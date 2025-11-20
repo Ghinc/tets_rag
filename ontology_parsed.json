@@ -1,0 +1,493 @@
+{
+  "concepts": {
+    "http://example.org/oppchovec#WellBeing": {
+      "label": "Well-being",
+      "comment": "Central concept representing a general state of satisfaction, balance, and fulfillment experienced by individuals or collectives.",
+      "uri": "http://example.org/oppchovec#WellBeing"
+    },
+    "http://example.org/oppchovec#QualityOfLife": {
+      "label": "Quality of Life",
+      "comment": "Concept encompassing the objective and subjective conditions that shape collective well-being.",
+      "uri": "http://example.org/oppchovec#QualityOfLife"
+    },
+    "http://example.org/oppchovec#Happiness": {
+      "label": "Happiness",
+      "comment": "An individual affective or emotional state associated with pleasure and immediate satisfaction.",
+      "uri": "http://example.org/oppchovec#Happiness"
+    },
+    "http://example.org/oppchovec#BuenVivir": {
+      "label": "Buen Vivir",
+      "comment": "A collective and territorial vision of living well, rooted in ecological balance and social relations.",
+      "uri": "http://example.org/oppchovec#BuenVivir"
+    },
+    "http://example.org/oppchovec#EudaimonicWellBeing": {
+      "label": "Eudaimonic well-being",
+      "comment": "A dimension of well-being related to self-realization, purpose, and personal development.",
+      "uri": "http://example.org/oppchovec#EudaimonicWellBeing"
+    },
+    "http://example.org/oppchovec#TerritorialWellBeing": {
+      "label": "Territorial well-being",
+      "comment": "A form of well-being associated with living conditions and the spatial, social, and environmental characteristics of a territory.",
+      "uri": "http://example.org/oppchovec#TerritorialWellBeing"
+    },
+    "http://example.org/oppchovec#SubjectiveTerritorialWellBeing": {
+      "label": "Subjective Territorial well-being",
+      "comment": "A form of territorial well-being depending on how people feel about their situation.",
+      "uri": "http://example.org/oppchovec#SubjectiveTerritorialWellBeing"
+    },
+    "http://example.org/oppchovec#ObjectiveTerritorialWellBeing": {
+      "label": "Objective Territorial well-being",
+      "comment": "A form of well-being depending on objective criteria on people's living conditions.",
+      "uri": "http://example.org/oppchovec#ObjectiveTerritorialWellBeing"
+    }
+  },
+  "dimensions": {
+    "http://example.org/oppchovec#Employment": {
+      "label": "Employment",
+      "comment": null,
+      "uri": "http://example.org/oppchovec#Employment"
+    },
+    "http://example.org/oppchovec#Housing": {
+      "label": "Housing",
+      "comment": null,
+      "uri": "http://example.org/oppchovec#Housing"
+    },
+    "http://example.org/oppchovec#Services": {
+      "label": "Services",
+      "comment": null,
+      "uri": "http://example.org/oppchovec#Services"
+    },
+    "http://example.org/oppchovec#Democracy": {
+      "label": "Democracy",
+      "comment": null,
+      "uri": "http://example.org/oppchovec#Democracy"
+    },
+    "http://example.org/oppchovec#Education": {
+      "label": "Education",
+      "comment": null,
+      "uri": "http://example.org/oppchovec#Education"
+    },
+    "http://example.org/oppchovec#Health": {
+      "label": "Health",
+      "comment": null,
+      "uri": "http://example.org/oppchovec#Health"
+    },
+    "http://example.org/oppchovec#EnvQuality": {
+      "label": "Environmental quality",
+      "comment": null,
+      "uri": "http://example.org/oppchovec#EnvQuality"
+    },
+    "http://example.org/oppchovec#Income": {
+      "label": "Income",
+      "comment": null,
+      "uri": "http://example.org/oppchovec#Income"
+    },
+    "http://example.org/oppchovec#WorkLifeBalance": {
+      "label": "Work–life balance",
+      "comment": null,
+      "uri": "http://example.org/oppchovec#WorkLifeBalance"
+    }
+  },
+  "indicators": {
+    "http://example.org/oppchovec#ObjectiveIndicator": {
+      "label": "Objective indicator",
+      "comment": "Indicator based on observed/recorded conditions (administrative or statistical data).",
+      "type": "unknown",
+      "measures_dimension": null,
+      "uri": "http://example.org/oppchovec#ObjectiveIndicator"
+    },
+    "http://example.org/oppchovec#SubjectiveIndicator": {
+      "label": "Subjective indicator",
+      "comment": "Indicator based on self-reported evaluations, perceptions, or survey items.",
+      "type": "unknown",
+      "measures_dimension": null,
+      "uri": "http://example.org/oppchovec#SubjectiveIndicator"
+    },
+    "http://example.org/oppchovec#MixedIndicator": {
+      "label": "Mixed Indicator",
+      "comment": "An indicator combining objective and subjective data to operationalize a concept.",
+      "type": "unknown",
+      "measures_dimension": null,
+      "uri": "http://example.org/oppchovec#MixedIndicator"
+    },
+    "http://example.org/oppchovec#OppChoVec": {
+      "label": "OppChoVec",
+      "comment": "Composite system of objective indicators used to operationalize territorial well-being (Opp–Cho–Vec).",
+      "type": "objective",
+      "measures_dimension": null,
+      "uri": "http://example.org/oppchovec#OppChoVec"
+    },
+    "http://example.org/oppchovec#EnoughFreeTimeFeeling": {
+      "label": "Feeling of having enough free time",
+      "comment": "Self-reported perception of having sufficient leisure or free time.",
+      "type": "subjective",
+      "measures_dimension": "http://example.org/oppchovec#WorkLifeBalance",
+      "uri": "http://example.org/oppchovec#EnoughFreeTimeFeeling"
+    },
+    "http://example.org/oppchovec#IncomeSatisfaction": {
+      "label": "Satisfaction with income",
+      "comment": "Self-reported satisfaction regarding personal or household income.",
+      "type": "subjective",
+      "measures_dimension": "http://example.org/oppchovec#Income",
+      "uri": "http://example.org/oppchovec#IncomeSatisfaction"
+    },
+    "http://example.org/oppchovec#PleasantEnvironmentFeeling": {
+      "label": "Perceived pleasant environment",
+      "comment": "Subjective appraisal of living in a pleasant, agreeable environment.",
+      "type": "subjective",
+      "measures_dimension": "http://example.org/oppchovec#EnvQuality",
+      "uri": "http://example.org/oppchovec#PleasantEnvironmentFeeling"
+    },
+    "http://example.org/oppchovec#SelfRatedHealth": {
+      "label": "Self-rated health",
+      "comment": "Self-assessed overall health status (e.g., very good to very bad).",
+      "type": "subjective",
+      "measures_dimension": "http://example.org/oppchovec#Health",
+      "uri": "http://example.org/oppchovec#SelfRatedHealth"
+    },
+    "http://example.org/oppchovec#EducationOfferSatisfaction": {
+      "label": "Satisfaction with the educational offer",
+      "comment": "Perceived adequacy and quality of available educational opportunities.",
+      "type": "subjective",
+      "measures_dimension": "http://example.org/oppchovec#Education",
+      "uri": "http://example.org/oppchovec#EducationOfferSatisfaction"
+    },
+    "http://example.org/oppchovec#HeardByPublicAuthoritiesFeeling": {
+      "label": "Feeling of being heard by public authorities",
+      "comment": "Perceived responsiveness of public authorities to residents’ concerns.",
+      "type": "subjective",
+      "measures_dimension": "http://example.org/oppchovec#Democracy",
+      "uri": "http://example.org/oppchovec#HeardByPublicAuthoritiesFeeling"
+    },
+    "http://example.org/oppchovec#ServiceAvailabilitySatisfaction": {
+      "label": "Satisfaction with available services",
+      "comment": "Self-reported satisfaction with the availability and adequacy of local services.",
+      "type": "subjective",
+      "measures_dimension": "http://example.org/oppchovec#Services",
+      "uri": "http://example.org/oppchovec#ServiceAvailabilitySatisfaction"
+    },
+    "http://example.org/oppchovec#SelfRatedHousingComfort": {
+      "label": "Self-rated housing comfort",
+      "comment": "Perceived comfort of the dwelling as reported by residents.",
+      "type": "subjective",
+      "measures_dimension": "http://example.org/oppchovec#Housing",
+      "uri": "http://example.org/oppchovec#SelfRatedHousingComfort"
+    },
+    "http://example.org/oppchovec#SelfRatedJobFulfilment": {
+      "label": "Self-rated job fulfilment",
+      "comment": "Perceived fulfilment or flourishing at work.",
+      "type": "subjective",
+      "measures_dimension": "http://example.org/oppchovec#Employment",
+      "uri": "http://example.org/oppchovec#SelfRatedJobFulfilment"
+    },
+    "http://example.org/oppchovec#UnemploymentRate": {
+      "label": "Unemployment rate",
+      "comment": "Percentage of the working-age population that is unemployed.",
+      "type": "objective",
+      "measures_dimension": null,
+      "uri": "http://example.org/oppchovec#UnemploymentRate"
+    },
+    "http://example.org/oppchovec#HousingSanitationRate": {
+      "label": "Percentage of dwellings with sanitary facilities",
+      "comment": "Share of dwellings equipped with at least one sanitary installation.",
+      "type": "objective",
+      "measures_dimension": null,
+      "uri": "http://example.org/oppchovec#HousingSanitationRate"
+    },
+    "http://example.org/oppchovec#ServiceAvailability": {
+      "label": "Availability of services in a geographic unit",
+      "comment": "Density and accessibility of essential public or private services within a defined territory.",
+      "type": "objective",
+      "measures_dimension": null,
+      "uri": "http://example.org/oppchovec#ServiceAvailability"
+    },
+    "http://example.org/oppchovec#VoterTurnout": {
+      "label": "Voter turnout",
+      "comment": "Rate of participation in local or national elections.",
+      "type": "objective",
+      "measures_dimension": null,
+      "uri": "http://example.org/oppchovec#VoterTurnout"
+    },
+    "http://example.org/oppchovec#HighSchoolGraduatesRate": {
+      "label": "Share of residents holding a high-school diploma",
+      "comment": "Proportion of population aged 18–24 having completed secondary education.",
+      "type": "objective",
+      "measures_dimension": null,
+      "uri": "http://example.org/oppchovec#HighSchoolGraduatesRate"
+    },
+    "http://example.org/oppchovec#HealthProfessionalProximity": {
+      "label": "Proximity of health professionals",
+      "comment": "Average distance or travel time to primary healthcare providers.",
+      "type": "objective",
+      "measures_dimension": null,
+      "uri": "http://example.org/oppchovec#HealthProfessionalProximity"
+    },
+    "http://example.org/oppchovec#WaterQuality": {
+      "label": "Water quality",
+      "comment": "Index of chemical and bacteriological quality of local water resources.",
+      "type": "objective",
+      "measures_dimension": null,
+      "uri": "http://example.org/oppchovec#WaterQuality"
+    },
+    "http://example.org/oppchovec#GDPperCapita": {
+      "label": "GDP per capita",
+      "comment": "Gross Domestic Product divided by total population of the area.",
+      "type": "objective",
+      "measures_dimension": null,
+      "uri": "http://example.org/oppchovec#GDPperCapita"
+    },
+    "http://example.org/oppchovec#AverageWeeklyWorkingHours": {
+      "label": "Average weekly working hours",
+      "comment": "Average number of hours worked per employed person per week.",
+      "type": "objective",
+      "measures_dimension": null,
+      "uri": "http://example.org/oppchovec#AverageWeeklyWorkingHours"
+    }
+  },
+  "relations": [
+    {
+      "subject": "http://example.org/oppchovec#EnoughFreeTimeFeeling",
+      "predicate": "http://example.org/oppchovec#measuresDimension",
+      "object": "http://example.org/oppchovec#WorkLifeBalance",
+      "subject_label": "Feeling of having enough free time",
+      "object_label": "Work–life balance"
+    },
+    {
+      "subject": "http://example.org/oppchovec#IncomeSatisfaction",
+      "predicate": "http://example.org/oppchovec#measuresDimension",
+      "object": "http://example.org/oppchovec#Income",
+      "subject_label": "Satisfaction with income",
+      "object_label": "Income"
+    },
+    {
+      "subject": "http://example.org/oppchovec#PleasantEnvironmentFeeling",
+      "predicate": "http://example.org/oppchovec#measuresDimension",
+      "object": "http://example.org/oppchovec#EnvQuality",
+      "subject_label": "Perceived pleasant environment",
+      "object_label": "Environmental quality"
+    },
+    {
+      "subject": "http://example.org/oppchovec#SelfRatedHealth",
+      "predicate": "http://example.org/oppchovec#measuresDimension",
+      "object": "http://example.org/oppchovec#Health",
+      "subject_label": "Self-rated health",
+      "object_label": "Health"
+    },
+    {
+      "subject": "http://example.org/oppchovec#EducationOfferSatisfaction",
+      "predicate": "http://example.org/oppchovec#measuresDimension",
+      "object": "http://example.org/oppchovec#Education",
+      "subject_label": "Satisfaction with the educational offer",
+      "object_label": "Education"
+    },
+    {
+      "subject": "http://example.org/oppchovec#HeardByPublicAuthoritiesFeeling",
+      "predicate": "http://example.org/oppchovec#measuresDimension",
+      "object": "http://example.org/oppchovec#Democracy",
+      "subject_label": "Feeling of being heard by public authorities",
+      "object_label": "Democracy"
+    },
+    {
+      "subject": "http://example.org/oppchovec#ServiceAvailabilitySatisfaction",
+      "predicate": "http://example.org/oppchovec#measuresDimension",
+      "object": "http://example.org/oppchovec#Services",
+      "subject_label": "Satisfaction with available services",
+      "object_label": "Services"
+    },
+    {
+      "subject": "http://example.org/oppchovec#SelfRatedHousingComfort",
+      "predicate": "http://example.org/oppchovec#measuresDimension",
+      "object": "http://example.org/oppchovec#Housing",
+      "subject_label": "Self-rated housing comfort",
+      "object_label": "Housing"
+    },
+    {
+      "subject": "http://example.org/oppchovec#SelfRatedJobFulfilment",
+      "predicate": "http://example.org/oppchovec#measuresDimension",
+      "object": "http://example.org/oppchovec#Employment",
+      "subject_label": "Self-rated job fulfilment",
+      "object_label": "Employment"
+    },
+    {
+      "subject": "http://example.org/oppchovec#ObjectiveTerritorialWellBeing",
+      "predicate": "http://example.org/oppchovec#isOperationalizedBy",
+      "object": "http://example.org/oppchovec#ObjectiveIndicator",
+      "subject_label": "Objective Territorial well-being",
+      "object_label": "Objective indicator"
+    },
+    {
+      "subject": "http://example.org/oppchovec#SubjectiveTerritorialWellBeing",
+      "predicate": "http://example.org/oppchovec#isOperationalizedBy",
+      "object": "http://example.org/oppchovec#SubjectiveIndicator",
+      "subject_label": "Subjective Territorial well-being",
+      "object_label": "Subjective indicator"
+    },
+    {
+      "subject": "http://example.org/oppchovec#ObjectiveTerritorialWellBeing",
+      "predicate": "http://example.org/oppchovec#isOperationalizedBy",
+      "object": "http://example.org/oppchovec#OppChoVec",
+      "subject_label": "Objective Territorial well-being",
+      "object_label": "OppChoVec"
+    },
+    {
+      "subject": "http://example.org/oppchovec#SubjectiveTerritorialWellBeing",
+      "predicate": "http://example.org/oppchovec#isOperationalizedBy",
+      "object": "http://example.org/oppchovec#EnoughFreeTimeFeeling",
+      "subject_label": "Subjective Territorial well-being",
+      "object_label": "Feeling of having enough free time"
+    },
+    {
+      "subject": "http://example.org/oppchovec#SubjectiveTerritorialWellBeing",
+      "predicate": "http://example.org/oppchovec#isOperationalizedBy",
+      "object": "http://example.org/oppchovec#IncomeSatisfaction",
+      "subject_label": "Subjective Territorial well-being",
+      "object_label": "Satisfaction with income"
+    },
+    {
+      "subject": "http://example.org/oppchovec#SubjectiveTerritorialWellBeing",
+      "predicate": "http://example.org/oppchovec#isOperationalizedBy",
+      "object": "http://example.org/oppchovec#PleasantEnvironmentFeeling",
+      "subject_label": "Subjective Territorial well-being",
+      "object_label": "Perceived pleasant environment"
+    },
+    {
+      "subject": "http://example.org/oppchovec#SubjectiveTerritorialWellBeing",
+      "predicate": "http://example.org/oppchovec#isOperationalizedBy",
+      "object": "http://example.org/oppchovec#SelfRatedHealth",
+      "subject_label": "Subjective Territorial well-being",
+      "object_label": "Self-rated health"
+    },
+    {
+      "subject": "http://example.org/oppchovec#SubjectiveTerritorialWellBeing",
+      "predicate": "http://example.org/oppchovec#isOperationalizedBy",
+      "object": "http://example.org/oppchovec#EducationOfferSatisfaction",
+      "subject_label": "Subjective Territorial well-being",
+      "object_label": "Satisfaction with the educational offer"
+    },
+    {
+      "subject": "http://example.org/oppchovec#SubjectiveTerritorialWellBeing",
+      "predicate": "http://example.org/oppchovec#isOperationalizedBy",
+      "object": "http://example.org/oppchovec#HeardByPublicAuthoritiesFeeling",
+      "subject_label": "Subjective Territorial well-being",
+      "object_label": "Feeling of being heard by public authorities"
+    },
+    {
+      "subject": "http://example.org/oppchovec#SubjectiveTerritorialWellBeing",
+      "predicate": "http://example.org/oppchovec#isOperationalizedBy",
+      "object": "http://example.org/oppchovec#ServiceAvailabilitySatisfaction",
+      "subject_label": "Subjective Territorial well-being",
+      "object_label": "Satisfaction with available services"
+    },
+    {
+      "subject": "http://example.org/oppchovec#SubjectiveTerritorialWellBeing",
+      "predicate": "http://example.org/oppchovec#isOperationalizedBy",
+      "object": "http://example.org/oppchovec#SelfRatedHousingComfort",
+      "subject_label": "Subjective Territorial well-being",
+      "object_label": "Self-rated housing comfort"
+    },
+    {
+      "subject": "http://example.org/oppchovec#SubjectiveTerritorialWellBeing",
+      "predicate": "http://example.org/oppchovec#isOperationalizedBy",
+      "object": "http://example.org/oppchovec#SelfRatedJobFulfilment",
+      "subject_label": "Subjective Territorial well-being",
+      "object_label": "Self-rated job fulfilment"
+    },
+    {
+      "subject": "http://example.org/oppchovec#WellBeing",
+      "predicate": "http://example.org/oppchovec#appliesTo",
+      "object": "http://example.org/oppchovec#Individual",
+      "subject_label": "Well-being",
+      "object_label": "Individual"
+    },
+    {
+      "subject": "http://example.org/oppchovec#Happiness",
+      "predicate": "http://example.org/oppchovec#appliesTo",
+      "object": "http://example.org/oppchovec#Individual",
+      "subject_label": "Happiness",
+      "object_label": "Individual"
+    },
+    {
+      "subject": "http://example.org/oppchovec#WellBeing",
+      "predicate": "http://example.org/oppchovec#appliesTo",
+      "object": "http://example.org/oppchovec#Collective",
+      "subject_label": "Well-being",
+      "object_label": "Collective"
+    },
+    {
+      "subject": "http://example.org/oppchovec#BuenVivir",
+      "predicate": "http://example.org/oppchovec#appliesTo",
+      "object": "http://example.org/oppchovec#Collective",
+      "subject_label": "Buen Vivir",
+      "object_label": "Collective"
+    },
+    {
+      "subject": "http://example.org/oppchovec#BuenVivir",
+      "predicate": "http://example.org/oppchovec#isAlternativeTo",
+      "object": "http://example.org/oppchovec#WellBeing",
+      "subject_label": "Buen Vivir",
+      "object_label": "Well-being"
+    }
+  ],
+  "keywords_to_dimension": {
+    "medecin": "http://example.org/oppchovec#Health",
+    "medecins": "http://example.org/oppchovec#Health",
+    "docteur": "http://example.org/oppchovec#Health",
+    "sante": "http://example.org/oppchovec#Health",
+    "santé": "http://example.org/oppchovec#Health",
+    "hopital": "http://example.org/oppchovec#Health",
+    "hôpital": "http://example.org/oppchovec#Health",
+    "soins": "http://example.org/oppchovec#Health",
+    "pharmacie": "http://example.org/oppchovec#Health",
+    "logement": "http://example.org/oppchovec#Housing",
+    "logements": "http://example.org/oppchovec#Housing",
+    "habitation": "http://example.org/oppchovec#Housing",
+    "maison": "http://example.org/oppchovec#Housing",
+    "appartement": "http://example.org/oppchovec#Housing",
+    "loyer": "http://example.org/oppchovec#Housing",
+    "prix immobilier": "http://example.org/oppchovec#Housing",
+    "ecole": "http://example.org/oppchovec#Education",
+    "école": "http://example.org/oppchovec#Education",
+    "ecoles": "http://example.org/oppchovec#Education",
+    "écoles": "http://example.org/oppchovec#Education",
+    "education": "http://example.org/oppchovec#Education",
+    "éducation": "http://example.org/oppchovec#Education",
+    "lycee": "http://example.org/oppchovec#Education",
+    "lycée": "http://example.org/oppchovec#Education",
+    "college": "http://example.org/oppchovec#Education",
+    "collège": "http://example.org/oppchovec#Education",
+    "universite": "http://example.org/oppchovec#Education",
+    "université": "http://example.org/oppchovec#Education",
+    "formation": "http://example.org/oppchovec#Education",
+    "service": "http://example.org/oppchovec#Services",
+    "services": "http://example.org/oppchovec#Services",
+    "commerce": "http://example.org/oppchovec#Services",
+    "commerces": "http://example.org/oppchovec#Services",
+    "administration": "http://example.org/oppchovec#Services",
+    "emploi": "http://example.org/oppchovec#Employment",
+    "travail": "http://example.org/oppchovec#Employment",
+    "chomage": "http://example.org/oppchovec#Employment",
+    "chômage": "http://example.org/oppchovec#Employment",
+    "job": "http://example.org/oppchovec#Employment",
+    "revenu": "http://example.org/oppchovec#Income",
+    "revenus": "http://example.org/oppchovec#Income",
+    "salaire": "http://example.org/oppchovec#Income",
+    "argent": "http://example.org/oppchovec#Income",
+    "democratie": "http://example.org/oppchovec#Democracy",
+    "démocratie": "http://example.org/oppchovec#Democracy",
+    "vote": "http://example.org/oppchovec#Democracy",
+    "election": "http://example.org/oppchovec#Democracy",
+    "élection": "http://example.org/oppchovec#Democracy",
+    "politique": "http://example.org/oppchovec#Democracy",
+    "environnement": "http://example.org/oppchovec#EnvQuality",
+    "nature": "http://example.org/oppchovec#EnvQuality",
+    "pollution": "http://example.org/oppchovec#EnvQuality",
+    "air": "http://example.org/oppchovec#EnvQuality",
+    "eau": "http://example.org/oppchovec#EnvQuality",
+    "transport": "http://example.org/oppchovec#Services",
+    "transports": "http://example.org/oppchovec#Services",
+    "bus": "http://example.org/oppchovec#Services",
+    "train": "http://example.org/oppchovec#Services",
+    "metro": "http://example.org/oppchovec#Services",
+    "métro": "http://example.org/oppchovec#Services"
+  }
+}

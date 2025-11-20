@@ -1,0 +1,43 @@
+@prefix : <http://example.org/oppchovec#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# Import the ontology schema
+<http://example.org/onto_be_instances> a owl:Ontology ;
+    owl:imports <http://example.org/oppchovec> .
+
+# --- tes individus à partir d'ici ---
+:Ajaccio a :Municipality ;
+    rdfs:label "Ajaccio"@en .
+:Afa a :Municipality ;
+    rdfs:label "Afa"@en .
+
+
+:OppChoVecIndex a :ObjectiveIndicator ;
+    :measuresDimension :OverallWellBeing ;
+    rdfs:label "OppChoVec composite index"@en .
+
+:Obs_Ajaccio_OppChoVec_2025 a :ObjectivizedObservation ;
+    :aboutIndicator :OppChoVecIndex ;
+    :forSpatialUnit :Ajaccio ;
+    :value 0.6 ;
+    :hasUnit unit:ONE ;
+    :observedAt [ a <http://www.w3.org/2006/time#Instant> ;
+                  <http://www.w3.org/2006/time#inXSDDate> "2025-09-08"^^xsd:date ] .
+
+:Survey_QEduc_2025 a :DataSource ;
+    rdfs:label "Subjective well-being survey 2025"@en .
+
+:EducationSatisfaction a :SubjectiveIndicator ;
+    :measuresDimension :Education ;
+    rdfs:label "Self-rated quality of life"@en .
+
+:Obs_Afa_QEduc_2025 a :SubjectiveObservation ;
+    :aboutIndicator :Education ;
+    :forSpatialUnit :Afa ;
+    :value 7.1 ;
+    :hasUnit unit:ONE ;
+    :basedOnSource :Survey_QoL_2025 ;
+    :observedAt [ a time:Instant ; time:inXSDDate "2025-02-10"^^xsd:date ] .

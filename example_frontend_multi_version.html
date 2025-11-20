@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot RAG Multi-Version - Interface de test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 1000px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .version-selector {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .version-selector h3 {
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .version-options {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .version-card {
+            flex: 1;
+            min-width: 200px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .version-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .version-card.selected {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .version-card.unavailable {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: #f5f5f5;
+        }
+
+        .version-card h4 {
+            color: #667eea;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .version-card p {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .version-features {
+            font-size: 11px;
+            color: #888;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .status-badge.available {
+            background: #4caf50;
+            color: white;
+        }
+
+        .status-badge.unavailable {
+            background: #f44336;
+            color: white;
+        }
+
+        .chat-container {
+            padding: 30px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.user {
+            text-align: right;
+        }
+
+        .message-content {
+            display: inline-block;
+            padding: 15px 20px;
+            border-radius: 15px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .message.user .message-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .message.bot .message-content {
+            background: #f1f3f4;
+            color: #333;
+        }
+
+        .version-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: bold;
+            margin-left: 8px;
+            background: #667eea;
+            color: white;
+        }
+
+        .sources {
+            margin-top: 15px;
+            padding: 15px;
+            background: #fff9e6;
+            border-left: 4px solid #ffd700;
+            border-radius: 8px;
+            font-size: 13px;
+        }
+
+        .source-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+        }
+
+        .source-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .source-header {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .source-content {
+            color: #666;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+
+        .input-container {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            gap: 10px;
+        }
+
+        #questionInput {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        #questionInput:focus {
+            border-color: #667eea;
+        }
+
+        #sendButton {
+            padding: 15px 35px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        #sendButton:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        #sendButton:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error {
+            background: #ffe6e6;
+            color: #d32f2f;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 30px;
+            border-left: 4px solid #d32f2f;
+        }
+
+        .settings {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+            font-size: 13px;
+        }
+
+        .settings label {
+            display: inline-flex;
+            align-items: center;
+            margin-right: 20px;
+            cursor: pointer;
+        }
+
+        .settings input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        .settings input[type="number"] {
+            width: 60px;
+            padding: 5px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🗣️ Chatbot RAG Multi-Version</h1>
+            <p>Testez et comparez les différentes versions du système RAG</p>
+        </div>
+
+        <div class="version-selector">
+            <h3>🔧 Choisissez la version du RAG :</h3>
+            <div class="version-options" id="versionOptions">
+                <!-- Les versions seront chargées dynamiquement -->
+            </div>
+        </div>
+
+        <div class="settings">
+            <label>
+                <input type="checkbox" id="useReranking" checked>
+                Reranking (v2/v3/v4)
+            </label>
+            <label>
+                <input type="checkbox" id="useOntology" checked>
+                Ontologie (v3)
+            </label>
+            <label>
+                <input type="checkbox" id="useCrossAnalysis" checked>
+                Analyse croisée (v4)
+            </label>
+            <label>
+                <input type="checkbox" id="includeQuant" checked>
+                Données quantitatives (v2/v3/v4)
+            </label>
+            <label>
+                Nb sources:
+                <input type="number" id="numSources" value="5" min="1" max="10">
+            </label>
+        </div>
+
+        <div class="chat-container" id="chatContainer">
+            <div class="message bot">
+                <div class="message-content">
+                    👋 Bonjour ! Choisissez une version du RAG ci-dessus, puis posez votre question.<br><br>
+                    <strong>v1</strong> = Simple et rapide<br>
+                    <strong>v2</strong> = Hybrid retrieval + Reranking<br>
+                    <strong>v3</strong> = v2 + Ontologie sémantique<br>
+                    <strong>v4</strong> = v2 + Analyse croisée multi-sources
+                </div>
+            </div>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Recherche en cours...</p>
+        </div>
+
+        <div class="input-container">
+            <input
+                type="text"
+                id="questionInput"
+                placeholder="Posez votre question ici..."
+                onkeypress="if(event.key==='Enter') sendQuestion()"
+            >
+            <button id="sendButton" onclick="sendQuestion()">Envoyer</button>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:8000/api/query';
+        const VERSIONS_URL = 'http://localhost:8000/api/versions';
+
+        let selectedVersion = 'v2'; // Par défaut
+        let availableVersions = [];
+
+        // Charger les versions disponibles au démarrage
+        async function loadVersions() {
+            try {
+                const response = await fetch(VERSIONS_URL);
+                if (!response.ok) throw new Error('Impossible de charger les versions');
+
+                availableVersions = await response.json();
+                displayVersions(availableVersions);
+            } catch (error) {
+                console.error('Erreur chargement versions:', error);
+                // Afficher les versions par défaut
+                displayVersions([
+                    { version: 'v1', name: 'RAG Basique', available: false, description: 'Serveur non démarré' },
+                    { version: 'v2', name: 'RAG Amélioré', available: false, description: 'Serveur non démarré' },
+                    { version: 'v3', name: 'RAG avec Ontologie', available: false, description: 'Serveur non démarré' },
+                    { version: 'v4', name: 'RAG avec Analyse Croisée', available: false, description: 'Serveur non démarré' }
+                ]);
+            }
+        }
+
+        function displayVersions(versions) {
+            const container = document.getElementById('versionOptions');
+            container.innerHTML = '';
+
+            versions.forEach(v => {
+                const card = document.createElement('div');
+                card.className = 'version-card' +
+                    (v.version === selectedVersion ? ' selected' : '') +
+                    (!v.available ? ' unavailable' : '');
+
+                card.innerHTML = `
+                    <h4>${v.version.toUpperCase()} - ${v.name}</h4>
+                    <p>${v.description}</p>
+                    <span class="status-badge ${v.available ? 'available' : 'unavailable'}">
+                        ${v.available ? '✓ Disponible' : '✗ Indisponible'}
+                    </span>
+                `;
+
+                if (v.available) {
+                    card.onclick = () => selectVersion(v.version);
+                }
+
+                container.appendChild(card);
+            });
+        }
+
+        function selectVersion(version) {
+            selectedVersion = version;
+            loadVersions(); // Refresh l'affichage
+        }
+
+        async function sendQuestion() {
+            const question = document.getElementById('questionInput').value.trim();
+
+            if (!question) {
+                alert('Veuillez entrer une question');
+                return;
+            }
+
+            // Vérifier que la version est disponible
+            const versionInfo = availableVersions.find(v => v.version === selectedVersion);
+            if (!versionInfo || !versionInfo.available) {
+                alert(`La version ${selectedVersion} n'est pas disponible. Veuillez choisir une autre version.`);
+                return;
+            }
+
+            // Ajouter le message de l'utilisateur
+            addMessage(question, 'user');
+            document.getElementById('questionInput').value = '';
+
+            // Désactiver le bouton et afficher le loading
+            document.getElementById('sendButton').disabled = true;
+            document.getElementById('loading').classList.add('active');
+
+            // Récupérer les paramètres
+            const params = {
+                question: question,
+                rag_version: selectedVersion,
+                k: parseInt(document.getElementById('numSources').value),
+                use_reranking: document.getElementById('useReranking').checked,
+                include_quantitative: document.getElementById('includeQuant').checked,
+                use_ontology_enrichment: document.getElementById('useOntology').checked,
+                use_cross_analysis: document.getElementById('useCrossAnalysis').checked
+            };
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(params)
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.detail || `HTTP ${response.status}`);
+                }
+
+                const data = await response.json();
+                addBotResponse(data);
+
+            } catch (error) {
+                console.error('Erreur:', error);
+                showError(error.message);
+            } finally {
+                document.getElementById('sendButton').disabled = false;
+                document.getElementById('loading').classList.remove('active');
+            }
+        }
+
+        function addMessage(text, type) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            contentDiv.textContent = text;
+
+            messageDiv.appendChild(contentDiv);
+            document.getElementById('chatContainer').appendChild(messageDiv);
+            document.getElementById('chatContainer').scrollTop = document.getElementById('chatContainer').scrollHeight;
+        }
+
+        function addBotResponse(data) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message bot';
+
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+
+            // Ajouter le badge de version
+            const versionBadge = document.createElement('span');
+            versionBadge.className = 'version-badge';
+            versionBadge.textContent = data.rag_version_used.toUpperCase();
+
+            // Ajouter la réponse
+            const answerP = document.createElement('p');
+            answerP.appendChild(versionBadge);
+            answerP.appendChild(document.createTextNode(' ' + data.answer));
+            contentDiv.appendChild(answerP);
+
+            // Ajouter les sources si présentes
+            if (data.sources && data.sources.length > 0) {
+                const sourcesDiv = document.createElement('div');
+                sourcesDiv.className = 'sources';
+                sourcesDiv.innerHTML = '<strong>📚 Sources (' + data.sources.length + ') :</strong>';
+
+                data.sources.forEach((source, index) => {
+                    const sourceItem = document.createElement('div');
+                    sourceItem.className = 'source-item';
+
+                    const sourceHeader = document.createElement('div');
+                    sourceHeader.className = 'source-header';
+                    const commune = source.metadata.commune || source.metadata.nom || 'N/A';
+                    sourceHeader.textContent = `${index + 1}. ${commune} (score: ${source.score.toFixed(3)})`;
+                    sourceHeader.style.cursor = 'pointer';
+
+                    const sourceContent = document.createElement('div');
+                    sourceContent.className = 'source-content';
+                    sourceContent.style.display = 'none'; // Caché par défaut
+                    sourceContent.textContent = source.content;
+
+                    // Ajouter le comportement de clic pour déplier/replier
+                    sourceHeader.onclick = () => {
+                        if (sourceContent.style.display === 'none') {
+                            sourceContent.style.display = 'block';
+                            sourceHeader.textContent = `▼ ${index + 1}. ${commune} (score: ${source.score.toFixed(3)})`;
+                        } else {
+                            sourceContent.style.display = 'none';
+                            sourceHeader.textContent = `▶ ${index + 1}. ${commune} (score: ${source.score.toFixed(3)})`;
+                        }
+                    };
+                    sourceHeader.textContent = `▶ ${index + 1}. ${commune} (score: ${source.score.toFixed(3)})`;
+
+                    sourceItem.appendChild(sourceHeader);
+                    sourceItem.appendChild(sourceContent);
+                    sourcesDiv.appendChild(sourceItem);
+                });
+
+                contentDiv.appendChild(sourcesDiv);
+            }
+
+            messageDiv.appendChild(contentDiv);
+            document.getElementById('chatContainer').appendChild(messageDiv);
+            document.getElementById('chatContainer').scrollTop = document.getElementById('chatContainer').scrollHeight;
+        }
+
+        function showError(message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error';
+            errorDiv.textContent = '❌ ' + message;
+
+            const container = document.querySelector('.container');
+            const chatContainer = document.getElementById('chatContainer');
+            container.insertBefore(errorDiv, chatContainer);
+
+            setTimeout(() => errorDiv.remove(), 5000);
+        }
+
+        // Charger les versions au démarrage
+        loadVersions();
+
+        // Auto-focus sur l'input
+        document.getElementById('questionInput').focus();
+    </script>
+</body>
+</html>

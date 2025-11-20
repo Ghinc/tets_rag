@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot RAG Multi-Version - Visualisation des sources</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 1000px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .version-selector {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .version-selector h3 {
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .version-options {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .version-card {
+            flex: 1;
+            min-width: 200px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .version-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .version-card.selected {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .version-card.unavailable {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: #f5f5f5;
+        }
+
+        .version-card h4 {
+            color: #667eea;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .version-card p {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .status-badge.available {
+            background: #4caf50;
+            color: white;
+        }
+
+        .status-badge.unavailable {
+            background: #f44336;
+            color: white;
+        }
+
+        .chat-container {
+            padding: 30px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.user {
+            text-align: right;
+        }
+
+        .message-content {
+            display: inline-block;
+            padding: 15px 20px;
+            border-radius: 15px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .message.user .message-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .message.bot .message-content {
+            background: #f1f3f4;
+            color: #333;
+        }
+
+        .version-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: bold;
+            margin-left: 8px;
+            background: #667eea;
+            color: white;
+        }
+
+        .sources {
+            margin-top: 15px;
+            padding: 15px;
+            background: #fff9e6;
+            border-left: 4px solid #ffd700;
+            border-radius: 8px;
+            font-size: 13px;
+        }
+
+        .source-item {
+            margin-bottom: 10px;
+            padding: 12px;
+            background: white;
+            border-radius: 5px;
+            border: 1px solid #e0e0e0;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .source-item:hover {
+            background: #f8f9fa;
+            border-color: #667eea;
+            transform: translateX(5px);
+        }
+
+        .source-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .source-header {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .source-score {
+            font-size: 11px;
+            padding: 2px 8px;
+            background: #667eea;
+            color: white;
+            border-radius: 10px;
+        }
+
+        .source-content {
+            color: #666;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+
+        .source-meta {
+            font-size: 11px;
+            color: #999;
+            margin-top: 5px;
+        }
+
+        .click-hint {
+            font-size: 10px;
+            color: #667eea;
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        /* Modal pour visualiser les sources */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            animation: fadeIn 0.3s;
+        }
+
+        .modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 800px;
+            max-height: 80vh;
+            width: 90%;
+            overflow-y: auto;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .modal-header h2 {
+            color: #667eea;
+            font-size: 20px;
+        }
+
+        .modal-close {
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .modal-close:hover {
+            background: #d32f2f;
+        }
+
+        .modal-body {
+            line-height: 1.6;
+        }
+
+        .modal-metadata {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .modal-metadata-item {
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .modal-metadata-item strong {
+            color: #667eea;
+            margin-right: 8px;
+        }
+
+        .modal-text {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            font-size: 14px;
+            line-height: 1.8;
+            white-space: pre-wrap;
+        }
+
+        .highlight {
+            background: #ffeb3b;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        .input-container {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            gap: 10px;
+        }
+
+        #questionInput {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        #questionInput:focus {
+            border-color: #667eea;
+        }
+
+        #sendButton {
+            padding: 15px 35px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        #sendButton:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        #sendButton:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error {
+            background: #ffe6e6;
+            color: #d32f2f;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 30px;
+            border-left: 4px solid #d32f2f;
+        }
+
+        .settings {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+            font-size: 13px;
+        }
+
+        .settings label {
+            display: inline-flex;
+            align-items: center;
+            margin-right: 20px;
+            cursor: pointer;
+        }
+
+        .settings input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        .settings input[type="number"] {
+            width: 60px;
+            padding: 5px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🗣️ Chatbot RAG Multi-Version</h1>
+            <p>Testez et évaluez la qualité des sources</p>
+        </div>
+
+        <div class="version-selector">
+            <h3>🔧 Choisissez la version du RAG :</h3>
+            <div class="version-options" id="versionOptions">
+                <!-- Les versions seront chargées dynamiquement -->
+            </div>
+        </div>
+
+        <div class="settings">
+            <label>
+                <input type="checkbox" id="useReranking" checked>
+                Reranking (v2/v3)
+            </label>
+            <label>
+                <input type="checkbox" id="useOntology" checked>
+                Ontologie (v3)
+            </label>
+            <label>
+                <input type="checkbox" id="includeQuant" checked>
+                Données quantitatives (v2/v3)
+            </label>
+            <label>
+                Nb sources:
+                <input type="number" id="numSources" value="5" min="1" max="10">
+            </label>
+        </div>
+
+        <div class="chat-container" id="chatContainer">
+            <div class="message bot">
+                <div class="message-content">
+                    👋 Bonjour ! Choisissez une version du RAG ci-dessus, puis posez votre question.<br><br>
+                    <strong>💡 Astuce :</strong> Cliquez sur les sources pour voir le document complet et évaluer la qualité du RAG !
+                </div>
+            </div>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Recherche en cours...</p>
+        </div>
+
+        <div class="input-container">
+            <input
+                type="text"
+                id="questionInput"
+                placeholder="Posez votre question ici..."
+                onkeypress="if(event.key==='Enter') sendQuestion()"
+            >
+            <button id="sendButton" onclick="sendQuestion()">Envoyer</button>
+        </div>
+    </div>
+
+    <!-- Modal pour visualiser les sources -->
+    <div class="modal" id="sourceModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Document source</h2>
+                <button class="modal-close" onclick="closeModal()">✕ Fermer</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-metadata" id="modalMetadata"></div>
+                <div class="modal-text" id="modalText"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:8000/api/query';
+        const VERSIONS_URL = 'http://localhost:8000/api/versions';
+
+        let selectedVersion = 'v2';
+        let availableVersions = [];
+        let currentSources = [];
+
+        // Charger les versions disponibles
+        async function loadVersions() {
+            try {
+                const response = await fetch(VERSIONS_URL);
+                if (!response.ok) throw new Error('Impossible de charger les versions');
+
+                availableVersions = await response.json();
+                displayVersions(availableVersions);
+            } catch (error) {
+                console.error('Erreur chargement versions:', error);
+                displayVersions([
+                    { version: 'v1', name: 'RAG Basique', available: false, description: 'Serveur non démarré' },
+                    { version: 'v2', name: 'RAG Amélioré', available: false, description: 'Serveur non démarré' },
+                    { version: 'v3', name: 'RAG avec Ontologie', available: false, description: 'Serveur non démarré' }
+                ]);
+            }
+        }
+
+        function displayVersions(versions) {
+            const container = document.getElementById('versionOptions');
+            container.innerHTML = '';
+
+            versions.forEach(v => {
+                const card = document.createElement('div');
+                card.className = 'version-card' +
+                    (v.version === selectedVersion ? ' selected' : '') +
+                    (!v.available ? ' unavailable' : '');
+
+                card.innerHTML = `
+                    <h4>${v.version.toUpperCase()} - ${v.name}</h4>
+                    <p>${v.description}</p>
+                    <span class="status-badge ${v.available ? 'available' : 'unavailable'}">
+                        ${v.available ? '✓ Disponible' : '✗ Indisponible'}
+                    </span>
+                `;
+
+                if (v.available) {
+                    card.onclick = () => selectVersion(v.version);
+                }
+
+                container.appendChild(card);
+            });
+        }
+
+        function selectVersion(version) {
+            selectedVersion = version;
+            loadVersions();
+        }
+
+        async function sendQuestion() {
+            const question = document.getElementById('questionInput').value.trim();
+
+            if (!question) {
+                alert('Veuillez entrer une question');
+                return;
+            }
+
+            const versionInfo = availableVersions.find(v => v.version === selectedVersion);
+            if (!versionInfo || !versionInfo.available) {
+                alert(`La version ${selectedVersion} n'est pas disponible.`);
+                return;
+            }
+
+            addMessage(question, 'user');
+            document.getElementById('questionInput').value = '';
+
+            document.getElementById('sendButton').disabled = true;
+            document.getElementById('loading').classList.add('active');
+
+            const params = {
+                question: question,
+                rag_version: selectedVersion,
+                k: parseInt(document.getElementById('numSources').value),
+                use_reranking: document.getElementById('useReranking').checked,
+                include_quantitative: document.getElementById('includeQuant').checked,
+                use_ontology_enrichment: document.getElementById('useOntology').checked
+            };
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(params)
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.detail || `HTTP ${response.status}`);
+                }
+
+                const data = await response.json();
+                currentSources = data.sources; // Stocker pour la modal
+                addBotResponse(data);
+
+            } catch (error) {
+                console.error('Erreur:', error);
+                showError(error.message);
+            } finally {
+                document.getElementById('sendButton').disabled = false;
+                document.getElementById('loading').classList.remove('active');
+            }
+        }
+
+        function addMessage(text, type) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            contentDiv.textContent = text;
+
+            messageDiv.appendChild(contentDiv);
+            document.getElementById('chatContainer').appendChild(messageDiv);
+            document.getElementById('chatContainer').scrollTop = document.getElementById('chatContainer').scrollHeight;
+        }
+
+        function addBotResponse(data) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message bot';
+
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+
+            const versionBadge = document.createElement('span');
+            versionBadge.className = 'version-badge';
+            versionBadge.textContent = data.rag_version_used.toUpperCase();
+
+            const answerP = document.createElement('p');
+            answerP.appendChild(versionBadge);
+            answerP.appendChild(document.createTextNode(' ' + data.answer));
+            contentDiv.appendChild(answerP);
+
+            if (data.sources && data.sources.length > 0) {
+                const sourcesDiv = document.createElement('div');
+                sourcesDiv.className = 'sources';
+                sourcesDiv.innerHTML = '<strong>📚 Sources (' + data.sources.length + ') - Cliquez pour voir le détail :</strong>';
+
+                data.sources.forEach((source, index) => {
+                    const sourceItem = document.createElement('div');
+                    sourceItem.className = 'source-item';
+                    sourceItem.onclick = () => openSourceModal(index);
+
+                    const sourceHeader = document.createElement('div');
+                    sourceHeader.className = 'source-header';
+                    const commune = source.metadata.commune || source.metadata.nom || source.metadata.filename || 'Document';
+                    sourceHeader.innerHTML = `
+                        <span>${index + 1}. ${commune}</span>
+                        <span class="source-score">Score: ${source.score.toFixed(3)}</span>
+                    `;
+
+                    const sourceContent = document.createElement('div');
+                    sourceContent.className = 'source-content';
+                    const preview = source.content.substring(0, 150) + '...';
+                    sourceContent.textContent = preview;
+
+                    const sourceMeta = document.createElement('div');
+                    sourceMeta.className = 'source-meta';
+                    sourceMeta.textContent = `Type: ${source.metadata.source || 'N/A'}`;
+
+                    const clickHint = document.createElement('div');
+                    clickHint.className = 'click-hint';
+                    clickHint.textContent = '👆 Cliquer pour voir le document complet';
+
+                    sourceItem.appendChild(sourceHeader);
+                    sourceItem.appendChild(sourceContent);
+                    sourceItem.appendChild(sourceMeta);
+                    sourceItem.appendChild(clickHint);
+                    sourcesDiv.appendChild(sourceItem);
+                });
+
+                contentDiv.appendChild(sourcesDiv);
+            }
+
+            messageDiv.appendChild(contentDiv);
+            document.getElementById('chatContainer').appendChild(messageDiv);
+            document.getElementById('chatContainer').scrollTop = document.getElementById('chatContainer').scrollHeight;
+        }
+
+        function openSourceModal(index) {
+            const source = currentSources[index];
+            if (!source) return;
+
+            const modal = document.getElementById('sourceModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalMetadata = document.getElementById('modalMetadata');
+            const modalText = document.getElementById('modalText');
+
+            // Titre
+            const commune = source.metadata.commune || source.metadata.nom || source.metadata.filename || 'Document';
+            modalTitle.textContent = `Source ${index + 1}: ${commune}`;
+
+            // Métadonnées
+            modalMetadata.innerHTML = `
+                <div class="modal-metadata-item"><strong>📍 Commune:</strong> ${source.metadata.commune || source.metadata.nom || 'N/A'}</div>
+                <div class="modal-metadata-item"><strong>📄 Type:</strong> ${source.metadata.source || 'N/A'}</div>
+                <div class="modal-metadata-item"><strong>📊 Score de pertinence:</strong> ${source.score.toFixed(4)}</div>
+                <div class="modal-metadata-item"><strong>📁 Fichier:</strong> ${source.metadata.filename || 'N/A'}</div>
+                ${source.metadata.chunk_index ? `<div class="modal-metadata-item"><strong>🔢 Chunk:</strong> ${source.metadata.chunk_index + 1} / ${source.metadata.total_chunks || '?'}</div>` : ''}
+            `;
+
+            // Texte complet
+            modalText.textContent = source.content;
+
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('sourceModal').classList.remove('active');
+        }
+
+        // Fermer la modal en cliquant en dehors
+        document.getElementById('sourceModal').onclick = function(event) {
+            if (event.target === this) {
+                closeModal();
+            }
+        };
+
+        function showError(message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error';
+            errorDiv.textContent = '❌ ' + message;
+
+            const container = document.querySelector('.container');
+            const chatContainer = document.getElementById('chatContainer');
+            container.insertBefore(errorDiv, chatContainer);
+
+            setTimeout(() => errorDiv.remove(), 5000);
+        }
+
+        // Charger les versions au démarrage
+        loadVersions();
+        document.getElementById('questionInput').focus();
+    </script>
+</body>
+</html>

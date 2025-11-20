@@ -1,0 +1,513 @@
+@prefix : <http://example.org/oppchovec#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix oa: <http://www.w3.org/ns/oa#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+
+#################################################################
+# Ontology metadata
+#################################################################
+
+<http://example.org/oppchovec> a owl:Ontology ;
+  rdfs:label "Ontology of Well-Being and Related Concepts"@en ;
+  owl:versionInfo "0.1" ;
+  rdfs:comment "Initial version corresponding to the conceptual diagram representing wellbeing and its subdimensions, as well as the links between wellbeing and other related concepts such as buen vivir, quality of life and happiness ."@en .
+
+#################################################################
+# Upper-level classes
+#################################################################
+
+
+: a owl:Class ;
+  rdfs:label "Scale"@en ;
+  rdfs:comment "Level of analysis or application at which a concept is considered."@en .
+
+:AbstractEntity a owl:Class ;
+    rdfs:label "Abstract Entity"@en ;
+    rdfs:comment "A high-level class encompassing both concepts and sentiments."@en .
+
+:Concept a owl:Class ;
+    rdfs:label "Concept"@en ;
+    rdfs:subClassOf :AbstractEntity;
+    rdfs:comment "Abstract conceptual construct used to describe or measure well-being and related ideas."@en .
+
+:Sentiment a owl:Class ;
+    rdfs:label "Sentiment"@en ;
+    rdfs:subClassOf :AbstractEntity;
+    rdfs:comment "Affective or emotional state experienced by an individual."@en .
+
+:Individual a owl:Class ;
+    rdfs:label "Individual"@en ;
+    rdfs:subClassOf :Scale;
+    rdfs:comment "A single subject to whom the subjective dimensions of well-being apply."@en .
+
+:Collective a owl:Class ;
+    rdfs:label "Collective"@en ;
+    rdfs:subClassOf :Scale;
+    rdfs:comment "A social group or community to which the collective dimensions of well-being apply."@en .
+
+#################################################################
+# Concept subclasses
+#################################################################
+
+:WellBeing a owl:Class ;
+    rdfs:subClassOf :Concept ;
+    rdfs:label "Well-being"@en ;
+    rdfs:comment "Central concept representing a general state of satisfaction, balance, and fulfillment experienced by individuals or collectives."@en .
+
+:QualityOfLife a owl:Class ;
+    rdfs:subClassOf :Concept ;
+    rdfs:label "Quality of Life"@en ;
+    rdfs:comment "Concept encompassing the objective and subjective conditions that shape collective well-being."@en .
+
+:BuenVivir a owl:Class ;
+    rdfs:subClassOf :Concept ;
+    rdfs:label "Buen Vivir"@en ;
+    rdfs:comment "A collective and territorial vision of living well, rooted in ecological balance and social relations."@en .
+
+#################################################################
+# Sentiment subclasse
+#################################################################
+
+:Happiness a owl:Class ;
+  rdfs:label "Happiness"@en ;
+  rdfs:subClassOf :Sentiment;
+  rdfs:comment "An individual affective or emotional state associated with pleasure and immediate satisfaction."@en .
+
+#################################################################
+# Wellbeing subclasses
+#################################################################
+
+:EudaimonicWellBeing a owl:Class ;
+    rdfs:subClassOf :WellBeing;
+    rdfs:label "Eudaimonic well-being"@en ;
+    rdfs:comment "A dimension of well-being related to self-realization, purpose, and personal development."@en .
+
+:TerritorialWellBeing a owl:Class ;
+    rdfs:subClassOf :WellBeing ;
+    rdfs:label "Territorial well-being"@en ;
+    rdfs:comment "A form of well-being associated with living conditions and the spatial, social, and environmental characteristics of a territory."@en .
+
+:SubjectiveTerritorialWellBeing a owl:Class ;
+    rdfs:subClassOf :TerritorialWellBeing ;
+    rdfs:label "Subjective Territorial well-being"@en ;
+    rdfs:comment "A form of territorial well-being depending on how people feel about their situation."@en .
+
+:ObjectiveTerritorialWellBeing a owl:Class ;
+    rdfs:subClassOf :TerritorialWellBeing ;
+    rdfs:label "Objective Territorial well-being"@en ;
+    rdfs:comment "A form of well-being depending on objective criteria on people's living conditions."@en ;
+    :isOperationalizedBy :ObjectiveIndicator ;
+    :calculatedFrom :UnemploymentRate , :HousingSanitationRate , :ServiceAvailability ,
+                  :VoterTurnout , :HighSchoolGraduatesRate , :HealthProfessionalProximity ,
+                  :WaterQuality , :GDPperCapita , :AverageWeeklyWorkingHours .
+
+
+#############################################################
+# Indicators
+##############################################################
+
+:Indicator a owl:Class ;
+  rdfs:label "Indicator"@en ;
+  rdfs:comment "A measurable variable or composite used to operationalize a concept."@en .
+
+:ObjectiveIndicator a owl:Class ;
+  rdfs:subClassOf :Indicator ;
+  rdfs:label "Objective indicator"@en ;
+  rdfs:comment "Indicator based on observed/recorded conditions (administrative or statistical data)."@en .
+
+:SubjectiveIndicator a owl:Class ;
+  rdfs:subClassOf :Indicator ;
+  rdfs:label "Subjective indicator"@en ;
+  rdfs:comment "Indicator based on self-reported evaluations, perceptions, or survey items."@en .
+
+:MixedIndicator a owl:Class ;
+    rdfs:subClassOf :Indicator ;
+    rdfs:label "Mixed Indicator"@en ;
+    rdfs:comment "An indicator combining objective and subjective data to operationalize a concept."@en .
+
+:OppChoVec a owl:Class ;
+  rdfs:subClassOf :ObjectiveIndicator ;
+  rdfs:label "OppChoVec"@en ;
+  rdfs:comment "Composite system of objective indicators used to operationalize territorial well-being (Opp–Cho–Vec)."@en .
+
+################################################################
+# Dimensions
+###############################################################
+
+:Dimension a owl:Class ;
+  rdfs:label "Dimension"@en ;
+  rdfs:comment "Abstract thematic aspect of territorial well-being that is made observable through indicators."@en .
+
+:Employment a owl:Class ; rdfs:subClassOf :Dimension ; rdfs:label "Employment"@en .
+:Housing    a owl:Class ; rdfs:subClassOf :Dimension ; rdfs:label "Housing"@en .
+:Services   a owl:Class ; rdfs:subClassOf :Dimension ; rdfs:label "Services"@en .
+:Democracy  a owl:Class ; rdfs:subClassOf :Dimension ; rdfs:label "Democracy"@en .
+:Education  a owl:Class ; rdfs:subClassOf :Dimension ; rdfs:label "Education"@en .
+:Health     a owl:Class ; rdfs:subClassOf :Dimension ; rdfs:label "Health"@en .
+:EnvQuality a owl:Class ; rdfs:subClassOf :Dimension ; rdfs:label "Environmental quality"@en .
+:Income     a owl:Class ; rdfs:subClassOf :Dimension ; rdfs:label "Income"@en .
+:WorkLifeBalance a owl:Class ; rdfs:subClassOf :Dimension ; rdfs:label "Work–life balance"@en .
+
+#################################################################
+# Géographie
+#################################################################
+
+:SpatialUnit a owl:Class ;
+  rdfs:subClassOf geo:Feature ;
+  rdfs:label "Spatial unit"@en .
+
+:Country     rdfs:subClassOf :SpatialUnit ; rdfs:label "Country"@en .
+:Region      rdfs:subClassOf :SpatialUnit ; rdfs:label "Region"@en .
+:Department  rdfs:subClassOf :SpatialUnit ; rdfs:label "Department"@en .
+:Municipality rdfs:subClassOf :SpatialUnit ; rdfs:label "Municipality"@en .
+
+#################################################################
+# Gepgraphic relations
+#################################################################
+
+:isPartOfSpatialUnit a owl:ObjectProperty ;
+    rdfs:domain :SpatialUnit ;
+    rdfs:range :SpatialUnit ;
+    rdfs:label "is part of spatial unit"@en ;
+    rdfs:comment "Defines hierarchical containment between spatial units (e.g. municipality → department → region → country)."@en .
+
+:appliesToSpatialUnit a owl:ObjectProperty ;
+    rdfs:domain :Indicator ;
+    rdfs:range :SpatialUnit ;
+    rdfs:label "applies to spatial unit"@en ;
+    rdfs:comment "Relates an indicator or observation to the spatial unit to which it applies."@en .
+
+################################################################
+# Geographical related datatypes
+################################################################
+
+:inseeCode a owl:DatatypeProperty ;
+    rdfs:domain :Municipality ;
+    rdfs:range xsd:string ;
+    rdfs:label "INSEE code"@en .
+
+:officialName a owl:DatatypeProperty ;
+    rdfs:domain :SpatialUnit ;
+    rdfs:range xsd:string ;
+    rdfs:label "Official name"@en .
+
+
+#################################################################
+# Subjective indicators for Subjective Territorial Well-Being
+#################################################################
+
+:EnoughFreeTimeFeeling a owl:Class ;
+  rdfs:subClassOf :SubjectiveIndicator ;
+  rdfs:label "Feeling of having enough free time"@en ;
+  rdfs:comment "Self-reported perception of having sufficient leisure or free time."@en ;
+  :measuresDimension :WorkLifeBalance .
+
+:IncomeSatisfaction a owl:Class ;
+  rdfs:subClassOf :SubjectiveIndicator ;
+  rdfs:label "Satisfaction with income"@en ;
+  rdfs:comment "Self-reported satisfaction regarding personal or household income."@en ;
+  :measuresDimension :Income .
+
+:PleasantEnvironmentFeeling a owl:Class ;
+  rdfs:subClassOf :SubjectiveIndicator ;
+  rdfs:label "Perceived pleasant environment"@en ;
+  rdfs:comment "Subjective appraisal of living in a pleasant, agreeable environment."@en ;
+  :measuresDimension :EnvQuality .
+
+:SelfRatedHealth a owl:Class ;
+  rdfs:subClassOf :SubjectiveIndicator ;
+  rdfs:label "Self-rated health"@en ;
+  rdfs:comment "Self-assessed overall health status (e.g., very good to very bad)."@en ;
+  :measuresDimension :Health .
+
+:EducationOfferSatisfaction a owl:Class ;
+  rdfs:subClassOf :SubjectiveIndicator ;
+  rdfs:label "Satisfaction with the educational offer"@en ;
+  rdfs:comment "Perceived adequacy and quality of available educational opportunities."@en ;
+  :measuresDimension :Education .
+
+:HeardByPublicAuthoritiesFeeling a owl:Class ;
+  rdfs:subClassOf :SubjectiveIndicator ;
+  rdfs:label "Feeling of being heard by public authorities"@en ;
+  rdfs:comment "Perceived responsiveness of public authorities to residents’ concerns."@en ;
+  :measuresDimension :Democracy .
+
+:ServiceAvailabilitySatisfaction a owl:Class ;
+  rdfs:subClassOf :SubjectiveIndicator ;
+  rdfs:label "Satisfaction with available services"@en ;
+  rdfs:comment "Self-reported satisfaction with the availability and adequacy of local services."@en ;
+  :measuresDimension :Services .
+
+:SelfRatedHousingComfort a owl:Class ;
+  rdfs:subClassOf :SubjectiveIndicator ;
+  rdfs:label "Self-rated housing comfort"@en ;
+  rdfs:comment "Perceived comfort of the dwelling as reported by residents."@en ;
+  :measuresDimension :Housing .
+
+:SelfRatedJobFulfilment a owl:Class ;
+  rdfs:subClassOf :SubjectiveIndicator ;
+  rdfs:label "Self-rated job fulfilment"@en ;
+  rdfs:comment "Perceived fulfilment or flourishing at work."@en ;
+  :measuresDimension :Employment .
+
+#################################################################
+# Objective indicators (already consistent with previous block)
+#################################################################
+
+:UnemploymentRate a owl:Class ;
+  rdfs:subClassOf :ObjectiveIndicator ;
+  rdfs:label "Unemployment rate"@en ;
+  rdfs:comment "Percentage of the working-age population that is unemployed."@en .
+
+:HousingSanitationRate a owl:Class ;
+  rdfs:subClassOf :ObjectiveIndicator ;
+  rdfs:label "Percentage of dwellings with sanitary facilities"@en ;
+  rdfs:comment "Share of dwellings equipped with at least one sanitary installation."@en .
+
+:ServiceAvailability a owl:Class ;
+  rdfs:subClassOf :ObjectiveIndicator ;
+  rdfs:label "Availability of services in a geographic unit"@en ;
+  rdfs:comment "Density and accessibility of essential public or private services within a defined territory."@en .
+
+:VoterTurnout a owl:Class ;
+  rdfs:subClassOf :ObjectiveIndicator ;
+  rdfs:label "Voter turnout"@en ;
+  rdfs:comment "Rate of participation in local or national elections."@en .
+
+:HighSchoolGraduatesRate a owl:Class ;
+  rdfs:subClassOf :ObjectiveIndicator ;
+  rdfs:label "Share of residents holding a high-school diploma"@en ;
+  rdfs:comment "Proportion of population aged 18–24 having completed secondary education."@en .
+
+:HealthProfessionalProximity a owl:Class ;
+  rdfs:subClassOf :ObjectiveIndicator ;
+  rdfs:label "Proximity of health professionals"@en ;
+  rdfs:comment "Average distance or travel time to primary healthcare providers."@en .
+
+:WaterQuality a owl:Class ;
+  rdfs:subClassOf :ObjectiveIndicator ;
+  rdfs:label "Water quality"@en ;
+  rdfs:comment "Index of chemical and bacteriological quality of local water resources."@en .
+
+:GDPperCapita a owl:Class ;
+  rdfs:subClassOf :ObjectiveIndicator ;
+  rdfs:label "GDP per capita"@en ;
+  rdfs:comment "Gross Domestic Product divided by total population of the area."@en .
+
+:AverageWeeklyWorkingHours a owl:Class ;
+  rdfs:subClassOf :ObjectiveIndicator ;
+  rdfs:label "Average weekly working hours"@en ;
+  rdfs:comment "Average number of hours worked per employed person per week."@en .
+
+#################################################################
+# Data sources
+################################################################
+
+:DataSource a owl:Class ;
+    rdfs:label "Data Source"@en ;
+    rdfs:comment "Any qualitative or quantitative source providing evidence for an indicator (e.g., interview, Wikipedia, INSEE dataset)."@en .
+
+:QualitativeSource a owl:Class ;
+    rdfs:subClassOf :DataSource ;
+    rdfs:label "Qualitative Source"@en .
+
+:QuantitativeSource a owl:Class ;
+    rdfs:subClassOf :DataSource ;
+    rdfs:label "Qualitative Source"@en .
+
+:Interview a owl:Class ;
+    rdfs:subClassOf :QualitativeSource ;
+    rdfs:label "Interview transcript"@en .
+
+:TextualDocument a owl:Class ;
+    rdfs:subClassOf :QualitativeSource ;
+    rdfs:label "Textual document"@en .
+
+
+#################################################################
+# Object properties
+#################################################################
+
+:appliesTo a owl:ObjectProperty ;
+    rdfs:label "applies to"@en ;
+    rdfs:domain :AbstractEntity ;
+    rdfs:range [ a owl:Class ;
+                 owl:unionOf ( :Individual :Collective )
+               ] ;
+    rdfs:comment "Relates an abstract entity (concept or sentiment) to the level of application, either individual or collective."@en .
+
+:isEquivalentTo a owl:ObjectProperty, owl:SymmetricProperty ;
+    rdfs:label "is equivalent to"@en ;
+    rdfs:domain :Concept ;
+    rdfs:range :Concept ;
+    rdfs:comment "Expresses conceptual equivalence between two conceptual constructs (e.g., Well-being and Quality of Life) in certain analytical frameworks."@en .
+
+:isAlternativeTo a owl:ObjectProperty, owl:SymmetricProperty ;
+    rdfs:label "is alternative to"@en ;
+    rdfs:domain :Concept ;
+    rdfs:range :Concept ;
+    rdfs:comment "Relates well-being to alternative approaches from other cultural traditions."@en .
+
+:isOperationalizedBy a owl:ObjectProperty ;
+  rdfs:label "is operationalized by"@en ;
+  rdfs:domain :TerritorialWellBeing ;
+  rdfs:range  :Indicator ;
+  rdfs:comment "Links (territorial) well-being concepts to the indicators used to make them measurable."@en .
+
+:operationalizes a owl:ObjectProperty ;
+  owl:inverseOf :isOperationalizedBy ;
+  rdfs:label "operationalizes"@en ;
+  rdfs:domain :Indicator ;
+  rdfs:range  :TerritorialWellBeing ;
+  rdfs:comment "Inverse of isOperationalizedBy."@en .
+
+
+:combinesIndicators a owl:ObjectProperty ;
+    rdfs:domain :MixedIndicator ;
+    rdfs:range [ a owl:Class ; owl:unionOf ( :ObjectiveIndicator :SubjectiveIndicator ) ] ;
+    rdfs:label "combines indicators"@en ;
+    rdfs:comment "Relates a mixed indicator to the objective and subjective indicators it combines."@en .
+
+
+################################################################
+#logical links dimensions
+###############################################################
+
+:hasDimension a owl:ObjectProperty ;
+  rdfs:label "has dimension"@en ;
+  rdfs:domain :TerritorialWellBeing ;
+  rdfs:range  :Dimension ;
+  rdfs:comment "Relates territorial well-being to a thematic dimension (e.g., Housing, Employment)."@en .
+
+:measuresDimension a owl:ObjectProperty ;
+  rdfs:label "measures dimension"@en ;
+  rdfs:domain :Indicator ;
+  rdfs:range  :Dimension ;
+  rdfs:comment "Links an indicator to the thematic dimension it measures."@en .
+
+
+################################################################
+# Ancrage
+################################################################
+
+
+:TextSpan a owl:Class ; rdfs:label "Text span"@en .
+:hasSpan a owl:ObjectProperty ; rdfs:domain :Observation ; rdfs:range :TextSpan .
+
+:beginOffset a owl:DatatypeProperty ; rdfs:domain :TextSpan ; rdfs:range xsd:integer .
+:endOffset   a owl:DatatypeProperty ; rdfs:domain :TextSpan ; rdfs:range xsd:integer .
+
+# Optional: use Web Annotation directly
+:annotatesSource a owl:ObjectProperty ; rdfs:domain :TextSpan ; rdfs:range :DataSource .
+
+################################################################
+# Observations - à voir si on garde cette classe
+################################################################
+
+:Observation a owl:Class ;
+    rdfs:label "Observation"@en ;
+    rdfs:comment "An observation of an indicator in a specific spatial unit and time context."@en .
+
+:SubjectiveObservation a owl:Class ;
+  rdfs:subClassOf :Observation ;
+  rdfs:label "Subjective observation"@en ;
+  rdfs:comment "Observation produced by a subjective indicator (self-report, perception)."@en .
+
+:ObjectivizedObservation a owl:Class ;
+  rdfs:subClassOf :Observation ;
+  rdfs:label "Objective observation"@en ;
+  rdfs:comment "Observation produced by an objective indicator (admin/statistical record)."@en .
+
+### Bridges
+:aboutIndicator rdfs:range :Indicator .
+
+  
+### Core properties scoped to Observation
+:aboutIndicator a owl:ObjectProperty ;
+  rdfs:domain :Observation ;
+  rdfs:range  :Indicator ;
+  rdfs:label "about indicator"@en .
+
+:forSpatialUnit a owl:ObjectProperty ;
+  rdfs:domain :Observation ;
+  rdfs:range  :SpatialUnit ;
+  rdfs:label "for spatial unit"@en .
+
+:observedAt a owl:ObjectProperty ;
+  rdfs:domain :Observation ;
+  rdfs:range  time:Instant ;
+  rdfs:label "observed at"@en .
+
+:value a owl:DatatypeProperty ;
+  rdfs:domain :Observation ;
+  rdfs:range  xsd:decimal ;
+  rdfs:label "value"@en .
+
+:hasUnit a owl:ObjectProperty ;
+  rdfs:domain :Observation ;
+  rdfs:range  qudt:Unit ;
+  rdfs:label "has unit"@en .
+
+:basedOnSource a owl:ObjectProperty ;
+  rdfs:domain :Observation ;
+  rdfs:range  :DataSource ;
+  rdfs:label "based on source"@en .
+
+### Optional: qualitative snippet
+:hasExcerpt a owl:DatatypeProperty ;
+  rdfs:domain :Observation ;
+  rdfs:range  xsd:string ;
+  rdfs:label "has excerpt"@en .
+
+### Indicator ↔ Dimension
+:measuresDimension a owl:ObjectProperty ;
+  rdfs:domain :Indicator ;
+  rdfs:range  :Dimension ;
+  rdfs:label "measures dimension"@en .
+
+
+
+#################################################################
+# Logical axioms
+#################################################################
+
+# Quality of Life ≡ Well-being
+:QualityOfLife owl:equivalentClass :WellBeing .
+
+# Buen Vivir as an alternative to Well-being
+:BuenVivir :isAlternativeTo :WellBeing .
+
+# Applicability relations
+:WellBeing :appliesTo :Individual .
+:WellBeing :appliesTo :Collective .
+:Happiness :appliesTo :Individual .
+:BuenVivir :appliesTo :Collective .
+
+# Territorial WB specializations are operationalized by different indicator families
+:SubjectiveTerritorialWellBeing :isOperationalizedBy :SubjectiveIndicator .
+:ObjectiveTerritorialWellBeing     :isOperationalizedBy :ObjectiveIndicator .
+
+# Explicit link to OppChoVec as an objective indicator system
+:ObjectiveTerritorialWellBeing :isOperationalizedBy :OppChoVec .
+
+#################################################################
+# Operationalization links (subjective side)
+#################################################################
+
+:SubjectiveTerritorialWellBeing :isOperationalizedBy
+  :EnoughFreeTimeFeeling ,
+  :IncomeSatisfaction ,
+  :PleasantEnvironmentFeeling ,
+  :SelfRatedHealth ,
+  :EducationOfferSatisfaction ,
+  :HeardByPublicAuthoritiesFeeling ,
+  :ServiceAvailabilitySatisfaction ,
+  :SelfRatedHousingComfort ,
+  :SelfRatedJobFulfilment .
+
+

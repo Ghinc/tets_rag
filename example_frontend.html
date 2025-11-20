@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot RAG v3 - Interface de test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 900px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .chat-container {
+            padding: 30px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.user {
+            text-align: right;
+        }
+
+        .message-content {
+            display: inline-block;
+            padding: 15px 20px;
+            border-radius: 15px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .message.user .message-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .message.bot .message-content {
+            background: #f1f3f4;
+            color: #333;
+        }
+
+        .sources {
+            margin-top: 15px;
+            padding: 15px;
+            background: #fff9e6;
+            border-left: 4px solid #ffd700;
+            border-radius: 8px;
+            font-size: 13px;
+        }
+
+        .source-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+        }
+
+        .source-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .source-header {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .source-content {
+            color: #666;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+
+        .input-container {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            gap: 10px;
+        }
+
+        #questionInput {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        #questionInput:focus {
+            border-color: #667eea;
+        }
+
+        #sendButton {
+            padding: 15px 35px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        #sendButton:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        #sendButton:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error {
+            background: #ffe6e6;
+            color: #d32f2f;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 30px;
+            border-left: 4px solid #d32f2f;
+        }
+
+        .settings {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+            font-size: 13px;
+        }
+
+        .settings label {
+            display: inline-flex;
+            align-items: center;
+            margin-right: 20px;
+            cursor: pointer;
+        }
+
+        .settings input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        .settings input[type="number"] {
+            width: 60px;
+            padding: 5px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🗣️ Chatbot RAG v3</h1>
+            <p>Système d'analyse de la qualité de vie en Corse</p>
+        </div>
+
+        <div class="settings">
+            <label>
+                <input type="checkbox" id="useReranking" checked>
+                Reranking
+            </label>
+            <label>
+                <input type="checkbox" id="useOntology" checked>
+                Ontologie
+            </label>
+            <label>
+                <input type="checkbox" id="includeQuant" checked>
+                Données quantitatives
+            </label>
+            <label>
+                Nb sources:
+                <input type="number" id="numSources" value="3" min="1" max="10">
+            </label>
+        </div>
+
+        <div class="chat-container" id="chatContainer">
+            <div class="message bot">
+                <div class="message-content">
+                    👋 Bonjour ! Je suis votre assistant pour explorer la qualité de vie en Corse.<br><br>
+                    Vous pouvez me poser des questions comme :<br>
+                    • "Quelle commune a le meilleur bien-être ?"<br>
+                    • "Comment est la qualité de vie à Ajaccio ?"<br>
+                    • "Quels sont les facteurs importants du bien-être ?"
+                </div>
+            </div>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Recherche en cours...</p>
+        </div>
+
+        <div class="input-container">
+            <input
+                type="text"
+                id="questionInput"
+                placeholder="Posez votre question ici..."
+                onkeypress="if(event.key==='Enter') sendQuestion()"
+            >
+            <button id="sendButton" onclick="sendQuestion()">Envoyer</button>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:8000/api/query';
+        const chatContainer = document.getElementById('chatContainer');
+        const questionInput = document.getElementById('questionInput');
+        const sendButton = document.getElementById('sendButton');
+        const loading = document.getElementById('loading');
+
+        async function sendQuestion() {
+            const question = questionInput.value.trim();
+
+            if (!question) {
+                alert('Veuillez entrer une question');
+                return;
+            }
+
+            // Ajouter le message de l'utilisateur
+            addMessage(question, 'user');
+            questionInput.value = '';
+
+            // Désactiver le bouton et afficher le loading
+            sendButton.disabled = true;
+            loading.classList.add('active');
+
+            // Récupérer les paramètres
+            const params = {
+                question: question,
+                k: parseInt(document.getElementById('numSources').value),
+                use_reranking: document.getElementById('useReranking').checked,
+                include_quantitative: document.getElementById('includeQuant').checked,
+                use_ontology_enrichment: document.getElementById('useOntology').checked
+            };
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(params)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                // Ajouter la réponse du bot
+                addBotResponse(data);
+
+            } catch (error) {
+                console.error('Erreur:', error);
+                showError('Erreur lors de la communication avec le serveur. Vérifiez que l\'API est démarrée.');
+            } finally {
+                sendButton.disabled = false;
+                loading.classList.remove('active');
+            }
+        }
+
+        function addMessage(text, type) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            contentDiv.textContent = text;
+
+            messageDiv.appendChild(contentDiv);
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function addBotResponse(data) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message bot';
+
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+
+            // Ajouter la réponse
+            const answerP = document.createElement('p');
+            answerP.textContent = data.answer;
+            contentDiv.appendChild(answerP);
+
+            // Ajouter les sources si présentes
+            if (data.sources && data.sources.length > 0) {
+                const sourcesDiv = document.createElement('div');
+                sourcesDiv.className = 'sources';
+                sourcesDiv.innerHTML = '<strong>📚 Sources (' + data.sources.length + ') :</strong>';
+
+                data.sources.forEach((source, index) => {
+                    const sourceItem = document.createElement('div');
+                    sourceItem.className = 'source-item';
+
+                    const sourceHeader = document.createElement('div');
+                    sourceHeader.className = 'source-header';
+                    const commune = source.metadata.commune || source.metadata.nom || 'N/A';
+                    sourceHeader.textContent = `${index + 1}. ${commune} (score: ${source.score.toFixed(3)})`;
+
+                    const sourceContent = document.createElement('div');
+                    sourceContent.className = 'source-content';
+                    const preview = source.content.substring(0, 150) + '...';
+                    sourceContent.textContent = preview;
+
+                    sourceItem.appendChild(sourceHeader);
+                    sourceItem.appendChild(sourceContent);
+                    sourcesDiv.appendChild(sourceItem);
+                });
+
+                contentDiv.appendChild(sourcesDiv);
+            }
+
+            messageDiv.appendChild(contentDiv);
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function showError(message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error';
+            errorDiv.textContent = '❌ ' + message;
+
+            const container = document.querySelector('.container');
+            container.insertBefore(errorDiv, chatContainer);
+
+            setTimeout(() => errorDiv.remove(), 5000);
+        }
+
+        // Auto-focus sur l'input au chargement
+        questionInput.focus();
+    </script>
+</body>
+</html>
