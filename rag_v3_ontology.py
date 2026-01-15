@@ -8,6 +8,7 @@ Différences avec RAG v2:
 - Enrichissement automatique des requêtes via l'ontologie
 - Ajout de termes sémantiquement liés issus de l'ontologie
 - Meilleure compréhension du contexte via les dimensions
+- Détection automatique des communes et filtrage ChromaDB
 
 Architecture:
 1. Query Enrichment: Enrichit la requête avec des termes de l'ontologie
@@ -27,6 +28,9 @@ import pandas as pd
 import chromadb
 import openai
 
+# Détection de communes
+from commune_detector import detect_commune
+
 # Imports des modules v2
 from rag_v2_improved import (
     ImprovedSemanticChunker,
@@ -37,6 +41,7 @@ from rag_v2_improved import (
     RetrievalResult,
     ImprovedPromptBuilder
 )
+from langchain_core.documents import Document
 
 # Imports des modules ontology
 from ontology_parser import OntologyParser
@@ -64,6 +69,7 @@ PRINCIPES:
 - Cite tes sources quand c'est pertinent
 - Distingue clairement données qualitatives et quantitatives
 - Si les données sont insuffisantes, indique-le explicitement
+- Ne force pas une analyse par commune si la question est générale ou conceptuelle
 - Réponds de manière concise et factuelle
 """
 
@@ -210,34 +216,75 @@ class RAGPipelineWithOntology:
 
     def _load_cache_if_exists(self):
         """
-        Charge le cache d'embeddings s'il existe (même cache que v2)
+        Charge automatiquement les documents depuis le cache pickle ou ChromaDB
         """
         cache_path = "embeddings_v2.pkl"
 
-        if not os.path.exists(cache_path):
-            print("Aucun cache trouve. Vous devrez appeler ingest_documents() pour indexer les documents.")
-            return
-
-        print(f"Chargement du cache depuis {cache_path}...")
+        # Vérifier si la collection ChromaDB a des documents
         try:
-            with open(cache_path, 'rb') as f:
-                cache_data = pickle.load(f)
+            collection_count = self.collection.count()
+            if collection_count > 0:
+                print(f"ChromaDB contient {collection_count} documents")
 
-            self.documents = cache_data.get('documents', [])
+                # Si on a le cache pickle, l'utiliser (plus rapide)
+                if os.path.exists(cache_path):
+                    print(f"Chargement des documents depuis le cache pickle...")
+                    try:
+                        with open(cache_path, 'rb') as f:
+                            cache_data = pickle.load(f)
 
-            if self.documents:
-                print(f"OK {len(self.documents)} documents charges depuis le cache")
+                        self.documents = cache_data.get('documents', [])
 
-                # Initialiser le hybrid retriever
-                print("Initialisation du retriever hybride depuis le cache...")
-                self.hybrid_retriever = HybridRetriever(
-                    self.collection,
-                    self.documents
-                )
-                print("OK Retriever hybride initialise")
+                        if self.documents:
+                            print(f"OK {len(self.documents)} documents charges depuis le cache")
+
+                            # Initialiser le hybrid retriever
+                            print("Initialisation du retriever hybride...")
+                            self.hybrid_retriever = HybridRetriever(
+                                self.collection,
+                                self.documents,
+                                dense_weight=0.6,
+                                sparse_weight=0.4
+                            )
+                            print("OK Retriever hybride initialise")
+                            return
+                        else:
+                            print("AVERTISSEMENT Cache pickle vide")
+                    except Exception as e:
+                        print(f"AVERTISSEMENT Erreur lors du chargement du cache pickle: {e}")
+
+                # Pas de cache pickle ou erreur - reconstruire depuis ChromaDB
+                print("Reconstruction des documents depuis ChromaDB...")
+                chroma_data = self.collection.get(include=['documents', 'metadatas'])
+
+                if chroma_data['documents']:
+                    # Reconstruire les objets Document
+                    self.documents = []
+                    for doc_text, metadata in zip(chroma_data['documents'], chroma_data['metadatas']):
+                        self.documents.append(Document(
+                            page_content=doc_text,
+                            metadata=metadata
+                        ))
+
+                    print(f"OK {len(self.documents)} documents reconstruits depuis ChromaDB")
+
+                    # Initialiser le hybrid retriever
+                    print("Initialisation du retriever hybride...")
+                    self.hybrid_retriever = HybridRetriever(
+                        self.collection,
+                        self.documents,
+                        dense_weight=0.6,
+                        sparse_weight=0.4
+                    )
+                    print("OK Retriever hybride initialise")
+                else:
+                    print("AVERTISSEMENT Aucun document trouve dans ChromaDB")
+            else:
+                print("Aucun document dans ChromaDB. Vous devrez appeler ingest_documents() pour indexer les documents.")
 
         except Exception as e:
-            print(f"ERREUR lors du chargement du cache : {e}")
+            print(f"AVERTISSEMENT Erreur lors de la verification de ChromaDB: {e}")
+            print("Vous devrez appeler ingest_documents() pour indexer les documents.")
 
     def query(self, question: str,
               k: int = 5,
@@ -262,7 +309,13 @@ class RAGPipelineWithOntology:
         if self.hybrid_retriever is None:
             raise ValueError("Le pipeline n'a pas ete initialise avec des documents. Appelez ingest_documents() d'abord.")
 
-        # 0. Enrichissement de la requête avec l'ontologie (NOUVEAU dans v3)
+        # 0. Détecter automatiquement la commune dans la question
+        detected_commune = detect_commune(question)
+        if detected_commune:
+            print(f"[AUTO-DETECT] Commune détectée: {detected_commune}")
+            commune_filter = detected_commune
+
+        # 1. Enrichissement de la requête avec l'ontologie (NOUVEAU dans v3)
         ontology_metadata = None
         query_to_use = question
 
@@ -273,15 +326,16 @@ class RAGPipelineWithOntology:
             ontology_metadata = enrichment_result["metadata"]
             print(f"  Dimensions: {enrichment_result['metadata']['dimension_labels']}")
 
-        # 1. Encoder la requête (enrichie)
+        # 2. Encoder la requête (enrichie)
         query_embedding = self.embed_model.encode_query(query_to_use)
 
-        # 2. Retrieval hybride
+        # 3. Retrieval hybride
         print("Retrieval hybride...")
         results = self.hybrid_retriever.retrieve(
             query_to_use,
             query_embedding,
-            k=k*2
+            k=k*2,
+            commune_filter=commune_filter  # Ajouter le filtre de commune
         )
 
         # 3. Reranking (optionnel)

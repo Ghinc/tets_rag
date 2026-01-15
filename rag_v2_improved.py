@@ -6,6 +6,7 @@ RAG v2 - Version améliorée avec:
 - Reranking avec cross-encoder
 - Dual-path pour données quantitatives
 - Prompt engineering amélioré
+- Détection automatique des communes et filtrage ChromaDB
 """
 
 import os
@@ -17,12 +18,20 @@ import numpy as np
 import pandas as pd
 from tqdm import tqdm
 
+from dotenv import load_dotenv
+
+# Charger les variables d'environnement depuis .env
+load_dotenv()
+
+# Détection de communes
+from commune_detector import detect_commune
+
 # Embeddings et modèles
 from sentence_transformers import SentenceTransformer, CrossEncoder
 
 # ChromaDB
 import chromadb
-from chromadb.config import Settings
+from chromadb.utils import embedding_functions
 
 # LangChain pour chunking et retrieval
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -218,7 +227,7 @@ class HybridRetriever:
         self.doc_map = {doc.metadata.get('id', i): doc for i, doc in enumerate(documents)}
 
     def retrieve(self, query: str, query_embedding: np.ndarray,
-                k: int = 10) -> List[RetrievalResult]:
+                k: int = 10, commune_filter: Optional[str] = None) -> List[RetrievalResult]:
         """
         Retrieval hybride avec fusion des scores
 
@@ -226,16 +235,24 @@ class HybridRetriever:
             query: Requête textuelle
             query_embedding: Embedding de la requête
             k: Nombre de résultats à retourner
+            commune_filter: Filtre par commune (optionnel)
 
         Returns:
             Liste de RetrievalResult triés par score
         """
         # 1. Recherche dense (ChromaDB)
-        dense_results = self.chroma_collection.query(
-            query_embeddings=[query_embedding.tolist()],
-            n_results=20,
-            include=["documents", "metadatas", "distances"]
-        )
+        query_params = {
+            "query_embeddings": [query_embedding.tolist()],
+            "n_results": 20,
+            "include": ["documents", "metadatas", "distances"]
+        }
+
+        # Ajouter filtre par commune si spécifié
+        if commune_filter:
+            query_params["where"] = {"nom": commune_filter}
+            print(f"[FILTRE] Recherche limitée à la commune: {commune_filter}")
+
+        dense_results = self.chroma_collection.query(**query_params)
 
         # 2. Recherche sparse (BM25)
         sparse_docs = self.bm25_retriever.invoke(query)
@@ -464,6 +481,7 @@ PRINCIPES:
 - Cite tes sources quand c'est pertinent
 - Distingue clairement données qualitatives et quantitatives
 - Si les données sont insuffisantes, indique-le explicitement
+- Ne force pas une analyse par commune si la question est générale ou conceptuelle
 - Réponds de manière concise et factuelle
 """
 
@@ -543,8 +561,8 @@ class ImprovedRAGPipeline:
     def __init__(self,
                  chroma_path: str = "./chroma_v2",
                  collection_name: str = "communes_corses_v2",
-                 embedding_model: str = "dangvantuan/sentence-camembert-large",
-                 reranker_model: str = "antoinelouis/crossencoder-camembert-base-mmarcoFR",
+                 embedding_model: str = "BAAI/bge-m3",
+                 reranker_model: str = "BAAI/bge-reranker-v2-m3",
                  llm_model: str = "gpt-3.5-turbo",
                  openai_api_key: Optional[str] = None,
                  quant_data_path: str = "df_mean_by_commune.csv"):
@@ -565,6 +583,9 @@ class ImprovedRAGPipeline:
 
         # ChromaDB
         self.chroma_client = chromadb.PersistentClient(path=chroma_path)
+
+        # Récupérer ou créer la collection
+        # Note: On ne spécifie pas d'embedding function ici car on gère les embeddings manuellement
         self.collection = self.chroma_client.get_or_create_collection(
             name=collection_name,
             metadata={"hnsw:space": "cosine"}  # Cosine similarity
@@ -579,38 +600,74 @@ class ImprovedRAGPipeline:
 
     def _load_cache_if_exists(self):
         """
-        Charge automatiquement le cache d'embeddings s'il existe
+        Charge automatiquement les documents depuis le cache pickle ou ChromaDB
         """
         cache_path = "embeddings_v2.pkl"
 
-        if not os.path.exists(cache_path):
-            print("Aucun cache trouvé. Vous devrez appeler ingest_documents() pour indexer les documents.")
-            return
-
-        print(f"Chargement du cache depuis {cache_path}...")
+        # Vérifier si la collection ChromaDB a des documents
         try:
-            with open(cache_path, 'rb') as f:
-                cache_data = pickle.load(f)
+            collection_count = self.collection.count()
+            if collection_count > 0:
+                print(f"ChromaDB contient {collection_count} documents")
 
-            self.documents = cache_data.get('documents', [])
+                # Si on a le cache pickle, l'utiliser (plus rapide)
+                if os.path.exists(cache_path):
+                    print(f"Chargement des documents depuis le cache pickle...")
+                    try:
+                        with open(cache_path, 'rb') as f:
+                            cache_data = pickle.load(f)
 
-            if self.documents:
-                print(f"OK {len(self.documents)} documents charges depuis le cache")
+                        self.documents = cache_data.get('documents', [])
 
-                # Initialiser le hybrid retriever
-                print("Initialisation du retriever hybride depuis le cache...")
-                self.hybrid_retriever = HybridRetriever(
-                    self.collection,
-                    self.documents,
-                    dense_weight=0.6,
-                    sparse_weight=0.4
-                )
-                print("OK Retriever hybride initialise")
+                        if self.documents:
+                            print(f"OK {len(self.documents)} documents charges depuis le cache")
+
+                            # Initialiser le hybrid retriever
+                            print("Initialisation du retriever hybride...")
+                            self.hybrid_retriever = HybridRetriever(
+                                self.collection,
+                                self.documents,
+                                dense_weight=0.6,
+                                sparse_weight=0.4
+                            )
+                            print("OK Retriever hybride initialise")
+                            return
+                        else:
+                            print("AVERTISSEMENT Cache pickle vide")
+                    except Exception as e:
+                        print(f"AVERTISSEMENT Erreur lors du chargement du cache pickle: {e}")
+
+                # Pas de cache pickle ou erreur - reconstruire depuis ChromaDB
+                print("Reconstruction des documents depuis ChromaDB...")
+                chroma_data = self.collection.get(include=['documents', 'metadatas'])
+
+                if chroma_data['documents']:
+                    # Reconstruire les objets Document
+                    self.documents = []
+                    for doc_text, metadata in zip(chroma_data['documents'], chroma_data['metadatas']):
+                        self.documents.append(Document(
+                            page_content=doc_text,
+                            metadata=metadata
+                        ))
+
+                    print(f"OK {len(self.documents)} documents reconstruits depuis ChromaDB")
+
+                    # Initialiser le hybrid retriever
+                    print("Initialisation du retriever hybride...")
+                    self.hybrid_retriever = HybridRetriever(
+                        self.collection,
+                        self.documents,
+                        dense_weight=0.6,
+                        sparse_weight=0.4
+                    )
+                    print("OK Retriever hybride initialise")
+                else:
+                    print("AVERTISSEMENT Aucun document trouve dans ChromaDB")
             else:
-                print("AVERTISSEMENT Cache vide, aucun document trouve")
+                print("Aucun document dans ChromaDB. Vous devrez appeler ingest_documents() pour indexer les documents.")
 
         except Exception as e:
-            print(f"AVERTISSEMENT Erreur lors du chargement du cache: {e}")
+            print(f"AVERTISSEMENT Erreur lors de la verification de ChromaDB: {e}")
             print("Vous devrez appeler ingest_documents() pour indexer les documents.")
 
     def ingest_documents(self, texts: List[str], metadatas: List[Dict],
@@ -714,15 +771,22 @@ class ImprovedRAGPipeline:
         if self.hybrid_retriever is None:
             raise ValueError("Le pipeline n'a pas été initialisé avec des documents. Appelez ingest_documents() d'abord.")
 
-        # 1. Encoder la requête
+        # 1. Détecter automatiquement la commune dans la question
+        detected_commune = detect_commune(question)
+        if detected_commune:
+            print(f"[AUTO-DETECT] Commune détectée: {detected_commune}")
+            commune_filter = detected_commune
+
+        # 2. Encoder la requête
         query_embedding = self.embed_model.encode_query(question)
 
-        # 2. Retrieval hybride
+        # 3. Retrieval hybride
         print("Retrieval hybride...")
         results = self.hybrid_retriever.retrieve(
             question,
             query_embedding,
-            k=k*2  # Récupérer plus pour le reranking
+            k=k*2,  # Récupérer plus pour le reranking
+            commune_filter=commune_filter  # Ajouter le filtre de commune
         )
 
         # 3. Reranking (optionnel)
@@ -870,15 +934,15 @@ if __name__ == "__main__":
     import os
     OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
     if not OPENAI_API_KEY:
-        raise ValueError("❌ Clé API OpenAI non trouvée. Définissez la variable d'environnement OPENAI_API_KEY")
+        raise ValueError("[ERREUR] Clé API OpenAI non trouvée. Définissez la variable d'environnement OPENAI_API_KEY")
 
     # Initialiser le pipeline
     print("Initialisation du pipeline RAG amélioré...")
     rag = ImprovedRAGPipeline(
         chroma_path="./chroma_v2",
         collection_name="communes_corses_v2",
-        embedding_model="dangvantuan/sentence-camembert-large",  # Français optimisé
-        reranker_model="antoinelouis/crossencoder-camembert-base-mmarcoFR",
+        embedding_model="BAAI/bge-m3",  # État de l'art multilingue
+        reranker_model="BAAI/bge-reranker-v2-m3",
         llm_model="gpt-3.5-turbo",
         openai_api_key=OPENAI_API_KEY
     )

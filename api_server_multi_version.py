@@ -29,6 +29,34 @@ from rag_v1_class import BasicRAGPipeline, RetrievalResult as RetrievalResult_v1
 from rag_v2_boosted import ImprovedRAGPipeline, RetrievalResult as RetrievalResult_v2
 from rag_v3_ontology import RAGPipelineWithOntology, RetrievalResult as RetrievalResult_v3
 from rag_v4_cross_analysis import ImprovedRAGPipeline as CrossAnalysisRAGPipeline, RetrievalResult as RetrievalResult_v4
+from rag_v5_graphrag_neo4j import GraphRAGPipeline
+
+# Import optionnel de v6 (nécessite torch_geometric)
+try:
+    from rag_v6_gretriever import GRetrieverRAGPipeline
+    V6_AVAILABLE = True
+except ImportError:
+    print("AVERTISSEMENT: torch_geometric non installé, RAG v6 désactivé")
+    GRetrieverRAGPipeline = None
+    V6_AVAILABLE = False
+
+# Import optionnel de v7 (nécessite llama-index, graphes optionnels)
+try:
+    from rag_v7_llamaindex import LlamaIndexRAGPipeline
+    V7_AVAILABLE = True
+except ImportError as e:
+    print(f"AVERTISSEMENT: LlamaIndex non installé, RAG v7 désactivé ({e})")
+    LlamaIndexRAGPipeline = None
+    V7_AVAILABLE = False
+
+# Import optionnel de v8 (nécessite llama-index + graphes OBLIGATOIRES)
+try:
+    from rag_v8_llamaindex_full import LlamaIndexRAGPipeline as LlamaIndexRAGPipelineFull
+    V8_AVAILABLE = True
+except ImportError as e:
+    print(f"AVERTISSEMENT: LlamaIndex non installé, RAG v8 désactivé ({e})")
+    LlamaIndexRAGPipelineFull = None
+    V8_AVAILABLE = False
 
 # Charger les variables d'environnement
 load_dotenv()
@@ -38,13 +66,14 @@ load_dotenv()
 class QueryRequest(BaseModel):
     """Modèle de requête pour poser une question"""
     question: str = Field(..., description="Question à poser au chatbot", min_length=1)
-    rag_version: Literal["v1", "v2", "v3", "v4"] = Field("v2", description="Version du RAG à utiliser")
+    rag_version: Literal["v1", "v2", "v3", "v4", "v5", "v6", "v7", "v8"] = Field("v2", description="Version du RAG à utiliser")
     k: int = Field(5, description="Nombre de documents à récupérer", ge=1, le=20)
     use_reranking: bool = Field(True, description="Utiliser le reranking (v2/v3/v4 uniquement)")
     include_quantitative: bool = Field(True, description="Inclure les données quantitatives (v2/v3/v4 uniquement)")
     commune_filter: Optional[str] = Field(None, description="Filtrer par commune spécifique")
     use_ontology_enrichment: bool = Field(True, description="Utiliser l'enrichissement ontologique (v3 uniquement)")
     use_cross_analysis: bool = Field(True, description="Activer l'analyse croisée automatique (v4 uniquement)")
+    query_mode: Literal["router", "sub_question", "hybrid"] = Field("router", description="Mode de query pour v7/v8 (router/sub_question/hybrid)")
 
     model_config = ConfigDict(
         json_schema_extra={
@@ -83,6 +112,9 @@ class HealthResponse(BaseModel):
     rag_v2_initialized: bool = Field(..., description="RAG v2 initialisé")
     rag_v3_initialized: bool = Field(..., description="RAG v3 initialisé")
     rag_v4_initialized: bool = Field(..., description="RAG v4 initialisé")
+    rag_v5_initialized: bool = Field(..., description="RAG v5 initialisé")
+    rag_v6_initialized: bool = Field(..., description="RAG v6 initialisé")
+    rag_v7_initialized: bool = Field(..., description="RAG v7 initialisé")
     timestamp: str = Field(..., description="Horodatage du check")
     version: str = Field(..., description="Version de l'API")
 
@@ -102,7 +134,10 @@ rag_pipelines = {
     "v1": None,
     "v2": None,
     "v3": None,
-    "v4": None
+    "v4": None,
+    "v5": None,
+    "v6": None,
+    "v7": None
 }
 
 
@@ -150,8 +185,8 @@ def initialize_all_rags():
             collection_name="communes_corses_v2",
             quant_data_path="df_mean_by_commune.csv",
             llm_model="gpt-3.5-turbo",
-            embedding_model="intfloat/e5-base-v2",
-            reranker_model="antoinelouis/crossencoder-camembert-base-mmarcoFR"
+            embedding_model="BAAI/bge-m3",
+            reranker_model="BAAI/bge-reranker-v2-m3"
         )
         print("OK RAG v2 initialisé")
     except Exception as e:
@@ -168,8 +203,8 @@ def initialize_all_rags():
             collection_name="communes_corses_v2",
             quant_data_path="df_mean_by_commune.csv",
             llm_model="gpt-3.5-turbo",
-            embedding_model="intfloat/e5-base-v2",
-            reranker_model="antoinelouis/crossencoder-camembert-base-mmarcoFR"
+            embedding_model="BAAI/bge-m3",
+            reranker_model="BAAI/bge-reranker-v2-m3"
         )
         print("OK RAG v3 initialisé")
     except Exception as e:
@@ -177,7 +212,7 @@ def initialize_all_rags():
         rag_pipelines["v3"] = None
 
     # === INITIALISER RAG v4 ===
-    print("\n[4/4] Initialisation RAG v4...")
+    print("\n[4/6] Initialisation RAG v4...")
     try:
         rag_pipelines["v4"] = CrossAnalysisRAGPipeline(
             openai_api_key=openai_api_key,
@@ -185,13 +220,106 @@ def initialize_all_rags():
             collection_name="communes_corses_v2",
             quant_data_path="df_mean_by_commune.csv",
             llm_model="gpt-3.5-turbo",
-            embedding_model="intfloat/e5-base-v2",
-            reranker_model="antoinelouis/crossencoder-camembert-base-mmarcoFR"
+            embedding_model="BAAI/bge-m3",
+            reranker_model="BAAI/bge-reranker-v2-m3"
         )
         print("OK RAG v4 initialisé")
     except Exception as e:
         print(f"AVERTISSEMENT: RAG v4 non disponible: {e}")
         rag_pipelines["v4"] = None
+
+    # === INITIALISER RAG v5 (Graph-RAG Neo4j) ===
+    print("\n[5/6] Initialisation RAG v5 (Graph-RAG Neo4j)...")
+    try:
+        # Utiliser None si NEO4J_PASSWORD n'est pas défini (connexion sans auth)
+        neo4j_password = os.getenv("NEO4J_PASSWORD", None)
+        if neo4j_password == "":
+            neo4j_password = None
+
+        rag_pipelines["v5"] = GraphRAGPipeline(
+            neo4j_uri="bolt://localhost:7687",
+            neo4j_user="neo4j",
+            neo4j_password=neo4j_password,
+            chroma_path="./chroma_v2/",
+            collection_name="communes_corses_v2",
+            embedding_model="BAAI/bge-m3",
+            reranker_model="BAAI/bge-reranker-v2-m3",
+            llm_model="gpt-3.5-turbo",
+            openai_api_key=openai_api_key,
+            ontology_path="ontology_be_2010_bilingue_fr_en.ttl"
+        )
+        print("OK RAG v5 initialisé")
+    except Exception as e:
+        print(f"AVERTISSEMENT: RAG v5 non disponible: {e}")
+        rag_pipelines["v5"] = None
+
+    # === INITIALISER RAG v6 (G-Retriever GNN) ===
+    print("\n[6/6] Initialisation RAG v6 (G-Retriever)...")
+    if not V6_AVAILABLE:
+        print("AVERTISSEMENT: RAG v6 non disponible (torch_geometric manquant)")
+        rag_pipelines["v6"] = None
+    else:
+        try:
+            # Utiliser None si NEO4J_PASSWORD n'est pas défini (connexion sans auth)
+            neo4j_password = os.getenv("NEO4J_PASSWORD", None)
+            if neo4j_password == "":
+                neo4j_password = None
+
+            rag_pipelines["v6"] = GRetrieverRAGPipeline(
+                neo4j_uri="bolt://localhost:7687",
+                neo4j_user="neo4j",
+                neo4j_password=neo4j_password,
+                openai_api_key=openai_api_key
+            )
+            print("OK RAG v6 initialisé")
+        except Exception as e:
+            print(f"AVERTISSEMENT: RAG v6 non disponible: {e}")
+            rag_pipelines["v6"] = None
+
+    # [7/8] Initialisation RAG v7 (LlamaIndex - graphes optionnels)
+    print("\n[7/8] Initialisation RAG v7 (LlamaIndex - graphes optionnels)...")
+    if not V7_AVAILABLE:
+        print("AVERTISSEMENT: RAG v7 non disponible (llama-index manquant)")
+        rag_pipelines["v7"] = None
+    else:
+        try:
+            rag_pipelines["v7"] = LlamaIndexRAGPipeline(
+                openai_api_key=openai_api_key,
+                chroma_path="./chroma_v2",
+                collection_name="communes_corses_v2",
+                neo4j_uri="bolt://localhost:7687",
+                neo4j_user="neo4j",
+                neo4j_password=""
+            )
+            print("OK RAG v7 initialisé")
+        except Exception as e:
+            print(f"AVERTISSEMENT: RAG v7 non disponible: {e}")
+            import traceback
+            traceback.print_exc()
+            rag_pipelines["v7"] = None
+
+    # [8/8] Initialisation RAG v8 (LlamaIndex FULL - graphes OBLIGATOIRES)
+    print("\n[8/8] Initialisation RAG v8 (LlamaIndex FULL - graphes OBLIGATOIRES)...")
+    if not V8_AVAILABLE:
+        print("AVERTISSEMENT: RAG v8 non disponible (llama-index manquant)")
+        rag_pipelines["v8"] = None
+    else:
+        try:
+            rag_pipelines["v8"] = LlamaIndexRAGPipelineFull(
+                openai_api_key=openai_api_key,
+                chroma_path="./chroma_v2",
+                collection_name="communes_corses_v2",
+                neo4j_uri="bolt://localhost:7687",
+                neo4j_user="neo4j",
+                neo4j_password=""
+            )
+            print("OK RAG v8 initialisé")
+        except Exception as e:
+            print(f"AVERTISSEMENT: RAG v8 non disponible: {e}")
+            print("  Note: v8 nécessite APOC Extended installé dans Neo4j")
+            import traceback
+            traceback.print_exc()
+            rag_pipelines["v8"] = None
 
     # Résumé
     print("\n" + "="*60)
@@ -265,6 +393,9 @@ async def health_check():
         rag_v2_initialized=rag_pipelines["v2"] is not None,
         rag_v3_initialized=rag_pipelines["v3"] is not None,
         rag_v4_initialized=rag_pipelines["v4"] is not None,
+        rag_v5_initialized=rag_pipelines["v5"] is not None,
+        rag_v6_initialized=rag_pipelines["v6"] is not None,
+        rag_v7_initialized=rag_pipelines["v7"] is not None,
         timestamp=datetime.now().isoformat(),
         version="2.0.0"
     )
@@ -326,6 +457,62 @@ async def get_versions():
                 "Analyse croisée quantitatif/qualitatif",
                 "Diversité de sources garantie",
                 "Synthèse multi-perspectives"
+            ]
+        ),
+        VersionInfo(
+            version="v5",
+            name="Graph-RAG avec Neo4j",
+            description="RAG avancé avec graphe de connaissances Neo4j",
+            available=rag_pipelines["v5"] is not None,
+            features=[
+                "Graphe de connaissances Neo4j",
+                "Retrieval hybride (Vector + Graph)",
+                "Embeddings BGE-M3 état de l'art",
+                "Enrichissement ontologique",
+                "Raisonnement sur graphe"
+            ]
+        ),
+        VersionInfo(
+            version="v6",
+            name="G-Retriever (GNN)",
+            description="v5 + Graph Neural Networks pour retrieval avancé",
+            available=rag_pipelines["v6"] is not None,
+            features=[
+                "Toutes les fonctionnalités v5",
+                "Graph Neural Networks (GraphSAGE)",
+                "Embeddings de graphe appris",
+                "Retrieval basé sur la structure",
+                "Performance maximale"
+            ]
+        ),
+        VersionInfo(
+            version="v7",
+            name="LlamaIndex Pipeline (graphes optionnels)",
+            description="Framework LlamaIndex avec routing intelligent - fonctionne sans APOC Extended",
+            available=rag_pipelines["v7"] is not None,
+            features=[
+                "Framework LlamaIndex complet",
+                "3 modes: Router / Sub-question / Hybrid",
+                "Graphes Neo4j optionnels (fallback vector-only)",
+                "Fonctionne sans APOC Extended",
+                "Fusion pondérée vector+graph (0.4/0.6) si graphe dispo",
+                "Citations natives avec source_nodes",
+                "Code simplifié (~200 lignes vs 500+)"
+            ]
+        ),
+        VersionInfo(
+            version="v8",
+            name="LlamaIndex Pipeline FULL (graphes OBLIGATOIRES)",
+            description="Framework LlamaIndex complet avec PropertyGraphIndex Neo4j - NÉCESSITE APOC Extended",
+            available=rag_pipelines["v8"] is not None,
+            features=[
+                "Toutes les fonctionnalités v7",
+                "PropertyGraphIndex Neo4j OBLIGATOIRE",
+                "Routing automatique (LLM choisit vector ou graph)",
+                "Décomposition automatique questions complexes",
+                "Fusion pondérée vector+graph (0.4/0.6)",
+                "Exploitation complète du graphe de connaissances",
+                "NÉCESSITE: APOC Extended installé dans Neo4j"
             ]
         )
     ]
@@ -409,15 +596,65 @@ async def query_rag(request: QueryRequest):
                     commune_filter=request.commune_filter
                 )
 
-        # Convertir les résultats en format API
-        sources = [
-            Source(
-                content=result.text,
-                score=result.score,
-                metadata=result.metadata
+        elif request.rag_version == "v5":
+            # v5 : Graph-RAG avec Neo4j
+            answer, retrieval_results = rag.query(
+                question=request.question,
+                k=request.k,
+                use_graph=True,
+                use_reranking=request.use_reranking,
+                commune_filter=request.commune_filter
             )
-            for result in retrieval_results
-        ]
+
+        elif request.rag_version == "v6":
+            # v6 : G-Retriever avec GNN
+            answer, retrieval_results = rag.query(
+                question=request.question,
+                k=request.k,
+                use_gnn=True,
+                use_reranking=request.use_reranking,
+                commune_filter=request.commune_filter
+            )
+
+        elif request.rag_version == "v7":
+            # v7 : LlamaIndex avec 3 modes (router, sub_question, hybrid) - graphes optionnels
+            answer, retrieval_results = rag.query(
+                question=request.question,
+                mode=request.query_mode,  # router, sub_question, ou hybrid
+                commune_filter=request.commune_filter,
+                k=request.k
+            )
+
+        elif request.rag_version == "v8":
+            # v8 : LlamaIndex FULL avec 3 modes (router, sub_question, hybrid) - graphes OBLIGATOIRES
+            answer, retrieval_results = rag.query(
+                question=request.question,
+                mode=request.query_mode,  # router, sub_question, ou hybrid
+                commune_filter=request.commune_filter,
+                k=request.k
+            )
+
+        # Convertir les résultats en format API
+        if request.rag_version in ["v7", "v8"]:
+            # v7 retourne List[Dict] avec clés: content, score, metadata, source_type
+            sources = [
+                Source(
+                    content=result['content'],
+                    score=result['score'],
+                    metadata=result['metadata']
+                )
+                for result in retrieval_results
+            ]
+        else:
+            # v1-v6 retournent List[RetrievalResult]
+            sources = [
+                Source(
+                    content=result.text,
+                    score=result.score,
+                    metadata=result.metadata
+                )
+                for result in retrieval_results
+            ]
 
         # Construire la réponse
         response = QueryResponse(

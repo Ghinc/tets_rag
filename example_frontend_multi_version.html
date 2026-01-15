@@ -313,6 +313,15 @@
             border-radius: 5px;
             margin-left: 5px;
         }
+
+        .settings select {
+            padding: 5px 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            margin-left: 5px;
+            background: white;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -346,6 +355,14 @@
                 <input type="checkbox" id="includeQuant" checked>
                 Données quantitatives (v2/v3/v4)
             </label>
+            <label id="v7ModeLabel" style="display:none;">
+                Mode v7:
+                <select id="v7Mode">
+                    <option value="router">Router (auto)</option>
+                    <option value="sub_question">Sub-question</option>
+                    <option value="hybrid">Hybrid</option>
+                </select>
+            </label>
             <label>
                 Nb sources:
                 <input type="number" id="numSources" value="5" min="1" max="10">
@@ -355,11 +372,14 @@
         <div class="chat-container" id="chatContainer">
             <div class="message bot">
                 <div class="message-content">
-                    👋 Bonjour ! Choisissez une version du RAG ci-dessus, puis posez votre question.<br><br>
+                    Bonjour ! Choisissez une version du RAG ci-dessus, puis posez votre question.<br><br>
                     <strong>v1</strong> = Simple et rapide<br>
                     <strong>v2</strong> = Hybrid retrieval + Reranking<br>
                     <strong>v3</strong> = v2 + Ontologie sémantique<br>
-                    <strong>v4</strong> = v2 + Analyse croisée multi-sources
+                    <strong>v4</strong> = v2 + Analyse croisée multi-sources<br>
+                    <strong>v5</strong> = Graph-RAG avec Neo4j<br>
+                    <strong>v6</strong> = v5 + Graph Neural Networks (G-Retriever)<br>
+                    <strong>v7</strong> = LlamaIndex Pipeline (Router/Sub-question/Hybrid)
                 </div>
             </div>
         </div>
@@ -435,7 +455,16 @@
 
         function selectVersion(version) {
             selectedVersion = version;
-            loadVersions(); // Refresh l'affichage
+            // Refresh l'affichage localement sans recharger depuis le serveur
+            displayVersions(availableVersions);
+
+            // Afficher/cacher le sélecteur de mode v7
+            const v7ModeLabel = document.getElementById('v7ModeLabel');
+            if (version === 'v7') {
+                v7ModeLabel.style.display = 'inline-flex';
+            } else {
+                v7ModeLabel.style.display = 'none';
+            }
         }
 
         async function sendQuestion() {
@@ -471,6 +500,11 @@
                 use_ontology_enrichment: document.getElementById('useOntology').checked,
                 use_cross_analysis: document.getElementById('useCrossAnalysis').checked
             };
+
+            // Ajouter le mode v7 si applicable
+            if (selectedVersion === 'v7') {
+                params.query_mode = document.getElementById('v7Mode').value;
+            }
 
             try {
                 const response = await fetch(API_URL, {
@@ -533,32 +567,57 @@
                 sourcesDiv.className = 'sources';
                 sourcesDiv.innerHTML = '<strong>📚 Sources (' + data.sources.length + ') :</strong>';
 
-                data.sources.forEach((source, index) => {
+data.sources.forEach((source, index) => {
                     const sourceItem = document.createElement('div');
                     sourceItem.className = 'source-item';
 
                     const sourceHeader = document.createElement('div');
                     sourceHeader.className = 'source-header';
-                    const commune = source.metadata.commune || source.metadata.nom || 'N/A';
-                    sourceHeader.textContent = `${index + 1}. ${commune} (score: ${source.score.toFixed(3)})`;
+
+                    // Détection du type de source
+                    let headerText;
+                    if (source.metadata.source === 'gnn') {
+                        // Source du graphe de connaissances
+                        const nodeType = source.metadata.node_type || 'Node';
+                        const label = source.metadata.properties?.label || source.metadata.properties?.name || 'Unknown';
+                        headerText = `🔗 ${nodeType}: ${label}`;
+                    } else {
+                        // Source classique (commune)
+                        const commune = source.metadata.commune || source.metadata.nom || 'N/A';
+                        headerText = `${commune}`;
+                    }
+
+                    sourceHeader.textContent = `${index + 1}. ${headerText} (score: ${source.score.toFixed(3)})`;
                     sourceHeader.style.cursor = 'pointer';
 
                     const sourceContent = document.createElement('div');
                     sourceContent.className = 'source-content';
                     sourceContent.style.display = 'none'; // Caché par défaut
-                    sourceContent.textContent = source.content;
+
+                    // Contenu adapté au type de source
+                    if (source.metadata.source === 'gnn' && source.metadata.properties) {
+                        // Afficher les propriétés du nœud du graphe
+                        let propsHtml = '<strong>Propriétés du nœud :</strong><br>';
+                        for (const [key, value] of Object.entries(source.metadata.properties)) {
+                            propsHtml += `<em>${key}:</em> ${value}<br>`;
+                        }
+                        propsHtml += '<br><strong>Texte :</strong><br>' + source.content;
+                        sourceContent.innerHTML = propsHtml;
+                    } else {
+                        sourceContent.textContent = source.content;
+                    }
 
                     // Ajouter le comportement de clic pour déplier/replier
                     sourceHeader.onclick = () => {
                         if (sourceContent.style.display === 'none') {
                             sourceContent.style.display = 'block';
-                            sourceHeader.textContent = `▼ ${index + 1}. ${commune} (score: ${source.score.toFixed(3)})`;
+                            sourceHeader.textContent = `▼ ${index + 1}. ${headerText} (score: ${source.score.toFixed(3)})`;
                         } else {
                             sourceContent.style.display = 'none';
-                            sourceHeader.textContent = `▶ ${index + 1}. ${commune} (score: ${source.score.toFixed(3)})`;
+                            sourceHeader.textContent = `▶ ${index + 1}. ${headerText} (score: ${source.score.toFixed(3)})`;
                         }
                     };
-                    sourceHeader.textContent = `▶ ${index + 1}. ${commune} (score: ${source.score.toFixed(3)})`;
+                    sourceHeader.textContent = `▶ ${index + 1}. ${headerText} (score: ${source.score.toFixed(3)})`;
 
                     sourceItem.appendChild(sourceHeader);
                     sourceItem.appendChild(sourceContent);

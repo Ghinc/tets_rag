@@ -9,6 +9,7 @@ __pycache__/
 # Environnements virtuels
 .venv/
 venv/
+venv_graphrag/
 .conda/
 conda/
 
@@ -25,5 +26,14 @@ conda/
 *.pkl
 *.txt
 
+# Bases de données ChromaDB (volumineuses)
+chroma_txt/
+chroma_v2/
+*.sqlite3
+
 # Fichiers système VS Code
 .vscode/
+
+# Fichiers temporaires
+nul
+*.backup
