@@ -171,7 +171,7 @@ class FrenchEmbeddingModel:
         # Déterminer si le modèle nécessite des préfixes (famille e5)
         self.use_prefixes = 'e5' in model_name.lower()
 
-    def encode_documents(self, texts: List[str], batch_size: int = 128,
+    def encode_documents(self, texts: List[str], batch_size: int = 8,
                         show_progress: bool = True) -> np.ndarray:
         """
         Encode des documents en embeddings
@@ -892,6 +892,115 @@ def load_interview_data(directory_path: str) -> Tuple[List[str], List[Dict]]:
     return texts, metadatas
 
 
+def load_ontology_mapping(mapping_path: str = "source_ontology_mapping.json") -> Dict:
+    """
+    Charge le fichier de mapping entre sources et identifiants ontologie.
+    Ce fichier est généré par populate_communes.py
+
+    Args:
+        mapping_path: Chemin vers le fichier JSON de mapping
+
+    Returns:
+        Dictionnaire de mapping {source_key: {commune, insee_code, source_id, source_uri, type}}
+    """
+    import json
+
+    if not os.path.exists(mapping_path):
+        print(f"AVERTISSEMENT: Fichier de mapping non trouvé: {mapping_path}")
+        print("Exécutez 'python populate_communes.py' pour le générer.")
+        return {}
+
+    with open(mapping_path, 'r', encoding='utf-8') as f:
+        mapping = json.load(f)
+
+    print(f"Mapping ontologie chargé: {len(mapping.get('sources', {}))} entrées")
+    return mapping
+
+
+def enrich_metadata_with_ontology(metadata: Dict, ontology_mapping: Dict) -> Dict:
+    """
+    Enrichit les métadonnées d'un document avec les identifiants de l'ontologie.
+
+    Args:
+        metadata: Métadonnées originales du document
+        ontology_mapping: Mapping chargé par load_ontology_mapping()
+
+    Returns:
+        Métadonnées enrichies avec source_id, source_uri, insee_code
+    """
+    if not ontology_mapping or 'sources' not in ontology_mapping:
+        return metadata
+
+    sources = ontology_mapping['sources']
+    enriched = metadata.copy()
+
+    source_type = metadata.get('source', '')
+    commune = metadata.get('nom', metadata.get('commune', ''))
+    filename = metadata.get('filename', '')
+
+    # Déterminer la clé de mapping selon le type de source
+    mapping_key = None
+    source_info = None
+
+    if source_type == 'entretien':
+        # Pour les entretiens, chercher avec commune + num_entretien
+        num_entretien = metadata.get('num_entretien', '1')
+        mapping_key = f"interview_{commune}_{num_entretien}"
+        if mapping_key in sources:
+            source_info = sources[mapping_key].get('interview', {})
+
+    elif source_type == 'enquete' or source_type == 'verbatim':
+        # Pour les enquêtes/verbatims, chercher par fichier ou commune
+        if filename and filename in sources:
+            src = sources[filename]
+            # Déterminer si c'est survey ou verbatim
+            if source_type == 'enquete' or 'quantitative' in source_type.lower():
+                source_info = src.get('survey', {})
+            else:
+                source_info = src.get('verbatim', {})
+            enriched['insee_code'] = src.get('insee_code', '')
+        elif commune:
+            # Essayer avec commune.txt
+            fname = f"{commune}.txt"
+            if fname in sources:
+                src = sources[fname]
+                if source_type == 'enquete' or 'quantitative' in source_type.lower():
+                    source_info = src.get('survey', {})
+                else:
+                    source_info = src.get('verbatim', {})
+                enriched['insee_code'] = src.get('insee_code', '')
+
+    elif source_type == 'wikipedia':
+        # Pour Wikipedia, chercher avec wiki_{commune}
+        mapping_key = f"wiki_{commune}"
+        if mapping_key in sources:
+            source_info = sources[mapping_key].get('wiki', {})
+            enriched['insee_code'] = sources[mapping_key].get('insee_code', '')
+
+    # Ajouter les infos de l'ontologie si trouvées
+    if source_info:
+        enriched['ontology_source_id'] = source_info.get('source_id', '')
+        enriched['ontology_source_uri'] = source_info.get('source_uri', '')
+        enriched['ontology_source_type'] = source_info.get('type', '')
+
+    return enriched
+
+
+def enrich_all_metadatas(metadatas: List[Dict], ontology_mapping: Dict) -> List[Dict]:
+    """
+    Enrichit une liste de métadonnées avec les identifiants ontologie.
+    À utiliser avant d'appeler ingest_documents().
+
+    Args:
+        metadatas: Liste de métadonnées
+        ontology_mapping: Mapping chargé par load_ontology_mapping()
+
+    Returns:
+        Liste de métadonnées enrichies
+    """
+    return [enrich_metadata_with_ontology(m, ontology_mapping) for m in metadatas]
+
+
 def compare_with_baseline(question: str,
                          baseline_results: List[str],
                          improved_results: List[RetrievalResult]):
@@ -947,6 +1056,9 @@ if __name__ == "__main__":
         openai_api_key=OPENAI_API_KEY
     )
 
+    # Charger le mapping ontologie (généré par populate_communes.py)
+    ontology_mapping = load_ontology_mapping("source_ontology_mapping.json")
+
     # Charger et ingérer les données
     # Option 1: Depuis un répertoire d'entretiens
     # texts, metadatas = load_interview_data("./entretiens")
@@ -972,6 +1084,14 @@ if __name__ == "__main__":
         {'source': 'entretien', 'nom': 'Ajaccio', 'num_entretien': '2'},
         {'source': 'entretien', 'nom': 'Bastia', 'num_entretien': '1'}
     ]
+
+    # Enrichir les métadonnées avec les identifiants ontologie
+    # Cela ajoute: ontology_source_id, ontology_source_uri, insee_code
+    demo_metadatas = enrich_all_metadatas(demo_metadatas, ontology_mapping)
+
+    # Afficher un exemple de métadonnées enrichies
+    print("\nExemple de métadonnées enrichies avec ontologie:")
+    print(demo_metadatas[0])
 
     # Ingestion
     print("\n" + "="*80)

@@ -1,0 +1,193 @@
+{
+  "timestamp": "20260206_213208",
+  "questions_file": "questions_communes.json",
+  "nb_questions": 66,
+  "models": {
+    "OpenAI": "gpt-4.1-mini",
+    "Grok": "grok-3-mini-beta",
+    "Kimi": "kimi-k2-0905-preview",
+    "Claude": "claude-haiku-4-5-20251001",
+    "Mistral": "mistral-small-latest"
+  },
+  "judge_model": "mistral-large-latest",
+  "judgments": [
+    {
+      "evaluations": [
+        {
+          "id": "A",
+          "note": 8,
+          "justification": "Fidèle aux sources et pertinente, mais manque de nuance sur la représentativité limitée de l'échantillon. La clarté et la complétude sont bonnes, mais la réponse est légèrement trop synthétique."
+        },
+        {
+          "id": "B",
+          "note": 9.5,
+          "justification": "Excellente fidélité aux sources, pertinence et complétude. La réponse est bien structurée, nuancée (mention des limites de l'échantillon) et évite les généralisations. Un modèle du genre."
+        },
+        {
+          "id": "C",
+          "note": 8.5,
+          "justification": "Très bonne fidélité et pertinence, avec une structure claire. La nuance est présente, mais la réponse est un peu moins détaillée que la B sur les profils des répondants et les thèmes abordés."
+        },
+        {
+          "id": "D",
+          "note": 9,
+          "justification": "Réponse très complète, bien structurée et nuancée. La fidélité et la pertinence sont excellentes, avec une mise en forme visuelle qui améliore la clarté. Légèrement moins concise que la B."
+        },
+        {
+          "id": "E",
+          "note": 7.5,
+          "justification": "Fidèle et pertinente, mais moins complète et nuancée que les autres. La structure est simple et la réponse manque de détails sur les profils des répondants ou les limites méthodologiques."
+        }
+      ],
+      "classement": [
+        "B",
+        "D",
+        "C",
+        "A",
+        "E"
+      ],
+      "meilleure_reponse": "B",
+      "synthese": "La réponse idéale combine la rigueur méthodologique de la réponse B (mention explicite des limites de l'échantillon, détails sur les profils) avec la structure visuelle et la complétude de la réponse D. Elle doit souligner que le bien-être à Ajaccio est principalement associé aux relations sociales et familiales (Sources 1, 3, 4), à l'équilibre vie pro/vie perso (Source 2), et au logement comme préoccupation émergente (Source 5). Elle doit aussi insister sur le caractère non généralisable des résultats, vu l'échantillon restreint (5 verbatims, tranche d'âge 46-50 ans).",
+      "provider_mapping": {
+        "A": "OpenAI",
+        "B": "Grok",
+        "C": "Kimi",
+        "D": "Claude",
+        "E": "Mistral"
+      },
+      "error": null,
+      "providers_en_erreur": [],
+      "question": "Comment les habitants d'Ajaccio ressentent-ils le bien-être ?"
+    },
+    {
+      "evaluations": [
+        {
+          "id": "A",
+          "note": 9,
+          "justification": "Réponse fidèle et complète, exploitant bien les sources. Structure claire et nuances présentes (tension environnement/économie). Légère généralisation sur l'accessibilité financière (non explicitement citée dans toutes les sources)."
+        },
+        {
+          "id": "B",
+          "note": 10,
+          "justification": "Excellente fidélité aux sources, pertinence et complétude. Met en avant les limites de l'échantillon et évite les généralisations. Nuances bien intégrées (conflit environnement/économie, problématique émergente du logement)."
+        },
+        {
+          "id": "C",
+          "note": 8,
+          "justification": "Bonne fidélité et pertinence, mais moins détaillée que B. La nuance sur les tensions économiques est présente, mais la structure est moins explicite. Mention utile des limites de l'échantillon."
+        },
+        {
+          "id": "D",
+          "note": 9,
+          "justification": "Très structurée et claire, avec une bonne exploitation des sources. Nuances bien intégrées (tension environnement/économie, problématique émergente). Légère redondance dans la présentation des profils."
+        },
+        {
+          "id": "E",
+          "note": 7,
+          "justification": "Fidèle et pertinente, mais manque de nuances (pas de mention des tensions économiques ou de la problématique émergente du logement). Structure simple et moins détaillée que les autres réponses."
+        }
+      ],
+      "classement": [
+        "B",
+        "D",
+        "A",
+        "C",
+        "E"
+      ],
+      "meilleure_reponse": "B",
+      "synthese": "La réponse idéale combine la rigueur de B (mention des limites de l'échantillon, nuances sur les tensions économiques) avec la structure claire et détaillée de D. Elle doit souligner les préoccupations clés (logement, services de proximité, environnement) tout en précisant leur caractère émergent ou central, et éviter les généralisations en rappelant le profil des répondants. La tension entre environnement et réalités économiques doit être mise en avant comme un élément clé de nuance.",
+      "provider_mapping": {
+        "A": "OpenAI",
+        "B": "Grok",
+        "C": "Kimi",
+        "D": "Claude",
+        "E": "Mistral"
+      },
+      "error": null,
+      "providers_en_erreur": [],
+      "question": "Quelles sont les préoccupations des habitants d'Ajaccio vis-à-vis de leur qualité de vie ?"
+    }
+  ],
+  "results_summary": [
+    {
+      "provider": "OpenAI",
+      "model": "gpt-4.1-mini",
+      "question": "Comment les habitants d'Ajaccio ressentent-ils le bien-être ?",
+      "answer": "Les habitants d'Ajaccio associent le bien-être principalement à la qualité des relations sociales et familiales, qui sont perçues comme un pilier essentiel (Sources 1, 3, 4). Ils valorisent également l'équilibre entre vie professionnelle et vie personnelle, notamment le temps passé en nature pour se ressourcer (Source 2). Le logement est une préoccupation émergente, bien que moins centrale dans la définition du bien-être (Source 5).",
+      "time_seconds": 4.31,
+      "error": false
+    },
+    {
+      "provider": "Grok",
+      "model": "grok-3-mini-beta",
+      "question": "Comment les habitants d'Ajaccio ressentent-ils le bien-être ?",
+      "answer": "D'après les verbatims fournis, les habitants d'Ajaccio expriment le bien-être de manière principalement positive, en soulignant les aspects suivants :\n\n- **Importance des relations et de la communauté** : Trois personnes (une femme de 50 ans fonctionnaire, un homme de 46 ans cadre, et une femme de 48 ans fonctionnaire) indiquent que le bien-être est étroitement lié à la vie sociale, familiale et communautaire, la décrivant comme un pilier essentiel au bonheur et à l'épanouissement.\n\n- **Équilibre entre vie professionnelle et personnelle** : Une femme de 46 ans salariée mentionne que le bien-être découle d'un bon ratio travail-vie personnelle, en permettant de profiter de la nature environnante pour se ressourcer et être plus efficace.\n\n- **Préoccupations liées au logement** : Un homme de 46 ans travailleur indépendant évoque le logement comme une nouvelle problématique, ce qui pourrait potentiellement affecter le bien-être, bien que le verbatim soit incomplet et ne précise pas l'impact direct.\n\nCes observations sont basées sur un échantillon limité de cinq verbatims, tous provenant d'adultes âgés de 46 à 50 ans à Ajaccio. Les données ne couvrent pas d'autres groupes démographiques ou thèmes, ce qui limite une analyse plus exhaustive.",
+      "time_seconds": 12.1,
+      "error": false
+    },
+    {
+      "provider": "Kimi",
+      "model": "kimi-k2-0905-preview",
+      "question": "Comment les habitants d'Ajaccio ressentent-ils le bien-être ?",
+      "answer": "D'après les verbatims d'habitants d'Ajaccio, le bien-être est ressenti principalement à travers :\n\n1. **Les relations sociales et familiales** : Les liens avec la famille, les amis et la communauté sont centraux (Sources 1, 3, 4). Les habitants soulignent que le bonheur passe par ces relations.\n\n2. **L'équilibre vie professionnelle/vie personnelle** : Le bien-être est associé à la possibilité de profiter de la nature environnante pour s'aérer et être plus efficace au travail (Source 2).\n\n3. **Le logement** : Apparaît comme une préoccupation émergente, sans être la priorité absolue (Source 5).\n\nDonnées insuffisantes : L'échantillon est limité (5 personnes), toutes à Ajaccio, avec une majorité de 46-50 ans. Les thèmes abordés sont fragmentaires.",
+      "time_seconds": 22.59,
+      "error": false
+    },
+    {
+      "provider": "Claude",
+      "model": "claude-haiku-4-5-20251001",
+      "question": "Comment les habitants d'Ajaccio ressentent-ils le bien-être ?",
+      "answer": "# Perception du bien-être chez les habitants d'Ajaccio\n\nSur la base des verbatims collectés, le bien-être des habitants d'Ajaccio repose sur **trois piliers principaux** :\n\n## 1. **Relations sociales et communauté** (4 mentions)\nLes habitants mettent l'accent sur l'importance de la **vie sociale et familiale**. Le bien-être est conçu collectivement à travers :\n- La famille, les amis, les voisins et les connaissances\n- Une vision du bien-être intrinsèquement liée à la communauté\n\n## 2. **Équilibre vie professionnelle/vie personnelle** (1 mention)\nPour les actifs, le bien-être passe par :\n- La capacité à équilibrer le temps professionnel et personnel\n- L'accès à la nature pour se ressourcer mentalement\n- L'amélioration de la productivité au travail\n\n## 3. **Logement** (1 mention)\nLe logement émerge comme une problématique croissante, bien que non systématiquement perçue comme prioritaire actuellement.\n\n## Profil dominant\nLes verbatims proviennent principalement de **femmes et hommes entre 46-50 ans** (adultes et jeunes seniors), en situation professionnelle stable (fonctionnaires, salariés, indépendants) à Ajaccio.\n\n**Note** : Les données fournies sont limitées (5 verbatims). Une analyse plus robuste nécessiterait un corpus plus large pour généraliser.",
+      "time_seconds": 4.91,
+      "error": false
+    },
+    {
+      "provider": "Mistral",
+      "model": "mistral-small-latest",
+      "question": "Comment les habitants d'Ajaccio ressentent-ils le bien-être ?",
+      "answer": "Les habitants d'Ajaccio semblent associer le bien-être à plusieurs facteurs :\n\n1. **Communauté et relations** : Les interactions sociales, la famille, les amis, les voisins et les connaissances sont considérés comme des piliers du bonheur et du bien-être (Sources 1, 3, 4).\n2. **Équilibre vie professionnelle/vie personnelle** : La capacité à équilibrer son temps entre travail et vie personnelle, ainsi que la possibilité de profiter de la nature environnante, est perçue comme essentielle pour le bien-être (Source 2).\n3. **Logement** : Bien que mentionné comme une problématique, le logement n'est pas directement lié au bien-être dans les verbatims fournis (Source 5).\n\nLes données sont insuffisantes pour généraliser ces sentiments à tous les habitants d'Ajaccio.",
+      "time_seconds": 1.77,
+      "error": false
+    },
+    {
+      "provider": "OpenAI",
+      "model": "gpt-4.1-mini",
+      "question": "Quelles sont les préoccupations des habitants d'Ajaccio vis-à-vis de leur qualité de vie ?",
+      "answer": "Les habitants d'Ajaccio expriment plusieurs préoccupations liées à leur qualité de vie :  \n- Le logement, notamment la propriété, le confort, la proximité des services et du travail, ainsi que l'accessibilité financière (Sources 1 et 2).  \n- La qualité et la variété des services de proximité, qui contribuent à un cadre de vie agréable (Source 3).  \n- L'environnement, incluant la qualité de l'air, de l'eau, la préservation de la nature, la biodiversité et l'aménagement du territoire, considéré comme déterminant pour la qualité de vie (Sources 4 et 5).  \n- Une tension entre l'importance vitale de l'environnement et les contraintes économiques mondiales (Source 5).",
+      "time_seconds": 3.12,
+      "error": false
+    },
+    {
+      "provider": "Grok",
+      "model": "grok-3-mini-beta",
+      "question": "Quelles sont les préoccupations des habitants d'Ajaccio vis-à-vis de leur qualité de vie ?",
+      "answer": "Basé sur les verbatims fournis, les préoccupations des habitants d'Ajaccio vis-à-vis de leur qualité de vie se concentrent sur les thèmes suivants, issus d'un échantillon limité (cinq sources) :\n\n- **Logement** : Des adultes (hommes de 46 et 47 ans) mentionnent des problèmes liés à l'accès au logement, son confort, sa proximité des services et du travail, ainsi que son accessibilité financière. Un d'entre eux note que ce n'est pas une priorité en temps normal mais devient une problématique.\n\n- **Services de proximité** : Un jeune senior (homme de 51 ans) souligne l'importance des services de qualité et variés pour un cadre de vie agréable.\n\n- **Environnement** : Une senior (femme de 70 ans) et un adulte (homme de 46 ans) expriment des préoccupations sur la qualité de l'air, de l'eau, la préservation de la nature, la biodiversité et l'aménagement du territoire. Ils soulignent que ces aspects sont vitaux pour la qualité de vie, mais le second note un conflit avec les réalités économiques.\n\nCes insights sont limités aux profils démographiques et thèmes indiqués ; les données ne couvrent pas d'autres aspects ou zones de la Corse. Si des données supplémentaires sont disponibles, une analyse plus complète pourrait être réalisée.",
+      "time_seconds": 11.23,
+      "error": false
+    },
+    {
+      "provider": "Kimi",
+      "model": "kimi-k2-0905-preview",
+      "question": "Quelles sont les préoccupations des habitants d'Ajaccio vis-à-vis de leur qualité de vie ?",
+      "answer": "D'après les verbatims d'habitants d'Ajaccio, les principales préoccupations concernant la qualité de vie sont :\n\n1. **Logement** : problème émergent pour certains (46 ans, indépendant), avec des critères importants comme la propriété, le confort, la proximité des services et du travail, et l'accessibilité financière (47 ans, cadre).\n\n2. **Services de proximité** : leur qualité et leur variété sont perçues comme essentielles à un cadre de vie agréable (51 ans, cadre).\n\n3. **Environnement** : préoccupation majeure pour les seniors (70 ans, retraitée) incluant la qualité de l'air et de l'eau, la préservation de la nature et la biodiversité. Les adultes (46 ans, cadre) soulignent aussi l'importance vitale de l'environnement, tout en notant les tensions avec la réalité économique.\n\n*Données limitées à 5 verbatims d'habitants d'Ajaccio, âgés de 46 à 70 ans.*",
+      "time_seconds": 23.62,
+      "error": false
+    },
+    {
+      "provider": "Claude",
+      "model": "claude-haiku-4-5-20251001",
+      "question": "Quelles sont les préoccupations des habitants d'Ajaccio vis-à-vis de leur qualité de vie ?",
+      "answer": "# Préoccupations des habitants d'Ajaccio concernant la qualité de vie\n\nSur la base des verbatims fournis, les habitants d'Ajaccio expriment les préoccupations suivantes :\n\n## 1. **Logement** (priorité émergente)\n- Accessibilité financière du logement\n- Confort et propriété\n- Proximité avec les services et le lieu de travail\n- *Note* : Un entrepreneur de 46 ans indique que le logement est devenu une problématique nouvelle, alors qu'il ne l'aurait pas prioritarisée auparavant.\n\n## 2. **Services de proximité**\n- Qualité et variété des services accessibles localement\n- Lien direct avec l'agrément du cadre de vie\n\n## 3. **Environnement** (préoccupation centrale mais contradictoire)\n- Qualité de l'air et de l'eau\n- Préservation de la nature et de la biodiversité\n- Aménagement du territoire\n- **Tension identifiée** : Un cadre de 46 ans souligne un conflit entre l'importance vitale de l'environnement et les réalités économiques mondiales qui le contredisent.\n\n## Profil des répondants\nLes préoccupations sont exprimées par des adultes et seniors, notamment des salariés cadres et un entrepreneur, reflétant des perspectives variées selon l'âge et le statut professionnel.",
+      "time_seconds": 3.77,
+      "error": false
+    },
+    {
+      "provider": "Mistral",
+      "model": "mistral-small-latest",
+      "question": "Quelles sont les préoccupations des habitants d'Ajaccio vis-à-vis de leur qualité de vie ?",
+      "answer": "Les préoccupations des habitants d'Ajaccio vis-à-vis de leur qualité de vie incluent :\n\n1. **Logement** :\n   - Problématiques de logement (Source 1).\n   - Importance de la propriété, du confort, de la proximité des services et du travail, ainsi que de l'accessibilité financière (Source 2).\n\n2. **Services de proximité** :\n   - Importance des services de proximité de qualité et variés pour un cadre de vie agréable (Source 3).\n\n3. **Environnement** :\n   - Qualité de l'air et de l'eau, préservation de la nature et de la biodiversité, aménagement du territoire (Source 4).\n   - L'environnement comme une question centrale et vitale (Source 5).\n\nCes préoccupations montrent que les habitants d'Ajaccio accordent une grande importance à leur cadre de vie, tant sur le plan du logement et des services que de l'environnement.",
+      "time_seconds": 2.13,
+      "error": false
+    }
+  ]
+}

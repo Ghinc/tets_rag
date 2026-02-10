@@ -368,10 +368,19 @@ rdfs:label "Ratio vie pro/vie perso"@fr .
 ################################################################
 
 :inseeCode a owl:DatatypeProperty ;
-    rdfs:domain :Municipality ;
     rdfs:range xsd:string ;
     rdfs:label "INSEE code"@en ;
-    rdfs:label "INSEE code"@fr .
+    rdfs:label "Code INSEE"@fr ;
+    rdfs:comment "Code INSEE de la commune concernée. Peut s'appliquer à une commune ou à une source de données."@fr ;
+    rdfs:comment "INSEE code of the relevant municipality. Can apply to a municipality or a data source."@en .
+
+:sourceId a owl:DatatypeProperty ;
+    rdfs:domain :DataSource ;
+    rdfs:range xsd:string ;
+    rdfs:label "Source identifier"@en ;
+    rdfs:label "Identifiant de source"@fr ;
+    rdfs:comment "Identifiant unique (UUID) de la source de données."@fr ;
+    rdfs:comment "Unique identifier (UUID) of the data source."@en .
 
 :officialName a owl:DatatypeProperty ;
     rdfs:domain :SpatialUnit ;
@@ -563,12 +572,44 @@ rdfs:label "Ratio vie pro/vie perso"@fr .
 :Interview a owl:Class ;
     rdfs:subClassOf :QualitativeSource ;
     rdfs:label "Interview transcript"@en ;
-    rdfs:label "Entretien transcript"@fr .
+    rdfs:label "Transcription d'entretien"@fr ;
+    rdfs:comment "Transcription of a semi-structured or unstructured interview with residents."@en ;
+    rdfs:comment "Transcription d'un entretien semi-directif ou non directif avec des habitants."@fr .
 
 :TextualDocument a owl:Class ;
     rdfs:subClassOf :QualitativeSource ;
     rdfs:label "Textual document"@en ;
-    rdfs:label "Textual document"@fr .
+    rdfs:label "Document textuel"@fr ;
+    rdfs:comment "Any textual document used as a qualitative source."@en ;
+    rdfs:comment "Tout document textuel utilisé comme source qualitative."@fr .
+
+:WikipediaArticle a owl:Class ;
+    rdfs:subClassOf :QualitativeSource ;
+    rdfs:label "Wikipedia article"@en ;
+    rdfs:label "Article Wikipedia"@fr ;
+    rdfs:comment "Wikipedia article providing contextual information about a municipality."@en ;
+    rdfs:comment "Article Wikipedia fournissant des informations contextuelles sur une commune."@fr .
+
+:Verbatim a owl:Class ;
+    rdfs:subClassOf :QualitativeSource ;
+    rdfs:label "Verbatim response"@en ;
+    rdfs:label "Verbatim"@fr ;
+    rdfs:comment "Open-ended textual response from a survey participant."@en ;
+    rdfs:comment "Réponse textuelle libre d'un participant à une enquête."@fr .
+
+:StatisticalDataset a owl:Class ;
+    rdfs:subClassOf :QuantitativeSource ;
+    rdfs:label "Statistical dataset"@en ;
+    rdfs:label "Jeu de données statistiques"@fr ;
+    rdfs:comment "Structured numerical data from official statistics (e.g., INSEE)."@en ;
+    rdfs:comment "Données numériques structurées issues de statistiques officielles (ex: INSEE)."@fr .
+
+:QuantitativeSurvey a owl:Class ;
+    rdfs:subClassOf :QuantitativeSource ;
+    rdfs:label "Quantitative survey"@en ;
+    rdfs:label "Enquête quantitative"@fr ;
+    rdfs:comment "Survey with closed-ended questions producing numerical scores or ratings."@en ;
+    rdfs:comment "Enquête avec questions fermées produisant des scores ou notes numériques."@fr .
 
 
 #################################################################

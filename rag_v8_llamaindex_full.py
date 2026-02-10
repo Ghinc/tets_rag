@@ -36,7 +36,7 @@ from llama_index.core.query_engine import (
     RetrieverQueryEngine
 )
 from llama_index.core.selectors import LLMSingleSelector
-from llama_index.core.tools import QueryEngineTool
+from llama_index.core.tools import QueryEngineTool, ToolMetadata
 from llama_index.core.postprocessor import SimilarityPostprocessor
 
 # LlamaIndex integrations
@@ -287,34 +287,41 @@ class LlamaIndexRAGPipeline:
             similarity_top_k=5
         )
 
-        # Tools pour le router avec descriptions
-        vector_tool = QueryEngineTool.from_defaults(
+        # Tools pour le router avec descriptions et noms explicites
+        vector_tool = QueryEngineTool(
             query_engine=vector_query_engine,
-            description=(
-                "Utile pour répondre à des questions sur les données statistiques, "
-                "scores de bien-être, verbatims d'entretiens, résultats de questionnaires, "
-                "et informations spécifiques aux communes corses. "
-                "Contient 5815 documents incluant fiches communes, entretiens qualitatifs, "
-                "verbatims et données quantitatives."
+            metadata=ToolMetadata(
+                name="vector_search",
+                description=(
+                    "Utile pour repondre a des questions sur les donnees statistiques, "
+                    "scores de bien-etre, verbatims d'entretiens, resultats de questionnaires, "
+                    "et informations specifiques aux communes corses. "
+                    "Contient 5815 documents incluant fiches communes, entretiens qualitatifs, "
+                    "verbatims et donnees quantitatives."
+                )
             )
         )
 
-        graph_tool = QueryEngineTool.from_defaults(
+        graph_tool = QueryEngineTool(
             query_engine=graph_query_engine,
-            description=(
-                "Utile pour répondre à des questions sur les concepts de bien-être, "
-                "les dimensions théoriques (santé, logement, éducation, etc.), "
-                "les indicateurs, et les relations sémantiques "
-                "de l'ontologie BE-2010 (Better Life Index). "
-                "Contient 116 nœuds d'ontologie avec relations."
+            metadata=ToolMetadata(
+                name="ontology_search",
+                description=(
+                    "Utile pour repondre a des questions sur les concepts de bien-etre, "
+                    "les dimensions theoriques (sante, logement, education, etc.), "
+                    "les indicateurs, et les relations semantiques "
+                    "de l'ontologie BE-2010 (Better Life Index). "
+                    "Contient 116 noeuds d'ontologie avec relations."
+                )
             )
         )
 
         # Router qui choisit automatiquement avec LLM
+        # verbose=False pour éviter les erreurs d'encodage charmap sur Windows
         router_query_engine = RouterQueryEngine(
             selector=LLMSingleSelector.from_defaults(),
             query_engine_tools=[vector_tool, graph_tool],
-            verbose=True
+            verbose=False
         )
 
         print("  [OK] RouterQueryEngine créé (vector+graph)")
@@ -325,28 +332,51 @@ class LlamaIndexRAGPipeline:
         Crée SubQuestionQueryEngine qui décompose
         automatiquement les questions complexes
 
+        Note: Utilise LLMQuestionGenerator (intégré) au lieu de OpenAIQuestionGenerator
+        (qui nécessite llama-index-question-gen-openai)
+
         Returns:
             SubQuestionQueryEngine
         """
+        # Import du question generator intégré
+        from llama_index.core.question_gen import LLMQuestionGenerator
+
         # Query engines individuels
         vector_query_engine = self.vector_index.as_query_engine(similarity_top_k=10)
         graph_query_engine = self.graph_index.as_query_engine(similarity_top_k=5)
 
-        # Tools pour le sub-question engine
-        vector_tool = QueryEngineTool.from_defaults(
+        # Tools pour le sub-question engine avec noms explicites
+        # IMPORTANT: Le nom du tool doit être explicite pour éviter les KeyError
+        vector_tool = QueryEngineTool(
             query_engine=vector_query_engine,
-            description="Données communes corses (statistiques, entretiens, verbatims)"
+            metadata=ToolMetadata(
+                name="vector_search",
+                description="Recherche dans les documents textuels des communes corses: statistiques, entretiens, verbatims, donnees demographiques"
+            )
         )
 
-        graph_tool = QueryEngineTool.from_defaults(
+        graph_tool = QueryEngineTool(
             query_engine=graph_query_engine,
-            description="Ontologie BE-2010 (concepts, dimensions, indicateurs)"
+            metadata=ToolMetadata(
+                name="ontology_search",
+                description="Recherche dans l'ontologie BE-2010: concepts de bien-etre, dimensions theoriques, indicateurs, relations semantiques"
+            )
         )
 
-        # Sub-question engine
-        sub_question_engine = SubQuestionQueryEngine.from_defaults(
+        # Créer le question generator avec le LLM configuré
+        question_gen = LLMQuestionGenerator.from_defaults(llm=Settings.llm)
+
+        # Response synthesizer
+        response_synthesizer = get_response_synthesizer()
+
+        # Sub-question engine créé manuellement (évite l'import de question-gen-openai)
+        # verbose=False et use_async=False pour éviter les erreurs Windows
+        sub_question_engine = SubQuestionQueryEngine(
+            question_gen=question_gen,
+            response_synthesizer=response_synthesizer,
             query_engine_tools=[vector_tool, graph_tool],
-            verbose=True
+            verbose=False,
+            use_async=False
         )
 
         print("  [OK] SubQuestionQueryEngine créé")

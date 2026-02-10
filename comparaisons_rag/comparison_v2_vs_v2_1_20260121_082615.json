@@ -1,0 +1,1101 @@
+[
+  {
+    "question": "Quels sont les différents types de bien-être ?",
+    "results": {
+      "RAG v2 (Hybrid+Reranking)": {
+        "success": true,
+        "answer": "Les différents types de bien-être mentionnés dans les extraits sont les suivants :\n1. Proximité de l'environnement et services de proximité (entretien Lozzi, Entretien 4)\n2. Santé (Extrait 2, Extrait 3)\n3. Sécurité financière (Extrait 3, Extrait 5)\n4. Espaces verts et parcs (Extrait 3)\n5. Cadre de vie environnemental (Extrait 3)\n6. Culture (Extrait 3)\n7. Vie sociale et moments en famille (Extrait 4)\n8. Équilibre entre vie professionnelle et personnelle (Extrait 4)\n\nIl est important de noter que ces types de bien-être peuvent varier en fonction des individus et de leurs priorités.",
+        "sources": [
+          {
+            "content": "---------------------\n\n### Commune : Lozzi | Entretien 4\n\nA : Moi j’aimerais vous parler de Lozzi, de son histoire et tout, et qu’est-ce que vous appelez bien-être ? \n\nQ : En fait le bien-être c’est différents critères que vous vous allez chercher, ou qui sont importants pour vous, pour vous sentir bien dans votre territoire. Y en a par exemple ça va être la proximité de l’environnement, ça va être les services de proximité etc.",
+            "score": 0.33628350496292114,
+            "metadata": {
+              "total_chunks": 8,
+              "type": "qualitatif",
+              "id": "entretien_unknown_327",
+              "source": "entretien",
+              "chunk_index": 0
+            }
+          },
+          {
+            "content": "La santé est la base du bien-être",
+            "score": 0.16737906634807587,
+            "metadata": {
+              "chunk_index": 76,
+              "id": "questionnaire_unknown_1096",
+              "type": "quanti",
+              "total_chunks": 373,
+              "source": "questionnaire"
+            }
+          },
+          {
+            "content": ", ce qui est primordial au bien être\", 'Services de proximité : variété, accessibilité à pied à partir du domicile, prix compétitifs, circuits courts', 'NSP', 'obtenir une sécurité financière permettant de se développer', 'il faut bien se soigner', \"pas assez d'espaces verts, de parcs\", \"Le cadre de vie sous l'angle environnemental\", 'Culture : permet de comprendre le monde et faire des choix éclairés', 'La santé sans quoi tout est plus difficile', 'Savoir être ailleurs qu’au travail'",
+            "score": 0.055090393871068954,
+            "metadata": {
+              "type": "qualitatif",
+              "chunk_index": 7,
+              "id": "verbatim_Bastia_2420",
+              "total_chunks": 14,
+              "nom": "Bastia",
+              "source": "verbatim"
+            }
+          },
+          {
+            "content": "La vie sociale et les moments de vie en famille sont très importants pour moi et constituent un pilier de mon bien-être                                                                                                                                                                                                      Savoir équilibré la vie professionnelle",
+            "score": 0.04139605164527893,
+            "metadata": {
+              "source": "questionnaire",
+              "type": "quanti",
+              "chunk_index": 124,
+              "id": "questionnaire_unknown_1803",
+              "total_chunks": 369
+            }
+          },
+          {
+            "content": ".                                                                                                                                   Les revenus sont importants en ce qu’ils permettent une sécurité financière et ainsi, participer au bien-être permettant de faire des activités comme le sport",
+            "score": 0.012647568248212337,
+            "metadata": {
+              "source": "questionnaire",
+              "type": "quanti",
+              "chunk_index": 203,
+              "id": "questionnaire_unknown_1223",
+              "total_chunks": 373
+            }
+          }
+        ],
+        "num_sources": 5,
+        "elapsed_time": 10.322806596755981,
+        "metadata": {
+          "k": 5,
+          "use_reranking": true,
+          "use_ontology": false,
+          "use_cross_analysis": false,
+          "include_quantitative": true,
+          "commune_filter": null,
+          "num_sources": 5
+        },
+        "context": "=== CONTEXTE PASSÉ AU LLM (V2) ===\nQuestion: Quels sont les différents types de bien-être ?\nDate: 2026-01-21T08:24:45.640005\nNombre de sources: 5\n\n=== SOURCES UTILISÉES ===\n\n--- Source 1 (score: 0.3363) ---\nMétadonnées: total_chunks: 8, type: qualitatif, id: entretien_unknown_327, source: entretien\nContenu:\n---------------------\n\n### Commune : Lozzi | Entretien 4\n\nA : Moi j’aimerais vous parler de Lozzi, de son histoire et tout, et qu’est-ce que vous appelez bien-être ? \n\nQ : En fait le bien-être c’est différents critères que vous vous allez chercher, ou qui sont importants pour vous, pour vous sentir bien dans votre territoire. Y en a par exemple ça va être la proximité de l’environnement, ça va être les services de proximité etc.\n\n--- Source 2 (score: 0.1674) ---\nMétadonnées: chunk_index: 76, id: questionnaire_unknown_1096, type: quanti, total_chunks: 373, source: questionnaire\nContenu:\nLa santé est la base du bien-être\n\n--- Source 3 (score: 0.0551) ---\nMétadonnées: type: qualitatif, chunk_index: 7, id: verbatim_Bastia_2420, total_chunks: 14, nom: Bastia, source: verbatim\nContenu:\n, ce qui est primordial au bien être\", 'Services de proximité : variété, accessibilité à pied à partir du domicile, prix compétitifs, circuits courts', 'NSP', 'obtenir une sécurité financière permettant de se développer', 'il faut bien se soigner', \"pas assez d'espaces verts, de parcs\", \"Le cadre de vie sous l'angle environnemental\", 'Culture : permet de comprendre le monde et faire des choix éclairés', 'La santé sans quoi tout est plus difficile', 'Savoir être ailleurs qu’au travail'\n\n--- Source 4 (score: 0.0414) ---\nMétadonnées: source: questionnaire, type: quanti, chunk_index: 124, id: questionnaire_unknown_1803, total_chunks: 369\nContenu:\nLa vie sociale et les moments de vie en famille sont très importants pour moi et constituent un pilier de mon bien-être                                                                                                                                                                                                      Savoir équilibré la vie professionnelle\n\n--- Source 5 (score: 0.0126) ---\nMétadonnées: source: questionnaire, type: quanti, chunk_index: 203, id: questionnaire_unknown_1223, total_chunks: 373\nContenu:\n.                                                                                                                                   Les revenus sont importants en ce qu’ils permettent une sécurité financière et ainsi, participer au bien-être permettant de faire des activités comme le sport\n\n=== FIN DU CONTEXTE ===",
+        "error": null
+      },
+      "RAG v2.1 (LlamaIndex)": {
+        "success": true,
+        "answer": "Les différents types de bien-être incluent la proximité de l'environnement, les services de proximité, l'accès à la culture, la qualité de l'environnement, l'épanouissement au travail, l'accès aux services facilement, la santé, le moral, l'accès à la mobilité, la sécurité financière, la possibilité de se soigner, les espaces verts, les parcs, les ondes positives liées à un lieu spécifique, le sentiment d'appartenance à un endroit, et la possibilité de faire famille dans un sens large.",
+        "sources": [
+          {
+            "content": "---------------------\n\n### Commune : Lozzi | Entretien 4\n\nA : Moi j’aimerais vous parler de Lozzi, de son histoire et tout, et qu’est-ce que vous appelez bien-être ? \n\nQ : En fait le bien-être c’est d...",
+            "score": 0.5484974384307861,
+            "metadata": {
+              "source": "entretien",
+              "type": "qualitatif",
+              "total_chunks": 8,
+              "chunk_index": 0,
+              "id": "entretien_unknown_327"
+            }
+          },
+          {
+            "content": ", ce qui est primordial au bien être\", 'Services de proximité : variété, accessibilité à pied à partir du domicile, prix compétitifs, circuits courts', 'NSP', 'obtenir une sécurité financière permetta...",
+            "score": 0.5155025720596313,
+            "metadata": {
+              "source": "verbatim",
+              "chunk_index": 7,
+              "type": "qualitatif",
+              "total_chunks": 14,
+              "nom": "Bastia",
+              "id": "verbatim_Bastia_2420"
+            }
+          },
+          {
+            "content": ". Moi le bien-être, c’est des ondes qui montent du sol, et qui me font du bien à l’endroit où je suis, et à l’endroit où je suis né, j’ai pas d’autres explications que ça. Je ne peux vivre qu’ici, ail...",
+            "score": 0.3656352162361145,
+            "metadata": {
+              "total_chunks": 21,
+              "source": "entretien",
+              "chunk_index": 18,
+              "type": "qualitatif",
+              "id": "entretien_unknown_357"
+            }
+          },
+          {
+            "content": ". Bien-être personnel = épanouissement au travail et inversement\", 'nan', 'nan', \"Il est important d'accéder à la culture (musée, théâtre, cinéma, ...) ; je suis favorable à la mise en place de pass c...",
+            "score": 0.2754570543766022,
+            "metadata": {
+              "chunk_index": 25,
+              "type": "qualitatif",
+              "total_chunks": 27,
+              "nom": "Ajaccio",
+              "source": "verbatim",
+              "id": "verbatim_Ajaccio_2393"
+            }
+          },
+          {
+            "content": "Q : Vous me parliez du coup de la culture, de cet accès ... de l’aspect social ... Est-ce qu’il y a d’autres critères de bien-être personnel qui vous semblent importants, vous m’avez parlé du cadre de...",
+            "score": 0.24483421444892883,
+            "metadata": {
+              "source": "entretien",
+              "type": "qualitatif",
+              "total_chunks": 13,
+              "chunk_index": 0,
+              "id": "entretien_unknown_269"
+            }
+          }
+        ],
+        "num_sources": 5,
+        "elapsed_time": 7.287038326263428,
+        "metadata": {
+          "k": 5,
+          "use_reranking": true,
+          "use_ontology": false,
+          "use_cross_analysis": false,
+          "include_quantitative": true,
+          "commune_filter": null,
+          "num_sources": 5
+        },
+        "context": "=== CONTEXTE PASSÉ AU LLM (V2.1) ===\nQuestion: Quels sont les différents types de bien-être ?\nDate: 2026-01-21T08:24:52.928062\nNombre de sources: 5\n\n=== SOURCES UTILISÉES ===\n\n--- Source 1 (score: 0.5485) ---\nMétadonnées: source: entretien, type: qualitatif, total_chunks: 8, id: entretien_unknown_327\nContenu:\n---------------------\n\n### Commune : Lozzi | Entretien 4\n\nA : Moi j’aimerais vous parler de Lozzi, de son histoire et tout, et qu’est-ce que vous appelez bien-être ? \n\nQ : En fait le bien-être c’est d...\n\n--- Source 2 (score: 0.5155) ---\nMétadonnées: source: verbatim, chunk_index: 7, type: qualitatif, total_chunks: 14, nom: Bastia, id: verbatim_Bastia_2420\nContenu:\n, ce qui est primordial au bien être\", 'Services de proximité : variété, accessibilité à pied à partir du domicile, prix compétitifs, circuits courts', 'NSP', 'obtenir une sécurité financière permetta...\n\n--- Source 3 (score: 0.3656) ---\nMétadonnées: total_chunks: 21, source: entretien, chunk_index: 18, type: qualitatif, id: entretien_unknown_357\nContenu:\n. Moi le bien-être, c’est des ondes qui montent du sol, et qui me font du bien à l’endroit où je suis, et à l’endroit où je suis né, j’ai pas d’autres explications que ça. Je ne peux vivre qu’ici, ail...\n\n--- Source 4 (score: 0.2755) ---\nMétadonnées: chunk_index: 25, type: qualitatif, total_chunks: 27, nom: Ajaccio, source: verbatim, id: verbatim_Ajaccio_2393\nContenu:\n. Bien-être personnel = épanouissement au travail et inversement\", 'nan', 'nan', \"Il est important d'accéder à la culture (musée, théâtre, cinéma, ...) ; je suis favorable à la mise en place de pass c...\n\n--- Source 5 (score: 0.2448) ---\nMétadonnées: source: entretien, type: qualitatif, total_chunks: 13, id: entretien_unknown_269\nContenu:\nQ : Vous me parliez du coup de la culture, de cet accès ... de l’aspect social ... Est-ce qu’il y a d’autres critères de bien-être personnel qui vous semblent importants, vous m’avez parlé du cadre de...\n\n=== FIN DU CONTEXTE ===",
+        "error": null
+      }
+    }
+  },
+  {
+    "question": "Comment est la qualité de vie à Ajaccio ?",
+    "results": {
+      "RAG v2 (Hybrid+Reranking)": {
+        "success": true,
+        "answer": "La qualité de vie à Ajaccio semble être perçue de manière contrastée par les habitants. Certains soulignent des aspects positifs tels que la nature, la beauté, l'environnement, la liberté et l'accessibilité. Cependant, des préoccupations sont également exprimées concernant des problèmes tels que les embouteillages, le manque de stationnement, la pollution, le manque d'espaces verts, la dégradation de l'environnement, le manque de personnel dans les centres hospitaliers, la sécurité dans les rues et le mauvais réseau de la Corse. \n\nLes données quantitatives indiquent un score de qualité de vie de 3.89/10 à Ajaccio, avec des scores spécifiques pour différents aspects de la vie quotidienne tels que les transports, l'éducation, la santé, la sécurité, le logement, les services locaux, la culture, le soutien social, et la vie associative. Le score global de confiance en l'avenir est de 2.75/10.\n\nEn résumé, la qualité de vie à Ajaccio semble être influencée par la beauté naturelle de la région mais aussi par des défis liés à l'environnement, à la santé, à la sécurité et aux infrastructures.",
+        "sources": [
+          {
+            "content": ", dont l'usage est compliqué à Ajaccio (embouteillages et manque de stationnement)\", 'Pour moi l’accès à l’éducation est la base fondamentale de la société et de la liberté des choix qu’on fera', 'Nature, beauté, respirer, contempler, besoin', 'Liberté, Accessibilité, Mobilité, Échanges', 'environnement : qualité de vie, harmonie, bien être', 'Nature, écologie, durable, montagne, mer', 'Préservation de la nature, bien être', 'Nécessité, prioritaire,Équilibré, durable, épanouissement'",
+            "score": 0.18782171607017517,
+            "metadata": {
+              "total_chunks": 27,
+              "chunk_index": 4,
+              "nom": "Ajaccio",
+              "id": "verbatim_Ajaccio_2372",
+              "source": "verbatim",
+              "type": "qualitatif"
+            }
+          },
+          {
+            "content": ", 'Le tourisme essentiel à notre économie', 'Santé', 'nature ombre fraicheur biodiversite energie', \"Important pour moi que le travail ne prenne pas plus d'importance que ma vie perso\", 'accessibilité des logements, prix et salubrité', \"a ajaccio beaucoup trop de pollution avec les bateaux de croisière, pas vraiment d'espaces verts, déjections canines en permanence\", \"L'importance d'un bon maillage en termes de transports pour proposer des alternatives à la voiture",
+            "score": 0.031303051859140396,
+            "metadata": {
+              "source": "verbatim",
+              "type": "qualitatif",
+              "nom": "Ajaccio",
+              "total_chunks": 27,
+              "chunk_index": 3,
+              "id": "verbatim_Ajaccio_2371"
+            }
+          },
+          {
+            "content": "================================================================================\nFICHE COMMUNE : AJACCIO\n================================================================================\n\n📊 SCORES GLOBAUX (échelle 0-10)\n────────────────────────────────────────────────────────────────────────────────\n• OppChoVec (Score global)    : 3.0/10\n• Opportunités                : 10.0/10\n• Choix                       : 1.27/10\n• Vécu                        : 4.8/10",
+            "score": 0.016083620488643646,
+            "metadata": {
+              "chunk_index": 0,
+              "type": "scores_detailles",
+              "nom": "Ajaccio",
+              "id": "fiche_commune_Ajaccio_18",
+              "filename": "Ajaccio.txt",
+              "total_chunks": 6,
+              "source": "fiche_commune"
+            }
+          },
+          {
+            "content": ", 'un cadre corse', \"l'environnement concerne tant la question de la qualité de l'air , de l'eau , la préservation de la nature , la biodiversité que l'aménagement du territoire et détermine la qualité de vie\", 'point à améliorer', 'logement : avoir du confort, quelque part où dormir est très important', 'La santé car si notre santé est fragile on a une qualité de vie réduite', 'Les centres hospitaliers manquent de personnel alors que tout le monde doit y avoir accès'",
+            "score": 0.002212726278230548,
+            "metadata": {
+              "chunk_index": 9,
+              "nom": "Ajaccio",
+              "id": "verbatim_Ajaccio_2377",
+              "source": "verbatim",
+              "type": "qualitatif",
+              "total_chunks": 27
+            }
+          },
+          {
+            "content": ", 'point à améliorer', \"vie pro/perso : faire la part des choses et pas tout mélanger permet d'avoir un équilibre\", 'La sécurité, si on sort dans la rue et qu’on se fait agresser, ce n’est plus de la qualité de vie', 'L’emploi justifie le salaire', 'Pour nous préserver le plus possible', \"La Corse souffre d'un très mauvais réseau\", \"environnement pour qualité de l'air\", 'bxbx', 'nan'",
+            "score": 0.0013802909525111318,
+            "metadata": {
+              "total_chunks": 27,
+              "id": "verbatim_Ajaccio_2386",
+              "type": "qualitatif",
+              "chunk_index": 18,
+              "nom": "Ajaccio",
+              "source": "verbatim"
+            }
+          }
+        ],
+        "num_sources": 5,
+        "elapsed_time": 8.531558513641357,
+        "metadata": {
+          "k": 5,
+          "use_reranking": true,
+          "use_ontology": false,
+          "use_cross_analysis": false,
+          "include_quantitative": true,
+          "commune_filter": null,
+          "num_sources": 5
+        },
+        "context": "=== CONTEXTE PASSÉ AU LLM (V2) ===\nQuestion: Comment est la qualité de vie à Ajaccio ?\nDate: 2026-01-21T08:25:01.458627\nNombre de sources: 5\n\n=== SOURCES UTILISÉES ===\n\n--- Source 1 (score: 0.1878) ---\nMétadonnées: total_chunks: 27, chunk_index: 4, nom: Ajaccio, id: verbatim_Ajaccio_2372, source: verbatim, type: qualitatif\nContenu:\n, dont l'usage est compliqué à Ajaccio (embouteillages et manque de stationnement)\", 'Pour moi l’accès à l’éducation est la base fondamentale de la société et de la liberté des choix qu’on fera', 'Nature, beauté, respirer, contempler, besoin', 'Liberté, Accessibilité, Mobilité, Échanges', 'environnement : qualité de vie, harmonie, bien être', 'Nature, écologie, durable, montagne, mer', 'Préservation de la nature, bien être', 'Nécessité, prioritaire,Équilibré, durable, épanouissement'\n\n--- Source 2 (score: 0.0313) ---\nMétadonnées: source: verbatim, type: qualitatif, nom: Ajaccio, total_chunks: 27, chunk_index: 3, id: verbatim_Ajaccio_2371\nContenu:\n, 'Le tourisme essentiel à notre économie', 'Santé', 'nature ombre fraicheur biodiversite energie', \"Important pour moi que le travail ne prenne pas plus d'importance que ma vie perso\", 'accessibilité des logements, prix et salubrité', \"a ajaccio beaucoup trop de pollution avec les bateaux de croisière, pas vraiment d'espaces verts, déjections canines en permanence\", \"L'importance d'un bon maillage en termes de transports pour proposer des alternatives à la voiture\n\n--- Source 3 (score: 0.0161) ---\nMétadonnées: type: scores_detailles, nom: Ajaccio, id: fiche_commune_Ajaccio_18, filename: Ajaccio.txt, total_chunks: 6, source: fiche_commune\nContenu:\n================================================================================\nFICHE COMMUNE : AJACCIO\n================================================================================\n\n📊 SCORES GLOBAUX (échelle 0-10)\n────────────────────────────────────────────────────────────────────────────────\n• OppChoVec (Score global)    : 3.0/10\n• Opportunités                : 10.0/10\n• Choix                       : 1.27/10\n• Vécu                        : 4.8/10\n\n--- Source 4 (score: 0.0022) ---\nMétadonnées: chunk_index: 9, nom: Ajaccio, id: verbatim_Ajaccio_2377, source: verbatim, type: qualitatif, total_chunks: 27\nContenu:\n, 'un cadre corse', \"l'environnement concerne tant la question de la qualité de l'air , de l'eau , la préservation de la nature , la biodiversité que l'aménagement du territoire et détermine la qualité de vie\", 'point à améliorer', 'logement : avoir du confort, quelque part où dormir est très important', 'La santé car si notre santé est fragile on a une qualité de vie réduite', 'Les centres hospitaliers manquent de personnel alors que tout le monde doit y avoir accès'\n\n--- Source 5 (score: 0.0014) ---\nMétadonnées: total_chunks: 27, id: verbatim_Ajaccio_2386, type: qualitatif, chunk_index: 18, nom: Ajaccio, source: verbatim\nContenu:\n, 'point à améliorer', \"vie pro/perso : faire la part des choses et pas tout mélanger permet d'avoir un équilibre\", 'La sécurité, si on sort dans la rue et qu’on se fait agresser, ce n’est plus de la qualité de vie', 'L’emploi justifie le salaire', 'Pour nous préserver le plus possible', \"La Corse souffre d'un très mauvais réseau\", \"environnement pour qualité de l'air\", 'bxbx', 'nan'\n\n=== FIN DU CONTEXTE ===",
+        "error": null
+      },
+      "RAG v2.1 (LlamaIndex)": {
+        "success": true,
+        "answer": "La qualité de vie à Ajaccio est considérée comme importante par les habitants. Certains soulignent que malgré des embouteillages et des difficultés de stationnement, la vie quotidienne reste agréable. De plus, la présence d'un environnement de qualité, avec des paysages magnifiques et de l'air non pollué, contribue à rendre Ajaccio un endroit où il fait bon vivre.",
+        "sources": [
+          {
+            "content": "Q : Donc le cadre de vie, c'est un des facteurs … \n\nA : C'est le plus important.  \n\nQ : Et du coup vous habitez sur Ajaccio, vous travaillez sur Porticcio, le territoire que vous pratiquez au quotidie...",
+            "score": 0.4243602752685547,
+            "metadata": {
+              "type": "qualitatif",
+              "total_chunks": 3,
+              "chunk_index": 2,
+              "source": "entretien",
+              "id": "entretien_unknown_692"
+            }
+          },
+          {
+            "content": "208 209 Femme  53                          Salarié(e) – Employé(e)                                     Ajaccio                                        NaN                                           Envi...",
+            "score": 0.36509543657302856,
+            "metadata": {
+              "total_chunks": 286,
+              "type": "quanti",
+              "source": "questionnaire",
+              "chunk_index": 255,
+              "id": "questionnaire_unknown_1648"
+            }
+          },
+          {
+            "content": ", dont l'usage est compliqué à Ajaccio (embouteillages et manque de stationnement)                                                                L'environnement est capital : bonne qualité des sols, ...",
+            "score": 0.26497355103492737,
+            "metadata": {
+              "chunk_index": 155,
+              "total_chunks": 286,
+              "type": "quanti",
+              "source": "questionnaire",
+              "id": "questionnaire_unknown_1548"
+            }
+          },
+          {
+            "content": "Q : En vrai c’est pas si pire hein. Ça se fait vite.  \n\n \nA : Ça se fait vite, on sait à quelle heure on part, on sait à quelle heure on arrive, y a pas d'embouteillage. Enfin voilà, donc c'est pas pi...",
+            "score": 0.12484391033649445,
+            "metadata": {
+              "total_chunks": 3,
+              "chunk_index": 1,
+              "source": "entretien",
+              "type": "qualitatif",
+              "id": "entretien_unknown_540"
+            }
+          },
+          {
+            "content": "A : Bah la qualité de vie ... alors à l’époque où on vit, en plus d’avoir de l’air non pollué et des paysages magnifiques, vraiment un endroit qui moi me met de bonne humeur quand je sors de chez moi,...",
+            "score": 0.0879720151424408,
+            "metadata": {
+              "total_chunks": 15,
+              "type": "qualitatif",
+              "source": "entretien",
+              "chunk_index": 1,
+              "id": "entretien_unknown_255"
+            }
+          }
+        ],
+        "num_sources": 5,
+        "elapsed_time": 5.8717570304870605,
+        "metadata": {
+          "k": 5,
+          "use_reranking": true,
+          "use_ontology": false,
+          "use_cross_analysis": false,
+          "include_quantitative": true,
+          "commune_filter": null,
+          "num_sources": 5
+        },
+        "context": "=== CONTEXTE PASSÉ AU LLM (V2.1) ===\nQuestion: Comment est la qualité de vie à Ajaccio ?\nDate: 2026-01-21T08:25:07.331370\nNombre de sources: 5\n\n=== SOURCES UTILISÉES ===\n\n--- Source 1 (score: 0.4244) ---\nMétadonnées: type: qualitatif, total_chunks: 3, chunk_index: 2, source: entretien, id: entretien_unknown_692\nContenu:\nQ : Donc le cadre de vie, c'est un des facteurs … \n\nA : C'est le plus important.  \n\nQ : Et du coup vous habitez sur Ajaccio, vous travaillez sur Porticcio, le territoire que vous pratiquez au quotidie...\n\n--- Source 2 (score: 0.3651) ---\nMétadonnées: total_chunks: 286, type: quanti, source: questionnaire, chunk_index: 255, id: questionnaire_unknown_1648\nContenu:\n208 209 Femme  53                          Salarié(e) – Employé(e)                                     Ajaccio                                        NaN                                           Envi...\n\n--- Source 3 (score: 0.2650) ---\nMétadonnées: chunk_index: 155, total_chunks: 286, type: quanti, source: questionnaire, id: questionnaire_unknown_1548\nContenu:\n, dont l'usage est compliqué à Ajaccio (embouteillages et manque de stationnement)                                                                L'environnement est capital : bonne qualité des sols, ...\n\n--- Source 4 (score: 0.1248) ---\nMétadonnées: total_chunks: 3, chunk_index: 1, source: entretien, type: qualitatif, id: entretien_unknown_540\nContenu:\nQ : En vrai c’est pas si pire hein. Ça se fait vite.  \n\n \nA : Ça se fait vite, on sait à quelle heure on part, on sait à quelle heure on arrive, y a pas d'embouteillage. Enfin voilà, donc c'est pas pi...\n\n--- Source 5 (score: 0.0880) ---\nMétadonnées: total_chunks: 15, type: qualitatif, source: entretien, chunk_index: 1, id: entretien_unknown_255\nContenu:\nA : Bah la qualité de vie ... alors à l’époque où on vit, en plus d’avoir de l’air non pollué et des paysages magnifiques, vraiment un endroit qui moi me met de bonne humeur quand je sors de chez moi,...\n\n=== FIN DU CONTEXTE ===",
+        "error": null
+      }
+    }
+  },
+  {
+    "question": "Quels sont les problèmes de transport en Corse ?",
+    "results": {
+      "RAG v2 (Hybrid+Reranking)": {
+        "success": true,
+        "answer": "Les extraits d'entretiens et de questionnaires ne fournissent pas suffisamment d'informations pour détailler clairement les problèmes de transport en Corse. Il est mentionné que les transports sont importants en Corse en raison du manque de certains besoins à proximité, et qu'il y a un souci particulier au centre de la Corse. Cependant, aucune information spécifique sur les problèmes de transport n'est donnée dans les extraits.",
+        "sources": [
+          {
+            "content": "Les transports sont importants car en Corse on a pas forcément tout les besoins nécessaires à proximité",
+            "score": 0.6526485085487366,
+            "metadata": {
+              "total_chunks": 373,
+              "chunk_index": 89,
+              "type": "quanti",
+              "source": "questionnaire",
+              "id": "questionnaire_unknown_1109"
+            }
+          },
+          {
+            "content": ". et surtout qu'en Corse, centre Corse il y a un souci",
+            "score": 0.12426230311393738,
+            "metadata": {
+              "id": "questionnaire_unknown_2043",
+              "type": "quanti",
+              "chunk_index": 364,
+              "source": "questionnaire",
+              "total_chunks": 369
+            }
+          },
+          {
+            "content": "de choix en arrivant en étude supérieur en Corse                                                                                                                                                                                          La crise environnemental est un problème partout dans le monde                                                                                         La Corse souffre d'un très mauvais réseau              Peu satisfait             Satisfait",
+            "score": 0.029074760153889656,
+            "metadata": {
+              "type": "quanti",
+              "id": "questionnaire_unknown_1011",
+              "chunk_index": 266,
+              "total_chunks": 275,
+              "source": "questionnaire"
+            }
+          },
+          {
+            "content": "A : Mais je pense que la racine chez nous, c'est l'argent, le problème. Je pense que tous les problèmes de la Corse viennent de l'argent. On peut prendre tous les conflits qu’il y a eu en Corse, de n'importe quelle nature : qu’ils soient politiques, qu’ils soient agricoles, qu’ils soient au niveau du développement, c'est l'argent qui freine, qui bloque, qui … tout le monde veut trop manger en fait.",
+            "score": 0.0251483004540205,
+            "metadata": {
+              "id": "entretien_unknown_687",
+              "total_chunks": 4,
+              "source": "entretien",
+              "type": "qualitatif",
+              "chunk_index": 1
+            }
+          },
+          {
+            "content": "A : Ben, ça serait la création d'entreprise, l'installation de gens, des choses comme ça.  \n\nQ : Et en Corse pour vous, c'est quoi les principaux problèmes rencontrés ?",
+            "score": 0.004094191826879978,
+            "metadata": {
+              "chunk_index": 0,
+              "source": "entretien",
+              "type": "qualitatif",
+              "id": "entretien_unknown_428",
+              "total_chunks": 6
+            }
+          }
+        ],
+        "num_sources": 5,
+        "elapsed_time": 6.148019313812256,
+        "metadata": {
+          "k": 5,
+          "use_reranking": true,
+          "use_ontology": false,
+          "use_cross_analysis": false,
+          "include_quantitative": true,
+          "commune_filter": null,
+          "num_sources": 5
+        },
+        "context": "=== CONTEXTE PASSÉ AU LLM (V2) ===\nQuestion: Quels sont les problèmes de transport en Corse ?\nDate: 2026-01-21T08:25:13.480398\nNombre de sources: 5\n\n=== SOURCES UTILISÉES ===\n\n--- Source 1 (score: 0.6526) ---\nMétadonnées: total_chunks: 373, chunk_index: 89, type: quanti, source: questionnaire, id: questionnaire_unknown_1109\nContenu:\nLes transports sont importants car en Corse on a pas forcément tout les besoins nécessaires à proximité\n\n--- Source 2 (score: 0.1243) ---\nMétadonnées: id: questionnaire_unknown_2043, type: quanti, chunk_index: 364, source: questionnaire, total_chunks: 369\nContenu:\n. et surtout qu'en Corse, centre Corse il y a un souci\n\n--- Source 3 (score: 0.0291) ---\nMétadonnées: type: quanti, id: questionnaire_unknown_1011, chunk_index: 266, total_chunks: 275, source: questionnaire\nContenu:\nde choix en arrivant en étude supérieur en Corse                                                                                                                                                                                          La crise environnemental est un problème partout dans le monde                                                                                         La Corse souffre d'un très mauvais réseau              Peu satisfait             Satisfait\n\n--- Source 4 (score: 0.0251) ---\nMétadonnées: id: entretien_unknown_687, total_chunks: 4, source: entretien, type: qualitatif, chunk_index: 1\nContenu:\nA : Mais je pense que la racine chez nous, c'est l'argent, le problème. Je pense que tous les problèmes de la Corse viennent de l'argent. On peut prendre tous les conflits qu’il y a eu en Corse, de n'importe quelle nature : qu’ils soient politiques, qu’ils soient agricoles, qu’ils soient au niveau du développement, c'est l'argent qui freine, qui bloque, qui … tout le monde veut trop manger en fait.\n\n--- Source 5 (score: 0.0041) ---\nMétadonnées: source: entretien, type: qualitatif, id: entretien_unknown_428, total_chunks: 6\nContenu:\nA : Ben, ça serait la création d'entreprise, l'installation de gens, des choses comme ça.  \n\nQ : Et en Corse pour vous, c'est quoi les principaux problèmes rencontrés ?\n\n=== FIN DU CONTEXTE ===",
+        "error": null
+      },
+      "RAG v2.1 (LlamaIndex)": {
+        "success": true,
+        "answer": "Les problèmes de transport en Corse incluent des difficultés liées à l'afflux saisonnier, des retards potentiels dus à des transporteurs non affiliés à La Poste, des incertitudes sur les temps de trajet et des soucis liés à un réseau de transport insatisfaisant.",
+        "sources": [
+          {
+            "content": "Les transports sont importants car en Corse on a pas forcément tout les besoins nécessaires à proximité...",
+            "score": 0.6130600571632385,
+            "metadata": {
+              "total_chunks": 373,
+              "type": "quanti",
+              "source": "questionnaire",
+              "chunk_index": 89,
+              "id": "questionnaire_unknown_1109"
+            }
+          },
+          {
+            "content": ". Quand l’été il y a tout cet afflux-là ... moi quand je pars de chez moi je sais qu’il faut 35 min pour aller à Corte, quand je pars au mois d’août je ne sais pas. On a aussi des problèmes avec les t...",
+            "score": 0.07163330167531967,
+            "metadata": {
+              "chunk_index": 11,
+              "total_chunks": 14,
+              "source": "entretien",
+              "type": "qualitatif",
+              "id": "entretien_unknown_324"
+            }
+          },
+          {
+            "content": "de choix en arrivant en étude supérieur en Corse                                                                                                                                                        ...",
+            "score": 0.06126062199473381,
+            "metadata": {
+              "chunk_index": 266,
+              "type": "quanti",
+              "total_chunks": 275,
+              "source": "questionnaire",
+              "id": "questionnaire_unknown_1011"
+            }
+          },
+          {
+            "content": "A : Mais je pense que la racine chez nous, c'est l'argent, le problème. Je pense que tous les problèmes de la Corse viennent de l'argent. On peut prendre tous les conflits qu’il y a eu en Corse, de n'...",
+            "score": 0.0399399995803833,
+            "metadata": {
+              "type": "qualitatif",
+              "chunk_index": 1,
+              "total_chunks": 4,
+              "source": "entretien",
+              "id": "entretien_unknown_687"
+            }
+          },
+          {
+            "content": ". et surtout qu'en Corse, centre Corse il y a un souci...",
+            "score": 0.010880254209041595,
+            "metadata": {
+              "source": "questionnaire",
+              "total_chunks": 369,
+              "type": "quanti",
+              "chunk_index": 364,
+              "id": "questionnaire_unknown_2043"
+            }
+          }
+        ],
+        "num_sources": 5,
+        "elapsed_time": 7.1380016803741455,
+        "metadata": {
+          "k": 5,
+          "use_reranking": true,
+          "use_ontology": false,
+          "use_cross_analysis": false,
+          "include_quantitative": true,
+          "commune_filter": null,
+          "num_sources": 5
+        },
+        "context": "=== CONTEXTE PASSÉ AU LLM (V2.1) ===\nQuestion: Quels sont les problèmes de transport en Corse ?\nDate: 2026-01-21T08:25:20.618403\nNombre de sources: 5\n\n=== SOURCES UTILISÉES ===\n\n--- Source 1 (score: 0.6131) ---\nMétadonnées: total_chunks: 373, type: quanti, source: questionnaire, chunk_index: 89, id: questionnaire_unknown_1109\nContenu:\nLes transports sont importants car en Corse on a pas forcément tout les besoins nécessaires à proximité...\n\n--- Source 2 (score: 0.0716) ---\nMétadonnées: chunk_index: 11, total_chunks: 14, source: entretien, type: qualitatif, id: entretien_unknown_324\nContenu:\n. Quand l’été il y a tout cet afflux-là ... moi quand je pars de chez moi je sais qu’il faut 35 min pour aller à Corte, quand je pars au mois d’août je ne sais pas. On a aussi des problèmes avec les t...\n\n--- Source 3 (score: 0.0613) ---\nMétadonnées: chunk_index: 266, type: quanti, total_chunks: 275, source: questionnaire, id: questionnaire_unknown_1011\nContenu:\nde choix en arrivant en étude supérieur en Corse                                                                                                                                                        ...\n\n--- Source 4 (score: 0.0399) ---\nMétadonnées: type: qualitatif, chunk_index: 1, total_chunks: 4, source: entretien, id: entretien_unknown_687\nContenu:\nA : Mais je pense que la racine chez nous, c'est l'argent, le problème. Je pense que tous les problèmes de la Corse viennent de l'argent. On peut prendre tous les conflits qu’il y a eu en Corse, de n'...\n\n--- Source 5 (score: 0.0109) ---\nMétadonnées: source: questionnaire, total_chunks: 369, type: quanti, chunk_index: 364, id: questionnaire_unknown_2043\nContenu:\n. et surtout qu'en Corse, centre Corse il y a un souci...\n\n=== FIN DU CONTEXTE ===",
+        "error": null
+      }
+    }
+  },
+  {
+    "question": "Que pensent les habitants de Lozzi de leur cadre de vie ?",
+    "results": {
+      "RAG v2 (Hybrid+Reranking)": {
+        "success": true,
+        "answer": "Les habitants de Lozzi semblent avoir une perception mitigée de leur cadre de vie. Le score global de qualité de vie est assez bas (3.04/10) et les opportunités dans la commune sont notées à 2.27/10. Cependant, le choix (9.2/10) est évalué très positivement. En termes de participation électorale, le taux est élevé (97.0%). On ne dispose pas d'informations qualitatives directes provenant des habitants de Lozzi concernant leur cadre de vie.",
+        "sources": [
+          {
+            "content": "Q : Donc vous pensez que les gens ce qu’ils viennent chercher ici c'est le cadre de vie ?",
+            "score": 0.02525198459625244,
+            "metadata": {
+              "source": "entretien",
+              "type": "qualitatif",
+              "chunk_index": 3,
+              "id": "entretien_unknown_704",
+              "total_chunks": 4
+            }
+          },
+          {
+            "content": "Q : Donc le cadre de vie et aussi l'esprit communautaire du village, la proximité entre les habitants, c'est important. Tu dirais que ça fait partie de tes indicateurs prioritaires pour se sentir bien dans ta vie ?",
+            "score": 0.006332803517580032,
+            "metadata": {
+              "source": "entretien",
+              "type": "qualitatif",
+              "chunk_index": 3,
+              "id": "entretien_unknown_12",
+              "total_chunks": 5
+            }
+          },
+          {
+            "content": "================================================================================\nFICHE COMMUNE : LOZZI\n================================================================================\n\n📊 SCORES GLOBAUX (échelle 0-10)\n────────────────────────────────────────────────────────────────────────────────\n• OppChoVec (Score global)    : 3.45/10\n• Opportunités                : 2.27/10\n• Choix                       : 9.2/10\n• Vécu                        : 3.04/10",
+            "score": 0.0015505376504734159,
+            "metadata": {
+              "source": "fiche_commune",
+              "filename": "Lozzi.txt",
+              "chunk_index": 0,
+              "type": "scores_detailles",
+              "id": "fiche_commune_Lozzi_852",
+              "nom": "Lozzi",
+              "total_chunks": 6
+            }
+          },
+          {
+            "content": "Cho2 - Participation électorale     : 97.0\n           → Taux de participation aux élections\n\n\n🏠 VÉCU - Détail des indicateurs\n────────────────────────────────────────────────────────────────────────────────\nScore global Vécu : 3.04/10\n\nComposantes :\n  Vec1 - Niveau de vie médian         : 20710 €/an\n           → Revenu médian de la commune\n\n  Vec2 - Qualité du logement          : 0.8001\n           → Nombre de pièces, décence, type de logement",
+            "score": 0.0007333442918024957,
+            "metadata": {
+              "chunk_index": 3,
+              "total_chunks": 6,
+              "nom": "Lozzi",
+              "id": "fiche_commune_Lozzi_855",
+              "source": "fiche_commune",
+              "type": "scores_detailles",
+              "filename": "Lozzi.txt"
+            }
+          },
+          {
+            "content": "Q : C'est trop ponctuel pour ... c’est pas assez régulier pour que ça soit problématique.  \n\n \nA : Ouais, voilà.  \n\n \nQ : Et justement, vous qui avez quand même expérimenté la grande ville, donc aussi l'accès à la culture, aux loisirs, c'est pas quelque chose de qui vous manque ? Que vous recherchez ? Ou c'est juste que vous avez adapté vos loisirs à votre cadre de vie ?",
+            "score": 0.0003131927514914423,
+            "metadata": {
+              "source": "entretien",
+              "type": "qualitatif",
+              "chunk_index": 0,
+              "id": "entretien_unknown_518",
+              "total_chunks": 3
+            }
+          }
+        ],
+        "num_sources": 5,
+        "elapsed_time": 7.675052165985107,
+        "metadata": {
+          "k": 5,
+          "use_reranking": true,
+          "use_ontology": false,
+          "use_cross_analysis": false,
+          "include_quantitative": true,
+          "commune_filter": null,
+          "num_sources": 5
+        },
+        "context": "=== CONTEXTE PASSÉ AU LLM (V2) ===\nQuestion: Que pensent les habitants de Lozzi de leur cadre de vie ?\nDate: 2026-01-21T08:25:28.291361\nNombre de sources: 5\n\n=== SOURCES UTILISÉES ===\n\n--- Source 1 (score: 0.0253) ---\nMétadonnées: source: entretien, type: qualitatif, chunk_index: 3, id: entretien_unknown_704, total_chunks: 4\nContenu:\nQ : Donc vous pensez que les gens ce qu’ils viennent chercher ici c'est le cadre de vie ?\n\n--- Source 2 (score: 0.0063) ---\nMétadonnées: source: entretien, type: qualitatif, chunk_index: 3, id: entretien_unknown_12, total_chunks: 5\nContenu:\nQ : Donc le cadre de vie et aussi l'esprit communautaire du village, la proximité entre les habitants, c'est important. Tu dirais que ça fait partie de tes indicateurs prioritaires pour se sentir bien dans ta vie ?\n\n--- Source 3 (score: 0.0016) ---\nMétadonnées: source: fiche_commune, filename: Lozzi.txt, type: scores_detailles, id: fiche_commune_Lozzi_852, nom: Lozzi, total_chunks: 6\nContenu:\n================================================================================\nFICHE COMMUNE : LOZZI\n================================================================================\n\n📊 SCORES GLOBAUX (échelle 0-10)\n────────────────────────────────────────────────────────────────────────────────\n• OppChoVec (Score global)    : 3.45/10\n• Opportunités                : 2.27/10\n• Choix                       : 9.2/10\n• Vécu                        : 3.04/10\n\n--- Source 4 (score: 0.0007) ---\nMétadonnées: chunk_index: 3, total_chunks: 6, nom: Lozzi, id: fiche_commune_Lozzi_855, source: fiche_commune, type: scores_detailles, filename: Lozzi.txt\nContenu:\nCho2 - Participation électorale     : 97.0\n           → Taux de participation aux élections\n\n\n🏠 VÉCU - Détail des indicateurs\n────────────────────────────────────────────────────────────────────────────────\nScore global Vécu : 3.04/10\n\nComposantes :\n  Vec1 - Niveau de vie médian         : 20710 €/an\n           → Revenu médian de la commune\n\n  Vec2 - Qualité du logement          : 0.8001\n           → Nombre de pièces, décence, type de logement\n\n--- Source 5 (score: 0.0003) ---\nMétadonnées: source: entretien, type: qualitatif, id: entretien_unknown_518, total_chunks: 3\nContenu:\nQ : C'est trop ponctuel pour ... c’est pas assez régulier pour que ça soit problématique.  \n\n \nA : Ouais, voilà.  \n\n \nQ : Et justement, vous qui avez quand même expérimenté la grande ville, donc aussi l'accès à la culture, aux loisirs, c'est pas quelque chose de qui vous manque ? Que vous recherchez ? Ou c'est juste que vous avez adapté vos loisirs à votre cadre de vie ?\n\n=== FIN DU CONTEXTE ===",
+        "error": null
+      },
+      "RAG v2.1 (LlamaIndex)": {
+        "success": true,
+        "answer": "Les habitants de Lozzi considèrent la qualité de vie et le sentiment d'appartenance aux racines comme des éléments essentiels de leur bien-être. Ils valorisent l'esprit communautaire, la proximité entre les habitants du village, et le lien fort avec leur territoire en tant que Corse.",
+        "sources": [
+          {
+            "content": "A : Après ici, maintenant, on a accès à tout. Après la seule chose, c'est vraiment les gens. Le jour où il n'y aura plus assez de gens pour tenir une vie sociale, je dirais. Mais pour le reste, on acc...",
+            "score": 0.8861067891120911,
+            "metadata": {
+              "source": "entretien",
+              "chunk_index": 0,
+              "type": "qualitatif",
+              "total_chunks": 3,
+              "id": "entretien_unknown_575"
+            }
+          },
+          {
+            "content": "Q : Ouais, c'est ça justement pour vous qui est est le point fort de Lozzi ? C’est la qualité de vie ? \n\n \nA : Je dirais la qualité de vie et les racines, parce que je pense qu'en tant que Corse, on e...",
+            "score": 0.8705807328224182,
+            "metadata": {
+              "chunk_index": 0,
+              "type": "qualitatif",
+              "total_chunks": 4,
+              "source": "entretien",
+              "id": "entretien_unknown_594"
+            }
+          },
+          {
+            "content": "---------------------\n\n### Commune : Lozzi | Entretien 4\n\nA : Moi j’aimerais vous parler de Lozzi, de son histoire et tout, et qu’est-ce que vous appelez bien-être ? \n\nQ : En fait le bien-être c’est d...",
+            "score": 0.7528886198997498,
+            "metadata": {
+              "source": "entretien",
+              "chunk_index": 0,
+              "type": "qualitatif",
+              "total_chunks": 8,
+              "id": "entretien_unknown_327"
+            }
+          },
+          {
+            "content": "Q : En fait vous êtes bien parce que vous êtes chez vous ?  \n\nA : Je suis chez moi, à l’endroit sur terre où je devais être, où le hasard de la vie à fait que je suis né et dans le contexte …  \n\nQ : S...",
+            "score": 0.49996912479400635,
+            "metadata": {
+              "source": "entretien",
+              "chunk_index": 1,
+              "type": "qualitatif",
+              "total_chunks": 3,
+              "id": "entretien_unknown_361"
+            }
+          },
+          {
+            "content": "Q : Vous me disiez que ça vous ferait pas partir ou quoi, mais est-ce que quand même du coup le fait que y a des gens qui partent, qu'il y ait de moins en moins de monde ça peut quand même contribuer ...",
+            "score": 0.24666856229305267,
+            "metadata": {
+              "type": "qualitatif",
+              "total_chunks": 3,
+              "chunk_index": 0,
+              "source": "entretien",
+              "id": "entretien_unknown_568"
+            }
+          }
+        ],
+        "num_sources": 5,
+        "elapsed_time": 7.258530616760254,
+        "metadata": {
+          "k": 5,
+          "use_reranking": true,
+          "use_ontology": false,
+          "use_cross_analysis": false,
+          "include_quantitative": true,
+          "commune_filter": null,
+          "num_sources": 5
+        },
+        "context": "=== CONTEXTE PASSÉ AU LLM (V2.1) ===\nQuestion: Que pensent les habitants de Lozzi de leur cadre de vie ?\nDate: 2026-01-21T08:25:35.553017\nNombre de sources: 5\n\n=== SOURCES UTILISÉES ===\n\n--- Source 1 (score: 0.8861) ---\nMétadonnées: source: entretien, type: qualitatif, total_chunks: 3, id: entretien_unknown_575\nContenu:\nA : Après ici, maintenant, on a accès à tout. Après la seule chose, c'est vraiment les gens. Le jour où il n'y aura plus assez de gens pour tenir une vie sociale, je dirais. Mais pour le reste, on acc...\n\n--- Source 2 (score: 0.8706) ---\nMétadonnées: type: qualitatif, total_chunks: 4, source: entretien, id: entretien_unknown_594\nContenu:\nQ : Ouais, c'est ça justement pour vous qui est est le point fort de Lozzi ? C’est la qualité de vie ? \n\n \nA : Je dirais la qualité de vie et les racines, parce que je pense qu'en tant que Corse, on e...\n\n--- Source 3 (score: 0.7529) ---\nMétadonnées: source: entretien, type: qualitatif, total_chunks: 8, id: entretien_unknown_327\nContenu:\n---------------------\n\n### Commune : Lozzi | Entretien 4\n\nA : Moi j’aimerais vous parler de Lozzi, de son histoire et tout, et qu’est-ce que vous appelez bien-être ? \n\nQ : En fait le bien-être c’est d...\n\n--- Source 4 (score: 0.5000) ---\nMétadonnées: source: entretien, chunk_index: 1, type: qualitatif, total_chunks: 3, id: entretien_unknown_361\nContenu:\nQ : En fait vous êtes bien parce que vous êtes chez vous ?  \n\nA : Je suis chez moi, à l’endroit sur terre où je devais être, où le hasard de la vie à fait que je suis né et dans le contexte …  \n\nQ : S...\n\n--- Source 5 (score: 0.2467) ---\nMétadonnées: type: qualitatif, total_chunks: 3, source: entretien, id: entretien_unknown_568\nContenu:\nQ : Vous me disiez que ça vous ferait pas partir ou quoi, mais est-ce que quand même du coup le fait que y a des gens qui partent, qu'il y ait de moins en moins de monde ça peut quand même contribuer ...\n\n=== FIN DU CONTEXTE ===",
+        "error": null
+      }
+    }
+  },
+  {
+    "question": "Quels sont les indicateurs de santé et d'éducation en Corse ?",
+    "results": {
+      "RAG v2 (Hybrid+Reranking)": {
+        "success": true,
+        "answer": "Les indicateurs de santé en Corse sont les suivants:\n- Score Santé: 1.80\n- Accès à des consultations/soins de qualité: 2.375\n- Accès à des professionnels de santé de qualité: 2.4\n- L'état de santé et l'accès aux soins peuvent être source de stress\n\nLes indicateurs d'éducation en Corse sont les suivants:\n- Score Éducation: 2.35\n\nCes données sont basées sur les réponses des habitants et les indicateurs quantitatifs disponibles pour la commune d'Ajaccio.",
+        "sources": [
+          {
+            "content": ", que de partir sur le continent...\", \"Les revenus pour le pouvoir d'achat\", 'Emploi', 'proximite pieton facilité', 'La santé est primordial', 'Accès à des consultations/soins de qualité, attractivité du territoire pour les personnels soignants', \"l'accès à la santé et à des professionnels de qualité est primordial, en Corse le meilleur médecin est malheureusement l'avion ...\", \"Pouvoir bénéficier de soins de santé sur l'île\", 'L’état de santé et l’accès aux soins peuvent être source de stress'",
+            "score": 0.04277496039867401,
+            "metadata": {
+              "source": "verbatim",
+              "type": "qualitatif",
+              "nom": "Ajaccio",
+              "id": "verbatim_Ajaccio_2388",
+              "chunk_index": 20,
+              "total_chunks": 27
+            }
+          },
+          {
+            "content": ", pas vraiment d'espaces verts, déjections canines en permanence vie de plus en plus chère, tout augmente mais pas les salaires, impression de travailler pour se nourrir et payer des taxes mais pas pour vivre pleinement                                                          l'accès à la santé et à des professionnels de qualité est primordial, en Corse le meilleur médecin est malheureusement l'avion ..",
+            "score": 0.00605869060382247,
+            "metadata": {
+              "source": "questionnaire",
+              "type": "quanti",
+              "chunk_index": 150,
+              "id": "questionnaire_unknown_1543",
+              "total_chunks": 286
+            }
+          },
+          {
+            "content": ", souvent très prenante et la vie personnelle                                                                                                                                                                                                                                                        Le coût de la vie en Corse est très élevée et des revenus relativement importants sont indispensables",
+            "score": 0.000533627753611654,
+            "metadata": {
+              "source": "questionnaire",
+              "type": "quanti",
+              "chunk_index": 125,
+              "id": "questionnaire_unknown_1804",
+              "total_chunks": 369
+            }
+          },
+          {
+            "content": "décents et à prix accessibles pour les étudiants                                                                                                                                                                             Emplois : des postes dans tous les domaines (environnement personnellement)                                                                        Sécurité : je veux me sentir en sécurité partout en Corse                   Satisfait        Très satisfait",
+            "score": 0.0004183115088380873,
+            "metadata": {
+              "id": "questionnaire_unknown_944",
+              "source": "questionnaire",
+              "type": "quanti",
+              "chunk_index": 199,
+              "total_chunks": 275
+            }
+          },
+          {
+            "content": "Les transports sont importants car en Corse on a pas forcément tout les besoins nécessaires à proximité",
+            "score": 0.0002172513195546344,
+            "metadata": {
+              "source": "questionnaire",
+              "type": "quanti",
+              "chunk_index": 89,
+              "id": "questionnaire_unknown_1109",
+              "total_chunks": 373
+            }
+          }
+        ],
+        "num_sources": 5,
+        "elapsed_time": 7.512045621871948,
+        "metadata": {
+          "k": 5,
+          "use_reranking": true,
+          "use_ontology": false,
+          "use_cross_analysis": false,
+          "include_quantitative": true,
+          "commune_filter": null,
+          "num_sources": 5
+        },
+        "context": "=== CONTEXTE PASSÉ AU LLM (V2) ===\nQuestion: Quels sont les indicateurs de santé et d'éducation en Corse ?\nDate: 2026-01-21T08:25:43.064041\nNombre de sources: 5\n\n=== SOURCES UTILISÉES ===\n\n--- Source 1 (score: 0.0428) ---\nMétadonnées: source: verbatim, type: qualitatif, nom: Ajaccio, id: verbatim_Ajaccio_2388, chunk_index: 20, total_chunks: 27\nContenu:\n, que de partir sur le continent...\", \"Les revenus pour le pouvoir d'achat\", 'Emploi', 'proximite pieton facilité', 'La santé est primordial', 'Accès à des consultations/soins de qualité, attractivité du territoire pour les personnels soignants', \"l'accès à la santé et à des professionnels de qualité est primordial, en Corse le meilleur médecin est malheureusement l'avion ...\", \"Pouvoir bénéficier de soins de santé sur l'île\", 'L’état de santé et l’accès aux soins peuvent être source de stress'\n\n--- Source 2 (score: 0.0061) ---\nMétadonnées: source: questionnaire, type: quanti, chunk_index: 150, id: questionnaire_unknown_1543, total_chunks: 286\nContenu:\n, pas vraiment d'espaces verts, déjections canines en permanence vie de plus en plus chère, tout augmente mais pas les salaires, impression de travailler pour se nourrir et payer des taxes mais pas pour vivre pleinement                                                          l'accès à la santé et à des professionnels de qualité est primordial, en Corse le meilleur médecin est malheureusement l'avion ..\n\n--- Source 3 (score: 0.0005) ---\nMétadonnées: source: questionnaire, type: quanti, chunk_index: 125, id: questionnaire_unknown_1804, total_chunks: 369\nContenu:\n, souvent très prenante et la vie personnelle                                                                                                                                                                                                                                                        Le coût de la vie en Corse est très élevée et des revenus relativement importants sont indispensables\n\n--- Source 4 (score: 0.0004) ---\nMétadonnées: id: questionnaire_unknown_944, source: questionnaire, type: quanti, chunk_index: 199, total_chunks: 275\nContenu:\ndécents et à prix accessibles pour les étudiants                                                                                                                                                                             Emplois : des postes dans tous les domaines (environnement personnellement)                                                                        Sécurité : je veux me sentir en sécurité partout en Corse                   Satisfait        Très satisfait\n\n--- Source 5 (score: 0.0002) ---\nMétadonnées: source: questionnaire, type: quanti, chunk_index: 89, id: questionnaire_unknown_1109, total_chunks: 373\nContenu:\nLes transports sont importants car en Corse on a pas forcément tout les besoins nécessaires à proximité\n\n=== FIN DU CONTEXTE ===",
+        "error": null
+      },
+      "RAG v2.1 (LlamaIndex)": {
+        "success": true,
+        "answer": "Les indicateurs de santé et d'éducation en Corse ne sont directement mentionnés dans le contexte fourni.",
+        "sources": [
+          {
+            "content": "Vec3 - Statut social (CSP)          : 0.8749\n           → Répartition des catégories socio-professionnelles\n\n  Vec4 - Emploi                       : 758 établissements\n           → Nombre d'établissem...",
+            "score": 0.0010649677133187652,
+            "metadata": {
+              "type": "scores_detailles",
+              "source": "fiche_commune",
+              "chunk_index": 4,
+              "total_chunks": 6,
+              "nom": "Omessa",
+              "filename": "Omessa.txt",
+              "id": "fiche_commune_Omessa_1126"
+            }
+          },
+          {
+            "content": "décents et à prix accessibles pour les étudiants                                                                                                                                                        ...",
+            "score": 0.0010596218053251505,
+            "metadata": {
+              "chunk_index": 199,
+              "source": "questionnaire",
+              "total_chunks": 275,
+              "type": "quanti",
+              "id": "questionnaire_unknown_944"
+            }
+          },
+          {
+            "content": "Vec3 - Statut social (CSP)          : 0.8542\n           → Répartition des catégories socio-professionnelles\n\n  Vec4 - Emploi                       : 381 établissements\n           → Nombre d'établissem...",
+            "score": 0.0006884978502057493,
+            "metadata": {
+              "total_chunks": 6,
+              "chunk_index": 4,
+              "type": "scores_detailles",
+              "filename": "Bonifacio.txt",
+              "source": "fiche_commune",
+              "nom": "Bonifacio",
+              "id": "fiche_commune_Bonifacio_244"
+            }
+          },
+          {
+            "content": "Vec3 - Statut social (CSP)          : 0.8689\n           → Répartition des catégories socio-professionnelles\n\n  Vec4 - Emploi                       : 266 établissements\n           → Nombre d'établissem...",
+            "score": 0.0006634592427872121,
+            "metadata": {
+              "nom": "Moltifao",
+              "source": "fiche_commune",
+              "type": "scores_detailles",
+              "chunk_index": 4,
+              "filename": "Moltifao.txt",
+              "total_chunks": 6,
+              "id": "fiche_commune_Moltifao_934"
+            }
+          },
+          {
+            "content": "Vec3 - Statut social (CSP)          : 0.846\n           → Répartition des catégories socio-professionnelles\n\n  Vec4 - Emploi                       : 436 établissements\n           → Nombre d'établisseme...",
+            "score": 0.0005278883618302643,
+            "metadata": {
+              "total_chunks": 6,
+              "source": "fiche_commune",
+              "type": "scores_detailles",
+              "nom": "Loreto-di-Tallano",
+              "chunk_index": 4,
+              "filename": "Loreto-di-Tallano.txt",
+              "id": "fiche_commune_Loreto-di-Tallano_850"
+            }
+          }
+        ],
+        "num_sources": 5,
+        "elapsed_time": 6.446994781494141,
+        "metadata": {
+          "k": 5,
+          "use_reranking": true,
+          "use_ontology": false,
+          "use_cross_analysis": false,
+          "include_quantitative": true,
+          "commune_filter": null,
+          "num_sources": 5
+        },
+        "context": "=== CONTEXTE PASSÉ AU LLM (V2.1) ===\nQuestion: Quels sont les indicateurs de santé et d'éducation en Corse ?\nDate: 2026-01-21T08:25:49.513566\nNombre de sources: 5\n\n=== SOURCES UTILISÉES ===\n\n--- Source 1 (score: 0.0011) ---\nMétadonnées: type: scores_detailles, source: fiche_commune, chunk_index: 4, total_chunks: 6, nom: Omessa, filename: Omessa.txt, id: fiche_commune_Omessa_1126\nContenu:\nVec3 - Statut social (CSP)          : 0.8749\n           → Répartition des catégories socio-professionnelles\n\n  Vec4 - Emploi                       : 758 établissements\n           → Nombre d'établissem...\n\n--- Source 2 (score: 0.0011) ---\nMétadonnées: chunk_index: 199, source: questionnaire, total_chunks: 275, type: quanti, id: questionnaire_unknown_944\nContenu:\ndécents et à prix accessibles pour les étudiants                                                                                                                                                        ...\n\n--- Source 3 (score: 0.0007) ---\nMétadonnées: total_chunks: 6, chunk_index: 4, type: scores_detailles, filename: Bonifacio.txt, source: fiche_commune, nom: Bonifacio, id: fiche_commune_Bonifacio_244\nContenu:\nVec3 - Statut social (CSP)          : 0.8542\n           → Répartition des catégories socio-professionnelles\n\n  Vec4 - Emploi                       : 381 établissements\n           → Nombre d'établissem...\n\n--- Source 4 (score: 0.0007) ---\nMétadonnées: nom: Moltifao, source: fiche_commune, type: scores_detailles, chunk_index: 4, filename: Moltifao.txt, total_chunks: 6, id: fiche_commune_Moltifao_934\nContenu:\nVec3 - Statut social (CSP)          : 0.8689\n           → Répartition des catégories socio-professionnelles\n\n  Vec4 - Emploi                       : 266 établissements\n           → Nombre d'établissem...\n\n--- Source 5 (score: 0.0005) ---\nMétadonnées: total_chunks: 6, source: fiche_commune, type: scores_detailles, nom: Loreto-di-Tallano, chunk_index: 4, filename: Loreto-di-Tallano.txt, id: fiche_commune_Loreto-di-Tallano_850\nContenu:\nVec3 - Statut social (CSP)          : 0.846\n           → Répartition des catégories socio-professionnelles\n\n  Vec4 - Emploi                       : 436 établissements\n           → Nombre d'établisseme...\n\n=== FIN DU CONTEXTE ===",
+        "error": null
+      }
+    }
+  },
+  {
+    "question": "Comment les Corses perçoivent-ils l'accès aux services publics ?",
+    "results": {
+      "RAG v2 (Hybrid+Reranking)": {
+        "success": true,
+        "answer": "Les Corses perçoivent l'accès aux services publics comme étant important, notamment en ce qui concerne les transports, les professionnels de santé et les services de soins. Cependant, il semble y avoir des préoccupations concernant le manque d'accès à certains professionnels de santé en Corse. Il est également souligné que l'éducation et l'accès aux services de soins sont essentiels pour l'évolution de la société. Cependant, les niveaux de satisfaction quant à l'accès aux services de soins varient parmi les répondants. Enfin, il est mentionné une possible inertie de la part des pouvoirs publics ou des habitants de la vallée, sans indication claire de son impact sur l'accès aux services publics.\n\nSource: Extrait d'entretiens et de questionnaires mentionnés.",
+        "sources": [
+          {
+            "content": "Les transports sont importants car en Corse on a pas forcément tout les besoins nécessaires à proximité",
+            "score": 0.01711116172373295,
+            "metadata": {
+              "type": "quanti",
+              "chunk_index": 89,
+              "total_chunks": 373,
+              "id": "questionnaire_unknown_1109",
+              "source": "questionnaire"
+            }
+          },
+          {
+            "content": ".                                                                                                                                                                                             Manque d'accès à certains professionnels de santé en Corse.                                                                                                                Studià hè libertà",
+            "score": 0.012054722756147385,
+            "metadata": {
+              "source": "questionnaire",
+              "chunk_index": 127,
+              "type": "quanti",
+              "id": "questionnaire_unknown_872",
+              "total_chunks": 275
+            }
+          },
+          {
+            "content": "l'éducation constitue un des piliers majeurs pour l'évolution de la société                                                                                                                                                                                                                                                                                                                                                                 l'accès à des services de soins  est essentiel         Très",
+            "score": 0.001030026120133698,
+            "metadata": {
+              "source": "questionnaire",
+              "type": "quanti",
+              "chunk_index": 68,
+              "id": "questionnaire_unknown_1747",
+              "total_chunks": 369
+            }
+          },
+          {
+            "content": "l'accès à des services de soins  est essentiel         Très peu satisfait                Neutre                               Satisfait                                           Neutre                            Neutre      Peu satisfait      Peu satisfait                       Satisfait          Satisfait                                                 Très satisfait     Très satisfait                               Satisfait            Peu satisfait",
+            "score": 0.0007466804818250239,
+            "metadata": {
+              "source": "questionnaire",
+              "type": "quanti",
+              "chunk_index": 69,
+              "id": "questionnaire_unknown_1748",
+              "total_chunks": 369
+            }
+          },
+          {
+            "content": "A : Une inertie de la part des pouvoirs publics ou des gens de la vallée ?",
+            "score": 0.00036356563214212656,
+            "metadata": {
+              "source": "entretien",
+              "type": "qualitatif",
+              "chunk_index": 2,
+              "id": "entretien_unknown_53",
+              "total_chunks": 5
+            }
+          }
+        ],
+        "num_sources": 5,
+        "elapsed_time": 5.3517444133758545,
+        "metadata": {
+          "k": 5,
+          "use_reranking": true,
+          "use_ontology": false,
+          "use_cross_analysis": false,
+          "include_quantitative": true,
+          "commune_filter": null,
+          "num_sources": 5
+        },
+        "context": "=== CONTEXTE PASSÉ AU LLM (V2) ===\nQuestion: Comment les Corses perçoivent-ils l'accès aux services publics ?\nDate: 2026-01-21T08:25:54.866269\nNombre de sources: 5\n\n=== SOURCES UTILISÉES ===\n\n--- Source 1 (score: 0.0171) ---\nMétadonnées: type: quanti, chunk_index: 89, total_chunks: 373, id: questionnaire_unknown_1109, source: questionnaire\nContenu:\nLes transports sont importants car en Corse on a pas forcément tout les besoins nécessaires à proximité\n\n--- Source 2 (score: 0.0121) ---\nMétadonnées: source: questionnaire, chunk_index: 127, type: quanti, id: questionnaire_unknown_872, total_chunks: 275\nContenu:\n.                                                                                                                                                                                             Manque d'accès à certains professionnels de santé en Corse.                                                                                                                Studià hè libertà\n\n--- Source 3 (score: 0.0010) ---\nMétadonnées: source: questionnaire, type: quanti, chunk_index: 68, id: questionnaire_unknown_1747, total_chunks: 369\nContenu:\nl'éducation constitue un des piliers majeurs pour l'évolution de la société                                                                                                                                                                                                                                                                                                                                                                 l'accès à des services de soins  est essentiel         Très\n\n--- Source 4 (score: 0.0007) ---\nMétadonnées: source: questionnaire, type: quanti, chunk_index: 69, id: questionnaire_unknown_1748, total_chunks: 369\nContenu:\nl'accès à des services de soins  est essentiel         Très peu satisfait                Neutre                               Satisfait                                           Neutre                            Neutre      Peu satisfait      Peu satisfait                       Satisfait          Satisfait                                                 Très satisfait     Très satisfait                               Satisfait            Peu satisfait\n\n--- Source 5 (score: 0.0004) ---\nMétadonnées: source: entretien, type: qualitatif, chunk_index: 2, id: entretien_unknown_53, total_chunks: 5\nContenu:\nA : Une inertie de la part des pouvoirs publics ou des gens de la vallée ?\n\n=== FIN DU CONTEXTE ===",
+        "error": null
+      },
+      "RAG v2.1 (LlamaIndex)": {
+        "success": true,
+        "answer": "Les Corses perçoivent l'accès aux services publics comme étant crucial pour leur qualité de vie, soulignant l'importance de la santé, des transports et des services de proximité. Ils expriment des préoccupations concernant le manque d'accès à certains professionnels de santé en Corse et soulignent que les transports sont essentiels car tous les besoins nécessaires ne sont pas toujours disponibles à proximité.",
+        "sources": [
+          {
+            "content": ", on est morts', \"L'accès à la santé pour sauver des vies\", 'proximité services/commerces', \"La santé est hyper importante pour avoir une bonne qualité de vie, c'est un peu un piller fondamental\", 'Pr...",
+            "score": 0.0924098938703537,
+            "metadata": {
+              "chunk_index": 9,
+              "total_chunks": 14,
+              "type": "qualitatif",
+              "nom": "Bastia",
+              "source": "verbatim",
+              "id": "verbatim_Bastia_2422"
+            }
+          },
+          {
+            "content": ".                                                                                                                                                                                             Manque d'a...",
+            "score": 0.020159592851996422,
+            "metadata": {
+              "type": "quanti",
+              "total_chunks": 275,
+              "chunk_index": 127,
+              "source": "questionnaire",
+              "id": "questionnaire_unknown_872"
+            }
+          },
+          {
+            "content": "Les transports sont importants car en Corse on a pas forcément tout les besoins nécessaires à proximité...",
+            "score": 0.013754734769463539,
+            "metadata": {
+              "source": "questionnaire",
+              "chunk_index": 89,
+              "total_chunks": 373,
+              "type": "quanti",
+              "id": "questionnaire_unknown_1109"
+            }
+          },
+          {
+            "content": ". \\nMes véritables choix auraient été Culture, Santé, Services de proximité ou Confiance envers les institutions étatiques.\", 'Le coût de la vie en Corse est très élevée et des revenus relativement im...",
+            "score": 0.010943313129246235,
+            "metadata": {
+              "chunk_index": 23,
+              "source": "verbatim",
+              "nom": "Ajaccio",
+              "type": "qualitatif",
+              "total_chunks": 27,
+              "id": "verbatim_Ajaccio_2391"
+            }
+          },
+          {
+            "content": "L'accès à la culture est aujourd'hui partout                                                                                                                                                            ...",
+            "score": 0.004377969540655613,
+            "metadata": {
+              "type": "quanti",
+              "chunk_index": 302,
+              "source": "questionnaire",
+              "total_chunks": 318,
+              "id": "questionnaire_unknown_2350"
+            }
+          }
+        ],
+        "num_sources": 5,
+        "elapsed_time": 6.794206619262695,
+        "metadata": {
+          "k": 5,
+          "use_reranking": true,
+          "use_ontology": false,
+          "use_cross_analysis": false,
+          "include_quantitative": true,
+          "commune_filter": null,
+          "num_sources": 5
+        },
+        "context": "=== CONTEXTE PASSÉ AU LLM (V2.1) ===\nQuestion: Comment les Corses perçoivent-ils l'accès aux services publics ?\nDate: 2026-01-21T08:26:01.659518\nNombre de sources: 5\n\n=== SOURCES UTILISÉES ===\n\n--- Source 1 (score: 0.0924) ---\nMétadonnées: chunk_index: 9, total_chunks: 14, type: qualitatif, nom: Bastia, source: verbatim, id: verbatim_Bastia_2422\nContenu:\n, on est morts', \"L'accès à la santé pour sauver des vies\", 'proximité services/commerces', \"La santé est hyper importante pour avoir une bonne qualité de vie, c'est un peu un piller fondamental\", 'Pr...\n\n--- Source 2 (score: 0.0202) ---\nMétadonnées: type: quanti, total_chunks: 275, chunk_index: 127, source: questionnaire, id: questionnaire_unknown_872\nContenu:\n.                                                                                                                                                                                             Manque d'a...\n\n--- Source 3 (score: 0.0138) ---\nMétadonnées: source: questionnaire, chunk_index: 89, total_chunks: 373, type: quanti, id: questionnaire_unknown_1109\nContenu:\nLes transports sont importants car en Corse on a pas forcément tout les besoins nécessaires à proximité...\n\n--- Source 4 (score: 0.0109) ---\nMétadonnées: chunk_index: 23, source: verbatim, nom: Ajaccio, type: qualitatif, total_chunks: 27, id: verbatim_Ajaccio_2391\nContenu:\n. \\nMes véritables choix auraient été Culture, Santé, Services de proximité ou Confiance envers les institutions étatiques.\", 'Le coût de la vie en Corse est très élevée et des revenus relativement im...\n\n--- Source 5 (score: 0.0044) ---\nMétadonnées: type: quanti, chunk_index: 302, source: questionnaire, total_chunks: 318, id: questionnaire_unknown_2350\nContenu:\nL'accès à la culture est aujourd'hui partout                                                                                                                                                            ...\n\n=== FIN DU CONTEXTE ===",
+        "error": null
+      }
+    }
+  },
+  {
+    "question": "Quels sont les enjeux environnementaux en Corse ?",
+    "results": {
+      "RAG v2 (Hybrid+Reranking)": {
+        "success": true,
+        "answer": "Les enjeux environnementaux en Corse comprennent la préservation de la nature, la biodiversité, la qualité de l'air et de l'eau, ainsi que l'aménagement du territoire. Les habitants soulignent l'importance de protéger l'environnement pour maintenir la qualité de vie (Extrait 1 et Extrait 2).\n\nCependant, des défis persistent, notamment en termes de réseau téléphonique insatisfaisant (Extrait 3) et de manque de personnel dans les centres hospitaliers (Extrait 1). Ces aspects peuvent impacter la qualité de vie des habitants de la région.",
+        "sources": [
+          {
+            "content": ", 'un cadre corse', \"l'environnement concerne tant la question de la qualité de l'air , de l'eau , la préservation de la nature , la biodiversité que l'aménagement du territoire et détermine la qualité de vie\", 'point à améliorer', 'logement : avoir du confort, quelque part où dormir est très important', 'La santé car si notre santé est fragile on a une qualité de vie réduite', 'Les centres hospitaliers manquent de personnel alors que tout le monde doit y avoir accès'",
+            "score": 0.6567754745483398,
+            "metadata": {
+              "type": "qualitatif",
+              "total_chunks": 27,
+              "nom": "Ajaccio",
+              "id": "verbatim_Ajaccio_2377",
+              "source": "verbatim",
+              "chunk_index": 9
+            }
+          },
+          {
+            "content": ".                                                                                                                                                                        Protéger l'environnement ou en prendre soin est important, en Corse on a cette chance d'avoir cette richesse de la nature",
+            "score": 0.6546652317047119,
+            "metadata": {
+              "id": "questionnaire_unknown_1111",
+              "source": "questionnaire",
+              "chunk_index": 91,
+              "total_chunks": 373,
+              "type": "quanti"
+            }
+          },
+          {
+            "content": "de choix en arrivant en étude supérieur en Corse                                                                                                                                                                                          La crise environnemental est un problème partout dans le monde                                                                                         La Corse souffre d'un très mauvais réseau              Peu satisfait             Satisfait",
+            "score": 0.3986652195453644,
+            "metadata": {
+              "chunk_index": 266,
+              "total_chunks": 275,
+              "id": "questionnaire_unknown_1011",
+              "source": "questionnaire",
+              "type": "quanti"
+            }
+          },
+          {
+            "content": "Vivre en Corse",
+            "score": 0.0063522919081151485,
+            "metadata": {
+              "source": "questionnaire",
+              "total_chunks": 318,
+              "chunk_index": 240,
+              "id": "questionnaire_unknown_2288",
+              "type": "quanti"
+            }
+          },
+          {
+            "content": "La présence de la communauté est un critère essentiel de la vie en Corse",
+            "score": 0.006228082347661257,
+            "metadata": {
+              "chunk_index": 285,
+              "source": "questionnaire",
+              "type": "quanti",
+              "id": "questionnaire_unknown_2333",
+              "total_chunks": 318
+            }
+          }
+        ],
+        "num_sources": 5,
+        "elapsed_time": 6.5808045864105225,
+        "metadata": {
+          "k": 5,
+          "use_reranking": true,
+          "use_ontology": false,
+          "use_cross_analysis": false,
+          "include_quantitative": true,
+          "commune_filter": null,
+          "num_sources": 5
+        },
+        "context": "=== CONTEXTE PASSÉ AU LLM (V2) ===\nQuestion: Quels sont les enjeux environnementaux en Corse ?\nDate: 2026-01-21T08:26:08.239340\nNombre de sources: 5\n\n=== SOURCES UTILISÉES ===\n\n--- Source 1 (score: 0.6568) ---\nMétadonnées: type: qualitatif, total_chunks: 27, nom: Ajaccio, id: verbatim_Ajaccio_2377, source: verbatim, chunk_index: 9\nContenu:\n, 'un cadre corse', \"l'environnement concerne tant la question de la qualité de l'air , de l'eau , la préservation de la nature , la biodiversité que l'aménagement du territoire et détermine la qualité de vie\", 'point à améliorer', 'logement : avoir du confort, quelque part où dormir est très important', 'La santé car si notre santé est fragile on a une qualité de vie réduite', 'Les centres hospitaliers manquent de personnel alors que tout le monde doit y avoir accès'\n\n--- Source 2 (score: 0.6547) ---\nMétadonnées: id: questionnaire_unknown_1111, source: questionnaire, chunk_index: 91, total_chunks: 373, type: quanti\nContenu:\n.                                                                                                                                                                        Protéger l'environnement ou en prendre soin est important, en Corse on a cette chance d'avoir cette richesse de la nature\n\n--- Source 3 (score: 0.3987) ---\nMétadonnées: chunk_index: 266, total_chunks: 275, id: questionnaire_unknown_1011, source: questionnaire, type: quanti\nContenu:\nde choix en arrivant en étude supérieur en Corse                                                                                                                                                                                          La crise environnemental est un problème partout dans le monde                                                                                         La Corse souffre d'un très mauvais réseau              Peu satisfait             Satisfait\n\n--- Source 4 (score: 0.0064) ---\nMétadonnées: source: questionnaire, total_chunks: 318, chunk_index: 240, id: questionnaire_unknown_2288, type: quanti\nContenu:\nVivre en Corse\n\n--- Source 5 (score: 0.0062) ---\nMétadonnées: chunk_index: 285, source: questionnaire, type: quanti, id: questionnaire_unknown_2333, total_chunks: 318\nContenu:\nLa présence de la communauté est un critère essentiel de la vie en Corse\n\n=== FIN DU CONTEXTE ===",
+        "error": null
+      },
+      "RAG v2.1 (LlamaIndex)": {
+        "success": true,
+        "answer": "Les enjeux environnementaux en Corse incluent la crise environnementale mondiale, la préservation de la nature, la biodiversité, la qualité de l'air et de l'eau, ainsi que la lutte contre la pollution.",
+        "sources": [
+          {
+            "content": "de choix en arrivant en étude supérieur en Corse                                                                                                                                                        ...",
+            "score": 0.49567514657974243,
+            "metadata": {
+              "chunk_index": 266,
+              "total_chunks": 275,
+              "type": "quanti",
+              "source": "questionnaire",
+              "id": "questionnaire_unknown_1011"
+            }
+          },
+          {
+            "content": ".                                                                                                                                                                        Protéger l'environnement ou en ...",
+            "score": 0.4548683762550354,
+            "metadata": {
+              "type": "quanti",
+              "source": "questionnaire",
+              "total_chunks": 373,
+              "chunk_index": 91,
+              "id": "questionnaire_unknown_1111"
+            }
+          },
+          {
+            "content": ", 'un cadre corse', \"l'environnement concerne tant la question de la qualité de l'air , de l'eau , la préservation de la nature , la biodiversité que l'aménagement du territoire et détermine la qualit...",
+            "score": 0.3404471278190613,
+            "metadata": {
+              "chunk_index": 9,
+              "nom": "Ajaccio",
+              "source": "verbatim",
+              "total_chunks": 27,
+              "type": "qualitatif",
+              "id": "verbatim_Ajaccio_2377"
+            }
+          },
+          {
+            "content": ", 'Qualité de vie', 'Culture : apprendre, échanger, partager, recevoir, transmettre', 'environnement = base du bien être', \"L'environnement, dont l'impact du réchauffement climatique, sans oublier la ...",
+            "score": 0.2569974362850189,
+            "metadata": {
+              "chunk_index": 10,
+              "source": "verbatim",
+              "total_chunks": 33,
+              "nom": "Corte",
+              "type": "qualitatif",
+              "id": "verbatim_Corte_2460"
+            }
+          },
+          {
+            "content": "verbatim: [\"L'environnement est important car vivre sur une zone commerciale ou de type cage à lapins impacte la santé physique et morale. l'humain a besoin d'espace, vivre trop proche des autres est ...",
+            "score": 0.10890695452690125,
+            "metadata": {
+              "type": "qualitatif",
+              "total_chunks": 3,
+              "nom": "Castirla",
+              "chunk_index": 1,
+              "source": "verbatim",
+              "id": "verbatim_Castirla_2447"
+            }
+          }
+        ],
+        "num_sources": 5,
+        "elapsed_time": 7.5783302783966064,
+        "metadata": {
+          "k": 5,
+          "use_reranking": true,
+          "use_ontology": false,
+          "use_cross_analysis": false,
+          "include_quantitative": true,
+          "commune_filter": null,
+          "num_sources": 5
+        },
+        "context": "=== CONTEXTE PASSÉ AU LLM (V2.1) ===\nQuestion: Quels sont les enjeux environnementaux en Corse ?\nDate: 2026-01-21T08:26:15.818667\nNombre de sources: 5\n\n=== SOURCES UTILISÉES ===\n\n--- Source 1 (score: 0.4957) ---\nMétadonnées: chunk_index: 266, total_chunks: 275, type: quanti, source: questionnaire, id: questionnaire_unknown_1011\nContenu:\nde choix en arrivant en étude supérieur en Corse                                                                                                                                                        ...\n\n--- Source 2 (score: 0.4549) ---\nMétadonnées: type: quanti, source: questionnaire, total_chunks: 373, chunk_index: 91, id: questionnaire_unknown_1111\nContenu:\n.                                                                                                                                                                        Protéger l'environnement ou en ...\n\n--- Source 3 (score: 0.3404) ---\nMétadonnées: chunk_index: 9, nom: Ajaccio, source: verbatim, total_chunks: 27, type: qualitatif, id: verbatim_Ajaccio_2377\nContenu:\n, 'un cadre corse', \"l'environnement concerne tant la question de la qualité de l'air , de l'eau , la préservation de la nature , la biodiversité que l'aménagement du territoire et détermine la qualit...\n\n--- Source 4 (score: 0.2570) ---\nMétadonnées: chunk_index: 10, source: verbatim, total_chunks: 33, nom: Corte, type: qualitatif, id: verbatim_Corte_2460\nContenu:\n, 'Qualité de vie', 'Culture : apprendre, échanger, partager, recevoir, transmettre', 'environnement = base du bien être', \"L'environnement, dont l'impact du réchauffement climatique, sans oublier la ...\n\n--- Source 5 (score: 0.1089) ---\nMétadonnées: type: qualitatif, total_chunks: 3, nom: Castirla, chunk_index: 1, source: verbatim, id: verbatim_Castirla_2447\nContenu:\nverbatim: [\"L'environnement est important car vivre sur une zone commerciale ou de type cage à lapins impacte la santé physique et morale. l'humain a besoin d'espace, vivre trop proche des autres est ...\n\n=== FIN DU CONTEXTE ===",
+        "error": null
+      }
+    }
+  }
+]

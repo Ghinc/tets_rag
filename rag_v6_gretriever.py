@@ -31,6 +31,10 @@ from rag_v5_graphrag_neo4j import Neo4jGraphManager, GraphRAGPipeline
 from rag_v2_improved import RetrievalResult
 from commune_detector import detect_commune
 
+# Dimension de l'espace latent partagé entre GNN et QueryEncoder.
+# Tous les embeddings comparés par cosine similarity DOIVENT être dans cet espace.
+LATENT_DIM = 512
+
 
 class GraphEncoder(torch.nn.Module):
     """
@@ -39,16 +43,16 @@ class GraphEncoder(torch.nn.Module):
     Utilise GraphSAGE pour agréger les informations du voisinage
     """
 
-    def __init__(self, input_dim: int = 768,
+    def __init__(self, input_dim: int = 1024,
                  hidden_dim: int = 256,
-                 output_dim: int = 512,
+                 output_dim: int = LATENT_DIM,
                  num_layers: int = 2,
                  dropout: float = 0.1):
         """
         Args:
-            input_dim: Dimension des features d'entrée (embeddings de texte)
+            input_dim: Dimension des features d'entrée (BGE-M3 = 1024)
             hidden_dim: Dimension des couches cachées
-            output_dim: Dimension de l'embedding final
+            output_dim: Dimension de l'embedding final (doit == LATENT_DIM)
             num_layers: Nombre de couches GNN
             dropout: Taux de dropout
         """
@@ -100,21 +104,25 @@ class QueryEncoder(torch.nn.Module):
     Projette les embeddings textuels de requêtes dans l'espace latent du GNN
 
     Architecture: MLP simple à 2 couches
-    - Input: 1024 dim (BGE-M3)
+    - Input: dim(embed_model) (BGE-M3 = 1024)
     - Hidden: 256 dim
-    - Output: 512 dim (espace graphe compressé)
+    - Output: LATENT_DIM (== GNN output_dim)
     """
 
-    def __init__(self, input_dim: int = 1024,
+    def __init__(self, input_dim: int,
                  hidden_dim: int = 256,
-                 output_dim: int = 512):
+                 output_dim: int = LATENT_DIM):
         """
         Args:
-            input_dim: Dimension de l'embedding textuel d'entrée (BGE-M3 = 1024)
+            input_dim: Dimension de l'embedding textuel d'entrée (dérivée du modèle)
             hidden_dim: Dimension de la couche cachée
-            output_dim: Dimension de sortie (doit matcher GNN output_dim = 512)
+            output_dim: Dimension de sortie (doit == LATENT_DIM == GNN output_dim)
         """
         super().__init__()
+        assert output_dim == LATENT_DIM, (
+            f"QueryEncoder output_dim={output_dim} != LATENT_DIM={LATENT_DIM}. "
+            f"Les espaces latents doivent correspondre."
+        )
 
         # MLP à 2 couches : Simple mais efficace
         self.mlp = torch.nn.Sequential(
@@ -297,7 +305,8 @@ class GRetrieverManager:
         print(f"\nEntraînement du GNN ({num_epochs} epochs)...")
 
         input_dim = self.graph_data.x.size(1)
-        self.gnn_model = GraphEncoder(input_dim=input_dim, output_dim=input_dim).to(self.device)
+        print(f"  Dimensions: input={input_dim}, output=LATENT_DIM={LATENT_DIM}")
+        self.gnn_model = GraphEncoder(input_dim=input_dim, output_dim=LATENT_DIM).to(self.device)
 
         optimizer = torch.optim.Adam(self.gnn_model.parameters(), lr=lr)
 
@@ -417,11 +426,24 @@ class GRetrieverManager:
         print(f"Learning rate: {lr}")
         print(f"Temperature: {temperature}")
 
+        # Dériver input_dim depuis le modèle d'embeddings (pas de hardcode)
+        probe_dim = len(self.embed_model.encode_query("test"))
+        print(f"  Dimension encode_query detectee: {probe_dim}")
+
+        # Vérifier que le GNN sort bien LATENT_DIM
+        with torch.no_grad():
+            gnn_out = self.gnn_model(self.graph_data.x, self.graph_data.edge_index)
+        gnn_out_dim = gnn_out.size(1)
+        assert gnn_out_dim == LATENT_DIM, (
+            f"GNN output_dim={gnn_out_dim} != LATENT_DIM={LATENT_DIM}. "
+            f"Reentrainer le GNN avec output_dim=LATENT_DIM."
+        )
+
         # Initialiser QueryEncoder
         self.query_encoder = QueryEncoder(
-            input_dim=1024,   # BGE-M3 input
-            hidden_dim=256,   # Hidden layer compacte
-            output_dim=512    # Même dim que GNN output (512)
+            input_dim=probe_dim,      # Dérivé du modèle d'embeddings
+            hidden_dim=256,
+            output_dim=LATENT_DIM     # == GNN output_dim
         ).to(self.device)
 
         optimizer = torch.optim.Adam(self.query_encoder.parameters(), lr=lr)
@@ -497,40 +519,48 @@ class GRetrieverManager:
         if self.gnn_model is None:
             raise ValueError("Le GNN n'a pas été entraîné. Appelez train_gnn() d'abord.")
 
-        # 1. Encoder la requête (textuellement)
+        # 1. Encoder la requete (textuellement)
         query_embedding = self.embed_model.encode_query(query)
         query_tensor = torch.tensor(query_embedding, dtype=torch.float).to(self.device)
 
         # 2. PROJETER dans l'espace du graphe avec QueryEncoder
-        if hasattr(self, 'query_encoder') and self.query_encoder is not None:
-            with torch.no_grad():
-                query_proj = self.query_encoder(query_tensor.unsqueeze(0))  # ✓ Même espace que GNN !
-        else:
-            # Fallback si QueryEncoder pas entraîné
-            query_proj = query_tensor.unsqueeze(0)
-            print("[WARNING] QueryEncoder non entraîné, utilisation embedding brut BGE-M3")
-            print("          Les espaces latents sont incompatibles ! Entraîner QueryEncoder recommandé.")
+        if not hasattr(self, 'query_encoder') or self.query_encoder is None:
+            raise RuntimeError(
+                "QueryEncoder non entraine. Impossible de projeter la requete "
+                f"(dim={query_tensor.shape[-1]}) dans l'espace GNN (dim={LATENT_DIM}). "
+                "Appelez train_query_encoder() d'abord."
+            )
 
-        # 3. Obtenir les embeddings GNN des nœuds
+        with torch.no_grad():
+            query_proj = self.query_encoder(query_tensor.unsqueeze(0))
+
+        # 3. Obtenir les embeddings GNN des noeuds
         self.gnn_model.eval()
         with torch.no_grad():
             node_embeddings = self.gnn_model(self.graph_data.x, self.graph_data.edge_index)
 
-        # 4. Normaliser les embeddings pour cosine similarity correcte
+        # 4. Assert dimensionnel explicite
+        assert query_proj.shape[1] == node_embeddings.shape[1], (
+            f"Dimension mismatch: query_proj={query_proj.shape[1]} vs "
+            f"node_embeddings={node_embeddings.shape[1]}. "
+            f"Les deux doivent etre == LATENT_DIM={LATENT_DIM}."
+        )
+
+        # 5. Normaliser les embeddings pour cosine similarity correcte
         query_proj = F.normalize(query_proj, p=2, dim=1)
         node_embeddings = F.normalize(node_embeddings, p=2, dim=1)
 
-        # 5. Calculer la similarité cosinus (maintenant dans le même espace !)
+        # 6. Calculer la similarite cosinus (meme espace LATENT_DIM)
         similarities = F.cosine_similarity(
-            query_proj,        # ✓ Espace graphe (512D)
-            node_embeddings,   # ✓ Espace graphe (512D)
+            query_proj,        # [1, LATENT_DIM]
+            node_embeddings,   # [num_nodes, LATENT_DIM]
             dim=1
         )
 
-        # 6. Récupérer les top-k nœuds
+        # 7. Recuperer les top-k noeuds
         top_k_scores, top_k_indices = torch.topk(similarities, k)
 
-        # 7. Construire la réponse
+        # 8. Construire la reponse
         results = []
         for score, idx in zip(top_k_scores.cpu().numpy(), top_k_indices.cpu().numpy()):
             node = self.reverse_mapping[idx]

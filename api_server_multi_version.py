@@ -27,6 +27,8 @@ from dotenv import load_dotenv
 # Imports des différentes versions RAG
 from rag_v1_class import BasicRAGPipeline, RetrievalResult as RetrievalResult_v1
 from rag_v2_boosted import ImprovedRAGPipeline, RetrievalResult as RetrievalResult_v2
+from rag_v2_1_llamaindex import RAGv2_1_LlamaIndex
+from rag_v2_2_portrait import PortraitRAGPipeline
 from rag_v3_ontology import RAGPipelineWithOntology, RetrievalResult as RetrievalResult_v3
 from rag_v4_cross_analysis import ImprovedRAGPipeline as CrossAnalysisRAGPipeline, RetrievalResult as RetrievalResult_v4
 from rag_v5_graphrag_neo4j import GraphRAGPipeline
@@ -66,7 +68,7 @@ load_dotenv()
 class QueryRequest(BaseModel):
     """Modèle de requête pour poser une question"""
     question: str = Field(..., description="Question à poser au chatbot", min_length=1)
-    rag_version: Literal["v1", "v2", "v3", "v4", "v5", "v6", "v7", "v8"] = Field("v2", description="Version du RAG à utiliser")
+    rag_version: Literal["v1", "v2", "v2.1", "v2.2", "v3", "v4", "v5", "v6", "v7", "v8"] = Field("v2", description="Version du RAG à utiliser")
     k: int = Field(5, description="Nombre de documents à récupérer", ge=1, le=20)
     use_reranking: bool = Field(True, description="Utiliser le reranking (v2/v3/v4 uniquement)")
     include_quantitative: bool = Field(True, description="Inclure les données quantitatives (v2/v3/v4 uniquement)")
@@ -74,6 +76,14 @@ class QueryRequest(BaseModel):
     use_ontology_enrichment: bool = Field(True, description="Utiliser l'enrichissement ontologique (v3 uniquement)")
     use_cross_analysis: bool = Field(True, description="Activer l'analyse croisée automatique (v4 uniquement)")
     query_mode: Literal["router", "sub_question", "hybrid"] = Field("router", description="Mode de query pour v7/v8 (router/sub_question/hybrid)")
+    llm_model: str = Field("gpt-3.5-turbo", description="Modèle LLM à utiliser (gpt-3.5-turbo, gpt-4, gpt-4o, gpt-4o-mini)")
+    # Filtres portrait pour v2.2
+    auto_detect_portrait: bool = Field(True, description="Détecter automatiquement les filtres portrait (v2.2)")
+    portrait_age_min: Optional[int] = Field(None, description="Âge minimum pour filtrer les verbatims (v2.2)", ge=15, le=100)
+    portrait_age_max: Optional[int] = Field(None, description="Âge maximum pour filtrer les verbatims (v2.2)", ge=15, le=100)
+    portrait_genre: Optional[str] = Field(None, description="Genre pour filtrer les verbatims: Homme/Femme (v2.2)")
+    portrait_profession: Optional[str] = Field(None, description="Profession pour filtrer les verbatims (v2.2)")
+    portrait_dimension: Optional[str] = Field(None, description="Dimension qualité de vie pour filtrer (v2.2)")
 
     model_config = ConfigDict(
         json_schema_extra={
@@ -103,6 +113,7 @@ class QueryResponse(BaseModel):
     metadata: Dict = Field(..., description="Métadonnées de la requête")
     rag_version_used: str = Field(..., description="Version du RAG utilisée")
     timestamp: str = Field(..., description="Horodatage de la réponse")
+    context: Optional[str] = Field(None, description="Contexte complet passé au LLM (pour debug/export)")
 
 
 class HealthResponse(BaseModel):
@@ -110,11 +121,14 @@ class HealthResponse(BaseModel):
     status: str = Field(..., description="État du serveur")
     rag_v1_initialized: bool = Field(..., description="RAG v1 initialisé")
     rag_v2_initialized: bool = Field(..., description="RAG v2 initialisé")
+    rag_v2_1_initialized: bool = Field(..., description="RAG v2.1 initialisé")
+    rag_v2_2_initialized: bool = Field(..., description="RAG v2.2 (Portrait) initialisé")
     rag_v3_initialized: bool = Field(..., description="RAG v3 initialisé")
     rag_v4_initialized: bool = Field(..., description="RAG v4 initialisé")
     rag_v5_initialized: bool = Field(..., description="RAG v5 initialisé")
     rag_v6_initialized: bool = Field(..., description="RAG v6 initialisé")
     rag_v7_initialized: bool = Field(..., description="RAG v7 initialisé")
+    rag_v8_initialized: bool = Field(..., description="RAG v8 initialisé")
     timestamp: str = Field(..., description="Horodatage du check")
     version: str = Field(..., description="Version de l'API")
 
@@ -133,11 +147,14 @@ class VersionInfo(BaseModel):
 rag_pipelines = {
     "v1": None,
     "v2": None,
+    "v2.1": None,
+    "v2.2": None,
     "v3": None,
     "v4": None,
     "v5": None,
     "v6": None,
-    "v7": None
+    "v7": None,
+    "v8": None
 }
 
 
@@ -177,7 +194,7 @@ def initialize_all_rags():
         rag_pipelines["v1"] = None
 
     # === INITIALISER RAG v2 ===
-    print("\n[2/4] Initialisation RAG v2...")
+    print("\n[2/9] Initialisation RAG v2...")
     try:
         rag_pipelines["v2"] = ImprovedRAGPipeline(
             openai_api_key=openai_api_key,
@@ -193,8 +210,52 @@ def initialize_all_rags():
         print(f"AVERTISSEMENT: RAG v2 non disponible: {e}")
         rag_pipelines["v2"] = None
 
+    # === INITIALISER RAG v2.1 (LlamaIndex équivalent v2) ===
+    print("\n[2.1/9] Initialisation RAG v2.1 (LlamaIndex)...")
+    try:
+        rag_pipelines["v2.1"] = RAGv2_1_LlamaIndex(
+            chroma_path="./chroma_v2",
+            collection_name="communes_corses_v2",
+            embedding_model="BAAI/bge-m3",
+            rerank_model="BAAI/bge-reranker-v2-m3",
+            llm_model="gpt-3.5-turbo",
+            top_k=5,
+            use_reranker=True,
+            use_hybrid=True
+        )
+        print("OK RAG v2.1 initialisé")
+    except Exception as e:
+        print(f"AVERTISSEMENT: RAG v2.1 non disponible: {e}")
+        import traceback
+        traceback.print_exc()
+        rag_pipelines["v2.1"] = None
+
+    # === INITIALISER RAG v2.2 (Portrait) ===
+    print("\n[2.2/10] Initialisation RAG v2.2 (Portrait)...")
+    try:
+        rag_pipelines["v2.2"] = PortraitRAGPipeline(
+            chroma_path="./chroma_portrait",
+            collection_name="portrait_verbatims",
+            embedding_model="BAAI/bge-m3",
+            reranker_model="BAAI/bge-reranker-v2-m3",
+            llm_model="gpt-3.5-turbo",
+            openai_api_key=openai_api_key,
+            quant_data_path="df_mean_by_commune.csv"
+        )
+        # Afficher les stats portrait
+        stats = rag_pipelines["v2.2"].get_portrait_stats()
+        if stats.get('count', 0) > 0:
+            print(f"OK RAG v2.2 initialisé ({stats['count']} verbatims portrait)")
+        else:
+            print("OK RAG v2.2 initialisé (pas de verbatims portrait indexés)")
+    except Exception as e:
+        print(f"AVERTISSEMENT: RAG v2.2 non disponible: {e}")
+        import traceback
+        traceback.print_exc()
+        rag_pipelines["v2.2"] = None
+
     # === INITIALISER RAG v3 ===
-    print("\n[3/4] Initialisation RAG v3...")
+    print("\n[3/10] Initialisation RAG v3...")
     try:
         rag_pipelines["v3"] = RAGPipelineWithOntology(
             openai_api_key=openai_api_key,
@@ -212,7 +273,7 @@ def initialize_all_rags():
         rag_pipelines["v3"] = None
 
     # === INITIALISER RAG v4 ===
-    print("\n[4/6] Initialisation RAG v4...")
+    print("\n[4/9] Initialisation RAG v4...")
     try:
         rag_pipelines["v4"] = CrossAnalysisRAGPipeline(
             openai_api_key=openai_api_key,
@@ -229,7 +290,7 @@ def initialize_all_rags():
         rag_pipelines["v4"] = None
 
     # === INITIALISER RAG v5 (Graph-RAG Neo4j) ===
-    print("\n[5/6] Initialisation RAG v5 (Graph-RAG Neo4j)...")
+    print("\n[5/9] Initialisation RAG v5 (Graph-RAG Neo4j)...")
     try:
         # Utiliser None si NEO4J_PASSWORD n'est pas défini (connexion sans auth)
         neo4j_password = os.getenv("NEO4J_PASSWORD", None)
@@ -254,7 +315,7 @@ def initialize_all_rags():
         rag_pipelines["v5"] = None
 
     # === INITIALISER RAG v6 (G-Retriever GNN) ===
-    print("\n[6/6] Initialisation RAG v6 (G-Retriever)...")
+    print("\n[6/9] Initialisation RAG v6 (G-Retriever)...")
     if not V6_AVAILABLE:
         print("AVERTISSEMENT: RAG v6 non disponible (torch_geometric manquant)")
         rag_pipelines["v6"] = None
@@ -276,8 +337,8 @@ def initialize_all_rags():
             print(f"AVERTISSEMENT: RAG v6 non disponible: {e}")
             rag_pipelines["v6"] = None
 
-    # [7/8] Initialisation RAG v7 (LlamaIndex - graphes optionnels)
-    print("\n[7/8] Initialisation RAG v7 (LlamaIndex - graphes optionnels)...")
+    # [7/9] Initialisation RAG v7 (LlamaIndex - graphes optionnels)
+    print("\n[7/9] Initialisation RAG v7 (LlamaIndex - graphes optionnels)...")
     if not V7_AVAILABLE:
         print("AVERTISSEMENT: RAG v7 non disponible (llama-index manquant)")
         rag_pipelines["v7"] = None
@@ -298,8 +359,8 @@ def initialize_all_rags():
             traceback.print_exc()
             rag_pipelines["v7"] = None
 
-    # [8/8] Initialisation RAG v8 (LlamaIndex FULL - graphes OBLIGATOIRES)
-    print("\n[8/8] Initialisation RAG v8 (LlamaIndex FULL - graphes OBLIGATOIRES)...")
+    # [8/9] Initialisation RAG v8 (LlamaIndex FULL - graphes OBLIGATOIRES)
+    print("\n[8/9] Initialisation RAG v8 (LlamaIndex FULL - graphes OBLIGATOIRES)...")
     if not V8_AVAILABLE:
         print("AVERTISSEMENT: RAG v8 non disponible (llama-index manquant)")
         rag_pipelines["v8"] = None
@@ -347,8 +408,8 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title="API Chatbot RAG Multi-Version - Qualité de vie en Corse",
-    description="API REST permettant de choisir entre les versions v1, v2 et v3 du système RAG",
-    version="2.0.0",
+    description="API REST permettant de choisir entre les versions v1, v2, v2.1, v2.2, v3, v4, v5, v6, v7, v8 du système RAG",
+    version="2.1.0",
     docs_url="/docs",
     redoc_url="/redoc",
     lifespan=lifespan
@@ -391,13 +452,16 @@ async def health_check():
         status="healthy",
         rag_v1_initialized=rag_pipelines["v1"] is not None,
         rag_v2_initialized=rag_pipelines["v2"] is not None,
+        rag_v2_1_initialized=rag_pipelines["v2.1"] is not None,
+        rag_v2_2_initialized=rag_pipelines["v2.2"] is not None,
         rag_v3_initialized=rag_pipelines["v3"] is not None,
         rag_v4_initialized=rag_pipelines["v4"] is not None,
         rag_v5_initialized=rag_pipelines["v5"] is not None,
         rag_v6_initialized=rag_pipelines["v6"] is not None,
         rag_v7_initialized=rag_pipelines["v7"] is not None,
+        rag_v8_initialized=rag_pipelines["v8"] is not None,
         timestamp=datetime.now().isoformat(),
-        version="2.0.0"
+        version="2.1.0"
     )
 
 
@@ -432,6 +496,34 @@ async def get_versions():
                 "Boost intelligent questionnaires",
                 "Données quantitatives",
                 "Meilleure précision"
+            ]
+        ),
+        VersionInfo(
+            version="v2.1",
+            name="RAG LlamaIndex (équivalent v2)",
+            description="Version LlamaIndex du RAG v2 pour comparaison",
+            available=rag_pipelines["v2.1"] is not None,
+            features=[
+                "Framework LlamaIndex",
+                "Hybrid retrieval (BM25 + Vector)",
+                "Reranking avec SentenceTransformer",
+                "Boost intelligent questionnaires",
+                "Comparaison avec v2 'fait main'"
+            ]
+        ),
+        VersionInfo(
+            version="v2.2",
+            name="RAG Portrait (filtres démographiques)",
+            description="v2 + filtrage par profil démographique (âge, genre, profession)",
+            available=rag_pipelines["v2.2"] is not None,
+            features=[
+                "Toutes les fonctionnalités v2",
+                "Filtrage par tranche d'âge (15-24, 25-34, 35-49, 50-64, 65+)",
+                "Filtrage par genre (Homme/Femme)",
+                "Filtrage par profession (9 catégories)",
+                "Filtrage par dimension qualité de vie",
+                "Auto-détection des filtres dans la question",
+                "Requêtes ciblées: 'Que pensent les jeunes de la santé ?'"
             ]
         ),
         VersionInfo(
@@ -545,7 +637,13 @@ async def query_rag(request: QueryRequest):
         )
 
     try:
-        print(f"\n[{datetime.now().isoformat()}] Requête {request.rag_version}: {request.question}")
+        print(f"\n[{datetime.now().isoformat()}] Requête {request.rag_version} (LLM: {request.llm_model}): {request.question}")
+
+        # Changer le modèle LLM si différent du défaut
+        if hasattr(rag, 'llm_model'):
+            rag.llm_model = request.llm_model
+        if hasattr(rag, 'llm') and hasattr(rag.llm, 'model'):
+            rag.llm.model = request.llm_model
 
         # Exécuter la requête selon la version
         if request.rag_version == "v1":
@@ -563,6 +661,55 @@ async def query_rag(request: QueryRequest):
                 use_reranking=request.use_reranking,
                 include_quantitative=request.include_quantitative,
                 commune_filter=request.commune_filter
+            )
+
+        elif request.rag_version == "v2.1":
+            # v2.1 : LlamaIndex équivalent v2
+            result = rag.query(
+                question=request.question,
+                commune=request.commune_filter
+            )
+            answer = result["answer"]
+            # Convertir les sources au format attendu
+            retrieval_results = []
+            for source in result["sources"]:
+                retrieval_results.append(type('obj', (object,), {
+                    'text': source['text'],
+                    'score': source['score'] if source['score'] is not None else 0.0,
+                    'metadata': source['metadata']
+                })())
+
+        elif request.rag_version == "v2.2":
+            # v2.2 : Portrait avec filtres démographiques
+            # Construire les filtres portrait explicites si fournis
+            portrait_filters = None
+            if not request.auto_detect_portrait:
+                # Mode manuel: utiliser les filtres fournis par l'utilisateur
+                has_explicit_filter = any([
+                    request.portrait_age_min,
+                    request.portrait_age_max,
+                    request.portrait_genre,
+                    request.portrait_profession,
+                    request.portrait_dimension
+                ])
+                if has_explicit_filter:
+                    portrait_filters = {
+                        'has_portrait_filter': True,
+                        'age_min': request.portrait_age_min,
+                        'age_max': request.portrait_age_max,
+                        'genre': request.portrait_genre,
+                        'profession': request.portrait_profession,
+                        'dimension': request.portrait_dimension
+                    }
+
+            answer, retrieval_results, detected_filters = rag.query(
+                question=request.question,
+                k=request.k,
+                use_reranking=request.use_reranking,
+                include_quantitative=request.include_quantitative,
+                commune_filter=request.commune_filter,
+                portrait_filters=portrait_filters,
+                auto_detect_filters=request.auto_detect_portrait
             )
 
         elif request.rag_version == "v3":
@@ -656,10 +803,35 @@ async def query_rag(request: QueryRequest):
                 for result in retrieval_results
             ]
 
+        # Construire le contexte complet (ce qui est passé au LLM)
+        context_parts = [
+            f"=== CONTEXTE PASSÉ AU LLM ({request.rag_version.upper()}) ===",
+            f"Question: {request.question}",
+            f"Date: {datetime.now().isoformat()}",
+            f"Nombre de sources: {len(sources)}",
+            "",
+            "=== SOURCES UTILISÉES ===",
+            ""
+        ]
+
+        for i, source in enumerate(sources, 1):
+            context_parts.append(f"--- Source {i} (score: {source.score:.4f}) ---")
+            # Ajouter les métadonnées pertinentes
+            if source.metadata:
+                meta_str = ", ".join(f"{k}: {v}" for k, v in source.metadata.items() if v and k not in ['content'])
+                if meta_str:
+                    context_parts.append(f"Métadonnées: {meta_str}")
+            context_parts.append(f"Contenu:\n{source.content}")
+            context_parts.append("")
+
+        context_parts.append("=== FIN DU CONTEXTE ===")
+        full_context = "\n".join(context_parts)
+
         # Construire la réponse
         response = QueryResponse(
             answer=answer,
             sources=sources,
+            context=full_context,
             metadata={
                 "k": request.k,
                 "use_reranking": request.use_reranking if request.rag_version != "v1" else False,

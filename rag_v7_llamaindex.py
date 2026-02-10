@@ -32,7 +32,7 @@ from llama_index.core.query_engine import (
     RetrieverQueryEngine
 )
 from llama_index.core.selectors import LLMSingleSelector
-from llama_index.core.tools import QueryEngineTool
+from llama_index.core.tools import QueryEngineTool, ToolMetadata
 from llama_index.core.postprocessor import SimilarityPostprocessor
 
 # LlamaIndex integrations
@@ -85,7 +85,7 @@ class CommuneBoostRetriever(BaseRetriever):
             if doc_commune and doc_commune.lower() == self._commune_filter.lower():
                 # Appliquer le boost
                 score = score * self._boost_factor
-                print(f"  [BOOST] {doc_commune}: {node_with_score.score:.3f} → {score:.3f}")
+                print(f"  [BOOST] {doc_commune}: {node_with_score.score:.3f} -> {score:.3f}")
 
             # Créer un nouveau NodeWithScore avec le score boosté
             boosted_node = NodeWithScore(
@@ -174,6 +174,126 @@ class HybridGraphVectorRetriever(BaseRetriever):
         )
 
         return sorted_nodes[:self._similarity_top_k]
+
+
+class RobustRouterEngine:
+    """
+    Wrapper pour RouterQueryEngine qui gère les erreurs d'encodage charmap
+    sur Windows (caractères Unicode comme '→').
+
+    Note: L'erreur charmap peut survenir lors du print interne de LlamaIndex,
+    pas uniquement lors de la génération de la réponse. Ce wrapper redirige
+    stdout temporairement pour éviter ces erreurs.
+    """
+
+    def __init__(self, router_engine, fallback_engine):
+        """
+        Args:
+            router_engine: RouterQueryEngine original
+            fallback_engine: Query engine de fallback (vector-only)
+        """
+        self._engine = router_engine
+        self._fallback = fallback_engine
+
+    def query(self, query_str: str):
+        """
+        Exécute la requête avec gestion des erreurs d'encodage.
+        Capture stdout pour éviter les erreurs charmap des prints internes.
+        """
+        import sys
+        import io
+
+        # Rediriger stdout vers un buffer UTF-8 pour éviter les erreurs charmap
+        old_stdout = sys.stdout
+        try:
+            # Créer un buffer qui accepte tout caractère Unicode
+            sys.stdout = io.StringIO()
+            result = self._engine.query(query_str)
+            # Restaurer stdout et ignorer le contenu capturé (qui pourrait contenir des caractères problématiques)
+            sys.stdout = old_stdout
+            return result
+        except UnicodeEncodeError as e:
+            sys.stdout = old_stdout
+            print(f"  [FALLBACK] Erreur encodage - utilisation vector-only")
+            return self._fallback.query(query_str)
+        except Exception as e:
+            sys.stdout = old_stdout
+            if 'charmap' in str(e) or 'encode' in str(e).lower():
+                print(f"  [FALLBACK] Erreur charmap - utilisation vector-only")
+                return self._fallback.query(query_str)
+            raise
+
+    async def aquery(self, query_str: str):
+        """Version asynchrone avec fallback"""
+        import sys
+        import io
+
+        old_stdout = sys.stdout
+        try:
+            sys.stdout = io.StringIO()
+            result = await self._engine.aquery(query_str)
+            sys.stdout = old_stdout
+            return result
+        except (UnicodeEncodeError, Exception) as e:
+            sys.stdout = old_stdout
+            if isinstance(e, UnicodeEncodeError) or 'charmap' in str(e):
+                print(f"  [FALLBACK] Erreur encodage - utilisation vector-only")
+                return await self._fallback.aquery(query_str)
+            raise
+
+
+class RobustSubQuestionEngine:
+    """
+    Wrapper pour SubQuestionQueryEngine qui gère les KeyError causés par
+    le LLM qui génère des noms de tools incorrects.
+
+    Le LLM peut générer 'Ontologie BE-2010' au lieu de 'ontology_search',
+    causant une KeyError. Ce wrapper intercepte ces erreurs et fait un
+    fallback vers une requête directe sur vector_search.
+    """
+
+    def __init__(self, sub_question_engine, fallback_engine, tool_name_mapping: Dict[str, str] = None):
+        """
+        Args:
+            sub_question_engine: SubQuestionQueryEngine original
+            fallback_engine: Query engine de fallback (vector-only)
+            tool_name_mapping: Mapping des noms incorrects vers les noms corrects
+        """
+        self._engine = sub_question_engine
+        self._fallback = fallback_engine
+        self._mapping = tool_name_mapping or {
+            'Ontologie BE-2010': 'ontology_search',
+            'ontologie_be_2010': 'ontology_search',
+            'ontologie': 'ontology_search',
+            'graph': 'ontology_search',
+            'vector': 'vector_search',
+            'documents': 'vector_search',
+        }
+
+    def query(self, query_str: str):
+        """
+        Exécute la requête avec gestion des erreurs.
+        En cas de KeyError, utilise le fallback engine.
+        """
+        try:
+            return self._engine.query(query_str)
+        except KeyError as e:
+            # Le LLM a généré un nom de tool incorrect
+            error_tool = str(e).strip("'\"")
+            print(f"  [FALLBACK] KeyError sur tool '{error_tool}' - utilisation vector-only")
+            return self._fallback.query(query_str)
+        except Exception as e:
+            # Autre erreur - utiliser le fallback
+            print(f"  [FALLBACK] Erreur SubQuestion ({type(e).__name__}) - utilisation vector-only")
+            return self._fallback.query(query_str)
+
+    async def aquery(self, query_str: str):
+        """Version asynchrone avec fallback"""
+        try:
+            return await self._engine.aquery(query_str)
+        except (KeyError, Exception) as e:
+            print(f"  [FALLBACK] Erreur SubQuestion ({type(e).__name__}) - utilisation vector-only")
+            return await self._fallback.aquery(query_str)
 
 
 class LlamaIndexRAGPipeline:
@@ -446,60 +566,93 @@ class LlamaIndexRAGPipeline:
             response_synthesizer=get_response_synthesizer()
         )
 
-        # Tools pour le router avec descriptions
-        vector_tool = QueryEngineTool.from_defaults(
+        # Tools pour le router avec descriptions et noms explicites
+        vector_tool = QueryEngineTool(
             query_engine=vector_query_engine,
-            description=(
-                "Utile pour répondre à des questions sur les données statistiques, "
-                "scores de bien-être, verbatims d'entretiens, résultats de questionnaires, "
-                "et informations spécifiques aux communes corses. "
-                "Contient 5815 documents incluant fiches communes, entretiens qualitatifs, "
-                "verbatims et données quantitatives."
+            metadata=ToolMetadata(
+                name="vector_search",
+                description=(
+                    "Utile pour repondre a des questions sur les donnees statistiques, "
+                    "scores de bien-etre, verbatims d'entretiens, resultats de questionnaires, "
+                    "et informations specifiques aux communes corses. "
+                    "Contient 5815 documents incluant fiches communes, entretiens qualitatifs, "
+                    "verbatims et donnees quantitatives."
+                )
             )
         )
 
-        graph_tool = QueryEngineTool.from_defaults(
+        graph_tool = QueryEngineTool(
             query_engine=graph_query_engine,
-            description=(
-                "Utile pour répondre à des questions sur les concepts de bien-être, "
-                "les dimensions théoriques (santé, logement, éducation, etc.), "
-                "les indicateurs, et les relations sémantiques "
-                "de l'ontologie BE-2010 (Better Life Index). "
-                "Contient 116 nœuds d'ontologie avec relations."
+            metadata=ToolMetadata(
+                name="ontology_search",
+                description=(
+                    "Utile pour repondre a des questions sur les concepts de bien-etre, "
+                    "les dimensions theoriques (sante, logement, education, etc.), "
+                    "les indicateurs, et les relations semantiques "
+                    "de l'ontologie BE-2010 (Better Life Index). "
+                    "Contient 116 noeuds d'ontologie avec relations."
+                )
             )
         )
 
         # Router qui choisit automatiquement avec LLM
+        # verbose=False pour éviter les erreurs d'encodage charmap sur Windows
         router_query_engine = RouterQueryEngine(
             selector=LLMSingleSelector.from_defaults(),
             query_engine_tools=[vector_tool, graph_tool],
-            verbose=True
+            verbose=False
         )
 
-        print("  [OK] RouterQueryEngine créé (vector+graph)")
-        return router_query_engine
+        # Wrapper robuste avec fallback vers vector-only en cas d'erreur charmap
+        robust_router = RobustRouterEngine(
+            router_engine=router_query_engine,
+            fallback_engine=vector_query_engine
+        )
 
-    def _create_sub_question_engine(self) -> SubQuestionQueryEngine:
+        print("  [OK] RouterQueryEngine créé (vector+graph) avec fallback robuste")
+        return robust_router
+
+    def _create_sub_question_engine(self):
         """
         Crée SubQuestionQueryEngine qui décompose
         automatiquement les questions complexes
 
         Si graph indisponible, utilise vector-only
 
+        Note: Utilise LLMQuestionGenerator (intégré) au lieu de OpenAIQuestionGenerator
+        (qui nécessite llama-index-question-gen-openai)
+
         Returns:
             SubQuestionQueryEngine ou query engine vector-only
         """
+        # Import du question generator intégré
+        from llama_index.core.question_gen import LLMQuestionGenerator
+
         # Query engine vectoriel
         vector_query_engine = self.vector_index.as_query_engine(similarity_top_k=10)
 
-        vector_tool = QueryEngineTool.from_defaults(
+        # IMPORTANT: Définir explicitement le nom du tool pour éviter KeyError
+        # Le SubQuestionQueryEngine utilise le nom du tool pour router les sous-questions
+        vector_tool = QueryEngineTool(
             query_engine=vector_query_engine,
-            description="Données communes corses (statistiques, entretiens, verbatims)"
+            metadata=ToolMetadata(
+                name="vector_search",
+                description="Recherche dans les documents textuels des communes corses: statistiques, entretiens, verbatims, données démographiques"
+            )
         )
+
+        # Créer le question generator avec le LLM configuré
+        question_gen = LLMQuestionGenerator.from_defaults(llm=Settings.llm)
+
+        # Response synthesizer
+        response_synthesizer = get_response_synthesizer()
 
         # Si graph indisponible, retourner vector-only
         if not self.graph_available:
-            sub_question_engine = SubQuestionQueryEngine.from_defaults(
+            # Créer SubQuestionQueryEngine manuellement (évite l'import de question-gen-openai)
+            sub_question_engine = SubQuestionQueryEngine(
+                question_gen=question_gen,
+                response_synthesizer=response_synthesizer,
                 query_engine_tools=[vector_tool],
                 verbose=True
             )
@@ -512,19 +665,33 @@ class LlamaIndexRAGPipeline:
             response_synthesizer=get_response_synthesizer()
         )
 
-        graph_tool = QueryEngineTool.from_defaults(
+        # IMPORTANT: Définir explicitement le nom du tool pour éviter KeyError
+        graph_tool = QueryEngineTool(
             query_engine=graph_query_engine,
-            description="Ontologie BE-2010 (concepts, dimensions, indicateurs)"
+            metadata=ToolMetadata(
+                name="ontology_search",
+                description="Recherche dans l'ontologie BE-2010: concepts de bien-être, dimensions théoriques, indicateurs, relations sémantiques"
+            )
         )
 
-        # Sub-question engine
-        sub_question_engine = SubQuestionQueryEngine.from_defaults(
+        # Sub-question engine créé manuellement (évite l'import de question-gen-openai)
+        sub_question_engine = SubQuestionQueryEngine(
+            question_gen=question_gen,
+            response_synthesizer=response_synthesizer,
             query_engine_tools=[vector_tool, graph_tool],
-            verbose=True
+            verbose=True,
+            use_async=False  # Évite les problèmes de coroutines
         )
 
-        print("  [OK] SubQuestionQueryEngine créé (vector+graph)")
-        return sub_question_engine
+        # Wrapper robuste avec fallback vers vector-only en cas de KeyError
+        # (le LLM peut générer 'Ontologie BE-2010' au lieu de 'ontology_search')
+        robust_engine = RobustSubQuestionEngine(
+            sub_question_engine=sub_question_engine,
+            fallback_engine=vector_query_engine
+        )
+
+        print("  [OK] SubQuestionQueryEngine créé (vector+graph) avec fallback robuste")
+        return robust_engine
 
     def _create_hybrid_retriever(self):
         """
@@ -633,6 +800,7 @@ class LlamaIndexRAGPipeline:
     def _query_router_with_boost(self, question: str, commune_filter: str):
         """
         Query router avec boost de commune
+        Utilise ToolMetadata explicite et verbose=False pour éviter les erreurs
         """
         # Créer retriever vector avec boost
         base_vector_retriever = VectorIndexRetriever(index=self.vector_index, similarity_top_k=10)
@@ -653,31 +821,47 @@ class LlamaIndexRAGPipeline:
             response_synthesizer=get_response_synthesizer()
         )
 
-        # Créer les tools
-        vector_tool = QueryEngineTool.from_defaults(
+        # Créer les tools avec noms explicites
+        vector_tool = QueryEngineTool(
             query_engine=vector_query_engine,
-            description="Documents textuels sur les communes corses (questionnaires, rapports)"
+            metadata=ToolMetadata(
+                name="vector_search",
+                description="Documents textuels sur les communes corses: statistiques, entretiens, verbatims"
+            )
         )
 
-        graph_tool = QueryEngineTool.from_defaults(
+        graph_tool = QueryEngineTool(
             query_engine=graph_query_engine,
-            description="Ontologie BE-2010 : concepts de bien-être, dimensions théoriques, indicateurs"
+            metadata=ToolMetadata(
+                name="ontology_search",
+                description="Ontologie BE-2010: concepts de bien-être, dimensions théoriques, indicateurs"
+            )
         )
 
-        # Router engine
+        # Router engine avec verbose=False pour éviter erreurs charmap
         router_engine = RouterQueryEngine(
             selector=LLMSingleSelector.from_defaults(),
-            query_engine_tools=[vector_tool, graph_tool]
+            query_engine_tools=[vector_tool, graph_tool],
+            verbose=False
         )
 
-        return router_engine.query(question)
+        # Wrapper robuste avec fallback
+        robust_router = RobustRouterEngine(
+            router_engine=router_engine,
+            fallback_engine=vector_query_engine
+        )
+
+        return robust_router.query(question)
 
     def _query_subquestion_with_boost(self, question: str, commune_filter: str):
         """
         Query sub-question avec boost de commune
+        Utilise LLMQuestionGenerator (intégré) au lieu de OpenAIQuestionGenerator
         """
         if not self.sub_question_available:
             raise ValueError("SubQuestionQueryEngine non disponible")
+
+        from llama_index.core.question_gen import LLMQuestionGenerator
 
         # Créer retriever vector avec boost
         base_vector_retriever = VectorIndexRetriever(index=self.vector_index, similarity_top_k=10)
@@ -698,27 +882,43 @@ class LlamaIndexRAGPipeline:
             response_synthesizer=get_response_synthesizer()
         )
 
-        # Créer les tools
-        vector_tool = QueryEngineTool.from_defaults(
+        # Créer les tools avec noms explicites pour éviter KeyError
+        vector_tool = QueryEngineTool(
             query_engine=vector_query_engine,
-            description="Documents textuels sur les communes corses"
-        )
-
-        graph_tool = QueryEngineTool.from_defaults(
-            query_engine=graph_query_engine,
-            description="Ontologie BE-2010"
-        )
-
-        # Sub-question engine (import dynamique car package optionnel)
-        try:
-            from llama_index.question_gen.openai import OpenAIQuestionGenerator
-            sub_question_engine = SubQuestionQueryEngine.from_defaults(
-                query_engine_tools=[vector_tool, graph_tool],
-                question_gen=OpenAIQuestionGenerator.from_defaults()
+            metadata=ToolMetadata(
+                name="vector_search",
+                description="Documents textuels sur les communes corses: statistiques, entretiens, verbatims"
             )
-            return sub_question_engine.query(question)
-        except ImportError:
-            raise ValueError("llama-index-question-gen-openai package requis")
+        )
+
+        graph_tool = QueryEngineTool(
+            query_engine=graph_query_engine,
+            metadata=ToolMetadata(
+                name="ontology_search",
+                description="Ontologie BE-2010: concepts de bien-être, dimensions théoriques, indicateurs"
+            )
+        )
+
+        # Créer le question generator avec le LLM configuré
+        question_gen = LLMQuestionGenerator.from_defaults(llm=Settings.llm)
+        response_synthesizer = get_response_synthesizer()
+
+        # Sub-question engine avec wrapper robuste
+        sub_question_engine = SubQuestionQueryEngine(
+            question_gen=question_gen,
+            response_synthesizer=response_synthesizer,
+            query_engine_tools=[vector_tool, graph_tool],
+            verbose=True,
+            use_async=False
+        )
+
+        # Wrapper robuste avec fallback
+        robust_engine = RobustSubQuestionEngine(
+            sub_question_engine=sub_question_engine,
+            fallback_engine=vector_query_engine
+        )
+
+        return robust_engine.query(question)
 
     def _query_hybrid(self, question: str, k: int, commune_filter: Optional[str] = None):
         """

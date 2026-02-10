@@ -209,6 +209,121 @@
             line-height: 1.4;
         }
 
+        .context-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 15px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background 0.3s;
+        }
+
+        .context-btn:hover {
+            background: #5a6fd6;
+        }
+
+        .context-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .context-modal.active {
+            display: flex;
+        }
+
+        .context-modal-content {
+            background: white;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .context-modal-header {
+            padding: 15px 20px;
+            background: #667eea;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .context-modal-header h3 {
+            margin: 0;
+        }
+
+        .context-modal-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .context-modal-body {
+            padding: 20px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .context-modal-body pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            max-height: 50vh;
+            overflow-y: auto;
+        }
+
+        .context-modal-footer {
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+            text-align: right;
+        }
+
+        .context-modal-footer button {
+            padding: 10px 20px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-export {
+            background: #4caf50;
+            color: white;
+        }
+
+        .btn-copy {
+            background: #2196f3;
+            color: white;
+        }
+
+        .btn-close {
+            background: #9e9e9e;
+            color: white;
+        }
+
         .input-container {
             padding: 20px 30px;
             background: #f8f9fa;
@@ -400,12 +515,31 @@
         </div>
     </div>
 
+    <!-- Modal pour afficher le contexte -->
+    <div class="context-modal" id="contextModal">
+        <div class="context-modal-content">
+            <div class="context-modal-header">
+                <h3>📄 Contexte passé au LLM</h3>
+                <button class="context-modal-close" onclick="closeContextModal()">&times;</button>
+            </div>
+            <div class="context-modal-body">
+                <pre id="contextContent"></pre>
+            </div>
+            <div class="context-modal-footer">
+                <button class="btn-copy" onclick="copyContext()">📋 Copier</button>
+                <button class="btn-export" onclick="exportContext()">💾 Exporter .txt</button>
+                <button class="btn-close" onclick="closeContextModal()">Fermer</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         const API_URL = 'http://localhost:8000/api/query';
         const VERSIONS_URL = 'http://localhost:8000/api/versions';
 
         let selectedVersion = 'v2'; // Par défaut
         let availableVersions = [];
+        let currentContext = ''; // Stocke le contexte de la dernière réponse
 
         // Charger les versions disponibles au démarrage
         async function loadVersions() {
@@ -561,6 +695,9 @@
             answerP.appendChild(document.createTextNode(' ' + data.answer));
             contentDiv.appendChild(answerP);
 
+            // Stocker le contexte pour cette réponse
+            const responseContext = data.context || 'Contexte non disponible';
+
             // Ajouter les sources si présentes
             if (data.sources && data.sources.length > 0) {
                 const sourcesDiv = document.createElement('div');
@@ -627,6 +764,13 @@ data.sources.forEach((source, index) => {
                 contentDiv.appendChild(sourcesDiv);
             }
 
+            // Ajouter le bouton "Voir contexte"
+            const contextBtn = document.createElement('button');
+            contextBtn.className = 'context-btn';
+            contextBtn.textContent = '📄 Voir contexte LLM';
+            contextBtn.onclick = () => showContext(responseContext);
+            contentDiv.appendChild(contextBtn);
+
             messageDiv.appendChild(contentDiv);
             document.getElementById('chatContainer').appendChild(messageDiv);
             document.getElementById('chatContainer').scrollTop = document.getElementById('chatContainer').scrollHeight;
@@ -649,6 +793,61 @@ data.sources.forEach((source, index) => {
 
         // Auto-focus sur l'input
         document.getElementById('questionInput').focus();
+
+        // === Fonctions pour le modal de contexte ===
+
+        function showContext(context) {
+            currentContext = context;
+            document.getElementById('contextContent').textContent = context;
+            document.getElementById('contextModal').classList.add('active');
+        }
+
+        function closeContextModal() {
+            document.getElementById('contextModal').classList.remove('active');
+        }
+
+        function copyContext() {
+            navigator.clipboard.writeText(currentContext).then(() => {
+                alert('Contexte copié dans le presse-papiers !');
+            }).catch(err => {
+                console.error('Erreur lors de la copie:', err);
+                // Fallback pour navigateurs plus anciens
+                const textArea = document.createElement('textarea');
+                textArea.value = currentContext;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('Contexte copié dans le presse-papiers !');
+            });
+        }
+
+        function exportContext() {
+            const blob = new Blob([currentContext], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+            a.download = `contexte_llm_${timestamp}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Fermer le modal en cliquant à l'extérieur
+        document.getElementById('contextModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeContextModal();
+            }
+        });
+
+        // Fermer le modal avec Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeContextModal();
+            }
+        });
     </script>
 </body>
 </html>
