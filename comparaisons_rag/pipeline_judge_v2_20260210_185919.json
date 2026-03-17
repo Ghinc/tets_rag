@@ -1,0 +1,194 @@
+{
+  "timestamp": "20260210_185919",
+  "questions_file": "questions_ontologie.json",
+  "rag_version": "v2",
+  "nb_questions": 8,
+  "models": {
+    "OpenAI": "gpt-4.1-mini",
+    "Grok": "grok-3-mini-beta",
+    "Kimi": "kimi-k2-0905-preview",
+    "Claude": "claude-haiku-4-5-20251001",
+    "Mistral": "mistral-small-latest"
+  },
+  "judge_model": "mistral-large-latest",
+  "judgments": [
+    {
+      "evaluations": [
+        {
+          "id": "A",
+          "note": 8,
+          "justification": "La réponse est fidèle aux sources et pertinente, couvrant la plupart des dimensions implicites du bien-être. Cependant, elle manque de nuance en ne soulignant pas l'absence d'ontologie formalisée dans les sources, ce qui limite sa complétude."
+        },
+        {
+          "id": "B",
+          "note": 6,
+          "justification": "La réponse est fidèle et claire, mais elle manque de pertinence car elle ne propose pas d'analyse des dimensions implicites du bien-être. Elle se contente de constater l'absence d'ontologie sans exploiter les verbatims."
+        },
+        {
+          "id": "C",
+          "note": 5,
+          "justification": "La réponse est fidèle et claire, mais elle est trop restrictive et ne répond pas à la question posée. Elle ignore les dimensions implicites présentes dans les verbatims, ce qui la rend peu pertinente."
+        },
+        {
+          "id": "D",
+          "note": 9,
+          "justification": "La réponse est fidèle, pertinente et complète, exploitant bien les verbatims tout en soulignant leurs limites. Elle est claire et nuancée, évitant les généralisations abusives et proposant une structure détaillée."
+        },
+        {
+          "id": "E",
+          "note": 7,
+          "justification": "La réponse est fidèle et pertinente, mais elle est moins complète que la réponse D car elle ne mentionne pas tous les aspects communautaires et services de proximité. Elle est cependant bien structurée et claire."
+        }
+      ],
+      "classement": [
+        "D",
+        "A",
+        "E",
+        "B",
+        "C"
+      ],
+      "meilleure_reponse": "D",
+      "synthese": "La réponse idéale devrait combiner la structure détaillée et nuancée de la réponse D, qui exploite pleinement les verbatims tout en reconnaissant leurs limites, avec la concision de la réponse A. Elle devrait clairement lister les dimensions du bien-être (environnement, équilibre vie pro/perso, relations sociales, services de proximité, logement, aspect communautaire) tout en précisant que ces éléments sont issus de verbatims et non d'une ontologie formalisée. Une mention des sources associées à chaque dimension, comme dans la réponse E, renforcerait la clarté et la fidélité.",
+      "provider_mapping": {
+        "A": "OpenAI",
+        "B": "Grok",
+        "C": "Kimi",
+        "D": "Claude",
+        "E": "Mistral"
+      },
+      "error": null,
+      "providers_en_erreur": [],
+      "question": "Quelles sont les grandes dimensions du bien-etre identifiees dans l'ontologie ?"
+    },
+    {
+      "evaluations": [
+        {
+          "id": "A",
+          "note": 7,
+          "justification": "La réponse distingue correctement bien-être subjectif et objectif en s'appuyant sur les sources, mais elle interprète de manière un peu trop affirmative des éléments implicites (ex. 'conditions matérielles mesurables' non explicitement présentes). La structure est claire, mais la nuance est légèrement déficiente."
+        },
+        {
+          "id": "B",
+          "note": 9,
+          "justification": "Excellente fidélité aux sources et pertinence, avec une nuance remarquable en soulignant l'absence de données objectives. La complétude est totale et la clarté exemplaire. Une réponse rigoureuse et honnête sur les limites des données."
+        },
+        {
+          "id": "C",
+          "note": 8,
+          "justification": "Très fidèle et nuancée, cette réponse met en avant l'absence de données objectives avec précision. La pertinence est parfaite, mais la complétude est légèrement limitée par l'absence d'exploitation des éléments subjectifs présents dans les sources."
+        },
+        {
+          "id": "D",
+          "note": 9,
+          "justification": "Réponse très équilibrée, combinant analyse des perceptions subjectives et reconnaissance des limites des données. La structure est claire et pédagogique, avec une excellente nuance. La complétude est presque parfaite."
+        },
+        {
+          "id": "E",
+          "note": 8,
+          "justification": "Fidèle et pertinente, cette réponse souligne bien les limites des données tout en restant concise. La clarté est bonne, mais la complétude est légèrement inférieure à B ou D en raison d'une exploitation moins détaillée des verbatims."
+        }
+      ],
+      "classement": [
+        "B",
+        "D",
+        "C",
+        "E",
+        "A"
+      ],
+      "meilleure_reponse": "B",
+      "synthese": "La réponse idéale reconnaît d'abord que les sources fournies sont exclusivement subjectives (verbatims exprimant des ressentis, perceptions et valeurs individuelles). Elle souligne ensuite l'absence de données objectives (indicateurs mesurables comme la qualité de l'air, les revenus, ou les statistiques de logement) pour établir une distinction claire. Enfin, elle propose une analyse nuancée des verbatims tout en évitant toute généralisation abusive, et suggère des pistes pour compléter l'analyse (intégration de données quantitatives). Une réponse honnête, rigoureuse et bien structurée.",
+      "provider_mapping": {
+        "A": "OpenAI",
+        "B": "Grok",
+        "C": "Kimi",
+        "D": "Claude",
+        "E": "Mistral"
+      },
+      "error": null,
+      "providers_en_erreur": [],
+      "question": "Comment le bien-etre objectif se distingue-t-il du bien-etre subjectif dans les donnees ?"
+    }
+  ],
+  "results_summary": [
+    {
+      "provider": "OpenAI",
+      "model": "gpt-4.1-mini",
+      "question": "Quelles sont les grandes dimensions du bien-etre identifiees dans l'ontologie ?",
+      "answer": "Le contexte fourni ne contient pas d'information explicite sur les grandes dimensions du bien-être identifiées dans une ontologie. Toutefois, à partir des verbatims, on peut relever plusieurs dimensions implicites du bien-être : environnement (humain, social, économique, écologique), équilibre vie professionnelle/vie personnelle, relations sociales, logement, soutien communautaire et familial. Ces éléments suggèrent que les grandes dimensions du bien-être incluent l'environnement global, les relations sociales, l'équilibre de vie, le logement et le soutien social.",
+      "time_seconds": 2.94,
+      "error": false
+    },
+    {
+      "provider": "Grok",
+      "model": "grok-3-mini-beta",
+      "question": "Quelles sont les grandes dimensions du bien-etre identifiees dans l'ontologie ?",
+      "answer": "Les informations fournies dans le contexte ne décrivent pas explicitement une ontologie du bien-être ni ses grandes dimensions. Le contexte se limite à des verbatims d'enquêtes qui évoquent des thèmes liés au bien-être, tels que l'environnement, les relations sociales, le ratio vie professionnelle/vie personnelle, le logement et les soutiens communautaires.\n\nÉtant donné que les données disponibles ne permettent pas d'identifier les dimensions de l'ontologie, je ne peux pas répondre de manière complète à votre question. Si vous fournissez plus de détails sur l'ontologie ou des sources supplémentaires, je pourrai mieux assister.",
+      "time_seconds": 11.81,
+      "error": false
+    },
+    {
+      "provider": "Kimi",
+      "model": "kimi-k2-0905-preview",
+      "question": "Quelles sont les grandes dimensions du bien-etre identifiees dans l'ontologie ?",
+      "answer": "Le contexte fourni ne contient pas l'ontologie du bien-être. Les extraits présentés sont uniquement des verbatims d'habitants, sans référence aux dimensions théoriques ou à la structure conceptuelle de l'ontologie.",
+      "time_seconds": 7.45,
+      "error": false
+    },
+    {
+      "provider": "Claude",
+      "model": "claude-haiku-4-5-20251001",
+      "question": "Quelles sont les grandes dimensions du bien-etre identifiees dans l'ontologie ?",
+      "answer": "# Réponse\n\nSur la base des verbatims fournis, je ne dispose pas d'une ontologie formalisée du bien-être. Cependant, je peux identifier les **grandes dimensions du bien-être mentionnées par les répondants** :\n\n1. **Environnement** (au sens large) - santé physique et psychologique, sérénité\n2. **Équilibre vie professionnelle / vie personnelle** - gestion du temps, détente dans la nature\n3. **Relations sociales** - liens amicaux, familiaux, échanges communautaires, prévention de l'isolement\n4. **Services de proximité** - accès à des ressources locales\n5. **Logement** - dimension habitationnelle\n6. **Aspect communautaire** - soutiens collectifs, projets partagés\n\n**Limitation importante** : Les données fournies sont des verbatims fragmentaires. Une véritable ontologie structurée du bien-être (avec concepts formalisés, dimensions hiérarchisées et indicateurs mesurables) n'est pas présente dans le contexte. Pour une réponse exhaustive, il faudrait accéder à la documentation complète de l'ontologie mentionnée.",
+      "time_seconds": 8.57,
+      "error": false
+    },
+    {
+      "provider": "Mistral",
+      "model": "mistral-small-latest",
+      "question": "Quelles sont les grandes dimensions du bien-etre identifiees dans l'ontologie ?",
+      "answer": "Les grandes dimensions du bien-être identifiées dans les verbatims sont :\n\n1. **Environnement** (humain, social, économique et écologique) [Source 1, Source 2, Source 5]\n2. **Équilibre vie professionnelle/vie personnelle** [Source 2]\n3. **Relations sociales** (évitant l'isolement et favorisant les échanges) [Source 3]\n4. **Logement** [Source 4]\n\nLes données sont insuffisantes pour identifier d'autres dimensions.",
+      "time_seconds": 2.81,
+      "error": false
+    },
+    {
+      "provider": "OpenAI",
+      "model": "gpt-4.1-mini",
+      "question": "Comment le bien-etre objectif se distingue-t-il du bien-etre subjectif dans les donnees ?",
+      "answer": "Dans les données fournies, le bien-être subjectif ressort à travers les ressentis personnels exprimés par les habitants, comme le besoin d'équilibrer vie professionnelle et vie personnelle pour être plus efficace et serein (Source 1), ou le sentiment de sécurité et de confort lié au logement perçu comme un « cocon » (Source 3). Ce sont des perceptions individuelles liées à la satisfaction, au stress ou à l'état d'esprit.\n\nLe bien-être objectif est plus implicite et se manifeste par des conditions matérielles ou environnementales mesurables, telles que la qualité du logement (absence d'humidité, voisinage calme - Source 3), la possibilité de se déplacer librement pour les étudiants (Source 5), ou la préservation de l'environnement via des gestes concrets pour réduire la pollution (Source 4).\n\nAinsi, le bien-être subjectif correspond aux sentiments et évaluations personnelles des habitants, tandis que le bien-être objectif concerne les conditions réelles et tangibles qui contribuent à la qualité de vie.",
+      "time_seconds": 3.41,
+      "error": false
+    },
+    {
+      "provider": "Grok",
+      "model": "grok-3-mini-beta",
+      "question": "Comment le bien-etre objectif se distingue-t-il du bien-etre subjectif dans les donnees ?",
+      "answer": "Les données fournies dans le contexte se composent exclusivement de verbatims subjectifs issus d'enquêtes auprès d'habitants de Corse. Ces verbatims expriment des perceptions personnelles, telles que :\n\n- Le sentiment d'équilibre entre vie professionnelle et personnelle (Source 1).\n- L'importance du logement pour se sentir sécurisé et le stress associé à des facteurs comme le bruit ou l'humidité (Source 3).\n- L'opinion sur le respect de l'environnement et les gestes quotidiens (Source 4).\n- La perception des transports pour la liberté et le bien-être social (Source 5).\n\nLe bien-être objectif, qui implique des indicateurs mesurables et extérieurs (comme des données statistiques sur la pollution ou l'accès au logement), n'est pas présent dans ces sources. En conséquence, les données sont insuffisantes pour distinguer clairement le bien-être objectif du bien-être subjectif, car elles ne contiennent que des éléments subjectifs basés sur les expériences individuelles. Si des données objectives étaient disponibles, une analyse plus complète serait possible.",
+      "time_seconds": 10.87,
+      "error": false
+    },
+    {
+      "provider": "Kimi",
+      "model": "kimi-k2-0905-preview",
+      "question": "Comment le bien-etre objectif se distingue-t-il du bien-etre subjectif dans les donnees ?",
+      "answer": "Sur la base des verbatims fournis, je ne peux pas établir de distinction entre bien-être objectif et subjectif car :\n\n1. **Aucune donnée objective n'est présente** : il n'y a pas d'indicateurs mesurables (revenus, conditions de logement chiffrées, données environnementales quantifiées, etc.)\n\n2. **Tous les extraits sont subjectifs** : ils expriment des perceptions personnelles (\"se sentir le plus sécurisé\", \"s'aérer l'esprit\", \"combat[tre] les moments de solitude\")\n\n3. **Pas d'ontologie du bien-être fournie** : le contexte ne contient pas de cadre conceptuel préétabli permettant de différencier ces deux dimensions\n\nLes données disponibles ne permettent donc pas d'analyser la distinction entre bien-être objectif et subjectif.",
+      "time_seconds": 18.77,
+      "error": false
+    },
+    {
+      "provider": "Claude",
+      "model": "claude-haiku-4-5-20251001",
+      "question": "Comment le bien-etre objectif se distingue-t-il du bien-etre subjectif dans les donnees ?",
+      "answer": "# Réponse\n\nLes données fournies **ne contiennent pas suffisamment d'informations** pour établir une distinction claire entre bien-être objectif et bien-être subjectif.\n\n## Ce que je peux constater :\n\nLes verbatims présentés reflètent surtout des **perceptions subjectives** du bien-être :\n- Ressentis personnels (\"se sentir le plus sécurisé\", \"s'aérer l'esprit\")\n- Valeurs individuelles (\"respecter notre terre\", \"avoir plus de liberté\")\n- Expériences vécues (stress lié aux voisins bruyants, à l'humidité)\n\n## Ce qui manque pour répondre complètement :\n\nPour distinguer bien-être objectif du bien-être subjectif, il faudrait :\n- **Données objectivables** : indicateurs mesurables (qualité de l'air, revenus, accès aux services, temps de trajet, etc.)\n- **Comparaison explicite** : montrer comment les habitants évaluent les mêmes aspects différemment selon qu'ils sont mesurés objectivement ou perçus subjectivement\n\nLes sources fournies privilégient les **verbatims qualitatifs** sans présenter de métriques objectives associées.",
+      "time_seconds": 3.44,
+      "error": false
+    },
+    {
+      "provider": "Mistral",
+      "model": "mistral-small-latest",
+      "question": "Comment le bien-etre objectif se distingue-t-il du bien-etre subjectif dans les donnees ?",
+      "answer": "Les données fournies ne permettent pas de distinguer clairement le bien-être objectif du bien-être subjectif. Les verbatims disponibles reflètent principalement des perceptions subjectives des individus concernant divers aspects de leur qualité de vie, tels que le ratio vie pro/vie perso, le logement, l'environnement et les transports.\n\nPour une analyse plus approfondie, des données objectives (par exemple, des indicateurs mesurables comme le taux de pollution, l'accès aux transports, les statistiques sur le logement) seraient nécessaires.",
+      "time_seconds": 2.88,
+      "error": false
+    }
+  ]
+}

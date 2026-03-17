@@ -85,6 +85,8 @@ PROFESSION_KEYWORDS = {
     'retraité': 'Retraité(e)',
     'retraitée': 'Retraité(e)',
     'retraitées': 'Retraité(e)',
+    'retraites': 'Retraité(e)',
+    'retraite': 'Retraité(e)',
 
     # Agriculteur(trice), artisan(e) ou commerçant(e)
     'agriculteurs': 'Agriculteur(trice), artisan(e) ou commerçant(e)',

@@ -20,6 +20,7 @@ from datetime import datetime
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, Field, ConfigDict
 import uvicorn
 from dotenv import load_dotenv
@@ -27,11 +28,23 @@ from dotenv import load_dotenv
 # Imports des différentes versions RAG
 from rag_v1_class import BasicRAGPipeline, RetrievalResult as RetrievalResult_v1
 from rag_v2_boosted import ImprovedRAGPipeline, RetrievalResult as RetrievalResult_v2
-from rag_v2_1_llamaindex import RAGv2_1_LlamaIndex
+try:
+    from rag_v2_1_llamaindex import RAGv2_1_LlamaIndex
+    V2_1_AVAILABLE = True
+except ImportError as e:
+    print(f"AVERTISSEMENT: RAG v2.1 non disponible ({e})")
+    RAGv2_1_LlamaIndex = None
+    V2_1_AVAILABLE = False
 from rag_v2_2_portrait import PortraitRAGPipeline
 from rag_v3_ontology import RAGPipelineWithOntology, RetrievalResult as RetrievalResult_v3
 from rag_v4_cross_analysis import ImprovedRAGPipeline as CrossAnalysisRAGPipeline, RetrievalResult as RetrievalResult_v4
-from rag_v5_graphrag_neo4j import GraphRAGPipeline
+try:
+    from rag_v5_graphrag_neo4j import GraphRAGPipeline
+    V5_AVAILABLE = True
+except ImportError as e:
+    print(f"AVERTISSEMENT: RAG v5 non disponible ({e})")
+    GraphRAGPipeline = None
+    V5_AVAILABLE = False
 
 # Import optionnel de v6 (nécessite torch_geometric)
 try:
@@ -60,6 +73,24 @@ except ImportError as e:
     LlamaIndexRAGPipelineFull = None
     V8_AVAILABLE = False
 
+# Import optionnel de v9 (RAPTOR-lite)
+try:
+    from rag_v9_raptor import RaptorRetriever
+    V9_AVAILABLE = True
+except ImportError as e:
+    print(f"AVERTISSEMENT: RAPTOR non disponible ({e})")
+    RaptorRetriever = None
+    V9_AVAILABLE = False
+
+# Import optionnel de v10 (RAPTOR + Sous-questions)
+try:
+    from rag_v10_raptor_subq import RaptorSubQuestionPipeline
+    V10_AVAILABLE = True
+except ImportError as e:
+    print(f"AVERTISSEMENT: RAG v10 non disponible ({e})")
+    RaptorSubQuestionPipeline = None
+    V10_AVAILABLE = False
+
 # Charger les variables d'environnement
 load_dotenv()
 
@@ -68,7 +99,7 @@ load_dotenv()
 class QueryRequest(BaseModel):
     """Modèle de requête pour poser une question"""
     question: str = Field(..., description="Question à poser au chatbot", min_length=1)
-    rag_version: Literal["v1", "v2", "v2.1", "v2.2", "v3", "v4", "v5", "v6", "v7", "v8"] = Field("v2", description="Version du RAG à utiliser")
+    rag_version: Literal["v1", "v2", "v2.1", "v2.2", "v3", "v4", "v5", "v6", "v7", "v8", "v9", "v10"] = Field("v2", description="Version du RAG à utiliser")
     k: int = Field(5, description="Nombre de documents à récupérer", ge=1, le=20)
     use_reranking: bool = Field(True, description="Utiliser le reranking (v2/v3/v4 uniquement)")
     include_quantitative: bool = Field(True, description="Inclure les données quantitatives (v2/v3/v4 uniquement)")
@@ -84,6 +115,7 @@ class QueryRequest(BaseModel):
     portrait_genre: Optional[str] = Field(None, description="Genre pour filtrer les verbatims: Homme/Femme (v2.2)")
     portrait_profession: Optional[str] = Field(None, description="Profession pour filtrer les verbatims (v2.2)")
     portrait_dimension: Optional[str] = Field(None, description="Dimension qualité de vie pour filtrer (v2.2)")
+    n_subquestions: int = Field(5, ge=1, le=8, description="Nombre de sous-questions à générer (v10 uniquement)")
 
     model_config = ConfigDict(
         json_schema_extra={
@@ -129,6 +161,8 @@ class HealthResponse(BaseModel):
     rag_v6_initialized: bool = Field(..., description="RAG v6 initialisé")
     rag_v7_initialized: bool = Field(..., description="RAG v7 initialisé")
     rag_v8_initialized: bool = Field(..., description="RAG v8 initialisé")
+    rag_v9_initialized: bool = Field(..., description="RAG v9 (RAPTOR) initialisé")
+    rag_v10_initialized: bool = Field(..., description="RAG v10 (RAPTOR + sous-questions) initialisé")
     timestamp: str = Field(..., description="Horodatage du check")
     version: str = Field(..., description="Version de l'API")
 
@@ -154,7 +188,9 @@ rag_pipelines = {
     "v5": None,
     "v6": None,
     "v7": None,
-    "v8": None
+    "v8": None,
+    "v9": None,
+    "v10": None
 }
 
 
@@ -179,56 +215,38 @@ def initialize_all_rags():
         )
 
     # === INITIALISER RAG v1 ===
-    print("\n[1/4] Initialisation RAG v1...")
-    try:
-        rag_pipelines["v1"] = BasicRAGPipeline(
-            openai_api_key=openai_api_key,
-            chroma_path="./chroma_txt/",
-            collection_name="communes_corses_txt",
-            llm_model="gpt-3.5-turbo",
-            embedding_model="intfloat/e5-base-v2"
-        )
-        print("OK RAG v1 initialisé")
-    except Exception as e:
-        print(f"AVERTISSEMENT: RAG v1 non disponible: {e}")
-        rag_pipelines["v1"] = None
+    # Désactivé : chroma_txt corrompu (Rust panic sur sqlite bindings)
+    print("\n[1/10] RAG v1 désactivé (chroma_txt corrompu)")
+    rag_pipelines["v1"] = None
 
     # === INITIALISER RAG v2 ===
-    print("\n[2/9] Initialisation RAG v2...")
-    try:
-        rag_pipelines["v2"] = ImprovedRAGPipeline(
-            openai_api_key=openai_api_key,
-            chroma_path="./chroma_v2/",
-            collection_name="communes_corses_v2",
-            quant_data_path="df_mean_by_commune.csv",
-            llm_model="gpt-3.5-turbo",
-            embedding_model="BAAI/bge-m3",
-            reranker_model="BAAI/bge-reranker-v2-m3"
-        )
-        print("OK RAG v2 initialisé")
-    except Exception as e:
-        print(f"AVERTISSEMENT: RAG v2 non disponible: {e}")
-        rag_pipelines["v2"] = None
+    # Désactivé : chroma_v2 corrompu (Rust panic sur sqlite bindings)
+    print("\n[2/10] RAG v2 désactivé (chroma_v2 corrompu)")
+    rag_pipelines["v2"] = None
 
     # === INITIALISER RAG v2.1 (LlamaIndex équivalent v2) ===
     print("\n[2.1/9] Initialisation RAG v2.1 (LlamaIndex)...")
-    try:
-        rag_pipelines["v2.1"] = RAGv2_1_LlamaIndex(
-            chroma_path="./chroma_v2",
-            collection_name="communes_corses_v2",
-            embedding_model="BAAI/bge-m3",
-            rerank_model="BAAI/bge-reranker-v2-m3",
-            llm_model="gpt-3.5-turbo",
-            top_k=5,
-            use_reranker=True,
-            use_hybrid=True
-        )
-        print("OK RAG v2.1 initialisé")
-    except Exception as e:
-        print(f"AVERTISSEMENT: RAG v2.1 non disponible: {e}")
-        import traceback
-        traceback.print_exc()
+    if not V2_1_AVAILABLE:
+        print("AVERTISSEMENT: RAG v2.1 non disponible (llama-index manquant)")
         rag_pipelines["v2.1"] = None
+    else:
+        try:
+            rag_pipelines["v2.1"] = RAGv2_1_LlamaIndex(
+                chroma_path="./chroma_v2",
+                collection_name="communes_corses_v2",
+                embedding_model="BAAI/bge-m3",
+                rerank_model="BAAI/bge-reranker-v2-m3",
+                llm_model="gpt-3.5-turbo",
+                top_k=5,
+                use_reranker=True,
+                use_hybrid=True
+            )
+            print("OK RAG v2.1 initialisé")
+        except Exception as e:
+            print(f"AVERTISSEMENT: RAG v2.1 non disponible: {e}")
+            import traceback
+            traceback.print_exc()
+            rag_pipelines["v2.1"] = None
 
     # === INITIALISER RAG v2.2 (Portrait) ===
     print("\n[2.2/10] Initialisation RAG v2.2 (Portrait)...")
@@ -254,65 +272,12 @@ def initialize_all_rags():
         traceback.print_exc()
         rag_pipelines["v2.2"] = None
 
-    # === INITIALISER RAG v3 ===
-    print("\n[3/10] Initialisation RAG v3...")
-    try:
-        rag_pipelines["v3"] = RAGPipelineWithOntology(
-            openai_api_key=openai_api_key,
-            ontology_path="ontology_be_2010_bilingue_fr_en.ttl",
-            chroma_path="./chroma_v2/",
-            collection_name="communes_corses_v2",
-            quant_data_path="df_mean_by_commune.csv",
-            llm_model="gpt-3.5-turbo",
-            embedding_model="BAAI/bge-m3",
-            reranker_model="BAAI/bge-reranker-v2-m3"
-        )
-        print("OK RAG v3 initialisé")
-    except Exception as e:
-        print(f"AVERTISSEMENT: RAG v3 non disponible: {e}")
-        rag_pipelines["v3"] = None
-
-    # === INITIALISER RAG v4 ===
-    print("\n[4/9] Initialisation RAG v4...")
-    try:
-        rag_pipelines["v4"] = CrossAnalysisRAGPipeline(
-            openai_api_key=openai_api_key,
-            chroma_path="./chroma_v2/",
-            collection_name="communes_corses_v2",
-            quant_data_path="df_mean_by_commune.csv",
-            llm_model="gpt-3.5-turbo",
-            embedding_model="BAAI/bge-m3",
-            reranker_model="BAAI/bge-reranker-v2-m3"
-        )
-        print("OK RAG v4 initialisé")
-    except Exception as e:
-        print(f"AVERTISSEMENT: RAG v4 non disponible: {e}")
-        rag_pipelines["v4"] = None
-
-    # === INITIALISER RAG v5 (Graph-RAG Neo4j) ===
-    print("\n[5/9] Initialisation RAG v5 (Graph-RAG Neo4j)...")
-    try:
-        # Utiliser None si NEO4J_PASSWORD n'est pas défini (connexion sans auth)
-        neo4j_password = os.getenv("NEO4J_PASSWORD", None)
-        if neo4j_password == "":
-            neo4j_password = None
-
-        rag_pipelines["v5"] = GraphRAGPipeline(
-            neo4j_uri="bolt://localhost:7687",
-            neo4j_user="neo4j",
-            neo4j_password=neo4j_password,
-            chroma_path="./chroma_v2/",
-            collection_name="communes_corses_v2",
-            embedding_model="BAAI/bge-m3",
-            reranker_model="BAAI/bge-reranker-v2-m3",
-            llm_model="gpt-3.5-turbo",
-            openai_api_key=openai_api_key,
-            ontology_path="ontology_be_2010_bilingue_fr_en.ttl"
-        )
-        print("OK RAG v5 initialisé")
-    except Exception as e:
-        print(f"AVERTISSEMENT: RAG v5 non disponible: {e}")
-        rag_pipelines["v5"] = None
+    # === RAG v3, v4, v5 ===
+    # Désactivés : utilisent chroma_v2 qui provoque un Rust panic fatal
+    print("\n[3-5/10] RAG v3, v4, v5 désactivés (chroma_v2 corrompu)")
+    rag_pipelines["v3"] = None
+    rag_pipelines["v4"] = None
+    rag_pipelines["v5"] = None
 
     # === INITIALISER RAG v6 (G-Retriever GNN) ===
     print("\n[6/9] Initialisation RAG v6 (G-Retriever)...")
@@ -330,6 +295,8 @@ def initialize_all_rags():
                 neo4j_uri="bolt://localhost:7687",
                 neo4j_user="neo4j",
                 neo4j_password=neo4j_password,
+                chroma_path="./chroma_portrait",
+                collection_name="portrait_verbatims",
                 openai_api_key=openai_api_key
             )
             print("OK RAG v6 initialisé")
@@ -382,6 +349,44 @@ def initialize_all_rags():
             traceback.print_exc()
             rag_pipelines["v8"] = None
 
+    # [9/11] Initialisation RAG v9 (RAPTOR-lite)
+    print("\n[9/11] Initialisation RAG v9 (RAPTOR-lite)...")
+    if not V9_AVAILABLE:
+        print("AVERTISSEMENT: RAG v9 non disponible (import échoué)")
+        rag_pipelines["v9"] = None
+    else:
+        try:
+            raptor = RaptorRetriever(
+                chroma_path="./chroma_portrait",
+                source_collection="portrait_verbatims",
+                summary_collection="raptor_summaries",
+            )
+            raptor.init()
+            rag_pipelines["v9"] = raptor
+            print(f"OK RAG v9 initialisé ({raptor.summary_count} synthèses RAPTOR)")
+        except Exception as e:
+            print(f"AVERTISSEMENT: RAG v9 non disponible: {e}")
+            rag_pipelines["v9"] = None
+
+    # [10/11] Initialisation RAG v10 (RAPTOR + Sous-questions)
+    print("\n[10/11] Initialisation RAG v10 (RAPTOR + Sous-questions)...")
+    if not V10_AVAILABLE:
+        print("AVERTISSEMENT: RAG v10 non disponible (import échoué)")
+        rag_pipelines["v10"] = None
+    else:
+        try:
+            v10 = RaptorSubQuestionPipeline(
+                chroma_path="./chroma_portrait",
+                source_collection="portrait_verbatims",
+                summary_collection="raptor_summaries",
+            )
+            v10.init()
+            rag_pipelines["v10"] = v10
+            print(f"OK RAG v10 initialisé")
+        except Exception as e:
+            print(f"AVERTISSEMENT: RAG v10 non disponible: {e}")
+            rag_pipelines["v10"] = None
+
     # Résumé
     print("\n" + "="*60)
     available = [v for v, p in rag_pipelines.items() if p is not None]
@@ -426,6 +431,16 @@ app.add_middleware(
 )
 
 
+# === FICHIER HTML FRONTEND ===
+
+@app.get("/frontend", response_class=HTMLResponse, tags=["Frontend"])
+async def serve_frontend():
+    """Sert l'interface graphique HTML"""
+    html_path = os.path.join(os.path.dirname(__file__), "example_frontend_multi_version.html")
+    with open(html_path, "r", encoding="utf-8") as f:
+        return HTMLResponse(content=f.read())
+
+
 # === ENDPOINTS ===
 
 @app.get("/", tags=["Root"])
@@ -460,8 +475,10 @@ async def health_check():
         rag_v6_initialized=rag_pipelines["v6"] is not None,
         rag_v7_initialized=rag_pipelines["v7"] is not None,
         rag_v8_initialized=rag_pipelines["v8"] is not None,
+        rag_v9_initialized=rag_pipelines["v9"] is not None,
+        rag_v10_initialized=rag_pipelines["v10"] is not None,
         timestamp=datetime.now().isoformat(),
-        version="2.1.0"
+        version="2.2.0"
     )
 
 
@@ -606,6 +623,34 @@ async def get_versions():
                 "Exploitation complète du graphe de connaissances",
                 "NÉCESSITE: APOC Extended installé dans Neo4j"
             ]
+        ),
+        VersionInfo(
+            version="v9",
+            name="RAPTOR-lite (synthèses analytiques)",
+            description="Synthèses pré-calculées par groupes démographiques avec fallback hiérarchique",
+            available=rag_pipelines["v9"] is not None,
+            features=[
+                "349 synthèses pré-calculées (6 vues analytiques)",
+                "Vues 1D: âge, profession, commune",
+                "Vues 2D: âge×profession, âge×commune, profession×commune",
+                "Détection automatique des dimensions dans la question",
+                "Fallback hiérarchique (2D → 1D → sémantique)",
+                "Synthèse + verbatims evidence",
+                "Idéal pour questions analytiques (ex: 'Que pensent les jeunes ?')"
+            ]
+        ),
+        VersionInfo(
+            version="v10",
+            name="RAPTOR + Sous-questions (pipeline 3 étapes)",
+            description="Décomposition Mistral Large → réponses Claude Haiku par sous-question → synthèse Mistral Large",
+            available=rag_pipelines["v10"] is not None,
+            features=[
+                "Décomposition automatique en N sous-questions (Mistral Large)",
+                "Retrieval RAPTOR-lite par sous-question",
+                "Réponse ciblée par sous-question (Claude Haiku)",
+                "Synthèse finale avec filtrage du bruit (Mistral Large)",
+                "Configurable : n_subquestions (1-8, défaut 5)",
+            ]
         )
     ]
     return versions
@@ -638,6 +683,7 @@ async def query_rag(request: QueryRequest):
 
     try:
         print(f"\n[{datetime.now().isoformat()}] Requête {request.rag_version} (LLM: {request.llm_model}): {request.question}")
+        v10_scoring = {"applicable": False}  # valeur par defaut pour les versions != v10
 
         # Changer le modèle LLM si différent du défaut
         if hasattr(rag, 'llm_model'):
@@ -781,9 +827,56 @@ async def query_rag(request: QueryRequest):
                 k=request.k
             )
 
+        elif request.rag_version == "v9":
+            # v9 : RAPTOR-lite — synthèses analytiques pré-calculées
+            # Le retriever retourne (context_str, sources_list)
+            # On passe le contexte à un LLM pour générer la réponse
+            context_str, raptor_sources = rag.query(
+                question=request.question,
+                k=request.k
+            )
+            # Générer une réponse via LLM
+            from openai import OpenAI
+            llm_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+            llm_response = llm_client.chat.completions.create(
+                model=request.llm_model,
+                messages=[
+                    {"role": "system", "content": (
+                        "Tu es un assistant spécialisé dans l'analyse de la qualité de vie en Corse. "
+                        "Réponds à la question en te basant UNIQUEMENT sur le contexte fourni. "
+                        "Cite des extraits quand c'est pertinent. Sois factuel et nuancé."
+                    )},
+                    {"role": "user", "content": f"Contexte :\n{context_str}\n\nQuestion : {request.question}"}
+                ],
+                temperature=0.3,
+                max_tokens=1500
+            )
+            answer = llm_response.choices[0].message.content
+            # Convertir les sources RAPTOR en format API
+            retrieval_results = raptor_sources
+
+        elif request.rag_version == "v10":
+            # v10 : RAPTOR + Sous-questions + Notation
+            # Le pipeline gère les 4 étapes et retourne (answer, sources, scoring)
+            answer, retrieval_results, v10_scoring = rag.query(
+                question=request.question,
+                k=request.k,
+                n_subquestions=request.n_subquestions,
+            )
+
         # Convertir les résultats en format API
-        if request.rag_version in ["v7", "v8"]:
-            # v7 retourne List[Dict] avec clés: content, score, metadata, source_type
+        if request.rag_version in ("v9", "v10"):
+            # v9 retourne List[Dict] avec clés: rank, type/commune, extrait, etc.
+            sources = [
+                Source(
+                    content=result.get('extrait', ''),
+                    score=1.0 - result.get('rank', 0) * 0.1,  # score décroissant par rang
+                    metadata={k: v for k, v in result.items() if k != 'extrait'}
+                )
+                for result in retrieval_results
+            ]
+        elif request.rag_version in ["v7", "v8"]:
+            # v7/v8 retourne List[Dict] avec clés: content, score, metadata, source_type
             sources = [
                 Source(
                     content=result['content'],
@@ -827,20 +920,30 @@ async def query_rag(request: QueryRequest):
         context_parts.append("=== FIN DU CONTEXTE ===")
         full_context = "\n".join(context_parts)
 
+        # Construire les metadonnees (scoring v10 si applicable)
+        metadata = {
+            "k": request.k,
+            "use_reranking": request.use_reranking if request.rag_version != "v1" else False,
+            "use_ontology": request.use_ontology_enrichment if request.rag_version == "v3" else False,
+            "use_cross_analysis": request.use_cross_analysis if request.rag_version == "v4" else False,
+            "include_quantitative": request.include_quantitative if request.rag_version != "v1" else False,
+            "commune_filter": request.commune_filter,
+            "num_sources": len(sources)
+        }
+        if request.rag_version == "v10" and v10_scoring.get("applicable"):
+            metadata["scoring"] = {
+                "dimension": v10_scoring["dimension"],
+                "score": v10_scoring["score"],
+                "score_max": 5,
+                "justification": v10_scoring["justification"],
+            }
+
         # Construire la réponse
         response = QueryResponse(
             answer=answer,
             sources=sources,
             context=full_context,
-            metadata={
-                "k": request.k,
-                "use_reranking": request.use_reranking if request.rag_version != "v1" else False,
-                "use_ontology": request.use_ontology_enrichment if request.rag_version == "v3" else False,
-                "use_cross_analysis": request.use_cross_analysis if request.rag_version == "v4" else False,
-                "include_quantitative": request.include_quantitative if request.rag_version != "v1" else False,
-                "commune_filter": request.commune_filter,
-                "num_sources": len(sources)
-            },
+            metadata=metadata,
             rag_version_used=request.rag_version,
             timestamp=datetime.now().isoformat()
         )
@@ -855,6 +958,110 @@ async def query_rag(request: QueryRequest):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Erreur lors du traitement avec {request.rag_version}: {str(e)}"
         )
+
+
+# === ENDPOINTS EXPLORATION CORPUS ===
+
+@app.get("/api/browse/filters", tags=["Browse"])
+async def get_browse_filters():
+    """Retourne les valeurs distinctes disponibles pour filtrer les verbatims."""
+    try:
+        import chromadb as _chromadb
+        chroma = _chromadb.PersistentClient(path="./chroma_portrait")
+        col = chroma.get_collection("portrait_verbatims")
+        all_metas = col.get(include=["metadatas"])["metadatas"]
+
+        age_order = ["15-24", "25-34", "35-49", "50-64", "65+"]
+
+        def sort_age(lst):
+            return sorted(lst, key=lambda x: age_order.index(x) if x in age_order else 99)
+
+        return {
+            "communes":    sorted(set(m["nom"]        for m in all_metas if m.get("nom"))),
+            "genres":      sorted(set(m["genre"]      for m in all_metas if m.get("genre"))),
+            "age_ranges":  sort_age(list(set(m["age_range"]   for m in all_metas if m.get("age_range")))),
+            "professions": sorted(set(m["profession"] for m in all_metas if m.get("profession"))),
+            "dimensions":  sorted(set(m["dimension"]  for m in all_metas if m.get("dimension"))),
+            "total":       len(all_metas),
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/browse/verbatims", tags=["Browse"])
+async def browse_verbatims(
+    commune:    Optional[str] = None,
+    genre:      Optional[str] = None,
+    age_range:  Optional[str] = None,
+    profession: Optional[str] = None,
+    dimension:  Optional[str] = None,
+):
+    """Retourne tous les verbatims correspondant aux filtres (non paginé — 690 docs max)."""
+    try:
+        import chromadb as _chromadb
+        chroma = _chromadb.PersistentClient(path="./chroma_portrait")
+        col = chroma.get_collection("portrait_verbatims")
+
+        conditions = []
+        if commune:    conditions.append({"nom":        {"$eq": commune}})
+        if genre:      conditions.append({"genre":      {"$eq": genre}})
+        if age_range:  conditions.append({"age_range":  {"$eq": age_range}})
+        if profession: conditions.append({"profession": {"$eq": profession}})
+        if dimension:  conditions.append({"dimension":  {"$eq": dimension}})
+
+        kwargs: dict = {"include": ["documents", "metadatas"]}
+        if len(conditions) == 1:
+            kwargs["where"] = conditions[0]
+        elif len(conditions) > 1:
+            kwargs["where"] = {"$and": conditions}
+
+        res = col.get(**kwargs)
+
+        verbatims = [
+            {"content": doc, "metadata": meta}
+            for doc, meta in zip(res["documents"], res["metadatas"])
+        ]
+        verbatims.sort(key=lambda v: (
+            v["metadata"].get("nom", ""),
+            v["metadata"].get("age_exact", 0) or 0,
+        ))
+
+        return {"total": len(verbatims), "verbatims": verbatims}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/browse/summaries", tags=["Browse"])
+async def browse_summaries():
+    """Retourne toutes les synthèses RAPTOR groupées par vue analytique."""
+    try:
+        import chromadb as _chromadb
+        chroma = _chromadb.PersistentClient(path="./chroma_portrait")
+        col = chroma.get_collection("raptor_summaries")
+
+        res = col.get(include=["documents", "metadatas"])
+
+        grouped: Dict[str, list] = {}
+        for doc, meta in zip(res["documents"], res["metadatas"]):
+            view = meta.get("view_name", "unknown")
+            grouped.setdefault(view, []).append({"content": doc, "metadata": meta})
+
+        for view in grouped:
+            grouped[view].sort(key=lambda x: (
+                x["metadata"].get("dim1_value", ""),
+                x["metadata"].get("dim2_value", ""),
+            ))
+
+        view_order = [
+            "age_range*profession", "age_range*commune", "profession*commune",
+            "age_range", "profession", "commune",
+        ]
+        ordered: Dict[str, list] = {v: grouped[v] for v in view_order if v in grouped}
+        ordered.update({v: grouped[v] for v in grouped if v not in view_order})
+
+        return {"total": sum(len(v) for v in ordered.values()), "views": ordered}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 # === POINT D'ENTRÉE ===

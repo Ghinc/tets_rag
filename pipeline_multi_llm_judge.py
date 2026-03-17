@@ -93,50 +93,240 @@ def call_anthropic(api_key: str, model: str, prompt: str, system_prompt: str) ->
 
 
 # ============================================================
-# Récupération du contexte RAG
+# Adaptateurs RAG (retrieval-only, pas de generation LLM)
 # ============================================================
 
-def get_rag_context(question: str, embed_model, chroma_collection, k: int = 5) -> tuple:
-    """Récupère le contexte RAG pour une question (modèle et collection pré-chargés)."""
-    query_embedding = embed_model.encode(f"query: {question}").tolist()
-    results = chroma_collection.query(
-        query_embeddings=[query_embedding],
-        n_results=k,
-        include=["documents", "metadatas"]
-    )
+AVAILABLE_RAG_VERSIONS = ["baseline", "v2", "v6", "v7", "raptor"]
 
-    context_parts = []
+
+def _format_sources(documents: list, metadatas: list) -> List[Dict]:
+    """Formate les sources depuis des listes documents/metadatas brutes."""
     sources = []
-    for i, (doc, meta) in enumerate(zip(results['documents'][0], results['metadatas'][0]), 1):
-        context_parts.append(f"[Source {i}] {doc[:300]}...")
+    for i, (doc, meta) in enumerate(zip(documents, metadatas), 1):
         sources.append({
             "rank": i,
-            "commune": meta.get("nom", "N/A"),
+            "commune": meta.get("nom", meta.get("commune", "N/A")),
             "genre": meta.get("genre", "N/A"),
             "age": meta.get("age_exact", "N/A"),
             "profession": meta.get("profession", "N/A"),
             "dimension": meta.get("dimension", "N/A"),
+            "source_type": meta.get("source_type", "dense"),
             "extrait": doc[:200] + "..."
         })
-
-    context = "\n\n".join(context_parts)
-    return context, sources
+    return sources
 
 
-def build_prompt(question: str, context: str) -> tuple:
-    system_prompt = """Tu es un assistant spécialisé dans l'analyse de données sur la qualité de vie en Corse.
-Tu as accès à des verbatims d'habitants avec leurs profils démographiques (âge, genre, profession).
-Base tes réponses UNIQUEMENT sur les informations fournies.
-Si les données sont insuffisantes, indique-le clairement.
-Réponds de manière concise et factuelle."""
+class RAGAdapter:
+    """Interface commune pour tous les backends RAG."""
 
-    user_prompt = f"""=== CONTEXTE (verbatims d'habitants) ===
+    def __init__(self, version: str):
+        self.version = version
+        self._pipeline = None
+        self._embed_model = None
+        self._collection = None
+
+    def init(self):
+        """Initialise le backend RAG (chargement modeles, connexions)."""
+        if self.version == "baseline":
+            self._init_baseline()
+        elif self.version == "v2":
+            self._init_v2()
+        elif self.version == "v6":
+            self._init_v6()
+        elif self.version == "v7":
+            self._init_v7()
+        elif self.version == "raptor":
+            self._init_raptor()
+        else:
+            raise ValueError(f"Version RAG inconnue: {self.version}. "
+                             f"Disponibles: {AVAILABLE_RAG_VERSIONS}")
+
+    def get_context(self, question: str, k: int = 5) -> tuple:
+        """Retourne (context_str, sources_list) pour une question."""
+        if self.version == "baseline":
+            return self._retrieve_baseline(question, k)
+        elif self.version == "v2":
+            return self._retrieve_v2(question, k)
+        elif self.version == "v6":
+            return self._retrieve_v6(question, k)
+        elif self.version == "v7":
+            return self._retrieve_v7(question, k)
+        elif self.version == "raptor":
+            return self._retrieve_raptor(question, k)
+
+    def close(self):
+        """Libere les ressources."""
+        if hasattr(self._pipeline, 'close'):
+            self._pipeline.close()
+
+    # --- baseline : ChromaDB direct (ancien get_rag_context) ---
+
+    def _init_baseline(self):
+        from sentence_transformers import SentenceTransformer
+        import chromadb
+        self._embed_model = SentenceTransformer("BAAI/bge-m3")
+        client = chromadb.PersistentClient(path="./chroma_portrait")
+        self._collection = client.get_collection("portrait_verbatims")
+
+    def _retrieve_baseline(self, question: str, k: int) -> tuple:
+        query_embedding = self._embed_model.encode(f"query: {question}").tolist()
+        results = self._collection.query(
+            query_embeddings=[query_embedding],
+            n_results=k,
+            include=["documents", "metadatas"]
+        )
+        docs = results['documents'][0]
+        metas = results['metadatas'][0]
+        context_parts = [f"[Source {i}] {doc[:300]}..." for i, doc in enumerate(docs, 1)]
+        sources = _format_sources(docs, metas)
+        return "\n\n".join(context_parts), sources
+
+    # --- v2 : PortraitRAGPipeline (hybrid + reranking) ---
+
+    def _init_v2(self):
+        from rag_v2_2_portrait import PortraitRAGPipeline
+        openai_key = os.getenv("OPENAI_API_KEY")
+        self._pipeline = PortraitRAGPipeline(
+            chroma_path="./chroma_portrait",
+            collection_name="portrait_verbatims",
+            embedding_model="BAAI/bge-m3",
+            reranker_model="BAAI/bge-reranker-v2-m3",
+            llm_model="gpt-4o-mini",
+            openai_api_key=openai_key
+        )
+
+    def _retrieve_v2(self, question: str, k: int) -> tuple:
+        # query() retourne (response_llm, retrieval_results, detected_filters)
+        # On ignore response_llm car chaque LLM du pipeline generera sa propre reponse
+        _, retrieval_results, _ = self._pipeline.query(
+            question, k=k, use_reranking=True, include_quantitative=True
+        )
+        context_parts = []
+        sources = []
+        for i, rr in enumerate(retrieval_results, 1):
+            context_parts.append(f"[Source {i} ({rr.source_type})] {rr.text[:300]}...")
+            meta = rr.metadata
+            sources.append({
+                "rank": i,
+                "commune": meta.get("nom", "N/A"),
+                "genre": meta.get("genre", "N/A"),
+                "age": meta.get("age_exact", "N/A"),
+                "profession": meta.get("profession", "N/A"),
+                "dimension": meta.get("dimension", "N/A"),
+                "source_type": rr.source_type,
+                "score": round(rr.score, 4),
+                "extrait": rr.text[:200] + "..."
+            })
+        return "\n\n".join(context_parts), sources
+
+    # --- v6 : G-Retriever (GNN heterogene + Neo4j + ChromaDB) ---
+
+    def _init_v6(self):
+        from rag_v6_gretriever import GRetrieverRAGPipeline
+        openai_key = os.getenv("OPENAI_API_KEY")
+        neo4j_password = os.getenv("NEO4J_PASSWORD", "password")
+        self._pipeline = GRetrieverRAGPipeline(
+            neo4j_uri="bolt://localhost:7687",
+            neo4j_user="neo4j",
+            neo4j_password=neo4j_password,
+            chroma_path="./chroma_portrait",
+            collection_name="portrait_verbatims",
+            openai_api_key=openai_key
+        )
+
+    def _retrieve_v6(self, question: str, k: int) -> tuple:
+        # query() retourne (response_str, List[RetrievalResult])
+        # On ignore response_str, on extrait le contexte des RetrievalResult
+        _, retrieval_results = self._pipeline.query(question, k=k, use_gnn=True)
+        context_parts = []
+        sources = []
+        for i, rr in enumerate(retrieval_results, 1):
+            context_parts.append(f"[Source {i} ({rr.source_type})] {rr.text[:300]}...")
+            meta = rr.metadata
+            sources.append({
+                "rank": i,
+                "commune": meta.get("nom", meta.get("commune", "N/A")),
+                "genre": meta.get("genre", "N/A"),
+                "age": meta.get("age_exact", "N/A"),
+                "profession": meta.get("profession", "N/A"),
+                "dimension": meta.get("dimension", "N/A"),
+                "source_type": rr.source_type,
+                "score": round(rr.score, 4),
+                "extrait": rr.text[:200] + "..."
+            })
+        return "\n\n".join(context_parts), sources
+
+    # --- v7 : LlamaIndex (vector + graph via Neo4j) ---
+
+    def _init_v7(self):
+        from rag_v7_llamaindex import LlamaIndexRAGPipeline
+        openai_key = os.getenv("OPENAI_API_KEY")
+        neo4j_password = os.getenv("NEO4J_PASSWORD", "password")
+        self._pipeline = LlamaIndexRAGPipeline(
+            openai_api_key=openai_key,
+            chroma_path="./chroma_v2",
+            neo4j_uri="bolt://localhost:7687",
+            neo4j_user="neo4j",
+            neo4j_password=neo4j_password
+        )
+
+    def _retrieve_v7(self, question: str, k: int) -> tuple:
+        # query() retourne (response_str, sources_list)
+        # response_str est genere par le LLM interne de LlamaIndex, on l'ignore
+        # mais on recupere les sources pour construire le contexte
+        _, sources_raw = self._pipeline.query(
+            question, mode="hybrid", k=k
+        )
+        context_parts = []
+        sources = []
+        for i, src in enumerate(sources_raw, 1):
+            text = src.get("content", "")
+            meta = src.get("metadata", {})
+            src_type = src.get("source_type", "unknown")
+            context_parts.append(f"[Source {i} ({src_type})] {text[:300]}...")
+            sources.append({
+                "rank": i,
+                "commune": meta.get("nom", meta.get("commune", "N/A")),
+                "genre": meta.get("genre", "N/A"),
+                "age": meta.get("age_exact", "N/A"),
+                "profession": meta.get("profession", "N/A"),
+                "dimension": meta.get("dimension", "N/A"),
+                "source_type": src_type,
+                "score": round(src.get("score", 0), 4),
+                "extrait": text[:200] + "..."
+            })
+        return "\n\n".join(context_parts), sources
+
+    # --- raptor : RAPTOR-lite (syntheses analytiques hierarchiques) ---
+
+    def _init_raptor(self):
+        from rag_v9_raptor import RaptorRetriever
+        self._pipeline = RaptorRetriever(
+            chroma_path="./chroma_portrait",
+            source_collection="portrait_verbatims",
+            summary_collection="raptor_summaries",
+        )
+        self._pipeline.init()
+
+    def _retrieve_raptor(self, question: str, k: int) -> tuple:
+        return self._pipeline.query(question, k=k)
+
+
+def build_prompt(question: str, context: str, rag_version: str = "baseline") -> tuple:
+    system_prompt = """Tu es un assistant specialise dans l'analyse de donnees sur la qualite de vie en Corse.
+Tu as acces a des donnees issues d'enquetes aupres d'habitants (verbatims, donnees quantitatives)
+et potentiellement a une ontologie du bien-etre (concepts, dimensions, indicateurs).
+Base tes reponses UNIQUEMENT sur les informations fournies dans le contexte.
+Si les donnees sont insuffisantes, indique-le clairement.
+Reponds de maniere concise et factuelle."""
+
+    user_prompt = f"""=== CONTEXTE (sources RAG {rag_version}) ===
 {context}
 
 === QUESTION ===
 {question}
 
-Réponds à la question en te basant sur le contexte ci-dessus."""
+Reponds a la question en te basant sur le contexte ci-dessus."""
 
     return system_prompt, user_prompt
 
@@ -145,7 +335,8 @@ Réponds à la question en te basant sur le contexte ci-dessus."""
 # Test d'un modèle
 # ============================================================
 
-def test_model(provider: str, question: str, context: str, sources: List[Dict]) -> Dict[str, Any]:
+def test_model(provider: str, question: str, context: str, sources: List[Dict],
+               rag_version: str = "baseline") -> Dict[str, Any]:
     config = MODELS_CONFIG[provider]
     model = config["model"]
     api_key = os.getenv(config["api_key_env"])
@@ -155,13 +346,13 @@ def test_model(provider: str, question: str, context: str, sources: List[Dict]) 
             "provider": provider,
             "model": model,
             "question": question,
-            "answer": f"ERREUR: Clé API {config['api_key_env']} non trouvée",
+            "answer": f"ERREUR: Cle API {config['api_key_env']} non trouvee",
             "time_seconds": 0,
             "sources": sources,
             "error": True
         }
 
-    system_prompt, user_prompt = build_prompt(question, context)
+    system_prompt, user_prompt = build_prompt(question, context, rag_version)
     start_time = time.time()
 
     try:
@@ -228,10 +419,13 @@ def call_judge(question: str, sources: List[Dict], responses: List[Dict]) -> Dic
         }
 
     # Formater les sources pour le juge
-    sources_text = "\n".join([
-        f"- Source {s['rank']}: [{s['commune']}] {s['extrait']}"
-        for s in sources
-    ])
+    def _format_source_line(s):
+        rank = s.get('rank', '?')
+        label = s.get('commune', s.get('view', s.get('type', 'source')))
+        extrait = s.get('extrait', '')
+        return f"- Source {rank}: [{label}] {extrait}"
+
+    sources_text = "\n".join([_format_source_line(s) for s in sources])
 
     # Formater les réponses anonymisées
     responses_text = "\n\n".join([
@@ -313,28 +507,25 @@ Tu DOIS répondre UNIQUEMENT en JSON valide, sans texte avant ni après."""
 # Pipeline principale
 # ============================================================
 
-def run_pipeline(questions: List[str], max_questions: Optional[int] = None) -> tuple:
-    """Exécute la pipeline complète : RAG → LLMs → Juge."""
+def run_pipeline(questions: List[str], rag_adapter: 'RAGAdapter',
+                 max_questions: Optional[int] = None) -> tuple:
+    """Execute la pipeline complete : RAG -> LLMs -> Juge."""
     if max_questions:
         questions = questions[:max_questions]
 
     print("=" * 70)
     print("PIPELINE MULTI-LLM AVEC AGENT JUGE")
-    print(f"  {len(questions)} questions × {len(MODELS_CONFIG)} providers")
+    print(f"  {len(questions)} questions x {len(MODELS_CONFIG)} providers")
+    print(f"  RAG : {rag_adapter.version}")
     print(f"  Juge : {JUDGE_MODEL}")
     print("=" * 70)
 
-    # Pré-chargement embeddings + ChromaDB
-    print("\nChargement du modèle d'embeddings...")
-    from sentence_transformers import SentenceTransformer
-    import chromadb
-
-    embed_model = SentenceTransformer("BAAI/bge-m3")
-    chroma_client = chromadb.PersistentClient(path="./chroma_portrait")
-    collection = chroma_client.get_collection("portrait_verbatims")
+    # Initialisation du backend RAG
+    print(f"\nInitialisation RAG ({rag_adapter.version})...")
+    rag_adapter.init()
     print("OK")
 
-    all_results = []       # Toutes les réponses LLM
+    all_results = []       # Toutes les reponses LLM
     all_judgments = []      # Tous les jugements
     all_sources = {}        # Sources par question
 
@@ -346,20 +537,20 @@ def run_pipeline(questions: List[str], max_questions: Optional[int] = None) -> t
         print(f"QUESTION {q_idx}/{len(questions)}: {question[:70]}...")
         print("=" * 70)
 
-        # Étape 1 : Contexte RAG
-        print("  [RAG] Récupération du contexte...", end=" ", flush=True)
-        context, sources = get_rag_context(question, embed_model, collection)
+        # Etape 1 : Contexte RAG
+        print(f"  [RAG {rag_adapter.version}] Recuperation du contexte...", end=" ", flush=True)
+        context, sources = rag_adapter.get_context(question)
         all_sources[question] = sources
         print(f"OK ({len(sources)} sources)")
 
-        # Étape 2 : Interrogation des LLMs
+        # Etape 2 : Interrogation des LLMs
         question_results = []
         for provider in MODELS_CONFIG:
             current_step += 1
             model_name = MODELS_CONFIG[provider]["model"]
             print(f"  [{current_step}/{total_steps}] {provider}/{model_name}...", end=" ", flush=True)
 
-            result = test_model(provider, question, context, sources)
+            result = test_model(provider, question, context, sources, rag_adapter.version)
             all_results.append(result)
             question_results.append(result)
 
@@ -595,26 +786,37 @@ def export_to_excel(results: List[Dict], judgments: List[Dict],
 def main():
     parser = argparse.ArgumentParser(description="Pipeline Multi-LLM avec Agent Juge")
     parser.add_argument("--questions-file", default="questions_communes.json",
-                        help="Fichier JSON contenant les questions (défaut: questions_communes.json)")
+                        help="Fichier JSON contenant les questions (defaut: questions_communes.json)")
     parser.add_argument("--max-questions", type=int, default=None,
-                        help="Nombre max de questions à traiter (pour tests)")
+                        help="Nombre max de questions a traiter (pour tests)")
     parser.add_argument("--output-dir", default="comparaisons_rag",
-                        help="Dossier de sortie (défaut: comparaisons_rag)")
+                        help="Dossier de sortie (defaut: comparaisons_rag)")
+    parser.add_argument("--rag-version", default="baseline",
+                        choices=AVAILABLE_RAG_VERSIONS,
+                        help=f"Version RAG a utiliser (defaut: baseline). "
+                             f"Disponibles: {', '.join(AVAILABLE_RAG_VERSIONS)}")
     args = parser.parse_args()
 
     # Charger les questions
     with open(args.questions_file, "r", encoding="utf-8") as f:
         data = json.load(f)
     questions = data.get("questions", data) if isinstance(data, dict) else data
-    print(f"Chargé {len(questions)} questions depuis {args.questions_file}")
+    print(f"Charge {len(questions)} questions depuis {args.questions_file}")
 
-    # Exécuter la pipeline
-    results, judgments, sources = run_pipeline(questions, args.max_questions)
+    # Creer l'adaptateur RAG
+    rag = RAGAdapter(args.rag_version)
+
+    # Executer la pipeline
+    results, judgments, sources = run_pipeline(questions, rag, args.max_questions)
 
     # Export Excel
+    # Liberer les ressources RAG
+    rag.close()
+
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     os.makedirs(args.output_dir, exist_ok=True)
-    output_path = os.path.join(args.output_dir, f"pipeline_judge_{timestamp}.xlsx")
+    output_path = os.path.join(args.output_dir,
+                               f"pipeline_judge_{args.rag_version}_{timestamp}.xlsx")
 
     export_to_excel(results, judgments, sources, output_path)
 
@@ -624,6 +826,7 @@ def main():
         json.dump({
             "timestamp": timestamp,
             "questions_file": args.questions_file,
+            "rag_version": args.rag_version,
             "nb_questions": len(questions),
             "models": {p: c["model"] for p, c in MODELS_CONFIG.items()},
             "judge_model": JUDGE_MODEL,

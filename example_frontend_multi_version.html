@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatbot RAG Multi-Version - Interface de test</title>
+    <title>Chatbot RAG Multi-Version</title>
+    <!-- SheetJS pour lire/écrire Excel -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+    <!-- Marked.js pour le rendu Markdown -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@9/marked.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -17,837 +17,1502 @@
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             padding: 20px;
         }
 
         .container {
             background: white;
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-width: 1000px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 1100px;
             width: 100%;
             overflow: hidden;
         }
 
+        /* ── Header ── */
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 30px;
+            padding: 24px 30px 0;
             text-align: center;
         }
+        .header h1 { font-size: 26px; margin-bottom: 6px; }
+        .header p  { opacity: .9; font-size: 13px; margin-bottom: 16px; }
 
-        .header h1 {
-            font-size: 28px;
-            margin-bottom: 10px;
+        /* ── Onglets ── */
+        .tabs {
+            display: flex;
+            gap: 4px;
+            padding: 0 30px;
         }
-
-        .header p {
-            opacity: 0.9;
+        .tab-btn {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 10px 10px 0 0;
+            cursor: pointer;
             font-size: 14px;
+            font-weight: 600;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            transition: background .2s;
         }
+        .tab-btn.active  { background: white; color: #667eea; }
+        .tab-btn:hover:not(.active) { background: rgba(255,255,255,0.35); }
 
+        /* ── Panneaux ── */
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+
+        /* ── Sélecteur de version ── */
         .version-selector {
-            padding: 20px 30px;
+            padding: 16px 24px;
             background: #f8f9fa;
             border-bottom: 2px solid #e0e0e0;
         }
-
-        .version-selector h3 {
-            margin-bottom: 15px;
-            color: #333;
-            font-size: 16px;
-        }
-
-        .version-options {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
+        .version-selector h3 { margin-bottom: 12px; color: #333; font-size: 15px; }
+        .version-options { display: flex; gap: 10px; flex-wrap: wrap; }
 
         .version-card {
-            flex: 1;
-            min-width: 200px;
-            padding: 15px;
+            flex: 1; min-width: 160px;
+            padding: 12px;
             border: 2px solid #e0e0e0;
             border-radius: 10px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all .25s;
             background: white;
+            font-size: 13px;
         }
-
-        .version-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .version-card.selected {
-            border-color: #667eea;
-            background: #f0f4ff;
-        }
-
-        .version-card.unavailable {
-            opacity: 0.5;
-            cursor: not-allowed;
-            background: #f5f5f5;
-        }
-
-        .version-card h4 {
-            color: #667eea;
-            margin-bottom: 5px;
-            font-size: 14px;
-        }
-
-        .version-card p {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 8px;
-        }
-
-        .version-features {
-            font-size: 11px;
-            color: #888;
-        }
+        .version-card:hover           { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,.1); }
+        .version-card.selected        { border-color: #667eea; background: #f0f4ff; }
+        .version-card.unavailable     { opacity: .45; cursor: not-allowed; background: #f5f5f5; }
+        .version-card h4              { color: #667eea; margin-bottom: 4px; font-size: 13px; }
+        .version-card p               { font-size: 11px; color: #666; margin-bottom: 6px; }
 
         .status-badge {
             display: inline-block;
-            padding: 3px 8px;
-            border-radius: 12px;
-            font-size: 10px;
-            font-weight: bold;
-            margin-top: 5px;
+            padding: 2px 7px; border-radius: 10px;
+            font-size: 10px; font-weight: bold;
         }
+        .status-badge.available   { background: #4caf50; color: white; }
+        .status-badge.unavailable { background: #f44336; color: white; }
 
-        .status-badge.available {
-            background: #4caf50;
-            color: white;
+        /* ── Settings ── */
+        .settings {
+            padding: 14px 24px;
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+            font-size: 13px;
+            display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
         }
+        .settings label { display: inline-flex; align-items: center; gap: 5px; cursor: pointer; }
+        .settings input[type="number"] { width: 56px; padding: 4px 6px; border: 1px solid #ddd; border-radius: 5px; }
+        .settings select { padding: 4px 8px; border: 1px solid #ddd; border-radius: 5px; background: white; cursor: pointer; }
 
-        .status-badge.unavailable {
-            background: #f44336;
-            color: white;
-        }
-
+        /* ══════════════════════════════════════════════
+           ONGLET CHAT
+        ══════════════════════════════════════════════ */
         .chat-container {
-            padding: 30px;
-            max-height: 400px;
+            padding: 24px;
+            max-height: 420px;
             overflow-y: auto;
         }
-
-        .message {
-            margin-bottom: 20px;
-            animation: fadeIn 0.3s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .message.user {
-            text-align: right;
-        }
-
+        .message { margin-bottom: 18px; animation: fadeIn .3s ease-in; }
+        @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+        .message.user { text-align: right; }
         .message-content {
             display: inline-block;
-            padding: 15px 20px;
-            border-radius: 15px;
-            max-width: 80%;
+            padding: 13px 18px;
+            border-radius: 14px;
+            max-width: 82%;
             word-wrap: break-word;
+            line-height: 1.5;
         }
-
-        .message.user .message-content {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .message.bot .message-content {
-            background: #f1f3f4;
-            color: #333;
-        }
+        .message.user .message-content { background: linear-gradient(135deg,#667eea,#764ba2); color: white; }
+        .message.bot  .message-content { background: #f1f3f4; color: #333; }
 
         .version-badge {
             display: inline-block;
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-size: 10px;
-            font-weight: bold;
-            margin-left: 8px;
-            background: #667eea;
-            color: white;
+            padding: 2px 7px; border-radius: 9px;
+            font-size: 10px; font-weight: bold;
+            margin-right: 6px;
+            background: #667eea; color: white;
         }
 
         .sources {
-            margin-top: 15px;
-            padding: 15px;
+            margin-top: 12px; padding: 12px;
             background: #fff9e6;
             border-left: 4px solid #ffd700;
-            border-radius: 8px;
-            font-size: 13px;
+            border-radius: 7px; font-size: 12px;
         }
+        .source-item { margin-bottom: 8px; padding: 8px; background: white; border-radius: 5px; }
+        .source-header { font-weight: bold; color: #667eea; margin-bottom: 4px; cursor: pointer; }
+        .source-content { color: #666; font-size: 11px; line-height: 1.4; display: none; }
 
-        .source-item {
-            margin-bottom: 10px;
-            padding: 10px;
-            background: white;
-            border-radius: 5px;
-        }
-
-        .source-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .source-header {
-            font-weight: bold;
-            color: #667eea;
-            margin-bottom: 5px;
-        }
-
-        .source-content {
-            color: #666;
-            font-size: 12px;
-            line-height: 1.4;
+        .scoring-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            margin-top: 10px; padding: 8px 14px;
+            background: linear-gradient(135deg,#11998e,#38ef7d);
+            color: white; border-radius: 20px;
+            font-size: 13px; font-weight: bold;
         }
 
         .context-btn {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 8px 15px;
-            background: #667eea;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 12px;
-            transition: background 0.3s;
+            display: inline-block; margin-top: 10px; padding: 7px 14px;
+            background: #667eea; color: white; border: none;
+            border-radius: 5px; cursor: pointer; font-size: 12px;
         }
-
-        .context-btn:hover {
-            background: #5a6fd6;
-        }
-
-        .context-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .context-modal.active {
-            display: flex;
-        }
-
-        .context-modal-content {
-            background: white;
-            border-radius: 10px;
-            width: 80%;
-            max-width: 800px;
-            max-height: 80vh;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .context-modal-header {
-            padding: 15px 20px;
-            background: #667eea;
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .context-modal-header h3 {
-            margin: 0;
-        }
-
-        .context-modal-close {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-        }
-
-        .context-modal-body {
-            padding: 20px;
-            overflow-y: auto;
-            flex: 1;
-        }
-
-        .context-modal-body pre {
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            font-family: 'Courier New', monospace;
-            font-size: 12px;
-            background: #f5f5f5;
-            padding: 15px;
-            border-radius: 5px;
-            max-height: 50vh;
-            overflow-y: auto;
-        }
-
-        .context-modal-footer {
-            padding: 15px 20px;
-            background: #f8f9fa;
-            border-top: 1px solid #e0e0e0;
-            text-align: right;
-        }
-
-        .context-modal-footer button {
-            padding: 10px 20px;
-            margin-left: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .btn-export {
-            background: #4caf50;
-            color: white;
-        }
-
-        .btn-copy {
-            background: #2196f3;
-            color: white;
-        }
-
-        .btn-close {
-            background: #9e9e9e;
-            color: white;
-        }
+        .context-btn:hover { background: #5a6fd6; }
 
         .input-container {
-            padding: 20px 30px;
+            padding: 16px 24px;
             background: #f8f9fa;
             border-top: 1px solid #e0e0e0;
-            display: flex;
-            gap: 10px;
+            display: flex; gap: 10px;
         }
-
         #questionInput {
-            flex: 1;
-            padding: 15px 20px;
-            border: 2px solid #e0e0e0;
-            border-radius: 25px;
-            font-size: 14px;
-            outline: none;
-            transition: border-color 0.3s;
+            flex: 1; padding: 13px 18px;
+            border: 2px solid #e0e0e0; border-radius: 25px;
+            font-size: 14px; outline: none; transition: border-color .3s;
         }
-
-        #questionInput:focus {
-            border-color: #667eea;
-        }
-
+        #questionInput:focus { border-color: #667eea; }
         #sendButton {
-            padding: 15px 35px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: bold;
-            transition: transform 0.2s, box-shadow 0.2s;
+            padding: 13px 30px;
+            background: linear-gradient(135deg,#667eea,#764ba2);
+            color: white; border: none; border-radius: 25px;
+            cursor: pointer; font-size: 14px; font-weight: bold;
+            transition: transform .2s, box-shadow .2s;
         }
+        #sendButton:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102,126,234,.4); }
+        #sendButton:disabled { opacity: .6; cursor: not-allowed; }
 
-        #sendButton:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        #sendButton:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        .loading {
-            display: none;
-            text-align: center;
-            padding: 20px;
-            color: #666;
-        }
-
-        .loading.active {
-            display: block;
-        }
-
+        .loading { display: none; text-align: center; padding: 16px; color: #666; }
+        .loading.active { display: block; }
         .spinner {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #667eea;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 10px;
+            border: 3px solid #f3f3f3; border-top: 3px solid #667eea;
+            border-radius: 50%; width: 28px; height: 28px;
+            animation: spin 1s linear infinite; margin: 0 auto 8px;
         }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
         .error {
-            background: #ffe6e6;
-            color: #d32f2f;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 30px;
-            border-left: 4px solid #d32f2f;
+            background: #ffe6e6; color: #d32f2f;
+            padding: 13px; border-radius: 9px;
+            margin: 12px 24px; border-left: 4px solid #d32f2f;
         }
 
-        .settings {
-            padding: 20px 30px;
-            background: #f8f9fa;
-            border-top: 1px solid #e0e0e0;
-            font-size: 13px;
-        }
+        /* ══════════════════════════════════════════════
+           ONGLET BATCH
+        ══════════════════════════════════════════════ */
+        .batch-panel { padding: 24px; }
 
-        .settings label {
-            display: inline-flex;
-            align-items: center;
-            margin-right: 20px;
+        .upload-zone {
+            border: 3px dashed #667eea;
+            border-radius: 14px;
+            padding: 36px;
+            text-align: center;
             cursor: pointer;
+            transition: background .2s, border-color .2s;
+            background: #f7f8ff;
+            margin-bottom: 20px;
+        }
+        .upload-zone:hover, .upload-zone.drag-over { background: #eef1ff; border-color: #4a5fbf; }
+        .upload-zone .icon  { font-size: 48px; margin-bottom: 10px; }
+        .upload-zone h3     { color: #667eea; margin-bottom: 6px; }
+        .upload-zone p      { color: #888; font-size: 13px; }
+        .upload-zone input[type="file"] { display: none; }
+
+        .batch-settings {
+            display: flex; flex-wrap: wrap; gap: 16px; align-items: center;
+            padding: 14px 0; border-top: 1px solid #eee; border-bottom: 1px solid #eee;
+            margin-bottom: 20px; font-size: 13px;
+        }
+        .batch-settings label { display: flex; align-items: center; gap: 6px; }
+        .batch-settings select, .batch-settings input[type="number"] {
+            padding: 5px 8px; border: 1px solid #ddd; border-radius: 6px;
+            background: white; font-size: 13px;
         }
 
-        .settings input[type="checkbox"] {
-            margin-right: 5px;
+        /* Questions preview */
+        .questions-preview {
+            display: none;
+            margin-bottom: 20px;
+        }
+        .questions-preview h4 { color: #333; margin-bottom: 10px; font-size: 14px; }
+        .questions-list {
+            max-height: 160px; overflow-y: auto;
+            border: 1px solid #e0e0e0; border-radius: 8px;
+            padding: 10px;
+            font-size: 13px; color: #444;
+        }
+        .q-item {
+            padding: 5px 0; border-bottom: 1px solid #f0f0f0;
+            display: flex; gap: 8px;
+        }
+        .q-item:last-child { border-bottom: none; }
+        .q-num { color: #667eea; font-weight: bold; min-width: 28px; }
+
+        /* Barre de progression */
+        .progress-section { display: none; margin-bottom: 20px; }
+        .progress-label { font-size: 13px; color: #555; margin-bottom: 6px; display: flex; justify-content: space-between; }
+        .progress-bar-wrap {
+            background: #eee; border-radius: 8px; height: 10px; overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%; background: linear-gradient(90deg,#667eea,#764ba2);
+            border-radius: 8px; transition: width .4s;
+            width: 0%;
         }
 
-        .settings input[type="number"] {
-            width: 60px;
-            padding: 5px;
-            border: 1px solid #e0e0e0;
-            border-radius: 5px;
-            margin-left: 5px;
+        /* Résultats batch */
+        .batch-results { display: none; }
+        .batch-results-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 14px;
+        }
+        .batch-results-header h3 { color: #333; font-size: 16px; }
+        .export-btns { display: flex; gap: 8px; }
+
+        .btn {
+            padding: 8px 16px; border: none; border-radius: 8px;
+            cursor: pointer; font-size: 13px; font-weight: 600; transition: opacity .2s;
+        }
+        .btn:hover { opacity: .85; }
+        .btn-green  { background: #4caf50; color: white; }
+        .btn-blue   { background: #2196f3; color: white; }
+        .btn-purple { background: #667eea; color: white; }
+        .btn-red    { background: #e53935; color: white; }
+
+        .result-item {
+            border: 1px solid #e8e8e8;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+        .result-question {
+            padding: 12px 16px;
+            background: linear-gradient(135deg,#667eea,#764ba2);
+            color: white;
+            font-weight: 600; font-size: 14px;
+            display: flex; align-items: flex-start; gap: 10px;
+        }
+        .result-q-num {
+            background: rgba(255,255,255,.25);
+            padding: 2px 8px; border-radius: 10px;
+            font-size: 12px; white-space: nowrap; margin-top: 1px;
+        }
+        .result-answer {
+            padding: 14px 16px;
+            font-size: 13px; color: #333; line-height: 1.6;
+        }
+        /* Styles Markdown communs (chat + batch) */
+        .md-body h1,.md-body h2,.md-body h3,.md-body h4,.md-body h5,.md-body h6 {
+            margin: 10px 0 4px; font-weight: bold; line-height: 1.3;
+        }
+        .md-body h1 { font-size: 1.2em; }
+        .md-body h2 { font-size: 1.1em; }
+        .md-body h3,.md-body h4,.md-body h5,.md-body h6 { font-size: 1em; }
+        .md-body p  { margin: 6px 0; }
+        .md-body ul,.md-body ol { margin: 4px 0 4px 18px; }
+        .md-body li { margin: 2px 0; }
+        .md-body strong { font-weight: 600; }
+        .md-body em { font-style: italic; }
+        .md-body code { background:#f0f0f0; padding: 1px 4px; border-radius:3px; font-family:monospace; font-size:.9em; }
+        .md-body pre  { background:#f5f5f5; padding:8px; border-radius:4px; overflow-x:auto; margin:6px 0; }
+        .md-body blockquote { border-left:3px solid #ccc; margin:6px 0; padding-left:10px; color:#666; }
+        .result-score {
+            padding: 10px 16px;
+            background: #f0fff4;
+            border-top: 1px solid #c6f6d5;
+            font-size: 13px; color: #276749;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .result-error {
+            padding: 12px 16px;
+            background: #fff5f5; color: #c53030;
+            font-size: 13px; border-top: 1px solid #fed7d7;
+        }
+        .result-pending {
+            padding: 14px 16px;
+            color: #888; font-size: 13px; display: flex; align-items: center; gap: 8px;
+        }
+        .mini-spinner {
+            width: 16px; height: 16px;
+            border: 2px solid #eee; border-top-color: #667eea;
+            border-radius: 50%; animation: spin .8s linear infinite;
+            display: inline-block;
         }
 
-        .settings select {
-            padding: 5px 10px;
-            border: 1px solid #e0e0e0;
-            border-radius: 5px;
-            margin-left: 5px;
-            background: white;
-            cursor: pointer;
+        /* ── Exploration ── */
+        .explore-layout {
+            display: flex;
+            height: calc(100vh - 145px);
+            min-height: 480px;
+        }
+        .explore-sidebar {
+            width: 210px;
+            flex-shrink: 0;
+            padding: 18px 16px;
+            background: #f8f9ff;
+            border-right: 1px solid #e0e0f0;
+            overflow-y: auto;
+        }
+        .explore-sidebar h3 { margin-bottom: 14px; color: #667eea; font-size: 15px; }
+        .filter-group { margin-bottom: 13px; }
+        .filter-group > label:first-child {
+            display: block; font-size: 11px; font-weight: 700; color: #667eea;
+            text-transform: uppercase; letter-spacing: .6px; margin-bottom: 5px;
+        }
+        .filter-group select {
+            width: 100%; padding: 5px 8px; border: 1px solid #d0d0e8;
+            border-radius: 5px; font-size: 12px; background: white;
+        }
+        .radio-group label {
+            display: flex; align-items: center; gap: 5px;
+            font-size: 13px; cursor: pointer; margin-bottom: 3px;
+        }
+        .explore-main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+        .explore-tabs {
+            display: flex; background: #f4f4fb; border-bottom: 1px solid #e0e0f0;
+            padding: 0 14px; flex-shrink: 0;
+        }
+        .explore-tab-btn {
+            padding: 10px 16px; background: none; border: none;
+            border-bottom: 3px solid transparent; cursor: pointer;
+            font-size: 13px; color: #888; transition: all .15s;
+        }
+        .explore-tab-btn.active { color: #667eea; border-bottom-color: #667eea; font-weight: 600; }
+        .explore-panel { display: none; flex: 1; overflow-y: auto; padding: 14px 16px; }
+        .explore-panel.active { display: block; }
+        .explore-loading { text-align: center; padding: 30px; color: #aaa; font-size: 14px; }
+
+        /* Verbatim cards */
+        .verbatim-card {
+            background: white; border: 1px solid #e8e8f0; border-radius: 8px;
+            margin-bottom: 8px; transition: box-shadow .15s;
+        }
+        .verbatim-card:hover { box-shadow: 0 2px 8px rgba(102,126,234,.15); }
+        .verbatim-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 9px 13px; cursor: pointer; gap: 8px; user-select: none;
+        }
+        .verbatim-tags { display: flex; flex-wrap: wrap; gap: 4px; flex: 1; }
+        .vtag { font-size: 11px; padding: 2px 7px; border-radius: 10px; font-weight: 500; white-space: nowrap; }
+        .vtag-commune    { background: #e8f0fe; color: #3b5bdb; }
+        .vtag-genre      { background: #fce8ff; color: #9b42b8; }
+        .vtag-age        { background: #e8fce8; color: #2d8a3a; }
+        .vtag-profession { background: #fff3e0; color: #c06020; }
+        .vtag-dimension  { background: #e3f2fd; color: #1565c0; }
+        .verbatim-arrow  { color: #bbb; font-size: 11px; flex-shrink: 0; }
+        .verbatim-body {
+            display: none; padding: 10px 13px 13px;
+            font-size: 13px; color: #444; line-height: 1.65;
+            border-top: 1px solid #f0f0f8; white-space: pre-wrap;
+        }
+
+        /* Summary cards */
+        .summary-view-section { margin-bottom: 18px; }
+        .summary-view-header {
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 13px; font-weight: 700; color: #667eea;
+            padding: 8px 12px; background: #efefff; border-radius: 7px;
+            margin-bottom: 7px; cursor: pointer; user-select: none;
+        }
+        .summary-view-header span:last-child { font-weight: 400; font-size: 12px; color: #999; }
+        .summary-card {
+            background: white; border: 1px solid #e8e8f0; border-radius: 6px; margin-bottom: 7px;
+        }
+        .summary-card-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 8px 12px; cursor: pointer; gap: 8px; user-select: none;
+        }
+        .summary-card-tags { display: flex; flex-wrap: wrap; gap: 4px; flex: 1; }
+        .summary-card-body {
+            display: none; padding: 10px 12px 12px;
+            font-size: 12px; color: #444; line-height: 1.65;
+            border-top: 1px solid #f0f0f8;
+        }
+
+        /* ── Modal contexte ── */
+        .context-modal {
+            display: none; position: fixed; top:0; left:0;
+            width:100%; height:100%;
+            background: rgba(0,0,0,.65);
+            z-index: 1000;
+            justify-content: center; align-items: center;
+        }
+        .context-modal.active { display: flex; }
+        .context-modal-content {
+            background: white; border-radius: 12px;
+            width: 80%; max-width: 800px; max-height: 80vh;
+            overflow: hidden; display: flex; flex-direction: column;
+        }
+        .context-modal-header {
+            padding: 14px 18px; background: #667eea; color: white;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .context-modal-header h3 { margin: 0; }
+        .context-modal-close { background: none; border: none; color: white; font-size: 22px; cursor: pointer; }
+        .context-modal-body { padding: 18px; overflow-y: auto; flex: 1; }
+        .context-modal-body pre {
+            white-space: pre-wrap; word-wrap: break-word;
+            font-family: 'Courier New', monospace; font-size: 12px;
+            background: #f5f5f5; padding: 14px; border-radius: 6px;
+        }
+        .context-modal-footer {
+            padding: 12px 18px; background: #f8f9fa;
+            border-top: 1px solid #e0e0e0; text-align: right; display: flex; gap: 8px; justify-content: flex-end;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🗣️ Chatbot RAG Multi-Version</h1>
-            <p>Testez et comparez les différentes versions du système RAG</p>
+<div class="container">
+
+    <!-- ── Header + onglets ── -->
+    <div class="header">
+        <h1>🗣️ Chatbot RAG Multi-Version</h1>
+        <p>Qualité de vie en Corse — v2.2 · v9 · v10</p>
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('chat')">💬 Chat</button>
+            <button class="tab-btn"        onclick="switchTab('batch')">📊 Traitement par lot</button>
+            <button class="tab-btn"        onclick="switchTab('explore')">🔍 Exploration</button>
         </div>
+    </div>
+
+    <!-- ════════════════════════════════════════
+         ONGLET CHAT
+    ════════════════════════════════════════ -->
+    <div class="tab-panel active" id="panel-chat">
 
         <div class="version-selector">
-            <h3>🔧 Choisissez la version du RAG :</h3>
-            <div class="version-options" id="versionOptions">
-                <!-- Les versions seront chargées dynamiquement -->
-            </div>
+            <h3>🔧 Version du RAG :</h3>
+            <div class="version-options" id="versionOptions"></div>
         </div>
 
         <div class="settings">
-            <label>
-                <input type="checkbox" id="useReranking" checked>
-                Reranking (v2/v3/v4)
-            </label>
-            <label>
-                <input type="checkbox" id="useOntology" checked>
-                Ontologie (v3)
-            </label>
-            <label>
-                <input type="checkbox" id="useCrossAnalysis" checked>
-                Analyse croisée (v4)
-            </label>
-            <label>
-                <input type="checkbox" id="includeQuant" checked>
-                Données quantitatives (v2/v3/v4)
-            </label>
+            <label><input type="checkbox" id="useReranking" checked> Reranking (v2)</label>
+            <label><input type="checkbox" id="useOntology"  checked> Ontologie (v3)</label>
+            <label><input type="checkbox" id="useCrossAnalysis" checked> Analyse croisée (v4)</label>
+            <label><input type="checkbox" id="includeQuant" checked> Données quant. (v2/v3/v4)</label>
             <label id="v7ModeLabel" style="display:none;">
-                Mode v7:
+                Mode :
                 <select id="v7Mode">
-                    <option value="router">Router (auto)</option>
+                    <option value="router">Router</option>
                     <option value="sub_question">Sub-question</option>
                     <option value="hybrid">Hybrid</option>
                 </select>
             </label>
             <label>
-                Nb sources:
-                <input type="number" id="numSources" value="5" min="1" max="10">
+                Sous-questions (v10) :
+                <input type="number" id="chatNSubq" value="5" min="1" max="8" style="width:50px;">
+            </label>
+            <label>
+                Sources :
+                <input type="number" id="numSources" value="5" min="1" max="10" style="width:50px;">
             </label>
         </div>
 
         <div class="chat-container" id="chatContainer">
             <div class="message bot">
                 <div class="message-content">
-                    Bonjour ! Choisissez une version du RAG ci-dessus, puis posez votre question.<br><br>
-                    <strong>v1</strong> = Simple et rapide<br>
-                    <strong>v2</strong> = Hybrid retrieval + Reranking<br>
-                    <strong>v3</strong> = v2 + Ontologie sémantique<br>
-                    <strong>v4</strong> = v2 + Analyse croisée multi-sources<br>
-                    <strong>v5</strong> = Graph-RAG avec Neo4j<br>
-                    <strong>v6</strong> = v5 + Graph Neural Networks (G-Retriever)<br>
-                    <strong>v7</strong> = LlamaIndex Pipeline (Router/Sub-question/Hybrid)
+                    Bonjour ! Choisissez une version et posez votre question.<br><br>
+                    <strong>v2.2</strong> = Hybrid retrieval + filtres démographiques<br>
+                    <strong>v9</strong> = RAPTOR-lite (synthèses par profil)<br>
+                    <strong>v10</strong> = RAPTOR + Sous-questions + Notation (Mistral Large / Claude Haiku)
                 </div>
             </div>
         </div>
 
         <div class="loading" id="loading">
             <div class="spinner"></div>
-            <p>Recherche en cours...</p>
+            <p id="loadingText">Recherche en cours...</p>
         </div>
 
         <div class="input-container">
-            <input
-                type="text"
-                id="questionInput"
-                placeholder="Posez votre question ici..."
-                onkeypress="if(event.key==='Enter') sendQuestion()"
-            >
+            <input type="text" id="questionInput"
+                   placeholder="Posez votre question ici..."
+                   onkeypress="if(event.key==='Enter') sendQuestion()">
             <button id="sendButton" onclick="sendQuestion()">Envoyer</button>
         </div>
     </div>
 
-    <!-- Modal pour afficher le contexte -->
-    <div class="context-modal" id="contextModal">
-        <div class="context-modal-content">
-            <div class="context-modal-header">
-                <h3>📄 Contexte passé au LLM</h3>
-                <button class="context-modal-close" onclick="closeContextModal()">&times;</button>
+    <!-- ════════════════════════════════════════
+         ONGLET BATCH
+    ════════════════════════════════════════ -->
+    <div class="tab-panel" id="panel-batch">
+
+        <div class="batch-panel">
+
+            <!-- Zone d'upload -->
+            <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+                <div class="icon">📂</div>
+                <h3>Importer un fichier Excel ou CSV</h3>
+                <p>Glissez-déposez ou cliquez — .xlsx · .xls · .csv</p>
+                <p style="margin-top:6px; font-size:12px; color:#aaa;">Les questions doivent être dans une colonne (une par ligne)</p>
+                <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" onchange="handleFile(this.files[0])">
             </div>
-            <div class="context-modal-body">
-                <pre id="contextContent"></pre>
+
+            <!-- Paramètres batch -->
+            <div class="batch-settings">
+                <label>
+                    Version RAG :
+                    <select id="batchVersion">
+                        <option value="v2.2">v2.2 — Portrait</option>
+                        <option value="v9">v9 — RAPTOR-lite</option>
+                        <option value="v10" selected>v10 — RAPTOR + Sous-questions</option>
+                    </select>
+                </label>
+                <label>
+                    Colonne des questions :
+                    <select id="batchColumn"><option value="0">Colonne 1 (auto)</option></select>
+                </label>
+                <label>
+                    Ligne de départ :
+                    <input type="number" id="batchStartRow" value="1" min="1" style="width:55px;">
+                    <span style="font-size:11px;color:#888;">(ignorer les en-têtes)</span>
+                </label>
+                <label>
+                    Sous-questions (v10) :
+                    <input type="number" id="batchNSubq" value="5" min="1" max="8" style="width:50px;">
+                </label>
+                <label>
+                    Sources k :
+                    <input type="number" id="batchK" value="5" min="1" max="10" style="width:50px;">
+                </label>
             </div>
-            <div class="context-modal-footer">
-                <button class="btn-copy" onclick="copyContext()">📋 Copier</button>
-                <button class="btn-export" onclick="exportContext()">💾 Exporter .txt</button>
-                <button class="btn-close" onclick="closeContextModal()">Fermer</button>
+
+            <!-- Aperçu questions -->
+            <div class="questions-preview" id="questionsPreview">
+                <h4 id="previewTitle">Questions détectées :</h4>
+                <div class="questions-list" id="questionsList"></div>
+                <div style="margin-top:12px; display:flex; gap:10px; align-items:center;">
+                    <button class="btn btn-purple" onclick="startBatch()">▶ Lancer l'analyse</button>
+                    <span id="batchCount" style="font-size:13px; color:#666;"></span>
+                </div>
             </div>
+
+            <!-- Barre de progression -->
+            <div class="progress-section" id="progressSection">
+                <div class="progress-label">
+                    <span id="progressText">Initialisation...</span>
+                    <div style="display:flex;gap:8px;align-items:center;">
+                        <span id="progressPct">0%</span>
+                        <button id="pauseBtn" class="btn btn-blue" style="padding:3px 12px;font-size:12px;" onclick="togglePause()" disabled>⏸ Pause</button>
+                    </div>
+                </div>
+                <div class="progress-bar-wrap">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+            </div>
+
+            <!-- Résultats -->
+            <div class="batch-results" id="batchResults">
+                <div class="batch-results-header">
+                    <h3>📋 Résultats</h3>
+                    <div class="export-btns">
+                        <button class="btn btn-red"    onclick="clearBatch()">🗑 Effacer</button>
+                    </div>
+                </div>
+                <div id="resultsList"></div>
+            </div>
+
         </div>
     </div>
 
-    <script>
-        const API_URL = 'http://localhost:8000/api/query';
-        const VERSIONS_URL = 'http://localhost:8000/api/versions';
+    <!-- ════════════════════════════════════════
+         ONGLET EXPLORATION
+    ════════════════════════════════════════ -->
+    <div class="tab-panel" id="panel-explore">
+        <div class="explore-layout">
 
-        let selectedVersion = 'v2'; // Par défaut
-        let availableVersions = [];
-        let currentContext = ''; // Stocke le contexte de la dernière réponse
+            <!-- Sidebar filtres -->
+            <div class="explore-sidebar">
+                <h3>🔍 Filtres</h3>
 
-        // Charger les versions disponibles au démarrage
-        async function loadVersions() {
-            try {
-                const response = await fetch(VERSIONS_URL);
-                if (!response.ok) throw new Error('Impossible de charger les versions');
+                <div class="filter-group">
+                    <label>Commune</label>
+                    <select id="fCommune"><option value="">Toutes</option></select>
+                </div>
 
-                availableVersions = await response.json();
-                displayVersions(availableVersions);
-            } catch (error) {
-                console.error('Erreur chargement versions:', error);
-                // Afficher les versions par défaut
-                displayVersions([
-                    { version: 'v1', name: 'RAG Basique', available: false, description: 'Serveur non démarré' },
-                    { version: 'v2', name: 'RAG Amélioré', available: false, description: 'Serveur non démarré' },
-                    { version: 'v3', name: 'RAG avec Ontologie', available: false, description: 'Serveur non démarré' },
-                    { version: 'v4', name: 'RAG avec Analyse Croisée', available: false, description: 'Serveur non démarré' }
-                ]);
-            }
-        }
+                <div class="filter-group">
+                    <label>Genre</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="fGenre" value="" checked> Tous</label>
+                        <label><input type="radio" name="fGenre" value="Homme"> Homme</label>
+                        <label><input type="radio" name="fGenre" value="Femme"> Femme</label>
+                    </div>
+                </div>
 
-        function displayVersions(versions) {
-            const container = document.getElementById('versionOptions');
-            container.innerHTML = '';
+                <div class="filter-group">
+                    <label>Tranche d'âge</label>
+                    <select id="fAgeRange"><option value="">Toutes</option></select>
+                </div>
 
-            versions.forEach(v => {
-                const card = document.createElement('div');
-                card.className = 'version-card' +
-                    (v.version === selectedVersion ? ' selected' : '') +
-                    (!v.available ? ' unavailable' : '');
+                <div class="filter-group">
+                    <label>Profession</label>
+                    <select id="fProfession"><option value="">Toutes</option></select>
+                </div>
 
-                card.innerHTML = `
-                    <h4>${v.version.toUpperCase()} - ${v.name}</h4>
-                    <p>${v.description}</p>
-                    <span class="status-badge ${v.available ? 'available' : 'unavailable'}">
-                        ${v.available ? '✓ Disponible' : '✗ Indisponible'}
-                    </span>
-                `;
+                <div class="filter-group">
+                    <label>Dimension QdV</label>
+                    <select id="fDimension"><option value="">Toutes</option></select>
+                </div>
 
-                if (v.available) {
-                    card.onclick = () => selectVersion(v.version);
-                }
+                <div style="display:flex;flex-direction:column;gap:8px;margin-top:16px;">
+                    <button class="btn btn-purple" onclick="searchVerbatims()">🔍 Chercher</button>
+                    <button class="btn" style="background:#eee;color:#555;" onclick="resetExploreFilters()">↺ Réinitialiser</button>
+                </div>
+            </div>
 
-                container.appendChild(card);
+            <!-- Zone résultats -->
+            <div class="explore-main">
+                <div class="explore-tabs">
+                    <button class="explore-tab-btn active" onclick="switchExploreTab('verbatims')">
+                        💬 Verbatims&nbsp;<span id="verbatimsCount" style="font-weight:400;"></span>
+                    </button>
+                    <button class="explore-tab-btn" onclick="switchExploreTab('summaries')">
+                        📊 Synthèses RAPTOR&nbsp;<span id="summariesCount" style="font-weight:400;"></span>
+                    </button>
+                </div>
+
+                <div id="explore-panel-verbatims" class="explore-panel active">
+                    <div id="verbatimsList"><div class="explore-loading">Sélectionnez l'onglet Exploration pour charger les données.</div></div>
+                </div>
+
+                <div id="explore-panel-summaries" class="explore-panel">
+                    <div id="summariesList"><div class="explore-loading">Chargement...</div></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div><!-- /.container -->
+
+<!-- ── Modal contexte LLM ── -->
+<div class="context-modal" id="contextModal">
+    <div class="context-modal-content">
+        <div class="context-modal-header">
+            <h3>📄 Contexte passé au LLM</h3>
+            <button class="context-modal-close" onclick="closeCtxModal()">&times;</button>
+        </div>
+        <div class="context-modal-body"><pre id="contextContent"></pre></div>
+        <div class="context-modal-footer">
+            <button class="btn btn-blue"  onclick="copyCtx()">📋 Copier</button>
+            <button class="btn btn-green" onclick="exportCtx()">💾 Exporter .txt</button>
+            <button class="btn"           onclick="closeCtxModal()" style="background:#9e9e9e;color:white;">Fermer</button>
+        </div>
+    </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   CONSTANTES
+═══════════════════════════════════════════════════════════ */
+const API_URL      = 'http://localhost:8000/api/query';
+const VERSIONS_URL = 'http://localhost:8000/api/versions';
+
+let selectedVersion  = 'v2.2';
+let availableVersions = [];
+let currentContext   = '';
+
+// Données batch
+let parsedQuestions  = [];   // [{idx, text}]
+let batchResults     = [];   // [{question, answer, scoring, error}]
+let batchRunning     = false;
+let batchPaused      = false;
+let parsedWorkbook   = null; // pour accès aux colonnes
+
+/* ═══════════════════════════════════════════════════════════
+   ONGLETS
+═══════════════════════════════════════════════════════════ */
+function switchTab(name) {
+    document.querySelectorAll('.tab-btn').forEach((b, i) => {
+        b.classList.toggle('active', ['chat', 'batch', 'explore'][i] === name);
+    });
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('panel-' + name).classList.add('active');
+    if (name === 'explore' && !exploreTabInitialized) {
+        exploreTabInitialized = true;
+        initExploreTab();
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   VERSIONS
+═══════════════════════════════════════════════════════════ */
+async function loadVersions() {
+    try {
+        const r = await fetch(VERSIONS_URL);
+        availableVersions = await r.json();
+        displayVersions(availableVersions);
+        // Pré-sélectionner la première version disponible
+        const first = availableVersions.find(v => v.available);
+        if (first) selectVersion(first.version);
+    } catch(e) {
+        console.error('Erreur chargement versions', e);
+        displayVersions([
+            { version:'v2.2', name:'Portrait', available:false, description:'Serveur non démarré' },
+            { version:'v9',   name:'RAPTOR',   available:false, description:'Serveur non démarré' },
+            { version:'v10',  name:'RAPTOR+SQ',available:false, description:'Serveur non démarré' },
+        ]);
+    }
+}
+
+function displayVersions(versions) {
+    const c = document.getElementById('versionOptions');
+    c.innerHTML = '';
+    versions.forEach(v => {
+        const card = document.createElement('div');
+        card.className = 'version-card' +
+            (v.version === selectedVersion ? ' selected' : '') +
+            (!v.available ? ' unavailable' : '');
+        card.innerHTML = `
+            <h4>${v.version.toUpperCase()} — ${v.name}</h4>
+            <p>${v.description}</p>
+            <span class="status-badge ${v.available ? 'available':'unavailable'}">
+                ${v.available ? '✓ Disponible':'✗ Indisponible'}
+            </span>`;
+        if (v.available) card.onclick = () => selectVersion(v.version);
+        c.appendChild(card);
+    });
+}
+
+function selectVersion(version) {
+    selectedVersion = version;
+    displayVersions(availableVersions);
+    document.getElementById('v7ModeLabel').style.display =
+        (version === 'v7') ? 'inline-flex' : 'none';
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CHAT
+═══════════════════════════════════════════════════════════ */
+async function sendQuestion() {
+    const q = document.getElementById('questionInput').value.trim();
+    if (!q) { alert('Veuillez entrer une question'); return; }
+
+    const vInfo = availableVersions.find(v => v.version === selectedVersion);
+    if (!vInfo || !vInfo.available) {
+        alert(`Version ${selectedVersion} non disponible.`); return;
+    }
+
+    addMessage(q, 'user');
+    document.getElementById('questionInput').value = '';
+    document.getElementById('sendButton').disabled = true;
+    document.getElementById('loading').classList.add('active');
+
+    if (selectedVersion === 'v10') {
+        const n = document.getElementById('chatNSubq').value;
+        document.getElementById('loadingText').textContent =
+            `Pipeline v10 : décomposition + ${n} sous-questions + synthèse + notation...`;
+    } else {
+        document.getElementById('loadingText').textContent = 'Recherche en cours...';
+    }
+
+    const params = {
+        question: q,
+        rag_version: selectedVersion,
+        k: parseInt(document.getElementById('numSources').value),
+        use_reranking:            document.getElementById('useReranking').checked,
+        include_quantitative:     document.getElementById('includeQuant').checked,
+        use_ontology_enrichment:  document.getElementById('useOntology').checked,
+        use_cross_analysis:       document.getElementById('useCrossAnalysis').checked,
+        n_subquestions:           parseInt(document.getElementById('chatNSubq').value),
+    };
+    if (selectedVersion === 'v7') params.query_mode = document.getElementById('v7Mode').value;
+
+    try {
+        const r = await fetch(API_URL, {
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body: JSON.stringify(params)
+        });
+        if (!r.ok) { const e = await r.json(); throw new Error(e.detail || `HTTP ${r.status}`); }
+        addBotResponse(await r.json());
+    } catch(e) {
+        showError(e.message);
+    } finally {
+        document.getElementById('sendButton').disabled = false;
+        document.getElementById('loading').classList.remove('active');
+    }
+}
+
+function addMessage(text, type) {
+    const d = document.createElement('div');
+    d.className = `message ${type}`;
+    const c = document.createElement('div');
+    c.className = 'message-content';
+    c.textContent = text;
+    d.appendChild(c);
+    appendToChat(d);
+}
+
+function addBotResponse(data) {
+    const d = document.createElement('div');
+    d.className = 'message bot';
+    const c = document.createElement('div');
+    c.className = 'message-content';
+
+    // Badge version + réponse
+    const badge = document.createElement('span');
+    badge.className = 'version-badge';
+    badge.textContent = data.rag_version_used.toUpperCase();
+    const p = document.createElement('div');
+    p.className = 'md-body';
+    p.prepend(badge);
+    p.insertAdjacentHTML('beforeend', marked.parse(data.answer || ''));
+    c.appendChild(p);
+
+    // Score v10
+    const sc = data.metadata && data.metadata.scoring;
+    if (sc) {
+        const sb = document.createElement('div');
+        sb.className = 'scoring-badge';
+        const stars = '★'.repeat(sc.score) + '☆'.repeat(5 - sc.score);
+        sb.innerHTML = `📊 <strong>${sc.dimension}</strong> : ${sc.score}/5 ${stars}`;
+        sb.title = sc.justification;
+        c.appendChild(sb);
+        // justification
+        const jEl = document.createElement('p');
+        jEl.style.cssText = 'font-size:12px;color:#555;margin-top:6px;font-style:italic;';
+        jEl.textContent = sc.justification;
+        c.appendChild(jEl);
+    }
+
+    // Sources
+    if (data.sources && data.sources.length > 0) {
+        const sdiv = document.createElement('div');
+        sdiv.className = 'sources';
+        sdiv.innerHTML = `<strong>📚 Sources (${data.sources.length}) :</strong>`;
+        data.sources.forEach((src, i) => {
+            const si = document.createElement('div');
+            si.className = 'source-item';
+            const sh = document.createElement('div');
+            sh.className = 'source-header';
+            const sc2 = document.createElement('div');
+            sc2.className = 'source-content';
+
+            let label;
+            if (src.metadata.type === 'raptor_summary')
+                label = `📊 Synthèse RAPTOR [${src.metadata.view||'N/A'}] (N=${src.metadata.num_chunks||'?'})`;
+            else if (src.metadata.source_type === 'verbatim_evidence')
+                label = `💬 ${src.metadata.commune||'N/A'}${src.metadata.profession ? ' - '+src.metadata.profession : ''}`;
+            else
+                label = `${src.metadata.commune || src.metadata.nom || 'Source'}`;
+
+            sh.textContent = `▶ ${i+1}. ${label} (score: ${src.score.toFixed(3)})`;
+            sh.onclick = () => {
+                const open = sc2.style.display !== 'none' && sc2.style.display !== '';
+                sc2.style.display = open ? 'none' : 'block';
+                sh.textContent = (open ? '▶ ' : '▼ ') + `${i+1}. ${label} (score: ${src.score.toFixed(3)})`;
+            };
+            sc2.textContent = src.content;
+            si.appendChild(sh); si.appendChild(sc2);
+            sdiv.appendChild(si);
+        });
+        c.appendChild(sdiv);
+    }
+
+    // Bouton contexte
+    const ctx = data.context || '';
+    if (ctx) {
+        const btn = document.createElement('button');
+        btn.className = 'context-btn';
+        btn.textContent = '📄 Voir contexte LLM';
+        btn.onclick = () => showCtxModal(ctx);
+        c.appendChild(btn);
+    }
+
+    d.appendChild(c);
+    appendToChat(d);
+}
+
+function appendToChat(el) {
+    const cc = document.getElementById('chatContainer');
+    cc.appendChild(el);
+    cc.scrollTop = cc.scrollHeight;
+}
+
+function showError(msg) {
+    const e = document.createElement('div');
+    e.className = 'error';
+    e.textContent = '❌ ' + msg;
+    const cc = document.getElementById('chatContainer');
+    cc.appendChild(e);
+    cc.scrollTop = cc.scrollHeight;
+    setTimeout(() => e.remove(), 6000);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   BATCH — UPLOAD & PARSING
+═══════════════════════════════════════════════════════════ */
+const uploadZone = document.getElementById('uploadZone');
+uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+uploadZone.addEventListener('dragleave',  () => uploadZone.classList.remove('drag-over'));
+uploadZone.addEventListener('drop', e => {
+    e.preventDefault(); uploadZone.classList.remove('drag-over');
+    if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+});
+
+function handleFile(file) {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = evt => {
+        const data = new Uint8Array(evt.target.result);
+        parsedWorkbook = XLSX.read(data, { type:'array' });
+        const sheet = parsedWorkbook.Sheets[parsedWorkbook.SheetNames[0]];
+        const rows  = XLSX.utils.sheet_to_json(sheet, { header:1, defval:'' });
+
+        // Remplir le sélecteur de colonnes
+        const colSel = document.getElementById('batchColumn');
+        colSel.innerHTML = '';
+        if (rows.length > 0) {
+            let questionColIdx = -1;
+            rows[0].forEach((cell, i) => {
+                const opt = document.createElement('option');
+                opt.value = i;
+                opt.textContent = `Colonne ${i+1}${cell ? ' — ' + String(cell).substring(0,25) : ''}`;
+                colSel.appendChild(opt);
+                const h = String(cell).trim().toLowerCase();
+                if (h === 'question' || h === 'questions') questionColIdx = i;
             });
+            if (questionColIdx >= 0) colSel.value = questionColIdx;
+        }
+        colSel.onchange = () => refreshPreview(rows);
+        document.getElementById('batchStartRow').onchange = () => refreshPreview(rows);
+
+        refreshPreview(rows);
+        uploadZone.innerHTML = `
+            <div class="icon">✅</div>
+            <h3>${file.name}</h3>
+            <p style="color:#4caf50;">Fichier chargé — cliquez pour changer</p>
+            <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" onchange="handleFile(this.files[0])">`;
+    };
+    reader.readAsArrayBuffer(file);
+}
+
+function refreshPreview(rows) {
+    const col      = parseInt(document.getElementById('batchColumn').value) || 0;
+    const startRow = parseInt(document.getElementById('batchStartRow').value) - 1 || 0;
+
+    parsedQuestions = rows
+        .slice(startRow)
+        .map((row, i) => ({ idx: startRow + i + 1, text: String(row[col] || '').trim() }))
+        .filter(q => q.text.length > 3);
+
+    const list = document.getElementById('questionsList');
+    list.innerHTML = parsedQuestions.map(q =>
+        `<div class="q-item"><span class="q-num">${q.idx}.</span><span>${escHtml(q.text)}</span></div>`
+    ).join('');
+
+    document.getElementById('batchCount').textContent =
+        `${parsedQuestions.length} question${parsedQuestions.length > 1 ? 's' : ''} détectée${parsedQuestions.length > 1 ? 's' : ''}`;
+    document.getElementById('questionsPreview').style.display = 'block';
+}
+
+function escHtml(t) {
+    return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+/* ═══════════════════════════════════════════════════════════
+   BATCH — EXÉCUTION
+═══════════════════════════════════════════════════════════ */
+async function startBatch() {
+    if (!parsedQuestions.length) { alert('Aucune question à traiter.'); return; }
+    if (batchRunning) { alert('Un traitement est déjà en cours.'); return; }
+
+    const version    = document.getElementById('batchVersion').value;
+    const nSubq      = parseInt(document.getElementById('batchNSubq').value);
+    const k          = parseInt(document.getElementById('batchK').value);
+    const vInfo      = availableVersions.find(v => v.version === version);
+    if (!vInfo || !vInfo.available) {
+        alert(`Version ${version} non disponible sur le serveur.`); return;
+    }
+
+    batchRunning  = true;
+    batchPaused   = false;
+    batchResults  = parsedQuestions.map(q => ({ question: q.text, answer: null, scoring: null, error: null }));
+    document.getElementById('pauseBtn').textContent = '⏸ Pause';
+    document.getElementById('pauseBtn').disabled = false;
+
+    // Afficher progress + résultats vides
+    document.getElementById('progressSection').style.display = 'block';
+    document.getElementById('batchResults').style.display    = 'block';
+    renderBatchResults('pending');
+    document.querySelector('#batchResults .batch-results-header h3').textContent =
+        `📋 Résultats — ${version.toUpperCase()}`;
+
+    const total = parsedQuestions.length;
+    for (let i = 0; i < total; i++) {
+        // Attendre si en pause
+        while (batchPaused) await new Promise(r => setTimeout(r, 300));
+
+        const q = parsedQuestions[i];
+        updateProgress(i, total, `Question ${i+1}/${total} : ${q.text.substring(0,60)}...`);
+
+        const params = {
+            question:    q.text,
+            rag_version: version,
+            k,
+            n_subquestions: nSubq,
+            use_reranking:           true,
+            include_quantitative:    true,
+            use_ontology_enrichment: true,
+            use_cross_analysis:      true,
+        };
+
+        try {
+            const r = await fetch(API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(params)
+            });
+            if (!r.ok) { const e = await r.json(); throw new Error(e.detail || `HTTP ${r.status}`); }
+            const data = await r.json();
+            batchResults[i].answer  = data.answer;
+            batchResults[i].sources = data.sources || [];
+            batchResults[i].scoring = data.metadata && data.metadata.scoring ? data.metadata.scoring : null;
+        } catch (e) {
+            batchResults[i].error = e.message;
         }
 
-        function selectVersion(version) {
-            selectedVersion = version;
-            // Refresh l'affichage localement sans recharger depuis le serveur
-            displayVersions(availableVersions);
+        renderBatchResults('partial', i);
+    }
 
-            // Afficher/cacher le sélecteur de mode v7
-            const v7ModeLabel = document.getElementById('v7ModeLabel');
-            if (version === 'v7') {
-                v7ModeLabel.style.display = 'inline-flex';
-            } else {
-                v7ModeLabel.style.display = 'none';
-            }
+    updateProgress(total, total, `Terminé — ${total} question${total>1?'s':''} traitée${total>1?'s':''}`);
+    batchRunning = false;
+    batchPaused  = false;
+    const btn = document.getElementById('pauseBtn');
+    btn.textContent = '⏸ Pause';
+    btn.disabled = true;
+}
+
+function togglePause() {
+    if (!batchRunning) return;
+    batchPaused = !batchPaused;
+    const btn = document.getElementById('pauseBtn');
+    if (batchPaused) {
+        btn.textContent = '▶ Reprendre';
+        btn.classList.replace('btn-blue', 'btn-green');
+        document.getElementById('progressText').textContent = '⏸ En pause...';
+    } else {
+        btn.textContent = '⏸ Pause';
+        btn.classList.replace('btn-green', 'btn-blue');
+    }
+}
+
+function updateProgress(done, total, text) {
+    const pct = total > 0 ? Math.round(done / total * 100) : 0;
+    document.getElementById('progressBar').style.width = pct + '%';
+    document.getElementById('progressPct').textContent = pct + '%';
+    document.getElementById('progressText').textContent = text;
+}
+
+/* Construit le bloc de contenu (réponse + score + sources) pour un résultat */
+function buildResultContent(res) {
+    const frag = document.createDocumentFragment();
+
+    if (res.error) {
+        const eDiv = document.createElement('div');
+        eDiv.className = 'result-error';
+        eDiv.textContent = '❌ Erreur : ' + res.error;
+        frag.appendChild(eDiv);
+        return frag;
+    }
+
+    // Réponse
+    const aDiv = document.createElement('div');
+    aDiv.className = 'result-answer md-body';
+    aDiv.innerHTML = marked.parse(res.answer || '');
+    frag.appendChild(aDiv);
+
+    // Score v10
+    if (res.scoring) {
+        const sDiv = document.createElement('div');
+        sDiv.className = 'result-score';
+        const stars = '★'.repeat(res.scoring.score) + '☆'.repeat(5 - res.scoring.score);
+        sDiv.innerHTML = `📊 <strong>${escHtml(res.scoring.dimension)}</strong> : ${res.scoring.score}/5 ${stars} &nbsp;—&nbsp; <em>${escHtml(res.scoring.justification)}</em>`;
+        frag.appendChild(sDiv);
+    }
+
+    // Sources cliquables
+    if (res.sources && res.sources.length > 0) {
+        const sdiv = document.createElement('div');
+        sdiv.className = 'sources';
+        const toggle = document.createElement('div');
+        toggle.style.cssText = 'cursor:pointer;font-weight:bold;user-select:none;';
+        toggle.textContent = `▶ 📚 Sources (${res.sources.length})`;
+        const slist = document.createElement('div');
+        slist.style.display = 'none';
+        toggle.onclick = () => {
+            const open = slist.style.display !== 'none';
+            slist.style.display = open ? 'none' : 'block';
+            toggle.textContent = (open ? '▶' : '▼') + ` 📚 Sources (${res.sources.length})`;
+        };
+        res.sources.forEach((src, si) => {
+            const srcItem = document.createElement('div');
+            srcItem.className = 'source-item';
+            const sh = document.createElement('div');
+            sh.className = 'source-header';
+            const sc2 = document.createElement('div');
+            sc2.className = 'source-content';
+
+            let label;
+            if (src.metadata.type === 'raptor_summary')
+                label = `📊 Synthèse RAPTOR [${src.metadata.view||'N/A'}] (N=${src.metadata.num_chunks||'?'})`;
+            else if (src.metadata.source_type === 'verbatim_evidence')
+                label = `💬 ${src.metadata.commune||'N/A'}${src.metadata.profession ? ' - '+src.metadata.profession : ''}`;
+            else
+                label = `${src.metadata.commune || src.metadata.nom || 'Source'}`;
+
+            sh.textContent = `▶ ${si+1}. ${label} (score: ${src.score.toFixed(3)})`;
+            sh.onclick = () => {
+                const open = sc2.style.display !== 'none' && sc2.style.display !== '';
+                sc2.style.display = open ? 'none' : 'block';
+                sh.textContent = (open ? '▶ ' : '▼ ') + `${si+1}. ${label} (score: ${src.score.toFixed(3)})`;
+            };
+            sc2.textContent = src.content;
+            srcItem.appendChild(sh); srcItem.appendChild(sc2);
+            slist.appendChild(srcItem);
+        });
+        sdiv.appendChild(toggle);
+        sdiv.appendChild(slist);
+        frag.appendChild(sdiv);
+    }
+
+    return frag;
+}
+
+function renderBatchResults(mode, currentIdx = -1) {
+    const container = document.getElementById('resultsList');
+
+    if (mode === 'pending') {
+        // Initialisation : construire tous les items en attente
+        container.innerHTML = '';
+        batchResults.forEach((res, i) => {
+            const item = document.createElement('div');
+            item.className = 'result-item';
+            item.id = `result-${i}`;
+            const qDiv = document.createElement('div');
+            qDiv.className = 'result-question';
+            qDiv.innerHTML = `<span class="result-q-num">${i+1}</span><span>${escHtml(res.question)}</span>`;
+            item.appendChild(qDiv);
+            const pDiv = document.createElement('div');
+            pDiv.className = 'result-pending';
+            pDiv.innerHTML = `<span class="mini-spinner"></span> En attente...`;
+            item.appendChild(pDiv);
+            container.appendChild(item);
+        });
+    } else if (mode === 'partial' && currentIdx >= 0) {
+        // Mise à jour uniquement de l'item terminé — les autres restent intacts
+        const item = document.getElementById(`result-${currentIdx}`);
+        if (!item) return;
+        // Supprimer uniquement le bloc "en attente / résultat précédent" (tout sauf la question)
+        const qDiv = item.querySelector('.result-question');
+        item.innerHTML = '';
+        item.appendChild(qDiv);
+        item.appendChild(buildResultContent(batchResults[currentIdx]));
+        item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+}
+
+function clearBatch() {
+    if (batchRunning) { alert('Traitement en cours, veuillez patienter.'); return; }
+    batchResults = [];
+    parsedQuestions = [];
+    document.getElementById('batchResults').style.display    = 'none';
+    document.getElementById('progressSection').style.display = 'none';
+    document.getElementById('questionsPreview').style.display= 'none';
+    document.getElementById('resultsList').innerHTML = '';
+    document.getElementById('batchColumn').innerHTML = '<option value="0">Colonne 1</option>';
+    // Reset upload zone
+    document.getElementById('uploadZone').innerHTML = `
+        <div class="icon">📂</div>
+        <h3>Importer un fichier Excel ou CSV</h3>
+        <p>Glissez-déposez ou cliquez — .xlsx · .xls · .csv</p>
+        <p style="margin-top:6px;font-size:12px;color:#aaa;">Les questions doivent être dans une colonne (une par ligne)</p>
+        <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" onchange="handleFile(this.files[0])">`;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   MODAL CONTEXTE
+═══════════════════════════════════════════════════════════ */
+function showCtxModal(ctx) {
+    currentContext = ctx;
+    document.getElementById('contextContent').textContent = ctx;
+    document.getElementById('contextModal').classList.add('active');
+}
+function closeCtxModal() { document.getElementById('contextModal').classList.remove('active'); }
+function copyCtx() {
+    navigator.clipboard.writeText(currentContext)
+        .then(() => alert('Contexte copié !'))
+        .catch(() => {
+            const ta = document.createElement('textarea');
+            ta.value = currentContext;
+            document.body.appendChild(ta); ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            alert('Contexte copié !');
+        });
+}
+function exportCtx() {
+    const blob = new Blob([currentContext], { type:'text/plain;charset=utf-8' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href = url;
+    a.download = `contexte_llm_${new Date().toISOString().slice(0,16).replace(/[T:]/g,'-')}.txt`;
+    document.body.appendChild(a); a.click();
+    document.body.removeChild(a); URL.revokeObjectURL(url);
+}
+document.getElementById('contextModal').addEventListener('click', e => {
+    if (e.target === document.getElementById('contextModal')) closeCtxModal();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCtxModal(); });
+
+/* ═══════════════════════════════════════════════════════════
+   EXPLORATION
+═══════════════════════════════════════════════════════════ */
+let exploreTabInitialized = false;
+
+async function initExploreTab() {
+    try {
+        const r = await fetch('/api/browse/filters');
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        const data = await r.json();
+
+        const fCommune = document.getElementById('fCommune');
+        data.communes.forEach(c => {
+            const o = document.createElement('option'); o.value = o.textContent = c; fCommune.appendChild(o);
+        });
+        const fAge = document.getElementById('fAgeRange');
+        data.age_ranges.forEach(a => {
+            const o = document.createElement('option'); o.value = o.textContent = a; fAge.appendChild(o);
+        });
+        const fProf = document.getElementById('fProfession');
+        data.professions.forEach(p => {
+            const o = document.createElement('option'); o.value = o.textContent = p; fProf.appendChild(o);
+        });
+        const fDim = document.getElementById('fDimension');
+        data.dimensions.forEach(d => {
+            const o = document.createElement('option'); o.value = o.textContent = d; fDim.appendChild(o);
+        });
+
+        document.getElementById('verbatimsCount').textContent = `(${data.total})`;
+        searchVerbatims();
+        loadSummaries();
+    } catch(e) {
+        document.getElementById('verbatimsList').innerHTML =
+            `<div class="explore-loading" style="color:red;">Erreur chargement filtres : ${e.message}</div>`;
+    }
+}
+
+function switchExploreTab(name) {
+    document.querySelectorAll('.explore-tab-btn').forEach((b, i) => {
+        b.classList.toggle('active', ['verbatims', 'summaries'][i] === name);
+    });
+    document.querySelectorAll('.explore-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('explore-panel-' + name).classList.add('active');
+}
+
+async function searchVerbatims() {
+    const commune    = document.getElementById('fCommune').value;
+    const genre      = document.querySelector('input[name="fGenre"]:checked')?.value || '';
+    const age_range  = document.getElementById('fAgeRange').value;
+    const profession = document.getElementById('fProfession').value;
+    const dimension  = document.getElementById('fDimension').value;
+
+    const params = new URLSearchParams();
+    if (commune)    params.set('commune',    commune);
+    if (genre)      params.set('genre',      genre);
+    if (age_range)  params.set('age_range',  age_range);
+    if (profession) params.set('profession', profession);
+    if (dimension)  params.set('dimension',  dimension);
+
+    const container = document.getElementById('verbatimsList');
+    container.innerHTML = '<div class="explore-loading">Chargement...</div>';
+
+    try {
+        const r = await fetch('/api/browse/verbatims?' + params.toString());
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        const data = await r.json();
+
+        document.getElementById('verbatimsCount').textContent = `(${data.total})`;
+        container.innerHTML = '';
+
+        if (data.total === 0) {
+            container.innerHTML = '<div class="explore-loading">Aucun verbatim trouvé avec ces filtres.</div>';
+            return;
         }
 
-        async function sendQuestion() {
-            const question = document.getElementById('questionInput').value.trim();
+        data.verbatims.forEach(v => {
+            const m = v.metadata;
+            const card = document.createElement('div');
+            card.className = 'verbatim-card';
 
-            if (!question) {
-                alert('Veuillez entrer une question');
-                return;
-            }
+            const header = document.createElement('div');
+            header.className = 'verbatim-header';
 
-            // Vérifier que la version est disponible
-            const versionInfo = availableVersions.find(v => v.version === selectedVersion);
-            if (!versionInfo || !versionInfo.available) {
-                alert(`La version ${selectedVersion} n'est pas disponible. Veuillez choisir une autre version.`);
-                return;
-            }
+            const tags = document.createElement('div');
+            tags.className = 'verbatim-tags';
 
-            // Ajouter le message de l'utilisateur
-            addMessage(question, 'user');
-            document.getElementById('questionInput').value = '';
+            const ageLabel = m.age_range
+                ? m.age_range + (m.age_exact && m.age_exact > 0 ? ` (${m.age_exact} ans)` : '')
+                : null;
 
-            // Désactiver le bouton et afficher le loading
-            document.getElementById('sendButton').disabled = true;
-            document.getElementById('loading').classList.add('active');
+            [
+                [m.nom,        'vtag-commune'],
+                [m.genre,      'vtag-genre'],
+                [ageLabel,     'vtag-age'],
+                [m.profession, 'vtag-profession'],
+                [m.dimension,  'vtag-dimension'],
+            ].forEach(([val, cls]) => {
+                if (!val) return;
+                const tag = document.createElement('span');
+                tag.className = `vtag ${cls}`;
+                tag.textContent = val;
+                tags.appendChild(tag);
+            });
 
-            // Récupérer les paramètres
-            const params = {
-                question: question,
-                rag_version: selectedVersion,
-                k: parseInt(document.getElementById('numSources').value),
-                use_reranking: document.getElementById('useReranking').checked,
-                include_quantitative: document.getElementById('includeQuant').checked,
-                use_ontology_enrichment: document.getElementById('useOntology').checked,
-                use_cross_analysis: document.getElementById('useCrossAnalysis').checked
+            const arrow = document.createElement('span');
+            arrow.className = 'verbatim-arrow';
+            arrow.textContent = '▶';
+
+            const body = document.createElement('div');
+            body.className = 'verbatim-body';
+            body.textContent = v.content;
+
+            header.onclick = () => {
+                const open = body.style.display === 'block';
+                body.style.display = open ? 'none' : 'block';
+                arrow.textContent = open ? '▶' : '▼';
             };
 
-            // Ajouter le mode v7 si applicable
-            if (selectedVersion === 'v7') {
-                params.query_mode = document.getElementById('v7Mode').value;
-            }
+            header.appendChild(tags);
+            header.appendChild(arrow);
+            card.appendChild(header);
+            card.appendChild(body);
+            container.appendChild(card);
+        });
+    } catch(e) {
+        container.innerHTML = `<div class="explore-loading" style="color:red;">Erreur : ${e.message}</div>`;
+    }
+}
 
-            try {
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(params)
-                });
+async function loadSummaries() {
+    const container = document.getElementById('summariesList');
+    container.innerHTML = '<div class="explore-loading">Chargement...</div>';
 
-                if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.detail || `HTTP ${response.status}`);
-                }
+    try {
+        const r = await fetch('/api/browse/summaries');
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        const data = await r.json();
 
-                const data = await response.json();
-                addBotResponse(data);
+        document.getElementById('summariesCount').textContent = `(${data.total})`;
+        container.innerHTML = '';
 
-            } catch (error) {
-                console.error('Erreur:', error);
-                showError(error.message);
-            } finally {
-                document.getElementById('sendButton').disabled = false;
-                document.getElementById('loading').classList.remove('active');
-            }
-        }
+        const viewLabels = {
+            // 2D démographiques
+            'age_range*profession': '🔀 Tranche d\'âge × Profession',
+            'age_range*commune':    '🔀 Tranche d\'âge × Commune',
+            'profession*commune':   '🔀 Profession × Commune',
+            // 2D thématiques
+            'dimension*commune':    '🎯 Thème QdV × Commune',
+            'dimension*age_range':  '🎯 Thème QdV × Tranche d\'âge',
+            'dimension*profession': '🎯 Thème QdV × Profession',
+            // 1D
+            'age_range':            '👤 Tranche d\'âge',
+            'profession':           '💼 Profession',
+            'commune':              '📍 Commune',
+            'dimension':            '🎯 Thème QdV',
+        };
 
-        function addMessage(text, type) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${type}`;
+        Object.entries(data.views).forEach(([viewName, summaries]) => {
+            const section = document.createElement('div');
+            section.className = 'summary-view-section';
 
-            const contentDiv = document.createElement('div');
-            contentDiv.className = 'message-content';
-            contentDiv.textContent = text;
+            const header = document.createElement('div');
+            header.className = 'summary-view-header';
+            header.innerHTML = `<span>${viewLabels[viewName] || viewName}</span><span>${summaries.length} synthèses</span>`;
 
-            messageDiv.appendChild(contentDiv);
-            document.getElementById('chatContainer').appendChild(messageDiv);
-            document.getElementById('chatContainer').scrollTop = document.getElementById('chatContainer').scrollHeight;
-        }
+            const list = document.createElement('div');
+            list.className = 'summary-view-list';
 
-        function addBotResponse(data) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = 'message bot';
+            let collapsed = false;
+            header.onclick = () => {
+                collapsed = !collapsed;
+                list.style.display = collapsed ? 'none' : 'block';
+                header.style.opacity = collapsed ? '.65' : '1';
+            };
 
-            const contentDiv = document.createElement('div');
-            contentDiv.className = 'message-content';
+            summaries.forEach(s => {
+                const m = s.metadata;
+                const card = document.createElement('div');
+                card.className = 'summary-card';
 
-            // Ajouter le badge de version
-            const versionBadge = document.createElement('span');
-            versionBadge.className = 'version-badge';
-            versionBadge.textContent = data.rag_version_used.toUpperCase();
+                const cardHeader = document.createElement('div');
+                cardHeader.className = 'summary-card-header';
 
-            // Ajouter la réponse
-            const answerP = document.createElement('p');
-            answerP.appendChild(versionBadge);
-            answerP.appendChild(document.createTextNode(' ' + data.answer));
-            contentDiv.appendChild(answerP);
+                let label = m.dim1_value || '';
+                if (m.dim2_value) label += ' × ' + m.dim2_value;
 
-            // Stocker le contexte pour cette réponse
-            const responseContext = data.context || 'Contexte non disponible';
+                const tagsDiv = document.createElement('div');
+                tagsDiv.className = 'summary-card-tags';
+                const t1 = document.createElement('span');
+                t1.className = 'vtag vtag-commune';
+                t1.textContent = label;
+                const t2 = document.createElement('span');
+                t2.className = 'vtag';
+                t2.style.cssText = 'background:#f0f0f0;color:#888;';
+                t2.textContent = (m.num_chunks || '?') + ' verbatims';
+                tagsDiv.appendChild(t1);
+                tagsDiv.appendChild(t2);
 
-            // Ajouter les sources si présentes
-            if (data.sources && data.sources.length > 0) {
-                const sourcesDiv = document.createElement('div');
-                sourcesDiv.className = 'sources';
-                sourcesDiv.innerHTML = '<strong>📚 Sources (' + data.sources.length + ') :</strong>';
+                const arrow = document.createElement('span');
+                arrow.className = 'verbatim-arrow';
+                arrow.textContent = '▶';
 
-data.sources.forEach((source, index) => {
-                    const sourceItem = document.createElement('div');
-                    sourceItem.className = 'source-item';
+                const body = document.createElement('div');
+                body.className = 'summary-card-body md-body';
+                body.innerHTML = marked.parse(s.content || '');
 
-                    const sourceHeader = document.createElement('div');
-                    sourceHeader.className = 'source-header';
+                cardHeader.onclick = () => {
+                    const open = body.style.display === 'block';
+                    body.style.display = open ? 'none' : 'block';
+                    arrow.textContent = open ? '▶' : '▼';
+                };
 
-                    // Détection du type de source
-                    let headerText;
-                    if (source.metadata.source === 'gnn') {
-                        // Source du graphe de connaissances
-                        const nodeType = source.metadata.node_type || 'Node';
-                        const label = source.metadata.properties?.label || source.metadata.properties?.name || 'Unknown';
-                        headerText = `🔗 ${nodeType}: ${label}`;
-                    } else {
-                        // Source classique (commune)
-                        const commune = source.metadata.commune || source.metadata.nom || 'N/A';
-                        headerText = `${commune}`;
-                    }
-
-                    sourceHeader.textContent = `${index + 1}. ${headerText} (score: ${source.score.toFixed(3)})`;
-                    sourceHeader.style.cursor = 'pointer';
-
-                    const sourceContent = document.createElement('div');
-                    sourceContent.className = 'source-content';
-                    sourceContent.style.display = 'none'; // Caché par défaut
-
-                    // Contenu adapté au type de source
-                    if (source.metadata.source === 'gnn' && source.metadata.properties) {
-                        // Afficher les propriétés du nœud du graphe
-                        let propsHtml = '<strong>Propriétés du nœud :</strong><br>';
-                        for (const [key, value] of Object.entries(source.metadata.properties)) {
-                            propsHtml += `<em>${key}:</em> ${value}<br>`;
-                        }
-                        propsHtml += '<br><strong>Texte :</strong><br>' + source.content;
-                        sourceContent.innerHTML = propsHtml;
-                    } else {
-                        sourceContent.textContent = source.content;
-                    }
-
-                    // Ajouter le comportement de clic pour déplier/replier
-                    sourceHeader.onclick = () => {
-                        if (sourceContent.style.display === 'none') {
-                            sourceContent.style.display = 'block';
-                            sourceHeader.textContent = `▼ ${index + 1}. ${headerText} (score: ${source.score.toFixed(3)})`;
-                        } else {
-                            sourceContent.style.display = 'none';
-                            sourceHeader.textContent = `▶ ${index + 1}. ${headerText} (score: ${source.score.toFixed(3)})`;
-                        }
-                    };
-                    sourceHeader.textContent = `▶ ${index + 1}. ${headerText} (score: ${source.score.toFixed(3)})`;
-
-                    sourceItem.appendChild(sourceHeader);
-                    sourceItem.appendChild(sourceContent);
-                    sourcesDiv.appendChild(sourceItem);
-                });
-
-                contentDiv.appendChild(sourcesDiv);
-            }
-
-            // Ajouter le bouton "Voir contexte"
-            const contextBtn = document.createElement('button');
-            contextBtn.className = 'context-btn';
-            contextBtn.textContent = '📄 Voir contexte LLM';
-            contextBtn.onclick = () => showContext(responseContext);
-            contentDiv.appendChild(contextBtn);
-
-            messageDiv.appendChild(contentDiv);
-            document.getElementById('chatContainer').appendChild(messageDiv);
-            document.getElementById('chatContainer').scrollTop = document.getElementById('chatContainer').scrollHeight;
-        }
-
-        function showError(message) {
-            const errorDiv = document.createElement('div');
-            errorDiv.className = 'error';
-            errorDiv.textContent = '❌ ' + message;
-
-            const container = document.querySelector('.container');
-            const chatContainer = document.getElementById('chatContainer');
-            container.insertBefore(errorDiv, chatContainer);
-
-            setTimeout(() => errorDiv.remove(), 5000);
-        }
-
-        // Charger les versions au démarrage
-        loadVersions();
-
-        // Auto-focus sur l'input
-        document.getElementById('questionInput').focus();
-
-        // === Fonctions pour le modal de contexte ===
-
-        function showContext(context) {
-            currentContext = context;
-            document.getElementById('contextContent').textContent = context;
-            document.getElementById('contextModal').classList.add('active');
-        }
-
-        function closeContextModal() {
-            document.getElementById('contextModal').classList.remove('active');
-        }
-
-        function copyContext() {
-            navigator.clipboard.writeText(currentContext).then(() => {
-                alert('Contexte copié dans le presse-papiers !');
-            }).catch(err => {
-                console.error('Erreur lors de la copie:', err);
-                // Fallback pour navigateurs plus anciens
-                const textArea = document.createElement('textarea');
-                textArea.value = currentContext;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                alert('Contexte copié dans le presse-papiers !');
+                cardHeader.appendChild(tagsDiv);
+                cardHeader.appendChild(arrow);
+                card.appendChild(cardHeader);
+                card.appendChild(body);
+                list.appendChild(card);
             });
-        }
 
-        function exportContext() {
-            const blob = new Blob([currentContext], { type: 'text/plain;charset=utf-8' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-            a.download = `contexte_llm_${timestamp}.txt`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        }
-
-        // Fermer le modal en cliquant à l'extérieur
-        document.getElementById('contextModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeContextModal();
-            }
+            section.appendChild(header);
+            section.appendChild(list);
+            container.appendChild(section);
         });
+    } catch(e) {
+        container.innerHTML = `<div class="explore-loading" style="color:red;">Erreur : ${e.message}</div>`;
+    }
+}
 
-        // Fermer le modal avec Escape
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeContextModal();
-            }
-        });
-    </script>
+function resetExploreFilters() {
+    document.getElementById('fCommune').value    = '';
+    document.getElementById('fAgeRange').value   = '';
+    document.getElementById('fProfession').value = '';
+    document.getElementById('fDimension').value  = '';
+    document.querySelector('input[name="fGenre"][value=""]').checked = true;
+    searchVerbatims();
+}
+
+/* ═══════════════════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════════════════ */
+loadVersions();
+document.getElementById('questionInput').focus();
+</script>
 </body>
 </html>

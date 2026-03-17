@@ -1,0 +1,722 @@
+{
+  "timestamp": "20260212_153505",
+  "questions_file": "questions_ontologie.json",
+  "rag_version": "v6",
+  "nb_questions": 8,
+  "models": {
+    "OpenAI": "gpt-4.1-mini",
+    "Grok": "grok-3-mini-beta",
+    "Kimi": "kimi-k2-0905-preview",
+    "Claude": "claude-haiku-4-5-20251001",
+    "Mistral": "mistral-small-latest"
+  },
+  "judge_model": "mistral-large-latest",
+  "judgments": [
+    {
+      "evaluations": [
+        {
+          "id": "A",
+          "note": 9,
+          "justification": "Réponse très fidèle et complète, couvrant toutes les dimensions clés des sources. La structure est claire et les nuances sont bien respectées, même si la 'Qualité de vie' est présentée comme une dimension supplémentaire plutôt qu'un concept englobant."
+        },
+        {
+          "id": "B",
+          "note": 5,
+          "justification": "Réponse trop restrictive : elle nie l'existence d'autres dimensions malgré leur description claire dans les sources. La pertinence est limitée par une interprétation excessive des termes 'dimensions' vs 'formes'."
+        },
+        {
+          "id": "C",
+          "note": 7,
+          "justification": "Bonne fidélité et clarté, mais incomplète : elle omet le concept central de 'Well-being' comme dimension structurante et la 'Qualité de vie' comme cadre conceptuel. Les nuances sont bien respectées."
+        },
+        {
+          "id": "D",
+          "note": 8,
+          "justification": "Réponse pertinente et nuancée, avec une structure claire. Elle exploite bien les sources mais minimise légèrement le rôle central du 'Well-being' général et ne mentionne pas explicitement sa description."
+        },
+        {
+          "id": "E",
+          "note": 10,
+          "justification": "Réponse exemplaire : fidèle, complète et claire, elle intègre toutes les informations clés sans généralisation abusive. La distinction entre dimensions, formes et concepts englobants est parfaitement respectée."
+        }
+      ],
+      "classement": [
+        "E",
+        "A",
+        "D",
+        "C",
+        "B"
+      ],
+      "meilleure_reponse": "E",
+      "synthese": "La réponse idéale combine la précision terminologique de la réponse E avec la structure hiérarchique des réponses A et D. Elle doit : 1) Identifier le 'Well-being' comme concept central, 2) Lister les dimensions spécifiques (eudaimonique, territorial, territorial objectif) en explicitant leurs liens, 3) Positionner la 'Qualité de vie' comme cadre conceptuel englobant sans la présenter comme une dimension supplémentaire. 4) Éviter toute interprétation restrictive des termes tout en maintenant une distinction claire entre dimensions et formes de bien-être.",
+      "provider_mapping": {
+        "A": "OpenAI",
+        "B": "Grok",
+        "C": "Kimi",
+        "D": "Claude",
+        "E": "Mistral"
+      },
+      "error": null,
+      "providers_en_erreur": [],
+      "question": "Quelles sont les grandes dimensions du bien-etre identifiees dans l'ontologie ?"
+    },
+    {
+      "evaluations": [
+        {
+          "id": "A",
+          "note": 8,
+          "justification": "Réponse fidèle et pertinente, mais manque de détails sur les indicateurs spécifiques (ex. OppChoVec) et de structure claire. La nuance est présente, mais la complétude est partielle."
+        },
+        {
+          "id": "B",
+          "note": 9,
+          "justification": "Excellente fidélité et pertinence, avec une exploitation complète des sources (mention des indicateurs objectifs/subjectifs et exemples). Structure claire et nuancée, mais légèrement redondante sur l'absence de données corses."
+        },
+        {
+          "id": "C",
+          "note": 7,
+          "justification": "Réponse concise et claire, mais trop succincte : manque de détails sur les indicateurs (ex. OppChoVec, satisfaction) et de nuance. Complétude limitée malgré une bonne fidélité."
+        },
+        {
+          "id": "D",
+          "note": 10,
+          "justification": "Réponse optimale : fidélité parfaite, pertinence totale, complétude (mention de la Qualité de Vie, indicateurs, et limites), structure pédagogique (titres, mise en forme), et nuance (complémentarité, limites contextuelles)."
+        },
+        {
+          "id": "E",
+          "note": 9,
+          "justification": "Très fidèle et complète (détails sur OppChoVec, indicateurs), pertinente et nuancée. Légèrement moins claire que D en raison d'une structure moins aérée, mais excellente exploitation des sources."
+        }
+      ],
+      "classement": [
+        "D",
+        "B",
+        "E",
+        "A",
+        "C"
+      ],
+      "meilleure_reponse": "D",
+      "synthese": "La réponse idéale combine la structure pédagogique et la mise en forme de D (titres, complémentarité, limites) avec les détails techniques de E et B (OppChoVec, indicateurs spécifiques). Elle doit insister sur la distinction fondamentale (critères objectifs vs perceptions) tout en soulignant leur articulation dans la Qualité de Vie (Source 4). Une mention des limites contextuelles (absence de données locales) renforce la nuance, tandis que des exemples concrets (temps libre, satisfaction) illustrent la dimension subjective sans généraliser.",
+      "provider_mapping": {
+        "A": "OpenAI",
+        "B": "Grok",
+        "C": "Kimi",
+        "D": "Claude",
+        "E": "Mistral"
+      },
+      "error": null,
+      "providers_en_erreur": [],
+      "question": "Comment le bien-etre objectif se distingue-t-il du bien-etre subjectif dans les donnees ?"
+    },
+    {
+      "evaluations": [
+        {
+          "id": "A",
+          "note": 8,
+          "justification": "Fidélité et pertinence excellentes, avec une bonne complétude des indicateurs. La structure est claire, mais manque légèrement de nuance sur l'absence de données spécifiques à la Corse et les dimensions associées à chaque indicateur."
+        },
+        {
+          "id": "B",
+          "note": 9,
+          "justification": "Très fidèle et pertinente, exploite bien les sources en mentionnant les dimensions et l'opérationnalisation subjective. La nuance sur l'absence de données corses est appréciable, mais la structure pourrait être plus dynamique."
+        },
+        {
+          "id": "C",
+          "note": 8,
+          "justification": "Fidélité et pertinence solides, avec une bonne exploitation des sources. La clarté est au rendez-vous, mais la réponse manque de détails sur les dimensions et de nuance sur le contexte corse."
+        },
+        {
+          "id": "D",
+          "note": 10,
+          "justification": "Réponse exemplaire : fidèle, pertinente, complète (dimensions détaillées), claire (structure hiérarchisée) et nuancée (mention des limites). Intègre tous les éléments clés sans généralisation abusive."
+        },
+        {
+          "id": "E",
+          "note": 7,
+          "justification": "Fidèle et pertinente, mais moins complète que les autres (dimensions moins explicites). La clarté est bonne, mais la répétition de 'agréable' et l'absence de nuance sur le contexte corse pénalisent la réponse."
+        }
+      ],
+      "classement": [
+        "D",
+        "B",
+        "A",
+        "C",
+        "E"
+      ],
+      "meilleure_reponse": "D",
+      "synthese": "La réponse idéale combine une structure hiérarchisée (comme D) avec une mention explicite des dimensions associées à chaque indicateur (logement, éducation, environnement). Elle intègre aussi une nuance sur l'absence de données spécifiques à la Corse, tout en soulignant le caractère subjectif et territorial des indicateurs. Une présentation visuelle (listes, titres) améliore la clarté, et l'ajout des liens entre indicateurs et concepts (comme dans B) renforce la complétude.",
+      "provider_mapping": {
+        "A": "OpenAI",
+        "B": "Grok",
+        "C": "Kimi",
+        "D": "Claude",
+        "E": "Mistral"
+      },
+      "error": null,
+      "providers_en_erreur": [],
+      "question": "Quels indicateurs permettent de mesurer la qualite de vie en Corse ?"
+    },
+    {
+      "evaluations": [
+        {
+          "id": "A",
+          "note": 7,
+          "justification": "La réponse est fidèle aux sources et pertinente, mais manque de complétude (pas de mention des indicateurs mixtes ou d'exemples comme OppChoVec) et de nuance (structure minimaliste). La clarté est bonne."
+        },
+        {
+          "id": "B",
+          "note": 9,
+          "justification": "Excellente fidélité et pertinence, avec une structure claire et une nuance appréciable (mention des limites du contexte). La complétude est bonne, bien qu'elle n'exploite pas pleinement l'exemple OppChoVec."
+        },
+        {
+          "id": "C",
+          "note": 6,
+          "justification": "Fidèle et pertinente, mais très minimaliste. Manque de complétude (pas d'exemples ou de détails) et de nuance. La clarté est correcte mais trop concise."
+        },
+        {
+          "id": "D",
+          "note": 10,
+          "justification": "Réponse optimale : fidèle, pertinente, complète (mention des indicateurs mixtes et de OppChoVec), claire (structure détaillée) et nuancée (distinction claire entre sources de données)."
+        },
+        {
+          "id": "E",
+          "note": 8,
+          "justification": "Fidèle et pertinente, avec une bonne clarté et une référence explicite aux sources. Manque de complétude (pas d'indicateur mixte ou d'exemple) et de nuance (structure basique)."
+        }
+      ],
+      "classement": [
+        "D",
+        "B",
+        "E",
+        "A",
+        "C"
+      ],
+      "meilleure_reponse": "D",
+      "synthese": "La réponse idéale combine une définition précise des indicateurs objectif (données administratives/statistiques) et subjectif (perceptions auto-rapportées), comme dans les réponses A et E. Elle intègre des exemples concrets (OppChoVec) et mentionne les indicateurs mixtes pour une complétude maximale (réponse D). Une structure claire avec des sous-parties (comme en D) améliore la lisibilité, tandis qu'une nuance sur les limites du contexte (comme en B) renforce la rigueur. Éviter les réponses trop minimalistes (C) pour garantir la richesse informative.",
+      "provider_mapping": {
+        "A": "OpenAI",
+        "B": "Grok",
+        "C": "Kimi",
+        "D": "Claude",
+        "E": "Mistral"
+      },
+      "error": null,
+      "providers_en_erreur": [],
+      "question": "Quelle est la difference entre un indicateur objectif et un indicateur subjectif ?"
+    },
+    {
+      "evaluations": [
+        {
+          "id": "A",
+          "note": 9,
+          "justification": "Réponse fidèle et pertinente, exploitant bien les sources. La structure est claire et complète, mais manque légèrement de détails sur l'opérationnalisation des indicateurs (ex. exemples concrets)."
+        },
+        {
+          "id": "B",
+          "note": 9.5,
+          "justification": "Excellente fidélité et pertinence, avec une décomposition très précise des sous-dimensions. Mention explicite des indicateurs subjectifs/objectifs et de leurs limites (données incomplètes). Nuancée et structurée."
+        },
+        {
+          "id": "C",
+          "note": 8.5,
+          "justification": "Bonne fidélité et clarté, mais moins complète que B. La réponse omet certains détails sur l'opérationnalisation (ex. noms des indicateurs) et manque légèrement de profondeur dans la nuance."
+        },
+        {
+          "id": "D",
+          "note": 10,
+          "justification": "Réponse idéale : fidèle, pertinente, complète et très bien structurée. Exploite toutes les informations clés, y compris les exemples d'indicateurs, et ajoute une observation nuancée sur la complémentarité des dimensions."
+        },
+        {
+          "id": "E",
+          "note": 8,
+          "justification": "Correcte mais minimaliste. Fidèle et pertinente, mais manque de détails sur l'opérationnalisation et de nuance. La structure est claire mais moins riche que les autres réponses."
+        }
+      ],
+      "classement": [
+        "D",
+        "B",
+        "A",
+        "C",
+        "E"
+      ],
+      "meilleure_reponse": "D",
+      "synthese": "La réponse idéale combine une structure hiérarchisée et détaillée (comme D), une fidélité rigoureuse aux sources (comme B), et une exploitation exhaustive des sous-dimensions et indicateurs. Elle devrait inclure : 1) Une définition claire du bien-être central, 2) La décomposition en bien-être eudémonique et territorial, 3) La subdivision du bien-être territorial en dimensions subjective/objective avec leurs indicateurs spécifiques, 4) Une observation nuancée sur la complémentarité des approches (comme D), et 5) Une mention des limites ou données manquantes (comme B). La clarté et la précision des termes utilisés (ex. 'opérationnalisé par') renforcent la qualité globale.",
+      "provider_mapping": {
+        "A": "OpenAI",
+        "B": "Grok",
+        "C": "Kimi",
+        "D": "Claude",
+        "E": "Mistral"
+      },
+      "error": null,
+      "providers_en_erreur": [],
+      "question": "Comment le concept de bien-etre est-il structure et decompose en sous-dimensions ?"
+    },
+    {
+      "evaluations": [
+        {
+          "id": "A",
+          "note": 7,
+          "justification": "Fidélité et pertinence excellentes, mais manque de structure et de nuance dans l'analyse des liens potentiels. Complétude limitée par l'absence d'exploration des implications indirectes."
+        },
+        {
+          "id": "B",
+          "note": 9,
+          "justification": "Excellente fidélité et pertinence, avec une structure claire et une analyse nuancée des limites des sources. Complétude optimale compte tenu des données disponibles."
+        },
+        {
+          "id": "C",
+          "note": 6,
+          "justification": "Fidélité respectée, mais réponse trop minimaliste. Manque de pertinence dans l'exploration des liens indirects et de clarté dans la présentation."
+        },
+        {
+          "id": "D",
+          "note": 8,
+          "justification": "Très bonne fidélité et structure claire. Pertinence et complétude bien exploitées, mais légèrement moins nuancée que la réponse B sur les hypothèses non documentées."
+        },
+        {
+          "id": "E",
+          "note": 5,
+          "justification": "Pertinence et clarté correctes, mais fidélité compromise par des hypothèses non étayées par les sources. Nuance insuffisante sur les limites des données."
+        }
+      ],
+      "classement": [
+        "B",
+        "D",
+        "A",
+        "C",
+        "E"
+      ],
+      "meilleure_reponse": "B",
+      "synthese": "La réponse idéale doit strictement s'appuyer sur les sources pour souligner l'absence de liens explicites entre la santé et les autres dimensions du bien-être, tout en structurant clairement cette analyse. Elle devrait mentionner les concepts connexes (bien-être territorial, eudémonique, etc.) comme des pistes potentielles non documentées, sans extrapoler. Une conclusion doit rappeler les limites des données disponibles et l'impossibilité d'établir des liens directs, tout en restant ouverte à des analyses futures avec des sources complémentaires.",
+      "provider_mapping": {
+        "A": "OpenAI",
+        "B": "Grok",
+        "C": "Kimi",
+        "D": "Claude",
+        "E": "Mistral"
+      },
+      "error": null,
+      "providers_en_erreur": [],
+      "question": "Quels liens existent entre la dimension sante et les autres dimensions du bien-etre ?"
+    },
+    {
+      "evaluations": [
+        {
+          "id": "A",
+          "note": 8,
+          "justification": "La réponse est fidèle aux sources et pertinente, couvrant les indicateurs clés (taux de chômage et heures travaillées). Cependant, elle mentionne les indicateurs mixtes sans preuve directe dans les sources, ce qui réduit légèrement sa fidélité. La clarté et la structure sont bonnes."
+        },
+        {
+          "id": "B",
+          "note": 9,
+          "justification": "Excellente fidélité et pertinence, avec une distinction claire entre indicateurs objectifs et subjectifs. La réponse exploite bien les sources et évite les généralisations. La nuance est présente, notamment sur les limites des sources. La structure est très claire."
+        },
+        {
+          "id": "C",
+          "note": 7,
+          "justification": "La réponse est concise et couvre les indicateurs principaux, mais elle manque de précision sur le type d'indicateurs (objectif/mixte) et ne justifie pas l'inclusion de 'self-rated job fulfilment' avec les sources. La complétude est partielle."
+        },
+        {
+          "id": "D",
+          "note": 10,
+          "justification": "Réponse exemplaire : fidèle, pertinente, complète et nuancée. Elle structure bien les informations, distingue les types d'indicateurs et souligne les limites des sources. La clarté est optimale, et les généralisations sont évitées."
+        },
+        {
+          "id": "E",
+          "note": 6,
+          "justification": "La réponse est fidèle et pertinente pour les indicateurs mentionnés, mais elle est incomplète (absence de 'self-rated job fulfilment' et des types d'indicateurs). La structure est minimaliste et manque de nuance."
+        }
+      ],
+      "classement": [
+        "D",
+        "B",
+        "A",
+        "C",
+        "E"
+      ],
+      "meilleure_reponse": "D",
+      "synthese": "La réponse idéale combine la structure détaillée de D avec la rigueur de B dans l'analyse des sources. Elle doit lister clairement les indicateurs objectifs (taux de chômage, heures travaillées) et mentionner le potentiel indicateur mixte ('self-rated job fulfilment'), tout en précisant leur nature (objectif/subjectif). Il est crucial de souligner les limites des sources, comme le fait D, et d'éviter les affirmations non étayées. Une réponse concise mais exhaustive, avec des sous-parties pour les types d'indicateurs, serait optimale.",
+      "provider_mapping": {
+        "A": "OpenAI",
+        "B": "Grok",
+        "C": "Kimi",
+        "D": "Claude",
+        "E": "Mistral"
+      },
+      "error": null,
+      "providers_en_erreur": [],
+      "question": "Comment la dimension emploi est-elle operationnalisee en indicateurs concrets ?"
+    },
+    {
+      "evaluations": [
+        {
+          "id": "A",
+          "note": 7,
+          "justification": "La réponse est fidèle aux sources et pertinente, mais manque de complétude (pas d'énumération des dimensions) et de nuance (pas de suggestion pour des données complémentaires). La clarté est bonne."
+        },
+        {
+          "id": "B",
+          "note": 9,
+          "justification": "Excellente fidélité et pertinence. La réponse est complète (mention des relations conceptuelles) et nuancée (suggestion de données supplémentaires). La structure est claire et professionnelle."
+        },
+        {
+          "id": "C",
+          "note": 8,
+          "justification": "Fidélité et pertinence irréprochables. La complétude est bonne (liste des dimensions), mais la nuance est légèrement moins développée que la réponse B. Clarté optimale."
+        },
+        {
+          "id": "D",
+          "note": 10,
+          "justification": "Réponse parfaite sur tous les critères : fidélité totale, pertinence ciblée, complétude (détails des dimensions et limites), clarté structurée (sections marquées) et nuance poussée (demande de données précises)."
+        },
+        {
+          "id": "E",
+          "note": 6,
+          "justification": "Fidélité et pertinence correctes, mais manque de complétude (pas de détails sur les dimensions) et de nuance. La clarté est acceptable mais minimaliste."
+        }
+      ],
+      "classement": [
+        "D",
+        "B",
+        "C",
+        "A",
+        "E"
+      ],
+      "meilleure_reponse": "D",
+      "synthese": "La réponse idéale combinerait la structure claire et visuelle de D (sections, puces, mise en évidence des manques) avec la concision de B pour les éléments conceptuels. Elle listerait systématiquement les dimensions comme C, tout en insistant sur l'absence de données quantitatives et en proposant des pistes concrètes pour y remédier (ex : enquêtes territoriales, indicateurs subjectifs/objectifs). La nuance serait renforcée en distinguant les corrélations théoriques (relations conceptuelles) des corrélations empiriques (absentes ici).",
+      "provider_mapping": {
+        "A": "OpenAI",
+        "B": "Grok",
+        "C": "Kimi",
+        "D": "Claude",
+        "E": "Mistral"
+      },
+      "error": null,
+      "providers_en_erreur": [],
+      "question": "Quelles dimensions du bien-etre sont les plus correlees entre elles ?"
+    }
+  ],
+  "results_summary": [
+    {
+      "provider": "OpenAI",
+      "model": "gpt-4.1-mini",
+      "question": "Quelles sont les grandes dimensions du bien-etre identifiees dans l'ontologie ?",
+      "answer": "Les grandes dimensions du bien-être identifiées dans l'ontologie sont :\n\n1. Le bien-être général (Well-being) : état général de satisfaction, d'équilibre et d'épanouissement.\n2. Le bien-être eudaimonique (Eudaimonic well-being) : lié à la réalisation de soi, au sens et au développement personnel.\n3. Le bien-être territorial (Territorial well-being) : lié aux conditions de vie et aux caractéristiques spatiales, sociales et environnementales d'un territoire.\n4. Le bien-être territorial objectif (Objective Territorial well-being) : basé sur des critères objectifs des conditions de vie des populations.\n\nLa Qualité de vie (Quality of Life) est un concept englobant les conditions objectives et subjectives influençant le bien-être collectif.",
+      "time_seconds": 4.11,
+      "error": false
+    },
+    {
+      "provider": "Grok",
+      "model": "grok-3-mini-beta",
+      "question": "Quelles sont les grandes dimensions du bien-etre identifiees dans l'ontologie ?",
+      "answer": "D'après le contexte fourni, les grandes dimensions du bien-être identifiées dans l'ontologie sont limitées aux éléments explicitement décrits comme tels. Voici un résumé basé sur les sources disponibles :\n\n- **Eudaimonic well-being** : Une dimension du bien-être liée à la réalisation de soi, au but et au développement personnel (Source 2).\n\nLes autres concepts mentionnés (comme Territorial well-being, Objective Territorial well-being et Quality of Life) sont des formes ou des aspects liés au bien-être, mais ils ne sont pas explicitement qualifiés de \"dimensions\" dans le contexte. Si d'autres dimensions sont présentes dans l'ontologie, les données fournies sont insuffisantes pour les identifier.",
+      "time_seconds": 12.08,
+      "error": false
+    },
+    {
+      "provider": "Kimi",
+      "model": "kimi-k2-0905-preview",
+      "question": "Quelles sont les grandes dimensions du bien-etre identifiees dans l'ontologie ?",
+      "answer": "D'après le contexte fourni, l'ontologie identifie les grandes dimensions suivantes du bien-être :\n\n1. **Bien-être eudémonique** : dimension liée à l'épanouissement personnel, au sens de la vie et au développement personnel\n\n2. **Bien-être territorial** : forme de bien-être associée aux conditions de vie et aux caractéristiques spatiales, sociales et environnementales d'un territoire\n\n3. **Bien-être territorial objectif** : bien-être fondé sur des critères objectifs des conditions de vie des personnes\n\nCes dimensions s'articulent autour du concept central de **bien-être** qui représente un état général de satisfaction, d'équilibre et d'épanouissement.",
+      "time_seconds": 12.3,
+      "error": false
+    },
+    {
+      "provider": "Claude",
+      "model": "claude-haiku-4-5-20251001",
+      "question": "Quelles sont les grandes dimensions du bien-etre identifiees dans l'ontologie ?",
+      "answer": "# Grandes dimensions du bien-être identifiées dans l'ontologie\n\nSur la base du contexte fourni, trois grandes dimensions du bien-être sont identifiées :\n\n1. **Bien-être eudémonique** : dimension liée à l'auto-réalisation, au sens de la vie et au développement personnel.\n\n2. **Bien-être territorial** : dimension associée aux conditions de vie et aux caractéristiques spatiales, sociales et environnementales du territoire.\n\n3. **Bien-être territorial objectif** : une forme spécifique du bien-être territorial qui dépend de critères objectifs concernant les conditions de vie des personnes (opérationnalisé par des indicateurs objectifs).\n\n**Note** : Le contexte mentionne également le concept général de **Qualité de Vie** qui englobe à la fois les conditions objectives et subjectives façonnant le bien-être collectif, mais ne détaille pas d'autres dimensions majeures au-delà de celles citées ci-dessus.",
+      "time_seconds": 6.63,
+      "error": false
+    },
+    {
+      "provider": "Mistral",
+      "model": "mistral-small-latest",
+      "question": "Quelles sont les grandes dimensions du bien-etre identifiees dans l'ontologie ?",
+      "answer": "Les grandes dimensions du bien-être identifiées dans l'ontologie sont :\n\n1. **Well-being** (Bien-être) : Concept central représentant un état général de satisfaction, d'équilibre et d'épanouissement.\n2. **Eudaimonic well-being** (Bien-être eudémonique) : Dimension liée à la réalisation de soi, au sens et au développement personnel.\n3. **Territorial well-being** (Bien-être territorial) : Forme de bien-être associée aux conditions de vie et aux caractéristiques spatiales, sociales et environnementales d'un territoire.\n4. **Objective Territorial well-being** (Bien-être territorial objectif) : Forme de bien-être dépendant de critères objectifs sur les conditions de vie des personnes.\n5. **Quality of Life** (Qualité de vie) : Concept englobant les conditions objectives et subjectives qui façonnent le bien-être collectif.",
+      "time_seconds": 2.97,
+      "error": false
+    },
+    {
+      "provider": "OpenAI",
+      "model": "gpt-4.1-mini",
+      "question": "Comment le bien-etre objectif se distingue-t-il du bien-etre subjectif dans les donnees ?",
+      "answer": "Le bien-être objectif se distingue du bien-être subjectif par le fait qu'il repose sur des critères objectifs liés aux conditions de vie des personnes (indicateurs objectifs), tandis que le bien-être subjectif dépend de la perception et du ressenti des individus quant à leur situation (indicateurs subjectifs, sentiment d'avoir assez de temps libre, satisfaction).",
+      "time_seconds": 3.04,
+      "error": false
+    },
+    {
+      "provider": "Grok",
+      "model": "grok-3-mini-beta",
+      "question": "Comment le bien-etre objectif se distingue-t-il du bien-etre subjectif dans les donnees ?",
+      "answer": "D'après les informations du contexte fourni :\n\n- Le **bien-être objectif** (Source 1) est une forme de bien-être territorial qui dépend de critères objectifs mesurés par des indicateurs objectifs, tels que des données sur les conditions de vie (par exemple, via des indicateurs objectifs ou un \"OppChoVec\", qui semble lié aux opportunités et choix).\n\n- Le **bien-être subjectif** (Source 2) est une forme de bien-être territorial qui dépend de la perception personnelle des individus, mesurée par des indicateurs subjectifs, tels que le sentiment d'avoir assez de temps libre ou des niveaux de satisfaction.\n\nLa principale distinction réside dans leur base de mesure : le bien-être objectif repose sur des faits quantifiables et externes, tandis que le bien-être subjectif s'appuie sur les expériences et sentiments personnels. Ces définitions sont tirées des concepts décrits dans les sources, sans données supplémentaires sur leur application en Corse. Si des données spécifiques d'enquêtes sont nécessaires pour une analyse plus détaillée, elles ne sont pas disponibles dans le contexte.",
+      "time_seconds": 9.56,
+      "error": false
+    },
+    {
+      "provider": "Kimi",
+      "model": "kimi-k2-0905-preview",
+      "question": "Comment le bien-etre objectif se distingue-t-il du bien-etre subjectif dans les donnees ?",
+      "answer": "D'après le contexte fourni :\n\n**Bien-être objectif territorial** : dépend de critères objectifs sur les conditions de vie des personnes (mesures quantifiables, indicateurs concrets).\n\n**Bien-être subjectif territorial** : dépend de la manière dont les personnes ressentent leur situation (perceptions, sentiments, satisfaction personnelle).\n\nLa distinction principale repose donc sur la nature des données : objectives vs subjectives.",
+      "time_seconds": 6.7,
+      "error": false
+    },
+    {
+      "provider": "Claude",
+      "model": "claude-haiku-4-5-20251001",
+      "question": "Comment le bien-etre objectif se distingue-t-il du bien-etre subjectif dans les donnees ?",
+      "answer": "# Distinction entre bien-être objectif et bien-être subjectif\n\nSelon les données d'ontologie fournies, ces deux formes de bien-être territorial se distinguent par leur **fondement** :\n\n## **Bien-être objectif**\n- Repose sur des **critères objectifs** relatifs aux conditions de vie réelles\n- Opérationnalisé par des **indicateurs objectifs**\n- Mesure les conditions matérielles et observables\n\n## **Bien-être subjectif**\n- Repose sur **la perception et les sentiments** des personnes vis-à-vis de leur situation\n- Opérationnalisé par des **indicateurs subjectifs** et des dimensions comme le sentiment d'avoir assez de temps libre ou la satisfaction\n- Mesure l'expérience vécue et ressentie\n\n## **Complémentarité**\nCes deux dimensions constituent ensemble la **Qualité de Vie**, englobant à la fois les conditions objectives et subjectives du bien-être collectif.\n\n---\n\n**⚠️ Limitation** : Le contexte fourni ne contient que des définitions conceptuelles. Pour une analyse approfondie des données corses spécifiques, il faudrait accéder aux verbatims d'enquêtes ou aux indicateurs quantitatifs réels collectés auprès des habitants.",
+      "time_seconds": 4.1,
+      "error": false
+    },
+    {
+      "provider": "Mistral",
+      "model": "mistral-small-latest",
+      "question": "Comment le bien-etre objectif se distingue-t-il du bien-etre subjectif dans les donnees ?",
+      "answer": "Le bien-être objectif (Objective Territorial well-being) se distingue du bien-être subjectif (Subjective Territorial well-being) par les critères sur lesquels ils reposent :\n\n1. **Bien-être objectif** : Il dépend de critères objectifs concernant les conditions de vie des personnes. Il est opérationnalisé par des indicateurs objectifs (Objective indicator) et des choix vectoriels opposés (OppChoVec).\n\n2. **Bien-être subjectif** : Il dépend de la manière dont les personnes perçoivent et ressentent leur situation. Il est opérationnalisé par des indicateurs subjectifs (Subjective indicator), le sentiment d'avoir suffisamment de temps libre (Feeling of having enough free time), et la satisfaction (Satisfac...).\n\nEn résumé, le bien-être objectif se base sur des mesures tangibles et quantifiables, tandis que le bien-être subjectif repose sur des perceptions et sentiments individuels.",
+      "time_seconds": 3.28,
+      "error": false
+    },
+    {
+      "provider": "OpenAI",
+      "model": "gpt-4.1-mini",
+      "question": "Quels indicateurs permettent de mesurer la qualite de vie en Corse ?",
+      "answer": "Les indicateurs permettant de mesurer la qualité de vie en Corse, selon le contexte fourni, sont :\n\n- Qualité de l'eau (Water quality) : indice chimique et bactériologique des ressources en eau locales.\n- Confort perçu du logement (Self-rated housing comfort) : confort du logement tel que ressenti par les habitants.\n- Satisfaction vis-à-vis de l'offre éducative (Satisfaction with the educational offer) : adéquation et qualité perçues des opportunités éducatives disponibles.\n- Environnement perçu comme agréable (Perceived pleasant environment) : appréciation subjective de vivre dans un environnement plaisant.\n\nCes indicateurs couvrent des dimensions objectives et subjectives liées au bien-être territorial.",
+      "time_seconds": 3.89,
+      "error": false
+    },
+    {
+      "provider": "Grok",
+      "model": "grok-3-mini-beta",
+      "question": "Quels indicateurs permettent de mesurer la qualite de vie en Corse ?",
+      "answer": "Basé sur le contexte fourni, les indicateurs suivants sont associés à la mesure de la qualité de vie :\n\n- **Water quality** : Index de qualité chimique et bactériologique des ressources en eau locales.\n- **Self-rated housing comfort** : Confort perçu du logement par les résidents, lié à la dimension \"Housing\".\n- **Satisfaction with the educational offer** : Satisfaction perçue de l'offre éducative, liée à la dimension \"Education\".\n- **Perceived pleasant environment** : Appréciation subjective d'un environnement agréable, liée à la dimension \"Environmental quality\".\n\nCes indicateurs sont opérationnalisés par le concept de \"Subjective Territorial well-being\". Le contexte ne fournit pas d'informations supplémentaires spécifiques à la Corse, mais ils sont pertinents pour évaluer des aspects de la qualité de vie. Si des données plus détaillées sur la Corse sont nécessaires, elles ne sont pas disponibles dans le contexte fourni.",
+      "time_seconds": 10.44,
+      "error": false
+    },
+    {
+      "provider": "Kimi",
+      "model": "kimi-k2-0905-preview",
+      "question": "Quels indicateurs permettent de mesurer la qualite de vie en Corse ?",
+      "answer": "Sur la base du contexte fourni, les indicateurs suivants permettent de mesurer la qualité de vie en Corse :\n\n- **Qualité de l'eau** : index de qualité chimique et bactériologique des ressources locales\n- **Confort du logement perçu** : confort subjectif du logement tel que rapporté par les résidents\n- **Satisfaction à l'égard de l'offre éducative** : adéquation et qualité perçues des opportunités éducatives disponibles\n- **Environnement agréable perçu** : évaluation subjective du fait de vivre dans un environnement plaisant\n\nCes indicateurs opérationnalisent des dimensions du bien-être territorial subjectif (logement, éducation, qualité environnementale).",
+      "time_seconds": 13.11,
+      "error": false
+    },
+    {
+      "provider": "Claude",
+      "model": "claude-haiku-4-5-20251001",
+      "question": "Quels indicateurs permettent de mesurer la qualite de vie en Corse ?",
+      "answer": "# Indicateurs de mesure de la qualité de vie en Corse\n\nSur la base des sources disponibles, les indicateurs suivants permettent de mesurer la qualité de vie en Corse :\n\n## Indicateurs identifiés\n\n1. **Qualité de l'eau** (*Water quality*)\n   - Index de qualité chimique et bactériologique des ressources en eau locales\n   - Dimension : Environnement\n\n2. **Confort du logement perçu** (*Self-rated housing comfort*)\n   - Perception du confort du logement rapportée par les résidents\n   - Dimension : Logement\n\n3. **Satisfaction envers l'offre éducative** (*Satisfaction with the educational offer*)\n   - Perception de l'adéquation et de la qualité des opportunités éducatives disponibles\n   - Dimension : Éducation\n\n4. **Environnement perçu comme agréable** (*Perceived pleasant environment*)\n   - Appréciation subjective de vivre dans un environnement plaisant et agréable\n   - Dimension : Qualité environnementale\n\n## Note\nCes indicateurs couvrent plusieurs dimensions du bien-être territorial (logement, éducation, environnement). Cependant, les données actuellement disponibles ne permettent pas de fournir des valeurs ou analyses quantitatives spécifiques à la Corse. D'autres indicateurs pourraient exister mais ne figurent pas dans le contexte fourni.",
+      "time_seconds": 6.15,
+      "error": false
+    },
+    {
+      "provider": "Mistral",
+      "model": "mistral-small-latest",
+      "question": "Quels indicateurs permettent de mesurer la qualite de vie en Corse ?",
+      "answer": "Les indicateurs permettant de mesurer la qualité de vie en Corse, selon les données fournies, sont :\n\n1. **Qualité de l'eau** : Indice de la qualité chimique et bactériologique des ressources en eau locales.\n2. **Confort ressenti du logement** : Perception du confort du logement telle que rapportée par les résidents.\n3. **Satisfaction de l'offre éducative** : Perception de l'adéquation et de la qualité des opportunités éducatives disponibles.\n4. **Environnement perçu comme agréable** : Appréciation subjective de la vie dans un environnement agréable et agréable.\n\nCes indicateurs sont liés à des dimensions spécifiques telles que le logement, l'éducation et la qualité environnementale, qui contribuent à la mesure du bien-être territorial subjectif.",
+      "time_seconds": 2.45,
+      "error": false
+    },
+    {
+      "provider": "OpenAI",
+      "model": "gpt-4.1-mini",
+      "question": "Quelle est la difference entre un indicateur objectif et un indicateur subjectif ?",
+      "answer": "Un indicateur objectif est basé sur des conditions observées ou enregistrées, telles que des données administratives ou statistiques. En revanche, un indicateur subjectif repose sur des évaluations auto-déclarées, des perceptions ou des réponses à des enquêtes.",
+      "time_seconds": 2.14,
+      "error": false
+    },
+    {
+      "provider": "Grok",
+      "model": "grok-3-mini-beta",
+      "question": "Quelle est la difference entre un indicateur objectif et un indicateur subjectif ?",
+      "answer": "D'après le contexte fourni, voici la différence entre un indicateur objectif et un indicateur subjectif, basée sur les descriptions des sources disponibles :\n\n- **Indicateur objectif** : C'est un indicateur basé sur des conditions observées ou enregistrées, telles que des données administratives ou statistiques. Il est utilisé pour opérationnaliser des concepts comme le bien-être territorial objectif (par exemple, via des systèmes composites comme OppChoVec).\n\n- **Indicateur subjectif** : C'est un indicateur basé sur des évaluations auto-rapportées, des perceptions ou des réponses d'enquêtes. Il est associé à l'opérationnalisation du bien-être territorial subjectif.\n\n**Différence principale** : L'indicateur objectif repose sur des données factuelles et mesurables issues d'observations externes, tandis que l'indicateur subjectif dépend des opinions ou expériences personnelles des individus. Notez que le contexte ne fournit pas de détails supplémentaires sur d'autres aspects, comme des exemples spécifiques en Corse. Si d'autres données étaient nécessaires, je l'indiquerais.",
+      "time_seconds": 8.9,
+      "error": false
+    },
+    {
+      "provider": "Kimi",
+      "model": "kimi-k2-0905-preview",
+      "question": "Quelle est la difference entre un indicateur objectif et un indicateur subjectif ?",
+      "answer": "D'après le contexte :\n\n**Indicateur objectif** : basé sur des conditions observées/enregistrées (données administratives ou statistiques).\n\n**Indicateur subjectif** : basé sur des évaluations auto-déclarées, des perceptions ou des items d'enquête.",
+      "time_seconds": 9.45,
+      "error": false
+    },
+    {
+      "provider": "Claude",
+      "model": "claude-haiku-4-5-20251001",
+      "question": "Quelle est la difference entre un indicateur objectif et un indicateur subjectif ?",
+      "answer": "## Différence entre indicateur objectif et indicateur subjectif\n\nSur la base des données fournies :\n\n### **Indicateur objectif**\n- Basé sur des **conditions observées/enregistrées**\n- Utilise des **données administratives ou statistiques**\n- Exemple d'opérationnalisation : le système **OppChoVec** (Opportunity–Choice–Living)\n\n### **Indicateur subjectif**\n- Basé sur des **évaluations auto-rapportées, perceptions ou réponses d'enquête**\n- Reflète l'expérience vécue et la perception des individus\n\n### **Indicateur mixte**\nLe contexte mentionne également l'existence d'un **indicateur mixte**, qui combine données objectives ET subjectives pour opérationnaliser un concept.\n\n---\n\n**En résumé** : La distinction principale réside dans la **source des données** — faits mesurables et enregistrés (objectif) versus perceptions et auto-évaluations des habitants (subjectif).",
+      "time_seconds": 3.58,
+      "error": false
+    },
+    {
+      "provider": "Mistral",
+      "model": "mistral-small-latest",
+      "question": "Quelle est la difference entre un indicateur objectif et un indicateur subjectif ?",
+      "answer": "Un indicateur objectif est basé sur des conditions observées ou enregistrées, telles que des données administratives ou statistiques (Source 1). En revanche, un indicateur subjectif repose sur des évaluations, perceptions ou items de sondage auto-déclarés (Source 3).",
+      "time_seconds": 1.31,
+      "error": false
+    },
+    {
+      "provider": "OpenAI",
+      "model": "gpt-4.1-mini",
+      "question": "Comment le concept de bien-etre est-il structure et decompose en sous-dimensions ?",
+      "answer": "Le concept de bien-être est structuré comme un état général de satisfaction, d'équilibre et d'épanouissement vécu par les individus ou des collectifs. Il se décompose en sous-dimensions, parmi lesquelles :\n\n- Le bien-être eudaimonique, lié à la réalisation de soi, au sens et au développement personnel.\n- Le bien-être territorial, qui se rapporte aux conditions de vie et aux caractéristiques spatiales, sociales et environnementales d'un territoire.\n\nLe bien-être territorial se subdivise en deux formes :\n\n- Le bien-être territorial subjectif, qui dépend des ressentis des personnes vis-à-vis de leur situation (ex. sentiment d'avoir suffisamment de temps libre, satisfaction).\n- Le bien-être territorial objectif, fondé sur des critères objectifs relatifs aux conditions de vie des habitants.\n\nCes sous-dimensions sont opérationnalisées par des indicateurs subjectifs et objectifs spécifiques.",
+      "time_seconds": 4.28,
+      "error": false
+    },
+    {
+      "provider": "Grok",
+      "model": "grok-3-mini-beta",
+      "question": "Comment le concept de bien-etre est-il structure et decompose en sous-dimensions ?",
+      "answer": "D'après les informations fournies dans le contexte, le concept de bien-être (Well-being) est structuré comme un concept central représentant un état général de satisfaction, équilibre et accomplissement. Il se décompose en sous-dimensions de la manière suivante :\n\n- **Eudaimonic well-being** : Une dimension liée à la réalisation de soi, au but et au développement personnel.\n- **Territorial well-being** : Une forme de bien-être associée aux conditions de vie et aux caractéristiques spatiales, sociales et environnementales d'un territoire. Celle-ci se décompose davantage en :\n  - **Subjective Territorial well-being** : Basée sur les perceptions et sentiments des individus, opérationnalisée par des indicateurs subjectifs tels que les \"Subjective indicator\", \"Feeling of having enough free time\" et \"Satisfac...\" (incomplète dans les données).\n  - **Objective Territorial well-being** : Basée sur des critères objectifs des conditions de vie, opérationnalisée par des indicateurs comme \"Objective indicator\" et \"OppChoVec\".\n\nCette structure est dérivée directement des sources fournies. Aucune autre décomposition n'est indiquée dans le contexte. Si des données supplémentaires étaient disponibles, une analyse plus complète pourrait être possible.",
+      "time_seconds": 9.84,
+      "error": false
+    },
+    {
+      "provider": "Kimi",
+      "model": "kimi-k2-0905-preview",
+      "question": "Comment le concept de bien-etre est-il structure et decompose en sous-dimensions ?",
+      "answer": "D'après le contexte fourni, le concept de bien-être est structuré et décomposé en plusieurs sous-dimensions :\n\n1. **Bien-être eudémonique** : dimension liée à l'épanouissement personnel, au sens de la vie et au développement personnel.\n\n2. **Bien-être territorial** : forme de bien-être associée aux conditions de vie et aux caractéristiques spatiales, sociales et environnementales d'un territoire. Ce dernier se subdivise en :\n   - **Bien-être territorial subjectif** : dépend de la perception subjective des individus (opérationnalisé par des indicateurs subjectifs comme le sentiment d'avoir assez de temps libre, la satisfaction, etc.)\n   - **Bien-être territorial objectif** : dépend de critères objectifs sur les conditions de vie (opérationnalisé par des indicateurs objectifs)\n\nCette structure montre une distinction entre les approches individuelles (eudémonique) et territoriales du bien-être, avec pour ces dernières une séparation entre aspects subjectifs et objectifs.",
+      "time_seconds": 15.2,
+      "error": false
+    },
+    {
+      "provider": "Claude",
+      "model": "claude-haiku-4-5-20251001",
+      "question": "Comment le concept de bien-etre est-il structure et decompose en sous-dimensions ?",
+      "answer": "# Structure et décomposition du bien-être\n\nSur la base des sources fournies, le bien-être est structuré selon une **architecture multi-dimensionnelle** :\n\n## Concept central\nLe **bien-être** est défini comme un état général de satisfaction, d'équilibre et d'accomplissement chez les individus ou collectivités.\n\n## Principales sous-dimensions identifiées\n\n### 1. **Bien-être eudémonique**\n- Relatif à l'**auto-réalisation, l'objectif de vie et le développement personnel**\n- Dimension qualitative centrée sur l'accomplissement individuel\n\n### 2. **Bien-être territorial**\n- Associé aux **conditions de vie et aux caractéristiques spatiales, sociales et environnementales** du territoire\n- Se subdivise en deux formes :\n\n#### 2.1 **Bien-être territorial subjectif**\n- Basé sur le **ressenti et la perception** des habitants\n- Opérationnalisé par :\n  - Indicateurs subjectifs (généraux)\n  - Sentiment d'avoir suffisamment de temps libre\n  - Satisfaction (partiellement énumérée dans les sources)\n\n#### 2.2 **Bien-être territorial objectif**\n- Basé sur des **critères objectifs** des conditions de vie\n- Opérationnalisé par :\n  - Indicateurs objectifs\n  - Vecteurs de choix et d'opportunités (OppChoVec)\n\n## Observation\nLa structure montre une **complémentarité entre dimensions subjectives et objectives**, particulièrement dans le bien-être territorial, permettant une évaluation multifacette de la qualité de vie.",
+      "time_seconds": 4.94,
+      "error": false
+    },
+    {
+      "provider": "Mistral",
+      "model": "mistral-small-latest",
+      "question": "Comment le concept de bien-etre est-il structure et decompose en sous-dimensions ?",
+      "answer": "Le concept de bien-être est structuré en plusieurs dimensions, notamment :\n\n1. **Bien-être eudémonique** : Lié à l'épanouissement personnel, au sens de la vie et au développement personnel.\n2. **Bien-être territorial** : Associé aux conditions de vie et aux caractéristiques spatiales, sociales et environnementales d'un territoire. Il se divise en deux sous-dimensions :\n   - **Bien-être territorial subjectif** : Dépend des sentiments des individus concernant leur situation, opérationnalisé par des indicateurs subjectifs comme le sentiment d'avoir assez de temps libre et la satisfaction.\n   - **Bien-être territorial objectif** : Basé sur des critères objectifs des conditions de vie, opérationnalisé par des indicateurs objectifs.\n\nCes dimensions et sous-dimensions permettent de décomposer et d'analyser le concept global de bien-être.",
+      "time_seconds": 4.63,
+      "error": false
+    },
+    {
+      "provider": "OpenAI",
+      "model": "gpt-4.1-mini",
+      "question": "Quels liens existent entre la dimension sante et les autres dimensions du bien-etre ?",
+      "answer": "Le contexte fourni ne donne pas d'information explicite sur les liens entre la dimension Santé et les autres dimensions du bien-être. On sait seulement que la Santé est une dimension évaluée notamment par l'auto-évaluation de la santé (Self-rated health), et que le bien-être inclut des dimensions comme le bien-être eudémonique (auto-réalisation, but personnel) et le bien-être territorial (conditions de vie, caractéristiques spatiales, sociales et environnementales). Toutefois, aucun lien direct ou interaction précise entre Santé et ces autres dimensions n'est mentionné dans les données fournies.",
+      "time_seconds": 3.16,
+      "error": false
+    },
+    {
+      "provider": "Grok",
+      "model": "grok-3-mini-beta",
+      "question": "Quels liens existent entre la dimension sante et les autres dimensions du bien-etre ?",
+      "answer": "### Analyse des liens entre la dimension \"Santé\" et les autres dimensions du bien-être\n\nBasé sur le contexte fourni, voici une analyse factuelle et concise :\n\n- **La dimension \"Santé\"** : Elle est décrite comme une dimension du bien-être, liée à des mesures telles que l'auto-évaluation de la santé ([Source 2]). Cependant, le contexte ne fournit pas de liens explicites ou directs avec d'autres dimensions ou concepts spécifiques.\n\n- **Liens potentiels non explicités** : \n  - Le concept central de \"Well-being\" ([Source 4]) représente un état général de satisfaction et d'équilibre, dans lequel la santé pourrait logiquement s'intégrer, mais aucun détail n'est fourni sur des interactions précises.\n  - \"Territorial well-being\" ([Source 3]) concerne les conditions de vie spatiales, sociales et environnementales, qui pourraient indirectement influencer la santé (par exemple, via l'environnement), mais aucun lien formel n'est indiqué.\n  - \"Eudaimonic well-being\" ([Source 1]) et \"Buen Vivir\" ([Source 5]) sont des concepts liés au développement personnel et à l'équilibre collectif, respectivement, mais le contexte ne mentionne pas de relations avec la santé.\n\n**Conclusion** : Les données du contexte sont insuffisantes pour établir des liens clairs et spécifiques entre la dimension \"Santé\" et les autres dimensions ou concepts du bien-être. Toute analyse plus approfondie nécessiterait des informations supplémentaires.",
+      "time_seconds": 15.92,
+      "error": false
+    },
+    {
+      "provider": "Kimi",
+      "model": "kimi-k2-0905-preview",
+      "question": "Quels liens existent entre la dimension sante et les autres dimensions du bien-etre ?",
+      "answer": "D'après le contexte fourni, je ne peux identifier que des liens limités entre la santé et les autres dimensions du bien-être :\n\n**Lien identifié :**\n- Santé → \"Self-rated health\" (lien MEASURES_DIMENSION)\n\n**Données insuffisantes :**\nLe contexte ne permet pas d'établir des liens explicites entre la dimension santé et les autres dimensions du bien-être. Les sources ne fournissent pas d'informations sur les interconnexions potentielles avec d'autres aspects du bien-être mentionnés (bien-être eudémonique, bien-être territorial, etc.).",
+      "time_seconds": 10.07,
+      "error": false
+    },
+    {
+      "provider": "Claude",
+      "model": "claude-haiku-4-5-20251001",
+      "question": "Quels liens existent entre la dimension sante et les autres dimensions du bien-etre ?",
+      "answer": "# Liens entre la dimension Santé et les autres dimensions du bien-être\n\nSur la base des données fournies, voici ce que je peux établir :\n\n## Relations identifiées\n\n**La dimension Santé** (Health) est connectée à :\n- **L'auto-évaluation de la santé** (Self-rated health) via une relation MEASURES_DIMENSION\n\n## Limitations des données disponibles\n\nLe contexte fourni ne contient **pas d'informations explicites** sur les liens directs entre la dimension Santé et les autres concepts du bien-être tels que :\n- Le bien-être eudémonique (Eudaimonic well-being)\n- Le bien-être territorial (Territorial well-being)\n- Le concept général de bien-être (Well-being)\n\n## Observations possibles\n\nBien que non formalisées dans les sources, on peut noter que le **bien-être territorial** (associé aux conditions de vie et caractéristiques environnementales) pourrait théoriquement influencer la santé, mais cette relation n'est pas documentée dans le contexte RAG fourni.\n\n**Conclusion** : Les données actuelles sont insuffisantes pour tracer une cartographie complète des liens entre la dimension Santé et les autres dimensions du bien-être en Corse. Il serait nécessaire d'accéder à des données ou schémas relationnels plus détaillés.",
+      "time_seconds": 5.57,
+      "error": false
+    },
+    {
+      "provider": "Mistral",
+      "model": "mistral-small-latest",
+      "question": "Quels liens existent entre la dimension sante et les autres dimensions du bien-etre ?",
+      "answer": "D'après le contexte fourni, la dimension \"Santé\" est liée à d'autres dimensions du bien-être de la manière suivante :\n\n1. **Santé et Bien-être Eudémonique** : Bien que non explicitement mentionné, la santé peut être considérée comme un facteur important pour le bien-être eudémonique, car une bonne santé peut faciliter la réalisation de soi, le développement personnel et la poursuite de buts significatifs.\n\n2. **Santé et Bien-être Territorial** : La santé est implicitement liée au bien-être territorial, car les conditions de vie, les caractéristiques spatiales, sociales et environnementales d'un territoire (comme la Corse) influencent directement la santé des individus.\n\nLes autres liens potentiels ne sont pas explicitement décrits dans le contexte fourni.",
+      "time_seconds": 3.44,
+      "error": false
+    },
+    {
+      "provider": "OpenAI",
+      "model": "gpt-4.1-mini",
+      "question": "Comment la dimension emploi est-elle operationnalisee en indicateurs concrets ?",
+      "answer": "La dimension Emploi est opérationnalisée par des indicateurs concrets tels que le taux de chômage (un indicateur objectif mesurant le pourcentage de la population en âge de travailler sans emploi) et la durée moyenne hebdomadaire de travail (indicateur objectif mesurant le nombre moyen d'heures travaillées par personne employée). Ces indicateurs sont basés sur des données observées ou administratives. Par ailleurs, il existe aussi des indicateurs mixtes combinant données objectives et subjectives pour mieux refléter cette dimension.",
+      "time_seconds": 4.0,
+      "error": false
+    },
+    {
+      "provider": "Grok",
+      "model": "grok-3-mini-beta",
+      "question": "Comment la dimension emploi est-elle operationnalisee en indicateurs concrets ?",
+      "answer": "La dimension \"Employment\" est opérationnalisée dans le contexte fourni par les indicateurs suivants, basés sur les sources disponibles :\n\n- **Self-rated job fulfilment** : Cet indicateur mesure directement la dimension Employment, en évaluant la satisfaction subjective des individus vis-à-vis de leur emploi (Source 1).\n- **Unemployment rate** : Il s'agit d'un indicateur objectif représentant le pourcentage de la population en âge de travailler qui est sans emploi (Source 2).\n- **Average weekly working hours** : Cet indicateur objectif mesure le nombre moyen d'heures travaillées par semaine par les personnes employées, ce qui est lié aux conditions d'emploi (Source 3).\n\nLes Sources 4 et 5 décrivent des types d'indicateurs généraux (objectif et mixte), mais elles ne fournissent pas de liens directs avec la dimension Employment. Si d'autres détails sont nécessaires, les données du contexte sont limitées.",
+      "time_seconds": 10.18,
+      "error": false
+    },
+    {
+      "provider": "Kimi",
+      "model": "kimi-k2-0905-preview",
+      "question": "Comment la dimension emploi est-elle operationnalisee en indicateurs concrets ?",
+      "answer": "D’après le contexte, la dimension « Employment » est opérationnalisée par :\n- le taux de chômage (unemployment rate),\n- la durée hebdomadaire moyenne du travail (average weekly working hours),\n- l’auto-évaluation de l’épanouissement professionnel (self-rated job fulfilment).",
+      "time_seconds": 5.99,
+      "error": false
+    },
+    {
+      "provider": "Claude",
+      "model": "claude-haiku-4-5-20251001",
+      "question": "Comment la dimension emploi est-elle operationnalisee en indicateurs concrets ?",
+      "answer": "# Opérationnalisation de la dimension Emploi\n\nBasé sur les données fournies, la dimension **Employment** est opérationnalisée par au moins deux indicateurs concrets :\n\n## Indicateurs identifiés\n\n1. **Unemployment rate** (Taux de chômage)\n   - Indicateur objectif mesurant le pourcentage de la population active au chômage\n   - Basé sur des données administratives/statistiques enregistrées\n\n2. **Average weekly working hours** (Durée moyenne hebdomadaire de travail)\n   - Indicateur objectif quantifiant le nombre d'heures travaillées par semaine par personne employée\n   - Données statistiques observables\n\n## Type d'opérationnalisation\n\nCes indicateurs relèvent du type **Objective Indicator**, c'est-à-dire basés sur des conditions observées et enregistrées (données administratives ou statistiques).\n\nUne dimension de type **Mixed Indicator** (combinant données objectives et subjectives) est également possible pour opérationnaliser l'emploi, notamment via la mesure **\"Self-rated job fulfilment\"** (satisfaction subjective face au travail), mais les détails spécifiques de cette operationnalisation ne sont pas fournis dans le contexte.\n\n---\n\n⚠️ **Limite** : Le contexte ne détaille pas exhaustivement tous les indicateurs opérationnalisant cette dimension en Corse spécifiquement.",
+      "time_seconds": 4.74,
+      "error": false
+    },
+    {
+      "provider": "Mistral",
+      "model": "mistral-small-latest",
+      "question": "Comment la dimension emploi est-elle operationnalisee en indicateurs concrets ?",
+      "answer": "La dimension \"Employment\" est opérationnalisée par les indicateurs suivants :\n\n1. **Taux de chômage** : Pourcentage de la population en âge de travailler qui est sans emploi.\n2. **Heures de travail hebdomadaires moyennes** : Nombre moyen d'heures travaillées par personne employée par semaine.\n\nCes indicateurs permettent de mesurer et d'évaluer la dimension de l'emploi.",
+      "time_seconds": 4.02,
+      "error": false
+    },
+    {
+      "provider": "OpenAI",
+      "model": "gpt-4.1-mini",
+      "question": "Quelles dimensions du bien-etre sont les plus correlees entre elles ?",
+      "answer": "Le contexte fourni ne contient pas d'informations spécifiques sur les corrélations entre les différentes dimensions du bien-être. Il décrit plusieurs concepts de bien-être (Well-being, Eudaimonic well-being, Territorial well-being, Subjective Territorial well-being) mais ne fournit pas de données ou d'analyses sur leurs corrélations.",
+      "time_seconds": 2.33,
+      "error": false
+    },
+    {
+      "provider": "Grok",
+      "model": "grok-3-mini-beta",
+      "question": "Quelles dimensions du bien-etre sont les plus correlees entre elles ?",
+      "answer": "Les informations fournies dans le contexte décrivent plusieurs concepts liés au bien-être (comme Well-being, Eudaimonic well-being, Territorial well-being, Subjective Territorial well-being et Quality of Life), ainsi que leurs relations générales (par exemple, des liens comme \"IS_ALTERNATIVE_TO\" ou \"IS_OPERATIONALIZED_BY\"). Cependant, ces sources ne contiennent aucune donnée quantitative, analyse statistique ou indication de corrélations entre ces dimensions.\n\nPar conséquent, les données sont insuffisantes pour répondre à votre question sur les dimensions les plus corrélées. Si vous fournissez des données supplémentaires issues d'enquêtes ou d'analyses, je pourrais être en mesure de fournir une réponse plus précise.",
+      "time_seconds": 9.61,
+      "error": false
+    },
+    {
+      "provider": "Kimi",
+      "model": "kimi-k2-0905-preview",
+      "question": "Quelles dimensions du bien-etre sont les plus correlees entre elles ?",
+      "answer": "D'après le contexte fourni, je ne dispose pas de données quantitatives permettant d'identifier les corrélations entre les dimensions du bien-être. Les sources présentent uniquement des définitions conceptuelles sans indicateurs de corrélation.\n\nLes dimensions mentionnées sont :\n- Bien-être général\n- Bien-être eudémonique (épanouissement personnel)\n- Bien-être territorial (conditions de vie territoriales)\n- Bien-être territorial subjectif (ressenti des individus sur leur territoire)\n- Qualité de vie (conditions objectives et subjectives)\n\nPour déterminer quelles dimensions sont les plus corrélées, il faudrait disposer de données statistiques d'enquêtes ou d'analyses quantitatives qui ne sont pas présentes dans ce contexte.",
+      "time_seconds": 11.19,
+      "error": false
+    },
+    {
+      "provider": "Claude",
+      "model": "claude-haiku-4-5-20251001",
+      "question": "Quelles dimensions du bien-etre sont les plus correlees entre elles ?",
+      "answer": "# Analyse des corrélations entre dimensions du bien-être\n\nSur la base du contexte fourni, je ne dispose **pas d'informations suffisantes** pour répondre à votre question sur les corrélations entre les dimensions du bien-être.\n\n## Ce que je peux identifier :\n\nLe contexte mentionne plusieurs dimensions du bien-être :\n- **Eudaimonic well-being** (auto-réalisation, purpose, développement personnel)\n- **Territorial well-being** (conditions de vie, caractéristiques spatiales, sociales et environnementales)\n- **Subjective Territorial well-being** (perception subjective de la situation territoriale)\n\nCependant :\n- ❌ Aucune donnée quantitative de corrélation n'est fournie\n- ❌ Aucune analyse empirique reliant ces dimensions n'est présente\n- ❌ Les sources indiquent uniquement des opérationnalisations partielles (sentiment d'avoir assez de temps libre, satisfaction...)\n\n## Pour répondre à cette question, il faudrait :\n\n1. Des données d'enquête (corrélations calculées entre les indicateurs)\n2. Une analyse des relations entre les dimensions du bien-être\n3. Des verbatims ou résultats d'études montrant les associations empiriques\n\n**Pouvez-vous fournir des données quantitatives ou d'enquête spécifiques ?**",
+      "time_seconds": 4.97,
+      "error": false
+    },
+    {
+      "provider": "Mistral",
+      "model": "mistral-small-latest",
+      "question": "Quelles dimensions du bien-etre sont les plus correlees entre elles ?",
+      "answer": "Les données fournies dans le contexte ne permettent pas de déterminer les dimensions du bien-être les plus corrélées entre elles, car elles ne contiennent pas d'informations sur les corrélations ou les relations entre les différentes dimensions du bien-être. Les sources mentionnent diverses dimensions du bien-être, mais aucune analyse de corrélation n'est présentée.\n\nPour répondre à cette question, des données spécifiques sur les corrélations entre les dimensions du bien-être seraient nécessaires.",
+      "time_seconds": 2.0,
+      "error": false
+    }
+  ]
+}

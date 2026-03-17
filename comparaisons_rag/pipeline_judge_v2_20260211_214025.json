@@ -1,0 +1,720 @@
+{
+  "timestamp": "20260211_214025",
+  "questions_file": "questions_ontologie.json",
+  "rag_version": "v2",
+  "nb_questions": 8,
+  "models": {
+    "OpenAI": "gpt-4.1-mini",
+    "Grok": "grok-3-mini-beta",
+    "Kimi": "kimi-k2-0905-preview",
+    "Claude": "claude-haiku-4-5-20251001",
+    "Mistral": "mistral-small-latest"
+  },
+  "judge_model": "mistral-large-latest",
+  "judgments": [
+    {
+      "evaluations": [
+        {
+          "id": "A",
+          "note": 7,
+          "justification": "La réponse est fidèle aux sources et pertinente, mais elle manque de complétude en ne listant pas explicitement toutes les dimensions identifiables. La nuance est bien présente, mais la structure pourrait être plus claire."
+        },
+        {
+          "id": "B",
+          "note": 5,
+          "justification": "La réponse est fidèle et nuancée, mais elle manque de pertinence car elle ne tente pas d'extraire les dimensions implicites des verbatims. La complétude est faible, et la clarté est moyenne."
+        },
+        {
+          "id": "C",
+          "note": 4,
+          "justification": "La réponse est fidèle mais trop restrictive : elle ne cherche pas à exploiter les informations disponibles. La pertinence et la complétude sont insuffisantes, bien que la clarté soit correcte."
+        },
+        {
+          "id": "D",
+          "note": 9,
+          "justification": "Excellente fidélité aux sources, pertinence et complétude. La réponse structure bien les dimensions émergentes et souligne les limites avec nuance. La clarté est optimale."
+        },
+        {
+          "id": "E",
+          "note": 8,
+          "justification": "Très fidèle et pertinente, avec une bonne complétude en listant explicitement les dimensions. Cependant, elle manque légèrement de nuance en ne précisant pas que ces dimensions ne proviennent pas d'une ontologie formalisée."
+        }
+      ],
+      "classement": [
+        "D",
+        "E",
+        "A",
+        "B",
+        "C"
+      ],
+      "meilleure_reponse": "D",
+      "synthese": "La réponse idéale combinerait la structure claire et nuancée de la réponse D avec l'exhaustivité de la réponse E. Elle devrait lister explicitement les dimensions émergentes (environnement, équilibre vie pro/perso, relations sociales, logement, aspect communautaire) tout en soulignant que ces éléments proviennent de verbatims et non d'une ontologie formalisée. Il est crucial de préciser les limites des sources pour éviter toute généralisation abusive, tout en exploitant au maximum les informations disponibles pour répondre à la question posée.",
+      "provider_mapping": {
+        "A": "OpenAI",
+        "B": "Grok",
+        "C": "Kimi",
+        "D": "Claude",
+        "E": "Mistral"
+      },
+      "error": null,
+      "providers_en_erreur": [],
+      "question": "Quelles sont les grandes dimensions du bien-etre identifiees dans l'ontologie ?"
+    },
+    {
+      "evaluations": [
+        {
+          "id": "A",
+          "note": 7,
+          "justification": "La réponse est fidèle aux sources et pertinente, mais elle interprète parfois les données de manière trop objective (ex. 'qualité du logement' comme indicateur objectif alors que les sources ne le décrivent que subjectivement). La nuance est présente mais la complétude est limitée par l'absence de données objectives explicites."
+        },
+        {
+          "id": "B",
+          "note": 9,
+          "justification": "Excellente fidélité aux sources et pertinence, avec une analyse nuancée et complète des limites des données. La réponse évite les généralisations et souligne clairement l'absence d'indicateurs objectifs, tout en structurant bien la distinction conceptuelle."
+        },
+        {
+          "id": "C",
+          "note": 6,
+          "justification": "La réponse est claire et fidèle, mais trop succincte. Elle manque de complétude en n'exploitant pas pleinement les exemples des sources pour illustrer le bien-être subjectif, et ne propose pas de pistes pour une analyse plus approfondie."
+        },
+        {
+          "id": "D",
+          "note": 8,
+          "justification": "Très bonne fidélité et pertinence, avec une structure claire et une nuance bien marquée. La réponse exploite bien les sources pour montrer leurs limites, mais elle aurait pu être plus concise et éviter la redondance dans l'explication des manques."
+        },
+        {
+          "id": "E",
+          "note": 7,
+          "justification": "Fidèle et pertinente, mais moins complète que B ou D. La réponse se contente de lister des exemples sans approfondir la distinction conceptuelle, et la nuance est présente mais moins développée que dans les meilleures réponses."
+        }
+      ],
+      "classement": [
+        "B",
+        "D",
+        "A",
+        "E",
+        "C"
+      ],
+      "meilleure_reponse": "B",
+      "synthese": "La réponse idéale reconnaît d'abord les limites des données (exclusivement subjectives) tout en exploitant les verbatims pour illustrer le bien-être subjectif (ex. sentiment de sécurité, équilibre vie pro/perso). Elle évite les généralisations en soulignant l'absence d'indicateurs objectifs, et structure clairement la distinction conceptuelle. Enfin, elle propose des pistes pour compléter l'analyse (données quantitatives, cadre théorique), tout en restant concise et nuancée.",
+      "provider_mapping": {
+        "A": "OpenAI",
+        "B": "Grok",
+        "C": "Kimi",
+        "D": "Claude",
+        "E": "Mistral"
+      },
+      "error": null,
+      "providers_en_erreur": [],
+      "question": "Comment le bien-etre objectif se distingue-t-il du bien-etre subjectif dans les donnees ?"
+    },
+    {
+      "evaluations": [
+        {
+          "id": "A",
+          "note": 9,
+          "justification": "Réponse fidèle aux sources, pertinente et complète, couvrant les trois dimensions clés (sociale, économique, environnementale). La structure est claire, mais manque légèrement de nuance sur l'absence de données quantitatives."
+        },
+        {
+          "id": "B",
+          "note": 8,
+          "justification": "Excellente nuance en soulignant les limites des données (absence d'indicateurs quantitatifs), mais moins complète que A ou D sur l'exploitation des thèmes. La pertinence est bonne, mais la clarté est légèrement affectée par une formulation plus technique."
+        },
+        {
+          "id": "C",
+          "note": 7,
+          "justification": "Fidèle et pertinente, mais moins complète que A ou D (ne mentionne pas explicitement le coût de la vie comme indicateur économique). La clarté est bonne, mais la réponse est un peu succincte et manque de profondeur."
+        },
+        {
+          "id": "D",
+          "note": 10,
+          "justification": "Réponse idéale : fidèle, pertinente, complète et très claire. Elle intègre une nuance forte sur les limites des données et structure les indicateurs de manière détaillée. La mention des dimensions manquantes ajoute de la profondeur."
+        },
+        {
+          "id": "E",
+          "note": 8,
+          "justification": "Très fidèle et pertinente, avec une bonne complétude. La clarté est bonne, mais la réponse manque de nuance sur les limites des données et est légèrement moins structurée que D."
+        }
+      ],
+      "classement": [
+        "D",
+        "A",
+        "E",
+        "B",
+        "C"
+      ],
+      "meilleure_reponse": "D",
+      "synthese": "La réponse idéale combine la fidélité aux sources et la clarté de la réponse A avec la nuance et la structure détaillée de la réponse D. Elle doit souligner les trois dimensions clés (communauté, revenus/coût de la vie, environnement) tout en précisant que les données sont qualitatives et limitées à ces thèmes. Une mention des dimensions absentes (santé, éducation, sécurité) et de l'absence d'indicateurs quantitatifs renforce la rigueur. Enfin, une présentation hiérarchisée (ex. liste numérotée ou sous-parties) améliore la lisibilité.",
+      "provider_mapping": {
+        "A": "OpenAI",
+        "B": "Grok",
+        "C": "Kimi",
+        "D": "Claude",
+        "E": "Mistral"
+      },
+      "error": null,
+      "providers_en_erreur": [],
+      "question": "Quels indicateurs permettent de mesurer la qualite de vie en Corse ?"
+    },
+    {
+      "evaluations": [
+        {
+          "id": "A",
+          "note": 4,
+          "justification": "La réponse est fidèle aux sources et pertinente dans son constat d'absence d'information, mais elle manque de complétude et de nuance en ne précisant pas pourquoi les sources ne permettent pas de répondre."
+        },
+        {
+          "id": "B",
+          "note": 7,
+          "justification": "La réponse est fidèle, pertinente et claire. Elle explique bien l'absence de données exploitables, mais pourrait être plus complète en suggérant des pistes pour une réponse théorique (comme le fait la réponse C)."
+        },
+        {
+          "id": "C",
+          "note": 9,
+          "justification": "Excellente réponse : fidèle, pertinente, complète et nuancée. Elle structure bien l'absence de réponse tout en proposant des éléments contextuels (ex. distinction entre données subjectives et concept théorique) et des pistes pour aller plus loin."
+        },
+        {
+          "id": "D",
+          "note": 8,
+          "justification": "Très bonne réponse, fidèle et pertinente, avec une explication claire et une suggestion utile. Elle est légèrement moins complète que la réponse C, car elle n'approfondit pas la distinction entre les verbatims (subjectifs) et le concept théorique demandé."
+        }
+      ],
+      "classement": [
+        "C",
+        "D",
+        "B",
+        "A"
+      ],
+      "meilleure_reponse": "C",
+      "synthese": "La réponse idéale doit d'abord constater l'absence d'information théorique dans les sources fournies, comme le font toutes les réponses. Elle devrait ensuite préciser que les verbatims illustrent des données *subjectives* (perceptions individuelles), mais que cela ne suffit pas à définir la différence conceptuelle entre indicateurs objectifs et subjectifs. Enfin, elle pourrait suggérer des pistes pour une réponse complète, comme des exemples d'indicateurs objectifs (ex. taux de chômage, revenus moyens) et subjectifs (ex. satisfaction déclarée), tout en soulignant la nécessité de sources méthodologiques supplémentaires.",
+      "provider_mapping": {
+        "A": "OpenAI",
+        "B": "Grok",
+        "C": "Claude",
+        "D": "Mistral"
+      },
+      "error": null,
+      "providers_en_erreur": [
+        {
+          "provider": "Kimi",
+          "erreur": "ERREUR: Error code: 429 - {'error': {'message': 'The engine is currently overloaded, please try again later', 'type': 'engine_overloaded_error'}}"
+        }
+      ],
+      "question": "Quelle est la difference entre un indicateur objectif et un indicateur subjectif ?"
+    },
+    {
+      "evaluations": [
+        {
+          "id": "A",
+          "note": 9,
+          "justification": "Réponse très fidèle aux sources, pertinente et complète, avec une structure claire. Elle évite les généralisations et exploite bien les informations clés. La nuance est présente, mais pourrait souligner davantage les limites des données."
+        },
+        {
+          "id": "B",
+          "note": 7,
+          "justification": "Réponse pertinente et fidèle, mais moins complète que la A. Elle insiste trop sur les limites des données, ce qui réduit sa clarté et sa complétude. La nuance est bien présente, mais la structure est moins engageante."
+        },
+        {
+          "id": "C",
+          "note": 6,
+          "justification": "Réponse fidèle et nuancée, mais incomplète (ajout de 'Santé' non explicitement mentionné dans les sources). La structure est claire, mais la pertinence est affectée par l'ajout d'une dimension non sourcée."
+        },
+        {
+          "id": "D",
+          "note": 9.5,
+          "justification": "Réponse excellente : fidèle, pertinente, complète et très bien structurée. Elle ajoute une nuance importante sur les limites des données sans surcharger le propos. La clarté est optimale, avec une mise en forme qui facilite la compréhension."
+        },
+        {
+          "id": "E",
+          "note": 8,
+          "justification": "Réponse fidèle et pertinente, avec une bonne exploitation des sources. Cependant, elle manque de nuance sur les limites des données et la structure est moins élaborée que la D. La clarté est correcte, mais moins aboutie."
+        }
+      ],
+      "classement": [
+        "D",
+        "A",
+        "E",
+        "B",
+        "C"
+      ],
+      "meilleure_reponse": "D",
+      "synthese": "La réponse idéale combine la structure claire et détaillée de la réponse D, qui met en avant les sous-dimensions du bien-être (équilibre vie pro/perso, communauté, environnement, logement) tout en soulignant les limites des données. Elle évite les ajouts non sourcés (comme la santé dans la réponse C) et intègre une nuance sur le caractère fragmentaire des verbatims. Une présentation visuelle (titres, sous-titres) améliore la clarté, tandis que la fidélité aux sources et la pertinence sont optimales.",
+      "provider_mapping": {
+        "A": "OpenAI",
+        "B": "Grok",
+        "C": "Kimi",
+        "D": "Claude",
+        "E": "Mistral"
+      },
+      "error": null,
+      "providers_en_erreur": [],
+      "question": "Comment le concept de bien-etre est-il structure et decompose en sous-dimensions ?"
+    },
+    {
+      "evaluations": [
+        {
+          "id": "A",
+          "note": 8,
+          "justification": "La réponse est fidèle aux sources et pertinente, couvrant les liens entre santé, bien-être global et environnement. Cependant, elle manque de nuance en ne soulignant pas les limites des données (absence de liens avec d'autres dimensions). La clarté est bonne mais la complétude est partielle."
+        },
+        {
+          "id": "B",
+          "note": 9,
+          "justification": "Excellente fidélité et pertinence, avec une structure claire et une nuance remarquable (limites des données bien identifiées). La complétude est bonne, bien que légèrement moins détaillée que d'autres réponses sur les liens explicites."
+        },
+        {
+          "id": "C",
+          "note": 7,
+          "justification": "Pertinente et fidèle, mais introduit une dimension 'mode de vie' non explicitement mentionnée dans les sources (Source 5 parle de 'bonne santé et un mode de vie sain' sans lien direct avec d'autres dimensions). La complétude est limitée et la nuance insuffisante."
+        },
+        {
+          "id": "D",
+          "note": 10,
+          "justification": "Réponse exemplaire : fidèle, pertinente, complète et nuancée. La structure est claire et pédagogique, exploitant toutes les informations clés tout en soulignant les limites des données. Aucun élément inventé ou généralisé."
+        },
+        {
+          "id": "E",
+          "note": 8,
+          "justification": "Fidèle et pertinente, avec une bonne exploitation des sources. La complétude est satisfaisante, mais la nuance est moins marquée que dans la réponse B ou D (limites des données moins mises en avant). La clarté est bonne mais moins structurée."
+        }
+      ],
+      "classement": [
+        "D",
+        "B",
+        "A",
+        "E",
+        "C"
+      ],
+      "meilleure_reponse": "D",
+      "synthese": "La réponse idéale combine une analyse exhaustive des liens entre santé, bien-être global, environnement et mode de vie, comme le fait la réponse D, tout en soulignant explicitement les limites des données (absence de liens avec d'autres dimensions comme le social ou l'économique). Elle structure les informations de manière claire (sous-parties thématiques) et évite toute généralisation abusive. La nuance est renforcée par une mention systématique des sources pour chaque lien identifié, ce qui renforce la fidélité aux verbatims.",
+      "provider_mapping": {
+        "A": "OpenAI",
+        "B": "Grok",
+        "C": "Kimi",
+        "D": "Claude",
+        "E": "Mistral"
+      },
+      "error": null,
+      "providers_en_erreur": [],
+      "question": "Quels liens existent entre la dimension sante et les autres dimensions du bien-etre ?"
+    },
+    {
+      "evaluations": [
+        {
+          "id": "A",
+          "note": 8,
+          "justification": "La réponse est fidèle aux sources et pertinente, couvrant bien les aspects qualitatifs de l'emploi. Cependant, elle extrapole légèrement en transformant des verbatims subjectifs en 'indicateurs concrets', ce qui manque de nuance quant à l'absence de données quantifiées."
+        },
+        {
+          "id": "B",
+          "note": 9,
+          "justification": "Excellente fidélité et pertinence, avec une analyse nuancée qui souligne les limites des sources. La complétude est bonne, et la clarté est remarquable. La réponse évite les généralisations en précisant l'absence d'indicateurs quantitatifs."
+        },
+        {
+          "id": "C",
+          "note": 7,
+          "justification": "Très fidèle et claire, mais moins complète que B. La réponse est pertinente mais minimaliste, ne mettant pas en valeur les dimensions qualitatives exploitées dans les sources. La nuance est bien respectée."
+        },
+        {
+          "id": "D",
+          "note": 10,
+          "justification": "Réponse idéale : fidèle, pertinente, complète et nuancée. Elle structure bien les dimensions qualitatives tout en soulignant les limites des sources. La clarté et la profondeur de l'analyse sont excellentes."
+        },
+        {
+          "id": "E",
+          "note": 6,
+          "justification": "Fidèle et complète, mais manque de nuance en présentant les verbatims comme des 'indicateurs concrets'. La pertinence est bonne, mais la réponse généralise abusivement en omettant le caractère subjectif des données."
+        }
+      ],
+      "classement": [
+        "D",
+        "B",
+        "A",
+        "C",
+        "E"
+      ],
+      "meilleure_reponse": "D",
+      "synthese": "La réponse idéale combine la rigueur de D et B : elle reconnaît d'abord l'absence d'indicateurs quantitatifs dans les sources, tout en exploitant les dimensions qualitatives évoquées (revenus, logement, accessibilité, qualité, etc.). Elle structure ces éléments en catégories claires (fonction socio-économique, développement personnel) et souligne leur caractère subjectif. Enfin, elle propose une piste méthodologique pour opérationnaliser ces dimensions, sans extrapoler au-delà des données disponibles.",
+      "provider_mapping": {
+        "A": "OpenAI",
+        "B": "Grok",
+        "C": "Kimi",
+        "D": "Claude",
+        "E": "Mistral"
+      },
+      "error": null,
+      "providers_en_erreur": [],
+      "question": "Comment la dimension emploi est-elle operationnalisee en indicateurs concrets ?"
+    },
+    {
+      "evaluations": [
+        {
+          "id": "A",
+          "note": 8,
+          "justification": "Fidèle aux sources et pertinente, cette réponse identifie correctement les corrélations implicites entre équilibre vie pro/perso et relations sociales. Cependant, elle manque de nuance sur l'absence de données quantitatives et surestime légèrement les liens entre dimensions."
+        },
+        {
+          "id": "B",
+          "note": 9,
+          "justification": "Excellente fidélité et nuance, cette réponse souligne clairement les limites des données tout en exploitant les inférences possibles. La structure est claire et la complétude est bonne, bien qu'elle ne propose pas de synthèse aussi directe que d'autres."
+        },
+        {
+          "id": "C",
+          "note": 7,
+          "justification": "Très fidèle et nuancée, mais trop minimaliste. La réponse manque de pertinence car elle ne répond pas pleinement à la question en se contentant de lister les dimensions sans explorer leurs liens potentiels."
+        },
+        {
+          "id": "D",
+          "note": 8,
+          "justification": "Bonne fidélité et pertinence, avec une structure claire et une exploitation complète des sources. Cependant, elle surinterprète légèrement les corrélations en les présentant comme établies, alors que les données sont qualitatives et limitées."
+        },
+        {
+          "id": "E",
+          "note": 6,
+          "justification": "Fidèle et nuancée, mais trop restrictive. La réponse est pertinente dans son rejet des corrélations, mais elle ignore les liens implicites que d'autres réponses exploitent, ce qui limite sa complétude."
+        }
+      ],
+      "classement": [
+        "B",
+        "D",
+        "A",
+        "C",
+        "E"
+      ],
+      "meilleure_reponse": "B",
+      "synthese": "La réponse idéale reconnaît d'abord les limites des données qualitatives fournies, soulignant l'absence de corrélations quantitatives. Elle identifie ensuite les dimensions clés (équilibre vie pro/perso, relations sociales, logement) et explore leurs liens implicites, comme l'association entre équilibre vie pro/perso et accès à la nature, ou entre relations sociales et isolement. Enfin, elle évite les généralisations en rappelant que ces liens sont suggérés par des verbatims isolés, sans preuve statistique.",
+      "provider_mapping": {
+        "A": "OpenAI",
+        "B": "Grok",
+        "C": "Kimi",
+        "D": "Claude",
+        "E": "Mistral"
+      },
+      "error": null,
+      "providers_en_erreur": [],
+      "question": "Quelles dimensions du bien-etre sont les plus correlees entre elles ?"
+    }
+  ],
+  "results_summary": [
+    {
+      "provider": "OpenAI",
+      "model": "gpt-4.1-mini",
+      "question": "Quelles sont les grandes dimensions du bien-etre identifiees dans l'ontologie ?",
+      "answer": "Le contexte fourni ne contient pas d'informations explicites sur les grandes dimensions du bien-être identifiées dans une ontologie. Seules des thématiques liées au bien-être sont mentionnées dans les verbatims : environnement (social, humain, économique, écologique), équilibre vie professionnelle/vie personnelle, relations sociales, logement, et soutiens communautaires. Ces éléments suggèrent que les dimensions du bien-être pourraient inclure l'environnement global, les relations sociales, l'équilibre de vie, et le cadre de vie, mais l'ontologie précise des dimensions n'est pas donnée.",
+      "time_seconds": 4.27,
+      "error": false
+    },
+    {
+      "provider": "Grok",
+      "model": "grok-3-mini-beta",
+      "question": "Quelles sont les grandes dimensions du bien-etre identifiees dans l'ontologie ?",
+      "answer": "Les informations fournies dans le contexte ne décrivent pas explicitement une ontologie du bien-être, ni ses grandes dimensions (concepts, dimensions ou indicateurs). Le contexte se limite à des verbatims d'enquêtes qui évoquent indirectement des aspects tels que l'environnement, les relations sociales, l'équilibre vie professionnelle/personnelle et le logement.\n\nPar conséquent, les données sont insuffisantes pour identifier les grandes dimensions du bien-être basées sur une ontologie. Si vous fournissez plus de détails sur l'ontologie, je pourrai analyser en conséquence.",
+      "time_seconds": 9.56,
+      "error": false
+    },
+    {
+      "provider": "Kimi",
+      "model": "kimi-k2-0905-preview",
+      "question": "Quelles sont les grandes dimensions du bien-etre identifiees dans l'ontologie ?",
+      "answer": "D'après le contexte fourni, je ne peux pas identifier les grandes dimensions du bien-être selon l'ontologie, car ce document ne contient pas l'ontologie du bien-être mentionnée. Les sources présentées sont uniquement des verbatims d'habitants corse sur différents thèmes (environnement, équilibre vie pro/vie perso, services de proximité, logement), mais ne détaillent pas la structure conceptuelle de l'ontologie du bien-être.",
+      "time_seconds": 10.87,
+      "error": false
+    },
+    {
+      "provider": "Claude",
+      "model": "claude-haiku-4-5-20251001",
+      "question": "Quelles sont les grandes dimensions du bien-etre identifiees dans l'ontologie ?",
+      "answer": "# Réponse\n\nSur la base des verbatims fournis, je ne dispose pas d'une **ontologie formalisée** du bien-être qui énumère explicitement les grandes dimensions.\n\nCependant, à partir des thèmes et contenus des témoignages, je peux identifier les **dimensions du bien-être qui émergent** :\n\n1. **Environnement** (au sens large) - écologique, social, économique, et impact sur la santé physique et psychologique\n\n2. **Équilibre vie professionnelle / vie personnelle** - capacité à équilibrer le temps de travail et les loisirs, accès à la nature\n\n3. **Relations sociales et lien communautaire** - relations sociales, soutiens familiaux et amicaux, prévention de l'isolement\n\n4. **Logement** - bien-être lié au cadre de vie\n\n5. **Services de proximité** - facilitation des échanges et interactions sociales\n\n**Limitation importante** : Le contexte fourni contient principalement des verbatims fragmentaires sans présenter une ontologie structurée. Pour une réponse complète et rigoureuse sur les dimensions formalisées du bien-être, il faudrait accès au document d'ontologie complet.",
+      "time_seconds": 6.3,
+      "error": false
+    },
+    {
+      "provider": "Mistral",
+      "model": "mistral-small-latest",
+      "question": "Quelles sont les grandes dimensions du bien-etre identifiees dans l'ontologie ?",
+      "answer": "Les grandes dimensions du bien-être identifiées dans le contexte sont :\n\n1. **Environnement** (humain, social, économique et écologique) - Source 1\n2. **Équilibre vie professionnelle/vie personnelle** - Source 2\n3. **Relations sociales** - Source 3\n4. **Logement** - Source 4\n5. **Aspect communautaire et soutiens amicaux et familiaux** - Source 5\n\nCes dimensions sont extraites des verbatims des habitants de Corse.",
+      "time_seconds": 2.55,
+      "error": false
+    },
+    {
+      "provider": "OpenAI",
+      "model": "gpt-4.1-mini",
+      "question": "Comment le bien-etre objectif se distingue-t-il du bien-etre subjectif dans les donnees ?",
+      "answer": "Le bien-être subjectif ressort clairement dans les verbatims par des ressentis personnels et émotionnels, par exemple l'importance de pouvoir équilibrer vie professionnelle et vie personnelle pour mieux profiter de la nature (Source 1), ou le sentiment de sécurité et de confort dans le logement comme un « cocon » sans stress (Source 3). \n\nLe bien-être objectif, en revanche, est davantage lié à des conditions matérielles ou environnementales observables, telles que la qualité du logement (humidité, bruit des voisins, Source 3), la disponibilité des transports pour la mobilité et la liberté (Source 5), ou encore les actions concrètes pour préserver l’environnement et réduire la pollution (Source 4).\n\nAinsi, le bien-être subjectif se manifeste à travers les perceptions et émotions des habitants, tandis que le bien-être objectif se traduit par des indicateurs tangibles liés aux conditions de vie et à l’environnement.",
+      "time_seconds": 3.83,
+      "error": false
+    },
+    {
+      "provider": "Grok",
+      "model": "grok-3-mini-beta",
+      "question": "Comment le bien-etre objectif se distingue-t-il du bien-etre subjectif dans les donnees ?",
+      "answer": "D'après les données fournies dans le contexte, qui consistent exclusivement en des verbatims d'enquêtes personnelles, il est difficile de distinguer clairement le bien-être objectif du bien-être subjectif, car les informations disponibles sont principalement subjectives. Voici une analyse basée sur ces éléments :\n\n- **Bien-être subjectif** : Cela domine les données, car les verbatims expriment les perceptions, sentiments et expériences personnelles des individus. Par exemple :\n  - La Source 1 décrit l'équilibre entre vie professionnelle et personnelle comme un moyen de \"profiter de la nature\" pour se sentir plus efficace, ce qui reflète une évaluation personnelle du bien-être.\n  - La Source 3 mentionne le logement comme un \"cocon\" où l'on doit se sentir sécurisé, en soulignant le stress causé par des facteurs comme le bruit ou l'humidité, ce qui est une perception individuelle.\n  - Les Sources 4 et 5 abordent respectivement l'environnement et les transports en termes d'importance personnelle (e.g., gestes quotidiens pour la planète ou la liberté pour combattre la solitude), illustrant des jugements subjectifs.\n\n- **Bien-être objectif** : Les données ne fournissent aucun indicateur mesurable ou factuel externe, tel que des statistiques sur la pollution, les conditions de logement ou les infrastructures de transport. Bien que des éléments objectifs puissent être sous-entendus (e.g., humidité dans le logement ou pollution dans l'environnement), ils sont décrits uniquement à travers les perceptions subjectives des répondants. Par conséquent, il n'y a pas d'exemples directs de bien-être objectif dans ce contexte.\n\nLes données sont insuffisantes pour une distinction approfondie, car elles se limitent à des témoignages personnels et ne incluent pas d'informations quantitatives ou objectives. Si des données supplémentaires étaient disponibles, cela permettrait une analyse plus complète.",
+      "time_seconds": 12.11,
+      "error": false
+    },
+    {
+      "provider": "Kimi",
+      "model": "kimi-k2-0905-preview",
+      "question": "Comment le bien-etre objectif se distingue-t-il du bien-etre subjectif dans les donnees ?",
+      "answer": "À partir des verbatims fournis, on ne peut **pas établir de distinction claire entre bien-être objectif et subjectif**, car :\n\n- Les données sont **entièrement subjectives** : il s'agit de **ressentis personnels** (\"se sentir le plus sécurisé\", \"s’aérer l’esprit\", \"combattre la solitude\").\n- Aucun **indicateur objectif** (comme des mesures de santé, de revenu, d’accès aux services ou de qualité de l’air) n’est mentionné.\n\n**Conclusion** : Le contexte ne permet pas de distinguer le bien-être objectif du subjectif.",
+      "time_seconds": 15.74,
+      "error": false
+    },
+    {
+      "provider": "Claude",
+      "model": "claude-haiku-4-5-20251001",
+      "question": "Comment le bien-etre objectif se distingue-t-il du bien-etre subjectif dans les donnees ?",
+      "answer": "# Réponse\n\nSur la base des données fournies, **je ne dispose pas d'informations suffisantes** pour distinguer le bien-être objectif du bien-être subjectif.\n\n## Pourquoi ?\n\nLes sources proposées contiennent exclusivement des **verbatims qualitatifs** — des témoignages subjectifs d'habitants exprimant leur ressenti personnel sur différents thèmes (logement, environnement, transports, équilibre vie pro/perso).\n\nCes témoignages reflètent :\n- Des **perceptions individuelles** (sentiment de sécurité, stress, liberté)\n- Des **valeurs personnelles** (respect de l'environnement, équilibre de vie)\n- Des **besoins ressentis** (se sentir sécurisé, combattre la solitude)\n\nPour distinguer le bien-être objectif du bien-être subjectif, il faudrait disposer de :\n- **Données objectivables** : indicateurs mesurables (revenu, accès aux services, qualité de l'air, nombre de transports en commun, etc.)\n- **Données subjectives chiffrées** : scores de satisfaction, indicateurs de bien-ressenti quantifiés\n- **Une conceptualisation** clarifiant comment ces deux dimensions sont différenciées dans votre cadre d'analyse\n\n**Conclusion** : Les données actuelles illustrent surtout la dimension **subjective et expérientielle** du bien-être en Corse.",
+      "time_seconds": 5.0,
+      "error": false
+    },
+    {
+      "provider": "Mistral",
+      "model": "mistral-small-latest",
+      "question": "Comment le bien-etre objectif se distingue-t-il du bien-etre subjectif dans les donnees ?",
+      "answer": "Les données fournies ne permettent pas de distinguer clairement le bien-être objectif du bien-être subjectif. Les verbatims disponibles se concentrent principalement sur des perceptions et des expériences personnelles, ce qui relève davantage du bien-être subjectif. Par exemple :\n\n- La Source 1 mentionne l'équilibre entre vie professionnelle et vie personnelle, ainsi que la possibilité de profiter de la nature pour améliorer le bien-être.\n- La Source 3 souligne l'importance du logement comme un lieu de sécurité et de confort, affectant ainsi le bien-être.\n- La Source 4 évoque l'importance de respecter l'environnement pour un bien-être personnel.\n\nCes éléments sont des indicateurs de bien-être subjectif, car ils reflètent des opinions et des sentiments individuels. Les données objectives, telles que des indicateurs économiques, des statistiques de santé, ou des mesures environnementales, ne sont pas présentes dans le contexte fourni.",
+      "time_seconds": 1.62,
+      "error": false
+    },
+    {
+      "provider": "OpenAI",
+      "model": "gpt-4.1-mini",
+      "question": "Quels indicateurs permettent de mesurer la qualite de vie en Corse ?",
+      "answer": "Les indicateurs permettant de mesurer la qualité de vie en Corse, d'après les données fournies, incluent :\n\n- La présence et le sentiment d'appartenance à la communauté (Source 1).\n- Le niveau des revenus nécessaires pour faire face au coût de la vie élevé (Sources 2 et 3).\n- L'accès rapide aux espaces naturels et la qualité de l'environnement (Source 4).\n- L'importance accordée à la protection et à la préservation de la nature (Source 5).\n\nCes indicateurs couvrent les dimensions sociale, économique et environnementale de la qualité de vie.",
+      "time_seconds": 3.31,
+      "error": false
+    },
+    {
+      "provider": "Grok",
+      "model": "grok-3-mini-beta",
+      "question": "Quels indicateurs permettent de mesurer la qualite de vie en Corse ?",
+      "answer": "Basé sur les verbatims fournis dans le contexte, les éléments mentionnés ne décrivent pas explicitement des indicateurs mesurables de la qualité de vie en Corse. Cependant, on peut déduire des thèmes qualitatifs potentiels qui pourraient être utilisés comme proxies pour des indicateurs :\n\n- **Communauté et relations** : La présence et l'importance de la communauté (mentionnée dans le verbatim d'une femme de 71 ans), ce qui pourrait se traduire par un indicateur qualitatif comme la satisfaction sociale ou la force des liens communautaires.\n- **Revenus** : Le coût élevé de la vie et la nécessité de revenus importants (mentionnée dans les verbatims d'une femme de 50 ans), pouvant indiquer un indicateur lié au pouvoir d'achat ou au niveau de vie économique.\n- **Environnement** : L'accès rapide aux espaces naturels et l'importance de leur protection (mentionnée dans les verbatims d'un homme de 62 ans et d'une femme de 26 ans), pouvant correspondre à un indicateur comme la qualité environnementale ou l'accès à la nature.\n\nCes thèmes sont dérivés des verbatims et représentent des aspects qualitatifs de la qualité de vie, mais les données fournies ne incluent pas d'indicateurs quantitatifs ou standardisés (tels que des scores, des pourcentages ou des mesures objectives). Si des indicateurs plus précis sont nécessaires, les données actuelles sont insuffisantes.",
+      "time_seconds": 14.2,
+      "error": false
+    },
+    {
+      "provider": "Kimi",
+      "model": "kimi-k2-0905-preview",
+      "question": "Quels indicateurs permettent de mesurer la qualite de vie en Corse ?",
+      "answer": "D’après les verbatims fournis, les indicateurs suivants sont mentionnés comme pertinents pour la qualité de vie en Corse :\n\n- **Solidarité communautaire** : présence et soutien de la commununité locale (Source 1).  \n- **Niveau de revenus** : revenus suffisants pour faire face au coût de la vie élevée (Sources 2-3).  \n- **Accès à la nature / environnement** : proximité et préservation des espaces naturels (Sources 4-5).\n\nAucune donnée supplémentaire sur d’autres dimensions (santé, éducation, sécurité, etc.) n’est disponible dans le contexte.",
+      "time_seconds": 13.01,
+      "error": false
+    },
+    {
+      "provider": "Claude",
+      "model": "claude-haiku-4-5-20251001",
+      "question": "Quels indicateurs permettent de mesurer la qualite de vie en Corse ?",
+      "answer": "# Indicateurs de qualité de vie en Corse (basés sur le contexte)\n\nSelon les données fournies, les indicateurs suivants ressortent comme étant importants pour mesurer la qualité de vie en Corse :\n\n## 1. **Communauté et relations sociales**\n- Présence et force de la communauté locale\n- Qualité des liens sociaux\n\n## 2. **Revenus et coût de la vie**\n- Niveau de revenus\n- Coût de la vie (particulièrement élevé en Corse)\n- Capacité financière à subvenir aux besoins familiaux\n\n## 3. **Environnement et accès à la nature**\n- Accès rapide aux espaces naturels proches du domicile ou du travail\n- Qualité et richesse environnementale\n- Possibilités de protection et de préservation de la nature\n\n---\n\n**⚠️ Limitation importante :** Le contexte fourni ne présente que des **verbatims qualitatifs** reflétant les perceptions d'habitants. Les données ne contiennent pas :\n- D'indicateurs quantitatifs spécifiques (indices, métriques chiffrées)\n- De cadre d'ontologie structuré du bien-être\n- D'autres dimensions potentiellement importantes (santé, emploi, services publics, etc.)\n\nUne analyse plus complète nécessiterait des données supplémentaires.",
+      "time_seconds": 3.63,
+      "error": false
+    },
+    {
+      "provider": "Mistral",
+      "model": "mistral-small-latest",
+      "question": "Quels indicateurs permettent de mesurer la qualite de vie en Corse ?",
+      "answer": "D'après les données fournies, les indicateurs permettant de mesurer la qualité de vie en Corse incluent :\n\n1. **Communauté et relations** : La présence et l'importance de la communauté pour les habitants, comme mentionné par une retraitée de 71 ans à Calvi [Source 1].\n\n2. **Revenus et coût de la vie** : Le coût de la vie élevé et la nécessité de revenus relativement importants, notamment pour les familles monoparentales, comme indiqué par une fonctionnaire de 50 ans à Ajaccio [Source 2, Source 3].\n\n3. **Environnement** : L'accès aux espaces naturels et la protection de l'environnement, soulignés par un fonctionnaire de 62 ans à Penta-di-Casinca et une employée de 26 ans à Ajaccio [Source 4, Source 5].\n\nCes indicateurs couvrent des aspects sociaux, économiques et environnementaux de la qualité de vie en Corse.",
+      "time_seconds": 2.46,
+      "error": false
+    },
+    {
+      "provider": "OpenAI",
+      "model": "gpt-4.1-mini",
+      "question": "Quelle est la difference entre un indicateur objectif et un indicateur subjectif ?",
+      "answer": "Le contexte fourni ne contient pas d'information explicite sur la différence entre un indicateur objectif et un indicateur subjectif.",
+      "time_seconds": 1.25,
+      "error": false
+    },
+    {
+      "provider": "Grok",
+      "model": "grok-3-mini-beta",
+      "question": "Quelle est la difference entre un indicateur objectif et un indicateur subjectif ?",
+      "answer": "Les informations fournies dans le contexte se limitent à des verbatims d'enquêtes sur des thèmes tels que le ratio vie professionnelle/vie personnelle, les revenus et l'emploi. Ces données ne contiennent aucune définition, explication ou référence à la différence entre un indicateur objectif et un indicateur subjectif. Par conséquent, je ne peux pas répondre à cette question en me basant uniquement sur les éléments du contexte. Si vous avez des données supplémentaires, je peux reconsidérer.",
+      "time_seconds": 6.53,
+      "error": false
+    },
+    {
+      "provider": "Kimi",
+      "model": "kimi-k2-0905-preview",
+      "question": "Quelle est la difference entre un indicateur objectif et un indicateur subjectif ?",
+      "answer": "ERREUR: Error code: 429 - {'error': {'message': 'The engine is currently overloaded, please try again later', 'type': 'engine_overloaded_error'}}",
+      "time_seconds": 11.4,
+      "error": true
+    },
+    {
+      "provider": "Claude",
+      "model": "claude-haiku-4-5-20251001",
+      "question": "Quelle est la difference entre un indicateur objectif et un indicateur subjectif ?",
+      "answer": "# Réponse\n\nJe ne peux pas répondre à cette question en me basant sur le contexte fourni.\n\nLes sources disponibles contiennent exclusivement des **verbatims qualitatifs** (témoignages d'habitants corses sur des thèmes comme l'équilibre vie pro/perso, les revenus et l'emploi). Elles ne proposent aucune information théorique ou définitionnelle sur la distinction entre indicateurs objectifs et subjectifs.\n\nPour répondre à votre question, il faudrait :\n- Des sources documentant les concepts méthodologiques de mesure\n- Des éléments provenant potentiellement d'une ontologie du bien-être mentionnée dans mes instructions\n- Des données explicitement structurées autour de cette distinction\n\n**Note** : Les verbatims eux-mêmes illustrent plutôt des données *subjectives* (perceptions et valeurs individuelles), mais cela ne permet pas de définir formellement la différence conceptuelle que vous demandez.",
+      "time_seconds": 3.14,
+      "error": false
+    },
+    {
+      "provider": "Mistral",
+      "model": "mistral-small-latest",
+      "question": "Quelle est la difference entre un indicateur objectif et un indicateur subjectif ?",
+      "answer": "Les données fournies dans le contexte ne permettent pas de répondre directement à la question concernant la différence entre un indicateur objectif et un indicateur subjectif. Les sources disponibles contiennent principalement des verbatims sur des thèmes comme le ratio vie pro/vie perso, les revenus, et l'emploi, mais elles ne définissent ni n'expliquent la différence entre ces types d'indicateurs.\n\nPour répondre à cette question, il serait nécessaire d'avoir des informations spécifiques sur la distinction entre indicateurs objectifs (mesurables de manière quantitative) et indicateurs subjectifs (basés sur des perceptions ou des opinions).",
+      "time_seconds": 1.62,
+      "error": false
+    },
+    {
+      "provider": "OpenAI",
+      "model": "gpt-4.1-mini",
+      "question": "Comment le concept de bien-etre est-il structure et decompose en sous-dimensions ?",
+      "answer": "Le concept de bien-être, selon les verbatims fournis, se structure autour de plusieurs sous-dimensions principales : \n\n1. **Ratio vie professionnelle / vie personnelle** : équilibre du temps entre travail et loisirs, avec un accent sur la possibilité de profiter de la nature pour se ressourcer et améliorer son efficacité au travail (Source 1).\n\n2. **Communauté et relations sociales** : le bien-être est perçu comme intrinsèquement lié à l'appartenance et la qualité des liens au sein d'une communauté (Source 2).\n\n3. **Environnement** : dimension large comprenant les aspects humains, sociaux, économiques et écologiques, qui sont des vecteurs de santé psychologique, de sérénité et de bien-être (Sources 4 et 5).\n\n4. **Logement** : mentionné comme un facteur de bien-être, bien que sans détails dans le contexte donné (Source 3).\n\nAinsi, le concept de bien-être dans ce contexte est décomposé en dimensions liées à l'équilibre de vie, aux relations sociales, à l'environnement global, et au logement.",
+      "time_seconds": 3.35,
+      "error": false
+    },
+    {
+      "provider": "Grok",
+      "model": "grok-3-mini-beta",
+      "question": "Comment le concept de bien-etre est-il structure et decompose en sous-dimensions ?",
+      "answer": "Les verbatims fournis dans le contexte ne décrivent pas explicitement une structure formelle ou une décomposition du concept de bien-être en sous-dimensions. Ils mentionnent toutefois plusieurs aspects liés au bien-être, tels que :\n\n- **Équilibre vie professionnelle/personnelle** : Référencé dans la Source 1, où il est associé à la possibilité de profiter de la nature pour améliorer l'efficacité au travail.\n- **Communauté et relations** : Mentionné dans la Source 2, où le bien-être est lié à une communauté.\n- **Logement** : Évoqué brièvement dans la Source 3, sans détails spécifiques.\n- **Environnement** : Développé dans les Sources 4 et 5, avec une référence à des dimensions incluant l'environnement humain, social, économique et écologique comme facteurs de santé, sérénité et bien-être.\n\nCes éléments suggèrent des thèmes potentiels, mais les données disponibles sont insuffisantes pour établir une structure complète ou une décomposition systématique du bien-être. Si une ontologie ou des indicateurs plus détaillés sont nécessaires, ils ne sont pas présents dans le contexte fourni.",
+      "time_seconds": 10.87,
+      "error": false
+    },
+    {
+      "provider": "Kimi",
+      "model": "kimi-k2-0905-preview",
+      "question": "Comment le concept de bien-etre est-il structure et decompose en sous-dimensions ?",
+      "answer": "Sur la base des seuls verbatims fournis, on ne dispose pas d’une structuration explicite du concept de bien-être en sous-dimensions.  \nLes répondants évoquent des thèmes qui peuvent être regroupés en cinq entrées :\n\n1. Équilibre vie pro / vie perso  \n2. Communauté et relations sociales  \n3. Logement  \n4. Environnement (nature, social, économique, écologique)  \n5. Santé (physique et psychique)\n\nCes thèmes suggèrent des dimensions possibles, mais le corpus ne contient ni définition formelle ni découpage officiel du bien-être.",
+      "time_seconds": 11.99,
+      "error": false
+    },
+    {
+      "provider": "Claude",
+      "model": "claude-haiku-4-5-20251001",
+      "question": "Comment le concept de bien-etre est-il structure et decompose en sous-dimensions ?",
+      "answer": "# Structure et sous-dimensions du bien-être selon les données disponibles\n\nSur la base des verbatims fournis, le bien-être en Corse apparaît structuré autour de **plusieurs sous-dimensions clés** :\n\n## 1. **Équilibre vie professionnelle / vie personnelle**\n- Capacité à équilibrer son temps de travail et loisirs\n- Accès à la nature comme ressource pour \"s'aérer l'esprit\"\n- Impact positif sur l'efficacité professionnelle\n\n## 2. **Dimension sociale et communautaire**\n- Le bien-être ne peut se concevoir que \"au travers une communauté\"\n- Souligne l'importance des relations et du lien collectif\n\n## 3. **Environnement (sens large)**\n- Dimensions humaine, sociale, économique et écologique\n- Conditions de vie matérielles (logement notamment)\n- Lien entre environnement et santé physique/psychologique\n\n## 4. **Santé et sérénité**\n- Santé physique et mentale (\"psy\")\n- État de sérénité générale\n\n---\n\n## ⚠️ **Limitation importante**\nLes données fournies présentent des **verbatims fragmentaires** sans offrir une **structure formelle et complète** du concept de bien-être. Une ontologie structurée (avec dimensions hiérarchisées et indicateurs spécifiques) n'est pas disponible dans le contexte fourni pour confirmer cette décomposition.",
+      "time_seconds": 4.17,
+      "error": false
+    },
+    {
+      "provider": "Mistral",
+      "model": "mistral-small-latest",
+      "question": "Comment le concept de bien-etre est-il structure et decompose en sous-dimensions ?",
+      "answer": "D'après les sources fournies, le concept de bien-être est structuré et décomposé en plusieurs sous-dimensions :\n\n1. **Ratio vie pro/vie perso** : Équilibre entre le temps professionnel et personnel, avec la possibilité de profiter de la nature environnante pour se ressourcer et améliorer l'efficacité au travail [Source 1].\n\n2. **Communauté et relations** : Importance des relations sociales et de l'appartenance à une communauté pour concevoir le bien-être [Source 2].\n\n3. **Logement** : Bien-être lié au logement, bien que les détails spécifiques ne soient pas fournis [Source 3].\n\n4. **Environnement** : Environnement humain, social, économique et écologique comme vecteur de bonne santé, de bien-être, de sérénité et de qualité de vie [Source 4, Source 5].\n\nLes données disponibles ne permettent pas d'identifier d'autres sous-dimensions du bien-être.",
+      "time_seconds": 4.64,
+      "error": false
+    },
+    {
+      "provider": "OpenAI",
+      "model": "gpt-4.1-mini",
+      "question": "Quels liens existent entre la dimension sante et les autres dimensions du bien-etre ?",
+      "answer": "Les verbatims montrent que la santé est perçue comme une base essentielle du bien-être, conditionnant la capacité à profiter de la vie (Source 1, 4, 5). Elle est aussi envisagée dans une approche globale, liée à la santé de l'environnement et du milieu de vie, incluant les autres êtres vivants (Source 2, 3, 4). Ainsi, la dimension santé est liée à la dimension environnementale, et influence toutes les autres dimensions du bien-être par son rôle fondamental dans la qualité de vie.",
+      "time_seconds": 2.61,
+      "error": false
+    },
+    {
+      "provider": "Grok",
+      "model": "grok-3-mini-beta",
+      "question": "Quels liens existent entre la dimension sante et les autres dimensions du bien-etre ?",
+      "answer": "D'après les verbatims fournis dans le contexte, les liens entre la dimension \"santé\" et les autres dimensions du bien-être sont limités aux éléments explicitement mentionnés. Voici une synthèse factuelle basée sur les sources :\n\n- **Santé et bien-être global** : La santé est décrite comme la base essentielle du bien-être (Source 1 : Homme de 25 ans). Elle est également considérée comme primordiale pour profiter de la vie et comme un élément impactant tous les aspects de la qualité de vie (Sources 4 et 5).\n\n- **Santé et environnement** : Plusieurs verbatims établissent un lien direct entre la santé personnelle et l'environnement. Par exemple, la santé est vue comme une composante d'une santé globale incluant le milieu de vie et les autres vivants (Sources 2, 3 et 4). Cela suggère une interdépendance entre la santé et les dimensions environnementales du bien-être.\n\nLes données disponibles ne fournissent pas d'informations sur d'autres dimensions potentielles du bien-être (par exemple, sociales, économiques ou éducatives). Par conséquent, les liens identifiés sont restreints à ceux évoqués dans les verbatims, et je ne peux pas extrapoler au-delà du contexte fourni. Si des données supplémentaires étaient disponibles, une analyse plus complète serait possible.",
+      "time_seconds": 13.4,
+      "error": false
+    },
+    {
+      "provider": "Kimi",
+      "model": "kimi-k2-0905-preview",
+      "question": "Quels liens existent entre la dimension sante et les autres dimensions du bien-etre ?",
+      "answer": "D'après les verbatims fournis, les liens entre santé et autres dimensions du bien-être en Corse sont :\n\n1. **Santé et environnement** : La santé est liée à \"la santé de mon milieu de vie\" (Source 2) et \"va de plus en plus être en lien avec l'environnement\" (Source 4)\n\n2. **Santé et mode de vie** : Une femme de 32 ans établit un lien direct entre \"avoir une bonne santé et un mode de vie sain\" (Source 5)\n\n3. **Santé comme fondement** : La santé est perçue comme \"la base du bien-être\" (Source 1) et \"primordiale pour pouvoir profiter de la vie\" (Source 4), suggérant qu'elle conditionne les autres dimensions du bien-être\n\nLes données insuffisantes ne permettent pas d'identifier d'autres dimensions spécifiques du bien-être mentionnées explicitement.",
+      "time_seconds": 17.93,
+      "error": false
+    },
+    {
+      "provider": "Claude",
+      "model": "claude-haiku-4-5-20251001",
+      "question": "Quels liens existent entre la dimension sante et les autres dimensions du bien-etre ?",
+      "answer": "# Liens entre la santé et autres dimensions du bien-être\n\nSelon les données disponibles, les habitants corses identifient les connexions suivantes :\n\n## Liens explicitement mentionnés\n\n**Santé ↔ Qualité de vie générale**\n- La santé est présentée comme un **fondement essentiel** : \"La santé est la base du bien-être\" et \"Sans la santé, nous ne pouvons rien faire\"\n- Elle est un **prérequis pour jouir d'autres dimensions** : \"La santé est primordiale pour pouvoir profiter de la vie\"\n\n**Santé ↔ Mode de vie**\n- Un lien direct est établi : \"c'est essentiel d'avoir une bonne santé et un mode de vie sain pour avoir une bonne qualité de vie\"\n\n**Santé ↔ Environnement**\n- La santé est liée à des facteurs environnementaux : \"Elle va de plus en plus être en lien avec l'environnement\"\n- Une vision écosystémique émerge : la santé personnelle est \"une composante d'un complexe plus vaste de la santé de mon milieu de vie, une santé globale incluant les autres vivants\"\n\n## Limitation\n\nLes données fournies ne détaillent pas les liens spécifiques avec d'autres dimensions potentielles du bien-être (relations sociales, épanouissement personnel, situation économique, etc.). Une analyse plus complète nécessiterait des données supplémentaires sur ces autres dimensions.",
+      "time_seconds": 4.56,
+      "error": false
+    },
+    {
+      "provider": "Mistral",
+      "model": "mistral-small-latest",
+      "question": "Quels liens existent entre la dimension sante et les autres dimensions du bien-etre ?",
+      "answer": "D'après les données fournies, plusieurs liens entre la dimension santé et les autres dimensions du bien-être peuvent être identifiés :\n\n1. **Environnement** : La santé est perçue comme étant en lien avec l'environnement. Un environnement sain est considéré comme essentiel pour maintenir une bonne santé [Source 4].\n\n2. **Mode de vie** : Une bonne santé est associée à un mode de vie sain, ce qui implique des choix de vie et des comportements qui influencent directement le bien-être global [Source 5].\n\n3. **Milieu de vie** : La santé est vue comme une composante d'un complexe plus vaste qui inclut la santé de l'ensemble du milieu de vie, suggérant une interconnexion entre la santé individuelle et la santé collective ou environnementale [Source 2, Source 3].\n\nCes éléments montrent que la santé est perçue comme une dimension centrale qui interagit avec d'autres aspects du bien-être, notamment l'environnement, le mode de vie et le milieu de vie.",
+      "time_seconds": 1.64,
+      "error": false
+    },
+    {
+      "provider": "OpenAI",
+      "model": "gpt-4.1-mini",
+      "question": "Comment la dimension emploi est-elle operationnalisee en indicateurs concrets ?",
+      "answer": "La dimension emploi est opérationnalisée à travers des indicateurs concrets tels que :\n\n- Accès à l'emploi (accessibilité, multiplicité des offres, diversité des débouchés)\n- Qualité de l'emploi (qualité, tensions liées à l'emploi)\n- Revenus générés par l'emploi permettant de subvenir aux besoins familiaux et au logement\n- Sécurité de l'emploi (emploi stable versus situation de chômage ou emploi \"par défaut\")\n- Fonction sociale de l'emploi (construction sociale, développement de projets personnels)\n\nCes indicateurs reflètent à la fois les aspects quantitatifs (offres, accès, revenus) et qualitatifs (qualité, rôle social) de l'emploi.",
+      "time_seconds": 4.0,
+      "error": false
+    },
+    {
+      "provider": "Grok",
+      "model": "grok-3-mini-beta",
+      "question": "Comment la dimension emploi est-elle operationnalisee en indicateurs concrets ?",
+      "answer": "La question porte sur la manière dont la dimension \"emploi\" est opérationnalisée en indicateurs concrets, mais les données du contexte fourni se limitent à des verbatims qualitatifs issus d'enquêtes. Ces verbatims décrivent des aspects subjectifs de l'emploi, tels que :\n\n- Son rôle pour assurer les besoins familiaux, développer des projets et favoriser la construction sociale (Source 1).\n- L'importance de l'accessibilité, de la qualité, des tensions et de la financiarisation (Source 2).\n- La diversité des débouchés et la multiplicité des offres (Source 3).\n- Sa contribution à obtenir des revenus et à se loger (Source 4).\n- L'idée que l'emploi est \"par défaut\" pour rester en Corse (Source 5).\n\nCes éléments ne sont pas opérationnalisés en indicateurs concrets (par exemple, taux de chômage, salaire moyen ou nombre d'offres d'emploi), car le contexte ne fournit que des descriptions qualitatives et non des données quantitatives ou des mesures standardisées. Les informations sont donc insuffisantes pour répondre pleinement à la question. Si des données supplémentaires sont disponibles, une analyse plus précise pourrait être effectuée.",
+      "time_seconds": 11.71,
+      "error": false
+    },
+    {
+      "provider": "Kimi",
+      "model": "kimi-k2-0905-preview",
+      "question": "Comment la dimension emploi est-elle operationnalisee en indicateurs concrets ?",
+      "answer": "Sur la base des seuls verbatims fournis, on ne peut **pas** décrire la façon dont la dimension « emploi » est traduite en indicateurs concrets (taux de chômage, emplois aidés, durée du trajet domicile-travail, etc.). Les extraits se bornent à exprimer, en langage spontané, l’importance que les habitants accordent à l’emploi (revenu, vie familiale, diversité des débouchés, etc.) ; aucun indicateur quantifié ni méthode d’operationalisation n’est mentionnée.",
+      "time_seconds": 12.01,
+      "error": false
+    },
+    {
+      "provider": "Claude",
+      "model": "claude-haiku-4-5-20251001",
+      "question": "Comment la dimension emploi est-elle operationnalisee en indicateurs concrets ?",
+      "answer": "## Réponse\n\nSur la base des verbatims fournis, **les données disponibles ne permettent pas de répondre précisément à votre question sur l'opérationnalisation de la dimension emploi en indicateurs concrets**.\n\n### Ce que les données montrent :\n\nLes verbatims révèlent plutôt **les dimensions qualitatives de l'emploi valorisées par les habitants** :\n\n1. **Fonction socio-économique** : revenus, logement, besoins vitaux\n2. **Fonction de développement personnel** : construction sociale, projets personnels/familiaux\n3. **Accessibilité et qualité** : mentionnées comme enjeux majeurs\n4. **Diversité des débouchés** : multiplicitité des offres comme facteur de qualité de vie\n\n### Manques identifiés :\n\n- **Pas d'indicateurs chiffrés explicites** (taux de chômage, salaires médians, temps d'accès à l'emploi, etc.)\n- **Pas de seuils ou critères mesurables** pour évaluer la \"qualité\" ou l'\"accessibilité\" mentionnées\n- **Pas d'opérationnalisation formelle** documentée dans les sources fournies\n\n**Conclusion** : Les données disponibles permettent d'identifier les **valeurs associées à l'emploi**, mais pas son opérationnalisation technique en indicateurs. Une ontologie du bien-être ou une méthodologie d'enquête spécifique serait nécessaire pour préciser cela.",
+      "time_seconds": 4.18,
+      "error": false
+    },
+    {
+      "provider": "Mistral",
+      "model": "mistral-small-latest",
+      "question": "Comment la dimension emploi est-elle operationnalisee en indicateurs concrets ?",
+      "answer": "D'après les verbatims fournis, la dimension emploi est opérationnalisée par les indicateurs concrets suivants :\n\n1. **Revenus** : L'emploi permet d'avoir des revenus (Source 4).\n2. **Logement** : L'emploi permet de se loger (Source 4).\n3. **Besoins familiaux** : L'emploi assure les besoins d'une vie familiale (Source 1).\n4. **Développement de projets** : L'emploi permet de développer des projets (Source 1).\n5. **Construction sociale** : L'emploi permet de se construire socialement (Source 1).\n6. **Diversité des débouchés** : La diversité des débouchés est mentionnée (Source 3).\n7. **Multiplicité des offres** : La multiplicité des offres est mentionnée (Source 3).\n8. **Accessibilité** : L'accessibilité à l'emploi est mentionnée (Source 2).\n9. **Qualité de l'emploi** : La qualité de l'emploi est mentionnée (Source 2).\n10. **Tension sur le marché de l'emploi** : La tension sur le marché de l'emploi est mentionnée (Source 2).\n11. **Financiarisation** : La financiarisation de l'emploi est mentionnée (Source 2).\n\nCes indicateurs montrent l'importance de l'emploi pour les habitants de Corse en termes de revenus, de logement, de développement personnel et social, ainsi que la diversité et la qualité des offres d'emploi.",
+      "time_seconds": 3.03,
+      "error": false
+    },
+    {
+      "provider": "OpenAI",
+      "model": "gpt-4.1-mini",
+      "question": "Quelles dimensions du bien-etre sont les plus correlees entre elles ?",
+      "answer": "Le contexte fournit des verbatims évoquant plusieurs dimensions du bien-être : le ratio vie professionnelle/vie personnelle (équilibre temps et détente), les relations sociales (éviter l'isolement, favoriser les échanges), et les conditions de logement (logement décent, loyers modérés, charges).\n\nParmi ces éléments, les dimensions du bien-être les plus corrélées semblent être :  \n- Le ratio vie pro/vie perso lié à la qualité de vie et à l'efficacité au travail, avec un lien implicite à la nature et à la détente (Source 1, 4).  \n- Les relations sociales, condition importante du bien-vivre et de l'échange (Source 2).\n\nCes deux dimensions (équilibre vie pro/perso et relations sociales) sont liées dans la mesure où une bonne gestion du temps favorise aussi les interactions sociales, essentielles pour éviter l'isolement.\n\nLa dimension logement apparaît comme une priorité distincte, liée aux conditions matérielles, sans indication directe de corrélation explicite avec les autres dimensions dans les verbatims fournis (Source 3, 5).\n\nEn résumé, le contexte suggère une corrélation entre l'équilibre vie pro/vie perso et les relations sociales comme dimensions du bien-être les plus liées entre elles.",
+      "time_seconds": 4.78,
+      "error": false
+    },
+    {
+      "provider": "Grok",
+      "model": "grok-3-mini-beta",
+      "question": "Quelles dimensions du bien-etre sont les plus correlees entre elles ?",
+      "answer": "Les données fournies dans le contexte se composent de verbatims qualitatifs issus d'enquêtes, qui décrivent des expériences personnelles liées au bien-être en Corse. Elles ne incluent pas d'analyses quantitatives, statistiques ou de corrélations directes entre dimensions du bien-être (telles que définies dans une ontologie potentielle). Voici une analyse basée uniquement sur ces verbatims :\n\n- **Dimensions mentionnées** : Les verbatims font référence aux dimensions suivantes :\n  - Équilibre vie professionnelle/vie personnelle (Sources 1 et 4).\n  - Relations sociales et isolement (Source 2).\n  - Logement (Sources 3 et 5).\n  - Environnement/nature (Source 1).\n  - Aspects financiers (lié au logement dans Source 5).\n\n- **Inférences possibles sur les corrélations** : \n  - Dans les verbatims, l'équilibre vie professionnelle/vie personnelle (Sources 1 et 4) semble lié à l'environnement/nature (Source 1), car l'accès à la nature est décrit comme un facteur aidant à l'équilibre. Cela suggère une connexion potentielle entre ces deux dimensions.\n  - Le logement (Sources 3 et 5) est associé à des aspects financiers (comme les loyers et impôts dans Source 5), indiquant une possible corrélation entre le logement et les conditions économiques.\n\nCependant, les données sont insuffisantes pour identifier des corrélations robustes ou quantifiables entre les dimensions du bien-être, car les verbatims sont anecdotiques et ne fournissent pas d'analyses agrégées ou de preuves statistiques. Pour une réponse plus précise, des données supplémentaires (comme des corrélations calculées) seraient nécessaires.",
+      "time_seconds": 14.89,
+      "error": false
+    },
+    {
+      "provider": "Kimi",
+      "model": "kimi-k2-0905-preview",
+      "question": "Quelles dimensions du bien-etre sont les plus correlees entre elles ?",
+      "answer": "Sur la base des seuls verbatims fournis, on ne peut établir de corrélations quantitatives entre dimensions.  \nOn observe simplement que :\n\n- « Ratio vie pro / vie perso » est mentionné conjointement avec « bien-être » (sources 1 et 4) ;\n- « Services de proximité » est lié à « relations sociales » et à « bien vivre » (source 2) ;\n- « Logement » est associé à « bien-être » et à « reste à vivre » (sources 3 et 5).\n\nAucune information ne permet de conclure quelles dimensions sont les plus corrélées entre elles.",
+      "time_seconds": 12.66,
+      "error": false
+    },
+    {
+      "provider": "Claude",
+      "model": "claude-haiku-4-5-20251001",
+      "question": "Quelles dimensions du bien-etre sont les plus correlees entre elles ?",
+      "answer": "# Analyse des corrélations entre dimensions du bien-être\n\nSur la base des données fournies, je peux identifier les **corrélations suivantes** :\n\n## 1. **Équilibre vie pro/vie perso ↔ Bien-être général**\nDeux sources (femme 46 ans à Ajaccio, homme 21 ans à Ajaccio) établissent un lien direct : maintenir un équilibre travail-vie personnelle est présenté comme **condition du bien-être**, permettant de profiter de la nature et d'être plus efficace professionnellement.\n\n## 2. **Services de proximité (relations sociales) ↔ Prévention de l'isolement**\nLa femme retraitée de 70 ans (Ajaccio) lie explicitement les relations sociales au \"bien vivre\" en soulignant qu'elles évitent l'isolement - suggérant une forte corrélation pour les seniors notamment.\n\n## 3. **Logement décent ↔ Capacité financière de vivre dignement**\nLa femme retraitée de 66 ans (Luri) établit un lien entre conditions de logement, charges/impôts et \"reste à vivre insuffisant\" - mettant en évidence une interdépendance entre habitat et situation financière.\n\n## ⚠️ **Limite importante**\n**Les données fournies sont insuffisantes** pour une analyse statistique rigoureuse des corrélations. Il s'agit de verbatims isolés sans données quantitatives permettant de mesurer des dépendances statistiques entre les dimensions du bien-être (logement, relations sociales, équilibre professionnel, situation financière, etc.).",
+      "time_seconds": 4.69,
+      "error": false
+    },
+    {
+      "provider": "Mistral",
+      "model": "mistral-small-latest",
+      "question": "Quelles dimensions du bien-etre sont les plus correlees entre elles ?",
+      "answer": "Les données fournies ne permettent pas de déterminer les corrélations entre les dimensions du bien-être. Les verbatims mentionnent des aspects tels que le ratio vie pro/vie perso, les services de proximité, les relations sociales, et le logement, mais aucune information n'est disponible sur les corrélations entre ces dimensions.",
+      "time_seconds": 1.06,
+      "error": false
+    }
+  ]
+}
