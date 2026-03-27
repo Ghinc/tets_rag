@@ -302,7 +302,8 @@ class RaptorRetriever:
                  chroma_path: str = CHROMA_PATH,
                  source_collection: str = SOURCE_COLLECTION,
                  summary_collection: str = TARGET_COLLECTION,
-                 n_evidence_chunks: int = 5):
+                 n_evidence_chunks: int = 5,
+                 oppchovec_col=None):
         self.chroma_path = chroma_path
         self.source_collection_name = source_collection
         self.summary_collection_name = summary_collection
@@ -310,6 +311,18 @@ class RaptorRetriever:
         self._embed_model = None
         self._source = None
         self._summaries = None
+        self._oppchovec = oppchovec_col  # collection ChromaDB oppchovec_scores (optionnelle)
+
+    # Collections supplémentaires et leurs paramètres de retrieval
+    _EXTRA_COLLECTIONS = [
+        {"name": "portrait_entretiens",   "data_type": "quali",  "label": "Entretien semi-directif (quali)",       "threshold": 0.55},
+        {"name": "enquete_responses",     "data_type": "quanti", "label": "Réponse enquête (quanti)",              "threshold": 0.50},
+        {"name": "enquete_scores_commune","data_type": "quanti", "label": "Scores enquête commune (quanti)",       "threshold": 0.50},
+        {"name": "communes_wiki",         "data_type": "mixte",  "label": "Fiche commune Wikipedia (mixte)",       "threshold": 0.60},
+        {"name": "communes_equipements",  "data_type": "quanti", "label": "Équipements et services commune (quanti)", "threshold": 0.80},
+        {"name": "communes_geo",          "data_type": "mixte",  "label": "Géographie commune (mixte)",               "threshold": 0.75},
+        {"name": "zones_epci",            "data_type": "mixte",  "label": "Zone intercommunale (mixte)",              "threshold": 0.75},
+    ]
 
     def init(self):
         """Charge les modeles et connecte aux collections ChromaDB."""
@@ -321,7 +334,25 @@ class RaptorRetriever:
         self._source = client.get_collection(self.source_collection_name)
         self._summaries = client.get_collection(self.summary_collection_name)
         self.summary_count = self._summaries.count()
-        print(f"RAPTOR Retriever : {self.summary_count} syntheses disponibles")
+
+        # Charger oppchovec_scores depuis le même client (évite les conflits multi-client)
+        try:
+            self._oppchovec = client.get_collection("oppchovec_scores")
+        except Exception:
+            self._oppchovec = None
+
+        # Charger les collections supplémentaires
+        self._extra_cols: Dict[str, object] = {}
+        for cfg in self._EXTRA_COLLECTIONS:
+            try:
+                self._extra_cols[cfg["name"]] = client.get_collection(cfg["name"])
+            except Exception:
+                pass
+
+        loaded = list(self._extra_cols.keys())
+        opp_info = f" + oppchovec ({self._oppchovec.count()} docs)" if self._oppchovec else ""
+        extra_info = f" + {len(loaded)} collections extra ({', '.join(loaded)})" if loaded else ""
+        print(f"RAPTOR Retriever : {self.summary_count} syntheses{opp_info}{extra_info}")
 
     def query(self, question: str, k: int = 5) -> Tuple[str, List[Dict]]:
         """
@@ -363,11 +394,16 @@ class RaptorRetriever:
         context_parts = []
         if summary_text:
             context_parts.append(
-                f"[Synthese RAPTOR - vue {summary_meta.get('view_name', 'N/A')}]\n{summary_text}"
+                f"[Synthese RAPTOR (quali) - vue {summary_meta.get('view_name', 'N/A')}]\n{summary_text}"
             )
 
         for i, (doc, meta) in enumerate(zip(evidence_docs, evidence_metas), 1):
-            context_parts.append(f"[Verbatim {i}] {doc[:300]}...")
+            context_parts.append(f"[Verbatim (quali) {i}] {doc[:300]}...")
+
+        # Etape 5 : Sources supplémentaires (entretiens, enquête, wiki)
+        extra_results = self.query_extra_sources(question, k=2)
+        for r in extra_results:
+            context_parts.append(f"[{r['label']}]\n{r['text'][:1500]}")
 
         context_str = "\n\n".join(context_parts)
 
@@ -392,8 +428,106 @@ class RaptorRetriever:
                 "source_type": "verbatim_evidence",
                 "extrait": doc
             })
+        for i, r in enumerate(extra_results):
+            sources.append({
+                "rank": len(sources) + i,
+                "source_type": r["collection"],
+                "data_type": r["data_type"],
+                "commune": r["meta"].get("commune", r["meta"].get("nom", "N/A")),
+                "distance": round(r["distance"], 3),
+                "extrait": r["text"][:1500],
+            })
 
         return context_str, sources
+
+    def query_extra_sources(self, question: str, k: int = 2) -> List[Dict]:
+        """
+        Recherche sémantique dans les collections supplémentaires (entretiens, enquête, wiki).
+        Retourne les résultats pertinents (distance < seuil) avec label et data_type.
+        """
+        if not self._extra_cols:
+            return []
+        q_emb = self._embed_model.encode(f"query: {question}").tolist()
+        results = []
+        for cfg in self._EXTRA_COLLECTIONS:
+            col = self._extra_cols.get(cfg["name"])
+            if col is None:
+                continue
+            n = min(k, col.count())
+            if n == 0:
+                continue
+            try:
+                res = col.query(
+                    query_embeddings=[q_emb],
+                    n_results=n,
+                    include=["documents", "metadatas", "distances"]
+                )
+                for doc, meta, dist in zip(
+                    res["documents"][0], res["metadatas"][0], res["distances"][0]
+                ):
+                    if dist <= cfg["threshold"]:
+                        results.append({
+                            "text": doc,
+                            "meta": meta,
+                            "distance": dist,
+                            "collection": cfg["name"],
+                            "data_type": cfg["data_type"],
+                            "label": cfg["label"],
+                        })
+            except Exception:
+                pass
+        return results
+
+    def query_oppchovec(self, question: str, k: int = 3) -> List[Dict]:
+        """
+        Cherche les scores OppChoVec les plus pertinents pour la question.
+        Retourne toujours le doc méthodologique (par ID fixe) en premier,
+        puis k-1 communes pertinentes par recherche sémantique.
+        Retourne [] si la collection n'est pas disponible.
+        """
+        if self._oppchovec is None:
+            return []
+
+        results = []
+
+        # 1. Toujours inclure le doc méthodologique (par ID fixe, zéro risque de non-retrieval)
+        try:
+            meth = self._oppchovec.get(
+                ids=["oppchovec_methodology"],
+                include=["documents", "metadatas"]
+            )
+            if meth["documents"]:
+                results.append({
+                    "text": meth["documents"][0],
+                    "meta": meth["metadatas"][0],
+                    "distance": 0.0
+                })
+        except Exception:
+            pass
+
+        # 2. Recherche sémantique pour les communes pertinentes (k-1 résultats)
+        k_communes = max(1, k - 1)
+        q_emb = self._embed_model.encode(f"query: {question}").tolist()
+        n = min(k_communes, self._oppchovec.count())
+        if n > 0:
+            try:
+                res = self._oppchovec.query(
+                    query_embeddings=[q_emb],
+                    n_results=n,
+                    include=["documents", "metadatas", "distances"],
+                    where={"source": {"$in": ["oppchovec_betti_0_10", "oppchovec_aggregate"]}}
+                )
+                for doc, meta, dist in zip(
+                    res["documents"][0],
+                    res["metadatas"][0],
+                    res["distances"][0]
+                ):
+                    results.append({"text": doc, "meta": meta, "distance": dist})
+            except Exception:
+                pass
+
+        return results
+
 
     # Mots-clés pour détecter la dimension QdV dans une question
     _DIMENSION_KEYWORDS: Dict[str, list] = {
@@ -489,15 +623,21 @@ class RaptorRetriever:
                 continue
 
         # Fallback : recherche semantique sur toutes les syntheses
+        # Seuil de distance : ne pas injecter un RAPTOR non pertinent
+        FALLBACK_DISTANCE_THRESHOLD = 0.55
         if self._summaries.count() > 0:
             query_embedding = self._embed_model.encode(f"query: {question}").tolist()
             results = self._summaries.query(
                 query_embeddings=[query_embedding],
                 n_results=1,
-                include=["documents", "metadatas"]
+                include=["documents", "metadatas", "distances"]
             )
             if results["documents"] and results["documents"][0]:
-                return results["documents"][0][0], results["metadatas"][0][0]
+                distance = results["distances"][0][0]
+                if distance <= FALLBACK_DISTANCE_THRESHOLD:
+                    return results["documents"][0][0], results["metadatas"][0][0]
+                else:
+                    print(f"  [RAPTOR] Fallback ignore (distance={distance:.3f} > seuil {FALLBACK_DISTANCE_THRESHOLD})")
 
         return None, {}
 

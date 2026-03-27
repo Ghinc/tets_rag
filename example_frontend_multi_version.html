@@ -8,6 +8,8 @@
     <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
     <!-- Marked.js pour le rendu Markdown -->
     <script src="https://cdn.jsdelivr.net/npm/marked@9/marked.min.js"></script>
+    <!-- html2pdf.js pour export PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -147,7 +149,7 @@
         }
         .source-item { margin-bottom: 8px; padding: 8px; background: white; border-radius: 5px; }
         .source-header { font-weight: bold; color: #667eea; margin-bottom: 4px; cursor: pointer; }
-        .source-content { color: #666; font-size: 11px; line-height: 1.4; display: none; }
+        .source-content { color: #444; font-size: 12px; line-height: 1.6; display: none; padding: 8px 4px 4px; }
 
         .scoring-badge {
             display: inline-flex; align-items: center; gap: 6px;
@@ -163,6 +165,96 @@
             border-radius: 5px; cursor: pointer; font-size: 12px;
         }
         .context-btn:hover { background: #5a6fd6; }
+
+        /* Section sous-questions déroulante */
+        /* Onglet Effectifs */
+        .stats-section { margin-bottom: 18px; }
+        .stats-section-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 10px 14px; background: #f4f5ff; border: 1px solid #dde;
+            border-radius: 8px; cursor: pointer; user-select: none;
+            font-weight: 600; font-size: 13px; color: #333;
+        }
+        .stats-section-header:hover { background: #eaecff; }
+        .stats-section-header .stats-badge {
+            background: #667eea; color: #fff; border-radius: 12px;
+            padding: 2px 10px; font-size: 12px; font-weight: 700;
+        }
+        .stats-section-body { display: none; padding: 12px 4px 4px; }
+        .stats-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .stats-table th {
+            text-align: left; padding: 5px 10px; background: #f8f8f8;
+            border-bottom: 2px solid #e0e0e0; color: #555; font-weight: 600;
+        }
+        .stats-table td { padding: 5px 10px; border-bottom: 1px solid #f0f0f0; }
+        .stats-table tr:last-child td { border-bottom: none; }
+        .stats-table .bar-cell { width: 120px; }
+        .stats-bar-wrap { background: #f0f0f0; border-radius: 4px; height: 8px; overflow: hidden; }
+        .stats-bar { background: #667eea; height: 8px; border-radius: 4px; }
+        .stats-subsection { margin: 12px 0 6px; font-size: 12px; font-weight: 700;
+            color: #667eea; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* ── Sous-questions v10 ── */
+        .subq-section {
+            margin-top: 14px;
+            border: 1px solid #d0d4f7;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #f8f8ff;
+        }
+        .subq-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 10px 14px;
+            background: linear-gradient(90deg, #667eea22, #764ba222);
+            border-bottom: 1px solid #d0d4f7;
+            cursor: pointer; user-select: none;
+        }
+        .subq-header:hover { background: linear-gradient(90deg, #667eea33, #764ba233); }
+        .subq-header-left { display: flex; align-items: center; gap: 8px; }
+        .subq-header-title {
+            font-size: 12px; font-weight: 700; color: #667eea;
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .subq-badge {
+            background: #667eea; color: white;
+            border-radius: 12px; padding: 1px 8px;
+            font-size: 11px; font-weight: 600;
+        }
+        .subq-chevron {
+            font-size: 12px; color: #667eea;
+            transition: transform 0.2s;
+        }
+        .subq-chevron.open { transform: rotate(180deg); }
+        .subq-body { display: none; }
+        .subq-body.open { display: block; }
+        .subq-item {
+            border-bottom: 1px solid #e8e8f5;
+        }
+        .subq-item:last-child { border-bottom: none; }
+        .subq-item-header {
+            display: flex; align-items: flex-start; gap: 10px;
+            padding: 10px 14px; cursor: pointer;
+        }
+        .subq-item-header:hover { background: #f0f0ff; }
+        .subq-num {
+            min-width: 22px; height: 22px; border-radius: 50%;
+            background: #667eea; color: white;
+            font-size: 11px; font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; margin-top: 1px;
+        }
+        .subq-question {
+            font-size: 13px; font-weight: 600; color: #333;
+            flex: 1; line-height: 1.4;
+        }
+        .subq-item-chevron { font-size: 11px; color: #aaa; margin-top: 3px; }
+        .subq-answer {
+            display: none;
+            padding: 0 14px 12px 46px;
+            font-size: 13px; color: #444; line-height: 1.6;
+            border-top: 1px dashed #e8e8f5;
+        }
+        .subq-answer.open { display: block; }
 
         .input-container {
             padding: 16px 24px;
@@ -240,17 +332,25 @@
         }
         .questions-preview h4 { color: #333; margin-bottom: 10px; font-size: 14px; }
         .questions-list {
-            max-height: 160px; overflow-y: auto;
+            max-height: 280px; overflow-y: auto;
             border: 1px solid #e0e0e0; border-radius: 8px;
             padding: 10px;
             font-size: 13px; color: #444;
         }
         .q-item {
             padding: 5px 0; border-bottom: 1px solid #f0f0f0;
-            display: flex; gap: 8px;
+            display: flex; gap: 8px; align-items: flex-start;
         }
         .q-item:last-child { border-bottom: none; }
+        .q-item label { display: flex; gap: 8px; align-items: flex-start; cursor: pointer; width: 100%; }
+        .q-item input[type="checkbox"] { margin-top: 2px; flex-shrink: 0; cursor: pointer; }
+        .q-item.unchecked { opacity: 0.4; }
         .q-num { color: #667eea; font-weight: bold; min-width: 28px; }
+        .q-select-bar { display: flex; gap: 8px; margin-bottom: 8px; }
+        .q-select-bar button { font-size: 11px; padding: 2px 10px; border: 1px solid #ccc;
+            border-radius: 4px; background: #f5f5f5; cursor: pointer; }
+        .q-select-bar button:hover { background: #e8e8e8; }
+        .q-select-bar span { font-size: 12px; color: #888; align-self: center; }
 
         /* Barre de progression */
         .progress-section { display: none; margin-bottom: 20px; }
@@ -584,6 +684,11 @@
             <!-- Aperçu questions -->
             <div class="questions-preview" id="questionsPreview">
                 <h4 id="previewTitle">Questions détectées :</h4>
+                <div class="q-select-bar">
+                    <button onclick="selectAllQuestions(true)">✅ Tout cocher</button>
+                    <button onclick="selectAllQuestions(false)">☐ Tout décocher</button>
+                    <span id="selectionCount"></span>
+                </div>
                 <div class="questions-list" id="questionsList"></div>
                 <div style="margin-top:12px; display:flex; gap:10px; align-items:center;">
                     <button class="btn btn-purple" onclick="startBatch()">▶ Lancer l'analyse</button>
@@ -610,6 +715,7 @@
                 <div class="batch-results-header">
                     <h3>📋 Résultats</h3>
                     <div class="export-btns">
+                        <button class="btn btn-green"  onclick="exportBatchPDF()">📄 Exporter PDF</button>
                         <button class="btn btn-red"    onclick="clearBatch()">🗑 Effacer</button>
                     </div>
                 </div>
@@ -673,6 +779,12 @@
                     <button class="explore-tab-btn" onclick="switchExploreTab('summaries')">
                         📊 Synthèses RAPTOR&nbsp;<span id="summariesCount" style="font-weight:400;"></span>
                     </button>
+                    <button class="explore-tab-btn" onclick="switchExploreTab('quantitative')">
+                        📈 Données quanti&nbsp;<span id="quantiCount" style="font-weight:400;"></span>
+                    </button>
+                    <button class="explore-tab-btn" onclick="switchExploreTab('stats')">
+                        🔢 Effectifs
+                    </button>
                 </div>
 
                 <div id="explore-panel-verbatims" class="explore-panel active">
@@ -681,6 +793,50 @@
 
                 <div id="explore-panel-summaries" class="explore-panel">
                     <div id="summariesList"><div class="explore-loading">Chargement...</div></div>
+                </div>
+
+                <div id="explore-panel-stats" class="explore-panel">
+                    <div id="statsContent"><div class="explore-loading">Chargement...</div></div>
+                </div>
+
+                <div id="explore-panel-quantitative" class="explore-panel">
+                    <!-- Sous-onglets quanti -->
+                    <div style="display:flex;gap:0;border-bottom:2px solid #e0e0e0;margin-bottom:14px;">
+                        <button id="qtab-repondants" onclick="switchQuantiTab('repondants')"
+                            style="padding:8px 18px;border:none;background:none;cursor:pointer;font-size:13px;font-weight:600;color:#667eea;border-bottom:2px solid #667eea;margin-bottom:-2px;">
+                            👤 Répondants&nbsp;<span id="quantiCount" style="font-weight:400;"></span>
+                        </button>
+                        <button id="qtab-syntheses" onclick="switchQuantiTab('syntheses')"
+                            style="padding:8px 18px;border:none;background:none;cursor:pointer;font-size:13px;font-weight:600;color:#999;border-bottom:2px solid transparent;margin-bottom:-2px;">
+                            📊 Synthèses RAPTOR quanti&nbsp;<span id="quantiSummaryCount" style="font-weight:400;"></span>
+                        </button>
+                    </div>
+
+                    <!-- Sous-panel répondants -->
+                    <div id="qpanel-repondants">
+                        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px;">
+                            <select id="qfCommune" style="padding:6px 10px;border:1px solid #ddd;border-radius:6px;font-size:13px;">
+                                <option value="">Toutes communes</option>
+                            </select>
+                            <select id="qfGenre" style="padding:6px 10px;border:1px solid #ddd;border-radius:6px;font-size:13px;">
+                                <option value="">Tous genres</option>
+                                <option value="Homme">Homme</option>
+                                <option value="Femme">Femme</option>
+                            </select>
+                            <select id="qfAgeRange" style="padding:6px 10px;border:1px solid #ddd;border-radius:6px;font-size:13px;">
+                                <option value="">Toutes tranches</option>
+                            </select>
+                            <button onclick="searchQuantitative()" style="padding:6px 14px;background:#667eea;color:white;border:none;border-radius:6px;cursor:pointer;font-size:13px;">🔍 Filtrer</button>
+                            <button onclick="resetQuantiFilters()" style="padding:6px 14px;background:#eee;color:#555;border:none;border-radius:6px;cursor:pointer;font-size:13px;">↺</button>
+                            <div id="quantiStats" style="margin-left:auto;font-size:12px;color:#666;"></div>
+                        </div>
+                        <div id="quantiList"><div class="explore-loading">Chargement...</div></div>
+                    </div>
+
+                    <!-- Sous-panel synthèses RAPTOR quanti -->
+                    <div id="qpanel-syntheses" style="display:none;">
+                        <div id="quantiSummariesList"><div class="explore-loading">Chargement...</div></div>
+                    </div>
                 </div>
             </div>
 
@@ -864,6 +1020,10 @@ function addBotResponse(data) {
     p.insertAdjacentHTML('beforeend', marked.parse(data.answer || ''));
     c.appendChild(p);
 
+    // Sous-questions v10 (juste après la réponse)
+    if (data.sub_questions && data.sub_questions.length > 0)
+        c.appendChild(buildSubQPanel(data.sub_questions));
+
     // Score v10
     const sc = data.metadata && data.metadata.scoring;
     if (sc) {
@@ -898,6 +1058,8 @@ function addBotResponse(data) {
                 label = `📊 Synthèse RAPTOR [${src.metadata.view||'N/A'}] (N=${src.metadata.num_chunks||'?'})`;
             else if (src.metadata.source_type === 'verbatim_evidence')
                 label = `💬 ${src.metadata.commune||'N/A'}${src.metadata.profession ? ' - '+src.metadata.profession : ''}`;
+            else if (src.metadata.source_type === 'oppchovec_score')
+                label = `📈 OppChoVec — ${src.metadata.commune||'N/A'} : ${src.metadata.oppchovec_0_10 != null ? src.metadata.oppchovec_0_10.toFixed(2)+'/10' : '?'} (Opp=${src.metadata.opp_0_10 != null ? src.metadata.opp_0_10.toFixed(2) : '?'}, Cho=${src.metadata.cho_0_10 != null ? src.metadata.cho_0_10.toFixed(2) : '?'}, Vec=${src.metadata.vec_0_10 != null ? src.metadata.vec_0_10.toFixed(2) : '?'})`;
             else
                 label = `${src.metadata.commune || src.metadata.nom || 'Source'}`;
 
@@ -907,7 +1069,8 @@ function addBotResponse(data) {
                 sc2.style.display = open ? 'none' : 'block';
                 sh.textContent = (open ? '▶ ' : '▼ ') + `${i+1}. ${label} (score: ${src.score.toFixed(3)})`;
             };
-            sc2.textContent = src.content;
+            sc2.className = 'source-content md-body';
+            sc2.innerHTML = marked.parse(src.content || '');
             si.appendChild(sh); si.appendChild(sc2);
             sdiv.appendChild(si);
         });
@@ -926,6 +1089,60 @@ function addBotResponse(data) {
 
     d.appendChild(c);
     appendToChat(d);
+}
+
+function buildSubQPanel(subQuestions) {
+    const wrap = document.createElement('div');
+    wrap.className = 'subq-section';
+
+    // En-tête cliquable pour déplier/replier tout le panneau
+    const header = document.createElement('div');
+    header.className = 'subq-header';
+    header.innerHTML = `
+        <div class="subq-header-left">
+            <span>🔍</span>
+            <span class="subq-header-title">Sous-questions v10</span>
+            <span class="subq-badge">${subQuestions.length}</span>
+        </div>
+        <span class="subq-chevron">▼</span>`;
+
+    const body = document.createElement('div');
+    body.className = 'subq-body open'; // ouvert par défaut
+
+    header.onclick = () => {
+        const isOpen = body.classList.toggle('open');
+        header.querySelector('.subq-chevron').classList.toggle('open', isOpen);
+    };
+    header.querySelector('.subq-chevron').classList.add('open');
+
+    // Une ligne par sous-question, avec réponse dépliable au clic
+    subQuestions.forEach((sq, i) => {
+        const item = document.createElement('div');
+        item.className = 'subq-item';
+
+        const ih = document.createElement('div');
+        ih.className = 'subq-item-header';
+        ih.innerHTML = `<span class="subq-num">${i + 1}</span>
+                        <span class="subq-question">${escHtml(sq.question)}</span>
+                        <span class="subq-item-chevron">▶</span>`;
+
+        const ans = document.createElement('div');
+        ans.className = 'subq-answer md-body';
+        ans.innerHTML = marked.parse(sq.answer || '');
+
+        ih.onclick = () => {
+            const open = ans.classList.toggle('open');
+            ih.querySelector('.subq-item-chevron').textContent = open ? '▼' : '▶';
+        };
+
+        item.appendChild(ih);
+        item.appendChild(ans);
+        body.appendChild(item);
+    });
+
+    wrap.appendChild(header);
+    wrap.appendChild(body);
+    return wrap;
 }
 
 function appendToChat(el) {
@@ -1002,13 +1219,44 @@ function refreshPreview(rows) {
         .filter(q => q.text.length > 3);
 
     const list = document.getElementById('questionsList');
-    list.innerHTML = parsedQuestions.map(q =>
-        `<div class="q-item"><span class="q-num">${q.idx}.</span><span>${escHtml(q.text)}</span></div>`
+    list.innerHTML = parsedQuestions.map((q, i) =>
+        `<div class="q-item" id="qitem-${i}">
+            <label>
+                <input type="checkbox" id="qcheck-${i}" checked onchange="updateSelectionCount()">
+                <span class="q-num">${q.idx}.</span>
+                <span>${escHtml(q.text)}</span>
+            </label>
+        </div>`
     ).join('');
 
-    document.getElementById('batchCount').textContent =
-        `${parsedQuestions.length} question${parsedQuestions.length > 1 ? 's' : ''} détectée${parsedQuestions.length > 1 ? 's' : ''}`;
+    updateSelectionCount();
     document.getElementById('questionsPreview').style.display = 'block';
+}
+
+function updateSelectionCount() {
+    const total    = parsedQuestions.length;
+    const checked  = parsedQuestions.filter((_, i) => {
+        const cb = document.getElementById(`qcheck-${i}`);
+        return cb && cb.checked;
+    }).length;
+    document.getElementById('selectionCount').textContent = `${checked} / ${total} sélectionnée${checked > 1 ? 's' : ''}`;
+    document.getElementById('batchCount').textContent =
+        checked > 0
+            ? `${checked} question${checked > 1 ? 's' : ''} à traiter`
+            : '⚠️ Aucune question sélectionnée';
+    parsedQuestions.forEach((_, i) => {
+        const item = document.getElementById(`qitem-${i}`);
+        const cb   = document.getElementById(`qcheck-${i}`);
+        if (item && cb) item.classList.toggle('unchecked', !cb.checked);
+    });
+}
+
+function selectAllQuestions(checked) {
+    parsedQuestions.forEach((_, i) => {
+        const cb = document.getElementById(`qcheck-${i}`);
+        if (cb) cb.checked = checked;
+    });
+    updateSelectionCount();
 }
 
 function escHtml(t) {
@@ -1022,6 +1270,13 @@ async function startBatch() {
     if (!parsedQuestions.length) { alert('Aucune question à traiter.'); return; }
     if (batchRunning) { alert('Un traitement est déjà en cours.'); return; }
 
+    // Filtrer les questions cochées
+    const selectedQuestions = parsedQuestions.filter((_, i) => {
+        const cb = document.getElementById(`qcheck-${i}`);
+        return cb && cb.checked;
+    });
+    if (!selectedQuestions.length) { alert('Aucune question sélectionnée. Cochez au moins une question.'); return; }
+
     const version    = document.getElementById('batchVersion').value;
     const nSubq      = parseInt(document.getElementById('batchNSubq').value);
     const k          = parseInt(document.getElementById('batchK').value);
@@ -1032,7 +1287,7 @@ async function startBatch() {
 
     batchRunning  = true;
     batchPaused   = false;
-    batchResults  = parsedQuestions.map(q => ({ question: q.text, answer: null, scoring: null, error: null }));
+    batchResults  = selectedQuestions.map(q => ({ question: q.text, answer: null, scoring: null, error: null }));
     document.getElementById('pauseBtn').textContent = '⏸ Pause';
     document.getElementById('pauseBtn').disabled = false;
 
@@ -1043,12 +1298,12 @@ async function startBatch() {
     document.querySelector('#batchResults .batch-results-header h3').textContent =
         `📋 Résultats — ${version.toUpperCase()}`;
 
-    const total = parsedQuestions.length;
+    const total = selectedQuestions.length;
     for (let i = 0; i < total; i++) {
         // Attendre si en pause
         while (batchPaused) await new Promise(r => setTimeout(r, 300));
 
-        const q = parsedQuestions[i];
+        const q = selectedQuestions[i];
         updateProgress(i, total, `Question ${i+1}/${total} : ${q.text.substring(0,60)}...`);
 
         const params = {
@@ -1070,9 +1325,10 @@ async function startBatch() {
             });
             if (!r.ok) { const e = await r.json(); throw new Error(e.detail || `HTTP ${r.status}`); }
             const data = await r.json();
-            batchResults[i].answer  = data.answer;
-            batchResults[i].sources = data.sources || [];
-            batchResults[i].scoring = data.metadata && data.metadata.scoring ? data.metadata.scoring : null;
+            batchResults[i].answer        = data.answer;
+            batchResults[i].sources       = data.sources || [];
+            batchResults[i].scoring       = data.metadata && data.metadata.scoring ? data.metadata.scoring : null;
+            batchResults[i].sub_questions = data.sub_questions || [];
         } catch (e) {
             batchResults[i].error = e.message;
         }
@@ -1127,6 +1383,10 @@ function buildResultContent(res) {
     aDiv.innerHTML = marked.parse(res.answer || '');
     frag.appendChild(aDiv);
 
+    // Sous-questions v10 (juste après la réponse)
+    if (res.sub_questions && res.sub_questions.length > 0)
+        frag.appendChild(buildSubQPanel(res.sub_questions));
+
     // Score v10
     if (res.scoring) {
         const sDiv = document.createElement('div');
@@ -1163,6 +1423,8 @@ function buildResultContent(res) {
                 label = `📊 Synthèse RAPTOR [${src.metadata.view||'N/A'}] (N=${src.metadata.num_chunks||'?'})`;
             else if (src.metadata.source_type === 'verbatim_evidence')
                 label = `💬 ${src.metadata.commune||'N/A'}${src.metadata.profession ? ' - '+src.metadata.profession : ''}`;
+            else if (src.metadata.source_type === 'oppchovec_score')
+                label = `📈 OppChoVec — ${src.metadata.commune||'N/A'} : ${src.metadata.oppchovec_0_10 != null ? src.metadata.oppchovec_0_10.toFixed(2)+'/10' : '?'} (Opp=${src.metadata.opp_0_10 != null ? src.metadata.opp_0_10.toFixed(2) : '?'}, Cho=${src.metadata.cho_0_10 != null ? src.metadata.cho_0_10.toFixed(2) : '?'}, Vec=${src.metadata.vec_0_10 != null ? src.metadata.vec_0_10.toFixed(2) : '?'})`;
             else
                 label = `${src.metadata.commune || src.metadata.nom || 'Source'}`;
 
@@ -1172,7 +1434,8 @@ function buildResultContent(res) {
                 sc2.style.display = open ? 'none' : 'block';
                 sh.textContent = (open ? '▶ ' : '▼ ') + `${si+1}. ${label} (score: ${src.score.toFixed(3)})`;
             };
-            sc2.textContent = src.content;
+            sc2.className = 'source-content md-body';
+            sc2.innerHTML = marked.parse(src.content || '');
             srcItem.appendChild(sh); srcItem.appendChild(sc2);
             slist.appendChild(srcItem);
         });
@@ -1215,6 +1478,105 @@ function renderBatchResults(mode, currentIdx = -1) {
         item.appendChild(buildResultContent(batchResults[currentIdx]));
         item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
+}
+
+function exportBatchPDF() {
+    const done = batchResults.filter(r => r.answer || r.error);
+    if (done.length === 0) { alert('Aucun résultat à exporter.'); return; }
+
+    const version  = document.getElementById('batchVersion')?.value || '';
+    const dateStr  = new Date().toLocaleString('fr-FR');
+    const filename = `RAG_resultats_${version}_${new Date().toISOString().slice(0,10)}.pdf`;
+
+    // Construire le contenu HTML du PDF
+    let html = `
+    <div style="font-family:Georgia,'Times New Roman',serif; color:#111; max-width:720px; margin:0 auto; padding:0 8px;">
+      <div style="border-bottom:3px solid #667eea; padding-bottom:14px; margin-bottom:24px;">
+        <h1 style="font-size:22px; color:#667eea; margin:0 0 6px;">Résultats RAG — ${escHtml(version)}</h1>
+        <p style="margin:0; font-size:13px; color:#666;">Exporté le ${escHtml(dateStr)} &nbsp;·&nbsp; ${done.length} question(s)</p>
+      </div>`;
+
+    done.forEach((res, i) => {
+        html += `
+      <div style="margin-bottom:28px; page-break-inside:avoid;">
+        <div style="background:#f0f0f8; border-left:4px solid #667eea; padding:8px 12px; margin-bottom:10px;">
+          <span style="font-size:12px; font-weight:bold; color:#667eea;">Question ${i+1}</span><br>
+          <span style="font-size:14px; font-weight:600;">${escHtml(res.question)}</span>
+        </div>`;
+
+        if (res.error) {
+            html += `<p style="color:#c0392b; font-size:13px;">❌ Erreur : ${escHtml(res.error)}</p>`;
+        } else {
+            // Réponse (markdown → HTML)
+            html += `<div style="font-size:13px; line-height:1.7;">${marked.parse(res.answer || '')}</div>`;
+
+            // Score v10
+            if (res.scoring) {
+                const stars = '★'.repeat(res.scoring.score) + '☆'.repeat(5 - res.scoring.score);
+                html += `
+        <div style="margin-top:10px; padding:6px 10px; background:#fffde7; border-radius:6px; font-size:12px;">
+          <strong>${escHtml(res.scoring.dimension)}</strong> : ${res.scoring.score}/5 ${stars}
+          &nbsp;—&nbsp; <em>${escHtml(res.scoring.justification)}</em>
+        </div>`;
+            }
+
+            // Sources (résumé compact)
+            if (res.sources && res.sources.length > 0) {
+                html += `<div style="margin-top:10px; font-size:11px; color:#555;">
+          <strong>Sources :</strong>
+          <ul style="margin:4px 0 0 16px; padding:0;">`;
+                res.sources.slice(0, 5).forEach((src, si) => {
+                    let label;
+                    if (src.metadata && src.metadata.type === 'raptor_summary')
+                        label = `Synthèse RAPTOR [${src.metadata.view||'?'}]`;
+                    else if (src.metadata && src.metadata.commune)
+                        label = src.metadata.commune + (src.metadata.profession ? ' – ' + src.metadata.profession : '');
+                    else
+                        label = `Source ${si+1}`;
+                    html += `<li>${escHtml(label)}</li>`;
+                });
+                html += `</ul></div>`;
+            }
+        }
+        html += `</div>`;
+    });
+
+    html += `<p style="font-size:10px; color:#aaa; text-align:center; margin-top:24px; border-top:1px solid #eee; padding-top:8px;">
+      Généré par Chatbot RAG Multi-Version · Qualité de vie en Corse
+    </p></div>`;
+
+    // Générer le PDF
+    const container = document.createElement('div');
+    container.innerHTML = html;
+    document.body.appendChild(container);
+
+    const btn = document.querySelector('.export-btns .btn-green');
+    const origText = btn.textContent;
+    btn.textContent = '⏳ Génération...';
+    btn.disabled = true;
+
+    html2pdf()
+        .set({
+            margin:      [12, 12, 12, 12],
+            filename:    filename,
+            image:       { type: 'jpeg', quality: 0.95 },
+            html2canvas: { scale: 2, useCORS: true, logging: false },
+            jsPDF:       { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            pagebreak:   { mode: ['avoid-all', 'css'] },
+        })
+        .from(container)
+        .save()
+        .then(() => {
+            document.body.removeChild(container);
+            btn.textContent = origText;
+            btn.disabled = false;
+        })
+        .catch(err => {
+            document.body.removeChild(container);
+            btn.textContent = origText;
+            btn.disabled = false;
+            alert('Erreur export PDF : ' + err.message);
+        });
 }
 
 function clearBatch() {
@@ -1308,12 +1670,123 @@ async function initExploreTab() {
     }
 }
 
+/* ═══════════════════════════════════════════════════════════
+   STATS — EFFECTIFS RÉELS
+═══════════════════════════════════════════════════════════ */
+let statsLoaded = false;
+
+async function loadStats() {
+    if (statsLoaded) return;
+    const container = document.getElementById('statsContent');
+    try {
+        const data = await fetch('/api/stats').then(r => r.json());
+        container.innerHTML = '';
+
+        // Helper : accordéon de section
+        function makeSection(title, badgeCount, buildBody) {
+            const sec = document.createElement('div');
+            sec.className = 'stats-section';
+            const hdr = document.createElement('div');
+            hdr.className = 'stats-section-header';
+            hdr.innerHTML = `<span>${title}</span><span class="stats-badge">${badgeCount}</span>`;
+            const body = document.createElement('div');
+            body.className = 'stats-section-body';
+            hdr.onclick = () => {
+                const open = body.style.display === 'block';
+                body.style.display = open ? 'none' : 'block';
+                hdr.querySelector('.stats-badge').textContent = open ? badgeCount : '▲ ' + badgeCount;
+            };
+            buildBody(body);
+            sec.appendChild(hdr); sec.appendChild(body);
+            return sec;
+        }
+
+        // Helper : tableau avec barre de progression
+        function makeTable(counts, colLabel, total) {
+            const table = document.createElement('table');
+            table.className = 'stats-table';
+            table.innerHTML = `<tr><th>${colLabel}</th><th>Effectif</th><th>%</th><th class="bar-cell"></th></tr>`;
+            const maxVal = Math.max(...Object.values(counts));
+            Object.entries(counts).forEach(([k, v]) => {
+                const pct = total > 0 ? (v / total * 100).toFixed(1) : 0;
+                const barPct = maxVal > 0 ? (v / maxVal * 100).toFixed(1) : 0;
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>${escHtml(k)}</td><td><strong>${v}</strong></td><td style="color:#888">${pct}%</td>`
+                    + `<td class="bar-cell"><div class="stats-bar-wrap"><div class="stats-bar" style="width:${barPct}%"></div></div></td>`;
+                table.appendChild(tr);
+            });
+            return table;
+        }
+
+        // ── Section Verbatims ──
+        if (data.verbatims && !data.verbatims.error) {
+            const vb = data.verbatims;
+            container.appendChild(makeSection('💬 Verbatims', vb.total, body => {
+                [
+                    ['Commune',         vb.par_commune],
+                    ['Tranche d\'âge',  vb.par_age_range],
+                    ['CSP / Profession',vb.par_profession],
+                    ['Dimension QdV',   vb.par_dimension],
+                    ['Genre',           vb.par_genre],
+                ].forEach(([label, counts]) => {
+                    const sub = document.createElement('div');
+                    sub.className = 'stats-subsection';
+                    sub.textContent = label;
+                    body.appendChild(sub);
+                    body.appendChild(makeTable(counts, label, vb.total));
+                });
+            }));
+        }
+
+        // ── Section Enquête ──
+        if (data.enquete && !data.enquete.error) {
+            const enq = data.enquete;
+            container.appendChild(makeSection('📋 Répondants enquête', enq.total, body => {
+                [
+                    ['Commune',         enq.par_commune],
+                    ['Tranche d\'âge',  enq.par_age_range],
+                    ['CSP / Profession',enq.par_profession],
+                    ['Genre',           enq.par_genre],
+                ].forEach(([label, counts]) => {
+                    const sub = document.createElement('div');
+                    sub.className = 'stats-subsection';
+                    sub.textContent = label;
+                    body.appendChild(sub);
+                    body.appendChild(makeTable(counts, label, enq.total));
+                });
+            }));
+        }
+
+        // ── Section RAPTOR ──
+        if (data.raptor && !data.raptor.error) {
+            const rap = data.raptor;
+            container.appendChild(makeSection('📊 Synthèses RAPTOR', rap.total, body => {
+                const table = document.createElement('table');
+                table.className = 'stats-table';
+                table.innerHTML = '<tr><th>Vue analytique</th><th>Synthèses</th><th>Verbatims moyens / synthèse</th></tr>';
+                Object.entries(rap.par_vue).forEach(([vn, d]) => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `<td><code>${escHtml(vn)}</code></td><td><strong>${d.total}</strong></td><td>${d.chunks_moyen}</td>`;
+                    table.appendChild(tr);
+                });
+                body.appendChild(table);
+            }));
+        }
+
+        statsLoaded = true;
+    } catch(e) {
+        container.innerHTML = `<div class="explore-loading" style="color:red;">Erreur : ${e.message}</div>`;
+    }
+}
+
 function switchExploreTab(name) {
     document.querySelectorAll('.explore-tab-btn').forEach((b, i) => {
-        b.classList.toggle('active', ['verbatims', 'summaries'][i] === name);
+        b.classList.toggle('active', ['verbatims', 'summaries', 'quantitative', 'stats'][i] === name);
     });
     document.querySelectorAll('.explore-panel').forEach(p => p.classList.remove('active'));
     document.getElementById('explore-panel-' + name).classList.add('active');
+    if (name === 'quantitative' && !quantiInitialized) loadQuantitative();
+    if (name === 'stats') loadStats();
 }
 
 async function searchVerbatims() {
@@ -1466,6 +1939,268 @@ async function loadSummaries() {
                 t2.className = 'vtag';
                 t2.style.cssText = 'background:#f0f0f0;color:#888;';
                 t2.textContent = (m.num_chunks || '?') + ' verbatims';
+                tagsDiv.appendChild(t1);
+                tagsDiv.appendChild(t2);
+
+                const arrow = document.createElement('span');
+                arrow.className = 'verbatim-arrow';
+                arrow.textContent = '▶';
+
+                const body = document.createElement('div');
+                body.className = 'summary-card-body md-body';
+                body.innerHTML = marked.parse(s.content || '');
+
+                cardHeader.onclick = () => {
+                    const open = body.style.display === 'block';
+                    body.style.display = open ? 'none' : 'block';
+                    arrow.textContent = open ? '▶' : '▼';
+                };
+
+                cardHeader.appendChild(tagsDiv);
+                cardHeader.appendChild(arrow);
+                card.appendChild(cardHeader);
+                card.appendChild(body);
+                list.appendChild(card);
+            });
+
+            section.appendChild(header);
+            section.appendChild(list);
+            container.appendChild(section);
+        });
+    } catch(e) {
+        container.innerHTML = `<div class="explore-loading" style="color:red;">Erreur : ${e.message}</div>`;
+    }
+}
+
+/* ── Données quantitatives ── */
+let quantiInitialized = false;
+let quantiAllRows = [];
+
+const SCORE_COLORS = {
+    'Très satisfait': '#2e7d32', 'Satisfait': '#558b2f', 'Neutre': '#f57f17',
+    'Moyennement satisfait': '#e65100', 'Insatisfait': '#b71c1c', 'Très insatisfait': '#880e4f',
+    'Bien entouré': '#2e7d32', 'Moyennement entouré': '#f57f17', 'Peu entouré': '#e65100',
+    'Très peu impliqué': '#b71c1c', 'Peu impliqué': '#e65100', 'Moyennement impliqué': '#f57f17',
+    'Impliqué': '#558b2f', 'Très impliqué': '#2e7d32',
+};
+const STAR_SCORES = [null, '★☆☆☆☆', '★★☆☆☆', '★★★☆☆', '★★★★☆', '★★★★★'];
+
+async function loadQuantitative() {
+    const container = document.getElementById('quantiList');
+    container.innerHTML = '<div class="explore-loading">Chargement...</div>';
+    try {
+        const r = await fetch('/api/browse/quantitative');
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        const data = await r.json();
+        quantiAllRows = data.rows;
+        quantiInitialized = true;
+
+        // Remplir sélecteurs communes et tranches d'âge
+        const qfC = document.getElementById('qfCommune');
+        data.stats.communes_disponibles.forEach(c => {
+            const o = document.createElement('option'); o.value = o.textContent = c; qfC.appendChild(o);
+        });
+        const qfA = document.getElementById('qfAgeRange');
+        data.stats.age_ranges_disponibles.forEach(a => {
+            const o = document.createElement('option'); o.value = o.textContent = a; qfA.appendChild(o);
+        });
+
+        renderQuantiRows(data.rows, data.stats);
+    } catch(e) {
+        container.innerHTML = `<div class="explore-loading" style="color:red;">Erreur : ${e.message}</div>`;
+    }
+}
+
+async function searchQuantitative() {
+    const commune   = document.getElementById('qfCommune').value;
+    const genre     = document.getElementById('qfGenre').value;
+    const age_range = document.getElementById('qfAgeRange').value;
+    const params = new URLSearchParams();
+    if (commune)   params.set('commune', commune);
+    if (genre)     params.set('genre', genre);
+    if (age_range) params.set('age_range', age_range);
+    const container = document.getElementById('quantiList');
+    container.innerHTML = '<div class="explore-loading">Chargement...</div>';
+    try {
+        const r = await fetch('/api/browse/quantitative?' + params.toString());
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        const data = await r.json();
+        renderQuantiRows(data.rows, data.stats);
+    } catch(e) {
+        container.innerHTML = `<div class="explore-loading" style="color:red;">Erreur : ${e.message}</div>`;
+    }
+}
+
+function resetQuantiFilters() {
+    document.getElementById('qfCommune').value  = '';
+    document.getElementById('qfGenre').value    = '';
+    document.getElementById('qfAgeRange').value = '';
+    searchQuantitative();
+}
+
+function renderQuantiRows(rows, stats) {
+    const container = document.getElementById('quantiList');
+    document.getElementById('quantiCount').textContent = `(${rows.length})`;
+
+    // Stats globales
+    const statsEl = document.getElementById('quantiStats');
+    statsEl.innerHTML = stats.bonheur_moyen != null
+        ? `Bonheur moy. <b>${stats.bonheur_moyen}/5</b> · QdV <b>${stats.qualite_vie_moyenne}/5</b> · Confiance <b>${stats.confiance_avenir_moy}/5</b>`
+        : '';
+
+    container.innerHTML = '';
+    if (rows.length === 0) {
+        container.innerHTML = '<div class="explore-loading">Aucun répondant avec ces filtres.</div>';
+        return;
+    }
+
+    rows.forEach(row => {
+        const card = document.createElement('div');
+        card.className = 'verbatim-card';
+
+        const header = document.createElement('div');
+        header.className = 'verbatim-header';
+
+        // Tags identité
+        const tags = document.createElement('div');
+        tags.className = 'verbatim-tags';
+        [
+            [row.commune,   'vtag-commune'],
+            [row.genre,     'vtag-genre'],
+            [row.age_range && row.age ? `${row.age_range} (${Math.round(row.age)} ans)` : row.age_range, 'vtag-age'],
+            [row.profession,'vtag-profession'],
+        ].forEach(([val, cls]) => {
+            if (!val) return;
+            const t = document.createElement('span');
+            t.className = `vtag ${cls}`;
+            t.textContent = val;
+            tags.appendChild(t);
+        });
+
+        // Scores globaux
+        const scores = document.createElement('div');
+        scores.style.cssText = 'display:flex;gap:8px;font-size:12px;color:#555;margin-left:auto;align-items:center;';
+        [['bonheur','😊'], ['qualite_vie','⭐'], ['confiance_avenir','🔮']].forEach(([k, icon]) => {
+            if (row[k] == null) return;
+            const s = document.createElement('span');
+            s.textContent = `${icon} ${row[k]}/5`;
+            scores.appendChild(s);
+        });
+
+        const arrow = document.createElement('span');
+        arrow.className = 'verbatim-arrow';
+        arrow.textContent = '▶';
+
+        // Corps : dimensions choisies + scores de satisfaction
+        const body = document.createElement('div');
+        body.className = 'verbatim-body';
+        body.style.cssText = 'display:none;';
+
+        let html = '';
+        if (row.dimensions_choisies) {
+            html += `<p style="margin-bottom:10px;"><strong>Dimensions prioritaires :</strong> ${row.dimensions_choisies}</p>`;
+        }
+        html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px;margin-top:8px;">';
+        Object.entries(row.scores).forEach(([dim, val]) => {
+            if (!val) return;
+            const color = SCORE_COLORS[val] || '#888';
+            html += `<div style="font-size:12px;padding:4px 8px;border-radius:4px;background:#f8f9fa;border-left:3px solid ${color};">
+                <span style="color:#555;">${dim}</span><br>
+                <span style="color:${color};font-weight:600;">${val}</span>
+            </div>`;
+        });
+        html += '</div>';
+        body.innerHTML = html;
+
+        header.onclick = () => {
+            const open = body.style.display === 'block';
+            body.style.display = open ? 'none' : 'block';
+            arrow.textContent = open ? '▶' : '▼';
+        };
+
+        header.appendChild(tags);
+        header.appendChild(scores);
+        header.appendChild(arrow);
+        card.appendChild(header);
+        card.appendChild(body);
+        container.appendChild(card);
+    });
+}
+
+/* ── Sous-onglets panneau quanti ── */
+let quantiSummariesInitialized = false;
+
+function switchQuantiTab(name) {
+    document.getElementById('qpanel-repondants').style.display  = name === 'repondants'  ? 'block' : 'none';
+    document.getElementById('qpanel-syntheses').style.display   = name === 'syntheses'   ? 'block' : 'none';
+    const active   = { border: '2px solid #667eea', color: '#667eea', marginBottom: '-2px' };
+    const inactive = { border: '2px solid transparent', color: '#999', marginBottom: '-2px' };
+    ['repondants', 'syntheses'].forEach(tab => {
+        const btn = document.getElementById(`qtab-${tab}`);
+        const s = tab === name ? active : inactive;
+        btn.style.borderBottom = s.border;
+        btn.style.color = s.color;
+    });
+    if (name === 'syntheses' && !quantiSummariesInitialized) loadQuantiSummaries();
+}
+
+async function loadQuantiSummaries() {
+    const container = document.getElementById('quantiSummariesList');
+    container.innerHTML = '<div class="explore-loading">Chargement...</div>';
+    try {
+        const r = await fetch('/api/browse/quanti_summaries');
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        const data = await r.json();
+        quantiSummariesInitialized = true;
+        document.getElementById('quantiSummaryCount').textContent = `(${data.total})`;
+        container.innerHTML = '';
+
+        const viewLabels = {
+            'age_range*profession': '🔀 Tranche d\'âge × CSP',
+            'age_range*commune':    '🔀 Tranche d\'âge × Commune',
+            'profession*commune':   '🔀 CSP × Commune',
+            'age_range':            '👤 Tranche d\'âge',
+            'profession':           '💼 CSP',
+            'commune':              '📍 Commune',
+        };
+
+        Object.entries(data.views).forEach(([viewName, summaries]) => {
+            const section = document.createElement('div');
+            section.className = 'summary-view-section';
+
+            const header = document.createElement('div');
+            header.className = 'summary-view-header';
+            header.innerHTML = `<span>${viewLabels[viewName] || viewName}</span><span>${summaries.length} synthèses</span>`;
+
+            const list = document.createElement('div');
+            list.className = 'summary-view-list';
+            let collapsed = false;
+            header.onclick = () => {
+                collapsed = !collapsed;
+                list.style.display = collapsed ? 'none' : 'block';
+                header.style.opacity = collapsed ? '.65' : '1';
+            };
+
+            summaries.forEach(s => {
+                const m = s.metadata;
+                const card = document.createElement('div');
+                card.className = 'summary-card';
+
+                const cardHeader = document.createElement('div');
+                cardHeader.className = 'summary-card-header';
+
+                let label = m.dim1_value || '';
+                if (m.dim2_value) label += ' × ' + m.dim2_value;
+
+                const tagsDiv = document.createElement('div');
+                tagsDiv.className = 'summary-card-tags';
+                const t1 = document.createElement('span');
+                t1.className = 'vtag vtag-commune';
+                t1.textContent = label;
+                const t2 = document.createElement('span');
+                t2.className = 'vtag';
+                t2.style.cssText = 'background:#e8f5e9;color:#2e7d32;';
+                t2.textContent = (m.num_respondents || '?') + ' répondants';
                 tagsDiv.appendChild(t1);
                 tagsDiv.appendChild(t2);
 

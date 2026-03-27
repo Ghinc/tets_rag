@@ -146,6 +146,7 @@ class QueryResponse(BaseModel):
     rag_version_used: str = Field(..., description="Version du RAG utilisée")
     timestamp: str = Field(..., description="Horodatage de la réponse")
     context: Optional[str] = Field(None, description="Contexte complet passé au LLM (pour debug/export)")
+    sub_questions: Optional[List[Dict]] = Field(None, description="Sous-questions et réponses intermédiaires (v10)")
 
 
 class HealthResponse(BaseModel):
@@ -192,6 +193,24 @@ rag_pipelines = {
     "v9": None,
     "v10": None
 }
+
+# Mots-clés déclenchant la recherche dans oppchovec_scores
+_OPPCHOVEC_KEYWORDS = [
+    "oppchovec", "score", "scores",
+    "opportunités", "opportunite", "opportunites",
+    "choix", "vécu", "vecu",
+    "indice", "indicateur", "indicateurs",
+    "classement", "classé", "classee", "rang",
+    "bien placé", "bien place", "mal placé", "mal place",
+    "meilleur", "moins bon", "moins bonne",
+    "mieux noté", "moins bien noté",
+]
+
+
+def _is_oppchovec_question(question: str) -> bool:
+    """Retourne True si la question porte (en partie) sur les scores OppChoVec."""
+    q = question.lower()
+    return any(kw in q for kw in _OPPCHOVEC_KEYWORDS)
 
 
 def initialize_all_rags():
@@ -684,6 +703,7 @@ async def query_rag(request: QueryRequest):
     try:
         print(f"\n[{datetime.now().isoformat()}] Requête {request.rag_version} (LLM: {request.llm_model}): {request.question}")
         v10_scoring = {"applicable": False}  # valeur par defaut pour les versions != v10
+        v10_sub_qa = None
 
         # Changer le modèle LLM si différent du défaut
         if hasattr(rag, 'llm_model'):
@@ -835,6 +855,15 @@ async def query_rag(request: QueryRequest):
                 question=request.question,
                 k=request.k
             )
+            # Enrichissement OppChoVec si la question y fait référence
+            opp_docs = []
+            if _is_oppchovec_question(request.question):
+                opp_docs = rag.query_oppchovec(request.question, k=3)
+                if opp_docs:
+                    opp_block = "\n\n[Scores OppChoVec (quanti) par commune]\n" + "\n\n".join(
+                        d["text"] for d in opp_docs
+                    )
+                    context_str = context_str + opp_block
             # Générer une réponse via LLM
             from openai import OpenAI
             llm_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
@@ -844,6 +873,11 @@ async def query_rag(request: QueryRequest):
                     {"role": "system", "content": (
                         "Tu es un assistant spécialisé dans l'analyse de la qualité de vie en Corse. "
                         "Réponds à la question en te basant UNIQUEMENT sur le contexte fourni. "
+                        "Les sources sont étiquetées (quali) pour les verbatims et synthèses de perceptions citoyennes, "
+                        "et (quanti) pour les scores et indicateurs chiffrés (OppChoVec, enquêtes). "
+                        "Pour une question portant sur des indicateurs chiffrés, appuie-toi prioritairement sur les sources (quanti). "
+                        "Pour une question de perception ou d'opinion, priorise les sources (quali). "
+                        "Pour une question mixte, utilise les deux de façon complémentaire. "
                         "Cite des extraits quand c'est pertinent. Sois factuel et nuancé."
                     )},
                     {"role": "user", "content": f"Contexte :\n{context_str}\n\nQuestion : {request.question}"}
@@ -852,17 +886,63 @@ async def query_rag(request: QueryRequest):
                 max_tokens=1500
             )
             answer = llm_response.choices[0].message.content
-            # Convertir les sources RAPTOR en format API
-            retrieval_results = raptor_sources
+            # Fusionner sources RAPTOR + sources OppChoVec
+            opp_sources = [
+                {
+                    "rank": len(raptor_sources) + i,
+                    "source_type": "oppchovec_score",
+                    "commune": d["meta"].get("commune"),
+                    "oppchovec_0_10": d["meta"].get("oppchovec_0_10"),
+                    "opp_0_10": d["meta"].get("opp_0_10"),
+                    "cho_0_10": d["meta"].get("cho_0_10"),
+                    "vec_0_10": d["meta"].get("vec_0_10"),
+                    "extrait": d["text"][:400],
+                }
+                for i, d in enumerate(opp_docs)
+            ]
+            retrieval_results = raptor_sources + opp_sources
 
         elif request.rag_version == "v10":
             # v10 : RAPTOR + Sous-questions + Notation
-            # Le pipeline gère les 4 étapes et retourne (answer, sources, scoring)
-            answer, retrieval_results, v10_scoring = rag.query(
+            # Pré-fetch OppChoVec pour l'injecter dans chaque sous-question si pertinent
+            opp_docs_v10 = []
+            extra_ctx_v10 = ""
+            if _is_oppchovec_question(request.question):
+                opp_docs_v10 = rag.retriever.query_oppchovec(request.question, k=3)
+                if opp_docs_v10:
+                    extra_ctx_v10 = "[Données OppChoVec (quanti)]\n" + "\n\n".join(d["text"] for d in opp_docs_v10)
+            answer, retrieval_results, v10_scoring, v10_sub_qa = rag.query(
                 question=request.question,
                 k=request.k,
                 n_subquestions=request.n_subquestions,
+                extra_context=extra_ctx_v10,
             )
+            # Enrichissement OppChoVec : ajout des scores en sources + complément de réponse
+            if opp_docs_v10:
+                opp_sources = [
+                    {
+                        "rank": len(retrieval_results) + i,
+                        "source_type": "oppchovec_score",
+                        "commune": d["meta"].get("commune"),
+                        "oppchovec_0_10": d["meta"].get("oppchovec_0_10"),
+                        "opp_0_10": d["meta"].get("opp_0_10"),
+                        "cho_0_10": d["meta"].get("cho_0_10"),
+                        "vec_0_10": d["meta"].get("vec_0_10"),
+                        "extrait": d["text"][:400],
+                    }
+                    for i, d in enumerate(opp_docs_v10)
+                ]
+                retrieval_results = retrieval_results + opp_sources
+                # Ajouter un appendice factuel avec les scores (communes seulement, pas la méthodologie)
+                commune_docs = [d for d in opp_docs_v10 if d["meta"].get("oppchovec_0_10") is not None]
+                if commune_docs:
+                    scores_lines = "\n".join(
+                        f"- {d['meta']['commune']} : OppChoVec={d['meta']['oppchovec_0_10']:.2f}/10 "
+                        f"(Opp={d['meta']['opp_0_10']:.2f}, Cho={d['meta']['cho_0_10']:.2f}, "
+                        f"Vec={d['meta']['vec_0_10']:.2f})"
+                        for d in commune_docs
+                    )
+                    answer = answer + f"\n\n**Scores OppChoVec (données chiffrées) :**\n{scores_lines}"
 
         # Convertir les résultats en format API
         if request.rag_version in ("v9", "v10"):
@@ -945,7 +1025,8 @@ async def query_rag(request: QueryRequest):
             context=full_context,
             metadata=metadata,
             rag_version_used=request.rag_version,
-            timestamp=datetime.now().isoformat()
+            timestamp=datetime.now().isoformat(),
+            sub_questions=v10_sub_qa if request.rag_version == "v10" else None
         )
 
         print(f"[{datetime.now().isoformat()}] Réponse générée ({request.rag_version}) avec {len(sources)} sources")
@@ -1062,6 +1143,224 @@ async def browse_summaries():
         return {"total": sum(len(v) for v in ordered.values()), "views": ordered}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/browse/quantitative", tags=["Browse"])
+async def browse_quantitative(
+    commune:   Optional[str] = None,
+    genre:     Optional[str] = None,
+    age_range: Optional[str] = None,
+):
+    """Retourne les données quantitatives du questionnaire (273 répondants)."""
+    import pandas as pd
+    import numpy as np
+
+    CSV_PATH = "./donnees_brutes/sortie_questionnaire_traited.csv"
+    try:
+        df = pd.read_csv(CSV_PATH, index_col=0)
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="Fichier CSV introuvable")
+
+    col_a = "Dans quelle commune résidez-vous ? ( A à S)"
+    col_b = "Dans quelle commune résidez-vous ? (T à Z)"
+    df["_commune"] = (df[col_a].fillna("") + df[col_b].fillna("")).str.strip()
+
+    if commune:   df = df[df["_commune"] == commune]
+    if genre:     df = df[df["genre"] == genre]
+    if age_range: df = df[df["Catégorie age"] == age_range]
+
+    score_map = {
+        "Les services de transports":                                          "Transports",
+        "L'accès à l'éducation":                                               "Education",
+        "La couverture des réseaux téléphoniques":                             "Réseaux",
+        "Les institutions étatiques (niveau de confiance)":                    "Institutions",
+        "Le tourisme (ressenti localement)":                                   "Tourisme",
+        "La sécurité":                                                         "Sécurité",
+        "L'offre de santé ":                                                   "Santé",
+        "Votre situation professionnelle":                                     "Emploi",
+        "Vos revenus":                                                         "Revenus",
+        "La répartition de votre temps entre travail et temps personnel":      "Temps pro/perso",
+        "Votre logement":                                                      "Logement",
+        "L'offre de services autour de chez vous":                             "Services",
+        "Votre accès à la culture":                                            "Culture",
+        "Vous sentez-vous bien entouré ?":                                     "Entourage",
+        "Vous sentez-vous impliqué dans la vie locale de votre commune ?":     "Implication locale",
+    }
+
+    def safe(val):
+        if val is None: return None
+        if isinstance(val, float) and np.isnan(val): return None
+        s = str(val).strip()
+        return None if s in ("", "nan") else val
+
+    rows = []
+    for _, row in df.iterrows():
+        r = {
+            "id":                  safe(row.get("ID")),
+            "commune":             row["_commune"] or None,
+            "genre":               safe(row.get("genre")),
+            "age":                 safe(row.get("Age")),
+            "age_range":           safe(row.get("Catégorie age")),
+            "profession":          safe(row.get("situation socioprofessionnelle")),
+            "dimensions_choisies": safe(row.get(
+                "Pour vous, qu'est-ce qui est important pour votre qualité de vie ? Choisissez 3 images"
+            )),
+            "bonheur":          safe(row.get(
+                "Sur une échelle de 1 à 5, pourriez-vous estimer à quel point vous êtes heureux ces derniers temps ?"
+            )),
+            "qualite_vie":      safe(row.get(
+                "Sur une échelle de 1 à 5, pourriez-vous évaluer votre qualité de vie ces derniers temps ?"
+            )),
+            "confiance_avenir": safe(row.get(
+                "Sur une échelle de 1 à 5, pourriez-vous évaluer votre confiance en l'avenir ?"
+            )),
+            "scores": {short: safe(row.get(long)) for long, short in score_map.items()},
+        }
+        rows.append(r)
+
+    def mean_score(key):
+        vals = [r[key] for r in rows if r[key] is not None]
+        return round(sum(float(v) for v in vals) / len(vals), 2) if vals else None
+
+    stats = {
+        "bonheur_moyen":         mean_score("bonheur"),
+        "qualite_vie_moyenne":   mean_score("qualite_vie"),
+        "confiance_avenir_moy":  mean_score("confiance_avenir"),
+        "communes_disponibles":  sorted(set(r["commune"] for r in rows if r["commune"])),
+        "age_ranges_disponibles": sorted(set(r["age_range"] for r in rows if r["age_range"])),
+    }
+
+    return {"total": len(rows), "stats": stats, "rows": rows}
+
+
+@app.get("/api/browse/quanti_summaries", tags=["Browse"])
+async def browse_quanti_summaries():
+    """Retourne les synthèses RAPTOR quantitatives groupées par vue analytique."""
+    try:
+        import chromadb as _chromadb
+        chroma = _chromadb.PersistentClient(path="./chroma_portrait")
+        col = chroma.get_collection("raptor_quanti_summaries")
+        res = col.get(include=["documents", "metadatas"])
+
+        grouped: Dict[str, list] = {}
+        for doc, meta in zip(res["documents"], res["metadatas"]):
+            view = meta.get("view_name", "unknown")
+            grouped.setdefault(view, []).append({"content": doc, "metadata": meta})
+
+        for view in grouped:
+            grouped[view].sort(key=lambda x: (
+                x["metadata"].get("dim1_value", ""),
+                x["metadata"].get("dim2_value", ""),
+            ))
+
+        view_order = [
+            "age_range*profession", "age_range*commune", "profession*commune",
+            "age_range", "profession", "commune",
+        ]
+        ordered: Dict[str, list] = {v: grouped[v] for v in view_order if v in grouped}
+        ordered.update({v: grouped[v] for v in grouped if v not in view_order})
+
+        return {"total": sum(len(v) for v in ordered.values()), "views": ordered}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/stats", tags=["Browse"])
+async def get_stats():
+    """
+    Retourne les effectifs réels par dimension d'analyse.
+    Toutes les valeurs proviennent des données brutes (ChromaDB + CSV).
+    Rien n'est inventé ni estimé.
+    """
+    from collections import Counter
+    import chromadb as _chromadb
+    import pandas as pd
+
+    result = {}
+
+    # ── 1. Verbatims (portrait_verbatims, ChromaDB) ───────────────────────────
+    try:
+        chroma = _chromadb.PersistentClient(path="./chroma_portrait")
+        col = chroma.get_collection("portrait_verbatims")
+        all_metas = col.get(include=["metadatas"])["metadatas"]
+
+        result["verbatims"] = {
+            "total":          len(all_metas),
+            "par_commune":    dict(Counter(m["nom"]        for m in all_metas if m.get("nom")).most_common()),
+            "par_age_range":  dict(Counter(m["age_range"]  for m in all_metas if m.get("age_range")).most_common()),
+            "par_profession": dict(Counter(m["profession"] for m in all_metas if m.get("profession")).most_common()),
+            "par_dimension":  dict(Counter(m["dimension"]  for m in all_metas if m.get("dimension")).most_common()),
+            "par_genre":      dict(Counter(m["genre"]      for m in all_metas if m.get("genre")).most_common()),
+        }
+    except Exception as e:
+        result["verbatims"] = {"error": str(e)}
+
+    # ── 2. Synthèses RAPTOR (raptor_summaries, ChromaDB) ──────────────────────
+    try:
+        chroma2 = _chromadb.PersistentClient(path="./chroma_portrait")
+        col2 = chroma2.get_collection("raptor_summaries")
+        all_sum_metas = col2.get(include=["metadatas"])["metadatas"]
+
+        par_vue: Dict[str, dict] = {}
+        for m in all_sum_metas:
+            vn = m.get("view_name", "inconnu")
+            nc = int(m.get("num_chunks", 0))
+            if vn not in par_vue:
+                par_vue[vn] = {"total": 0, "chunks_total": 0}
+            par_vue[vn]["total"]        += 1
+            par_vue[vn]["chunks_total"] += nc
+
+        vue_order = [
+            "age_range*profession", "age_range*commune", "profession*commune",
+            "dimension*commune", "dimension*age_range", "dimension*profession",
+            "age_range", "profession", "commune", "dimension",
+        ]
+        par_vue_ordered = {}
+        for vn in vue_order:
+            if vn in par_vue:
+                d = par_vue[vn]
+                par_vue_ordered[vn] = {
+                    "total":        d["total"],
+                    "chunks_moyen": round(d["chunks_total"] / d["total"], 1),
+                }
+        for vn, d in par_vue.items():
+            if vn not in par_vue_ordered:
+                par_vue_ordered[vn] = {
+                    "total":        d["total"],
+                    "chunks_moyen": round(d["chunks_total"] / d["total"], 1),
+                }
+
+        result["raptor"] = {
+            "total":   len(all_sum_metas),
+            "par_vue": par_vue_ordered,
+        }
+    except Exception as e:
+        result["raptor"] = {"error": str(e)}
+
+    # ── 3. Répondants enquête (CSV) ───────────────────────────────────────────
+    CSV_PATH = "./donnees_brutes/sortie_questionnaire_traited.csv"
+    try:
+        df = pd.read_csv(CSV_PATH, index_col=0)
+        col_a = "Dans quelle commune résidez-vous ? ( A à S)"
+        col_b = "Dans quelle commune résidez-vous ? (T à Z)"
+        df["_commune"] = (df[col_a].fillna("") + df[col_b].fillna("")).str.strip()
+
+        age_order = ["15-24", "25-34", "35-49", "50-64", "65+"]
+        age_counts = dict(Counter(df["Catégorie age"].dropna()))
+        age_counts_ordered = {k: age_counts[k] for k in age_order if k in age_counts}
+        age_counts_ordered.update({k: v for k, v in age_counts.items() if k not in age_counts_ordered})
+
+        result["enquete"] = {
+            "total":          len(df),
+            "par_commune":    dict(Counter(df["_commune"].replace("", None).dropna()).most_common()),
+            "par_age_range":  age_counts_ordered,
+            "par_profession": dict(Counter(df["situation socioprofessionnelle"].dropna()).most_common()),
+            "par_genre":      dict(Counter(df["genre"].dropna()).most_common()),
+        }
+    except Exception as e:
+        result["enquete"] = {"error": str(e)}
+
+    return result
 
 
 # === POINT D'ENTRÉE ===

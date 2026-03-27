@@ -101,23 +101,45 @@ def _call_claude(prompt: str, system_prompt: str,
 # ============================================================
 
 _SYSTEM_DECOMPOSER = (
-    "Tu es un expert en analyse de donnees qualitatives sur la qualite de vie. "
-    "Ton role est de decomposer une question complexe en sous-questions ciblees, "
-    "chacune portant sur un aspect distinct de la question initiale. "
+    "Tu es un expert specialise UNIQUEMENT dans l'analyse de donnees sur la qualite de vie en Corse, "
+    "a partir de verbatims citoyens et d'indicateurs territoriaux (scores OppChoVec, enquetes). "
+    "Ton role est de decomposer une question en sous-questions ciblees. "
+    "REGLES ABSOLUES : "
+    "(1) Chaque sous-question doit rester du MEME TYPE que la question initiale : "
+    "si la question est factuelle/chiffree (ex: score, rang, indicateur), les sous-questions le sont aussi — "
+    "ne derives JAMAIS vers du qualitatif/percetions/verbatims pour une question factuelle. "
+    "Si la question est qualitative (ex: que pensent les habitants), les sous-questions portent sur des groupes ou dimensions. "
+    "(2) Ne genere PAS de sous-questions sur des donnees que tu n'as pas (ex: sous-indicateurs detailles, "
+    "ventilation demographique d'un score chiffre si non demandee). "
+    "(3) Reste strictement dans le domaine de la question — ne glisse pas vers d'autres sujets. "
     "Reponds UNIQUEMENT avec un JSON valide contenant une liste de sous-questions."
 )
 
 
-def decompose_question(question: str, n: int = DEFAULT_N_SUBQUESTIONS) -> List[str]:
+def decompose_question(question: str, n: int = DEFAULT_N_SUBQUESTIONS,
+                        extra_context: str = "") -> List[str]:
     """
     Utilise Mistral Large pour decomposer la question en N sous-questions.
     Chaque sous-question porte sur un aspect distinct (groupe demographique,
     dimension thematique, comparaison geographique, etc.).
+    Si extra_context est fourni (ex: donnees OppChoVec), il guide la decomposition
+    pour eviter les sous-questions hors-scope.
     """
+    context_hint = ""
+    if extra_context:
+        context_hint = (
+            f"DONNEES DISPONIBLES (utilise-les pour orienter la decomposition) :\n"
+            f"{extra_context[:1500]}\n\n"
+        )
     prompt = (
+        f"{context_hint}"
         f"Decompose cette question en exactement {n} sous-questions ciblees et complementaires.\n"
-        f"Chaque sous-question doit porter sur un aspect distinct "
-        f"(ex: un groupe demographique, une dimension thematique, une comparaison geographique).\n\n"
+        f"Chaque sous-question doit rester du meme type que la question initiale "
+        f"(factuelle si factuelle, qualitative si qualitative) et porter sur un aspect distinct.\n"
+        f"INTERDIT : deriver vers des dimensions non mentionnees dans la question initiale, "
+        f"inventer des sous-categories demographiques si elles ne sont pas demandees, "
+        f"melanger questions chiffrees et questions de perception.\n"
+        f"IMPORTANT : ne genere QUE des sous-questions auxquelles les donnees disponibles permettent de repondre.\n\n"
         f"Question initiale : {question}\n\n"
         f"Reponds UNIQUEMENT avec ce JSON (sans texte avant ou apres) :\n"
         f'{{\n  "sub_questions": [\n    "sous-question 1",\n    "sous-question 2"\n  ]\n}}'
@@ -156,8 +178,13 @@ def decompose_question(question: str, n: int = DEFAULT_N_SUBQUESTIONS) -> List[s
 # ============================================================
 
 _SYSTEM_ANSWERER = (
-    "Tu es un analyste specialise dans les verbatims citoyens sur la qualite de vie en Corse. "
+    "Tu es un analyste specialise dans l'analyse de la qualite de vie en Corse, "
+    "a partir de verbatims citoyens et d'indicateurs territoriaux chiffres. "
     "Reponds a la sous-question posee en te basant UNIQUEMENT sur le contexte fourni. "
+    "Les sources sont etiquetees (quali) pour les verbatims/syntheses de perceptions, "
+    "et (quanti) pour les scores et indicateurs chiffres. "
+    "Pour une sous-question chiffree, appuie-toi prioritairement sur les sources (quanti). "
+    "Pour une sous-question de perception, priorise les sources (quali). "
     "Sois concis (3-5 phrases max), factuel et cite des extraits courts entre guillemets si pertinent. "
     "Si le contexte ne contient pas d'information pertinente, dis-le clairement en une phrase."
 )
@@ -168,7 +195,7 @@ def answer_subquestion(sub_question: str, context: str) -> str:
     Utilise Claude Haiku pour repondre a une sous-question a partir du contexte RAPTOR.
     Le contexte est tronque a 3000 caracteres pour maitriser les tokens.
     """
-    prompt = f"Contexte (syntheses et verbatims) :\n{context[:3000]}\n\nSous-question : {sub_question}"
+    prompt = f"Contexte (syntheses et verbatims) :\n{context[:5000]}\n\nSous-question : {sub_question}"
     return _call_claude(prompt, _SYSTEM_ANSWERER)
 
 
@@ -316,12 +343,14 @@ class RaptorSubQuestionPipeline:
                  chroma_path: str = CHROMA_PATH,
                  source_collection: str = SOURCE_COLLECTION,
                  summary_collection: str = TARGET_COLLECTION,
-                 n_evidence_chunks: int = 5):
+                 n_evidence_chunks: int = 5,
+                 oppchovec_col=None):
         self.retriever = RaptorRetriever(
             chroma_path=chroma_path,
             source_collection=source_collection,
             summary_collection=summary_collection,
             n_evidence_chunks=n_evidence_chunks,
+            oppchovec_col=oppchovec_col,
         )
         self._initialized = False
 
@@ -332,15 +361,17 @@ class RaptorSubQuestionPipeline:
         print(f"RAG v10 initialise ({self.retriever.summary_count} syntheses RAPTOR disponibles)")
 
     def query(self, question: str, k: int = 5,
-              n_subquestions: int = DEFAULT_N_SUBQUESTIONS) -> Tuple[str, List[Dict], Dict]:
+              n_subquestions: int = DEFAULT_N_SUBQUESTIONS,
+              extra_context: str = "") -> Tuple[str, List[Dict], Dict, List[Dict]]:
         """
         Pipeline complet v10.
 
         Returns:
-            (final_answer, all_sources, scoring)
-            all_sources : liste de dicts avec les champs habituels RAPTOR
-                          + sub_question_idx et sub_question pour tracabilite.
-            scoring     : dict {applicable, dimension, score, justification}
+            (final_answer, all_sources, scoring, sub_qa_pairs)
+            all_sources  : liste de dicts avec les champs habituels RAPTOR
+                           + sub_question_idx et sub_question pour tracabilite.
+            scoring      : dict {applicable, dimension, score, justification}
+            sub_qa_pairs : liste de dicts {idx, question, answer} pour affichage
         """
         if not self._initialized:
             raise RuntimeError("Pipeline non initialise. Appelez init() d'abord.")
@@ -349,7 +380,7 @@ class RaptorSubQuestionPipeline:
 
         # --- Etape 1 : Decomposition ---
         print(f"[v10] Etape 1/4 : Decomposition en {n_subquestions} sous-questions (Mistral Large)...")
-        sub_questions = decompose_question(question, n=n_subquestions)
+        sub_questions = decompose_question(question, n=n_subquestions, extra_context=extra_context)
         print(f"[v10] Sous-questions :")
         for i, sq in enumerate(sub_questions, 1):
             print(f"  {i}. {sq}")
@@ -362,6 +393,8 @@ class RaptorSubQuestionPipeline:
         for i, sq in enumerate(sub_questions, 1):
             print(f"  [{i}/{len(sub_questions)}] {sq[:80]}...")
             context_str, sources = self.retriever.query(sq, k=k)
+            if extra_context:
+                context_str = extra_context + "\n\n" + context_str
             ans = answer_subquestion(sq, context_str)
             sub_qa_pairs.append((sq, ans))
             for s in sources:
@@ -383,7 +416,11 @@ class RaptorSubQuestionPipeline:
             print(f"  -> Notation non applicable ({scoring['justification'][:80]}...)")
 
         print("[v10] Pipeline termine.")
-        return final_answer, all_sources, scoring
+        sub_qa_list = [
+            {"idx": i + 1, "question": sq, "answer": ans}
+            for i, (sq, ans) in enumerate(sub_qa_pairs)
+        ]
+        return final_answer, all_sources, scoring, sub_qa_list
 
     def close(self):
         self.retriever.close()
@@ -408,7 +445,7 @@ def main():
     pipeline = RaptorSubQuestionPipeline()
     pipeline.init()
 
-    answer, sources, scoring = pipeline.query(
+    answer, sources, scoring, sub_qa = pipeline.query(
         question=args.query,
         k=args.k,
         n_subquestions=args.n_subquestions,
