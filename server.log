@@ -1,0 +1,908 @@
+INFO:     Started server process [84636]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+AVERTISSEMENT: RAG v2.1 non disponible (No module named 'llama_index')
+AVERTISSEMENT: LlamaIndex non installé, RAG v7 désactivé (No module named 'llama_index')
+AVERTISSEMENT: LlamaIndex non installé, RAG v8 désactivé (No module named 'llama_index')
+
+============================================================
+DÉMARRAGE DU SERVEUR API MULTI-VERSION
+============================================================
+Host: 0.0.0.0
+Port: 8000
+Documentation: http://localhost:8000/docs
+============================================================
+
+AVERTISSEMENT: RAG v2.1 non disponible (No module named 'llama_index')
+AVERTISSEMENT: LlamaIndex non installé, RAG v7 désactivé (No module named 'llama_index')
+AVERTISSEMENT: LlamaIndex non installé, RAG v8 désactivé (No module named 'llama_index')
+
+============================================================
+INITIALISATION MULTI-VERSION RAG
+============================================================
+
+
+[1/10] RAG v1 désactivé (chroma_txt corrompu)
+
+[2/10] RAG v2 désactivé (chroma_v2 corrompu)
+
+[2.1/9] Initialisation RAG v2.1 (LlamaIndex)...
+AVERTISSEMENT: RAG v2.1 non disponible (llama-index manquant)
+
+[2.2/10] Initialisation RAG v2.2 (Portrait)...
+Chargement du modèle d'embeddings: BAAI/bge-m3
+Chargement du reranker: BAAI/bge-reranker-v2-m3
+ChromaDB portrait contient 690 verbatims
+Chargement des documents depuis ChromaDB portrait...
+OK 690 documents reconstruits depuis ChromaDB
+Initialisation du retriever hybride portrait...
+Initialisation du retriever BM25...
+OK Retriever hybride portrait initialisé
+OK RAG v2.2 initialisé (690 verbatims portrait)
+
+[3-5/10] RAG v3, v4, v5 désactivés (chroma_v2 corrompu)
+
+[6/9] Initialisation RAG v6 (G-Retriever)...
+================================================================================
+INITIALISATION GRAPH-RAG (Neo4j + ChromaDB)
+================================================================================
+Connexion à Neo4j: bolt://localhost:7687
+  Mode: Sans authentification
+[X] Erreur de connexion Neo4j: Couldn't connect to localhost:7687 (resolved to ('[::1]:7687', '127.0.0.1:7687')):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)
+Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)
+AVERTISSEMENT: RAG v6 non disponible: Couldn't connect to localhost:7687 (resolved to ('[::1]:7687', '127.0.0.1:7687')):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)
+Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)
+
+[7/9] Initialisation RAG v7 (LlamaIndex - graphes optionnels)...
+AVERTISSEMENT: RAG v7 non disponible (llama-index manquant)
+
+[8/9] Initialisation RAG v8 (LlamaIndex FULL - graphes OBLIGATOIRES)...
+AVERTISSEMENT: RAG v8 non disponible (llama-index manquant)
+
+[9/11] Initialisation RAG v9 (RAPTOR-lite)...
+RAPTOR Retriever : 532 syntheses + oppchovec (392 docs) + 7 collections extra (portrait_entretiens, enquete_responses, enquete_scores_commune, communes_wiki, communes_equipements, communes_geo, zones_epci)
+OK RAG v9 initialisé (532 synthèses RAPTOR)
+
+[10/11] Initialisation RAG v10 (RAPTOR + Sous-questions)...
+RAPTOR Retriever : 532 syntheses + oppchovec (392 docs) + 7 collections extra (portrait_entretiens, enquete_responses, enquete_scores_commune, communes_wiki, communes_equipements, communes_geo, zones_epci)
+RAG v10 initialise (532 syntheses RAPTOR disponibles)
+OK RAG v10 initialisé
+
+============================================================
+SYSTEMES RAG DISPONIBLES: v2.2, v9, v10
+============================================================
+
+INFO:     127.0.0.1:56709 - "GET /api/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58301 - "GET /frontend HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58301 - "GET /api/versions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58301 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+
+[2026-03-30T13:28:04.113409] Requête v10 (LLM: gpt-3.5-turbo): Quelle est la commune de la Communauté d'Agglomération du Pays Ajaccien (CAPA) avec le meilleur score OppChoVec global ?
+
+[v10] Question : Quelle est la commune de la Communauté d'Agglomération du Pays Ajaccien (CAPA) avec le meilleur score OppChoVec global ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quelle est la commune de la CAPA ayant le score global OppChoVec le plus élevé parmi les 360 communes corses ?
+  2. Quel est le score Opp (opportunités) de la commune de la CAPA avec le meilleur score OppChoVec global ?
+  3. Quel est le rang de la commune de la CAPA avec le meilleur score OppChoVec global parmi les 360 communes corses ?
+  4. Quelle est la valeur du sous-indicateur Opp1 (éducation) pour la commune de la CAPA avec le meilleur score OppChoVec global ?
+  5. Quelle est la valeur du sous-indicateur Opp3 (mobilité) pour la commune de la CAPA avec le meilleur score OppChoVec global ?
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quelle est la commune de la CAPA ayant le score global OppChoVec le plus élevé p...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Vue trouvee: age_range*commune (N=3)
+  [2/5] Quel est le score Opp (opportunités) de la commune de la CAPA avec le meilleur s...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.550 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [3/5] Quel est le rang de la commune de la CAPA avec le meilleur score OppChoVec globa...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Vue trouvee: commune (N=3)
+  [4/5] Quelle est la valeur du sous-indicateur Opp1 (éducation) pour la commune de la C...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Education'}
+  [RAPTOR] Vue trouvee: dimension (N=43)
+  [5/5] Quelle est la valeur du sous-indicateur Opp3 (mobilité) pour la commune de la CA...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Transports'}
+  [RAPTOR] Vue trouvee: dimension (N=27)
+
+[v10] Etape 3/4 : Synthese finale (Mistral Large)...
+
+[v10] Etape 4/4 : Notation de la dimension (Mistral Large)...
+  -> bien-être territorial global (indice OppChoVec) : 4/5
+     Si je devais noter le bien-être territorial global d'Afa selon l'indice OppChoVec, je mettrais 4/5 c...
+[v10] Pipeline termine.
+[2026-03-30T13:28:52.958340] ERREUR (v10): 'commune'
+INFO:     127.0.0.1:52400 - "POST /api/query HTTP/1.1" 500 Internal Server Error
+
+[2026-03-30T13:28:52.974502] Requête v10 (LLM: gpt-3.5-turbo): Quelle est la commune de la CAPA avec le meilleur score Opportunités (Opp) ?
+
+[v10] Question : Quelle est la commune de la CAPA avec le meilleur score Opportunités (Opp) ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quel est le score global Opportunités (Opp) de chaque commune de la CAPA, calculé à partir des 4 sous-indicateurs (Opp1 à Opp4) ?
+  2. Quelle commune de la CAPA obtient le meilleur score sur le sous-indicateur Opp1 (avoir une bonne éducation) ?
+  3. Quelle commune de la CAPA obtient le meilleur score sur le sous-indicateur Opp2 (environnement social diversifié) ?
+  4. Quelle commune de la CAPA obtient le meilleur score sur le sous-indicateur Opp3 (moyens de la mobilité minimale) ?
+  5. Quelle commune de la CAPA obtient le meilleur score sur le sous-indicateur Opp4 (accès aux TIC) ?
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quel est le score global Opportunités (Opp) de chaque commune de la CAPA, calcul...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Vue trouvee: age_range*commune (N=6)
+  [2/5] Quelle commune de la CAPA obtient le meilleur score sur le sous-indicateur Opp1 ...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Education'}
+  [RAPTOR] Vue trouvee: dimension (N=43)
+  [3/5] Quelle commune de la CAPA obtient le meilleur score sur le sous-indicateur Opp2 ...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Environnement'}
+  [RAPTOR] Vue trouvee: dimension (N=134)
+  [4/5] Quelle commune de la CAPA obtient le meilleur score sur le sous-indicateur Opp3 ...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Transports'}
+  [RAPTOR] Vue trouvee: dimension (N=27)
+  [5/5] Quelle commune de la CAPA obtient le meilleur score sur le sous-indicateur Opp4 ...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.559 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+
+[v10] Etape 3/4 : Synthese finale (Mistral Large)...
+
+[v10] Etape 4/4 : Notation de la dimension (Mistral Large)...
+  -> disponibilité et qualité des données sur les opportunités territoriales (Opp) : 1/5
+     Si je devais noter la disponibilité et la qualité des données sur les opportunités territoriales pou...
+[v10] Pipeline termine.
+[2026-03-30T13:29:40.705563] Réponse générée (v10) avec 27 sources
+INFO:     127.0.0.1:52400 - "POST /api/query HTTP/1.1" 200 OK
+
+[2026-03-30T13:29:40.948317] Requête v10 (LLM: gpt-3.5-turbo): Quelle est la commune de la CAPA avec le meilleur score Choix (Cho) ?
+
+[v10] Question : Quelle est la commune de la CAPA avec le meilleur score Choix (Cho) ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+  [WARN] Parsing JSON decomposition echoue (Expecting ',' delimiter: line 8 column 1 (char 653)), extraction manuelle...
+[v10] Sous-questions :
+  1. "Quelle est la commune de la CAPA ayant le score Choix (Cho) le plus élevé en valeur absolue ?",
+  2. "Quel est le rang de chaque commune de la CAPA selon leur score Choix (Cho) ?",
+  3. "Quelle est la commune de la CAPA avec le meilleur score dans la dimension *Opportunités* (Opp) composant le score Choix (Cho) ?",
+  4. "Quelle est la commune de la CAPA avec le meilleur sous-score *Opp1 — Avoir une bonne éducation* parmi les composantes du score Choix (Cho) ?",
+  5. "Quelle est la commune de la CAPA avec le meilleur sous-score *Opp3 — Avoir les moyens de la mobilité minimale* parmi les composantes du score Choix (Cho) ?"
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] "Quelle est la commune de la CAPA ayant le score Choix (Cho) le plus élevé en va...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.563 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [2/5] "Quel est le rang de chaque commune de la CAPA selon leur score Choix (Cho) ?",...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.557 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [3/5] "Quelle est la commune de la CAPA avec le meilleur score dans la dimension *Oppo...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.552 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [4/5] "Quelle est la commune de la CAPA avec le meilleur sous-score *Opp1 — Avoir une ...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Education'}
+  [RAPTOR] Vue trouvee: dimension (N=43)
+  [5/5] "Quelle est la commune de la CAPA avec le meilleur sous-score *Opp3 — Avoir les ...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Transports'}
+  [RAPTOR] Vue trouvee: dimension (N=27)
+
+[v10] Etape 3/4 : Synthese finale (Mistral Large)...
+
+[v10] Etape 4/4 : Notation de la dimension (Mistral Large)...
+  -> accessibilité aux services et logement (score Choix) : 2/5
+     Si je devais noter l'accessibilité aux services et au logement (score Choix) pour les communes de la...
+[v10] Pipeline termine.
+[2026-03-30T13:30:37.390502] ERREUR (v10): 'commune'
+INFO:     127.0.0.1:52400 - "POST /api/query HTTP/1.1" 500 Internal Server Error
+
+[2026-03-30T13:30:37.568512] Requête v10 (LLM: gpt-3.5-turbo): Quelle est la commune de la CAPA avec le meilleur score Vécu (Vec) ?
+
+[v10] Question : Quelle est la commune de la CAPA avec le meilleur score Vécu (Vec) ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quelle est la valeur du score Vécu (Vec) pour chaque commune de la CAPA dans l'indicateur OppChoVec ?
+  2. Quel est le rang de chaque commune de la CAPA selon leur score Vécu (Vec) dans l'indicateur OppChoVec ?
+  3. Quelle commune de la CAPA présente le score Vécu (Vec) le plus élevé parmi les 360 communes corses ?
+  4. Quelle est la moyenne du score Vécu (Vec) des communes de la CAPA comparée à la moyenne des communes corses ?
+  5. Quelles sont les trois communes de la CAPA ayant les scores Vécu (Vec) les plus élevés ?
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quelle est la valeur du score Vécu (Vec) pour chaque commune de la CAPA dans l'i...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Vue trouvee: profession*commune (N=3)
+  [2/5] Quel est le rang de chaque commune de la CAPA selon leur score Vécu (Vec) dans l...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.556 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [3/5] Quelle commune de la CAPA présente le score Vécu (Vec) le plus élevé parmi les 3...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Vue trouvee: profession*commune (N=3)
+  [4/5] Quelle est la moyenne du score Vécu (Vec) des communes de la CAPA comparée à la ...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Vue trouvee: profession*commune (N=3)
+  [5/5] Quelles sont les trois communes de la CAPA ayant les scores Vécu (Vec) les plus ...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Vue trouvee: profession*commune (N=3)
+
+[v10] Etape 3/4 : Synthese finale (Mistral Large)...
+
+[v10] Etape 4/4 : Notation de la dimension (Mistral Large)...
+  -> qualite_percue_de_vie_territoriale : 2/5
+     Si je devais noter la qualité perçue de vie territoriale (score Vec) pour la CAPA, je mettrais 2/5 c...
+[v10] Pipeline termine.
+[2026-03-30T13:31:25.537556] Réponse générée (v10) avec 19 sources
+INFO:     127.0.0.1:52400 - "POST /api/query HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54129 - "GET /api/stats HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49671 - "GET /frontend HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49671 - "GET /api/versions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49671 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+
+[2026-03-30T13:41:57.377792] Requête v10 (LLM: gpt-3.5-turbo): Quelle est la commune de la Communauté d'Agglomération du Pays Ajaccien (CAPA) avec le meilleur score OppChoVec global ?
+
+[v10] Question : Quelle est la commune de la Communauté d'Agglomération du Pays Ajaccien (CAPA) avec le meilleur score OppChoVec global ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quelle est la commune de la CAPA ayant le score global OppChoVec le plus élevé parmi les 360 communes corses ?
+  2. Quelle est la commune de la CAPA avec le meilleur score dans la dimension *Opportunités* (Opp) de l'indicateur OppChoVec ?
+  3. Quelle est la commune de la CAPA affichant le score le plus élevé pour l'indicateur *Opp1 — Avoir une bonne éducation* ?
+  4. Quelle est la commune de la CAPA avec le score maximal pour l'indicateur *Opp2 — Être inséré dans un environnement social diversifié* ?
+  5. Quelle est la commune de la CAPA présentant le meilleur score combiné pour les indicateurs *Opp3 — Avoir les moyens de la mobilité minimale* et *Opp4 — Avoir accès aux TIC* ?
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quelle est la commune de la CAPA ayant le score global OppChoVec le plus élevé p...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Vue trouvee: age_range*commune (N=3)
+  [2/5] Quelle est la commune de la CAPA avec le meilleur score dans la dimension *Oppor...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.565 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [3/5] Quelle est la commune de la CAPA affichant le score le plus élevé pour l'indicat...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Education'}
+  [RAPTOR] Vue trouvee: dimension (N=43)
+  [4/5] Quelle est la commune de la CAPA avec le score maximal pour l'indicateur *Opp2 —...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Environnement'}
+  [RAPTOR] Vue trouvee: dimension (N=134)
+  [5/5] Quelle est la commune de la CAPA présentant le meilleur score combiné pour les i...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Transports'}
+  [RAPTOR] Vue trouvee: dimension (N=27)
+
+[v10] Etape 3/4 : Synthese finale (Mistral Large)...
+
+[v10] Etape 4/4 : Notation de la dimension (Mistral Large)...
+  -> bien-être multidimensionnel global (OppChoVec) : 4/5
+     Si je devais noter le bien-être multidimensionnel global (OppChoVec) pour la commune d'Afa, je mettr...
+[v10] Pipeline termine.
+[2026-03-30T13:42:43.300288] ERREUR (v10): 'commune'
+INFO:     127.0.0.1:50854 - "POST /api/query HTTP/1.1" 500 Internal Server Error
+
+[2026-03-30T13:42:43.315882] Requête v10 (LLM: gpt-3.5-turbo): Quelle est la commune de la CAPA avec le meilleur score Opportunités (Opp) ?
+
+[v10] Question : Quelle est la commune de la CAPA avec le meilleur score Opportunités (Opp) ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quel est le score global Opportunités (Opp) de chaque commune de la CAPA, calculé à partir des 4 sous-indicateurs (Opp1 à Opp4) ?
+  2. Quelle est la commune de la CAPA avec le score le plus élevé sur le sous-indicateur Opp1 (avoir une bonne éducation) ?
+  3. Quelle est la commune de la CAPA avec le score le plus élevé sur le sous-indicateur Opp2 (environnement social diversifié) ?
+  4. Quelle est la commune de la CAPA avec le score le plus élevé sur le sous-indicateur Opp3 (mobilité minimale) ?
+  5. Quelle est la commune de la CAPA avec le score le plus élevé sur le sous-indicateur Opp4 (accès aux TIC) ?
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quel est le score global Opportunités (Opp) de chaque commune de la CAPA, calcul...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Vue trouvee: age_range*commune (N=6)
+  [2/5] Quelle est la commune de la CAPA avec le score le plus élevé sur le sous-indicat...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Education'}
+  [RAPTOR] Vue trouvee: dimension (N=43)
+  [3/5] Quelle est la commune de la CAPA avec le score le plus élevé sur le sous-indicat...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Environnement'}
+  [RAPTOR] Vue trouvee: dimension (N=134)
+  [4/5] Quelle est la commune de la CAPA avec le score le plus élevé sur le sous-indicat...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Transports'}
+  [RAPTOR] Vue trouvee: dimension (N=27)
+  [5/5] Quelle est la commune de la CAPA avec le score le plus élevé sur le sous-indicat...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.569 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+
+[v10] Etape 3/4 : Synthese finale (Mistral Large)...
+
+[v10] Etape 4/4 : Notation de la dimension (Mistral Large)...
+  -> accessibilité et qualité des opportunités socio-économiques (score Opportunités - Opp) : 2/5
+     Si je devais noter l'accessibilité et la qualité des opportunités socio-économiques pour les commune...
+[v10] Pipeline termine.
+[2026-03-30T13:43:28.780091] Réponse générée (v10) avec 27 sources
+INFO:     127.0.0.1:50854 - "POST /api/query HTTP/1.1" 200 OK
+
+[2026-03-30T13:43:28.982863] Requête v10 (LLM: gpt-3.5-turbo): Quelle est la commune de la CAPA avec le meilleur score Choix (Cho) ?
+
+[v10] Question : Quelle est la commune de la CAPA avec le meilleur score Choix (Cho) ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quelle est la commune de la CAPA ayant le score Choix (Cho) le plus élevé dans la dimension *Opportunités (Opp)* de l'indicateur OppChoVec ?
+  2. Quelle est la commune de la CAPA avec le meilleur sous-score *Opp1 (Avoir une bonne éducation)* dans la dimension Opportunités ?
+  3. Quelle est la commune de la CAPA avec le meilleur sous-score *Opp2 (Être inséré dans un environnement social diversifié)* dans la dimension Opportunités ?
+  4. Quelle est la commune de la CAPA avec le meilleur sous-score *Opp3 (Avoir les moyens de la mobilité minimale)* dans la dimension Opportunités ?
+  5. Quelle est la commune de la CAPA avec le meilleur sous-score *Opp4 (Avoir accès aux TIC)* dans la dimension Opportunités ?
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quelle est la commune de la CAPA ayant le score Choix (Cho) le plus élevé dans l...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.571 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [2/5] Quelle est la commune de la CAPA avec le meilleur sous-score *Opp1 (Avoir une bo...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Education'}
+  [RAPTOR] Vue trouvee: dimension (N=43)
+  [3/5] Quelle est la commune de la CAPA avec le meilleur sous-score *Opp2 (Être inséré ...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Environnement'}
+  [RAPTOR] Vue trouvee: dimension (N=134)
+  [4/5] Quelle est la commune de la CAPA avec le meilleur sous-score *Opp3 (Avoir les mo...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Transports'}
+  [RAPTOR] Vue trouvee: dimension (N=27)
+  [5/5] Quelle est la commune de la CAPA avec le meilleur sous-score *Opp4 (Avoir accès ...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Vue trouvee: dimension*age_range (N=8)
+
+[v10] Etape 3/4 : Synthese finale (Mistral Large)...
+
+[v10] Etape 4/4 : Notation de la dimension (Mistral Large)...
+  -> accessibilite et qualite des opportunites locales (indicateur OppChoVec) : 2/5
+     Si je devais noter l'accessibilité et la qualité des opportunités locales (éducation, diversité soci...
+[v10] Pipeline termine.
+[2026-03-30T13:44:11.818171] ERREUR (v10): 'commune'
+INFO:     127.0.0.1:50854 - "POST /api/query HTTP/1.1" 500 Internal Server Error
+
+[2026-03-30T13:44:11.956107] Requête v10 (LLM: gpt-3.5-turbo): Quelle est la commune de la CAPA avec le meilleur score Vécu (Vec) ?
+
+[v10] Question : Quelle est la commune de la CAPA avec le meilleur score Vécu (Vec) ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quel est le score Vec (Vécu) de chaque commune de la CAPA dans la dimension globale de l'indicateur OppChoVec ?
+  2. Quelle commune de la CAPA présente le score Vec le plus élevé pour la sous-dimension 'Vécu lié à la santé et au bien-être subjectif' ?
+  3. Quelle est la position (rang) de chaque commune de la CAPA selon leur score Vec dans l'indicateur OppChoVec ?
+  4. Quelle commune de la CAPA affiche le meilleur score Vec pour la sous-dimension 'Vécu lié à la qualité de l'environnement local' ?
+  5. Parmi les communes de la CAPA, laquelle enregistre le score Vec le plus élevé pour la sous-dimension 'Vécu lié à la satisfaction dans les relations sociales' ?
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quel est le score Vec (Vécu) de chaque commune de la CAPA dans la dimension glob...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.555 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [2/5] Quelle commune de la CAPA présente le score Vec le plus élevé pour la sous-dimen...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Santé'}
+  [RAPTOR] Vue trouvee: dimension (N=111)
+  [3/5] Quelle est la position (rang) de chaque commune de la CAPA selon leur score Vec ...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.557 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [4/5] Quelle commune de la CAPA affiche le meilleur score Vec pour la sous-dimension '...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Environnement'}
+  [RAPTOR] Vue trouvee: dimension (N=134)
+  [5/5] Parmi les communes de la CAPA, laquelle enregistre le score Vec le plus élevé po...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Communauté et relations'}
+  [RAPTOR] Vue trouvee: dimension (N=53)
+
+[v10] Etape 3/4 : Synthese finale (Mistral Large)...
+
+[v10] Etape 4/4 : Notation de la dimension (Mistral Large)...
+  -> Notation non applicable (Les données disponibles sont totalement absentes ou hors-sujet pour évaluer le s...)
+[v10] Pipeline termine.
+[2026-03-30T13:45:06.584890] Réponse générée (v10) avec 21 sources
+INFO:     127.0.0.1:50854 - "POST /api/query HTTP/1.1" 200 OK
+
+[2026-03-30T13:52:21.835524] Requête v10 (LLM: gpt-3.5-turbo): Quelle est la commune de la CAPA avec le meilleur score OppChoVec global ?
+
+[v10] Question : Quelle est la commune de la CAPA avec le meilleur score OppChoVec global ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quel est le score OppChoVec global de chaque commune de la CAPA (Communauté d'Agglomération du Pays Ajaccien) ?
+  2. Quelle commune de la CAPA affiche le score OppChoVec global le plus élevé ?
+  3. Quel est le rang de chaque commune de la CAPA dans le classement des 360 communes corses selon le score OppChoVec global ?
+  4. Quelle est la valeur de la dimension 'Opportunités' (Opp) pour la commune de la CAPA ayant le meilleur score OppChoVec global ?
+  5. Quelles sont les contributions respectives des quatre sous-indicateurs (Opp1, Opp2, Opp3, Opp4) au score OppChoVec global de la commune de la CAPA la mieux classée ?
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quel est le score OppChoVec global de chaque commune de la CAPA (Communauté d'Ag...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Communauté et relations'}
+  [RAPTOR] Vue trouvee: dimension (N=53)
+  [2/5] Quelle commune de la CAPA affiche le score OppChoVec global le plus élevé ?...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.590 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [3/5] Quel est le rang de chaque commune de la CAPA dans le classement des 360 commune...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Vue trouvee: profession*commune (N=3)
+  [4/5] Quelle est la valeur de la dimension 'Opportunités' (Opp) pour la commune de la ...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Vue trouvee: dimension*profession (N=10)
+  [5/5] Quelles sont les contributions respectives des quatre sous-indicateurs (Opp1, Op...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Vue trouvee: profession*commune (N=3)
+
+[v10] Etape 3/4 : Synthese finale (Mistral Large)...
+
+[v10] Etape 4/4 : Notation de la dimension (Mistral Large)...
+  -> qualite_de_vie_globale_communale : 3/5
+     Si je devais noter la qualité de vie globale communale basée sur l'indice OppChoVec, je mettrais 3/5...
+[v10] Pipeline termine.
+[2026-03-30T13:53:15.406617] ERREUR (v10): 'commune'
+INFO:     127.0.0.1:55270 - "POST /api/query HTTP/1.1" 500 Internal Server Error
+
+[2026-03-30T13:53:20.640840] Requête v10 (LLM: gpt-3.5-turbo): Quelle est la commune de la CAPA avec le meilleur score OppChoVec global ?
+
+[v10] Question : Quelle est la commune de la CAPA avec le meilleur score OppChoVec global ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quelle est la commune de la CAPA ayant le score global OppChoVec le plus élevé en valeur absolue ?
+  2. Quel est le rang de chaque commune de la CAPA dans le classement OppChoVec global parmi les 360 communes corses ?
+  3. Quelle est la commune de la CAPA avec le meilleur score dans la dimension 'Opportunités' (Opp) de l'indice OppChoVec ?
+  4. Quelle est la commune de la CAPA présentant le score le plus élevé pour le sous-indicateur 'Avoir une bonne éducation' (Opp1) ?
+  5. Quelle est la commune de la CAPA avec le score le plus haut pour le sous-indicateur 'Avoir les moyens de la mobilité minimale' (Opp3) ?
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quelle est la commune de la CAPA ayant le score global OppChoVec le plus élevé e...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.588 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [2/5] Quel est le rang de chaque commune de la CAPA dans le classement OppChoVec globa...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Vue trouvee: profession*commune (N=3)
+  [3/5] Quelle est la commune de la CAPA avec le meilleur score dans la dimension 'Oppor...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.571 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [4/5] Quelle est la commune de la CAPA présentant le score le plus élevé pour le sous-...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Education'}
+  [RAPTOR] Vue trouvee: dimension (N=43)
+  [5/5] Quelle est la commune de la CAPA avec le score le plus haut pour le sous-indicat...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Transports'}
+  [RAPTOR] Vue trouvee: dimension (N=27)
+
+[v10] Etape 3/4 : Synthese finale (Mistral Large)...
+
+[v10] Etape 4/4 : Notation de la dimension (Mistral Large)...
+  -> qualite_de_vie_globale_communale : 4/5
+     Si je devais noter la qualité de vie globale communale dans la CAPA, je mettrais 4/5 car Ville-di-Pi...
+[v10] Pipeline termine.
+[2026-03-30T13:53:59.493455] ERREUR (v10): 'commune'
+INFO:     127.0.0.1:55280 - "POST /api/query HTTP/1.1" 500 Internal Server Error
+
+[2026-03-30T14:14:04.663388] Requête v10 (LLM: gpt-3.5-turbo): Quelle est la commune de la CAPA avec le meilleur score OppChoVec global ?
+
+[v10] Question : Quelle est la commune de la CAPA avec le meilleur score OppChoVec global ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quel est le score OppChoVec global de chaque commune de la CAPA ?
+  2. Parmi les communes de la CAPA, quelle est celle qui obtient le score OppChoVec global le plus élevé ?
+  3. Quelle est la valeur du sous-indicateur Opp1 (éducation) pour la commune de la CAPA avec le meilleur score OppChoVec global ?
+  4. Quelle est la valeur du sous-indicateur Opp2 (diversité sociale) pour la commune de la CAPA avec le meilleur score OppChoVec global ?
+  5. Quelle est la valeur du sous-indicateur Opp3 (mobilité) pour la commune de la CAPA avec le meilleur score OppChoVec global ?
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quel est le score OppChoVec global de chaque commune de la CAPA ?...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.566 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [2/5] Parmi les communes de la CAPA, quelle est celle qui obtient le score OppChoVec g...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.572 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [3/5] Quelle est la valeur du sous-indicateur Opp1 (éducation) pour la commune de la C...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Education'}
+  [RAPTOR] Vue trouvee: dimension (N=43)
+  [4/5] Quelle est la valeur du sous-indicateur Opp2 (diversité sociale) pour la commune...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Vue trouvee: age_range*commune (N=6)
+  [5/5] Quelle est la valeur du sous-indicateur Opp3 (mobilité) pour la commune de la CA...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Transports'}
+  [RAPTOR] Vue trouvee: dimension (N=27)
+
+[v10] Etape 3/4 : Synthese finale (Mistral Large)...
+
+[v10] Etape 4/4 : Notation de la dimension (Mistral Large)...
+  -> qualite de vie globale des communes de la CAPA (score OppChoVec) : 4/5
+     Si je devais noter la qualité de vie globale des communes de la CAPA basée sur le score OppChoVec, j...
+[v10] Pipeline termine.
+[2026-03-30T14:14:46.743677] ERREUR (v10): 'commune'
+INFO:     127.0.0.1:51346 - "POST /api/query HTTP/1.1" 500 Internal Server Error
+
+[2026-03-30T14:47:40.484448] Requête v10 (LLM: gpt-3.5-turbo): Quelle est la commune de la CAPA avec le meilleur score OppChoVec global ?
+
+[v10] Question : Quelle est la commune de la CAPA avec le meilleur score OppChoVec global ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quel est le score OppChoVec global de chaque commune de la CAPA ?
+  2. Quelle commune de la CAPA obtient le score le plus élevé sur la dimension *Opportunités* (Opp) de l'indicateur OppChoVec ?
+  3. Quelle est la commune de la CAPA avec le meilleur score sur le sous-indicateur *Opp1 — Avoir une bonne éducation* ?
+  4. Quelle est la commune de la CAPA avec le meilleur score sur le sous-indicateur *Opp2 — Être inséré dans un environnement social diversifié* ?
+  5. Quelle est la commune de la CAPA avec le meilleur score sur le sous-indicateur *Opp3 — Avoir les moyens de la mobilité minimale* ?
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quel est le score OppChoVec global de chaque commune de la CAPA ?...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.566 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [2/5] Quelle commune de la CAPA obtient le score le plus élevé sur la dimension *Oppor...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.558 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [3/5] Quelle est la commune de la CAPA avec le meilleur score sur le sous-indicateur *...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Education'}
+  [RAPTOR] Vue trouvee: dimension (N=43)
+  [4/5] Quelle est la commune de la CAPA avec le meilleur score sur le sous-indicateur *...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Environnement'}
+  [RAPTOR] Vue trouvee: dimension (N=134)
+  [5/5] Quelle est la commune de la CAPA avec le meilleur score sur le sous-indicateur *...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Transports'}
+  [RAPTOR] Vue trouvee: dimension (N=27)
+
+[v10] Etape 3/4 : Synthese finale (Mistral Large)...
+
+[v10] Etape 4/4 : Notation de la dimension (Mistral Large)...
+  -> qualite_de_vie_globale_communale : 3/5
+     Si je devais noter la qualité de vie globale communale basée sur l'indice OppChoVec, je mettrais 3/5...
+[v10] Pipeline termine.
+[2026-03-30T14:48:21.189414] ERREUR (v10): 'commune'
+INFO:     127.0.0.1:50534 - "POST /api/query HTTP/1.1" 500 Internal Server Error
+
+[2026-03-30T14:48:49.475423] Requête v10 (LLM: gpt-3.5-turbo): Quelle est la commune de la CAPA avec le meilleur score OppChoVec global ?
+
+[v10] Question : Quelle est la commune de la CAPA avec le meilleur score OppChoVec global ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quel est le score OppChoVec global de chaque commune de la CAPA ?
+  2. Quelle commune de la CAPA obtient le score le plus élevé sur la dimension 'Opportunités' (Opp) de l'indicateur OppChoVec ?
+  3. Quelle est la commune de la CAPA avec le meilleur score sur le sous-indicateur 'Avoir une bonne éducation' (Opp1) ?
+  4. Quelle commune de la CAPA affiche le score le plus élevé pour le sous-indicateur 'Être inséré dans un environnement social diversifié' (Opp2) ?
+  5. Quelle commune de la CAPA présente le score maximal sur la combinaison des sous-indicateurs 'Avoir les moyens de la mobilité minimale' (Opp3) et 'Avoir accès aux TIC' (Opp4) ?
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quel est le score OppChoVec global de chaque commune de la CAPA ?...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.566 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [2/5] Quelle commune de la CAPA obtient le score le plus élevé sur la dimension 'Oppor...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.559 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [3/5] Quelle est la commune de la CAPA avec le meilleur score sur le sous-indicateur '...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Education'}
+  [RAPTOR] Vue trouvee: dimension (N=43)
+  [4/5] Quelle commune de la CAPA affiche le score le plus élevé pour le sous-indicateur...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Environnement'}
+  [RAPTOR] Vue trouvee: dimension (N=134)
+  [5/5] Quelle commune de la CAPA présente le score maximal sur la combinaison des sous-...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Transports'}
+  [RAPTOR] Vue trouvee: dimension (N=27)
+
+[v10] Etape 3/4 : Synthese finale (Mistral Large)...
+
+[v10] Etape 4/4 : Notation de la dimension (Mistral Large)...
+  -> qualite_de_vie_globale_communale_OppChoVec : 3/5
+     Si je devais noter la qualité de vie globale communale basée sur l'indice OppChoVec, je mettrais 3/5...
+[v10] Pipeline termine.
+[2026-03-30T14:49:36.084420] ERREUR (v10): 'commune'
+INFO:     127.0.0.1:50569 - "POST /api/query HTTP/1.1" 500 Internal Server Error
+
+[2026-03-30T14:58:29.344099] Requête v10 (LLM: gpt-3.5-turbo): Quelle est la commune de la CAPA avec le meilleur score OppChoVec global ?
+
+[v10] Question : Quelle est la commune de la CAPA avec le meilleur score OppChoVec global ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quel est le score OppChoVec global de chaque commune de la CAPA ?
+  2. Quel est le rang de chaque commune de la CAPA selon leur score OppChoVec global ?
+  3. Quelle est la commune de la CAPA ayant le score le plus élevé pour la dimension *Opportunités* (Opp) de l'indicateur OppChoVec ?
+  4. Quelle est la valeur du score OppChoVec global de la commune de la CAPA en tête du classement ?
+  5. Quelles sont les trois communes de la CAPA avec les meilleurs scores OppChoVec globaux, classées par ordre décroissant ?
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quel est le score OppChoVec global de chaque commune de la CAPA ?...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.566 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [2/5] Quel est le rang de chaque commune de la CAPA selon leur score OppChoVec global ...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.576 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [3/5] Quelle est la commune de la CAPA ayant le score le plus élevé pour la dimension ...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.571 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [4/5] Quelle est la valeur du score OppChoVec global de la commune de la CAPA en tête ...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Vue trouvee: age_range*commune (N=6)
+  [5/5] Quelles sont les trois communes de la CAPA avec les meilleurs scores OppChoVec g...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.553 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+
+[v10] Etape 3/4 : Synthese finale (Mistral Large)...
+
+[v10] Etape 4/4 : Notation de la dimension (Mistral Large)...
+  -> qualite_de_vie_globale_communale : 4/5
+     Si je devais noter la qualité de vie globale communale dans la CAPA, je mettrais 4/5 car les données...
+[v10] Pipeline termine.
+[2026-03-30T15:14:56.675156] ERREUR (v10): 'commune'
+INFO:     127.0.0.1:64468 - "POST /api/query HTTP/1.1" 500 Internal Server Error
+
+[2026-03-30T15:18:55.949381] Requête v10 (LLM: gpt-3.5-turbo): Quelle est la commune de la CAPA avec le meilleur score OppChoVec global ?
+
+[v10] Question : Quelle est la commune de la CAPA avec le meilleur score OppChoVec global ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quelle est la commune de la CAPA ayant le score global OppChoVec le plus élevé en valeur absolue ?
+  2. Quel est le rang de chaque commune de la CAPA dans le classement OppChoVec parmi les 360 communes corses ?
+  3. Quelle est la commune de la CAPA avec le meilleur score dans la dimension 'Opportunités' (Opp) de l'indice OppChoVec ?
+  4. Quelle est la commune de la CAPA avec le score le plus élevé pour l'indicateur 'Opp1 — Avoir une bonne éducation' ?
+  5. Quelle est la commune de la CAPA avec le score le plus élevé pour l'indicateur 'Opp3 — Avoir les moyens de la mobilité minimale' ?
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quelle est la commune de la CAPA ayant le score global OppChoVec le plus élevé e...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.588 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [2/5] Quel est le rang de chaque commune de la CAPA dans le classement OppChoVec parmi...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Vue trouvee: profession*commune (N=3)
+  [3/5] Quelle est la commune de la CAPA avec le meilleur score dans la dimension 'Oppor...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.571 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [4/5] Quelle est la commune de la CAPA avec le score le plus élevé pour l'indicateur '...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Education'}
+  [RAPTOR] Vue trouvee: dimension (N=43)
+  [5/5] Quelle est la commune de la CAPA avec le score le plus élevé pour l'indicateur '...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Transports'}
+  [RAPTOR] Vue trouvee: dimension (N=27)
+
+[v10] Etape 3/4 : Synthese finale (Mistral Large)...
+
+[v10] Etape 4/4 : Notation de la dimension (Mistral Large)...
+  -> qualite_de_vie_globale_territoriale : 4/5
+     Si je devais noter la qualité de vie globale territoriale (via l'indice OppChoVec) pour Ville-di-Pie...
+[v10] Pipeline termine.
+[2026-03-30T15:19:42.850096] ERREUR (v10): 'commune'
+INFO:     127.0.0.1:57757 - "POST /api/query HTTP/1.1" 500 Internal Server Error
+
+[2026-03-30T20:45:17.022064] Requête v10 (LLM: gpt-3.5-turbo): Quelle est la commune de la CAPA avec le meilleur score OppChoVec global ?
+
+[v10] Question : Quelle est la commune de la CAPA avec le meilleur score OppChoVec global ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quel est le score OppChoVec global de chaque commune de la CAPA ?
+  2. Quelle commune de la CAPA obtient le rang le plus élevé en score OppChoVec global parmi les 360 communes corses ?
+  3. Quel est le score de la dimension 'Opportunités' (Opp) pour la commune de la CAPA avec le meilleur score OppChoVec global ?
+  4. Quelle est la valeur de l'indicateur Opp1 (avoir une bonne éducation) pour la commune de la CAPA avec le meilleur score OppChoVec global ?
+  5. Quelle est la valeur de l'indicateur Opp4 (avoir accès aux TIC) pour la commune de la CAPA avec le meilleur score OppChoVec global ?
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quel est le score OppChoVec global de chaque commune de la CAPA ?...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.566 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [2/5] Quelle commune de la CAPA obtient le rang le plus élevé en score OppChoVec globa...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Vue trouvee: age_range*commune (N=3)
+  [3/5] Quel est le score de la dimension 'Opportunités' (Opp) pour la commune de la CAP...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.562 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [4/5] Quelle est la valeur de l'indicateur Opp1 (avoir une bonne éducation) pour la co...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Education'}
+  [RAPTOR] Vue trouvee: dimension (N=43)
+  [5/5] Quelle est la valeur de l'indicateur Opp4 (avoir accès aux TIC) pour la commune ...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Vue trouvee: age_range*commune (N=6)
+
+[v10] Etape 3/4 : Synthese finale (Mistral Large)...
+
+[v10] Etape 4/4 : Notation de la dimension (Mistral Large)...
+  -> qualité de vie globale (score OppChoVec) : 4/5
+     Si je devais noter la qualité de vie globale des communes de la CAPA via le score OppChoVec, je mett...
+[v10] Pipeline termine.
+[2026-03-30T20:45:52.916423] ERREUR (v10): 'commune'
+INFO:     127.0.0.1:60056 - "POST /api/query HTTP/1.1" 500 Internal Server Error
+
+[2026-03-30T20:50:05.112746] Requête v10 (LLM: gpt-3.5-turbo): Quelle est la commune de la CAPA avec le meilleur score OppChoVec global ?
+
+[v10] Question : Quelle est la commune de la CAPA avec le meilleur score OppChoVec global ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quel est le score OppChoVec global de chaque commune de la CAPA ?
+  2. Quel est le rang de chaque commune de la CAPA selon leur score OppChoVec global ?
+  3. Quelle est la commune de la CAPA ayant le score le plus élevé pour la dimension *Opportunités* (Opp) de l'indicateur OppChoVec ?
+  4. Quelle est la commune de la CAPA avec le meilleur score pour le sous-indicateur *Opp1 — Avoir une bonne éducation* ?
+  5. Quelle est la commune de la CAPA avec le meilleur score pour le sous-indicateur *Opp3 — Avoir les moyens de la mobilité minimale* ?
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quel est le score OppChoVec global de chaque commune de la CAPA ?...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.566 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [2/5] Quel est le rang de chaque commune de la CAPA selon leur score OppChoVec global ...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.576 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [3/5] Quelle est la commune de la CAPA ayant le score le plus élevé pour la dimension ...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.571 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [4/5] Quelle est la commune de la CAPA avec le meilleur score pour le sous-indicateur ...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Education'}
+  [RAPTOR] Vue trouvee: dimension (N=43)
+  [5/5] Quelle est la commune de la CAPA avec le meilleur score pour le sous-indicateur ...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Transports'}
+  [RAPTOR] Vue trouvee: dimension (N=27)
+
+[v10] Etape 3/4 : Synthese finale (Mistral Large)...
+
+[v10] Etape 4/4 : Notation de la dimension (Mistral Large)...
+  -> qualite de vie globale (score OppChoVec) : 3/5
+     Si je devais noter la qualité de vie globale des communes de la CAPA via le score OppChoVec, je mett...
+[v10] Pipeline termine.
+[2026-03-30T20:50:41.377157] ERREUR (v10): 'commune'
+INFO:     127.0.0.1:54367 - "POST /api/query HTTP/1.1" 500 Internal Server Error
+
+[2026-03-30T20:55:06.960116] Requête v10 (LLM: gpt-3.5-turbo): Quelle est la commune de la CAPA avec le meilleur score OppChoVec global ?
+
+[v10] Question : Quelle est la commune de la CAPA avec le meilleur score OppChoVec global ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quel est le score OppChoVec global de chaque commune de la CAPA ?
+  2. Quelle commune de la CAPA obtient le rang le plus élevé selon le score OppChoVec global ?
+  3. Quelle est la valeur du score OppChoVec global de la commune en tête dans la CAPA ?
+  4. Quelles sont les trois communes de la CAPA ayant les scores OppChoVec globaux les plus élevés ?
+  5. Quelle est la différence de score OppChoVec global entre la première et la deuxième commune de la CAPA ?
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quel est le score OppChoVec global de chaque commune de la CAPA ?...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.566 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [2/5] Quelle commune de la CAPA obtient le rang le plus élevé selon le score OppChoVec...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.590 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [3/5] Quelle est la valeur du score OppChoVec global de la commune en tête dans la CAP...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Vue trouvee: age_range*commune (N=3)
+  [4/5] Quelles sont les trois communes de la CAPA ayant les scores OppChoVec globaux le...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.551 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [5/5] Quelle est la différence de score OppChoVec global entre la première et la deuxi...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.553 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+
+[v10] Etape 3/4 : Synthese finale (Mistral Large)...
+
+[v10] Etape 4/4 : Notation de la dimension (Mistral Large)...
+  -> qualite_de_vie_globale_communale : 4/5
+     Si je devais noter la qualité de vie globale communale dans la CC CA de Bastia selon l'indice OppCho...
+[v10] Pipeline termine.
+[2026-03-30T20:55:44.288698] ERREUR (v10): 'commune'
+INFO:     127.0.0.1:57298 - "POST /api/query HTTP/1.1" 500 Internal Server Error
+
+[2026-03-30T20:59:41.773091] Requête v10 (LLM: gpt-3.5-turbo): Quelle est la commune de la CAPA avec le meilleur score OppChoVec global ?
+
+[v10] Question : Quelle est la commune de la CAPA avec le meilleur score OppChoVec global ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quel est le score OppChoVec global de chaque commune de la CAPA ?
+  2. Quel est le rang de chaque commune de la CAPA selon leur score OppChoVec global ?
+  3. Quelle est la commune de la CAPA ayant le score le plus élevé pour la dimension 'Opportunités' (Opp) de l'indicateur OppChoVec ?
+  4. Quelle est la valeur du score OppChoVec global pour la commune de la CAPA en tête du classement ?
+  5. Quelles sont les trois communes de la CAPA avec les meilleurs scores OppChoVec globaux, et quels sont leurs scores respectifs ?
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quel est le score OppChoVec global de chaque commune de la CAPA ?...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.566 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [2/5] Quel est le rang de chaque commune de la CAPA selon leur score OppChoVec global ...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.576 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [3/5] Quelle est la commune de la CAPA ayant le score le plus élevé pour la dimension ...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.572 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [4/5] Quelle est la valeur du score OppChoVec global pour la commune de la CAPA en têt...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Vue trouvee: age_range*commune (N=6)
+  [5/5] Quelles sont les trois communes de la CAPA avec les meilleurs scores OppChoVec g...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Vue trouvee: age_range*commune (N=3)
+
+[v10] Etape 3/4 : Synthese finale (Mistral Large)...
+
+[v10] Etape 4/4 : Notation de la dimension (Mistral Large)...
+  -> bien-être territorial global (OppChoVec) : 4/5
+     Si je devais noter le bien-être territorial global des communes de la CAPA, je mettrais 4/5 car les ...
+[v10] Pipeline termine.
+[2026-03-30T21:00:16.160327] ERREUR (v10): 'commune'
+INFO:     127.0.0.1:61090 - "POST /api/query HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:53762 - "GET /api/stats HTTP/1.1" 200 OK
+
+[2026-03-30T21:25:48.176220] Requête v10 (LLM: gpt-3.5-turbo): Quelle est la commune de la CAPA avec le meilleur score OppChoVec global ?
+
+[v10] Question : Quelle est la commune de la CAPA avec le meilleur score OppChoVec global ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quel est le score OppChoVec global de chaque commune de la CAPA ?
+  2. Quel est le rang de chaque commune de la CAPA selon leur score OppChoVec global ?
+  3. Quelle est la commune de la CAPA ayant le score OppChoVec global le plus élevé ?
+  4. Quels sont les scores des quatre dimensions (Opp1, Opp2, Opp3, Opp4) de la commune de la CAPA avec le meilleur score OppChoVec global ?
+  5. Comment se situe le score OppChoVec global de la commune la mieux classée de la CAPA par rapport à la moyenne des scores des communes corses ?
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quel est le score OppChoVec global de chaque commune de la CAPA ?...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.566 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [2/5] Quel est le rang de chaque commune de la CAPA selon leur score OppChoVec global ...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.576 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [3/5] Quelle est la commune de la CAPA ayant le score OppChoVec global le plus élevé ?...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.583 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [4/5] Quels sont les scores des quatre dimensions (Opp1, Opp2, Opp3, Opp4) de la commu...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.555 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [5/5] Comment se situe le score OppChoVec global de la commune la mieux classée de la ...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Vue trouvee: commune (N=3)
+
+[v10] Etape 3/4 : Synthese finale (Mistral Large)...
+
+[v10] Etape 4/4 : Notation de la dimension (Mistral Large)...
+  -> qualite de vie globale des communes de la CAPA (indicateur OppChoVec) : 4/5
+     Si je devais noter la qualité de vie globale des communes de la CAPA via l'indicateur OppChoVec, je ...
+[v10] Pipeline termine.
+[2026-03-30T21:26:28.112362] ERREUR (v10): 'commune'
+INFO:     127.0.0.1:58643 - "POST /api/query HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:58661 - "GET /api/stats HTTP/1.1" 200 OK
+
+[2026-03-30T21:32:33.125959] Requête v10 (LLM: gpt-3.5-turbo): Quelle est la commune de la CAPA avec le meilleur score OppChoVec global ?
+
+[v10] Question : Quelle est la commune de la CAPA avec le meilleur score OppChoVec global ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quel est le score OppChoVec global de chaque commune de la CAPA ?
+  2. Quelle commune de la CAPA obtient le score le plus élevé sur la dimension *Opportunités (Opp)* de l'indicateur OppChoVec ?
+  3. Quelle est la commune de la CAPA avec le meilleur score sur le sous-indicateur *Opp1 — Avoir une bonne éducation* ?
+  4. Quelle est la commune de la CAPA avec le meilleur score sur le sous-indicateur *Opp2 — Être inséré dans un environnement social diversifié* ?
+  5. Quelle est la commune de la CAPA avec le meilleur score sur le sous-indicateur *Opp3 — Avoir les moyens de la mobilité minimale* ?
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quel est le score OppChoVec global de chaque commune de la CAPA ?...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.566 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [2/5] Quelle commune de la CAPA obtient le score le plus élevé sur la dimension *Oppor...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignore (distance=0.556 > seuil 0.55)
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [3/5] Quelle est la commune de la CAPA avec le meilleur score sur le sous-indicateur *...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Education'}
+  [RAPTOR] Vue trouvee: dimension (N=43)
+  [4/5] Quelle est la commune de la CAPA avec le meilleur score sur le sous-indicateur *...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Environnement'}
+  [RAPTOR] Vue trouvee: dimension (N=134)
+  [5/5] Quelle est la commune de la CAPA avec le meilleur score sur le sous-indicateur *...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Transports'}
+  [RAPTOR] Vue trouvee: dimension (N=27)
+
+[v10] Etape 3/4 : Synthese finale (Mistral Large)...
+
+[v10] Etape 4/4 : Notation de la dimension (Mistral Large)...
+  -> qualite de vie globale des communes de la CAPA (score OppChoVec) : 3/5
+     Si je devais noter la qualité de vie globale des communes de la CAPA sur la base du score OppChoVec,...
+[v10] Pipeline termine.
+[2026-03-30T21:33:16.381691] ERREUR (v10): 'commune'
+INFO:     127.0.0.1:52034 - "POST /api/query HTTP/1.1" 500 Internal Server Error

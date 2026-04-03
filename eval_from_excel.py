@@ -3,7 +3,7 @@ eval_from_excel.py — Pipeline d'évaluation automatisé du RAG v10
 
 Lit les 103 questions de rag_evaluation_with_metrics_full.xlsx,
 appelle l'API RAG pour chaque question, applique les métriques indiquées,
-et exporte les résultats dans un Excel annoté à 3 feuilles.
+et exporte les résultats dans un rapport Markdown.
 
 Usage:
     python eval_from_excel.py --max 5                          # test rapide
@@ -415,208 +415,180 @@ def compute_semantic_robustness(groups: dict, row_answers: dict) -> dict:
 # 6. Export Excel (3 feuilles)
 # ─────────────────────────────────────────────
 
-def export_to_excel(results: list[dict], robustness: dict, output_path: str):
-    import openpyxl
-    from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
-
-    wb = openpyxl.Workbook()
-
-    # ── Styles partagés ──
-    HDR_FILL = PatternFill(start_color="2F4F8F", end_color="2F4F8F", fill_type="solid")
-    HDR_FONT = Font(bold=True, color="FFFFFF", size=10)
-    WRAP     = Alignment(wrap_text=True, vertical="top")
-    THIN     = Border(
-        bottom=Side(style="thin", color="CCCCCC"),
-        right= Side(style="thin", color="CCCCCC"),
-    )
-    # Couleurs par section
-    SECTION_FILLS = {
-        "Retrieval mono-commune":                  "D9E2F3",
-        "Retrieval multi-commune":                 "E2EFDA",
-        "Raisonnement comparatif":                 "FFF2CC",
-        "Gestion d'absence d'information":         "FCE4D6",
-        "Robustesse sémantique":                   "F2DCDB",
-        "Raisonnement causal et contre-intuitif":  "EAD7F5",
-        "Gestion de l'incertitude et des biais":   "D5F5E3",
-    }
-
-    def hdr(ws, row, col, value, width=None):
-        c = ws.cell(row=row, column=col, value=value)
-        c.font = HDR_FONT
-        c.fill = HDR_FILL
-        c.alignment = WRAP
-        if width:
-            ws.column_dimensions[openpyxl.utils.get_column_letter(col)].width = width
-        return c
-
-    def cell_fill(section):
-        color = None
-        for k, v in SECTION_FILLS.items():
-            if k.lower() in section.lower() or section.lower() in k.lower():
-                color = v
-                break
-        if color:
-            return PatternFill(start_color=color, end_color=color, fill_type="solid")
-        return None
-
-    # ════════════════════════════════════════════
-    # Feuille 1 : Résultats détaillés
-    # ════════════════════════════════════════════
-    ws1 = wb.active
-    ws1.title = "Resultats"
-
-    cols1 = [
-        ("Ligne", 6), ("Section", 28), ("Sous-section", 22), ("Question", 60),
-        ("Reponse RAG", 80),
-        ("Factual Score", 12), ("Factual Detail", 45),
-        ("Binary Score", 12), ("Binary Detail", 40),
-        ("Judge Global", 12), ("Judge Pertinence", 12), ("Judge Factuel", 12),
-        ("Judge Nuance", 12), ("Judge CoheQQ", 12), ("Judge Justif", 50),
-        ("Refusal OK", 10), ("Hallucination", 12), ("Overconfidence", 14), ("Refusal Detail", 40),
-        ("Robust Groupe", 20), ("Commentaires", 40),
-    ]
-    for ci, (title, width) in enumerate(cols1, 1):
-        hdr(ws1, 1, ci, title, width)
-    ws1.freeze_panes = "A2"
-
-    for ri, r in enumerate(results, 2):
-        fill = cell_fill(r.get("section", ""))
-        f = r.get("scores", {})
-
-        values = [
-            r.get("excel_row", ""),
-            r.get("section", ""),
-            r.get("subsection", ""),
-            r.get("question", ""),
-            r.get("answer", ""),
-            # Factual
-            f.get("factual", {}).get("score"),
-            f.get("factual", {}).get("detail", ""),
-            # Binary
-            f.get("binary", {}).get("score"),
-            f.get("binary", {}).get("detail", ""),
-            # Judge
-            f.get("judge", {}).get("score_global"),
-            f.get("judge", {}).get("pertinence"),
-            f.get("judge", {}).get("fondement_factuel"),
-            f.get("judge", {}).get("nuance_incertitude"),
-            f.get("judge", {}).get("coherence_qualiquanti"),
-            f.get("judge", {}).get("justification", ""),
-            # Refusal
-            f.get("refusal", {}).get("refusal_ok"),
-            f.get("refusal", {}).get("hallucination"),
-            f.get("refusal", {}).get("overconfidence"),
-            f.get("refusal", {}).get("explication", ""),
-            # Robustesse
-            r.get("robustness_group", ""),
-            r.get("comments", ""),
-        ]
-
-        for ci, val in enumerate(values, 1):
-            c = ws1.cell(row=ri, column=ci, value=val)
-            c.alignment = WRAP
-            c.border = THIN
-            if fill:
-                c.fill = fill
-        ws1.row_dimensions[ri].height = 70
-
-    # ════════════════════════════════════════════
-    # Feuille 2 : Résumé par section
-    # ════════════════════════════════════════════
-    ws2 = wb.create_sheet("Resume par section")
-    cols2 = [
-        ("Section", 32), ("N questions", 12),
-        ("Factual MAE moy.", 16), ("Factual accuracy", 14),
-        ("Binary accuracy", 14),
-        ("Judge Global moy.", 16),
-        ("Refusal rate", 12), ("Hallucination rate", 14), ("Overconfidence rate", 16),
-    ]
-    for ci, (title, width) in enumerate(cols2, 1):
-        hdr(ws2, 1, ci, title, width)
-    ws2.freeze_panes = "A2"
-
-    # Agrégation par section
+def export_to_markdown(results: list[dict], robustness: dict, output_path: str,
+                        metadata: dict = None):
     from collections import defaultdict
+
+    def avg(lst): return round(sum(lst) / len(lst), 3) if lst else None
+    def pct(v): return f"{v*100:.1f}%" if v is not None else "—"
+    def fmt(v, suffix=""): return f"{v}{suffix}" if v is not None else "—"
+
+    # ── Agrégation par section ──
     sec_data = defaultdict(lambda: {
-        "n": 0,
-        "factual_scores": [], "factual_errors": [],
-        "binary_scores": [],
-        "judge_scores": [],
-        "refusals": [], "hallucinations": [], "overconfs": [],
+        "n": 0, "factual_scores": [], "binary_scores": [],
+        "judge_scores": [], "refusals": [], "hallucinations": [], "overconfs": [],
     })
     for r in results:
         sec = r.get("section", "Inconnue")
         d = sec_data[sec]
         d["n"] += 1
         f = r.get("scores", {})
-        fs = f.get("factual", {})
-        if fs.get("score") is not None:
-            d["factual_scores"].append(fs["score"])
-        bs = f.get("binary", {})
-        if bs.get("score") is not None:
-            d["binary_scores"].append(bs["score"])
-        js = f.get("judge", {})
-        if js.get("score_global") is not None:
-            d["judge_scores"].append(js["score_global"])
+        if f.get("factual", {}).get("score") is not None:
+            d["factual_scores"].append(f["factual"]["score"])
+        if f.get("binary", {}).get("score") is not None:
+            d["binary_scores"].append(f["binary"]["score"])
+        if f.get("judge", {}).get("score_global") is not None:
+            d["judge_scores"].append(f["judge"]["score_global"])
         rs = f.get("refusal", {})
         if rs.get("refusal_ok") is not None:
             d["refusals"].append(1 if rs["refusal_ok"] else 0)
             d["hallucinations"].append(1 if rs.get("hallucination") else 0)
             d["overconfs"].append(1 if rs.get("overconfidence") else 0)
 
-    def avg(lst): return round(sum(lst) / len(lst), 3) if lst else None
+    md = []
 
-    for ri, (sec, d) in enumerate(sorted(sec_data.items()), 2):
-        fill = cell_fill(sec)
-        vals = [
-            sec, d["n"],
-            avg([1 - s for s in d["factual_scores"]]),  # MAE approximée
-            avg(d["factual_scores"]),
-            avg(d["binary_scores"]),
-            avg([s / 5 for s in d["judge_scores"]]),    # normalisé 0-1
-            avg(d["refusals"]),
-            avg(d["hallucinations"]),
-            avg(d["overconfs"]),
-        ]
-        for ci, val in enumerate(vals, 1):
-            c = ws2.cell(row=ri, column=ci, value=val)
-            c.alignment = WRAP
-            c.border = THIN
-            if fill:
-                c.fill = fill
+    # ── En-tête ──
+    ts = (metadata or {}).get("timestamp", datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+    version = (metadata or {}).get("rag_version", "?")
+    judge_model = (metadata or {}).get("judge_model", "?")
+    total_q = (metadata or {}).get("total_questions", len(results))
 
-    # ════════════════════════════════════════════
-    # Feuille 3 : Robustesse sémantique
-    # ════════════════════════════════════════════
-    ws3 = wb.create_sheet("Robustesse semantique")
-    cols3 = [
-        ("Groupe", 30), ("N reponses", 10), ("Similarite moy.", 14),
-        ("Similarite min.", 14), ("Detail", 40),
-    ]
-    for ci, (title, width) in enumerate(cols3, 1):
-        hdr(ws3, 1, ci, title, width)
+    md.append(f"# Rapport d'évaluation RAG — {version.upper()}\n")
+    md.append(f"**Date :** {ts}  \n**Modèle juge :** {judge_model}  \n**Questions évaluées :** {total_q}\n")
+    md.append("\n---\n")
 
-    for ri, (group, data) in enumerate(robustness.items(), 2):
-        answers = data.get("answers", [])
-        vals = [
-            group,
-            len([a for a in answers if a and not a.startswith("ERREUR")]),
-            data.get("mean_sim"),
-            data.get("min_sim"),
-            data.get("detail", ""),
-        ]
-        for ci, val in enumerate(vals, 1):
-            c = ws3.cell(row=ri, column=ci, value=val)
-            c.alignment = WRAP
-            c.border = THIN
+    # ── Résumé global ──
+    factual_ok = [r for r in results if r.get("scores", {}).get("factual", {}).get("score") is not None]
+    binary_ok  = [r for r in results if r.get("scores", {}).get("binary",  {}).get("score") is not None]
+    judge_ok   = [r for r in results if r.get("scores", {}).get("judge",   {}).get("score_global") is not None]
+    refusal_ok = [r for r in results if r.get("scores", {}).get("refusal", {}).get("refusal_ok") is not None]
+    errors     = [r for r in results if r.get("answer", "").startswith("ERREUR")]
 
-    # Interprétation attendue
-    ws3.cell(row=len(robustness) + 3, column=1,
-             value="Interprétation : sim > 0.85 = très cohérent, 0.7-0.85 = acceptable, < 0.7 = fragile").font = \
-        Font(italic=True, color="666666")
+    md.append("## Résumé global\n")
+    md.append("| Métrique | Valeur | N |\n|---------|--------|---|\n")
+    if factual_ok:
+        md.append(f"| Factual accuracy | {pct(avg([r['scores']['factual']['score'] for r in factual_ok]))} | {len(factual_ok)} |\n")
+    if binary_ok:
+        md.append(f"| Binary accuracy | {pct(avg([r['scores']['binary']['score'] for r in binary_ok]))} | {len(binary_ok)} |\n")
+    if judge_ok:
+        score = avg([r['scores']['judge']['score_global'] for r in judge_ok])
+        md.append(f"| Juge LLM (moy.) | {fmt(score, '/5')} | {len(judge_ok)} |\n")
+    if refusal_ok:
+        ref_rate = avg([1 if r['scores']['refusal']['refusal_ok'] else 0 for r in refusal_ok])
+        hal_rate = avg([1 if r['scores']['refusal'].get('hallucination') else 0 for r in refusal_ok])
+        md.append(f"| Refus correct | {pct(ref_rate)} | {len(refusal_ok)} |\n")
+        md.append(f"| Hallucination | {pct(hal_rate)} | {len(refusal_ok)} |\n")
+    if errors:
+        md.append(f"| Erreurs API | {len(errors)} | {len(results)} |\n")
+    md.append("\n")
 
-    wb.save(output_path)
-    print(f"Excel sauvegarde : {output_path}")
+    # ── Résumé par section ──
+    md.append("## Résumé par section\n")
+    md.append("| Section | N | Juge moy. | Binary acc. | Factual acc. | Refusal |\n")
+    md.append("|---------|---|-----------|------------|--------------|--------|\n")
+    for sec, d in sorted(sec_data.items()):
+        md.append(
+            f"| {sec} | {d['n']} "
+            f"| {fmt(avg(d['judge_scores']), '/5')} "
+            f"| {pct(avg(d['binary_scores']))} "
+            f"| {pct(avg(d['factual_scores']))} "
+            f"| {pct(avg(d['refusals']))} |\n"
+        )
+    md.append("\n")
+
+    # ── Robustesse sémantique ──
+    if robustness:
+        md.append("## Robustesse sémantique\n")
+        md.append("| Groupe | N | Sim. moy. | Sim. min. |\n|--------|---|-----------|----------|\n")
+        for group, data in robustness.items():
+            answers = data.get("answers", [])
+            n_ok = len([a for a in answers if a and not a.startswith("ERREUR")])
+            md.append(
+                f"| {group} | {n_ok} "
+                f"| {fmt(data.get('mean_sim'))} "
+                f"| {fmt(data.get('min_sim'))} |\n"
+            )
+        md.append("\n> Interprétation : sim > 0.85 = très cohérent · 0.70–0.85 = acceptable · < 0.70 = fragile\n\n")
+
+    # ── Résultats détaillés ──
+    md.append("---\n\n## Résultats détaillés\n")
+
+    current_section = None
+    for r in results:
+        sec = r.get("section", "")
+        if sec != current_section:
+            current_section = sec
+            md.append(f"\n### {sec}\n")
+
+        row = r.get("excel_row", "?")
+        subsec = r.get("subsection", "")
+        question = r.get("question", "")
+        answer = r.get("answer", "")
+        f = r.get("scores", {})
+        metrics = r.get("metrics", [])
+
+        md.append(f"\n#### R{row} — {subsec}\n\n")
+        md.append(f"> {question}\n\n")
+
+        # Badges métriques
+        badge_map = {"factual": "📐 Factual", "binary": "🔢 Binary", "judge": "🧑‍⚖️ Juge",
+                     "refusal": "🚫 Refusal", "halluc": "👻 Halluc.", "overconf": "⚠️ Overconf.", "robust": "🔄 Robustesse"}
+        badges = " · ".join(badge_map.get(m, m) for m in metrics if m in badge_map)
+        if badges:
+            md.append(f"**Métriques :** {badges}\n\n")
+
+        if answer.startswith("ERREUR"):
+            md.append(f"❌ **{answer}**\n\n")
+        else:
+            md.append("**Réponse RAG :**\n\n")
+            md.append(answer.strip() + "\n\n")
+
+            # Scores
+            scores_lines = []
+            fs = f.get("factual", {})
+            if fs.get("score") is not None:
+                scores_lines.append(f"**📐 Factual :** {pct(fs['score'])} — {fs.get('detail', '')}")
+            bs = f.get("binary", {})
+            if bs.get("score") is not None:
+                label = "✅" if bs["score"] == 1 else "❌"
+                scores_lines.append(f"**🔢 Binary :** {label} {bs.get('detail', '')}")
+            js = f.get("judge", {})
+            if js.get("score_global") is not None:
+                scores_lines.append(
+                    f"**🧑‍⚖️ Juge :** {js['score_global']:.1f}/5 "
+                    f"(pertinence: {fmt(js.get('pertinence'))} · "
+                    f"fondement: {fmt(js.get('fondement_factuel'))} · "
+                    f"nuance: {fmt(js.get('nuance_incertitude'))} · "
+                    f"cohérence: {fmt(js.get('coherence_qualiquanti'))})"
+                )
+                if js.get("justification"):
+                    scores_lines.append(f"*{js['justification'][:200]}{'…' if len(js.get('justification','')) > 200 else ''}*")
+            rs = f.get("refusal", {})
+            if rs.get("refusal_ok") is not None:
+                ref_icon = "✅" if rs["refusal_ok"] else "❌"
+                hal_icon = "⚠️" if rs.get("hallucination") else "✅"
+                oc_icon  = "⚠️" if rs.get("overconfidence") else "✅"
+                scores_lines.append(
+                    f"**🚫 Refusal :** {ref_icon} · "
+                    f"Hallucination : {hal_icon} · "
+                    f"Overconfidence : {oc_icon}"
+                )
+                if rs.get("explication"):
+                    scores_lines.append(f"*{rs['explication'][:200]}*")
+            rb = r.get("robustness_group", "")
+            if rb:
+                scores_lines.append(f"**🔄 Groupe robustesse :** `{rb}`")
+            if r.get("comments"):
+                scores_lines.append(f"*{r['comments']}*")
+
+            if scores_lines:
+                md.append("\n".join(scores_lines) + "\n\n")
+
+        md.append("---\n")
+
+    with open(output_path, "w", encoding="utf-8") as f:
+        f.write("".join(md))
+    print(f"Markdown sauvegarde : {output_path}")
 
 
 # ─────────────────────────────────────────────
@@ -645,8 +617,8 @@ def main():
             saved = json.load(f)
         results = saved["results"]
         robustness = saved.get("robustness", {})
-        xlsx = args.from_json.replace(".json", "_reexport.xlsx")
-        export_to_excel(results, robustness, xlsx)
+        md_path = args.from_json.replace(".json", "_reexport.md")
+        export_to_markdown(results, robustness, md_path, metadata=saved.get("metadata", {}))
         return
 
     # ── Chargement ground truth ──
@@ -793,8 +765,13 @@ def main():
         }, f, ensure_ascii=False, indent=2)
     print(f"\nJSON sauvegarde : {json_path}")
 
-    xlsx_path = os.path.join(args.output, f"{base}.xlsx")
-    export_to_excel(results, robustness, xlsx_path)
+    md_path = os.path.join(args.output, f"{base}.md")
+    export_to_markdown(results, robustness, md_path, metadata={
+        "timestamp": timestamp,
+        "rag_version": args.version,
+        "judge_model": JUDGE_MODEL,
+        "total_questions": total,
+    })
 
     # ── 8. Résumé terminal ──
     print("\n" + "=" * 70)

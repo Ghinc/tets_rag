@@ -1599,7 +1599,7 @@ async def _run_eval_subprocess(job_id: str, req: EvalStartRequest):
             line = raw_line.decode("utf-8", errors="replace").rstrip()
             _append_job_line(job_id, line)
             # Détecter le chemin Excel en sortie
-            if line.startswith("Excel sauvegarde :"):
+            if line.startswith("Markdown sauvegarde :"):
                 state["result_path"] = line.split(":", 1)[1].strip()
                 _write_job_state(job_id, state)
 
@@ -1730,7 +1730,7 @@ async def eval_status(job_id: str):
 
 @app.get("/api/eval/{job_id}/result", tags=["Evaluation"])
 async def eval_result(job_id: str):
-    """Télécharge le fichier Excel résultat d'un job terminé."""
+    """Télécharge le rapport Markdown d'un job terminé."""
     state = _read_job_state(job_id)
     if state is None:
         raise HTTPException(status_code=404, detail="Job introuvable")
@@ -1740,8 +1740,23 @@ async def eval_result(job_id: str):
     if not path or not os.path.exists(path):
         raise HTTPException(status_code=404, detail="Fichier résultat introuvable")
     filename = os.path.basename(path)
-    return FileResponse(path, filename=filename,
-                        media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    return FileResponse(path, filename=filename, media_type="text/markdown")
+
+
+@app.get("/api/eval/{job_id}/content", tags=["Evaluation"])
+async def eval_content(job_id: str):
+    """Retourne le contenu texte du rapport Markdown pour affichage inline."""
+    state = _read_job_state(job_id)
+    if state is None:
+        raise HTTPException(status_code=404, detail="Job introuvable")
+    if state["status"] != "done":
+        raise HTTPException(status_code=400, detail=f"Job non terminé (statut : {state['status']})")
+    path = state.get("result_path")
+    if not path or not os.path.exists(path):
+        raise HTTPException(status_code=404, detail="Fichier résultat introuvable")
+    with open(path, encoding="utf-8") as f:
+        content = f.read()
+    return {"content": content, "filename": os.path.basename(path)}
 
 
 # === POINT D'ENTRÉE ===

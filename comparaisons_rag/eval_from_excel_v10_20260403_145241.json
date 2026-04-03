@@ -1,0 +1,454 @@
+{
+  "metadata": {
+    "timestamp": "20260403_145241",
+    "rag_version": "v10",
+    "judge_model": "mistral-large-latest",
+    "total_questions": 3
+  },
+  "results": [
+    {
+      "excel_row": 2,
+      "section": "Retrieval mono-commune",
+      "subsection": "Retrieval descriptif global",
+      "question": "Comment les habitants d'Ajaccio ressentent-ils le bien-être ?",
+      "do_factual": false,
+      "do_binary": false,
+      "do_judge": true,
+      "do_refusal": false,
+      "do_halluc": false,
+      "do_overconf": false,
+      "do_robust": false,
+      "comments": "",
+      "answer": "ERREUR API: 500 Server Error: Internal Server Error for url: http://localhost:8000/api/query",
+      "sources": [],
+      "scores": {}
+    },
+    {
+      "excel_row": 5,
+      "section": "Retrieval mono-commune",
+      "subsection": "Retrieval factuel et interprétation",
+      "question": "Quel est le score moyen de bien-être à Ajaccio ?",
+      "do_factual": true,
+      "do_binary": false,
+      "do_judge": false,
+      "do_refusal": false,
+      "do_halluc": false,
+      "do_overconf": false,
+      "do_robust": false,
+      "comments": "",
+      "answer": "### **Synthèse : Score moyen de bien-être à Ajaccio**\n\n#### **1. Score global de bien-être (OppChoVec) à Ajaccio**\nLe **score moyen de bien-être objectif territorial** pour Ajaccio est de **5,78/10**, selon l’indice **OppChoVec** (Opportunités-Choix-Vécu).\nCe score place la commune au **19ᵉ rang sur 360 en Corse**, reflétant une situation **contrastée** :\n- **Forte performance** en **opportunités** (10,00/10, **1ʳᵉ place**).\n- **Faiblesse marquée** en **liberté de choix** (1,27/10, **358ᵉ place**).\n- **Vécu moyen** des habitants (4,80/10, **41ᵉ place**).\n\n**Interprétation** :\nAjaccio offre des **conditions objectives exceptionnelles** (éducation, diversité sociale, mobilité, accès au numérique), mais ces atouts ne se traduisent pas par un **bien-être subjectif élevé**, en raison de **contraintes structurelles** (accès limité aux droits politiques, conditions de vie réelles dégradées).\n\n---\n\n#### **2. Analyse des dimensions clés**\n##### **a) Opportunités (Opp) : 10,00/10 (1ʳᵉ place)**\n- **Meilleur score de Corse** pour cette dimension, couvrant :\n  - **Éducation** (Opp1) – *score non détaillé*.\n  - **Diversité sociale** (Opp2) – *score non détaillé*.\n  - **Mobilité minimale** (Opp3) – *score non détaillé*.\n  - **Accès aux TIC** (Opp4) – *score non détaillé*.\n- **Limite** : Ce score **ne reflète pas les inégalités internes** (ex. : accès inégal à l’éducation ou à la mobilité selon les quartiers).\n\n##### **b) Liberté de choix (Cho) : 1,27/10 (358ᵉ place)**\n- **Point critique** du bien-être ajaccien.\n- **Hypothèses** (non confirmées par les données) :\n  - **Accès limité aux droits politiques** (ex. : participation citoyenne, représentation locale).\n  - **Contraintes socio-économiques** (coût de la vie, précarité).\n\n##### **c) Vécu (Vec) : 4,80/10 (41ᵉ place)**\n- **Écart significatif** entre les **opportunités théoriques** (10/10) et la **qualité de vie perçue**.\n- **Facteurs possibles** (non détaillés dans les données) :\n  - **Environnement urbain** (pollution, densité, insécurité).\n  - **Services publics** (santé, transports, logement).\n\n---\n\n#### **3. Limites des données disponibles**\n- **Manque de granularité** :\n  - Les **sous-scores** (Opp1, Opp2, Opp3, Opp4) ne sont **pas détaillés**, empêchant une analyse fine des forces/faiblesses sectorielles.\n  - Aucune donnée sur les **disparités internes** (quartiers, groupes sociaux).\n- **Absence de données subjectives** :\n  - Le score **Vec (4,80/10)** est objectif, mais ne capture pas les **perceptions individuelles** (enquêtes qualitatives manquantes).\n\n---\n\n#### **4. Conclusion : Un bien-être en tension**\n- **Score moyen (5,78/10)** : **Moyen supérieur**, mais **déséquilibré**.\n- **Paradoxe ajaccien** :\n  - **Atouts majeurs** (opportunités) **vs. handicaps structurels** (choix, vécu).\n- **Pistes d’amélioration** :\n  - **Renforcer la liberté de choix** (accès aux droits, participation citoyenne).\n  - **Réduire l’écart entre opportunités et vécu** (politiques ciblées sur le logement, les transports, la santé).\n  - **Affiner l’analyse** via des données **désagrégées** (par quartier, indicateur) et **qualitatives** (enquêtes habitants).\n\n**En résumé** : Ajaccio est une commune **bien dotée en opportunités**, mais son **bien-être global reste limité par des freins systémiques**. Une approche **multidimensionnelle** (objective + subjective) serait nécessaire pour une évaluation complète.\n\n**Scores OppChoVec (données chiffrées) :**\n- Ajaccio : OppChoVec=5.78/10 (Opp=10.00, Cho=1.27, Vec=4.80)\n- CA du Pays Ajaccien : OppChoVec=5.98/10 (Opp=5.56, Cho=8.66, Vec=6.77)",
+      "sources": [
+        {
+          "content": "**Groupe : nom=Ajaccio (N=129)**\n\n---\n\n### **Thèmes dominants**\n1. **Santé** (mentionnée dans **20 verbatims**)\n   - Accès aux soins, qualité des services médicaux, importance de la prévention.\n   - Exemples : *\"La santé : si on a pas la santé, on a rien dans la vie\"* (Verbatim 1), *\"La santé est primordial\"* (Verbatim 54), *\"L’accès à la santé et à des professionnels de qualité est primordial\"* (Verbatim 60).\n\n2. **Revenus et pouvoir d’achat** (mentionnés dans **18 verbatims**)\n   - Préoccupation majeure face à la vie chère, aux salaires insuffisants et aux inégalités.\n   - Exemples : *\"Les revenus permettent de me payer un logement, la nourriture et quelques plaisirs\"* (Verbatim 5), *\"La vie de plus en plus chère, tout augmente mais pas les salaires\"* (Verbatim 59), *\"Senza soldi, semi barboni\"* (Verbatim 41).\n\n3. **Environnement et cadre de vie** (mentionnés dans **17 verbatims**)\n   - Qualité de l’air, espaces verts, pollution (notamment liée aux bateaux de croisière), biodiversité.\n   - Exemples : *\"Air frais, sons ambiants, zones vertes, accès au soleil\"* (Verbatim 13), *\"À Ajaccio beaucoup trop de pollution avec les bateaux de croisière\"* (Verbatim 58), *\"Nature, beauté, respirer, contempler\"* (Verbatim 67).\n\n4. **Ratio vie professionnelle / vie personnelle** (mentionné dans **15 verbatims**)\n   - Équilibre entre travail et vie privée, nécessité de séparer les deux sphères.\n   - Exemples : *\"Le ratio vie pro et vie perso, car c’est important d’avoir un bon équilibre\"* (Verbatim 2), *\"Garder un équilibre entre les 2 est important\"* (Verbatim 19), *\"Il est important de pouvoir gérer sa vie professionnelle sans qu’elle empiète sur la vie personnelle\"* (Verbatim 106).\n\n---\n---\n\n### **Points de convergence**\n1. **Importance de l’équilibre vie pro/vie perso**\n   - Presque tous les répondants (jeunes, adultes, seniors) soulignent la nécessité de séparer travail et vie personnelle pour éviter l’épuisement.\n   - Exemple : *\"Une coupure est importante entre ces deux mondes\"* (Verbatim 4).\n\n2. **Critique de la vie chère et des revenus insuffisants**\n   - Plusieurs verbatims pointent le coût de la vie élevé en Corse, notamment pour les jeunes et les familles monoparentales.\n   - Exemple : *\"Le coût de la vie en Corse est très élevé et des revenus relativement importants sont indispensables\"* (Verbatim 90).\n\n3. **Préoccupation pour l’accès aux soins**\n   - La santé est perçue comme un pilier de la qualité de vie, mais son accès est jugé inégal ou limité.\n   - Exemple : *\"Les centres hospitaliers manquent de personnel alors que tout le monde doit y avoir accès\"* (Verbatim 17).\n\n4. **Valorisation de l’environnement naturel**\n   - Malgré les critiques sur la pollution, la nature est globalement perçue comme un atout majeur d’Ajaccio.\n   - Exemple : *\"En Corse on a cette chance d’avoir cette richesse de la nature\"* (Verbatim 32).\n\n5. **Rôle central des services de proximité**\n   - La proximité des commerces, services de santé et transports est souvent citée comme un facteur de bien-être.\n   - Exemple : *\"Accès aux commerces facilement\"* (Verbatim 15), *\"Services de proximité : c’est le plaisir de trouver ce dont on a besoin dans un rayon proche\"* (Verbatim 103).\n\n---\n---\n\n### **Points de divergence**\n1. **Perception de la pollution et de l’environnement**\n   - Certains soulignent la **pollution liée aux bateaux de croisière** (Verbatim 58) ou le manque d’espaces verts, tandis que d’autres mettent en avant la **qualité de l’air et la biodiversité** (Verbatim 67, 94).\n   - Exemple de divergence :\n     - *\"À Ajaccio beaucoup trop de pollution avec les bateaux de croisière\"* (Verbatim 58).\n     - *\"Vivre sain dans un environnement sain et propre\"* (Verbatim 94).\n\n2. **Priorités selon l’âge et la situation professionnelle**\n   - **Jeunes (18-23 ans)** : Revenus, logement, équilibre vie pro/perso, santé.\n   - **Adultes (30-50 ans)** : Revenus, transports, éducation, environnement.\n   - **Seniors (50+ ans)** : Culture, communauté, services de proximité, santé.\n   - Exemple : Les jeunes citent davantage le **logement** (Verbatims 6, 8, 14, 55), tandis que les seniors évoquent la **culture** (Verbatims 68, 75, 108, 125).\n\n3. **Opinions sur le tourisme**\n   - Certains y voient une **source de revenus essentielle** pour l’économie locale (Verbatim 43), tandis que d’autres ne l’évoquent pas ou critiquent ses impacts (ex. pollution).\n   - Aucun verbatim ne critique frontalement le tourisme, mais certains mentionnent ses effets négatifs indirects (Verbatim 58).\n\n4. **Confiance dans les institutions locales**\n   - Certains répondants expriment une **méfiance** ou une **insatisfaction** envers les services publics (ex. santé, transports), tandis que d’autres ne mentionnent pas ce sujet.\n   - Exemple : *\"Le meilleur médecin est malheureusement l’avion\"* (Verbatim 60) suggère une critique des services locaux.\n\n---\n---\n\n### **Signaux faibles**\n1. **Mentions isolées mais potentiellement significatives**\n   - **Réseau mobile/internet** :\n     *\"La Corse souffre d’un très mauvais réseau\"* (Verbatim 24).\n   - **Sécurité** :\n     *\"Si on sort dans la rue et qu’on se fait agresser, ce n’est plus de la qualité de vie\"* (Verbatim 12).\n   - **Éducation et emploi** :\n     *\"Débouchés, multiplicité des offres\"* (Verbatim 56), *\"L’éducation est une notion fondamentale pour nos enfants\"* (Verbatim 97).\n   - **Culture** :\n     *\"Importance d’avoir accès à la culture, source d’émancipation",
+          "score": 1.0
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Santé': La santé : si on a pas la santé, on a rien dans la vie",
+          "score": 0.9
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Ratio vie pro/ vie perso': Le ratio vie pro et vie perso, car c’est important d’avoir un bon équilibre entre les deux",
+          "score": 0.8
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Education': D’éducation : importante dans la société d’aujourd’hui",
+          "score": 0.7
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 21 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Ratio vie pro/ vie perso': Le ratio vie pro/vie perso est important pour moi pour avoir un équilibre de vie sain car il ne faut pas que les deux se mélangent trop : une coupure est importante entre ces deux mondes.",
+          "score": 0.6
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 21 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Revenus': Les revenus permettent de me payer un logement, la nourriture et quelques plaisirs/loisirs à côté.",
+          "score": 0.5
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 21 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Logement': Le logement est important car il est impératif qu'il soit décent et qu'on s'y sente bien",
+          "score": 0.3999999999999999
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 23 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Revenus': revenu : sans revenu on ne peut rien faire, rien acheter, on ne peut pas vivre",
+          "score": 0.29999999999999993
+        },
+        {
+          "content": "La commune de Ajaccio compte une part de 12.9% de cadres et professions intellectuelles supérieures, 16.6% d'ouvriers, avec un taux d'activité de 75.6%. 87.8% des emplois y sont salariés. On y trouve 5.0 points de contact postal, 11.0 hypermarchés ou supermarchés, 38.0 supérettes ou épiceries, 51.0 boulangeries et 21.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 15.0 écoles maternelles, 20.0 écoles élémentaires, 6.0 collèges et 6.0 lycées. Elle possède 1.0 services d'urgence, 80.0 médecins généralistes, 31.0 pharmacies, 204.0 infirmiers et 15.0 crèches. La sécurité est assurée par 1.0 postes de police ou gendarmerie. Il y a également 2.0 agences Pôle emploi. Le taux de pauvreté est de 14.3%, la part de logements vacants est de 3.3%, et celle des résidences secondaires est de 9.2%. Le taux de coups et blessures volontaires est de 4.0 pour 1 000 habitants. Le prix moyen au m² est de 3666.90984455959€, pour une surface moyenne des logements de 71.7937823834197 m².",
+          "score": 0.19999999999999996
+        },
+        {
+          "content": "**Groupe : nom=Ajaccio (N=129)**\n\n---\n\n### **Thèmes dominants**\n1. **Santé** (mentionnée dans **20 verbatims**)\n   - Accès aux soins, qualité des services médicaux, importance de la prévention.\n   - Exemples : *\"La santé : si on a pas la santé, on a rien dans la vie\"* (Verbatim 1), *\"La santé est primordial\"* (Verbatim 54), *\"L’accès à la santé et à des professionnels de qualité est primordial\"* (Verbatim 60).\n\n2. **Revenus et pouvoir d’achat** (mentionnés dans **18 verbatims**)\n   - Préoccupation majeure face à la vie chère, aux salaires insuffisants et aux inégalités.\n   - Exemples : *\"Les revenus permettent de me payer un logement, la nourriture et quelques plaisirs\"* (Verbatim 5), *\"La vie de plus en plus chère, tout augmente mais pas les salaires\"* (Verbatim 59), *\"Senza soldi, semi barboni\"* (Verbatim 41).\n\n3. **Environnement et cadre de vie** (mentionnés dans **17 verbatims**)\n   - Qualité de l’air, espaces verts, pollution (notamment liée aux bateaux de croisière), biodiversité.\n   - Exemples : *\"Air frais, sons ambiants, zones vertes, accès au soleil\"* (Verbatim 13), *\"À Ajaccio beaucoup trop de pollution avec les bateaux de croisière\"* (Verbatim 58), *\"Nature, beauté, respirer, contempler\"* (Verbatim 67).\n\n4. **Ratio vie professionnelle / vie personnelle** (mentionné dans **15 verbatims**)\n   - Équilibre entre travail et vie privée, nécessité de séparer les deux sphères.\n   - Exemples : *\"Le ratio vie pro et vie perso, car c’est important d’avoir un bon équilibre\"* (Verbatim 2), *\"Garder un équilibre entre les 2 est important\"* (Verbatim 19), *\"Il est important de pouvoir gérer sa vie professionnelle sans qu’elle empiète sur la vie personnelle\"* (Verbatim 106).\n\n---\n---\n\n### **Points de convergence**\n1. **Importance de l’équilibre vie pro/vie perso**\n   - Presque tous les répondants (jeunes, adultes, seniors) soulignent la nécessité de séparer travail et vie personnelle pour éviter l’épuisement.\n   - Exemple : *\"Une coupure est importante entre ces deux mondes\"* (Verbatim 4).\n\n2. **Critique de la vie chère et des revenus insuffisants**\n   - Plusieurs verbatims pointent le coût de la vie élevé en Corse, notamment pour les jeunes et les familles monoparentales.\n   - Exemple : *\"Le coût de la vie en Corse est très élevé et des revenus relativement importants sont indispensables\"* (Verbatim 90).\n\n3. **Préoccupation pour l’accès aux soins**\n   - La santé est perçue comme un pilier de la qualité de vie, mais son accès est jugé inégal ou limité.\n   - Exemple : *\"Les centres hospitaliers manquent de personnel alors que tout le monde doit y avoir accès\"* (Verbatim 17).\n\n4. **Valorisation de l’environnement naturel**\n   - Malgré les critiques sur la pollution, la nature est globalement perçue comme un atout majeur d’Ajaccio.\n   - Exemple : *\"En Corse on a cette chance d’avoir cette richesse de la nature\"* (Verbatim 32).\n\n5. **Rôle central des services de proximité**\n   - La proximité des commerces, services de santé et transports est souvent citée comme un facteur de bien-être.\n   - Exemple : *\"Accès aux commerces facilement\"* (Verbatim 15), *\"Services de proximité : c’est le plaisir de trouver ce dont on a besoin dans un rayon proche\"* (Verbatim 103).\n\n---\n---\n\n### **Points de divergence**\n1. **Perception de la pollution et de l’environnement**\n   - Certains soulignent la **pollution liée aux bateaux de croisière** (Verbatim 58) ou le manque d’espaces verts, tandis que d’autres mettent en avant la **qualité de l’air et la biodiversité** (Verbatim 67, 94).\n   - Exemple de divergence :\n     - *\"À Ajaccio beaucoup trop de pollution avec les bateaux de croisière\"* (Verbatim 58).\n     - *\"Vivre sain dans un environnement sain et propre\"* (Verbatim 94).\n\n2. **Priorités selon l’âge et la situation professionnelle**\n   - **Jeunes (18-23 ans)** : Revenus, logement, équilibre vie pro/perso, santé.\n   - **Adultes (30-50 ans)** : Revenus, transports, éducation, environnement.\n   - **Seniors (50+ ans)** : Culture, communauté, services de proximité, santé.\n   - Exemple : Les jeunes citent davantage le **logement** (Verbatims 6, 8, 14, 55), tandis que les seniors évoquent la **culture** (Verbatims 68, 75, 108, 125).\n\n3. **Opinions sur le tourisme**\n   - Certains y voient une **source de revenus essentielle** pour l’économie locale (Verbatim 43), tandis que d’autres ne l’évoquent pas ou critiquent ses impacts (ex. pollution).\n   - Aucun verbatim ne critique frontalement le tourisme, mais certains mentionnent ses effets négatifs indirects (Verbatim 58).\n\n4. **Confiance dans les institutions locales**\n   - Certains répondants expriment une **méfiance** ou une **insatisfaction** envers les services publics (ex. santé, transports), tandis que d’autres ne mentionnent pas ce sujet.\n   - Exemple : *\"Le meilleur médecin est malheureusement l’avion\"* (Verbatim 60) suggère une critique des services locaux.\n\n---\n---\n\n### **Signaux faibles**\n1. **Mentions isolées mais potentiellement significatives**\n   - **Réseau mobile/internet** :\n     *\"La Corse souffre d’un très mauvais réseau\"* (Verbatim 24).\n   - **Sécurité** :\n     *\"Si on sort dans la rue et qu’on se fait agresser, ce n’est plus de la qualité de vie\"* (Verbatim 12).\n   - **Éducation et emploi** :\n     *\"Débouchés, multiplicité des offres\"* (Verbatim 56), *\"L’éducation est une notion fondamentale pour nos enfants\"* (Verbatim 97).\n   - **Culture** :\n     *\"Importance d’avoir accès à la culture, source d’émancipation",
+          "score": 1.0
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Santé': La santé : si on a pas la santé, on a rien dans la vie",
+          "score": 0.9
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Ratio vie pro/ vie perso': Le ratio vie pro et vie perso, car c’est important d’avoir un bon équilibre entre les deux",
+          "score": 0.8
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Education': D’éducation : importante dans la société d’aujourd’hui",
+          "score": 0.7
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 21 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Ratio vie pro/ vie perso': Le ratio vie pro/vie perso est important pour moi pour avoir un équilibre de vie sain car il ne faut pas que les deux se mélangent trop : une coupure est importante entre ces deux mondes.",
+          "score": 0.6
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 21 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Revenus': Les revenus permettent de me payer un logement, la nourriture et quelques plaisirs/loisirs à côté.",
+          "score": 0.5
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 21 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Logement': Le logement est important car il est impératif qu'il soit décent et qu'on s'y sente bien",
+          "score": 0.3999999999999999
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 23 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Revenus': revenu : sans revenu on ne peut rien faire, rien acheter, on ne peut pas vivre",
+          "score": 0.29999999999999993
+        },
+        {
+          "content": "**Groupe : dimension=Education, nom=Ajaccio (N=8)**\n\n**Themes dominants** :\n1. Importance de l'éducation dans la société\n2. Accès à l'éducation\n\n**Points de convergence** :\n- Plusieurs personnes soulignent l'importance fondamentale de l'éducation dans la société. Par exemple, une femme de 48 ans déclare : \"Pour moi l’accès à l’éducation est la base fondamentale de la société et de la liberté des choix qu’on fera\". Un homme de 46 ans ajoute : \"L'éducation est une notion fondamentale pour nos enfants, donc pour l'avenir\".\n- L'accès à l'éducation est également un point de convergence, avec des mentions comme \"Accès à l’éducation pour un niveau de vie correct\" par une femme de 47 ans.\n\n**Points de divergence** :\n- Les verbatims ne présentent pas de divergences majeures. Les opinions exprimées sont globalement alignées sur l'importance et l'accès à l'éducation.\n\n**Signaux faibles** :\n- Un verbatim en corse : \"U nosciu avvenne : A ghjuventù\" (Un homme de 44 ans), pourrait indiquer une préoccupation spécifique à la culture locale ou une dimension intergénérationnelle de l'éducation.\n\n**Limites de l'echantillon** :\n- L'échantillon est petit (N=8), ce qui limite la généralisation des résultats.\n- Il y a une surreprésentation des adultes (6 sur 8) par rapport aux jeunes (2 sur 8), ce qui pourrait biaiser la perception de l'importance de l'éducation selon les différentes tranches d'âge.\n- Les professions représentées sont variées, mais il manque des perspectives d'autres groupes professionnels ou socio-économiques.",
+          "score": 1.0
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Education': D’éducation : importante dans la société d’aujourd’hui",
+          "score": 0.9
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 20 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Education': éducation pour trouver un emploi après",
+          "score": 0.8
+        },
+        {
+          "content": "Verbatim d'un(e) Homme de 44 ans (Adultes), Travailleur(se) indépendant(e) / Entrepreneur(e), à Ajaccio, sur le thème 'Education': U nosciu avvenne : A ghjuventù",
+          "score": 0.7
+        },
+        {
+          "content": "Verbatim d'un(e) Homme de 32 ans (Jeunes adultes), Salarié(e) – Employé(e), à Ajaccio, sur le thème 'Education': Éducation",
+          "score": 0.6
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 48 ans (Adultes), Fonctionnaire, à Ajaccio, sur le thème 'Education': Pour moi l’accès à l’éducation est la base fondamentale de la société et de la liberté des choix qu’on fera",
+          "score": 0.5
+        },
+        {
+          "content": "Verbatim d'un(e) Homme de 46 ans (Adultes), Salarié(e) – Cadre ou profession intermédiaire, à Ajaccio, sur le thème 'Education': L'éducation est une notion fondamentale pour nos enfants, donc pour l'avenir",
+          "score": 0.3999999999999999
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 47 ans (Adultes), Salarié(e) – Cadre ou profession intermédiaire, à Ajaccio, sur le thème 'Education': Accès à l’éducation pour un niveau de vie correct",
+          "score": 0.29999999999999993
+        },
+        {
+          "content": "La commune de Ajaccio compte une part de 12.9% de cadres et professions intellectuelles supérieures, 16.6% d'ouvriers, avec un taux d'activité de 75.6%. 87.8% des emplois y sont salariés. On y trouve 5.0 points de contact postal, 11.0 hypermarchés ou supermarchés, 38.0 supérettes ou épiceries, 51.0 boulangeries et 21.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 15.0 écoles maternelles, 20.0 écoles élémentaires, 6.0 collèges et 6.0 lycées. Elle possède 1.0 services d'urgence, 80.0 médecins généralistes, 31.0 pharmacies, 204.0 infirmiers et 15.0 crèches. La sécurité est assurée par 1.0 postes de police ou gendarmerie. Il y a également 2.0 agences Pôle emploi. Le taux de pauvreté est de 14.3%, la part de logements vacants est de 3.3%, et celle des résidences secondaires est de 9.2%. Le taux de coups et blessures volontaires est de 4.0 pour 1 000 habitants. Le prix moyen au m² est de 3666.90984455959€, pour une surface moyenne des logements de 71.7937823834197 m².",
+          "score": 0.19999999999999996
+        },
+        {
+          "content": "**Groupe : dimension=Environnement, nom=Ajaccio (N=23)**\n\n**Themes dominants** :\n1. Importance de la nature et de la biodiversité\n2. Qualité de l'air et de l'eau\n3. Préservation de l'environnement\n4. Impact de l'urbanisation et de l'économie sur l'environnement\n\n**Points de convergence** :\n- La majorité des participants soulignent l'importance de la nature et de la biodiversité pour la qualité de vie à Ajaccio. Par exemple, plusieurs mentionnent \"nature\", \"biodiversité\", et \"qualité de l'air\" comme des éléments essentiels (\"nature ombre fraicheur biodiversite energie\", \"environnement : qualité de vie, harmonie, bien être\").\n- La protection de l'environnement est un thème récurrent, avec des mentions de la nécessité de \"protéger l'environnement\" et de \"gestes citoyens\" pour préserver la qualité de l'eau et des déchets (\"Environnement à protéger en ayant des gestes citoyens au niveau de la gestion de l'eau, tri des déchets\").\n\n**Points de divergence** :\n- Certains participants expriment des préoccupations spécifiques à Ajaccio, comme la pollution due aux bateaux de croisière et le manque d'espaces verts (\"à ajaccio beaucoup trop de pollution avec les bateaux de croisière, pas vraiment d'espaces verts\"), tandis que d'autres se concentrent sur des aspects plus généraux de l'environnement (\"La crise environnemental est un problème partout dans le monde\").\n- Il y a également des opinions divergentes sur l'impact de l'urbanisation et de l'économie sur l'environnement, avec certains soulignant la nécessité de \"développement durable\" et d'autres mentionnant les contradictions entre la réalité économique et les concepts environnementaux (\"L'environnement est une question qui devrait être centrale car vitale, malheureusement la réalité économique mondiale est en contradiction avec ce concept\").\n\n**Signaux faibles** :\n- Un participant mentionne la nécessité de \"Faire en sorte que les pré-étudiants aient plus de choix en arrivant en étude supérieur en Corse\", ce qui pourrait indiquer des préoccupations spécifiques liées à l'environnement académique et aux choix éducatifs.\n- Un autre participant mentionne \"un cadre corse\", ce qui pourrait suggérer une appréciation particulière pour le cadre de vie local.\n\n**Limites de l'echantillon** :\n- L'échantillon est relativement petit (N=23), ce qui limite la généralisabilité des résultats.\n- Il y a une surreprésentation de jeunes adultes et d'adultes, avec peu de représentation des seniors.\n- Certains verbatims sont très courts ou incompréhensibles (\"bxb\", \"sdsds\"), ce qui peut biaiser l'analyse.\n- Les verbatims proviennent d'un groupe relativement homogène en termes de lieu (Ajaccio), ce qui peut ne pas refléter les opinions des habitants d'autres régions de la Corse.",
+          "score": 1.0
+        },
+        {
+          "content": "Verbatim d'un(e) Homme de 20 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Environnement': Air frais, sons ambiants, zones vertes, accès au soleil",
+          "score": 0.9
+        },
+        {
+          "content": "Verbatim d'un(e) Homme de 22 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Environnement': Faire en sorte que les pré-étudiants aient plus de choix en arrivant en étude supérieur en Corse",
+          "score": 0.8
+        },
+        {
+          "content": "Verbatim d'un(e) Homme de 22 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Environnement': La crise environnemental est un problème partout dans le monde",
+          "score": 0.7
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 20 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Environnement': environnement pour qualité de l'air",
+          "score": 0.6
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 19 ans (Jeunes), Salarié(e) – Cadre ou profession intermédiaire, à Ajaccio, sur le thème 'Environnement': bxb",
+          "score": 0.5
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 26 ans (Jeunes adultes), Salarié(e) – Employé(e), à Ajaccio, sur le thème 'Environnement': Protéger l'environnement ou en prendre soin est important, en Corse on a cette chance d'avoir cette richesse de la nature.",
+          "score": 0.3999999999999999
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 38 ans (Adultes), Salarié(e) – Cadre ou profession intermédiaire, à Ajaccio, sur le thème 'Environnement': nature ombre fraicheur biodiversite energie",
+          "score": 0.29999999999999993
+        },
+        {
+          "content": "**Groupe : dimension=Transports, nom=Ajaccio (N=8)**\n\n**Themes dominants** :\n1. Importance des transports pour la mobilité et l'autonomie\n2. Nécessité d'alternatives à la voiture\n\n**Points de convergence** :\n- Plusieurs personnes soulignent l'importance des transports pour se déplacer librement et éviter les contraintes. Par exemple, une femme de 26 ans mentionne : \"Les transports sont importants car en Corse on a pas forcément tout les besoins nécessaires à proximité, je pense qu'il est agréable qu'on puisse se déplacer librement sans trop de contraintes.\"\n- La nécessité de réduire la dépendance aux transports est également un point partagé, comme le montre le verbatim d'une femme de 30 ans : \"Ne pas être dépendante des transports au quotidien.\"\n\n**Points de divergence** :\n- Les opinions sont globalement alignées sur l'importance des transports, mais certains verbatims sont trop courts ou incompréhensibles (comme \"cxb\" ou \"dedede\") pour identifier des divergences claires.\n\n**Signaux faibles** :\n- Un homme de 62 ans mentionne un \"point à améliorer\", sans préciser sa pensée. Cette mention isolée pourrait indiquer des insatisfactions spécifiques non détaillées dans les autres verbatims.\n\n**Limites de l'echantillon** :\n- L'échantillon est petit (N=8) et certains verbatims sont trop courts ou incompréhensibles, ce qui limite la richesse de l'analyse.\n- Il y a une surreprésentation des jeunes adultes (4/8) et des cadres ou professions intermédiaires (4/8), ce qui peut biaiser la représentation des opinions de la population ajaccienne dans son ensemble.",
+          "score": 1.0
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 20 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Transports': transports pour facilité globale",
+          "score": 0.9
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 19 ans (Jeunes), Salarié(e) – Cadre ou profession intermédiaire, à Ajaccio, sur le thème 'Transports': cxb",
+          "score": 0.8
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 26 ans (Jeunes adultes), Salarié(e) – Employé(e), à Ajaccio, sur le thème 'Transports': Les transports sont importants car en Corse on a pas forcément tout les besoins nécessaires à proximité, je pense qu'il est agréable qu'on puisse se déplacer librement sans trop de contraintes.",
+          "score": 0.7
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 30 ans (Jeunes adultes), Salarié(e) – Cadre ou profession intermédiaire, à Ajaccio, sur le thème 'Transports': Ne pas être dépendante des transports au quotidien",
+          "score": 0.6
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 32 ans (Jeunes adultes), Salarié(e) – Employé(e), à Ajaccio, sur le thème 'Transports': L'importance d'un bon maillage en termes de transports pour proposer des alternatives à la voiture, dont l'usage est compliqué à Ajaccio (embouteillages et manque de stationnement)",
+          "score": 0.5
+        },
+        {
+          "content": "Verbatim d'un(e) Homme de 47 ans (Adultes), Salarié(e) – Cadre ou profession intermédiaire, à Ajaccio, sur le thème 'Transports': Liberté, Accessibilité, Mobilité, Échanges",
+          "score": 0.3999999999999999
+        },
+        {
+          "content": "Verbatim d'un(e) Homme de 68 ans (Seniors), Fonctionnaire, à Ajaccio, sur le thème 'Transports': dedede",
+          "score": 0.29999999999999993
+        },
+        {
+          "content": "La commune de Ajaccio compte une part de 12.9% de cadres et professions intellectuelles supérieures, 16.6% d'ouvriers, avec un taux d'activité de 75.6%. 87.8% des emplois y sont salariés. On y trouve 5.0 points de contact postal, 11.0 hypermarchés ou supermarchés, 38.0 supérettes ou épiceries, 51.0 boulangeries et 21.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 15.0 écoles maternelles, 20.0 écoles élémentaires, 6.0 collèges et 6.0 lycées. Elle possède 1.0 services d'urgence, 80.0 médecins généralistes, 31.0 pharmacies, 204.0 infirmiers et 15.0 crèches. La sécurité est assurée par 1.0 postes de police ou gendarmerie. Il y a également 2.0 agences Pôle emploi. Le taux de pauvreté est de 14.3%, la part de logements vacants est de 3.3%, et celle des résidences secondaires est de 9.2%. Le taux de coups et blessures volontaires est de 4.0 pour 1 000 habitants. Le prix moyen au m² est de 3666.90984455959€, pour une surface moyenne des logements de 71.7937823834197 m².",
+          "score": 0.19999999999999996
+        },
+        {
+          "content": "L'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théorique >= 30 min de trajet.\n\n• Opp4 — Avoir accès aux TIC (poids 0,25)\n  Couverture locale par Internet haut débit (>= 30 Mbit/s) et réseau 4G.\n\nDIMENSION 2 — CHOIX (Cho)\nLa liber",
+          "score": -3.3
+        },
+        {
+          "content": "Le score OppChoVec de Ajaccio est de 5.78/10 (élevé).\n\nDécomposition des sous-scores de Ajaccio :\n- Score Opportunités (Opp) de Ajaccio : 10.00/10 (très élevé)\n- Score Choix (Cho) de Ajaccio : 1.27/10 (très faible)\n- Score Vécu (Vec) de Ajaccio : 4.80/10 (moyen)\n\nRang de Ajaccio parmi les 360 communes corses :\n- OppChoVec global : 19e sur 360\n- Opportunités (Opp) : 1e sur 360\n- Choix (Cho) : 358e sur 360\n- Vécu (Vec) : 41e sur 360\n\nAnalyse de Ajaccio :\n- Ajaccio se distingue surtout par ses opportunités (Opp=10.00/10).\n- Le point le plus faible de Ajaccio est le score Choix (1.27/10).\n\nValeurs brutes (non normalisées) de Ajaccio :\n- OppChoVec brut : 0.1026\n- Opp brut : 0.7095\n- Cho brut : 0.4294\n- Vec brut : 0.5801",
+          "score": -3.4000000000000004
+        },
+        {
+          "content": "Le score OppChoVec moyen de la CC CA du Pays Ajaccien est de 5.98/10 (élevé).\nCette intercommunalité est située dans la micro-région Gravona-Prunelli (territoire : Mezzana).\nDécomposition : Opportunités (Opp) = 5.56/10, Choix (Cho) = 8.66/10, Vécu (Vec) = 6.77/10.\nElle regroupe 10 communes dont les scores sont disponibles.\nLes 3 meilleures communes : Afa (10.00), Appietto (9.61), Alata (9.59).\nLes 3 communes avec les scores les plus faibles : Peri (3.92), Valle-di-Mezzana (3.77), Tavaco (3.00).\nToutes les communes de la CC CA du Pays Ajaccien avec leur score OppChoVec : Afa (10.00), Ajaccio (5.78), Alata (9.59), Appietto (9.61), Cuttoli-Corticchiato (5.14), Peri (3.92), Sarrola-Carcopino (4.78), Tavaco (3.00), Valle-di-Mezzana (3.77), Villanova (4.25).",
+          "score": -3.5
+        }
+      ],
+      "scores": {
+        "factual": {
+          "score": 1.0,
+          "detail": "Extrait=5.78, Attendu=5.78, MAE=0.00, Exact=oui"
+        }
+      },
+      "robustness_group": ""
+    },
+    {
+      "excel_row": 23,
+      "section": "Retrieval mono-commune",
+      "subsection": "Analyse multi-source et cohérence des données",
+      "question": "Le bien-être est-il homogène entre les différents groupes d’âge à Ajaccio ?",
+      "do_factual": false,
+      "do_binary": true,
+      "do_judge": true,
+      "do_refusal": false,
+      "do_halluc": false,
+      "do_overconf": false,
+      "do_robust": false,
+      "comments": "",
+      "answer": "### **Synthèse finale : Le bien-être est-il homogène entre les différents groupes d’âge à Ajaccio ?**\n\n**Réponse directe à la question initiale** :\nÀ partir des données disponibles, **aucune conclusion quantitative ne peut être tirée** sur l’homogénéité du bien-être entre les groupes d’âge à Ajaccio, car les sources fournies ne contiennent **aucun score OppChoVec ni indicateur chiffré** permettant une comparaison objective. Les éléments disponibles se limitent à des **données qualitatives** (perceptions, verbatims) qui suggèrent des disparités, mais sans mesure standardisée.\n\n---\n\n### **Points clés de l’analyse**\n\n#### **1. Absence de données quantitatives comparables**\n- **Aucun score OppChoVec** n’est mentionné dans les sources pour **aucune tranche d’âge** (18-29 ans, 30-44 ans, 45-59 ans, 60-74 ans, 75 ans et plus).\n- Les enquêtes territoriales citées ne fournissent **pas d’indicateurs chiffrés** (ex. : indices de satisfaction, scores de qualité de vie) permettant une évaluation objective et comparative.\n- **Limite méthodologique** : Sans métrique commune, il est impossible de déterminer si le bien-être est homogène ou non entre les groupes.\n\n#### **2. Données qualitatives disponibles : tendances perceptives par groupe d’âge**\nBien que non quantifiables, les **synthèses qualitatives** (verbatims, analyses RAPTOR) révèlent des **différences de préoccupations** selon l’âge, qui pourraient refléter des inégalités de bien-être :\n\n- **18-29 ans (et 15-24 ans)** :\n  - **Enjeux dominants** : Précarité économique (revenus, logement), difficultés d’insertion professionnelle, équilibre vie pro/perso.\n  - **Perception** : Sentiment de vulnérabilité lié à l’avenir (emploi, accès au logement), mais aussi dynamisme associatif et social chez certains.\n\n- **30-49 ans (proche des 30-44 ans)** :\n  - **Enjeux dominants** : Charge mentale (famille, travail), accès aux services (crèches, transports), pression immobilière.\n  - **Perception** : Stress lié à la conciliation des responsabilités, mais aussi satisfaction pour ceux ayant stabilisé leur situation.\n\n- **45-59 ans** :\n  - **Enjeux dominants** : Transition vers la retraite (préoccupations financières), santé (maladies chroniques), isolement relatif.\n  - **Perception** : Inquiétudes pour l’avenir (pouvoir d’achat, dépendance), mais aussi valorisation des réseaux sociaux locaux.\n\n- **60-74 ans** :\n  - **Enjeux dominants** : Accès aux soins, mobilité réduite, sentiment d’abandon institutionnel (ex. : déserts médicaux).\n  - **Perception** : Satisfaction pour les retraités actifs (vie associative), mais frustration pour ceux en situation de fragilité.\n\n- **75 ans et plus** :\n  - **Enjeux dominants** : Isolement, dépendance, difficultés d’accès aux services (ex. : transports, soins à domicile).\n  - **Perception** : Vulnérabilité accrue, mais aussi résilience pour ceux bénéficiant d’un soutien familial ou communautaire.\n\n#### **3. Hypothèses sur les disparités de bien-être**\nLes données qualitatives suggèrent que le bien-être à Ajaccio **n’est probablement pas homogène** entre les groupes d’âge, avec des **facteurs de risque différenciés** :\n- **Jeunes (18-29 ans)** : Précarité économique et professionnelle.\n- **Actifs (30-49 ans)** : Charge mentale et pression immobilière.\n- **Seniors (60 ans et +)** : Isolement, santé et accès aux services.\n\nCependant, **ces observations restent partielles** :\n- Elles ne couvrent pas toutes les tranches d’âge avec la même granularité (ex. : pas de données pour les 30-44 ans).\n- Elles reposent sur des **perceptions subjectives**, sans validation statistique.\n- Elles ne permettent pas de **hiérarchiser** l’importance des enjeux (ex. : la santé est-elle plus critique que le logement pour les seniors ?).\n\n#### **4. Lacunes et besoins pour une réponse robuste**\nPour répondre rigoureusement à la question initiale, il faudrait :\n1. **Des données quantitatives** :\n   - Scores de bien-être standardisés (ex. : OppChoVec, mais aussi d’autres indicateurs comme l’**Indice de Développement Humain local** ou des enquêtes INSEE).\n   - Enquêtes territoriales **par tranche d’âge** avec des échantillons représentatifs.\n2. **Une approche mixte** :\n   - Croiser les données qualitatives (perceptions) avec des indicateurs objectifs (taux de chômage, accès aux soins, etc.).\n   - Analyser les **inégalités intra-groupes** (ex. : les 60-74 ans ne forment pas un bloc homogène).\n3. **Des comparaisons spatiales** :\n   - Situer Ajaccio par rapport à d’autres territoires (ex. : autres villes corses, moyennes nationales) pour contextualiser les résultats.\n\n---\n\n### **Conclusion**\n**En l’état des données fournies** :\n- **Aucune preuve quantitative** ne permet d’affirmer ou d’infirmer l’homogénéité du bien-être entre les groupes d’âge à Ajaccio.\n- **Les données qualitatives** suggèrent des **disparités de préoccupations**, mais sans mesure objective de leur impact sur le bien-être.\n- **Recommandation** : Pour une analyse fiable, il est nécessaire de mobiliser des **enquêtes territoriales quantitatives** (ex. : scores de satisfaction, indicateurs socio-économiques) et de les croiser avec les perceptions citoyennes.\n\n**Réponse nuancée** :\n*Le bien-être à Ajaccio semble varier selon l’âge si l’on se base sur les perceptions des habitants, mais l’absence de données quantitatives comparables empêche toute conclusion définitive.*",
+      "sources": [
+        {
+          "content": "**Groupe : age_range=15-24, nom=Ajaccio (N=30)**\n\n**Themes dominants** : Santé, Revenus, Ratio vie pro/vie perso, Logement\n\n**Points de convergence** :\n- La santé est considérée comme essentielle pour une bonne qualité de vie. Plusieurs verbatims soulignent son importance, par exemple : \"La santé : si on a pas la santé, on a rien dans la vie\" (Verbatim 1) et \"La santé car si notre santé est fragile on a une qualité de vie réduite\" (Verbatim 11).\n- Les revenus sont perçus comme cruciaux pour subvenir aux besoins de base et accéder à des loisirs. Des expressions comme \"Les revenus permettent de me payer un logement, la nourriture et quelques plaisirs/loisirs à côté\" (Verbatim 5) et \"sans revenu on ne peut rien faire, rien acheter, on ne peut pas vivre\" (Verbatim 7) illustrent cette préoccupation.\n- L'équilibre entre vie professionnelle et vie personnelle est souvent mentionné comme important pour un bien-être général. Par exemple : \"Le ratio vie pro et vie perso, car c’est important d’avoir un bon équilibre entre les deux\" (Verbatim 2) et \"faire la part des choses et pas tout mélanger permet d'avoir un équilibre\" (Verbatim 9).\n- Le logement est vu comme un besoin fondamental, avec des attentes de décence et de confort. Des verbatims comme \"Le logement est important car il est impératif qu'il soit décent et qu'on s'y sente bien\" (Verbatim 6) et \"avoir du confort, quelque part où dormir est très important\" (Verbatim 8) en témoignent.\n\n**Points de divergence** :\n- Certains verbatims mentionnent des problèmes spécifiques comme la sécurité (\"La sécurité, si on sort dans la rue et qu’on se fait agresser, ce n’est plus de la qualité de vie\" - Verbatim 12) ou les transports (\"transports pour facilité globale\" - Verbatim 26), mais ces thèmes sont moins fréquents.\n- Il y a une divergence sur l'importance relative des thèmes, certains mettant l'accent sur l'environnement (\"Air frais, sons ambiants, zones vertes, accès au soleil\" - Verbatim 13) tandis que d'autres se concentrent sur les revenus ou la santé.\n\n**Signaux faibles** :\n- La mention de la crise environnementale (\"La crise environnemental est un problème partout dans le monde\" - Verbatim 23) et des problèmes de réseau (\"La Corse souffre d'un très mauvais réseau\" - Verbatim 24) sont des signaux faibles mais potentiellement significatifs, bien qu'ils n'apparaissent que dans un ou deux verbatims.\n- Les verbatims 28, 29 et 30 contiennent des termes incompréhensibles (\"cxb\", \"bxb\", \"bxbx\"), ce qui pourrait indiquer des erreurs de saisie ou des réponses non pertinentes.\n\n**Limites de l'echantillon** :\n- L'échantillon est relativement petit (N=30), ce qui limite la généralisation des résultats.\n- Il y a une surreprésentation d'étudiants (28 sur 30), ce qui peut biaiser les résultats en faveur des préoccupations spécifiques à cette catégorie socio-professionnelle.\n- Les verbatims 28, 29 et 30 contiennent des termes incompréhensibles, ce qui peut fausser l'analyse.",
+          "score": 1.0
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Santé': La santé : si on a pas la santé, on a rien dans la vie",
+          "score": 0.9
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Ratio vie pro/ vie perso': Le ratio vie pro et vie perso, car c’est important d’avoir un bon équilibre entre les deux",
+          "score": 0.8
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Education': D’éducation : importante dans la société d’aujourd’hui",
+          "score": 0.7
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 21 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Ratio vie pro/ vie perso': Le ratio vie pro/vie perso est important pour moi pour avoir un équilibre de vie sain car il ne faut pas que les deux se mélangent trop : une coupure est importante entre ces deux mondes.",
+          "score": 0.6
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 21 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Revenus': Les revenus permettent de me payer un logement, la nourriture et quelques plaisirs/loisirs à côté.",
+          "score": 0.5
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 21 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Logement': Le logement est important car il est impératif qu'il soit décent et qu'on s'y sente bien",
+          "score": 0.3999999999999999
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 23 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Revenus': revenu : sans revenu on ne peut rien faire, rien acheter, on ne peut pas vivre",
+          "score": 0.29999999999999993
+        },
+        {
+          "content": "**Groupe : age_range=35-49, nom=Ajaccio (N=36)**\n\n**Themes dominants** : Santé, Revenus, Ratio vie pro/vie perso, Environnement\n\n**Points de convergence** :\n- **Santé** : Plusieurs personnes soulignent l'importance de la santé et de l'accès aux soins. Par exemple, \"La santé est primordial\" (Verbatim 15) et \"Prévention, Accès aux soins, Nutrition, Activité physique, Bien-être mental\" (Verbatim 21).\n- **Revenus** : Les revenus et le pouvoir d'achat sont également un thème récurrent. Un participant mentionne \"Senza soldi, semi barboni. E sottumessi.\" (Verbatim 5), tandis qu'un autre souligne que \"Les revenus sont important pour tout (loisirs, santé....)\" (Verbatim 14).\n- **Ratio vie pro/vie perso** : L'équilibre entre vie professionnelle et vie personnelle est un point de convergence. Par exemple, \"Important pour moi que le travail ne prenne pas plus d'importance que ma vie perso\" (Verbatim 13) et \"privilégier la vie personnelle et la séparer du travail\" (Verbatim 26).\n- **Environnement** : L'environnement est un thème important pour plusieurs participants. Par exemple, \"nature ombre fraicheur biodiversite energie\" (Verbatim 10) et \"vivre sain un environnement sain et propre\" (Verbatim 25).\n\n**Points de divergence** :\n- **Revenus** : Bien que la plupart des participants soulignent l'importance des revenus, un participant mentionne que \"En temps normal, je n'aurais jamais choisi cette image, mais malheureusement, je traverse une période compliquée qui me fait prendre conscience que je ne gagne pas assez d'argent pour vivre comme j'aimerais le faire...\" (Verbatim 23), ce qui montre une divergence dans l'expérience personnelle.\n- **Logement** : Un participant mentionne que \"Le logement est également une nouvelle problématique à laquelle je suis confronté\" (Verbatim 24), tandis que d'autres ne mentionnent pas ce thème.\n\n**Signaux faibles** :\n- **Culture** : Bien que moins mentionné, un participant souligne que \"La culture, avec davantage de choix depuis l'ouverture du Palatinu et de l'Empire\" (Verbatim 8).\n- **Services de proximité** : Un participant mentionne que \"Services de proximité : c'est le plaisir de trouver de dont on a besoin dans un rayon proche du lieu d'habitation en pouvant s'y rendre à pied ou en vélo\" (Verbatim 31), ce qui pourrait être un signal faible mais pertinent.\n\n**Limites de l'echantillon** :\n- La taille de l'échantillon est relativement petite (N=36), ce qui peut limiter la généralisation des résultats.\n- Il y a une surreprésentation de certains thèmes par rapport à d'autres, ce qui peut biaiser l'analyse.\n- Les verbatims sont issus d'un groupe spécifique (âge 35-49, Ajaccio), ce qui peut ne pas refléter les opinions de la population générale.",
+          "score": 1.0
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 43 ans (Adultes), Fonctionnaire, à Ajaccio, sur le thème 'Ratio vie pro/ vie perso': test",
+          "score": 0.9
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 43 ans (Adultes), Fonctionnaire, à Ajaccio, sur le thème 'Communauté et relations': test",
+          "score": 0.8
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 43 ans (Adultes), Fonctionnaire, à Ajaccio, sur le thème 'Santé': test",
+          "score": 0.7
+        },
+        {
+          "content": "Verbatim d'un(e) Homme de 44 ans (Adultes), Travailleur(se) indépendant(e) / Entrepreneur(e), à Ajaccio, sur le thème 'Education': U nosciu avvenne : A ghjuventù",
+          "score": 0.6
+        },
+        {
+          "content": "Verbatim d'un(e) Homme de 44 ans (Adultes), Travailleur(se) indépendant(e) / Entrepreneur(e), à Ajaccio, sur le thème 'Revenus': Senza soldi, semi barboni. E sottumessi.",
+          "score": 0.5
+        },
+        {
+          "content": "Verbatim d'un(e) Homme de 44 ans (Adultes), Travailleur(se) indépendant(e) / Entrepreneur(e), à Ajaccio, sur le thème 'Santé': C'est mieux de pouvoir se soigner ici, que de partir sur le continent...",
+          "score": 0.3999999999999999
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 39 ans (Adultes), Salarié(e) – Cadre ou profession intermédiaire, à Ajaccio, sur le thème 'Tourisme (ressenti localement)': Le tourisme essentiel à notre économie",
+          "score": 0.29999999999999993
+        },
+        {
+          "content": "**Groupe : age_range=50-64, nom=Ajaccio (N=36)**\n\n**Thèmes dominants** :\n1. Environnement\n2. Culture\n3. Services de proximité\n4. Communauté et relations\n\n**Points de convergence** :\n- L'environnement est un thème récurrent, avec une importance accordée à la nature, à la préservation de la planète et à la qualité de l'environnement pour la santé et le bien-être. Par exemple, \"Nature, beauté, respirer, contempler, besoin\" (Verbatim 1) et \"la protection planète\" (Verbatim 22).\n- La culture est également un thème central, avec des mentions de l'importance de l'accès à la culture, des spectacles, des arts et des rencontres culturelles. Par exemple, \"Culture, art, spectacles, sorties, ouverture\" (Verbatim 2) et \"la culture pour donner du sens a tout\" (Verbatim 23).\n- Les services de proximité sont considérés comme essentiels pour faciliter la vie quotidienne et améliorer le cadre de vie. Par exemple, \"service de proximité : relationnel, confiance, pratique\" (Verbatim 5) et \"La présence des services de proximité rend la vie plus facile\" (Verbatim 28).\n- La communauté et les relations sociales sont importantes pour le bien-être, avec des mentions de l'importance des amis, de la famille et des moments de vie en commun. Par exemple, \"Amis, vie sociale, famille, enfants, fêtes\" (Verbatim 3) et \"un réseau avec qui echanger\" (Verbatim 24).\n\n**Points de divergence** :\n- Certains verbatims mentionnent des points à améliorer concernant l'environnement (Verbatim 34) et les transports (Verbatim 35), tandis que d'autres soulignent la qualité de l'environnement existante (Verbatim 1, Verbatim 4).\n- Il y a des opinions divergentes sur la culture, avec des mentions de la nécessité d'une offre culturelle adaptée et importante (Verbatim 32) et des points à améliorer (Verbatim 36).\n\n**Signaux faibles** :\n- Un seul verbatim mentionne explicitement les revenus comme un facteur important de la qualité de vie, notamment en raison du coût de la vie élevé en Corse (Verbatim 18, Verbatim 21).\n- Un seul verbatim aborde la question de la santé et de l'accès aux soins (Verbatim 12, Verbatim 20, Verbatim 29).\n\n**Limites de l'échantillon** :\n- L'échantillon est relativement petit (N=36), ce qui peut limiter la généralisation des résultats.\n- Il y a une surreprésentation de fonctionnaires et de cadres ou professions intermédiaires, ce qui peut biaiser les résultats en faveur de ces catégories socioprofessionnelles.\n- Les verbatims proviennent tous de la même commune (Ajaccio), ce qui peut limiter la diversité des points de vue.",
+          "score": 1.0
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 50 ans (Jeunes seniors), Fonctionnaire, à Ajaccio, sur le thème 'Environnement': Nature, beauté, respirer, contempler, besoin",
+          "score": 0.9
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 50 ans (Jeunes seniors), Fonctionnaire, à Ajaccio, sur le thème 'Culture': Culture, art, spectacles, sorties, ouverture",
+          "score": 0.8
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 50 ans (Jeunes seniors), Fonctionnaire, à Ajaccio, sur le thème 'Communauté et relations': Amis, vie sociale, famille, enfants, fêtes",
+          "score": 0.7
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 53 ans (Jeunes seniors), Salarié(e) – Employé(e), à Ajaccio, sur le thème 'Environnement': environnement : qualité de vie, harmonie, bien être",
+          "score": 0.6
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 53 ans (Jeunes seniors), Salarié(e) – Employé(e), à Ajaccio, sur le thème 'Services de proximité': service de proximité : relationnel, confiance, pratique",
+          "score": 0.5
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 53 ans (Jeunes seniors), Salarié(e) – Employé(e), à Ajaccio, sur le thème 'Culture': culture : rencontre, ouverture d'esprit, curiosité, contact humain",
+          "score": 0.3999999999999999
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 52 ans (Jeunes seniors), Salarié(e) – Cadre ou profession intermédiaire, à Ajaccio, sur le thème 'Environnement': Nature, écologie, durable, montagne, mer",
+          "score": 0.29999999999999993
+        },
+        {
+          "content": "**Groupe : age_range=65+, nom=Ajaccio (N=9)**\n\n**Thèmes dominants** : Environnement, Culture, Communauté et relations, Services de proximité\n\n**Points de convergence** :\n- Plusieurs personnes soulignent l'importance de la culture et de l'accès aux lieux culturels pour l'émancipation individuelle et le bien-être. Par exemple, \"Importance d'avoir l'accès à la culture source d'émancipation\" et \"la culture et l'accès aux lieux culturels est une condition essentielle à l'émancipation individuel et au bien être\".\n- La qualité de l'environnement est également un point de convergence, avec des mentions de la qualité de l'air, de l'eau, de la préservation de la nature et de l'aménagement du territoire. Par exemple, \"l'environnement concerne tant la question de la qualité de l'air, de l'eau, la préservation de la nature, la biodiversité que l'aménagement du territoire et détermine la qualité de vie\".\n- Les relations sociales et la communauté sont également importantes, avec des mentions de l'importance de \"faire famille dans le sens large du terme\" et des relations sociales comme condition du \"bien vivre\".\n\n**Points de divergence** :\n- Les verbatims ne montrent pas de divergences majeures, mais il y a une absence de consensus sur les thèmes des transports et des revenus, qui ne sont pas abordés de manière significative.\n\n**Signaux faibles** :\n- Un signal faible est la mention de l'importance d'harmoniser la vie publique et privée, bien que cela ne soit mentionné qu'une seule fois : \"Importance d'harmoniser la vie publique et privée\".\n\n**Limites de l'échantillon** :\n- L'échantillon est petit (N=9), ce qui limite la généralisation des résultats.\n- Il y a une surreprésentation des femmes (6/9) et des retraités (3/9), ce qui peut biaiser les résultats.\n- Les verbatims des hommes de 68 ans (Seniors), Fonctionnaire, à Ajaccio, sur les thèmes 'Transports' et 'Environnement' sont vides (\"dedede\", \"sdsds\", \"hyhyh\"), ce qui peut indiquer un problème de collecte ou de transcription des données.",
+          "score": 1.0
+        },
+        {
+          "content": "Verbatim d'un(e) Homme de 68 ans (Seniors), Fonctionnaire, à Ajaccio, sur le thème 'Transports': dedede",
+          "score": 0.9
+        },
+        {
+          "content": "Verbatim d'un(e) Homme de 68 ans (Seniors), Fonctionnaire, à Ajaccio, sur le thème 'Environnement': sdsds",
+          "score": 0.8
+        },
+        {
+          "content": "Verbatim d'un(e) Homme de 68 ans (Seniors), Fonctionnaire, à Ajaccio, sur le thème 'Revenus': hyhyh",
+          "score": 0.7
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 69 ans (Seniors), Autre, à Ajaccio, sur le thème 'Ratio vie pro/ vie perso': Importance d harmoniser la vie publique et privée.",
+          "score": 0.6
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 69 ans (Seniors), Autre, à Ajaccio, sur le thème 'Culture': Importance d avoir l accès à la culture source d émancipation.",
+          "score": 0.5
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 69 ans (Seniors), Autre, à Ajaccio, sur le thème 'Communauté et relations': Importance de faire famille dans le sens large du terme.",
+          "score": 0.3999999999999999
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 70 ans (Seniors), Retraité(e), à Ajaccio, sur le thème 'Environnement': l'environnement concerne tant la question de la qualité de l'air , de l'eau , la préservation de la nature , la biodiversité que l'aménagement du territoire et détermine la qualité de vie",
+          "score": 0.29999999999999993
+        },
+        {
+          "content": "**Groupe : nom=Ajaccio (N=129)**\n\n---\n\n### **Thèmes dominants**\n1. **Santé** (mentionnée dans **20 verbatims**)\n   - Accès aux soins, qualité des services médicaux, importance de la prévention.\n   - Exemples : *\"La santé : si on a pas la santé, on a rien dans la vie\"* (Verbatim 1), *\"La santé est primordial\"* (Verbatim 54), *\"L’accès à la santé et à des professionnels de qualité est primordial\"* (Verbatim 60).\n\n2. **Revenus et pouvoir d’achat** (mentionnés dans **18 verbatims**)\n   - Préoccupation majeure face à la vie chère, aux salaires insuffisants et aux inégalités.\n   - Exemples : *\"Les revenus permettent de me payer un logement, la nourriture et quelques plaisirs\"* (Verbatim 5), *\"La vie de plus en plus chère, tout augmente mais pas les salaires\"* (Verbatim 59), *\"Senza soldi, semi barboni\"* (Verbatim 41).\n\n3. **Environnement et cadre de vie** (mentionnés dans **17 verbatims**)\n   - Qualité de l’air, espaces verts, pollution (notamment liée aux bateaux de croisière), biodiversité.\n   - Exemples : *\"Air frais, sons ambiants, zones vertes, accès au soleil\"* (Verbatim 13), *\"À Ajaccio beaucoup trop de pollution avec les bateaux de croisière\"* (Verbatim 58), *\"Nature, beauté, respirer, contempler\"* (Verbatim 67).\n\n4. **Ratio vie professionnelle / vie personnelle** (mentionné dans **15 verbatims**)\n   - Équilibre entre travail et vie privée, nécessité de séparer les deux sphères.\n   - Exemples : *\"Le ratio vie pro et vie perso, car c’est important d’avoir un bon équilibre\"* (Verbatim 2), *\"Garder un équilibre entre les 2 est important\"* (Verbatim 19), *\"Il est important de pouvoir gérer sa vie professionnelle sans qu’elle empiète sur la vie personnelle\"* (Verbatim 106).\n\n---\n---\n\n### **Points de convergence**\n1. **Importance de l’équilibre vie pro/vie perso**\n   - Presque tous les répondants (jeunes, adultes, seniors) soulignent la nécessité de séparer travail et vie personnelle pour éviter l’épuisement.\n   - Exemple : *\"Une coupure est importante entre ces deux mondes\"* (Verbatim 4).\n\n2. **Critique de la vie chère et des revenus insuffisants**\n   - Plusieurs verbatims pointent le coût de la vie élevé en Corse, notamment pour les jeunes et les familles monoparentales.\n   - Exemple : *\"Le coût de la vie en Corse est très élevé et des revenus relativement importants sont indispensables\"* (Verbatim 90).\n\n3. **Préoccupation pour l’accès aux soins**\n   - La santé est perçue comme un pilier de la qualité de vie, mais son accès est jugé inégal ou limité.\n   - Exemple : *\"Les centres hospitaliers manquent de personnel alors que tout le monde doit y avoir accès\"* (Verbatim 17).\n\n4. **Valorisation de l’environnement naturel**\n   - Malgré les critiques sur la pollution, la nature est globalement perçue comme un atout majeur d’Ajaccio.\n   - Exemple : *\"En Corse on a cette chance d’avoir cette richesse de la nature\"* (Verbatim 32).\n\n5. **Rôle central des services de proximité**\n   - La proximité des commerces, services de santé et transports est souvent citée comme un facteur de bien-être.\n   - Exemple : *\"Accès aux commerces facilement\"* (Verbatim 15), *\"Services de proximité : c’est le plaisir de trouver ce dont on a besoin dans un rayon proche\"* (Verbatim 103).\n\n---\n---\n\n### **Points de divergence**\n1. **Perception de la pollution et de l’environnement**\n   - Certains soulignent la **pollution liée aux bateaux de croisière** (Verbatim 58) ou le manque d’espaces verts, tandis que d’autres mettent en avant la **qualité de l’air et la biodiversité** (Verbatim 67, 94).\n   - Exemple de divergence :\n     - *\"À Ajaccio beaucoup trop de pollution avec les bateaux de croisière\"* (Verbatim 58).\n     - *\"Vivre sain dans un environnement sain et propre\"* (Verbatim 94).\n\n2. **Priorités selon l’âge et la situation professionnelle**\n   - **Jeunes (18-23 ans)** : Revenus, logement, équilibre vie pro/perso, santé.\n   - **Adultes (30-50 ans)** : Revenus, transports, éducation, environnement.\n   - **Seniors (50+ ans)** : Culture, communauté, services de proximité, santé.\n   - Exemple : Les jeunes citent davantage le **logement** (Verbatims 6, 8, 14, 55), tandis que les seniors évoquent la **culture** (Verbatims 68, 75, 108, 125).\n\n3. **Opinions sur le tourisme**\n   - Certains y voient une **source de revenus essentielle** pour l’économie locale (Verbatim 43), tandis que d’autres ne l’évoquent pas ou critiquent ses impacts (ex. pollution).\n   - Aucun verbatim ne critique frontalement le tourisme, mais certains mentionnent ses effets négatifs indirects (Verbatim 58).\n\n4. **Confiance dans les institutions locales**\n   - Certains répondants expriment une **méfiance** ou une **insatisfaction** envers les services publics (ex. santé, transports), tandis que d’autres ne mentionnent pas ce sujet.\n   - Exemple : *\"Le meilleur médecin est malheureusement l’avion\"* (Verbatim 60) suggère une critique des services locaux.\n\n---\n---\n\n### **Signaux faibles**\n1. **Mentions isolées mais potentiellement significatives**\n   - **Réseau mobile/internet** :\n     *\"La Corse souffre d’un très mauvais réseau\"* (Verbatim 24).\n   - **Sécurité** :\n     *\"Si on sort dans la rue et qu’on se fait agresser, ce n’est plus de la qualité de vie\"* (Verbatim 12).\n   - **Éducation et emploi** :\n     *\"Débouchés, multiplicité des offres\"* (Verbatim 56), *\"L’éducation est une notion fondamentale pour nos enfants\"* (Verbatim 97).\n   - **Culture** :\n     *\"Importance d’avoir accès à la culture, source d’émancipation",
+          "score": 1.0
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Santé': La santé : si on a pas la santé, on a rien dans la vie",
+          "score": 0.9
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Ratio vie pro/ vie perso': Le ratio vie pro et vie perso, car c’est important d’avoir un bon équilibre entre les deux",
+          "score": 0.8
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Education': D’éducation : importante dans la société d’aujourd’hui",
+          "score": 0.7
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 21 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Ratio vie pro/ vie perso': Le ratio vie pro/vie perso est important pour moi pour avoir un équilibre de vie sain car il ne faut pas que les deux se mélangent trop : une coupure est importante entre ces deux mondes.",
+          "score": 0.6
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 21 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Revenus': Les revenus permettent de me payer un logement, la nourriture et quelques plaisirs/loisirs à côté.",
+          "score": 0.5
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 21 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Logement': Le logement est important car il est impératif qu'il soit décent et qu'on s'y sente bien",
+          "score": 0.3999999999999999
+        },
+        {
+          "content": "Verbatim d'un(e) Femme de 23 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Revenus': revenu : sans revenu on ne peut rien faire, rien acheter, on ne peut pas vivre",
+          "score": 0.29999999999999993
+        }
+      ],
+      "scores": {
+        "binary": {
+          "score": null,
+          "detail": "Erreur LLM: Expecting ',' delimiter: line 8 column 4 (char 597)"
+        },
+        "judge": {
+          "pertinence": 5,
+          "fondement_factuel": 5,
+          "nuance_incertitude": 5,
+          "coherence_qualiquanti": 4,
+          "score_global": 4.75,
+          "justification": "La réponse traite parfaitement la question en s'appuyant rigoureusement sur les sources disponibles, tout en soulignant avec précision les limites des données qualitatives. L'équilibre quali/quanti est bien adapté, même si une approche quantitative plus poussée aurait été idéale pour une réponse exhaustive.",
+          "error": null
+        }
+      },
+      "robustness_group": ""
+    }
+  ],
+  "robustness": {
+    "reformulations_paraphrastiques": {
+      "mean_sim": null,
+      "min_sim": null,
+      "detail": "FlagEmbedding manquant",
+      "answers": []
+    },
+    "variations_syntaxiques": {
+      "mean_sim": null,
+      "min_sim": null,
+      "detail": "FlagEmbedding manquant",
+      "answers": []
+    },
+    "reformulations_indirectes": {
+      "mean_sim": null,
+      "min_sim": null,
+      "detail": "FlagEmbedding manquant",
+      "answers": []
+    },
+    "ambiguite_et_bruit_lexical": {
+      "mean_sim": null,
+      "min_sim": null,
+      "detail": "FlagEmbedding manquant",
+      "answers": []
+    }
+  }
+}

@@ -696,14 +696,33 @@
         .eval-log-line-ok  { color: #a8f0a8; }
         .eval-log-line-dim { color: #888; }
 
-        /* Résultat */
-        .eval-result-box {
+        /* Résultat évaluation */
+        .eval-result-banner {
             display: none; margin-top: 16px;
-            padding: 14px 18px;
+            padding: 12px 16px; gap: 12px;
             background: #e8f5e9; border: 1px solid #a5d6a7;
-            border-radius: 10px; display: none; align-items: center; gap: 14px;
+            border-radius: 10px; align-items: center; flex-wrap: wrap;
         }
-        .eval-result-box.visible { display: flex; }
+        .eval-result-banner.visible { display: flex; }
+        .eval-report {
+            display: none; margin-top: 20px;
+            border: 1px solid #dde; border-radius: 10px;
+            padding: 24px 28px; background: #fff;
+            max-height: 70vh; overflow-y: auto;
+            font-size: 14px; line-height: 1.7;
+        }
+        .eval-report.visible { display: block; }
+        .eval-report h1 { font-size: 22px; border-bottom: 2px solid #3a7bd5; padding-bottom: 6px; }
+        .eval-report h2 { font-size: 17px; color: #2c4f8a; margin-top: 28px; border-bottom: 1px solid #e0e6f5; padding-bottom: 4px; }
+        .eval-report h3 { font-size: 15px; color: #444; margin-top: 20px; }
+        .eval-report h4 { font-size: 13px; color: #555; margin-top: 14px; }
+        .eval-report blockquote { border-left: 3px solid #3a7bd5; padding: 4px 12px; color: #555; font-style: italic; margin: 8px 0; background: #f5f8ff; border-radius: 0 4px 4px 0; }
+        .eval-report table { border-collapse: collapse; width: 100%; margin: 10px 0; font-size: 13px; }
+        .eval-report th { background: #2f4f8f; color: #fff; padding: 6px 10px; text-align: left; }
+        .eval-report td { padding: 5px 10px; border: 1px solid #dde; }
+        .eval-report tr:nth-child(even) td { background: #f7f9ff; }
+        .eval-report hr { border: none; border-top: 1px solid #e0e6f5; margin: 20px 0; }
+        .eval-report code { background: #f0f0f0; padding: 1px 5px; border-radius: 3px; font-size: 12px; }
     </style>
 </head>
 <body>
@@ -1091,16 +1110,19 @@
                 <div id="evalLog" class="eval-log" style="margin-top:14px;"></div>
 
                 <!-- Résultat -->
-                <div id="evalResultBox" class="eval-result-box" style="display:none;">
+                <div id="evalResultBanner" class="eval-result-banner">
                     <span style="font-size:22px;">✅</span>
-                    <div>
+                    <div style="flex:1;">
                         <div style="font-weight:700;color:#2e7d32;margin-bottom:4px;">Évaluation terminée !</div>
                         <div id="evalResultPath" style="font-size:12px;color:#555;margin-bottom:8px;"></div>
-                        <button class="btn btn-green" id="evalDownloadBtn" onclick="evalDownload()">
-                            ⬇️ Télécharger le fichier Excel
-                        </button>
+                        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                            <button class="btn btn-green" onclick="evalDownloadMd()">⬇️ Télécharger .md</button>
+                            <button class="btn btn-blue"  onclick="evalExportPDF()">🖨️ Exporter PDF</button>
+                        </div>
                     </div>
                 </div>
+                <!-- Rapport Markdown inline -->
+                <div id="evalReport" class="eval-report"></div>
             </div>
 
         </div>
@@ -2933,7 +2955,9 @@ async function evalLaunch() {
     const log = document.getElementById('evalLog');
     log.innerHTML = '';
     log.classList.add('visible');
-    document.getElementById('evalResultBox').style.display = 'none';
+    document.getElementById('evalResultBanner').classList.remove('visible');
+    document.getElementById('evalReport').classList.remove('visible');
+    document.getElementById('evalReport').innerHTML = '';
     document.getElementById('evalLaunchBtn').disabled = true;
     document.getElementById('evalLaunchBtn').textContent = '⏳ En cours...';
 
@@ -2995,24 +3019,51 @@ function _evalLogLine(text, type) {
     log.scrollTop = log.scrollHeight;
 }
 
-function _evalJobDone(success) {
+async function _evalJobDone(success) {
     if (evalEventSrc) { evalEventSrc.close(); evalEventSrc = null; }
     document.getElementById('evalLaunchBtn').disabled = false;
     document.getElementById('evalLaunchBtn').textContent = '▶ Relancer l\'évaluation';
     if (success) {
-        const box = document.getElementById('evalResultBox');
-        box.style.display = 'flex';
-        document.getElementById('evalResultPath').textContent =
-            `comparaisons_rag/eval_from_excel_${document.getElementById('evalVersion').value}_...xlsx`;
         _evalLogLine('=== Évaluation terminée avec succès ===', 'ok');
+        // Afficher la bannière
+        document.getElementById('evalResultBanner').classList.add('visible');
+        const version = document.getElementById('evalVersion').value;
+        document.getElementById('evalResultPath').textContent =
+            `comparaisons_rag/eval_from_excel_${version}_...md`;
+        // Charger et rendre le rapport markdown
+        try {
+            const r = await fetch(`/api/eval/${evalJobId}/content`);
+            if (!r.ok) throw new Error(r.statusText);
+            const { content, filename } = await r.json();
+            document.getElementById('evalResultPath').textContent = filename;
+            const reportEl = document.getElementById('evalReport');
+            reportEl.innerHTML = marked.parse(content);
+            reportEl.classList.add('visible');
+        } catch (e) {
+            _evalLogLine(`[AVERTISSEMENT] Impossible de charger le rapport : ${e.message}`, 'err');
+        }
     } else {
         _evalLogLine('=== Évaluation terminée avec erreur ===', 'err');
     }
 }
 
-function evalDownload() {
+function evalDownloadMd() {
     if (!evalJobId) return;
     window.location.href = `/api/eval/${evalJobId}/result`;
+}
+
+async function evalExportPDF() {
+    const reportEl = document.getElementById('evalReport');
+    if (!reportEl.classList.contains('visible')) return;
+    const filename = document.getElementById('evalResultPath').textContent.replace(/\.md$/, '.pdf') || 'rapport_eval.pdf';
+    const opt = {
+        margin: [12, 14],
+        filename,
+        image: { type: 'jpeg', quality: 0.95 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+    };
+    html2pdf().set(opt).from(reportEl).save();
 }
 
 // Drag-and-drop sur le fichier Excel
