@@ -15,12 +15,19 @@ Date: 2025-11-17
 """
 
 import os
+import sys
+import json
+import asyncio
+import uuid
+import tempfile
+import subprocess
+import shutil
 from typing import Optional, List, Dict, Literal
 from datetime import datetime
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, HTTPException, status
+from fastapi import FastAPI, HTTPException, BackgroundTasks, UploadFile, File, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, StreamingResponse, FileResponse
 from pydantic import BaseModel, Field, ConfigDict
 import uvicorn
 from dotenv import load_dotenv
@@ -676,7 +683,7 @@ async def get_versions():
 
 
 @app.post("/api/query", response_model=QueryResponse, tags=["Query"])
-async def query_rag(request: QueryRequest):
+def query_rag(request: QueryRequest):
     """
     Pose une question au système RAG avec choix de version
 
@@ -896,7 +903,7 @@ async def query_rag(request: QueryRequest):
                     "opp_0_10": d["meta"].get("opp_0_10"),
                     "cho_0_10": d["meta"].get("cho_0_10"),
                     "vec_0_10": d["meta"].get("vec_0_10"),
-                    "extrait": d["text"][:400],
+                    "extrait": d["text"][:1500],
                 }
                 for i, d in enumerate(opp_docs)
             ]
@@ -928,7 +935,7 @@ async def query_rag(request: QueryRequest):
                         "opp_0_10": d["meta"].get("opp_0_10"),
                         "cho_0_10": d["meta"].get("cho_0_10"),
                         "vec_0_10": d["meta"].get("vec_0_10"),
-                        "extrait": d["text"][:400],
+                        "extrait": d["text"][:1500],
                     }
                     for i, d in enumerate(opp_docs_v10)
                 ]
@@ -937,7 +944,7 @@ async def query_rag(request: QueryRequest):
                 commune_docs = [d for d in opp_docs_v10 if d["meta"].get("oppchovec_0_10") is not None]
                 if commune_docs:
                     scores_lines = "\n".join(
-                        f"- {d['meta']['commune']} : OppChoVec={d['meta']['oppchovec_0_10']:.2f}/10 "
+                        f"- {d['meta'].get('commune') or d['meta'].get('zone', '?')} : OppChoVec={d['meta']['oppchovec_0_10']:.2f}/10 "
                         f"(Opp={d['meta']['opp_0_10']:.2f}, Cho={d['meta']['cho_0_10']:.2f}, "
                         f"Vec={d['meta']['vec_0_10']:.2f})"
                         for d in commune_docs
@@ -1034,7 +1041,8 @@ async def query_rag(request: QueryRequest):
         return response
 
     except Exception as e:
-        print(f"[{datetime.now().isoformat()}] ERREUR ({request.rag_version}): {str(e)}")
+        import traceback
+        traceback.print_exc()
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Erreur lors du traitement avec {request.rag_version}: {str(e)}"
@@ -1265,6 +1273,106 @@ async def browse_quanti_summaries():
         raise HTTPException(status_code=500, detail=str(e))
 
 
+@app.get("/api/browse/oppchovec", tags=["Browse"])
+async def browse_oppchovec(epci: Optional[str] = None, sort_by: str = "oppchovec_0_10"):
+    """Retourne les scores OppChoVec par commune, optionnellement filtrés par EPCI."""
+    try:
+        import chromadb as _chromadb
+        chroma = _chromadb.PersistentClient(path="./chroma_portrait")
+
+        # Communes individuelles
+        opp = chroma.get_collection("oppchovec_scores")
+        communes_res = opp.get(where={"source": "oppchovec_betti_0_10"}, include=["metadatas"])
+
+        # Mapping commune → EPCI depuis communes_geo
+        geo = chroma.get_collection("communes_geo")
+        geo_res = geo.get(include=["metadatas"])
+        epci_map = {m["commune"]: m.get("epci", "") for m in geo_res["metadatas"]}
+
+        communes = []
+        for m in communes_res["metadatas"]:
+            commune = m["commune"]
+            epci_val = epci_map.get(commune, "")
+            if epci and epci_val != epci:
+                continue
+            communes.append({
+                "commune":       commune,
+                "epci":          epci_val,
+                "score_global":  round(m.get("oppchovec_0_10", 0), 4),
+                "opp":           round(m.get("opp_0_10", 0), 4),
+                "cho":           round(m.get("cho_0_10", 0), 4),
+                "vec":           round(m.get("vec_0_10", 0), 4),
+                "rank_total":    m.get("rank_total"),
+                "rank_opp":      m.get("rank_opp"),
+                "rank_cho":      m.get("rank_cho"),
+                "rank_vec":      m.get("rank_vec"),
+            })
+
+        sort_key = {"oppchovec_0_10": "score_global", "opp_0_10": "opp",
+                    "cho_0_10": "cho", "vec_0_10": "vec"}.get(sort_by, "score_global")
+        communes.sort(key=lambda x: x[sort_key], reverse=True)
+
+        # Agrégats EPCI
+        agg_res = opp.get(where={"source": "oppchovec_aggregate"}, include=["metadatas"])
+        aggregates = [
+            {
+                "zone":      m["zone"],
+                "epci":      m.get("epci", ""),
+                "score_global": round(m.get("oppchovec_0_10", 0), 4),
+                "opp":       round(m.get("opp_0_10", 0), 4),
+                "cho":       round(m.get("cho_0_10", 0), 4),
+                "vec":       round(m.get("vec_0_10", 0), 4),
+                "nb_communes": m.get("nb_communes", 0),
+            }
+            for m in agg_res["metadatas"]
+        ]
+        aggregates.sort(key=lambda x: x["score_global"], reverse=True)
+
+        # Liste des EPCI disponibles
+        all_epcis = sorted(set(v for v in epci_map.values() if v))
+
+        return {
+            "total": len(communes),
+            "communes": communes,
+            "aggregates": aggregates,
+            "epcis": all_epcis,
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/browse/entretiens", tags=["Browse"])
+async def browse_entretiens(commune: Optional[str] = None):
+    """Retourne les entretiens qualitatifs, optionnellement filtrés par commune."""
+    try:
+        import chromadb as _chromadb
+        chroma = _chromadb.PersistentClient(path="./chroma_portrait")
+        col = chroma.get_collection("portrait_entretiens")
+
+        kwargs: dict = {"include": ["documents", "metadatas"]}
+        if commune:
+            kwargs["where"] = {"commune": {"$eq": commune}}
+
+        res = col.get(**kwargs)
+        entretiens: Dict[str, list] = {}
+        for doc, meta in zip(res["documents"], res["metadatas"]):
+            key = f"{meta.get('commune', '?')} — Entretien {meta.get('num_entretien', '?')}"
+            entretiens.setdefault(key, []).append({
+                "chunk_idx": meta.get("chunk_idx", 0),
+                "content":   doc,
+                "commune":   meta.get("commune", ""),
+                "num":       meta.get("num_entretien"),
+            })
+        # Trier les chunks par index
+        for k in entretiens:
+            entretiens[k].sort(key=lambda x: x["chunk_idx"])
+
+        communes_list = sorted(set(meta.get("commune", "") for meta in res["metadatas"] if meta.get("commune")))
+        return {"total_chunks": len(res["documents"]), "entretiens": entretiens, "communes": communes_list}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @app.get("/api/stats", tags=["Browse"])
 async def get_stats():
     """
@@ -1360,7 +1468,280 @@ async def get_stats():
     except Exception as e:
         result["enquete"] = {"error": str(e)}
 
+    # ── 4. OppChoVec (oppchovec_scores, ChromaDB) ─────────────────────────────
+    try:
+        chroma2 = _chromadb.PersistentClient(path="./chroma_portrait")
+        opp_col = chroma2.get_collection("oppchovec_scores")
+        opp_metas = opp_col.get(where={"source": "oppchovec_betti_0_10"}, include=["metadatas"])["metadatas"]
+        geo_col = chroma2.get_collection("communes_geo")
+        geo_metas = geo_col.get(include=["metadatas"])["metadatas"]
+        epci_map = {m["commune"]: m.get("epci", "") for m in geo_metas}
+
+        scores = [m.get("oppchovec_0_10", 0) for m in opp_metas]
+        par_epci = dict(Counter(epci_map.get(m["commune"], "Inconnu") for m in opp_metas).most_common())
+
+        result["oppchovec"] = {
+            "total":       len(opp_metas),
+            "score_moyen": round(sum(scores) / len(scores), 4) if scores else 0,
+            "score_max":   round(max(scores), 4) if scores else 0,
+            "score_min":   round(min(scores), 4) if scores else 0,
+            "par_epci":    par_epci,
+        }
+    except Exception as e:
+        result["oppchovec"] = {"error": str(e)}
+
+    # ── 5. Entretiens qualitatifs (portrait_entretiens, ChromaDB) ─────────────
+    try:
+        chroma3 = _chromadb.PersistentClient(path="./chroma_portrait")
+        ent_col = chroma3.get_collection("portrait_entretiens")
+        ent_metas = ent_col.get(include=["metadatas"])["metadatas"]
+        entretiens_par_commune = dict(Counter(m.get("commune", "?") for m in ent_metas).most_common())
+        n_entretiens = len(set((m.get("commune"), m.get("num_entretien")) for m in ent_metas))
+        result["entretiens"] = {
+            "total_chunks":       len(ent_metas),
+            "nb_entretiens":      n_entretiens,
+            "par_commune":        entretiens_par_commune,
+        }
+    except Exception as e:
+        result["entretiens"] = {"error": str(e)}
+
     return result
+
+
+# ════════════════════════════════════════════════════════════════
+# ENDPOINTS ÉVALUATION (eval_from_excel.py)
+# ════════════════════════════════════════════════════════════════
+
+# Stockage des jobs dans des fichiers temporaires (partagé entre workers uvicorn)
+_EVAL_JOBS_DIR = tempfile.gettempdir()
+
+
+def _job_state_path(job_id: str) -> str:
+    return os.path.join(_EVAL_JOBS_DIR, f"eval_job_{job_id}.json")
+
+
+def _job_lines_path(job_id: str) -> str:
+    return os.path.join(_EVAL_JOBS_DIR, f"eval_job_{job_id}_lines.txt")
+
+
+def _read_job_state(job_id: str) -> dict | None:
+    path = _job_state_path(job_id)
+    if not os.path.exists(path):
+        return None
+    try:
+        with open(path, encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return None
+
+
+def _write_job_state(job_id: str, state: dict):
+    path = _job_state_path(job_id)
+    tmp = path + ".tmp"
+    with open(tmp, "w", encoding="utf-8") as f:
+        json.dump(state, f)
+    os.replace(tmp, path)
+
+
+def _append_job_line(job_id: str, line: str):
+    with open(_job_lines_path(job_id), "a", encoding="utf-8") as f:
+        f.write(line + "\n")
+
+
+def _read_job_lines(job_id: str) -> list:
+    path = _job_lines_path(job_id)
+    if not os.path.exists(path):
+        return []
+    with open(path, encoding="utf-8") as f:
+        return [ln.rstrip("\n") for ln in f.readlines()]
+
+
+class EvalStartRequest(BaseModel):
+    excel_path: str
+    rag_version: str = "v10"
+    k: int = 7
+    rows: List[int] = []       # liste de numéros de ligne Excel (vide = toutes)
+    no_judge: bool = False
+    no_robust: bool = False
+    output_dir: str = "comparaisons_rag"
+
+
+async def _run_eval_subprocess(job_id: str, req: EvalStartRequest):
+    """Lance eval_from_excel.py en sous-processus et capture la sortie ligne par ligne."""
+    state = _read_job_state(job_id) or {"status": "running", "result_path": None, "error": None, "pid": None}
+    try:
+        python = sys.executable
+        script = os.path.join(os.path.dirname(__file__), "eval_from_excel.py")
+        cmd = [
+            python, script,
+            "--input", req.excel_path,
+            "--version", req.rag_version,
+            "--k", str(req.k),
+            "--output", req.output_dir,
+        ]
+        if req.rows:
+            cmd += ["--rows", ",".join(str(r) for r in req.rows)]
+        if req.no_judge:
+            cmd.append("--no-judge")
+        if req.no_robust:
+            cmd.append("--no-robust")
+
+        proc = await asyncio.create_subprocess_exec(
+            *cmd,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.STDOUT,
+            cwd=os.path.dirname(__file__),
+        )
+        state["pid"] = proc.pid
+        _write_job_state(job_id, state)
+
+        async for raw_line in proc.stdout:
+            line = raw_line.decode("utf-8", errors="replace").rstrip()
+            _append_job_line(job_id, line)
+            # Détecter le chemin Excel en sortie
+            if line.startswith("Excel sauvegarde :"):
+                state["result_path"] = line.split(":", 1)[1].strip()
+                _write_job_state(job_id, state)
+
+        await proc.wait()
+        state["status"] = "done" if proc.returncode == 0 else "error"
+        if proc.returncode != 0:
+            state["error"] = f"Processus terminé avec code {proc.returncode}"
+        _write_job_state(job_id, state)
+
+    except Exception as e:
+        state["status"] = "error"
+        state["error"] = str(e)
+        _append_job_line(job_id, f"[ERREUR] {e}")
+        _write_job_state(job_id, state)
+
+
+def _read_eval_excel(path: str) -> list:
+    """Lit un Excel d'évaluation et retourne la liste des questions avec leurs métriques."""
+    import openpyxl
+    wb = openpyxl.load_workbook(path)
+    ws = wb.active
+    questions = []
+    COL_METRIC_MAP = {4: "factual", 5: "binary", 6: "judge",
+                      7: "refusal", 8: "halluc", 9: "overconf", 10: "robust"}
+    for r in range(2, ws.max_row + 1):
+        q = ws.cell(r, 3).value
+        if not q:
+            continue
+        metrics = [name for col, name in COL_METRIC_MAP.items()
+                   if ws.cell(r, col).value == "X"]
+        questions.append({
+            "excel_row":  r,
+            "section":    ws.cell(r, 1).value or "",
+            "subsection": ws.cell(r, 2).value or "",
+            "question":   str(q).strip(),
+            "metrics":    metrics,
+        })
+    return questions
+
+
+class EvalPreviewRequest(BaseModel):
+    path: str
+
+
+@app.post("/api/eval/preview", tags=["Evaluation"])
+def eval_preview(req: EvalPreviewRequest):
+    """Retourne la liste des questions d'un fichier Excel d'évaluation (chemin serveur)."""
+    path = req.path.strip()
+    if not os.path.exists(path):
+        raise HTTPException(status_code=404, detail=f"Fichier introuvable : {path}")
+    try:
+        questions = _read_eval_excel(path)
+        return {"questions": questions, "total": len(questions)}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/eval/upload", tags=["Evaluation"])
+async def eval_upload(file: UploadFile = File(...)):
+    """Upload un fichier Excel d'évaluation — le stocke temporairement et retourne son chemin serveur."""
+    suffix = os.path.splitext(file.filename or "eval.xlsx")[1] or ".xlsx"
+    tmp_dir = os.path.join(tempfile.gettempdir(), "rag_eval_uploads")
+    os.makedirs(tmp_dir, exist_ok=True)
+    dest = os.path.join(tmp_dir, f"{uuid.uuid4().hex[:8]}{suffix}")
+    try:
+        content = await file.read()
+        with open(dest, "wb") as f:
+            f.write(content)
+        questions = _read_eval_excel(dest)
+        return {"server_path": dest, "questions": questions, "total": len(questions)}
+    except Exception as e:
+        if os.path.exists(dest):
+            os.remove(dest)
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/eval/start", tags=["Evaluation"])
+async def eval_start(req: EvalStartRequest, background_tasks: BackgroundTasks):
+    """Démarre un job d'évaluation en arrière-plan."""
+    if not os.path.exists(req.excel_path):
+        raise HTTPException(status_code=400, detail=f"Fichier introuvable : {req.excel_path}")
+    job_id = str(uuid.uuid4())[:8]
+    _write_job_state(job_id, {"status": "running", "result_path": None, "error": None, "pid": None})
+    open(_job_lines_path(job_id), "w").close()  # fichier de logs vide
+    background_tasks.add_task(_run_eval_subprocess, job_id, req)
+    return {"job_id": job_id}
+
+
+@app.get("/api/eval/{job_id}/stream", tags=["Evaluation"])
+async def eval_stream(job_id: str):
+    """SSE : flux de progression du job d'évaluation."""
+    if _read_job_state(job_id) is None:
+        raise HTTPException(status_code=404, detail="Job introuvable")
+
+    async def generate():
+        sent = 0
+        while True:
+            lines = _read_job_lines(job_id)
+            while sent < len(lines):
+                yield f"data: {lines[sent]}\n\n"
+                sent += 1
+            state = _read_job_state(job_id)
+            if state and state["status"] in ("done", "error"):
+                yield f"data: __STATUS__{state['status']}__\n\n"
+                if state.get("result_path"):
+                    yield f"data: __RESULT_PATH__{state['result_path']}__\n\n"
+                break
+            await asyncio.sleep(0.5)
+
+    return StreamingResponse(generate(), media_type="text/event-stream",
+                             headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"})
+
+
+@app.get("/api/eval/{job_id}/status", tags=["Evaluation"])
+async def eval_status(job_id: str):
+    """Statut d'un job d'évaluation."""
+    state = _read_job_state(job_id)
+    if state is None:
+        raise HTTPException(status_code=404, detail="Job introuvable")
+    return {
+        "job_id": job_id,
+        "status": state["status"],
+        "lines_count": len(_read_job_lines(job_id)),
+        "result_path": state.get("result_path"),
+        "error": state.get("error"),
+    }
+
+
+@app.get("/api/eval/{job_id}/result", tags=["Evaluation"])
+async def eval_result(job_id: str):
+    """Télécharge le fichier Excel résultat d'un job terminé."""
+    state = _read_job_state(job_id)
+    if state is None:
+        raise HTTPException(status_code=404, detail="Job introuvable")
+    if state["status"] != "done":
+        raise HTTPException(status_code=400, detail=f"Job non terminé (statut : {state['status']})")
+    path = state.get("result_path")
+    if not path or not os.path.exists(path):
+        raise HTTPException(status_code=404, detail="Fichier résultat introuvable")
+    filename = os.path.basename(path)
+    return FileResponse(path, filename=filename,
+                        media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
 
 
 # === POINT D'ENTRÉE ===

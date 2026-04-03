@@ -563,6 +563,147 @@
             padding: 12px 18px; background: #f8f9fa;
             border-top: 1px solid #e0e0e0; text-align: right; display: flex; gap: 8px; justify-content: flex-end;
         }
+
+        /* ── OppChoVec table ── */
+        .opp-table { width:100%; border-collapse:collapse; font-size:13px; }
+        .opp-table th {
+            text-align:left; padding:7px 10px; background:#f4f5ff;
+            border-bottom:2px solid #d0d4f7; color:#555; font-weight:600;
+            position:sticky; top:0;
+        }
+        .opp-table td { padding:6px 10px; border-bottom:1px solid #f0f0f0; }
+        .opp-table tr:hover td { background:#fafbff; }
+        .opp-score {
+            display:inline-block; padding:2px 7px; border-radius:6px;
+            font-weight:700; font-size:12px; white-space:nowrap;
+        }
+        .opp-score.high   { background:#e8f5e9; color:#2e7d32; }
+        .opp-score.medium { background:#fff3e0; color:#e65100; }
+        .opp-score.low    { background:#fce4ec; color:#c62828; }
+        .opp-agg-section { margin-top:20px; }
+        .opp-agg-section h4 { font-size:13px; font-weight:700; color:#667eea; margin-bottom:8px; }
+        .opp-epci-grid { display:flex; flex-wrap:wrap; gap:8px; }
+        .opp-epci-card {
+            border:1px solid #dde; border-radius:8px; padding:10px 14px;
+            background:#f8f9ff; min-width:200px; flex:1;
+        }
+        .opp-epci-card .epci-name { font-weight:600; font-size:12px; color:#333; margin-bottom:6px; }
+        .opp-epci-card .epci-scores { display:flex; gap:6px; flex-wrap:wrap; }
+
+        /* ── Entretiens ── */
+        .entretien-group { border:1px solid #dde; border-radius:9px; margin-bottom:10px; overflow:hidden; }
+        .entretien-header {
+            display:flex; align-items:center; justify-content:space-between;
+            padding:9px 14px; background:#f0f2ff; cursor:pointer; user-select:none;
+            font-size:13px; font-weight:600; color:#333;
+        }
+        .entretien-header:hover { background:#e6eaff; }
+        .entretien-body { display:none; padding:12px 16px; font-size:13px; line-height:1.6; color:#444; }
+        .entretien-body.open { display:block; }
+        .entretien-chunk { padding:8px 0; border-bottom:1px dashed #eee; }
+        .entretien-chunk:last-child { border-bottom:none; }
+        .entretien-chunk-num { font-size:11px; color:#999; margin-bottom:4px; }
+
+        /* ══════════════════════════════════════════════
+           ONGLET ÉVALUATION
+        ══════════════════════════════════════════════ */
+        .eval-panel { padding: 24px; }
+        .eval-section {
+            background: #f8f9fa; border: 1px solid #e4e6f0;
+            border-radius: 12px; padding: 18px 20px; margin-bottom: 18px;
+        }
+        .eval-section h3 {
+            font-size: 14px; font-weight: 700; color: #667eea;
+            margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+        }
+        .eval-path-row {
+            display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+        }
+        .eval-path-row input[type="text"] {
+            flex: 1; min-width: 260px; padding: 8px 12px;
+            border: 1px solid #ddd; border-radius: 7px; font-size: 13px;
+        }
+        .eval-opts-grid {
+            display: flex; flex-wrap: wrap; gap: 14px; align-items: center; font-size: 13px;
+        }
+        .eval-opts-grid label { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+        .eval-opts-grid select, .eval-opts-grid input[type="number"] {
+            padding: 5px 8px; border: 1px solid #ddd; border-radius: 6px;
+            background: white; font-size: 13px;
+        }
+        .eval-opts-grid input[type="checkbox"] { cursor: pointer; }
+
+        /* Question list */
+        .eval-section-group {
+            border: 1px solid #dde; border-radius: 9px;
+            margin-bottom: 10px; overflow: hidden;
+        }
+        .eval-section-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 9px 14px; background: #f0f2ff;
+            cursor: pointer; user-select: none;
+            font-size: 13px; font-weight: 600; color: #333;
+        }
+        .eval-section-header:hover { background: #e6eaff; }
+        .eval-section-header-left { display: flex; align-items: center; gap: 8px; }
+        .eval-section-badge {
+            background: #667eea; color: white;
+            border-radius: 10px; padding: 1px 9px; font-size: 11px; font-weight: 700;
+        }
+        .eval-section-body { display: none; }
+        .eval-section-body.open { display: block; }
+        .eval-q-item {
+            display: flex; align-items: flex-start; gap: 8px;
+            padding: 7px 14px; border-top: 1px solid #eee; font-size: 12px;
+        }
+        .eval-q-item:hover { background: #fafbff; }
+        .eval-q-item input[type="checkbox"] { margin-top: 3px; flex-shrink: 0; cursor: pointer; }
+        .eval-q-item label { cursor: pointer; flex: 1; display: flex; flex-direction: column; gap: 3px; }
+        .eval-q-text { color: #333; line-height: 1.4; }
+        .eval-q-subsection { font-size: 11px; color: #999; font-style: italic; }
+        .eval-metric-badges { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 3px; }
+        .eval-badge {
+            padding: 1px 6px; border-radius: 8px; font-size: 10px; font-weight: 700;
+        }
+        .eval-badge.factual    { background: #e3f2fd; color: #1565c0; }
+        .eval-badge.binary     { background: #e8f5e9; color: #2e7d32; }
+        .eval-badge.judge      { background: #f3e5f5; color: #6a1b9a; }
+        .eval-badge.refusal    { background: #fff3e0; color: #e65100; }
+        .eval-badge.robust     { background: #fce4ec; color: #880e4f; }
+
+        /* Barre de sélection */
+        .eval-select-bar {
+            display: flex; gap: 8px; align-items: center; margin-bottom: 12px;
+        }
+        .eval-select-bar button {
+            font-size: 11px; padding: 3px 10px; border: 1px solid #ccc;
+            border-radius: 4px; background: #f5f5f5; cursor: pointer;
+        }
+        .eval-select-bar button:hover { background: #e8e8e8; }
+        .eval-select-bar span { font-size: 12px; color: #888; }
+
+        /* Log de progression */
+        .eval-log {
+            background: #1a1a2e; color: #a8d8a8;
+            border-radius: 10px; padding: 14px 16px;
+            font-family: 'Courier New', monospace; font-size: 12px;
+            max-height: 320px; overflow-y: auto;
+            white-space: pre-wrap; word-break: break-word;
+            display: none;
+        }
+        .eval-log.visible { display: block; }
+        .eval-log-line-err { color: #ff9898; }
+        .eval-log-line-ok  { color: #a8f0a8; }
+        .eval-log-line-dim { color: #888; }
+
+        /* Résultat */
+        .eval-result-box {
+            display: none; margin-top: 16px;
+            padding: 14px 18px;
+            background: #e8f5e9; border: 1px solid #a5d6a7;
+            border-radius: 10px; display: none; align-items: center; gap: 14px;
+        }
+        .eval-result-box.visible { display: flex; }
     </style>
 </head>
 <body>
@@ -576,6 +717,7 @@
             <button class="tab-btn active" onclick="switchTab('chat')">💬 Chat</button>
             <button class="tab-btn"        onclick="switchTab('batch')">📊 Traitement par lot</button>
             <button class="tab-btn"        onclick="switchTab('explore')">🔍 Exploration</button>
+            <button class="tab-btn"        onclick="switchTab('eval')">🧪 Évaluation</button>
         </div>
     </div>
 
@@ -776,11 +918,17 @@
                     <button class="explore-tab-btn active" onclick="switchExploreTab('verbatims')">
                         💬 Verbatims&nbsp;<span id="verbatimsCount" style="font-weight:400;"></span>
                     </button>
+                    <button class="explore-tab-btn" onclick="switchExploreTab('entretiens')">
+                        🎤 Entretiens&nbsp;<span id="entretiensCount" style="font-weight:400;"></span>
+                    </button>
                     <button class="explore-tab-btn" onclick="switchExploreTab('summaries')">
                         📊 Synthèses RAPTOR&nbsp;<span id="summariesCount" style="font-weight:400;"></span>
                     </button>
                     <button class="explore-tab-btn" onclick="switchExploreTab('quantitative')">
                         📈 Données quanti&nbsp;<span id="quantiCount" style="font-weight:400;"></span>
+                    </button>
+                    <button class="explore-tab-btn" onclick="switchExploreTab('oppchovec')">
+                        🏆 OppChoVec&nbsp;<span id="oppchovecCount" style="font-weight:400;"></span>
                     </button>
                     <button class="explore-tab-btn" onclick="switchExploreTab('stats')">
                         🔢 Effectifs
@@ -791,8 +939,39 @@
                     <div id="verbatimsList"><div class="explore-loading">Sélectionnez l'onglet Exploration pour charger les données.</div></div>
                 </div>
 
+                <!-- Entretiens -->
+                <div id="explore-panel-entretiens" class="explore-panel">
+                    <div style="display:flex;gap:10px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+                        <select id="fEntretiensCommune" style="padding:6px 10px;border:1px solid #ddd;border-radius:6px;font-size:13px;">
+                            <option value="">Toutes communes</option>
+                        </select>
+                        <button onclick="loadEntretiens()" style="padding:6px 14px;background:#667eea;color:white;border:none;border-radius:6px;cursor:pointer;font-size:13px;">🔍 Filtrer</button>
+                        <button onclick="document.getElementById('fEntretiensCommune').value='';loadEntretiens()" style="padding:6px 14px;background:#eee;color:#555;border:none;border-radius:6px;cursor:pointer;font-size:13px;">↺</button>
+                    </div>
+                    <div id="entretiensList"><div class="explore-loading">Chargement...</div></div>
+                </div>
+
                 <div id="explore-panel-summaries" class="explore-panel">
                     <div id="summariesList"><div class="explore-loading">Chargement...</div></div>
+                </div>
+
+                <!-- OppChoVec -->
+                <div id="explore-panel-oppchovec" class="explore-panel">
+                    <div style="display:flex;gap:10px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+                        <select id="fOppEpci" style="padding:6px 10px;border:1px solid #ddd;border-radius:6px;font-size:13px;min-width:200px;">
+                            <option value="">Tous les EPCI</option>
+                        </select>
+                        <select id="fOppSort" style="padding:6px 10px;border:1px solid #ddd;border-radius:6px;font-size:13px;">
+                            <option value="oppchovec_0_10">Trier par Score global</option>
+                            <option value="opp_0_10">Trier par Opportunités (Opp)</option>
+                            <option value="cho_0_10">Trier par Choix (Cho)</option>
+                            <option value="vec_0_10">Trier par Vécu (Vec)</option>
+                        </select>
+                        <button onclick="loadOppChovec()" style="padding:6px 14px;background:#667eea;color:white;border:none;border-radius:6px;cursor:pointer;font-size:13px;">🔍 Filtrer</button>
+                        <button onclick="document.getElementById('fOppEpci').value='';loadOppChovec()" style="padding:6px 14px;background:#eee;color:#555;border:none;border-radius:6px;cursor:pointer;font-size:13px;">↺</button>
+                        <span id="oppchovecStats" style="font-size:12px;color:#888;margin-left:auto;"></span>
+                    </div>
+                    <div id="oppchovecList"><div class="explore-loading">Chargement...</div></div>
                 </div>
 
                 <div id="explore-panel-stats" class="explore-panel">
@@ -843,6 +1022,90 @@
         </div>
     </div>
 
+    <!-- ════════════════════════════════════════
+         ONGLET ÉVALUATION
+    ════════════════════════════════════════ -->
+    <div class="tab-panel" id="panel-eval">
+        <div class="eval-panel">
+
+            <!-- ── 1. Paramètres ── -->
+            <div class="eval-section">
+                <h3>⚙️ Paramètres</h3>
+                <div class="eval-opts-grid" style="margin-bottom:12px;">
+                    <label style="flex:1;">
+                        Fichier Excel :
+                        <input type="text" id="evalExcelPath" style="width:100%;max-width:420px;"
+                               value="C:\Users\comiti_g\Downloads\rag_evaluation_with_metrics_full.xlsx"
+                               placeholder="Chemin absolu ou nom du fichier uploadé">
+                    </label>
+                    <button class="btn btn-blue" onclick="evalLoadQuestions()" style="padding:6px 14px;font-size:13px;">
+                        📂 Charger les questions
+                    </button>
+                    <button class="btn btn-blue" id="evalBrowseBtn" onclick="evalBrowseFile()" style="padding:6px 14px;font-size:13px;background:#5c9ee8;">
+                        📁 Parcourir...
+                    </button>
+                </div>
+                <div class="eval-opts-grid">
+                    <label>Version RAG :
+                        <select id="evalVersion">
+                            <option value="v9">v9 — RAPTOR-lite</option>
+                            <option value="v10" selected>v10 — RAPTOR + Sous-questions</option>
+                        </select>
+                    </label>
+                    <label>Sources k :
+                        <input type="number" id="evalK" value="7" min="1" max="15" style="width:55px;">
+                    </label>
+                    <label>
+                        <input type="checkbox" id="evalNoJudge">
+                        Sans juge LLM <span style="color:#999;font-size:11px;">(plus rapide)</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="evalNoRobust">
+                        Sans robustesse sémantique
+                    </label>
+                </div>
+            </div>
+
+            <!-- ── 2. Sélection des questions ── -->
+            <div class="eval-section" id="evalQuestionsSection" style="display:none;">
+                <h3>📋 Questions <span id="evalQCountLabel" style="font-size:12px;font-weight:400;color:#888;"></span></h3>
+                <div class="eval-select-bar">
+                    <button onclick="evalSelectAll(true)">✅ Tout sélectionner</button>
+                    <button onclick="evalSelectAll(false)">☐ Tout désélectionner</button>
+                    <span id="evalSelectedCount"></span>
+                </div>
+                <div id="evalQuestionsList"></div>
+            </div>
+
+            <!-- ── 3. Lancement ── -->
+            <div class="eval-section" id="evalLaunchSection" style="display:none;">
+                <h3>🚀 Lancement</h3>
+                <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+                    <button class="btn btn-purple" id="evalLaunchBtn" onclick="evalLaunch()">
+                        ▶ Lancer l'évaluation
+                    </button>
+                    <span id="evalLaunchInfo" style="font-size:13px;color:#666;"></span>
+                </div>
+
+                <!-- Log en temps réel -->
+                <div id="evalLog" class="eval-log" style="margin-top:14px;"></div>
+
+                <!-- Résultat -->
+                <div id="evalResultBox" class="eval-result-box" style="display:none;">
+                    <span style="font-size:22px;">✅</span>
+                    <div>
+                        <div style="font-weight:700;color:#2e7d32;margin-bottom:4px;">Évaluation terminée !</div>
+                        <div id="evalResultPath" style="font-size:12px;color:#555;margin-bottom:8px;"></div>
+                        <button class="btn btn-green" id="evalDownloadBtn" onclick="evalDownload()">
+                            ⬇️ Télécharger le fichier Excel
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 </div><!-- /.container -->
 
 <!-- ── Modal contexte LLM ── -->
@@ -884,7 +1147,7 @@ let parsedWorkbook   = null; // pour accès aux colonnes
 ═══════════════════════════════════════════════════════════ */
 function switchTab(name) {
     document.querySelectorAll('.tab-btn').forEach((b, i) => {
-        b.classList.toggle('active', ['chat', 'batch', 'explore'][i] === name);
+        b.classList.toggle('active', ['chat', 'batch', 'explore', 'eval'][i] === name);
     });
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
     document.getElementById('panel-' + name).classList.add('active');
@@ -1773,6 +2036,35 @@ async function loadStats() {
             }));
         }
 
+        // ── Section OppChoVec ──
+        if (data.oppchovec && !data.oppchovec.error) {
+            const opp = data.oppchovec;
+            container.appendChild(makeSection('🏆 Scores OppChoVec', opp.total + ' communes', body => {
+                const info = document.createElement('div');
+                info.style = 'display:flex;gap:20px;flex-wrap:wrap;margin-bottom:12px;font-size:13px;';
+                [
+                    ['Score moyen', opp.score_moyen + ' /10'],
+                    ['Score max',   opp.score_max   + ' /10'],
+                    ['Score min',   opp.score_min   + ' /10'],
+                ].forEach(([label, val]) => {
+                    const d = document.createElement('div');
+                    d.innerHTML = `<span style="color:#888;">${label} : </span><strong>${val}</strong>`;
+                    info.appendChild(d);
+                });
+                body.appendChild(info);
+                body.appendChild(makeTable(opp.par_epci, 'EPCI', opp.total));
+            }));
+        }
+
+        // ── Section Entretiens ──
+        if (data.entretiens && !data.entretiens.error) {
+            const ent = data.entretiens;
+            container.appendChild(makeSection('🎤 Entretiens qualitatifs',
+                    `${ent.nb_entretiens} entretiens · ${ent.total_chunks} extraits`, body => {
+                body.appendChild(makeTable(ent.par_commune, 'Commune (extraits)', ent.total_chunks));
+            }));
+        }
+
         statsLoaded = true;
     } catch(e) {
         container.innerHTML = `<div class="explore-loading" style="color:red;">Erreur : ${e.message}</div>`;
@@ -1781,12 +2073,15 @@ async function loadStats() {
 
 function switchExploreTab(name) {
     document.querySelectorAll('.explore-tab-btn').forEach((b, i) => {
-        b.classList.toggle('active', ['verbatims', 'summaries', 'quantitative', 'stats'][i] === name);
+        b.classList.toggle('active',
+            ['verbatims', 'entretiens', 'summaries', 'quantitative', 'oppchovec', 'stats'][i] === name);
     });
     document.querySelectorAll('.explore-panel').forEach(p => p.classList.remove('active'));
     document.getElementById('explore-panel-' + name).classList.add('active');
     if (name === 'quantitative' && !quantiInitialized) loadQuantitative();
     if (name === 'stats') loadStats();
+    if (name === 'entretiens' && !entretiensInitialized) loadEntretiens();
+    if (name === 'oppchovec' && !oppchovecInitialized) loadOppChovec();
 }
 
 async function searchVerbatims() {
@@ -2244,10 +2539,508 @@ function resetExploreFilters() {
 }
 
 /* ═══════════════════════════════════════════════════════════
+   OPPCHOVEC
+═══════════════════════════════════════════════════════════ */
+let oppchovecInitialized = false;
+
+function oppScoreClass(s) {
+    return s >= 6 ? 'high' : s >= 3.5 ? 'medium' : 'low';
+}
+
+async function loadOppChovec() {
+    const container = document.getElementById('oppchovecList');
+    container.innerHTML = '<div class="explore-loading">Chargement...</div>';
+    const epci    = document.getElementById('fOppEpci').value;
+    const sort_by = document.getElementById('fOppSort').value;
+
+    const params = new URLSearchParams();
+    if (epci)    params.set('epci', epci);
+    if (sort_by) params.set('sort_by', sort_by);
+
+    try {
+        const r    = await fetch('/api/browse/oppchovec?' + params.toString());
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        const data = await r.json();
+
+        // Remplir le sélecteur EPCI (une seule fois)
+        if (!oppchovecInitialized) {
+            const sel = document.getElementById('fOppEpci');
+            data.epcis.forEach(e => {
+                const o = document.createElement('option');
+                o.value = o.textContent = e;
+                sel.appendChild(o);
+            });
+        }
+        oppchovecInitialized = true;
+
+        document.getElementById('oppchovecCount').textContent = `(${data.total})`;
+        document.getElementById('oppchovecStats').textContent =
+            data.communes.length > 0
+            ? `Moy. ${(data.communes.reduce((s,c)=>s+c.score_global,0)/data.communes.length).toFixed(2)}/10`
+            : '';
+
+        container.innerHTML = '';
+
+        // ── Tableau communes ──
+        if (data.communes.length === 0) {
+            container.innerHTML = '<div class="explore-loading">Aucune commune.</div>';
+            return;
+        }
+        const table = document.createElement('table');
+        table.className = 'opp-table';
+        table.innerHTML = `<thead><tr>
+            <th>Rang</th><th>Commune</th><th>EPCI</th>
+            <th>Global /10</th><th>Opp /10</th><th>Cho /10</th><th>Vec /10</th>
+        </tr></thead><tbody></tbody>`;
+        const tbody = table.querySelector('tbody');
+        data.communes.forEach((c, i) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td style="color:#999;font-size:11px;">#${c.rank_total ?? i+1}</td>
+                <td><strong>${escHtml(c.commune)}</strong></td>
+                <td style="font-size:11px;color:#888;">${escHtml(c.epci||'—')}</td>
+                <td><span class="opp-score ${oppScoreClass(c.score_global)}">${c.score_global.toFixed(2)}</span></td>
+                <td style="color:#555;">${c.opp.toFixed(2)}</td>
+                <td style="color:#555;">${c.cho.toFixed(2)}</td>
+                <td style="color:#555;">${c.vec.toFixed(2)}</td>`;
+            tbody.appendChild(tr);
+        });
+        container.appendChild(table);
+
+        // ── Agrégats EPCI ──
+        if (data.aggregates && data.aggregates.length > 0 && !epci) {
+            const aggSec = document.createElement('div');
+            aggSec.className = 'opp-agg-section';
+            aggSec.innerHTML = '<h4>📊 Scores moyens par EPCI</h4>';
+            const grid = document.createElement('div');
+            grid.className = 'opp-epci-grid';
+            data.aggregates.forEach(a => {
+                const card = document.createElement('div');
+                card.className = 'opp-epci-card';
+                card.innerHTML = `
+                    <div class="epci-name">${escHtml(a.zone)}</div>
+                    <div class="epci-scores">
+                        <span class="opp-score ${oppScoreClass(a.score_global)}">${a.score_global.toFixed(2)}</span>
+                        <span style="font-size:11px;color:#888;">Opp ${a.opp.toFixed(2)}</span>
+                        <span style="font-size:11px;color:#888;">Cho ${a.cho.toFixed(2)}</span>
+                        <span style="font-size:11px;color:#888;">Vec ${a.vec.toFixed(2)}</span>
+                        <span style="font-size:10px;color:#bbb;">${a.nb_communes} communes</span>
+                    </div>`;
+                grid.appendChild(card);
+            });
+            aggSec.appendChild(grid);
+            container.appendChild(aggSec);
+        }
+    } catch(e) {
+        container.innerHTML = `<div class="explore-loading" style="color:red;">Erreur : ${e.message}</div>`;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ENTRETIENS
+═══════════════════════════════════════════════════════════ */
+let entretiensInitialized = false;
+
+async function loadEntretiens() {
+    const container = document.getElementById('entretiensList');
+    container.innerHTML = '<div class="explore-loading">Chargement...</div>';
+    const commune = document.getElementById('fEntretiensCommune').value;
+
+    const params = new URLSearchParams();
+    if (commune) params.set('commune', commune);
+
+    try {
+        const r    = await fetch('/api/browse/entretiens?' + params.toString());
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        const data = await r.json();
+
+        // Remplir le sélecteur commune (une seule fois)
+        if (!entretiensInitialized) {
+            const sel = document.getElementById('fEntretiensCommune');
+            data.communes.forEach(c => {
+                const o = document.createElement('option');
+                o.value = o.textContent = c;
+                sel.appendChild(o);
+            });
+            entretiensInitialized = true;
+        }
+
+        document.getElementById('entretiensCount').textContent =
+            `(${Object.keys(data.entretiens).length} entretiens)`;
+        container.innerHTML = '';
+
+        if (Object.keys(data.entretiens).length === 0) {
+            container.innerHTML = '<div class="explore-loading">Aucun entretien trouvé.</div>';
+            return;
+        }
+
+        Object.entries(data.entretiens).forEach(([title, chunks]) => {
+            const group = document.createElement('div');
+            group.className = 'entretien-group';
+            const hdr = document.createElement('div');
+            hdr.className = 'entretien-header';
+            hdr.innerHTML = `<span>${escHtml(title)}</span>
+                <span style="font-size:11px;color:#888;">${chunks.length} extrait${chunks.length>1?'s':''}</span>`;
+            const body = document.createElement('div');
+            body.className = 'entretien-body';
+            hdr.onclick = () => body.classList.toggle('open');
+
+            chunks.forEach((c, i) => {
+                const chunk = document.createElement('div');
+                chunk.className = 'entretien-chunk';
+                chunk.innerHTML = `<div class="entretien-chunk-num">Extrait ${i+1}</div>
+                    <div>${escHtml(c.content)}</div>`;
+                body.appendChild(chunk);
+            });
+            group.appendChild(hdr);
+            group.appendChild(body);
+            container.appendChild(group);
+        });
+    } catch(e) {
+        container.innerHTML = `<div class="explore-loading" style="color:red;">Erreur : ${e.message}</div>`;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════
    INIT
 ═══════════════════════════════════════════════════════════ */
 loadVersions();
 document.getElementById('questionInput').focus();
+
+/* ═══════════════════════════════════════════════════════════
+   ONGLET ÉVALUATION
+═══════════════════════════════════════════════════════════ */
+let evalQuestions = [];   // {excel_row, section, subsection, question, metrics[]}
+let evalJobId     = null;
+let evalEventSrc  = null;
+
+const METRIC_LABELS = {
+    do_factual:  { label: 'Factual',  cls: 'factual'  },
+    do_binary:   { label: 'Binary',   cls: 'binary'   },
+    do_judge:    { label: 'Judge',    cls: 'judge'    },
+    do_refusal:  { label: 'Refusal',  cls: 'refusal'  },
+    do_halluc:   { label: 'Halluc.',  cls: 'refusal'  },
+    do_overconf: { label: 'Overconf.',cls: 'refusal'  },
+    do_robust:   { label: 'Robust.',  cls: 'robust'   },
+};
+
+// ── Chargement de l'Excel ──
+// Deux modes : chemin absolu connu (preview) ou fichier uploadé (upload)
+async function evalLoadQuestions() {
+    const path = document.getElementById('evalExcelPath').value.trim();
+    if (!path) return;
+
+    const btn = document.querySelector('[onclick="evalLoadQuestions()"]');
+    btn.disabled = true;
+    btn.textContent = '⏳ Chargement...';
+
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000); // 15s max
+
+    try {
+        const resp = await fetch('/api/eval/preview', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ path }),
+            signal: controller.signal,
+        });
+        clearTimeout(timeout);
+        if (!resp.ok) {
+            const err = await resp.json().catch(() => ({}));
+            throw new Error(err.detail || resp.statusText);
+        }
+        const data = await resp.json();
+        document.getElementById('evalExcelPath').setAttribute('data-abs-path', path);
+        evalQuestions = data.questions.map(q => ({
+            ...q,
+            metrics: (q.metrics || []).map(m => 'do_' + m),
+        }));
+        _evalRenderQuestions();
+    } catch (e) {
+        clearTimeout(timeout);
+        if (e.name === 'AbortError') {
+            alert('Le serveur est occupé (une évaluation RAG est probablement en cours).\n\nSolution : attendez la fin de l\'évaluation en cours, ou utilisez le bouton "Parcourir" pour uploader le fichier directement.');
+        } else {
+            alert(`Impossible de lire le fichier : ${e.message}\n\nUtilisez le bouton "Parcourir" pour sélectionner le fichier.`);
+        }
+    } finally {
+        btn.disabled = false;
+        btn.textContent = '📂 Charger les questions';
+    }
+}
+
+async function evalBrowseFile() {
+    const inp = document.createElement('input');
+    inp.type = 'file';
+    inp.accept = '.xlsx,.xls';
+    inp.style.display = 'none';
+    inp.onchange = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const btn = document.getElementById('evalBrowseBtn');
+        btn.disabled = true;
+        btn.textContent = '⏳ Upload...';
+        const uploadCtrl = new AbortController();
+        const uploadTimeout = setTimeout(() => uploadCtrl.abort(), 20000);
+        try {
+            const form = new FormData();
+            form.append('file', file);
+            const resp = await fetch('/api/eval/upload', { method: 'POST', body: form, signal: uploadCtrl.signal });
+            clearTimeout(uploadTimeout);
+            if (!resp.ok) {
+                const err = await resp.json().catch(() => ({}));
+                throw new Error(err.detail || resp.statusText);
+            }
+            const data = await resp.json();
+            document.getElementById('evalExcelPath').value = file.name;
+            document.getElementById('evalExcelPath').setAttribute('data-abs-path', data.server_path);
+            evalQuestions = data.questions.map(q => ({
+                ...q,
+                metrics: (q.metrics || []).map(m => 'do_' + m),
+            }));
+            _evalRenderQuestions();
+        } catch (e) {
+            clearTimeout(uploadTimeout);
+            if (e.name === 'AbortError') {
+                alert('Le serveur est occupé. Réessayez quand l\'évaluation en cours sera terminée.');
+            } else {
+                alert(`Erreur upload : ${e.message}`);
+            }
+        } finally {
+            btn.disabled = false;
+            btn.textContent = '📁 Parcourir...';
+        }
+    };
+    document.body.appendChild(inp);
+    inp.click();
+    document.body.removeChild(inp);
+}
+
+function _evalRenderQuestions() {
+    const container = document.getElementById('evalQuestionsList');
+    container.innerHTML = '';
+
+    // Grouper par section
+    const groups = {};
+    for (const q of evalQuestions) {
+        if (!groups[q.section]) groups[q.section] = [];
+        groups[q.section].push(q);
+    }
+
+    for (const [section, qs] of Object.entries(groups)) {
+        const groupDiv = document.createElement('div');
+        groupDiv.className = 'eval-section-group';
+
+        const header = document.createElement('div');
+        header.className = 'eval-section-header';
+        header.innerHTML = `
+            <div class="eval-section-header-left">
+                <input type="checkbox" checked onchange="evalToggleSection('${section}', this.checked)" onclick="event.stopPropagation()">
+                <span>${section}</span>
+                <span class="eval-section-badge">${qs.length}</span>
+            </div>
+            <span style="font-size:11px;color:#888;">▼</span>`;
+        header.addEventListener('click', (e) => {
+            if (e.target.tagName === 'INPUT') return;
+            const body = groupDiv.querySelector('.eval-section-body');
+            body.classList.toggle('open');
+        });
+
+        const body = document.createElement('div');
+        body.className = 'eval-section-body open';
+
+        for (const q of qs) {
+            const item = document.createElement('div');
+            item.className = 'eval-q-item';
+            const metricBadges = q.metrics.map(m => {
+                const info = METRIC_LABELS[m];
+                return info ? `<span class="eval-badge ${info.cls}">${info.label}</span>` : '';
+            }).join('');
+            item.innerHTML = `
+                <input type="checkbox" class="eval-q-cb" data-row="${q.excel_row}" checked
+                       onchange="evalUpdateCount()">
+                <label>
+                    <span class="eval-q-text">${q.question}</span>
+                    <span class="eval-q-subsection">${q.subsection}</span>
+                    <div class="eval-metric-badges">${metricBadges}</div>
+                </label>`;
+            body.appendChild(item);
+        }
+
+        groupDiv.appendChild(header);
+        groupDiv.appendChild(body);
+        container.appendChild(groupDiv);
+    }
+
+    document.getElementById('evalQuestionsSection').style.display = 'block';
+    document.getElementById('evalLaunchSection').style.display = 'block';
+    document.getElementById('evalQCountLabel').textContent =
+        `— ${evalQuestions.length} questions au total`;
+    evalUpdateCount();
+}
+
+function evalToggleSection(section, checked) {
+    document.querySelectorAll('.eval-q-cb').forEach(cb => {
+        const row = parseInt(cb.dataset.row);
+        const q = evalQuestions.find(q => q.excel_row === row);
+        if (q && q.section === section) {
+            cb.checked = checked;
+        }
+    });
+    evalUpdateCount();
+}
+
+function evalSelectAll(checked) {
+    document.querySelectorAll('.eval-q-cb').forEach(cb => cb.checked = checked);
+    // Sync section checkboxes
+    document.querySelectorAll('.eval-section-header input[type=checkbox]')
+        .forEach(cb => cb.checked = checked);
+    evalUpdateCount();
+}
+
+function evalUpdateCount() {
+    const total    = document.querySelectorAll('.eval-q-cb').length;
+    const selected = document.querySelectorAll('.eval-q-cb:checked').length;
+    document.getElementById('evalSelectedCount').textContent = `${selected} / ${total} sélectionnées`;
+    document.getElementById('evalLaunchInfo').textContent =
+        selected > 0 ? `${selected} question${selected > 1 ? 's' : ''} à évaluer` : 'Sélectionnez au moins une question';
+}
+
+// ── Lancement ──
+async function evalLaunch() {
+    const selectedRows = [...document.querySelectorAll('.eval-q-cb:checked')]
+        .map(cb => parseInt(cb.dataset.row));
+    if (selectedRows.length === 0) {
+        alert('Sélectionnez au moins une question.');
+        return;
+    }
+
+    // Chemin absolu stocké lors du chargement (preview ou upload)
+    const inp = document.getElementById('evalExcelPath');
+    const excelPath = inp.getAttribute('data-abs-path') || inp.value;
+
+    const payload = {
+        excel_path:  excelPath,
+        rag_version: document.getElementById('evalVersion').value,
+        k:           parseInt(document.getElementById('evalK').value) || 7,
+        rows:        selectedRows,
+        no_judge:    document.getElementById('evalNoJudge').checked,
+        no_robust:   document.getElementById('evalNoRobust').checked,
+        output_dir:  'comparaisons_rag',
+    };
+
+    // Réinitialiser l'UI
+    const log = document.getElementById('evalLog');
+    log.innerHTML = '';
+    log.classList.add('visible');
+    document.getElementById('evalResultBox').style.display = 'none';
+    document.getElementById('evalLaunchBtn').disabled = true;
+    document.getElementById('evalLaunchBtn').textContent = '⏳ En cours...';
+
+    // Démarrer le job
+    let resp;
+    try {
+        resp = await fetch('/api/eval/start', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+        });
+        if (!resp.ok) {
+            const err = await resp.json();
+            throw new Error(err.detail || resp.statusText);
+        }
+    } catch (e) {
+        _evalLogLine(`[ERREUR] ${e.message}`, 'err');
+        document.getElementById('evalLaunchBtn').disabled = false;
+        document.getElementById('evalLaunchBtn').textContent = '▶ Lancer l\'évaluation';
+        return;
+    }
+
+    const { job_id } = await resp.json();
+    evalJobId = job_id;
+    _evalLogLine(`Job démarré : ${job_id}`, 'dim');
+
+    // Stream SSE
+    if (evalEventSrc) evalEventSrc.close();
+    evalEventSrc = new EventSource(`/api/eval/${job_id}/stream`);
+    evalEventSrc.onmessage = (e) => {
+        const data = e.data;
+        if (data.startsWith('__STATUS__done__')) {
+            _evalJobDone(true);
+        } else if (data.startsWith('__STATUS__error__')) {
+            _evalJobDone(false);
+        } else if (data.startsWith('__RESULT_PATH__')) {
+            // Chemin résultat extrait du log
+        } else {
+            const cls = data.includes('ERREUR') ? 'err'
+                      : data.includes('OK') || data.includes('✓') ? 'ok'
+                      : 'dim';
+            _evalLogLine(data, cls);
+        }
+    };
+    evalEventSrc.onerror = () => {
+        evalEventSrc.close();
+        _evalLogLine('[Connexion SSE fermée]', 'dim');
+    };
+}
+
+function _evalLogLine(text, type) {
+    const log = document.getElementById('evalLog');
+    const span = document.createElement('span');
+    if (type === 'err') span.className = 'eval-log-line-err';
+    else if (type === 'ok') span.className = 'eval-log-line-ok';
+    else span.className = 'eval-log-line-dim';
+    span.textContent = text + '\n';
+    log.appendChild(span);
+    log.scrollTop = log.scrollHeight;
+}
+
+function _evalJobDone(success) {
+    if (evalEventSrc) { evalEventSrc.close(); evalEventSrc = null; }
+    document.getElementById('evalLaunchBtn').disabled = false;
+    document.getElementById('evalLaunchBtn').textContent = '▶ Relancer l\'évaluation';
+    if (success) {
+        const box = document.getElementById('evalResultBox');
+        box.style.display = 'flex';
+        document.getElementById('evalResultPath').textContent =
+            `comparaisons_rag/eval_from_excel_${document.getElementById('evalVersion').value}_...xlsx`;
+        _evalLogLine('=== Évaluation terminée avec succès ===', 'ok');
+    } else {
+        _evalLogLine('=== Évaluation terminée avec erreur ===', 'err');
+    }
+}
+
+function evalDownload() {
+    if (!evalJobId) return;
+    window.location.href = `/api/eval/${evalJobId}/result`;
+}
+
+// Drag-and-drop sur le fichier Excel
+document.addEventListener('DOMContentLoaded', () => {
+    const pathInput = document.getElementById('evalExcelPath');
+    if (!pathInput) return;
+    pathInput.addEventListener('dragover', (e) => { e.preventDefault(); });
+    pathInput.addEventListener('drop', (e) => {
+        e.preventDefault();
+        const file = e.dataTransfer.files[0];
+        if (!file) return;
+        // Uploader le fichier via le endpoint upload
+        const btn = document.getElementById('evalBrowseBtn');
+        if (btn) { btn.disabled = true; btn.textContent = '⏳ Upload...'; }
+        const form = new FormData();
+        form.append('file', file);
+        fetch('/api/eval/upload', { method: 'POST', body: form })
+            .then(r => r.ok ? r.json() : r.json().then(e => Promise.reject(e.detail)))
+            .then(data => {
+                pathInput.value = file.name;
+                pathInput.setAttribute('data-abs-path', data.server_path);
+                evalQuestions = data.questions.map(q => ({ ...q, metrics: (q.metrics||[]).map(m => 'do_'+m) }));
+                _evalRenderQuestions();
+            })
+            .catch(err => alert(`Erreur : ${err}`))
+            .finally(() => { if (btn) { btn.disabled = false; btn.textContent = '📁 Parcourir...'; } });
+    });
+});
 </script>
 </body>
 </html>
