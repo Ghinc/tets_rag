@@ -731,7 +731,7 @@
     <!-- ── Header + onglets ── -->
     <div class="header">
         <h1>🗣️ Chatbot RAG Multi-Version</h1>
-        <p>Qualité de vie en Corse — v2.2 · v9 · v10</p>
+        <p>Qualité de vie en Corse — v2.2 · v9 · v10 · v11</p>
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab('chat')">💬 Chat</button>
             <button class="tab-btn"        onclick="switchTab('batch')">📊 Traitement par lot</button>
@@ -767,6 +767,13 @@
                 Sous-questions (v10) :
                 <input type="number" id="chatNSubq" value="5" min="1" max="8" style="width:50px;">
             </label>
+            <label id="v11IterLabel" style="display:none;">
+                Itérations max (v11) :
+                <input type="number" id="chatMaxIter" value="5" min="1" max="8" style="width:50px;">
+            </label>
+            <label id="v11FastPathLabel" style="display:none;">
+                <input type="checkbox" id="chatFastPath" checked> Fast path v11
+            </label>
             <label>
                 Sources :
                 <input type="number" id="numSources" value="5" min="1" max="10" style="width:50px;">
@@ -779,7 +786,8 @@
                     Bonjour ! Choisissez une version et posez votre question.<br><br>
                     <strong>v2.2</strong> = Hybrid retrieval + filtres démographiques<br>
                     <strong>v9</strong> = RAPTOR-lite (synthèses par profil)<br>
-                    <strong>v10</strong> = RAPTOR + Sous-questions + Notation (Mistral Large / Claude Haiku)
+                    <strong>v10</strong> = RAPTOR + Sous-questions + Notation (Mistral Large / Claude Haiku)<br>
+                    <strong>v11</strong> = Agentic RAG — boucle ReAct + CRAG gate (Claude Sonnet)
                 </div>
             </div>
         </div>
@@ -817,10 +825,11 @@
             <div class="batch-settings">
                 <label>
                     Version RAG :
-                    <select id="batchVersion">
+                    <select id="batchVersion" onchange="document.getElementById('batchV11IterLabel').style.display=(this.value==='v11'?'inline-flex':'none')">
                         <option value="v2.2">v2.2 — Portrait</option>
                         <option value="v9">v9 — RAPTOR-lite</option>
                         <option value="v10" selected>v10 — RAPTOR + Sous-questions</option>
+                        <option value="v11">v11 — Agentic RAG</option>
                     </select>
                 </label>
                 <label>
@@ -835,6 +844,10 @@
                 <label>
                     Sous-questions (v10) :
                     <input type="number" id="batchNSubq" value="5" min="1" max="8" style="width:50px;">
+                </label>
+                <label id="batchV11IterLabel" style="display:none;">
+                    Itérations max (v11) :
+                    <input type="number" id="batchMaxIter" value="5" min="1" max="8" style="width:50px;">
                 </label>
                 <label>
                     Sources k :
@@ -1069,6 +1082,7 @@
                         <select id="evalVersion">
                             <option value="v9">v9 — RAPTOR-lite</option>
                             <option value="v10" selected>v10 — RAPTOR + Sous-questions</option>
+                            <option value="v11">v11 — Agentic RAG</option>
                         </select>
                     </label>
                     <label>Sources k :
@@ -1193,9 +1207,10 @@ async function loadVersions() {
     } catch(e) {
         console.error('Erreur chargement versions', e);
         displayVersions([
-            { version:'v2.2', name:'Portrait', available:false, description:'Serveur non démarré' },
-            { version:'v9',   name:'RAPTOR',   available:false, description:'Serveur non démarré' },
-            { version:'v10',  name:'RAPTOR+SQ',available:false, description:'Serveur non démarré' },
+            { version:'v2.2', name:'Portrait',   available:false, description:'Serveur non démarré' },
+            { version:'v9',   name:'RAPTOR',     available:false, description:'Serveur non démarré' },
+            { version:'v10',  name:'RAPTOR+SQ',  available:false, description:'Serveur non démarré' },
+            { version:'v11',  name:'Agentic RAG',available:false, description:'Serveur non démarré' },
         ]);
     }
 }
@@ -1224,6 +1239,10 @@ function selectVersion(version) {
     displayVersions(availableVersions);
     document.getElementById('v7ModeLabel').style.display =
         (version === 'v7') ? 'inline-flex' : 'none';
+    document.getElementById('v11IterLabel').style.display =
+        (version === 'v11') ? 'inline-flex' : 'none';
+    document.getElementById('v11FastPathLabel').style.display =
+        (version === 'v11') ? 'inline-flex' : 'none';
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -1247,6 +1266,11 @@ async function sendQuestion() {
         const n = document.getElementById('chatNSubq').value;
         document.getElementById('loadingText').textContent =
             `Pipeline v10 : décomposition + ${n} sous-questions + synthèse + notation...`;
+    } else if (selectedVersion === 'v11') {
+        const iter = document.getElementById('chatMaxIter').value;
+        const fp   = document.getElementById('chatFastPath').checked;
+        document.getElementById('loadingText').textContent =
+            `Pipeline v11 : boucle ReAct (max ${iter} it.) — fast path ${fp ? 'activé' : 'désactivé'}...`;
     } else {
         document.getElementById('loadingText').textContent = 'Recherche en cours...';
     }
@@ -1260,6 +1284,8 @@ async function sendQuestion() {
         use_ontology_enrichment:  document.getElementById('useOntology').checked,
         use_cross_analysis:       document.getElementById('useCrossAnalysis').checked,
         n_subquestions:           parseInt(document.getElementById('chatNSubq').value),
+        max_iterations:           parseInt(document.getElementById('chatMaxIter').value),
+        use_fast_path:            document.getElementById('chatFastPath').checked,
     };
     if (selectedVersion === 'v7') params.query_mode = document.getElementById('v7Mode').value;
 
@@ -1305,9 +1331,9 @@ function addBotResponse(data) {
     p.insertAdjacentHTML('beforeend', marked.parse(data.answer || ''));
     c.appendChild(p);
 
-    // Sous-questions v10 (juste après la réponse)
+    // Sous-questions v10 / outils v11 (juste après la réponse)
     if (data.sub_questions && data.sub_questions.length > 0)
-        c.appendChild(buildSubQPanel(data.sub_questions));
+        c.appendChild(buildSubQPanel(data.sub_questions, data.rag_version_used));
 
     // Score v10
     const sc = data.metadata && data.metadata.scoring;
@@ -1376,23 +1402,28 @@ function addBotResponse(data) {
     appendToChat(d);
 }
 
-function buildSubQPanel(subQuestions) {
+function buildSubQPanel(subQuestions, ragVersion) {
+    const isV11 = ragVersion === 'v11' ||
+        (subQuestions[0] && subQuestions[0].sub_question && subQuestions[0].sub_question.startsWith('[Itération'));
+
     const wrap = document.createElement('div');
     wrap.className = 'subq-section';
 
-    // En-tête cliquable pour déplier/replier tout le panneau
+    const titleLabel = isV11 ? 'Outils utilisés v11' : 'Sous-questions v10';
+    const icon = isV11 ? '🤖' : '🔍';
+
     const header = document.createElement('div');
     header.className = 'subq-header';
     header.innerHTML = `
         <div class="subq-header-left">
-            <span>🔍</span>
-            <span class="subq-header-title">Sous-questions v10</span>
+            <span>${icon}</span>
+            <span class="subq-header-title">${titleLabel}</span>
             <span class="subq-badge">${subQuestions.length}</span>
         </div>
         <span class="subq-chevron">▼</span>`;
 
     const body = document.createElement('div');
-    body.className = 'subq-body open'; // ouvert par défaut
+    body.className = 'subq-body open';
 
     header.onclick = () => {
         const isOpen = body.classList.toggle('open');
@@ -1400,20 +1431,33 @@ function buildSubQPanel(subQuestions) {
     };
     header.querySelector('.subq-chevron').classList.add('open');
 
-    // Une ligne par sous-question, avec réponse dépliable au clic
     subQuestions.forEach((sq, i) => {
         const item = document.createElement('div');
         item.className = 'subq-item';
 
+        // Pour v11 : sq.sub_question = "[Itération N] tool_name(...)", sq.sub_answer = "CRAG score: 0.xxx"
+        // Pour v10 : sq.question, sq.answer
+        const qText = sq.sub_question || sq.question || '';
+        const aText = sq.sub_answer   || sq.answer   || '';
+        const score = sq.score != null ? sq.score : null;
+
+        // Badge CRAG pour v11
+        const cragBadge = (isV11 && score != null)
+            ? `<span style="margin-left:8px;padding:1px 6px;border-radius:8px;font-size:10px;font-weight:700;
+                background:${score > 0.6 ? '#c8f0c8' : score > 0.3 ? '#fff0c0' : '#f8d0d0'};
+                color:${score > 0.6 ? '#2a7a2a' : score > 0.3 ? '#7a6000' : '#8a1010'};">
+                CRAG ${score.toFixed(2)}</span>`
+            : '';
+
         const ih = document.createElement('div');
         ih.className = 'subq-item-header';
         ih.innerHTML = `<span class="subq-num">${i + 1}</span>
-                        <span class="subq-question">${escHtml(sq.question)}</span>
+                        <span class="subq-question">${escHtml(qText)}${cragBadge}</span>
                         <span class="subq-item-chevron">▶</span>`;
 
         const ans = document.createElement('div');
         ans.className = 'subq-answer md-body';
-        ans.innerHTML = marked.parse(sq.answer || '');
+        ans.innerHTML = marked.parse(aText || '');
 
         ih.onclick = () => {
             const open = ans.classList.toggle('open');
@@ -1564,6 +1608,7 @@ async function startBatch() {
 
     const version    = document.getElementById('batchVersion').value;
     const nSubq      = parseInt(document.getElementById('batchNSubq').value);
+    const batchMaxIter = parseInt(document.getElementById('batchMaxIter').value);
     const k          = parseInt(document.getElementById('batchK').value);
     const vInfo      = availableVersions.find(v => v.version === version);
     if (!vInfo || !vInfo.available) {
@@ -1596,6 +1641,8 @@ async function startBatch() {
             rag_version: version,
             k,
             n_subquestions: nSubq,
+            max_iterations: batchMaxIter,
+            use_fast_path:  true,
             use_reranking:           true,
             include_quantitative:    true,
             use_ontology_enrichment: true,
@@ -1668,9 +1715,9 @@ function buildResultContent(res) {
     aDiv.innerHTML = marked.parse(res.answer || '');
     frag.appendChild(aDiv);
 
-    // Sous-questions v10 (juste après la réponse)
+    // Sous-questions v10 / outils v11 (juste après la réponse)
     if (res.sub_questions && res.sub_questions.length > 0)
-        frag.appendChild(buildSubQPanel(res.sub_questions));
+        frag.appendChild(buildSubQPanel(res.sub_questions, res.rag_version_used || selectedVersion));
 
     // Score v10
     if (res.scoring) {
