@@ -98,6 +98,15 @@ except ImportError as e:
     RaptorSubQuestionPipeline = None
     V10_AVAILABLE = False
 
+# Import optionnel de v11 (Agentic RAG : ReAct + CRAG gate)
+try:
+    from rag_v11_agentic import AgenticRAGPipeline
+    V11_AVAILABLE = True
+except ImportError as e:
+    print(f"AVERTISSEMENT: RAG v11 non disponible ({e})")
+    AgenticRAGPipeline = None
+    V11_AVAILABLE = False
+
 # Charger les variables d'environnement
 load_dotenv()
 
@@ -106,7 +115,7 @@ load_dotenv()
 class QueryRequest(BaseModel):
     """Modèle de requête pour poser une question"""
     question: str = Field(..., description="Question à poser au chatbot", min_length=1)
-    rag_version: Literal["v1", "v2", "v2.1", "v2.2", "v3", "v4", "v5", "v6", "v7", "v8", "v9", "v10"] = Field("v2", description="Version du RAG à utiliser")
+    rag_version: Literal["v1", "v2", "v2.1", "v2.2", "v3", "v4", "v5", "v6", "v7", "v8", "v9", "v10", "v11"] = Field("v2", description="Version du RAG à utiliser")
     k: int = Field(5, description="Nombre de documents à récupérer", ge=1, le=20)
     use_reranking: bool = Field(True, description="Utiliser le reranking (v2/v3/v4 uniquement)")
     include_quantitative: bool = Field(True, description="Inclure les données quantitatives (v2/v3/v4 uniquement)")
@@ -123,6 +132,8 @@ class QueryRequest(BaseModel):
     portrait_profession: Optional[str] = Field(None, description="Profession pour filtrer les verbatims (v2.2)")
     portrait_dimension: Optional[str] = Field(None, description="Dimension qualité de vie pour filtrer (v2.2)")
     n_subquestions: int = Field(5, ge=1, le=8, description="Nombre de sous-questions à générer (v10 uniquement)")
+    max_iterations: int = Field(5, ge=1, le=8, description="Nombre max d'itérations ReAct (v11 uniquement)")
+    use_fast_path: bool = Field(True, description="Fast path pour questions simples (v11 uniquement)")
 
     model_config = ConfigDict(
         json_schema_extra={
@@ -171,6 +182,7 @@ class HealthResponse(BaseModel):
     rag_v8_initialized: bool = Field(..., description="RAG v8 initialisé")
     rag_v9_initialized: bool = Field(..., description="RAG v9 (RAPTOR) initialisé")
     rag_v10_initialized: bool = Field(..., description="RAG v10 (RAPTOR + sous-questions) initialisé")
+    rag_v11_initialized: bool = Field(..., description="RAG v11 (Agentic ReAct+CRAG) initialisé")
     timestamp: str = Field(..., description="Horodatage du check")
     version: str = Field(..., description="Version de l'API")
 
@@ -198,7 +210,8 @@ rag_pipelines = {
     "v7": None,
     "v8": None,
     "v9": None,
-    "v10": None
+    "v10": None,
+    "v11": None,
 }
 
 # Mots-clés déclenchant la recherche dans oppchovec_scores
@@ -413,6 +426,23 @@ def initialize_all_rags():
             print(f"AVERTISSEMENT: RAG v10 non disponible: {e}")
             rag_pipelines["v10"] = None
 
+    # [11/11] Initialisation RAG v11 (Agentic ReAct+CRAG)
+    print("\n[11/11] Initialisation RAG v11 (Agentic ReAct+CRAG)...")
+    if not V11_AVAILABLE:
+        print("AVERTISSEMENT: RAG v11 non disponible (import échoué)")
+        rag_pipelines["v11"] = None
+    else:
+        try:
+            v11 = AgenticRAGPipeline(chroma_path="./chroma_portrait")
+            v11.init()
+            rag_pipelines["v11"] = v11
+            print("OK RAG v11 initialisé (Agentic ReAct+CRAG)")
+        except Exception as e:
+            print(f"AVERTISSEMENT: RAG v11 non disponible: {e}")
+            import traceback
+            traceback.print_exc()
+            rag_pipelines["v11"] = None
+
     # Résumé
     print("\n" + "="*60)
     available = [v for v, p in rag_pipelines.items() if p is not None]
@@ -503,6 +533,7 @@ async def health_check():
         rag_v8_initialized=rag_pipelines["v8"] is not None,
         rag_v9_initialized=rag_pipelines["v9"] is not None,
         rag_v10_initialized=rag_pipelines["v10"] is not None,
+        rag_v11_initialized=rag_pipelines["v11"] is not None,
         timestamp=datetime.now().isoformat(),
         version="2.2.0"
     )
@@ -677,7 +708,22 @@ async def get_versions():
                 "Synthèse finale avec filtrage du bruit (Mistral Large)",
                 "Configurable : n_subquestions (1-8, défaut 5)",
             ]
-        )
+        ),
+        VersionInfo(
+            version="v11",
+            name="Agentic RAG (ReAct + CRAG gate)",
+            description="Boucle ReAct itérative (Claude Sonnet) avec 5 outils, CRAG gate cosine BGE-M3, fast path v9 pour questions simples",
+            available=rag_pipelines["v11"] is not None,
+            features=[
+                "Boucle ReAct dynamique (max 5 itérations)",
+                "5 outils : summary_search, verbatim_search, score_lookup, geo_neighbors, decompose",
+                "CRAG gate : évaluation cosine BGE-M3 après chaque retrieval",
+                "Fast path v9 direct pour questions simples (classifier regex)",
+                "Sélection dynamique d'outils par Claude Sonnet 4.6",
+                "Reformulation automatique si contexte non pertinent (CRAG score < 0.2)",
+                "Aucune dépendance supplémentaire (Anthropic Tool Use natif)",
+            ]
+        ),
     ]
     return versions
 
@@ -909,6 +955,16 @@ def query_rag(request: QueryRequest):
             ]
             retrieval_results = raptor_sources + opp_sources
 
+        elif request.rag_version == "v11":
+            # v11 : Agentic RAG — boucle ReAct + CRAG gate + fast path v9
+            answer, retrieval_results, v10_sub_qa = rag.query(
+                question=request.question,
+                k=request.k,
+                max_iterations=request.max_iterations,
+                use_fast_path=request.use_fast_path,
+            )
+            v10_scoring = {"applicable": False}
+
         elif request.rag_version == "v10":
             # v10 : RAPTOR + Sous-questions + Notation
             # Pré-fetch OppChoVec pour l'injecter dans chaque sous-question si pertinent
@@ -952,7 +1008,7 @@ def query_rag(request: QueryRequest):
                     answer = answer + f"\n\n**Scores OppChoVec (données chiffrées) :**\n{scores_lines}"
 
         # Convertir les résultats en format API
-        if request.rag_version in ("v9", "v10"):
+        if request.rag_version in ("v9", "v10", "v11"):
             # v9 retourne List[Dict] avec clés: rank, type/commune, extrait, etc.
             sources = [
                 Source(
@@ -1033,7 +1089,7 @@ def query_rag(request: QueryRequest):
             metadata=metadata,
             rag_version_used=request.rag_version,
             timestamp=datetime.now().isoformat(),
-            sub_questions=v10_sub_qa if request.rag_version == "v10" else None
+            sub_questions=v10_sub_qa if request.rag_version in ("v10", "v11") else None
         )
 
         print(f"[{datetime.now().isoformat()}] Réponse générée ({request.rag_version}) avec {len(sources)} sources")
