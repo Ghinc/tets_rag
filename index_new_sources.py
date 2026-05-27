@@ -159,6 +159,24 @@ def _get_commune(row) -> str:
     return "Inconnue"
 
 
+def _age_to_range(age_str: str) -> str:
+    """Calcule la tranche d'âge harmonisée (même buckets que portrait_verbatims)."""
+    try:
+        age = int(float(age_str))
+    except (ValueError, TypeError):
+        return "Non spécifié"
+    if age < 25:
+        return "18-24"
+    elif age < 35:
+        return "25-34"
+    elif age < 50:
+        return "35-49"
+    elif age < 65:
+        return "50-64"
+    else:
+        return "65+"
+
+
 def load_enquete_responses(filepath: str = "./sortie_questionnaire_traited.csv") -> Tuple[List[str], List[Dict]]:
     df = pd.read_csv(filepath)
     texts, metas = [], []
@@ -168,7 +186,7 @@ def load_enquete_responses(filepath: str = "./sortie_questionnaire_traited.csv")
         genre = str(row.get("genre", "")).strip()
         age = str(row.get("Age", row.get("age", ""))).strip()
         csp = str(row.get("situation socioprofessionnelle", "")).strip()
-        cat_age = str(row.get("Catégorie age", "")).strip()
+        cat_age = _age_to_range(age)
 
         # En-tête du profil
         lines = [
@@ -214,21 +232,14 @@ def load_enquete_responses(filepath: str = "./sortie_questionnaire_traited.csv")
 
 def index_enquete_responses(client, model):
     col = client.get_or_create_collection("enquete_responses")
-    existing = set(col.get(include=[])["ids"])
     print(f"Collection enquete_responses : {col.count()} docs existants")
 
     texts, metas = load_enquete_responses()
     ids = [f"enquete_rep_{m['respondent_id']}" for m in metas]
 
-    to_add = [(id_, t, m) for id_, t, m in zip(ids, texts, metas) if id_ not in existing]
-    if not to_add:
-        print("  Rien à ajouter")
-        return
-
-    ids_a, texts_a, metas_a = zip(*to_add)
-    embeddings = embed_batch(model, list(texts_a))
-    col.add(ids=list(ids_a), documents=list(texts_a), embeddings=embeddings, metadatas=list(metas_a))
-    print(f"  [OK] {len(ids_a)} répondants ajoutés -> total {col.count()}")
+    embeddings = embed_batch(model, texts)
+    col.upsert(ids=ids, documents=texts, embeddings=embeddings, metadatas=metas)
+    print(f"  [OK] {len(ids)} répondants upsertés -> total {col.count()}")
 
 
 # ============================================================

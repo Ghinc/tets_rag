@@ -32,7 +32,7 @@ def age_to_range(age: int) -> str:
     if age is None:
         return "Non spécifié"
     if age < 25:
-        return "15-24"  # Jeunes
+        return "18-24"  # Jeunes
     elif age < 35:
         return "25-34"  # Jeunes adultes
     elif age < 50:
@@ -45,13 +45,39 @@ def age_to_range(age: int) -> str:
 def age_range_label(age_range: str) -> str:
     """Retourne le label humain de la tranche d'âge"""
     labels = {
-        "15-24": "Jeunes",
+        "18-24": "Jeunes",
         "25-34": "Jeunes adultes",
         "35-49": "Adultes",
         "50-64": "Jeunes seniors",
         "65+": "Seniors"
     }
     return labels.get(age_range, "Non spécifié")
+
+def _build_questionnaire_id_map(chroma_path: str) -> dict:
+    """Construit un mapping (commune, age_int, genre, profession) -> respondent_id
+    en lisant enquete_responses depuis ChromaDB."""
+    import math
+    try:
+        import chromadb as _chromadb
+        client = _chromadb.PersistentClient(path=chroma_path)
+        col = client.get_collection("enquete_responses")
+        data = col.get(include=["metadatas"])
+        mapping = {}
+        for m in data["metadatas"]:
+            try:
+                age_f = float(m.get("age", 0))
+                age_i = int(age_f) if not math.isnan(age_f) else None
+            except (ValueError, TypeError):
+                age_i = None
+            key = (m.get("commune", ""), age_i, m.get("genre", ""), m.get("csp", ""))
+            if age_i is not None:
+                mapping[key] = m.get("respondent_id")
+        print(f"   Mapping questionnaire : {len(mapping)} entrées depuis enquete_responses")
+        return mapping
+    except Exception as e:
+        print(f"   [AVERTISSEMENT] Impossible de charger enquete_responses : {e}")
+        return {}
+
 
 def main():
     print("=" * 60)
@@ -70,6 +96,9 @@ def main():
     print(f"   - Professions: {df['profession'].nunique()}")
     print(f"   - Dimensions: {df['dimension'].nunique()}")
 
+    # 1b. Charger le mapping questionnaire depuis enquete_responses
+    qid_map = _build_questionnaire_id_map(CHROMA_PATH)
+
     # 2. Charger le modèle d'embeddings
     print(f"\n2. Chargement du modèle d'embeddings: {EMBEDDING_MODEL}...")
     model = SentenceTransformer(EMBEDDING_MODEL)
@@ -80,6 +109,7 @@ def main():
     documents = []
     metadatas = []
     ids = []
+    qid_matched = 0
 
     for idx, row in tqdm(df.iterrows(), total=len(df), desc="   Traitement"):
         verbatim = str(row['verbatim']).strip()
@@ -89,6 +119,13 @@ def main():
         # Convertir l'âge
         age_int = age_to_int(row['age'])
         age_cat = age_to_range(age_int)
+
+        # Résoudre le numéro de questionnaire
+        qid_key = (str(row['commune']), age_int, str(row['genre']) if pd.notna(row['genre']) else '',
+                   str(row['profession']) if pd.notna(row['profession']) else '')
+        num_questionnaire = qid_map.get(qid_key)
+        if num_questionnaire is not None:
+            qid_matched += 1
 
         # Construire le document avec contexte
         doc_text = f"Verbatim d'un(e) {row['genre']} de {age_int} ans ({age_range_label(age_cat)}), {row['profession']}, à {row['commune']}, sur le thème '{row['dimension']}': {verbatim}"
@@ -104,6 +141,7 @@ def main():
             'dimension': str(row['dimension']) if pd.notna(row['dimension']) else 'Non spécifié',
             'matching_certain': bool(row['matching_certain']) if pd.notna(row.get('matching_certain')) else True,
             'choix_numero': int(row['choix_numero']) if pd.notna(row.get('choix_numero')) else 0,
+            'num_questionnaire': int(num_questionnaire) if num_questionnaire is not None else -1,
         }
 
         doc_id = f"portrait_{row['commune']}_{idx}"
@@ -113,6 +151,8 @@ def main():
         ids.append(doc_id)
 
     print(f"   {len(documents)} documents préparés")
+
+    print(f"   num_questionnaire résolu : {qid_matched}/{len(documents)} chunks ({100*qid_matched//max(len(documents),1)}%)")
 
     # 4. Générer les embeddings
     print("\n4. Génération des embeddings...")

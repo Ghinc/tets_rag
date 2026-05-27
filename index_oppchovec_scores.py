@@ -15,10 +15,11 @@ import os
 import sys
 import argparse
 
-XLSX_PATH    = "C:/Users/comiti_g/Downloads/oppchovec_betti_0_10_trie.xlsx"
-CHROMA_PATH  = "./chroma_portrait"
-COLLECTION   = "oppchovec_scores"
-EMBED_MODEL  = "./model_cache/models--BAAI--bge-m3/snapshots/5617a9f61b028005a4858fdac845db406aefb181"
+XLSX_PATH       = "C:/Users/comiti_g/Downloads/oppchovec_betti_0_10_trie.xlsx"
+DIMENSIONS_XLSX = "C:/These/Données2/visualisation_OPPCHOVEC_1011/Code/Python/donnees_oppchovec_par_dimension.xlsx"
+CHROMA_PATH     = "./chroma_portrait"
+COLLECTION      = "oppchovec_scores"
+EMBED_MODEL     = "./model_cache/models--BAAI--bge-m3/snapshots/5617a9f61b028005a4858fdac845db406aefb181"
 
 # Forcer le cache local (pas d'accès internet requis)
 os.environ.setdefault("HF_HUB_OFFLINE", "1")
@@ -36,8 +37,23 @@ def _level(score: float) -> str:
     return "très faible"
 
 
-def build_document(row, ranks: dict) -> str:
-    """Génère le texte descriptif complet pour une commune."""
+def build_document(row, ranks: dict, dim_row=None, dim_norms: dict = None) -> str:
+    """
+    Génère le texte descriptif complet pour une commune.
+
+    Structure hiérarchique de l'indice OppChoVec :
+      OppChoVec
+      ├── Opp (Opportunités)  ← sous-score 1/3
+      │   ├── Opp1 : Éducation
+      │   ├── Opp2 : Diversité sociale
+      │   ├── Opp3 : Mobilité
+      │   └── Opp4 : Accès TIC
+      ├── Cho (Choix)         ← sous-score 2/3
+      └── Vec (Vécu)          ← sous-score 3/3
+
+    dim_row   : ligne de donnees_oppchovec_par_dimension.xlsx (ou None)
+    dim_norms : dict {Opp1_min, Opp1_max, ...} pour normaliser 0-10 (ou None)
+    """
     commune = row["Zone"]
     opp = row["Score_Opp_0_10"]
     cho = row["Score_Cho_0_10"]
@@ -45,22 +61,54 @@ def build_document(row, ranks: dict) -> str:
     total = row["OppChoVec_0_10"]
 
     lines = [
-        f"Le score OppChoVec de {commune} est de {total:.2f}/10 ({_level(total)}).",
+        # Brief hiérarchique — aide le LLM à comprendre la structure
+        f"NOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :",
+        f"  • Opp (Opportunités) = accès aux ressources du territoire",
+        f"  • Cho (Choix) = liberté effective des individus",
+        f"  • Vec (Vécu) = réalisations concrètes des habitants",
+        f"Le score Opp est lui-même décomposé en 4 sous-dimensions :",
+        f"  • Opp1 = niveau d'éducation moyen",
+        f"  • Opp2 = diversité sociale (indice de Theil CSP)",
+        f"  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)",
+        f"  • Opp4 = accès aux TIC (Internet haut débit, 4G)",
+        f"Ces scores sont normalisés sur 0-10 par rapport aux 360 communes corses.",
         "",
-        f"Décomposition des sous-scores de {commune} :",
-        f"- Score Opportunités (Opp) de {commune} : {opp:.2f}/10 ({_level(opp)})",
-        f"- Score Choix (Cho) de {commune} : {cho:.2f}/10 ({_level(cho)})",
-        f"- Score Vécu (Vec) de {commune} : {vec:.2f}/10 ({_level(vec)})",
+        f"Score OppChoVec de {commune} : {total:.2f}/10 ({_level(total)}).",
         "",
-        f"Rang de {commune} parmi les 360 communes corses :",
-        f"- OppChoVec global : {ranks['total']}e sur 360",
-        f"- Opportunités (Opp) : {ranks['opp']}e sur 360",
-        f"- Choix (Cho) : {ranks['cho']}e sur 360",
-        f"- Vécu (Vec) : {ranks['vec']}e sur 360",
+        f"Sous-scores principaux de {commune} :",
+        f"  • Opportunités (Opp) : {opp:.2f}/10 ({_level(opp)})  — rang {ranks['opp']}e/360",
+        f"  • Choix (Cho)        : {cho:.2f}/10 ({_level(cho)})  — rang {ranks['cho']}e/360",
+        f"  • Vécu (Vec)         : {vec:.2f}/10 ({_level(vec)})  — rang {ranks['vec']}e/360",
+        f"  • OppChoVec global   : rang {ranks['total']}e/360",
         "",
     ]
 
-    # Analyse comparative
+    # Sous-dimensions Opp1/Opp2/Opp3/Opp4 (si disponibles)
+    if dim_row is not None and dim_norms is not None:
+        def _norm(val, vmin, vmax):
+            if vmax == vmin:
+                return 5.0
+            return max(0.0, min(10.0, (val - vmin) / (vmax - vmin) * 10))
+
+        opp1_n = _norm(dim_row["Opp1"], dim_norms["Opp1_min"], dim_norms["Opp1_max"])
+        opp2_n = _norm(dim_row["Opp2"], dim_norms["Opp2_min"], dim_norms["Opp2_max"])
+        opp3_n = _norm(dim_row["Opp3"], dim_norms["Opp3_min"], dim_norms["Opp3_max"])
+        opp4_n = _norm(dim_row["Opp4"], dim_norms["Opp4_min"], dim_norms["Opp4_max"])
+
+        lines += [
+            f"Sous-dimensions du score Opportunités (Opp) de {commune} :",
+            f"  • Opp1 — Éducation      : {opp1_n:.2f}/10 ({_level(opp1_n)})  "
+            f"[valeur brute : {dim_row['Opp1']:.3f}] — rang {ranks.get('opp1', '?')}e/360",
+            f"  • Opp2 — Diversité soc. : {opp2_n:.2f}/10 ({_level(opp2_n)})  "
+            f"[indice Theil : {dim_row['Opp2']:.4f}] — rang {ranks.get('opp2', '?')}e/360",
+            f"  • Opp3 — Mobilité       : {opp3_n:.2f}/10 ({_level(opp3_n)})  "
+            f"[indicateur : {dim_row['Opp3']:.1f}/200] — rang {ranks.get('opp3', '?')}e/360",
+            f"  • Opp4 — TIC (numérique): {opp4_n:.2f}/10 ({_level(opp4_n)})  "
+            f"[couverture : {dim_row['Opp4']:.1f}%] — rang {ranks.get('opp4', '?')}e/360",
+            "",
+        ]
+
+    # Analyse comparative (Opp/Cho/Vec)
     comparaisons = []
     if opp > cho and opp > vec:
         comparaisons.append(f"{commune} se distingue surtout par ses opportunités (Opp={opp:.2f}/10)")
@@ -78,7 +126,7 @@ def build_document(row, ranks: dict) -> str:
             lines.append(f"- {c}.")
         lines.append("")
 
-    # Rappel des valeurs brutes (non normalisées)
+    # Valeurs brutes
     lines += [
         f"Valeurs brutes (non normalisées) de {commune} :",
         f"- OppChoVec brut : {row['OppChoVec']:.4f}",
@@ -92,7 +140,7 @@ def build_document(row, ranks: dict) -> str:
 
 # ── Script principal ──────────────────────────────────────────────────────────
 
-def cmd_build(xlsx_path: str):
+def cmd_build(xlsx_path: str, dimensions_xlsx: str = DIMENSIONS_XLSX):
     import pandas as pd
     import chromadb
     from sentence_transformers import SentenceTransformer
@@ -106,6 +154,28 @@ def cmd_build(xlsx_path: str):
     df["rank_opp"]   = df["Score_Opp_0_10"].rank(ascending=False, method="min").astype(int)
     df["rank_cho"]   = df["Score_Cho_0_10"].rank(ascending=False, method="min").astype(int)
     df["rank_vec"]   = df["Score_Vec_0_10"].rank(ascending=False, method="min").astype(int)
+
+    # Chargement des sous-dimensions Opp1/Opp2/Opp3/Opp4
+    dim_df = None
+    dim_norms = None
+    try:
+        dim_df = pd.read_excel(dimensions_xlsx)
+        dim_df = dim_df.set_index("Zone")
+        # Rangs des sous-dimensions (1 = meilleur)
+        dim_df["rank_opp1"] = dim_df["Opp1"].rank(ascending=False, method="min").astype(int)
+        dim_df["rank_opp2"] = dim_df["Opp2"].rank(ascending=False, method="min").astype(int)
+        dim_df["rank_opp3"] = dim_df["Opp3"].rank(ascending=False, method="min").astype(int)
+        dim_df["rank_opp4"] = dim_df["Opp4"].rank(ascending=False, method="min").astype(int)
+        # Bornes pour normalisation 0-10
+        dim_norms = {
+            "Opp1_min": dim_df["Opp1"].min(), "Opp1_max": dim_df["Opp1"].max(),
+            "Opp2_min": dim_df["Opp2"].min(), "Opp2_max": dim_df["Opp2"].max(),
+            "Opp3_min": dim_df["Opp3"].min(), "Opp3_max": dim_df["Opp3"].max(),
+            "Opp4_min": dim_df["Opp4"].min(), "Opp4_max": dim_df["Opp4"].max(),
+        }
+        print(f"  Sous-dimensions Opp1/Opp2/Opp3/Opp4 chargées ({len(dim_df)} communes)")
+    except Exception as e:
+        print(f"  AVERTISSEMENT : sous-dimensions Opp non disponibles ({e})")
 
     print(f"Connexion ChromaDB : {CHROMA_PATH}")
     client = chromadb.PersistentClient(path=CHROMA_PATH)
@@ -126,20 +196,31 @@ def cmd_build(xlsx_path: str):
 
     for _, row in df.iterrows():
         commune = str(row["Zone"]).strip()
+
+        # Données sous-dimensions Opp1-4 pour cette commune (si disponibles)
+        dim_row = None
+        if dim_df is not None and commune in dim_df.index:
+            dim_row = dim_df.loc[commune]
+
         ranks = {
             "total": int(row["rank_total"]),
             "opp":   int(row["rank_opp"]),
             "cho":   int(row["rank_cho"]),
             "vec":   int(row["rank_vec"]),
         }
+        if dim_row is not None:
+            ranks["opp1"] = int(dim_row["rank_opp1"])
+            ranks["opp2"] = int(dim_row["rank_opp2"])
+            ranks["opp3"] = int(dim_row["rank_opp3"])
+            ranks["opp4"] = int(dim_row["rank_opp4"])
 
-        doc = build_document(row, ranks)
+        doc = build_document(row, ranks, dim_row=dim_row, dim_norms=dim_norms)
         emb = model.encode(f"passage: {doc}").tolist()
 
         ids.append(f"oppchovec_{commune.lower().replace(' ', '_').replace('-', '_')}")
         docs.append(doc)
         embeddings.append(emb)
-        metadatas.append({
+        meta = {
             "commune":        commune,
             "oppchovec_0_10": float(row["OppChoVec_0_10"]),
             "opp_0_10":       float(row["Score_Opp_0_10"]),
@@ -150,7 +231,19 @@ def cmd_build(xlsx_path: str):
             "rank_cho":       int(row["rank_cho"]),
             "rank_vec":       int(row["rank_vec"]),
             "source":         "oppchovec_betti_0_10",
-        })
+        }
+        if dim_row is not None:
+            def _norm(val, vmin, vmax):
+                return round(max(0.0, min(10.0, (val - vmin) / (vmax - vmin) * 10)), 4) if vmax != vmin else 5.0
+            meta["opp1_0_10"] = _norm(dim_row["Opp1"], dim_norms["Opp1_min"], dim_norms["Opp1_max"])
+            meta["opp2_0_10"] = _norm(dim_row["Opp2"], dim_norms["Opp2_min"], dim_norms["Opp2_max"])
+            meta["opp3_0_10"] = _norm(dim_row["Opp3"], dim_norms["Opp3_min"], dim_norms["Opp3_max"])
+            meta["opp4_0_10"] = _norm(dim_row["Opp4"], dim_norms["Opp4_min"], dim_norms["Opp4_max"])
+            meta["rank_opp1"] = int(dim_row["rank_opp1"])
+            meta["rank_opp2"] = int(dim_row["rank_opp2"])
+            meta["rank_opp3"] = int(dim_row["rank_opp3"])
+            meta["rank_opp4"] = int(dim_row["rank_opp4"])
+        metadatas.append(meta)
 
         if len(ids) % 50 == 0:
             print(f"  {len(ids)}/{len(df)} communes traitées...")
@@ -261,8 +354,8 @@ Source : Bourdeau-Lepage L. (2011), adapté pour la Corse. Données : oppchovec_
 def cmd_aggregate():
     """Calcule les moyennes OppChoVec par EPCI et pour la Corse entière,
     puis upsert les documents agrégés dans la collection oppchovec_scores."""
-    import chromadb
     from sentence_transformers import SentenceTransformer
+    import chromadb
 
     print(f"Connexion ChromaDB : {CHROMA_PATH}")
     client = chromadb.PersistentClient(path=CHROMA_PATH)
@@ -340,9 +433,53 @@ def cmd_aggregate():
     }
     print(f"\nScore moyen Corse : {corse_means['total']:.2f}/10 (Opp={corse_means['opp']:.2f}, Cho={corse_means['cho']:.2f}, Vec={corse_means['vec']:.2f})")
 
+    # Moyennes Opp1/Opp2/Opp3/Opp4 (si disponibles dans les métadonnées des communes)
+    opp1_vals = [m["opp1_0_10"] for m in commune_scores.values() if "opp1_0_10" in m]
+    opp2_vals = [m["opp2_0_10"] for m in commune_scores.values() if "opp2_0_10" in m]
+    opp3_vals = [m["opp3_0_10"] for m in commune_scores.values() if "opp3_0_10" in m]
+    opp4_vals = [m["opp4_0_10"] for m in commune_scores.values() if "opp4_0_10" in m]
+
     # ── 4. Générer les documents et upsert ────────────────────────────────────
     print("\nGénération et indexation des documents agrégés...")
     agg_ids, agg_docs, agg_embs, agg_metas = [], [], [], []
+
+    # Document classement global des communes (liste complète avec EPCI)
+    communes_sorted = sorted(commune_scores.items(), key=lambda x: -x[1]["oppchovec_0_10"])
+    median_val = communes_sorted[len(communes_sorted) // 2][1]["oppchovec_0_10"]
+    ranking_lines = [
+        f"Classement OppChoVec des {len(communes_sorted)} communes corses (score 0-10).",
+        "Format : rang. Commune [EPCI]  OppChoVec  Opp  Cho  Vec",
+        "",
+        f"Score moyen Corse : {corse_means['total']:.2f}/10  |  Médiane : {median_val:.2f}/10",
+        f"Min : {communes_sorted[-1][0]} ({communes_sorted[-1][1]['oppchovec_0_10']:.2f}/10)  "
+        f"Max : {communes_sorted[0][0]} ({communes_sorted[0][1]['oppchovec_0_10']:.2f}/10)",
+        "",
+    ]
+    for rank, (commune, m) in enumerate(communes_sorted, 1):
+        epci_label = epci_map.get(commune, "EPCI inconnu")
+        ranking_lines.append(
+            f"  {rank:3d}. {commune:<28s} [{epci_label:<30s}]"
+            f"  {m['oppchovec_0_10']:5.2f}"
+            f"  Opp={m['opp_0_10']:5.2f}  Cho={m['cho_0_10']:5.2f}  Vec={m['vec_0_10']:5.2f}"
+        )
+    ranking_lines += [
+        "",
+        f"-> COMMUNE EN TETE (rang 1)     : "
+        f"{communes_sorted[0][0]} ({communes_sorted[0][1]['oppchovec_0_10']:.2f}/10)",
+        f"-> COMMUNE EN DERNIER (rang {len(communes_sorted)}) : "
+        f"{communes_sorted[-1][0]} ({communes_sorted[-1][1]['oppchovec_0_10']:.2f}/10)",
+    ]
+    ranking_text = "\n".join(ranking_lines)
+    agg_ids.append("oppchovec_classement_global")
+    agg_docs.append(ranking_text)
+    agg_embs.append(model.encode(f"passage: {ranking_text}").tolist())
+    agg_metas.append({
+        "source": "oppchovec_classement",
+        "type":   "classement",
+        "zone":   "Corse",
+        "epci":   "",
+    })
+    print(f"  [OK] Classement global ({len(communes_sorted)} communes) généré")
 
     # Document Corse globale
     corse_doc = (
@@ -366,6 +503,55 @@ def cmd_aggregate():
         "vec_0_10":       round(corse_means["vec"],   4),
         "nb_communes":    len(all_total),
     })
+
+    # Document classement des composantes OppChoVec
+    main_ranked = sorted(
+        [("Opp (Opportunités)", corse_means["opp"]),
+         ("Cho (Choix)",        corse_means["cho"]),
+         ("Vec (Vécu)",         corse_means["vec"])],
+        key=lambda x: -x[1]
+    )
+    classement_lines = [
+        f"Classement des composantes OppChoVec — Corse entière ({len(all_total)} communes).",
+        "",
+        "Sous-scores principaux (du plus élevé au plus faible) :",
+    ]
+    for i, (name, score) in enumerate(main_ranked, 1):
+        classement_lines.append(f"  {i}. {name:<25s} : {score:.2f}/10 ({_level(score)})")
+    classement_lines += [
+        "",
+        f"-> COMPOSANTE LA PLUS ELEVEE  : {main_ranked[0][0]} ({main_ranked[0][1]:.2f}/10)",
+        f"-> COMPOSANTE LA PLUS FAIBLE  : {main_ranked[-1][0]} ({main_ranked[-1][1]:.2f}/10)",
+    ]
+    if opp1_vals and opp2_vals and opp3_vals and opp4_vals:
+        opp_sub = sorted([
+            ("Opp1 — Éducation",          sum(opp1_vals) / len(opp1_vals)),
+            ("Opp2 — Diversité sociale",   sum(opp2_vals) / len(opp2_vals)),
+            ("Opp3 — Mobilité",           sum(opp3_vals) / len(opp3_vals)),
+            ("Opp4 — Accès TIC",          sum(opp4_vals) / len(opp4_vals)),
+        ], key=lambda x: -x[1])
+        classement_lines += [
+            "",
+            f"Sous-dimensions du score Opportunités (Opp), classées :",
+        ]
+        for i, (name, score) in enumerate(opp_sub, 1):
+            classement_lines.append(f"  {i}. {name:<30s} : {score:.2f}/10 ({_level(score)})")
+        classement_lines += [
+            "",
+            f"-> SOUS-DIMENSION OPP LA PLUS ELEVEE : {opp_sub[0][0]} ({opp_sub[0][1]:.2f}/10)",
+            f"-> SOUS-DIMENSION OPP LA PLUS FAIBLE : {opp_sub[-1][0]} ({opp_sub[-1][1]:.2f}/10)",
+        ]
+    classement_text = "\n".join(classement_lines)
+    agg_ids.append("oppchovec_classement_composantes")
+    agg_docs.append(classement_text)
+    agg_embs.append(model.encode(f"passage: {classement_text}").tolist())
+    agg_metas.append({
+        "source": "oppchovec_classement",
+        "type":   "classement",
+        "zone":   "Corse",
+        "epci":   "",
+    })
+    print("  [OK] Document classement composantes OppChoVec généré")
 
     # Documents par EPCI
     for epci, data in sorted(epci_data.items()):

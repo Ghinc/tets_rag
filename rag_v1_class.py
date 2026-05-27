@@ -39,10 +39,10 @@ class BasicRAGPipeline:
     def __init__(
         self,
         openai_api_key: str,
-        chroma_path: str = "./chroma_txt/",
-        collection_name: str = "communes_corses_txt",
-        llm_model: str = "gpt-3.5-turbo",
-        embedding_model: str = "intfloat/e5-base-v2"
+        chroma_path: str = "./chroma_portrait",
+        collection_name: str = "portrait_verbatims",
+        llm_model: str = "gpt-4o-mini",
+        embedding_model: str = "BAAI/bge-m3"
     ):
         """
         Initialise le pipeline RAG v1
@@ -106,10 +106,8 @@ class BasicRAGPipeline:
         Returns:
             Tuple (réponse_générée, liste_de_sources)
         """
-        # 1. Générer l'embedding de la question
-        # Note: e5-base-v2 nécessite le préfixe "query:"
-        query_text = f"query: {question}"
-        query_embedding = self.embed_model.encode([query_text]).tolist()
+        # 1. Générer l'embedding de la question (BGE-M3 : préfixe "query: ")
+        query_embedding = self.embed_model.encode([f"query: {question}"]).tolist()
 
         # 2. Recherche vectorielle dans ChromaDB
         results = self.collection.query(

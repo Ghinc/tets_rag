@@ -15,7 +15,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #f0f2f8;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -723,6 +723,12 @@
         .eval-report tr:nth-child(even) td { background: #f7f9ff; }
         .eval-report hr { border: none; border-top: 1px solid #e0e6f5; margin: 20px 0; }
         .eval-report code { background: #f0f0f0; padding: 1px 5px; border-radius: 3px; font-size: 12px; }
+
+        /* ── Règles de coupure de page pour l'export PDF ─────────────── */
+        h1, h2, h3, h4 { break-after: avoid; page-break-after: avoid; orphans: 3; widows: 3; }
+        p, li { orphans: 3; widows: 3; }
+        table, blockquote, pre { break-inside: avoid; page-break-inside: avoid; }
+        tr { break-inside: avoid; page-break-inside: avoid; }
     </style>
 </head>
 <body>
@@ -737,6 +743,8 @@
             <button class="tab-btn"        onclick="switchTab('batch')">📊 Traitement par lot</button>
             <button class="tab-btn"        onclick="switchTab('explore')">🔍 Exploration</button>
             <button class="tab-btn"        onclick="switchTab('eval')">🧪 Évaluation</button>
+            <button class="tab-btn"        onclick="switchTab('debug')">🔬 Debug Retrieval</button>
+            <button class="tab-btn"        onclick="switchTab('annot')">📝 Annotation</button>
         </div>
     </div>
 
@@ -861,6 +869,7 @@
                 <div class="q-select-bar">
                     <button onclick="selectAllQuestions(true)">✅ Tout cocher</button>
                     <button onclick="selectAllQuestions(false)">☐ Tout décocher</button>
+                    <button onclick="selectRandomQuestions(10)">🎲 10 au hasard</button>
                     <span id="selectionCount"></span>
                 </div>
                 <div class="questions-list" id="questionsList"></div>
@@ -954,13 +963,25 @@
                         🎤 Entretiens&nbsp;<span id="entretiensCount" style="font-weight:400;"></span>
                     </button>
                     <button class="explore-tab-btn" onclick="switchExploreTab('summaries')">
-                        📊 Synthèses RAPTOR&nbsp;<span id="summariesCount" style="font-weight:400;"></span>
+                        📊 Synthèses RAPTOR quali&nbsp;<span id="summariesCount" style="font-weight:400;"></span>
+                    </button>
+                    <button class="explore-tab-btn" onclick="switchExploreTab('syntheses_quanti')">
+                        📊 Synthèses RAPTOR quanti&nbsp;<span id="synthesesQuantiCount" style="font-weight:400;"></span>
                     </button>
                     <button class="explore-tab-btn" onclick="switchExploreTab('quantitative')">
                         📈 Données quanti&nbsp;<span id="quantiCount" style="font-weight:400;"></span>
                     </button>
                     <button class="explore-tab-btn" onclick="switchExploreTab('oppchovec')">
                         🏆 OppChoVec&nbsp;<span id="oppchovecCount" style="font-weight:400;"></span>
+                    </button>
+                    <button class="explore-tab-btn" onclick="switchExploreTab('classements')">
+                        🏅 Classements communes
+                    </button>
+                    <button class="explore-tab-btn" onclick="switchExploreTab('equipements')">
+                        🏘 Équipements
+                    </button>
+                    <button class="explore-tab-btn" onclick="switchExploreTab('profil_repondants')">
+                        👥 Profil répondants
                     </button>
                     <button class="explore-tab-btn" onclick="switchExploreTab('stats')">
                         🔢 Effectifs
@@ -987,6 +1008,10 @@
                     <div id="summariesList"><div class="explore-loading">Chargement...</div></div>
                 </div>
 
+                <div id="explore-panel-syntheses_quanti" class="explore-panel">
+                    <div id="synthesesQuantiList"><div class="explore-loading">Chargement...</div></div>
+                </div>
+
                 <!-- OppChoVec -->
                 <div id="explore-panel-oppchovec" class="explore-panel">
                     <div style="display:flex;gap:10px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
@@ -1006,48 +1031,69 @@
                     <div id="oppchovecList"><div class="explore-loading">Chargement...</div></div>
                 </div>
 
+                <!-- Classements communes -->
+                <div id="explore-panel-classements" class="explore-panel">
+                    <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:14px;">
+                        <label style="font-size:13px;font-weight:600;">Critère :</label>
+                        <select id="classementsCritere" onchange="renderClassements()"
+                                style="padding:6px 12px;border:1px solid #ddd;border-radius:6px;font-size:13px;min-width:260px;">
+                            <option value="global">🌐 Score moyen toutes dimensions</option>
+                            <option value="bien_etre">😊 Bien-être ressenti (bonheur + QdV)</option>
+                            <option value="confiance_avenir">🔭 Confiance en l'avenir</option>
+                            <optgroup label="── Par dimension ──">
+                            </optgroup>
+                        </select>
+                        <span id="classementsNote" style="font-size:12px;color:#888;font-style:italic;"></span>
+                    </div>
+                    <div id="classementsList"><div class="explore-loading">Chargement...</div></div>
+                </div>
+
+                <!-- Équipements communes -->
+                <div id="explore-panel-equipements" class="explore-panel">
+                    <div style="display:flex;gap:10px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+                        <select id="fEquipCommune" onchange="filterEquipements()"
+                                style="padding:6px 10px;border:1px solid #ddd;border-radius:6px;font-size:13px;">
+                            <option value="">Toutes les communes</option>
+                        </select>
+                        <span id="equipementsCount" style="font-size:12px;color:#666;"></span>
+                    </div>
+                    <div id="equipementsList"><div class="explore-loading">Chargement...</div></div>
+                </div>
+
+                <!-- Profil répondants par commune -->
+                <div id="explore-panel-profil_repondants" class="explore-panel">
+                    <div style="display:flex;gap:10px;align-items:center;margin-bottom:12px;flex-wrap:wrap;">
+                        <select id="fProfilCommune" onchange="filterProfils()"
+                                style="padding:6px 10px;border:1px solid #ddd;border-radius:6px;font-size:13px;">
+                            <option value="">Toutes les communes</option>
+                        </select>
+                        <span id="profilCount" style="font-size:12px;color:#666;"></span>
+                    </div>
+                    <div id="profilList"><div class="explore-loading">Chargement...</div></div>
+                </div>
+
                 <div id="explore-panel-stats" class="explore-panel">
                     <div id="statsContent"><div class="explore-loading">Chargement...</div></div>
                 </div>
 
                 <div id="explore-panel-quantitative" class="explore-panel">
-                    <!-- Sous-onglets quanti -->
-                    <div style="display:flex;gap:0;border-bottom:2px solid #e0e0e0;margin-bottom:14px;">
-                        <button id="qtab-repondants" onclick="switchQuantiTab('repondants')"
-                            style="padding:8px 18px;border:none;background:none;cursor:pointer;font-size:13px;font-weight:600;color:#667eea;border-bottom:2px solid #667eea;margin-bottom:-2px;">
-                            👤 Répondants&nbsp;<span id="quantiCount" style="font-weight:400;"></span>
-                        </button>
-                        <button id="qtab-syntheses" onclick="switchQuantiTab('syntheses')"
-                            style="padding:8px 18px;border:none;background:none;cursor:pointer;font-size:13px;font-weight:600;color:#999;border-bottom:2px solid transparent;margin-bottom:-2px;">
-                            📊 Synthèses RAPTOR quanti&nbsp;<span id="quantiSummaryCount" style="font-weight:400;"></span>
-                        </button>
+                    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px;">
+                        <select id="qfCommune" style="padding:6px 10px;border:1px solid #ddd;border-radius:6px;font-size:13px;">
+                            <option value="">Toutes communes</option>
+                        </select>
+                        <select id="qfGenre" style="padding:6px 10px;border:1px solid #ddd;border-radius:6px;font-size:13px;">
+                            <option value="">Tous genres</option>
+                            <option value="Homme">Homme</option>
+                            <option value="Femme">Femme</option>
+                        </select>
+                        <select id="qfAgeRange" style="padding:6px 10px;border:1px solid #ddd;border-radius:6px;font-size:13px;">
+                            <option value="">Toutes tranches</option>
+                        </select>
+                        <button onclick="searchQuantitative()" style="padding:6px 14px;background:#667eea;color:white;border:none;border-radius:6px;cursor:pointer;font-size:13px;">🔍 Filtrer</button>
+                        <button onclick="resetQuantiFilters()" style="padding:6px 14px;background:#eee;color:#555;border:none;border-radius:6px;cursor:pointer;font-size:13px;">↺</button>
+                        <div id="quantiStats" style="margin-left:auto;font-size:12px;color:#666;"></div>
                     </div>
-
-                    <!-- Sous-panel répondants -->
-                    <div id="qpanel-repondants">
-                        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px;">
-                            <select id="qfCommune" style="padding:6px 10px;border:1px solid #ddd;border-radius:6px;font-size:13px;">
-                                <option value="">Toutes communes</option>
-                            </select>
-                            <select id="qfGenre" style="padding:6px 10px;border:1px solid #ddd;border-radius:6px;font-size:13px;">
-                                <option value="">Tous genres</option>
-                                <option value="Homme">Homme</option>
-                                <option value="Femme">Femme</option>
-                            </select>
-                            <select id="qfAgeRange" style="padding:6px 10px;border:1px solid #ddd;border-radius:6px;font-size:13px;">
-                                <option value="">Toutes tranches</option>
-                            </select>
-                            <button onclick="searchQuantitative()" style="padding:6px 14px;background:#667eea;color:white;border:none;border-radius:6px;cursor:pointer;font-size:13px;">🔍 Filtrer</button>
-                            <button onclick="resetQuantiFilters()" style="padding:6px 14px;background:#eee;color:#555;border:none;border-radius:6px;cursor:pointer;font-size:13px;">↺</button>
-                            <div id="quantiStats" style="margin-left:auto;font-size:12px;color:#666;"></div>
-                        </div>
-                        <div id="quantiList"><div class="explore-loading">Chargement...</div></div>
-                    </div>
-
-                    <!-- Sous-panel synthèses RAPTOR quanti -->
-                    <div id="qpanel-syntheses" style="display:none;">
-                        <div id="quantiSummariesList"><div class="explore-loading">Chargement...</div></div>
-                    </div>
+                    <div id="quantiList"><div class="explore-loading">Chargement...</div></div>
                 </div>
             </div>
 
@@ -1142,6 +1188,60 @@
         </div>
     </div>
 
+    <!-- ════════════════════════════════════════
+         ONGLET DEBUG RETRIEVAL
+    ════════════════════════════════════════ -->
+    <div class="tab-panel" id="panel-debug">
+        <div style="display:flex;gap:0;height:calc(100vh - 110px);overflow:hidden;">
+
+            <!-- ── Colonne gauche : liste des questions ── -->
+            <div style="width:36%;min-width:280px;border-right:1px solid #e0e0e0;overflow-y:auto;background:#fafafa;display:flex;flex-direction:column;">
+                <div style="padding:10px 14px 8px;border-bottom:1px solid #e0e0e0;background:#fff;position:sticky;top:0;z-index:10;">
+                    <div style="font-weight:700;font-size:14px;margin-bottom:8px;color:#333;">🔬 Debug Retrieval</div>
+                    <input type="text" id="debugExcelPath" placeholder="Chemin Excel..." style="width:100%;font-size:12px;padding:5px 7px;border:1px solid #ccc;border-radius:4px;box-sizing:border-box;margin-bottom:6px;" value="C:\Users\comiti_g\Downloads\rag_evaluation_with_metrics_full.xlsx">
+                    <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:6px;">
+                        <select id="debugVersion" style="font-size:12px;padding:4px;">
+                            <option value="v9">v9</option>
+                            <option value="v10" selected>v10</option>
+                            <option value="v11">v11</option>
+                        </select>
+                        <label style="font-size:12px;">k=<input type="number" id="debugK" value="7" min="1" max="15" style="width:42px;font-size:12px;padding:3px;"></label>
+                        <button onclick="debugLoadQuestions()" style="font-size:12px;padding:4px 10px;background:#667eea;color:white;border:none;border-radius:4px;cursor:pointer;flex-shrink:0;">📂 Charger</button>
+                    </div>
+                    <input type="text" id="debugSearch" placeholder="🔍 Filtrer..." style="width:100%;font-size:12px;padding:5px 7px;border:1px solid #ccc;border-radius:4px;box-sizing:border-box;" oninput="debugFilterList()">
+                    <div id="debugListStatus" style="font-size:11px;color:#888;margin-top:4px;"></div>
+                </div>
+
+                <!-- Batch controls -->
+                <div style="padding:10px 14px 8px;border-bottom:1px solid #e0e0e0;background:#fff;">
+                    <div style="display:flex;gap:6px;align-items:center;">
+                        <button id="debugBatchBtn" onclick="debugRunBatch()" style="flex:1;font-size:12px;padding:6px 10px;background:#43a047;color:white;border:none;border-radius:4px;cursor:pointer;font-weight:600;">▶▶ Lancer le batch</button>
+                        <button id="debugCompareModeBtn" onclick="debugToggleCompare()" title="Comparer v1 (vanilla) vs la version sélectionnée" style="font-size:11px;padding:6px 10px;background:#6c757d;color:white;border:none;border-radius:4px;cursor:pointer;white-space:nowrap;">⚖️ vs v1</button>
+                    </div>
+                    <div id="debugBatchProgress" style="display:none;margin-top:8px;">
+                        <div style="display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#555;margin-bottom:3px;">
+                            <span>Question <span id="batchCurrent">0</span>/<span id="batchTotal">0</span></span>
+                            <button onclick="debugStopBatch()" style="font-size:10px;padding:2px 6px;background:#e53935;color:white;border:none;border-radius:3px;cursor:pointer;">⏹ Stop</button>
+                        </div>
+                        <div style="background:#e0e0e0;border-radius:3px;height:5px;">
+                            <div id="batchProgressBar" style="background:#43a047;height:5px;border-radius:3px;width:0%;transition:width .3s;"></div>
+                        </div>
+                    </div>
+                    <div id="debugBatchStats" style="display:none;margin-top:6px;font-size:11px;color:#444;background:#f5f5f5;border-radius:4px;padding:6px 8px;"></div>
+                </div>
+
+                <div id="debugListItems" style="overflow-y:auto;flex:1;"></div>
+            </div>
+
+            <!-- ── Colonne droite : détail ── -->
+            <div style="flex:1;overflow-y:auto;padding:16px 20px;">
+                <div id="debugDetailContent" style="color:#aaa;font-size:14px;padding-top:60px;text-align:center;">
+                    ← Charger l&apos;Excel et cliquer sur une question pour lancer le test
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div><!-- /.container -->
 
 <!-- ── Modal contexte LLM ── -->
@@ -1183,7 +1283,7 @@ let parsedWorkbook   = null; // pour accès aux colonnes
 ═══════════════════════════════════════════════════════════ */
 function switchTab(name) {
     document.querySelectorAll('.tab-btn').forEach((b, i) => {
-        b.classList.toggle('active', ['chat', 'batch', 'explore', 'eval'][i] === name);
+        b.classList.toggle('active', ['chat', 'batch', 'explore', 'eval', 'debug', 'annot'][i] === name);
     });
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
     document.getElementById('panel-' + name).classList.add('active');
@@ -1371,8 +1471,12 @@ function addBotResponse(data) {
                 label = `💬 ${src.metadata.commune||'N/A'}${src.metadata.profession ? ' - '+src.metadata.profession : ''}`;
             else if (src.metadata.source_type === 'oppchovec_score')
                 label = `📈 OppChoVec — ${src.metadata.commune||'N/A'} : ${src.metadata.oppchovec_0_10 != null ? src.metadata.oppchovec_0_10.toFixed(2)+'/10' : '?'} (Opp=${src.metadata.opp_0_10 != null ? src.metadata.opp_0_10.toFixed(2) : '?'}, Cho=${src.metadata.cho_0_10 != null ? src.metadata.cho_0_10.toFixed(2) : '?'}, Vec=${src.metadata.vec_0_10 != null ? src.metadata.vec_0_10.toFixed(2) : '?'})`;
+            else if (src.metadata.source_type === 'raptor_entretiens_summaries')
+                label = `📝 Synthèse entretiens — ${src.metadata.commune || 'N/A'} (N=${src.metadata.num_chunks||'?'} extraits)`;
+            else if (src.metadata.source_type === 'raptor_enquete_summaries' || src.metadata.source_type === 'raptor_summaries')
+                label = `📊 Synthèse RAPTOR — ${src.metadata.commune || 'Toutes communes'} [${src.metadata.view_name||'?'}] (N=${src.metadata.num_chunks||'?'})`;
             else
-                label = `${src.metadata.commune || src.metadata.nom || 'Source'}`;
+                label = `${src.metadata.commune || src.metadata.nom || src.metadata.source_type || 'Source'}`;
 
             sh.textContent = `▶ ${i+1}. ${label} (score: ${src.score.toFixed(3)})`;
             sh.onclick = () => {
@@ -1588,6 +1692,27 @@ function selectAllQuestions(checked) {
     updateSelectionCount();
 }
 
+function selectRandomQuestions(n) {
+    // Décocher tout d'abord
+    parsedQuestions.forEach((_, i) => {
+        const cb = document.getElementById(`qcheck-${i}`);
+        if (cb) cb.checked = false;
+    });
+    // Tirer n indices sans remise
+    const total = parsedQuestions.length;
+    const count = Math.min(n, total);
+    const indices = Array.from({length: total}, (_, i) => i);
+    for (let i = indices.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [indices[i], indices[j]] = [indices[j], indices[i]];
+    }
+    indices.slice(0, count).forEach(i => {
+        const cb = document.getElementById(`qcheck-${i}`);
+        if (cb) cb.checked = true;
+    });
+    updateSelectionCount();
+}
+
 function escHtml(t) {
     return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
@@ -1757,8 +1882,12 @@ function buildResultContent(res) {
                 label = `💬 ${src.metadata.commune||'N/A'}${src.metadata.profession ? ' - '+src.metadata.profession : ''}`;
             else if (src.metadata.source_type === 'oppchovec_score')
                 label = `📈 OppChoVec — ${src.metadata.commune||'N/A'} : ${src.metadata.oppchovec_0_10 != null ? src.metadata.oppchovec_0_10.toFixed(2)+'/10' : '?'} (Opp=${src.metadata.opp_0_10 != null ? src.metadata.opp_0_10.toFixed(2) : '?'}, Cho=${src.metadata.cho_0_10 != null ? src.metadata.cho_0_10.toFixed(2) : '?'}, Vec=${src.metadata.vec_0_10 != null ? src.metadata.vec_0_10.toFixed(2) : '?'})`;
+            else if (src.metadata.source_type === 'raptor_entretiens_summaries')
+                label = `📝 Synthèse entretiens — ${src.metadata.commune || 'N/A'} (N=${src.metadata.num_chunks||'?'} extraits)`;
+            else if (src.metadata.source_type === 'raptor_enquete_summaries' || src.metadata.source_type === 'raptor_summaries')
+                label = `📊 Synthèse RAPTOR — ${src.metadata.commune || 'Toutes communes'} [${src.metadata.view_name||'?'}] (N=${src.metadata.num_chunks||'?'})`;
             else
-                label = `${src.metadata.commune || src.metadata.nom || 'Source'}`;
+                label = `${src.metadata.commune || src.metadata.nom || src.metadata.source_type || 'Source'}`;
 
             sh.textContent = `▶ ${si+1}. ${label} (score: ${src.score.toFixed(3)})`;
             sh.onclick = () => {
@@ -1830,8 +1959,8 @@ function exportBatchPDF() {
 
     done.forEach((res, i) => {
         html += `
-      <div style="margin-bottom:28px; page-break-inside:avoid;">
-        <div style="background:#f0f0f8; border-left:4px solid #667eea; padding:8px 12px; margin-bottom:10px;">
+      <div style="margin-bottom:28px;">
+        <div style="background:#f0f0f8; border-left:4px solid #667eea; padding:8px 12px; margin-bottom:10px; break-inside:avoid; page-break-inside:avoid;">
           <span style="font-size:12px; font-weight:bold; color:#667eea;">Question ${i+1}</span><br>
           <span style="font-size:14px; font-weight:600;">${escHtml(res.question)}</span>
         </div>`;
@@ -1877,24 +2006,25 @@ function exportBatchPDF() {
       Généré par Chatbot RAG Multi-Version · Qualité de vie en Corse
     </p></div>`;
 
-    // Générer le PDF
-    const container = document.createElement('div');
-    container.innerHTML = html;
-    document.body.appendChild(container);
-
     const btn = document.querySelector('.export-btns .btn-green');
     const origText = btn.textContent;
     btn.textContent = '⏳ Génération...';
     btn.disabled = true;
 
+    // Injecter dans le DOM (évite la page blanche initiale du rendu off-screen)
+    const container = document.createElement('div');
+    container.innerHTML = html;
+    container.style.cssText = 'position:fixed; left:-9999px; top:0; width:794px; background:#fff;';
+    document.body.appendChild(container);
+
     html2pdf()
         .set({
-            margin:      [12, 12, 12, 12],
+            margin:      [14, 14, 14, 14],
             filename:    filename,
-            image:       { type: 'jpeg', quality: 0.95 },
-            html2canvas: { scale: 2, useCORS: true, logging: false },
+            image:       { type: 'jpeg', quality: 0.97 },
+            html2canvas: { scale: 2, useCORS: true, logging: false, windowWidth: 794 },
             jsPDF:       { unit: 'mm', format: 'a4', orientation: 'portrait' },
-            pagebreak:   { mode: ['avoid-all', 'css'] },
+            pagebreak:   { mode: 'css', avoid: ['li', 'h2', 'h3', 'blockquote'] },
         })
         .from(container)
         .save()
@@ -2001,6 +2131,226 @@ async function initExploreTab() {
             `<div class="explore-loading" style="color:red;">Erreur chargement filtres : ${e.message}</div>`;
     }
 }
+
+/* ═══════════════════════════════════════════════════════════
+   CLASSEMENTS COMMUNES (ENQUÊTE QDV)
+═══════════════════════════════════════════════════════════ */
+let classementsInitialized = false;
+let classementsData = null;
+
+const SCORE_COLORS_LIKERT = {
+    5: '#1b5e20', 4: '#388e3c', 3: '#f9a825', 2: '#e64a19', 1: '#b71c1c',
+};
+function scoreColor(s) {
+    if (s >= 4.5) return SCORE_COLORS_LIKERT[5];
+    if (s >= 3.5) return SCORE_COLORS_LIKERT[4];
+    if (s >= 2.5) return SCORE_COLORS_LIKERT[3];
+    if (s >= 1.5) return SCORE_COLORS_LIKERT[2];
+    return SCORE_COLORS_LIKERT[1];
+}
+function scoreLabel(s) {
+    if (s >= 4.5) return 'très élevé';
+    if (s >= 3.5) return 'moyen-fort';
+    if (s >= 2.5) return 'moyen';
+    if (s >= 1.5) return 'faible';
+    return 'très faible';
+}
+
+async function loadClassements() {
+    const container = document.getElementById('classementsList');
+    container.innerHTML = '<div class="explore-loading">Chargement...</div>';
+    try {
+        const r = await fetch('/api/browse/classements_communes');
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        classementsData = await r.json();
+        classementsInitialized = true;
+
+        // Remplir optgroup dimensions
+        const sel = document.getElementById('classementsCritere');
+        const og = sel.querySelector('optgroup');
+        classementsData.dimensions.forEach(dim => {
+            const o = document.createElement('option');
+            o.value = dim; o.textContent = dim;
+            og.appendChild(o);
+        });
+
+        renderClassements();
+    } catch(e) {
+        container.innerHTML = `<div class="explore-loading" style="color:red;">Erreur : ${e.message}</div>`;
+    }
+}
+
+function renderClassements() {
+    if (!classementsData) return;
+    const critere = document.getElementById('classementsCritere').value;
+    const rows = classementsData.rankings[critere] || [];
+    const container = document.getElementById('classementsList');
+    const noteEl = document.getElementById('classementsNote');
+
+    const noteMap = {
+        'global': 'Moyenne des 14 dimensions Likert',
+        'bien_etre': 'Moyenne bonheur + qualité de vie globale',
+        'confiance_avenir': 'Réponse à la question confiance en l\'avenir',
+    };
+    noteEl.textContent = noteMap[critere] || `Dimension : ${critere}`;
+
+    if (rows.length === 0) {
+        container.innerHTML = '<div class="explore-loading">Aucune donnée disponible.</div>';
+        return;
+    }
+
+    const minN = classementsData.min_n;
+    let html = `<div style="font-size:12px;color:#888;margin-bottom:10px;">
+        ${rows.length} communes · seuil minimum ${minN} répondants · scores sur 5
+    </div>
+    <table style="width:100%;border-collapse:collapse;font-size:13px;">
+        <thead>
+            <tr style="background:#f5f5f5;border-bottom:2px solid #ddd;">
+                <th style="padding:8px 6px;text-align:center;width:45px;">#</th>
+                <th style="padding:8px 6px;text-align:left;">Commune</th>
+                <th style="padding:8px 6px;text-align:center;width:90px;">N répondants</th>
+                <th style="padding:8px 6px;text-align:center;width:80px;">Score /5</th>
+                <th style="padding:8px 6px;text-align:left;">Niveau</th>
+                <th style="padding:8px 6px;text-align:left;">Barre</th>
+            </tr>
+        </thead>
+        <tbody>`;
+
+    rows.forEach((row, idx) => {
+        const bg = idx % 2 === 0 ? '#fff' : '#fafafa';
+        const color = scoreColor(row.score);
+        const barW = Math.round((row.score / 5) * 120);
+        const nStyle = row.n <= 5 ? 'color:#e65100;font-weight:600;' : 'color:#555;';
+        html += `<tr style="background:${bg};border-bottom:1px solid #eee;">
+            <td style="padding:6px;text-align:center;color:#999;">${row.rang}</td>
+            <td style="padding:6px;font-weight:500;">${row.commune}</td>
+            <td style="padding:6px;text-align:center;${nStyle}" title="${row.n <= 5 ? '⚠ Faible effectif' : ''}">${row.n}${row.n <= 5 ? ' ⚠' : ''}</td>
+            <td style="padding:6px;text-align:center;font-weight:700;color:${color};">${row.score.toFixed(2)}</td>
+            <td style="padding:6px;font-size:11px;color:${color};">${scoreLabel(row.score)}</td>
+            <td style="padding:6px;">
+                <div style="background:#e0e0e0;border-radius:3px;height:10px;width:120px;">
+                    <div style="background:${color};border-radius:3px;height:10px;width:${barW}px;"></div>
+                </div>
+            </td>
+        </tr>`;
+    });
+
+    html += '</tbody></table>';
+    html += `<div style="font-size:11px;color:#aaa;margin-top:8px;">
+        ⚠ = moins de 6 répondants — scores à interpréter avec précaution.
+    </div>`;
+    container.innerHTML = html;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   ÉQUIPEMENTS COMMUNES
+═══════════════════════════════════════════════════════════ */
+let equipementsInitialized = false;
+let equipementsAllDocs = [];
+
+async function loadEquipements() {
+    const container = document.getElementById('equipementsList');
+    container.innerHTML = '<div class="explore-loading">Chargement...</div>';
+    try {
+        const r = await fetch('/api/browse/equipements');
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        const data = await r.json();
+        equipementsAllDocs = data.docs;
+        equipementsInitialized = true;
+        const sel = document.getElementById('fEquipCommune');
+        data.communes.forEach(c => {
+            const o = document.createElement('option'); o.value = o.textContent = c; sel.appendChild(o);
+        });
+        renderEquipements(data.docs);
+    } catch(e) {
+        container.innerHTML = `<div class="explore-loading" style="color:red;">Erreur : ${e.message}</div>`;
+    }
+}
+
+function filterEquipements() {
+    const commune = document.getElementById('fEquipCommune').value;
+    const filtered = commune ? equipementsAllDocs.filter(d => d.commune === commune) : equipementsAllDocs;
+    renderEquipements(filtered);
+}
+
+function renderEquipements(docs) {
+    const container = document.getElementById('equipementsList');
+    document.getElementById('equipementsCount').textContent = `${docs.length} document${docs.length > 1 ? 's' : ''}`;
+    if (docs.length === 0) {
+        container.innerHTML = '<div class="explore-loading">Aucun résultat.</div>';
+        return;
+    }
+    container.innerHTML = docs.map(d => `
+        <div style="background:white;border:1px solid #e0e0e0;border-radius:8px;margin-bottom:10px;overflow:hidden;">
+            <div style="padding:10px 14px;background:#f5f5f5;display:flex;justify-content:space-between;align-items:center;cursor:pointer;"
+                 onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
+                <strong style="font-size:13px;">🏘 ${d.commune}</strong>
+                <span style="font-size:11px;color:#888;">▼</span>
+            </div>
+            <div style="padding:12px 14px;font-size:12px;white-space:pre-wrap;font-family:monospace;display:none;
+                        background:#fafafa;max-height:300px;overflow-y:auto;">${d.content}</div>
+        </div>`).join('');
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   PROFIL RÉPONDANTS PAR COMMUNE
+═══════════════════════════════════════════════════════════ */
+let profilInitialized = false;
+let profilAllDocs = [];
+
+async function loadProfilRepondants() {
+    const container = document.getElementById('profilList');
+    container.innerHTML = '<div class="explore-loading">Chargement...</div>';
+    try {
+        const r = await fetch('/api/browse/communes_profil');
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        const data = await r.json();
+        profilAllDocs = data.docs;
+        profilInitialized = true;
+        const sel = document.getElementById('fProfilCommune');
+        data.communes.forEach(c => {
+            const o = document.createElement('option'); o.value = o.textContent = c; sel.appendChild(o);
+        });
+        renderProfils(data.docs);
+    } catch(e) {
+        container.innerHTML = `<div class="explore-loading" style="color:red;">Erreur : ${e.message}</div>`;
+    }
+}
+
+function filterProfils() {
+    const commune = document.getElementById('fProfilCommune').value;
+    const filtered = commune ? profilAllDocs.filter(d => d.commune === commune) : profilAllDocs;
+    renderProfils(filtered);
+}
+
+function renderProfils(docs) {
+    const container = document.getElementById('profilList');
+    document.getElementById('profilCount').textContent =
+        `${docs.length} commune${docs.length > 1 ? 's' : ''} · triées par N répondants`;
+    if (docs.length === 0) {
+        container.innerHTML = '<div class="explore-loading">Aucun résultat.</div>';
+        return;
+    }
+    container.innerHTML = docs.map(d => {
+        const warn = d.n_repondants <= 2 ? ' ⚠ faible effectif' : '';
+        const borderColor = d.n_repondants >= 10 ? '#4caf50' : d.n_repondants >= 3 ? '#ff9800' : '#f44336';
+        return `
+        <div style="background:white;border:1px solid #e0e0e0;border-left:4px solid ${borderColor};
+                    border-radius:8px;margin-bottom:10px;overflow:hidden;">
+            <div style="padding:10px 14px;background:#f5f5f5;display:flex;justify-content:space-between;
+                        align-items:center;cursor:pointer;"
+                 onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
+                <strong style="font-size:13px;">👥 ${d.commune}</strong>
+                <span style="font-size:12px;color:#666;">N=${d.n_repondants}${warn}</span>
+            </div>
+            <div style="padding:12px 14px;font-size:12px;white-space:pre-wrap;display:none;
+                        background:#fafafa;max-height:300px;overflow-y:auto;">${d.content}</div>
+        </div>`;
+    }).join('');
+}
+
 
 /* ═══════════════════════════════════════════════════════════
    STATS — EFFECTIFS RÉELS
@@ -2140,17 +2490,121 @@ async function loadStats() {
     }
 }
 
+let synthesesQuantiInitialized = false;
+
 function switchExploreTab(name) {
+    const tabNames = ['verbatims','entretiens','summaries','syntheses_quanti','quantitative','oppchovec',
+                      'classements','equipements','profil_repondants','stats'];
     document.querySelectorAll('.explore-tab-btn').forEach((b, i) => {
-        b.classList.toggle('active',
-            ['verbatims', 'entretiens', 'summaries', 'quantitative', 'oppchovec', 'stats'][i] === name);
+        b.classList.toggle('active', tabNames[i] === name);
     });
     document.querySelectorAll('.explore-panel').forEach(p => p.classList.remove('active'));
     document.getElementById('explore-panel-' + name).classList.add('active');
-    if (name === 'quantitative' && !quantiInitialized) loadQuantitative();
-    if (name === 'stats') loadStats();
-    if (name === 'entretiens' && !entretiensInitialized) loadEntretiens();
-    if (name === 'oppchovec' && !oppchovecInitialized) loadOppChovec();
+    if (name === 'syntheses_quanti'  && !synthesesQuantiInitialized) loadSynthesesQuanti();
+    if (name === 'quantitative'      && !quantiInitialized)          loadQuantitative();
+    if (name === 'stats')                                             loadStats();
+    if (name === 'entretiens'        && !entretiensInitialized)      loadEntretiens();
+    if (name === 'oppchovec'         && !oppchovecInitialized)       loadOppChovec();
+    if (name === 'classements'       && !classementsInitialized)     loadClassements();
+    if (name === 'equipements'       && !equipementsInitialized)     loadEquipements();
+    if (name === 'profil_repondants' && !profilInitialized)          loadProfilRepondants();
+}
+
+async function loadSynthesesQuanti() {
+    const container = document.getElementById('synthesesQuantiList');
+    container.innerHTML = '<div class="explore-loading">Chargement...</div>';
+    try {
+        const r = await fetch('/api/browse/quanti_summaries');
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        const data = await r.json();
+        synthesesQuantiInitialized = true;
+        document.getElementById('synthesesQuantiCount').textContent = `(${data.total})`;
+        container.innerHTML = '';
+
+        const viewLabels = {
+            'enquete_age_range*profession': '🔀 Tranche d\'âge × CSP',
+            'enquete_age_range*commune':    '🔀 Tranche d\'âge × Commune',
+            'enquete_profession*commune':   '🔀 CSP × Commune',
+            'enquete_age_range':            '👤 Tranche d\'âge',
+            'enquete_profession':           '💼 CSP',
+            'enquete_commune':              '📍 Commune',
+            'enquete_dimension*commune':    '🎯 Thème QdV × Commune',
+            'enquete_dimension*age_range':  '🎯 Thème QdV × Tranche d\'âge',
+            'enquete_dimension*profession': '🎯 Thème QdV × CSP',
+            'enquete_dimension':            '🎯 Thème QdV',
+        };
+
+        Object.entries(data.views).forEach(([viewName, summaries]) => {
+            const section = document.createElement('div');
+            section.className = 'summary-view-section';
+
+            const header = document.createElement('div');
+            header.className = 'summary-view-header';
+            header.innerHTML = `<span>${viewLabels[viewName] || viewName}</span><span>${summaries.length} synthèses</span>`;
+
+            const list = document.createElement('div');
+            list.className = 'summary-view-list';
+            let collapsed = false;
+            header.onclick = () => {
+                collapsed = !collapsed;
+                list.style.display = collapsed ? 'none' : 'block';
+                header.style.opacity = collapsed ? '.65' : '1';
+            };
+
+            summaries.forEach(s => {
+                const m = s.metadata;
+                const card = document.createElement('div');
+                card.className = 'summary-card';
+
+                const cardHeader = document.createElement('div');
+                cardHeader.className = 'summary-card-header';
+
+                let label = m.dim1_value || '';
+                if (m.dim2_value) label += ' × ' + m.dim2_value;
+
+                const tagsDiv = document.createElement('div');
+                tagsDiv.className = 'summary-card-tags';
+                const t1 = document.createElement('span');
+                t1.className = 'vtag vtag-commune';
+                t1.textContent = label;
+                const t2 = document.createElement('span');
+                t2.className = 'vtag';
+                t2.style.cssText = 'background:#e8f5e9;color:#2e7d32;';
+                t2.textContent = (m.num_respondents || m.num_chunks || '?') + ' répondants';
+                tagsDiv.appendChild(t1);
+                tagsDiv.appendChild(t2);
+
+                const arrow = document.createElement('span');
+                arrow.textContent = '▶';
+                arrow.style.cssText = 'font-size:10px;color:#aaa;flex-shrink:0;';
+
+                cardHeader.appendChild(tagsDiv);
+                cardHeader.appendChild(arrow);
+                card.appendChild(cardHeader);
+
+                const body = document.createElement('div');
+                body.className = 'summary-card-body md-body';
+                body.innerHTML = marked.parse(s.content || '');
+                card.appendChild(body);
+
+                cardHeader.onclick = () => {
+                    const open = body.style.display === 'block';
+                    body.style.display = open ? 'none' : 'block';
+                    arrow.textContent = open ? '▶' : '▼';
+                };
+
+                list.appendChild(card);
+            });
+
+            section.appendChild(header);
+            section.appendChild(list);
+            container.appendChild(section);
+        });
+
+        if (data.total === 0) container.innerHTML = '<div class="explore-loading">Aucune synthèse disponible.</div>';
+    } catch(e) {
+        container.innerHTML = `<div class="explore-loading">Erreur : ${e.message}</div>`;
+    }
 }
 
 async function searchVerbatims() {
@@ -2520,12 +2974,16 @@ async function loadQuantiSummaries() {
         container.innerHTML = '';
 
         const viewLabels = {
-            'age_range*profession': '🔀 Tranche d\'âge × CSP',
-            'age_range*commune':    '🔀 Tranche d\'âge × Commune',
-            'profession*commune':   '🔀 CSP × Commune',
-            'age_range':            '👤 Tranche d\'âge',
-            'profession':           '💼 CSP',
-            'commune':              '📍 Commune',
+            'enquete_age_range*profession': '🔀 Tranche d\'âge × CSP',
+            'enquete_age_range*commune':    '🔀 Tranche d\'âge × Commune',
+            'enquete_profession*commune':   '🔀 CSP × Commune',
+            'enquete_age_range':            '👤 Tranche d\'âge',
+            'enquete_profession':           '💼 CSP',
+            'enquete_commune':              '📍 Commune',
+            'enquete_dimension*commune':    '🎯 Thème QdV × Commune',
+            'enquete_dimension*age_range':  '🎯 Thème QdV × Tranche d\'âge',
+            'enquete_dimension*profession': '🎯 Thème QdV × CSP',
+            'enquete_dimension':            '🎯 Thème QdV',
         };
 
         Object.entries(data.views).forEach(([viewName, summaries]) => {
@@ -3103,14 +3561,34 @@ async function evalExportPDF() {
     const reportEl = document.getElementById('evalReport');
     if (!reportEl.classList.contains('visible')) return;
     const filename = document.getElementById('evalResultPath').textContent.replace(/\.md$/, '.pdf') || 'rapport_eval.pdf';
+
+    const btn = document.querySelector('#evalTab .btn-blue');
+    const origText = btn ? btn.textContent : '';
+    if (btn) { btn.textContent = '⏳ Génération...'; btn.disabled = true; }
+
+    // Injecter dans le DOM (évite la page blanche et les blancs dus au rendu off-screen)
+    const container = document.createElement('div');
+    container.innerHTML = reportEl.innerHTML;
+    container.style.cssText = 'position:fixed; left:-9999px; top:0; width:794px; background:#fff; font-family:Georgia,serif; font-size:14px; line-height:1.7; color:#111; padding:24px 28px;';
+    document.body.appendChild(container);
+
     const opt = {
-        margin: [12, 14],
+        margin: [14, 14, 14, 14],
         filename,
-        image: { type: 'jpeg', quality: 0.95 },
-        html2canvas: { scale: 2 },
+        image: { type: 'jpeg', quality: 0.97 },
+        html2canvas: { scale: 2, useCORS: true, windowWidth: 794 },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        pagebreak: { mode: 'css', avoid: ['li', 'h2', 'h3', 'h4', 'tr', 'blockquote'] },
     };
-    html2pdf().set(opt).from(reportEl).save();
+    html2pdf().set(opt).from(container).save()
+        .then(() => {
+            document.body.removeChild(container);
+            if (btn) { btn.textContent = origText; btn.disabled = false; }
+        })
+        .catch(() => {
+            document.body.removeChild(container);
+            if (btn) { btn.textContent = origText; btn.disabled = false; }
+        });
 }
 
 // Drag-and-drop sur le fichier Excel
@@ -3139,6 +3617,1491 @@ document.addEventListener('DOMContentLoaded', () => {
             .finally(() => { if (btn) { btn.disabled = false; btn.textContent = '📁 Parcourir...'; } });
     });
 });
+
+/* ═══════════════════════════════════════════════════════════
+   DEBUG RETRIEVAL
+═══════════════════════════════════════════════════════════ */
+let debugQuestions = [];
+let debugSelectedRow = null;
+
+const CAT_LABELS = {
+    raptor_portrait:      'RAPTOR portrait',
+    raptor_enquete:       'RAPTOR enquête',
+    raptor_any:           'RAPTOR (portrait ou enquête)',
+    raptor_both:          'RAPTOR (les deux)',
+    oppchovec:            'OppChoVec',
+    verbatims:            'Verbatims',
+    classement:           'Classement',
+    entretiens:           'Entretiens',
+    equipements:          'Équipements',
+    stats_repondants:     'Stats répondants',
+    stats_enquete:        'Stats enquête',
+    methodology_oppchovec:'Méthodo OppChoVec',
+    methodology_enquete:  'Méthodo enquête',
+    wiki:                 'Wiki',
+    rien:                 'Rien attendu',
+    autre:                'Autre/non classé',
+};
+
+const CAT_COLORS = {
+    raptor_portrait:   '#1976d2',
+    raptor_enquete:    '#7b1fa2',
+    raptor_any:        '#0097a7',
+    raptor_both:       '#0097a7',
+    oppchovec:         '#e65100',
+    verbatims:         '#388e3c',
+    classement:        '#5d4037',
+    entretiens:        '#c62828',
+    equipements:       '#00695c',
+    stats_repondants:  '#283593',
+    stats_enquete:     '#6a1b9a',
+    methodology_oppchovec: '#bf360c',
+    methodology_enquete:   '#4a148c',
+    wiki:              '#9e9e9e',
+    rien:              '#757575',
+    autre:             '#bdbdbd',
+};
+
+function catBadge(cat, extra='') {
+    const color = CAT_COLORS[cat] || '#888';
+    const label = CAT_LABELS[cat] || cat;
+    return `<span style="display:inline-block;padding:2px 7px;border-radius:10px;font-size:11px;font-weight:600;color:white;background:${color};margin:2px;${extra}">${label}</span>`;
+}
+
+async function debugLoadQuestions() {
+    const path = document.getElementById('debugExcelPath').value.trim();
+    if (!path) return;
+    document.getElementById('debugListStatus').textContent = 'Chargement…';
+    document.getElementById('debugListItems').innerHTML = '';
+    try {
+        const r = await fetch(`http://localhost:8000/api/eval/questions?excel_path=${encodeURIComponent(path)}`);
+        if (!r.ok) { const e = await r.json(); throw new Error(e.detail || r.statusText); }
+        const data = await r.json();
+        debugQuestions = data.questions;
+        document.getElementById('debugListStatus').textContent = `${data.count} questions chargées`;
+        debugRenderList(debugQuestions);
+    } catch(e) {
+        document.getElementById('debugListStatus').textContent = `Erreur : ${e.message}`;
+    }
+}
+
+function debugFilterList() {
+    const q = document.getElementById('debugSearch').value.toLowerCase();
+    const filtered = q ? debugQuestions.filter(x => x.question.toLowerCase().includes(q) || (x.section||'').toLowerCase().includes(q)) : debugQuestions;
+    debugRenderList(filtered);
+}
+
+function debugRenderList(questions) {
+    const el = document.getElementById('debugListItems');
+    let html = '';
+    let lastSection = null;
+    for (const q of questions) {
+        if (q.section !== lastSection) {
+            lastSection = q.section;
+            html += `<div style="padding:6px 14px 2px;font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.5px;background:#f0f0f0;border-top:1px solid #e0e0e0;">${q.section || '—'}</div>`;
+        }
+        const hasGT = q.do_retrieval;
+        const gtIcon = hasGT ? '📦' : '⬜';
+        const selected = debugSelectedRow === q.excel_row ? 'background:#e8eaf6;border-left:3px solid #667eea;' : 'border-left:3px solid transparent;';
+        html += `<div onclick="debugSelectQuestion(${q.excel_row})" style="padding:7px 14px;cursor:pointer;border-bottom:1px solid #eee;${selected}transition:background .1s;" onmouseover="if(${debugSelectedRow}!==${q.excel_row})this.style.background='#f5f5f5'" onmouseout="if(${debugSelectedRow}!==${q.excel_row})this.style.background=''">
+            <div style="font-size:12px;color:#333;line-height:1.4;">${gtIcon} ${escHtml(q.question)}</div>
+            ${hasGT ? `<div style="font-size:10px;color:#999;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">GT: ${escHtml(String(q.retrieval_gt||''))}</div>` : ''}
+        </div>`;
+    }
+    el.innerHTML = html || '<div style="padding:14px;color:#aaa;font-size:13px;">Aucune question</div>';
+}
+
+function debugSelectQuestion(row) {
+    debugSelectedRow = row;
+    const q = debugQuestions.find(x => x.excel_row === row);
+    if (!q) return;
+    debugRenderList(debugQuestions.filter(x => {
+        const s = document.getElementById('debugSearch').value.toLowerCase();
+        return !s || x.question.toLowerCase().includes(s) || (x.section||'').toLowerCase().includes(s);
+    }));
+    debugShowDetail(q);
+}
+
+function debugShowDetail(q) {
+    const dc = document.getElementById('debugDetailContent');
+    const gtItems = q.retrieval_gt ? debugParseGTLocal(String(q.retrieval_gt)) : [];
+    const requiredCats = gtItems.filter(i=>!i.optional&&i.category!=='rien').map(i=>i.category);
+    const optionalCats = gtItems.filter(i=>i.optional).map(i=>i.category);
+    const isRefusal   = gtItems.some(i=>i.category==='rien');
+
+    let gtHtml = '';
+    if (!q.do_retrieval) {
+        gtHtml = '<span style="color:#aaa;font-size:12px;">Pas de GT retrieval défini pour cette question</span>';
+    } else if (isRefusal) {
+        gtHtml = '<span style="background:#757575;color:white;padding:2px 8px;border-radius:10px;font-size:12px;">Rien attendu (refus)</span>';
+    } else {
+        if (requiredCats.length) gtHtml += '<span style="font-size:11px;color:#555;margin-right:4px;">Requis:</span>' + requiredCats.map(c=>catBadge(c)).join('');
+        if (optionalCats.length) gtHtml += ' <span style="font-size:11px;color:#aaa;margin-right:4px;margin-left:8px;">Optionnel:</span>' + optionalCats.map(c=>catBadge(c,'opacity:.6')).join('');
+    }
+
+    const version = document.getElementById('debugVersion').value;
+    const k = document.getElementById('debugK').value;
+
+    dc.innerHTML = `
+        <div style="max-width:860px;">
+            <div style="margin-bottom:4px;font-size:11px;color:#888;">Ligne Excel ${q.excel_row} · ${escHtml(q.section)} ${q.subsection?'/ '+escHtml(q.subsection):''}</div>
+            <h3 style="margin:0 0 10px;font-size:16px;color:#222;">${escHtml(q.question)}</h3>
+
+            <div style="background:#f5f5f5;border-radius:6px;padding:10px 14px;margin-bottom:14px;">
+                <div style="font-size:11px;font-weight:700;color:#666;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;">📦 Ground Truth Retrieval</div>
+                <div style="font-size:12px;color:#777;margin-bottom:6px;">Texte brut : <em>${escHtml(String(q.retrieval_gt||'—'))}</em></div>
+                <div>${gtHtml}</div>
+            </div>
+
+            <button id="debugRunBtn" onclick="debugRun(${q.excel_row})" style="padding:8px 18px;background:#667eea;color:white;border:none;border-radius:5px;cursor:pointer;font-size:13px;font-weight:600;">
+                ▶ Lancer le test (${version}, k=${k})
+            </button>
+            <div id="debugRunResult" style="margin-top:14px;"></div>
+        </div>`;
+}
+
+async function debugRun(row) {
+    const q = debugQuestions.find(x => x.excel_row === row);
+    if (!q) return;
+    const btn = document.getElementById('debugRunBtn');
+    btn.disabled = true;
+    btn.textContent = '⏳ Requête en cours…';
+    const resEl = document.getElementById('debugRunResult');
+    resEl.innerHTML = '<div style="color:#888;font-size:13px;">Appel RAG en cours (peut prendre 30–60s pour v10)…</div>';
+
+    const version = document.getElementById('debugVersion').value;
+    const k = parseInt(document.getElementById('debugK').value);
+
+    try {
+        const r = await fetch('http://localhost:8000/api/eval/debug_retrieval', {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({ question: q.question, retrieval_gt: q.retrieval_gt ? String(q.retrieval_gt) : null, rag_version: version, k })
+        });
+        if (!r.ok) { const e = await r.json(); throw new Error(e.detail || r.statusText); }
+        const data = await r.json();
+        resEl.innerHTML = debugRenderResult(data);
+    } catch(e) {
+        resEl.innerHTML = `<div style="color:#c62828;padding:10px;background:#ffebee;border-radius:4px;">Erreur : ${escHtml(e.message)}</div>`;
+    } finally {
+        btn.disabled = false;
+        btn.textContent = '▶ Relancer';
+    }
+}
+
+function debugRenderResult(data) {
+    const score = data.score || {};
+    const classified = data.classified || [];
+    const gtItems = data.gt_items || [];
+
+    // Catégories requises, optionnelles, récupérées
+    const required = new Set((score.expected || []));
+    const retrieved = new Set((score.retrieved || []));
+    const hits = new Set((score.hits || []));
+
+    // ── Score banner ──
+    let scoreBanner = '';
+    if (score.refusal_case) {
+        const n = score.retrieved_count || 0;
+        scoreBanner = `<div style="padding:10px 14px;border-radius:6px;background:${n===0?'#e8f5e9':'#fff3e0'};border:1px solid ${n===0?'#a5d6a7':'#ffcc80'};margin-bottom:14px;">
+            <b>Refus attendu</b> — ${n===0?'✅ Aucune source récupérée (correct)':'⚠️ '+n+' source(s) récupérée(s) (inattendu)'}</div>`;
+    } else if (score.recall !== null && score.recall !== undefined) {
+        const recPct = Math.round(score.recall*100);
+        const precPct = Math.round(score.precision*100);
+        const recColor = recPct===100?'#2e7d32':recPct>=50?'#e65100':'#c62828';
+        const precColor = precPct===100?'#2e7d32':precPct>=50?'#e65100':'#c62828';
+        scoreBanner = `<div style="display:flex;gap:16px;padding:10px 16px;border-radius:6px;background:#f5f5f5;border:1px solid #e0e0e0;margin-bottom:14px;flex-wrap:wrap;align-items:center;">
+            <div><span style="font-size:11px;color:#666;">Recall</span><br><span style="font-size:24px;font-weight:700;color:${recColor};">${recPct}%</span><span style="font-size:12px;color:#888;"> (${hits.size}/${required.size})</span></div>
+            <div><span style="font-size:11px;color:#666;">Précision</span><br><span style="font-size:24px;font-weight:700;color:${precColor};">${precPct}%</span></div>
+            <div style="flex:1;font-size:12px;color:#555;">${escHtml(score.detail||'')}</div>
+        </div>`;
+    } else {
+        scoreBanner = `<div style="padding:8px 12px;border-radius:4px;background:#f5f5f5;color:#888;font-size:12px;margin-bottom:14px;">${escHtml(score.detail||'Pas de scoring')}</div>`;
+    }
+
+    // ── Tableau GT vs Retrieved ──
+    let compHtml = '';
+    if (required.size > 0 || retrieved.size > 0) {
+        const allCats = new Set([...required, ...retrieved]);
+        compHtml = `<div style="margin-bottom:14px;">
+            <div style="font-size:11px;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">Comparaison GT ↔ Retrieval</div>
+            <table style="width:100%;border-collapse:collapse;font-size:12px;">
+                <thead><tr style="background:#f0f0f0;">
+                    <th style="padding:5px 8px;text-align:left;">Catégorie</th>
+                    <th style="padding:5px 8px;text-align:center;">GT requis</th>
+                    <th style="padding:5px 8px;text-align:center;">Récupéré</th>
+                    <th style="padding:5px 8px;text-align:center;">Statut</th>
+                </tr></thead><tbody>`;
+        for (const cat of [...allCats].sort()) {
+            const isReq = required.has(cat);
+            const isRet = retrieved.has(cat);
+            const isHit = hits.has(cat);
+            let status = '';
+            if (isReq && isHit)  status = '<span style="color:#2e7d32;font-weight:700;">✅ Hit</span>';
+            else if (isReq)      status = '<span style="color:#c62828;font-weight:700;">❌ Manqué</span>';
+            else if (isRet)      status = '<span style="color:#e65100;">⚠️ Inattendu</span>';
+            compHtml += `<tr style="border-bottom:1px solid #eee;">
+                <td style="padding:5px 8px;">${catBadge(cat)}</td>
+                <td style="padding:5px 8px;text-align:center;">${isReq?'✓':''}</td>
+                <td style="padding:5px 8px;text-align:center;">${isRet?'✓':''}</td>
+                <td style="padding:5px 8px;text-align:center;">${status}</td>
+            </tr>`;
+        }
+        compHtml += '</tbody></table></div>';
+    }
+
+    // ── Liste des sources récupérées ──
+    const sourcesByType = {};
+    for (const s of classified) {
+        const c = s.category;
+        if (!sourcesByType[c]) sourcesByType[c] = [];
+        sourcesByType[c].push(s);
+    }
+    let sourcesHtml = `<div style="font-size:11px;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">Sources récupérées (${classified.length})</div>`;
+    if (classified.length === 0) {
+        sourcesHtml += '<div style="color:#aaa;font-size:12px;">Aucune source</div>';
+    } else {
+        for (const [cat, srcs] of Object.entries(sourcesByType)) {
+            const isMissed = required.has(cat) && !hits.has(cat);
+            const isHit    = hits.has(cat);
+            const isUnexp  = !required.has(cat) && retrieved.has(cat);
+            const border   = isHit ? '2px solid #a5d6a7' : isMissed ? '2px solid #ef9a9a' : '1px solid #e0e0e0';
+            sourcesHtml += `<details style="margin-bottom:6px;border:${border};border-radius:5px;overflow:hidden;">
+                <summary style="padding:6px 10px;cursor:pointer;background:${isHit?'#f1f8e9':isMissed?'#ffebee':'#fafafa'};font-size:12px;font-weight:600;">
+                    ${catBadge(cat)} <span style="color:#888;">(${srcs.length} source${srcs.length>1?'s':''})</span>
+                    ${isHit?'<span style="color:#2e7d32;margin-left:6px;">✅</span>':isUnexp?'<span style="color:#e65100;margin-left:6px;">⚠️ inattendu</span>':''}
+                </summary>
+                <div style="padding:6px 10px;background:white;">`;
+            for (const s of srcs) {
+                sourcesHtml += `<div style="padding:5px 0;border-bottom:1px solid #f5f5f5;font-size:11px;">
+                    <span style="color:#888;">#${s.rank||'?'}</span>
+                    ${s.commune?`<b>${escHtml(s.commune)}</b>`:''}
+                    ${s.view?`<span style="color:#999;"> · vue: ${escHtml(s.view)}</span>`:''}
+                    ${s.type?`<span style="color:#bbb;"> · ${escHtml(s.type)}</span>`:''}
+                    <div style="color:#555;margin-top:2px;">${escHtml(s.extrait||'')}</div>
+                </div>`;
+            }
+            sourcesHtml += '</div></details>';
+        }
+    }
+
+    return scoreBanner + compHtml + `<div style="background:#fafafa;border-radius:6px;padding:12px 14px;">${sourcesHtml}</div>`;
+}
+
+function debugParseGTLocal(text) {
+    // Parsing côté client (simplifié) pour affichage immédiat du GT avant le run
+    if (!text || ['nan','none',''].includes(text.trim().toLowerCase())) return [];
+    const items = [];
+    const CATEGORIES = {
+        'raptor': 'raptor_both', 'portrait': 'raptor_portrait', 'quali': 'raptor_portrait',
+        'quanti': 'raptor_enquete', 'dimension': 'raptor_enquete', 'enquête': 'raptor_enquete',
+        'enquete': 'raptor_enquete', 'oppchovec': 'oppchovec', 'opp': 'oppchovec',
+        'cho': 'oppchovec', 'vec': 'oppchovec', 'classement': 'classement',
+        'verbatim': 'verbatims', 'entretien': 'entretiens', 'équipement': 'equipements',
+        'equipement': 'equipements', 'répondant': 'stats_repondants', 'repondant': 'stats_repondants',
+        'stats enquête': 'stats_enquete', 'résultats': 'stats_enquete', 'wiki': 'wiki',
+        'rien': 'rien', 'pas de données': 'rien',
+    };
+    for (const part of text.split(',')) {
+        const p = part.trim().toLowerCase();
+        if (!p) continue;
+        const optional = p.includes('facultatif') || p.includes('ou rien') || p.includes('wiki');
+        let cat = null;
+        for (const [kw, c] of Object.entries(CATEGORIES)) {
+            if (p.includes(kw)) { cat = c; break; }
+        }
+        if (cat) items.push({ category: cat, optional });
+    }
+    return items;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   DEBUG — BATCH
+═══════════════════════════════════════════════════════════ */
+let debugBatchRunning  = false;
+let debugBatchStop     = false;
+let debugBatchResults  = [];   // [{q, data, error}]
+let debugBatchSelected = null; // index dans debugBatchResults
+let debugCompareMode   = false;
+let debugCompareResults = [];  // [{q, data_v1, data_vx}]
+let debugCompareSelected = null;
+
+function debugToggleCompare() {
+    debugCompareMode = !debugCompareMode;
+    const btn = document.getElementById('debugCompareModeBtn');
+    btn.style.background = debugCompareMode ? '#0d6efd' : '#6c757d';
+    btn.textContent = debugCompareMode ? '⚖️ vs v1 (ON)' : '⚖️ vs v1';
+}
+
+async function debugRunBatch() {
+    const qs = debugQuestions.filter(q => q.do_retrieval);
+    if (!qs.length) { alert('Chargez d\'abord l\'Excel (bouton 📂) — aucune question avec GT retrieval trouvée.'); return; }
+    if (debugBatchRunning) return;
+
+    debugBatchRunning = true;
+    debugBatchStop    = false;
+    debugBatchResults = [];
+    debugCompareResults = [];
+    debugBatchSelected = null;
+    debugCompareSelected = null;
+
+    const version = document.getElementById('debugVersion').value;
+    const k = parseInt(document.getElementById('debugK').value);
+    const btn = document.getElementById('debugBatchBtn');
+    btn.disabled = true;
+    btn.textContent = '⏳ Batch en cours…';
+
+    document.getElementById('debugBatchProgress').style.display = 'block';
+    document.getElementById('debugBatchStats').style.display = 'none';
+    document.getElementById('batchTotal').textContent = qs.length;
+    document.getElementById('batchCurrent').textContent = '0';
+    document.getElementById('batchProgressBar').style.width = '0%';
+
+    document.getElementById('debugDetailContent').innerHTML = debugCompareMode ? debugRenderCompareTable() : debugRenderBatchTable();
+
+    const apiCall = (q, ver) => fetch('http://localhost:8000/api/eval/debug_retrieval', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ question: q.question, retrieval_gt: q.retrieval_gt ? String(q.retrieval_gt) : null, rag_version: ver, k })
+    });
+
+    for (let i = 0; i < qs.length; i++) {
+        if (debugBatchStop) break;
+        const q = qs[i];
+        document.getElementById('batchCurrent').textContent = i + 1;
+        document.getElementById('batchProgressBar').style.width = Math.round((i / qs.length) * 100) + '%';
+
+        if (debugCompareMode) {
+            let data_v1 = null, data_vx = null;
+            try {
+                const [r1, rx] = await Promise.all([apiCall(q, 'v1'), apiCall(q, version)]);
+                data_v1 = r1.ok ? await r1.json() : { error: (await r1.json()).detail };
+                data_vx = rx.ok ? await rx.json() : { error: (await rx.json()).detail };
+            } catch(e) {
+                data_v1 = data_v1 || { error: e.message };
+                data_vx = data_vx || { error: e.message };
+            }
+            debugCompareResults.push({ q, data_v1, data_vx });
+            document.getElementById('debugDetailContent').innerHTML = debugRenderCompareTable();
+        } else {
+            let entry = { q, data: null, error: null };
+            try {
+                const r = await apiCall(q, version);
+                if (!r.ok) { const e = await r.json(); throw new Error(e.detail || r.statusText); }
+                entry.data = await r.json();
+            } catch(e) {
+                entry.error = e.message;
+            }
+            debugBatchResults.push(entry);
+            document.getElementById('debugDetailContent').innerHTML = debugRenderBatchTable();
+        }
+    }
+
+    document.getElementById('batchProgressBar').style.width = '100%';
+    document.getElementById('batchCurrent').textContent = qs.length;
+
+    debugBatchRunning = false;
+    btn.disabled = false;
+    btn.textContent = '▶▶ Relancer le batch';
+    document.getElementById('debugBatchProgress').style.display = 'none';
+    if (!debugCompareMode) debugRenderBatchStatsBar();
+}
+
+function debugStopBatch() {
+    debugBatchStop = true;
+}
+
+function debugRenderBatchStatsBar() {
+    const stats = document.getElementById('debugBatchStats');
+    const rows = debugBatchResults.filter(e => e.data && e.data.score && e.data.score.recall !== null && e.data.score.recall !== undefined);
+    if (!rows.length) { stats.style.display = 'none'; return; }
+    const recalls    = rows.map(e => e.data.score.recall);
+    const precisions = rows.map(e => e.data.score.precision);
+    const avg = arr => arr.reduce((a, b) => a + b, 0) / arr.length;
+    const perfect = recalls.filter(r => r === 1).length;
+    const zero    = recalls.filter(r => r === 0).length;
+    stats.style.display = 'block';
+    stats.innerHTML = `<b>Recall moyen :</b> ${(avg(recalls)*100).toFixed(1)}% &nbsp;|&nbsp;
+        <b>Précision moy. :</b> ${(avg(precisions)*100).toFixed(1)}% &nbsp;|&nbsp;
+        <b>Parfait :</b> ${perfect}/${rows.length} &nbsp;|&nbsp;
+        <b>0% :</b> ${zero}/${rows.length}`;
+}
+
+function debugRenderBatchTable() {
+    const rows = debugBatchResults;
+    const running = debugBatchRunning;
+
+    const qs = debugQuestions.filter(q => q.do_retrieval);
+    const total = qs.length;
+    const done  = rows.length;
+
+    let html = `<div style="max-width:100%;padding:0 4px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+            <div style="font-weight:700;font-size:14px;color:#333;">📊 Résultats batch — <span id="batchTableVersion"></span></div>
+            <div style="font-size:11px;color:#888;">${done}/${total} questions traitées${running?' (en cours…)':''}</div>
+        </div>`;
+
+    // Stats en-tête
+    const scored = rows.filter(e => e.data && e.data.score && e.data.score.recall !== null && e.data.score.recall !== undefined);
+    if (scored.length > 0) {
+        const avg = arr => arr.reduce((a,b)=>a+b,0)/arr.length;
+        const recalls    = scored.map(e => e.data.score.recall);
+        const precisions = scored.map(e => e.data.score.precision);
+        const perfect = recalls.filter(r => r === 1).length;
+        const recColor = avg(recalls) >= .8 ? '#2e7d32' : avg(recalls) >= .5 ? '#e65100' : '#c62828';
+        const precColor = avg(precisions) >= .8 ? '#2e7d32' : avg(precisions) >= .5 ? '#e65100' : '#c62828';
+        html += `<div style="display:flex;gap:16px;padding:10px 16px;border-radius:6px;background:#f5f5f5;border:1px solid #e0e0e0;margin-bottom:12px;flex-wrap:wrap;align-items:center;">
+            <div><span style="font-size:10px;color:#666;">Recall moyen</span><br><span style="font-size:22px;font-weight:700;color:${recColor};">${(avg(recalls)*100).toFixed(1)}%</span></div>
+            <div><span style="font-size:10px;color:#666;">Précision moy.</span><br><span style="font-size:22px;font-weight:700;color:${precColor};">${(avg(precisions)*100).toFixed(1)}%</span></div>
+            <div><span style="font-size:10px;color:#666;">Recall 100%</span><br><span style="font-size:22px;font-weight:700;color:#2e7d32;">${perfect}</span><span style="font-size:11px;color:#888;">/${scored.length}</span></div>
+            <div><span style="font-size:10px;color:#666;">Recall 0%</span><br><span style="font-size:22px;font-weight:700;color:#c62828;">${recalls.filter(r=>r===0).length}</span><span style="font-size:11px;color:#888;">/${scored.length}</span></div>
+            <div style="flex:1;"></div>
+            <button onclick="debugExportBatchCsv()" style="font-size:11px;padding:4px 10px;background:#555;color:white;border:none;border-radius:4px;cursor:pointer;">📥 CSV</button>
+        </div>`;
+    }
+
+    // Tableau
+    html += `<table style="width:100%;border-collapse:collapse;font-size:12px;">
+        <thead><tr style="background:#f0f0f0;position:sticky;top:0;">
+            <th style="padding:5px 6px;text-align:left;width:36px;">#</th>
+            <th style="padding:5px 6px;text-align:left;">Question</th>
+            <th style="padding:5px 6px;text-align:center;width:70px;">Recall</th>
+            <th style="padding:5px 6px;text-align:center;width:70px;">Précision</th>
+            <th style="padding:5px 6px;text-align:left;width:180px;">Hits / Manqués</th>
+        </tr></thead><tbody>`;
+
+    for (let i = 0; i < rows.length; i++) {
+        const {q, data, error} = rows[i];
+        const score = data ? (data.score || {}) : {};
+        const isSelected = debugBatchSelected === i;
+        const bg = isSelected ? '#e3f2fd' : (i%2===0?'#fff':'#fafafa');
+
+        let recCell = '<td style="padding:5px 6px;text-align:center;color:#aaa;">—</td>';
+        let precCell = '<td style="padding:5px 6px;text-align:center;color:#aaa;">—</td>';
+        let hitsCell = '<td style="padding:5px 6px;"></td>';
+
+        if (error) {
+            recCell = `<td colspan="3" style="padding:5px 6px;color:#c62828;font-size:11px;">Erreur: ${escHtml(error)}</td>`;
+        } else if (score.recall !== null && score.recall !== undefined) {
+            const recPct = Math.round(score.recall * 100);
+            const precPct = Math.round(score.precision * 100);
+            const recColor = recPct===100?'#2e7d32':recPct>=50?'#e65100':'#c62828';
+            const precColor = precPct===100?'#2e7d32':precPct>=50?'#e65100':'#c62828';
+            recCell = `<td style="padding:5px 6px;text-align:center;font-weight:700;color:${recColor};">${recPct}%</td>`;
+            precCell = `<td style="padding:5px 6px;text-align:center;font-weight:700;color:${precColor};">${precPct}%</td>`;
+            const hits   = (score.hits || []).map(c => `<span style="background:${CAT_COLORS[c]||'#ccc'};color:white;padding:1px 5px;border-radius:8px;font-size:10px;margin:1px;">${c}</span>`).join('');
+            const missed = (score.expected || []).filter(c => !(score.hits||[]).includes(c)).map(c => `<span style="background:#ef9a9a;color:white;padding:1px 5px;border-radius:8px;font-size:10px;margin:1px;text-decoration:line-through;">${c}</span>`).join('');
+            hitsCell = `<td style="padding:5px 6px;">${hits}${missed}</td>`;
+        } else if (score.refusal_case) {
+            const ok = (score.retrieved_count||0) === 0;
+            recCell = `<td colspan="3" style="padding:5px 6px;font-size:11px;color:${ok?'#2e7d32':'#e65100'};">${ok?'✅ Refus correct':'⚠️ '+(score.retrieved_count)+' src inattendue(s)'}</td>`;
+        } else if (score.detail) {
+            recCell = `<td colspan="3" style="padding:5px 6px;color:#aaa;font-size:11px;">${escHtml(score.detail)}</td>`;
+        }
+
+        html += `<tr style="background:${bg};cursor:pointer;border-bottom:1px solid #eee;" onclick="debugSelectBatchRow(${i})">
+            <td style="padding:5px 6px;color:#888;">${q.excel_row}</td>
+            <td style="padding:5px 6px;max-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${escHtml(q.question)}">${escHtml(q.question)}</td>
+            ${recCell}${precCell}${hitsCell}
+        </tr>`;
+    }
+
+    // Lignes en attente (questions non encore traitées)
+    if (running) {
+        const pending = qs.slice(rows.length, rows.length + 3);
+        for (const q of pending) {
+            html += `<tr style="background:#f9f9f9;color:#bbb;border-bottom:1px solid #eee;">
+                <td style="padding:5px 6px;">${q.excel_row}</td>
+                <td style="padding:5px 6px;font-style:italic;">${escHtml(q.question)}</td>
+                <td colspan="3" style="padding:5px 6px;text-align:center;">⏳</td>
+            </tr>`;
+        }
+        if (qs.length - rows.length > 3) {
+            html += `<tr style="background:#f9f9f9;color:#bbb;"><td colspan="5" style="padding:5px 6px;text-align:center;">… ${qs.length - rows.length - 3} questions restantes</td></tr>`;
+        }
+    }
+
+    html += '</tbody></table></div>';
+    return html;
+}
+
+function debugSelectBatchRow(i) {
+    debugBatchSelected = i;
+    // Re-rendre le tableau pour mettre à jour la sélection
+    document.getElementById('debugDetailContent').innerHTML = debugRenderBatchTable();
+    // Scroll vers le détail — on insère le détail après le tableau
+    const entry = debugBatchResults[i];
+    if (!entry || !entry.data) return;
+    const dc = document.getElementById('debugDetailContent');
+    const detail = document.createElement('div');
+    detail.style.cssText = 'max-width:860px;margin-top:20px;padding-top:16px;border-top:2px solid #667eea;';
+    detail.innerHTML = `<div style="font-size:11px;color:#888;margin-bottom:6px;">Ligne Excel ${entry.q.excel_row} — ${escHtml(entry.q.question)}</div>` + debugRenderResult(entry.data);
+    dc.appendChild(detail);
+    detail.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function debugExportBatchCsv() {
+    if (!debugBatchResults.length) return;
+    const version = document.getElementById('debugVersion').value;
+    const k = document.getElementById('debugK').value;
+    const lines = ['ligne,question,recall,precision,expected,hits,manques,detail'];
+    for (const {q, data, error} of debugBatchResults) {
+        const s = data ? (data.score || {}) : {};
+        const rec   = s.recall   !== null && s.recall   !== undefined ? (s.recall*100).toFixed(0)   : '';
+        const prec  = s.precision !== null && s.precision !== undefined ? (s.precision*100).toFixed(0) : '';
+        const exp   = (s.expected||[]).join(';');
+        const hits  = (s.hits||[]).join(';');
+        const missed = (s.expected||[]).filter(c=>!(s.hits||[]).includes(c)).join(';');
+        const detail = error ? 'ERREUR:'+error : (s.detail||s.refusal_case?'refusal':'');
+        lines.push([q.excel_row, `"${(q.question||'').replace(/"/g,'""')}"`, rec, prec, `"${exp}"`, `"${hits}"`, `"${missed}"`, `"${detail}"`].join(','));
+    }
+    const blob = new Blob(['﻿'+lines.join('\n')], {type:'text/csv;charset=utf-8;'});
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+    a.download = `debug_batch_${version}_k${k}_${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
+}
+
+function debugRenderCompareTable() {
+    const rows = debugCompareResults;
+    const running = debugBatchRunning;
+    const qs = debugQuestions.filter(q => q.do_retrieval);
+    const version = document.getElementById('debugVersion').value;
+    const avg = arr => arr.length ? arr.reduce((a,b)=>a+b,0)/arr.length : null;
+    const pct = v => v !== null && v !== undefined ? Math.round(v*100)+'%' : '—';
+    const col = v => v===null||v===undefined?'#aaa':v===1?'#2e7d32':v>=.5?'#e65100':'#c62828';
+    const deltaCol = d => d > 0.01 ? '#2e7d32' : d < -0.01 ? '#c62828' : '#888';
+
+    // Calcul stats globales
+    const scored = rows.filter(e => e.data_v1 && e.data_vx &&
+        e.data_v1.score && e.data_vx.score &&
+        e.data_v1.score.recall !== null && e.data_vx.score.recall !== null);
+    const r1s = scored.map(e => e.data_v1.score.recall);
+    const rxs = scored.map(e => e.data_vx.score.recall);
+    const p1s = scored.map(e => e.data_v1.score.precision);
+    const pxs = scored.map(e => e.data_vx.score.precision);
+    const avgR1 = avg(r1s), avgRx = avg(rxs);
+    const avgP1 = avg(p1s), avgPx = avg(pxs);
+
+    let html = `<div style="max-width:100%;padding:0 4px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+            <div style="font-weight:700;font-size:14px;color:#333;">⚖️ Comparaison v1 vs ${escHtml(version)}</div>
+            <div style="font-size:11px;color:#888;">${rows.length}/${qs.length} questions${running?' (en cours…)':''}</div>
+        </div>`;
+
+    if (scored.length > 0) {
+        const dR = avgRx - avgR1, dP = avgPx - avgP1;
+        html += `<div style="display:flex;gap:10px;padding:10px 14px;border-radius:6px;background:#f5f5f5;border:1px solid #e0e0e0;margin-bottom:12px;flex-wrap:wrap;align-items:center;">
+            <div style="text-align:center;"><div style="font-size:10px;color:#666;">Recall v1</div><div style="font-size:20px;font-weight:700;color:${col(avgR1)};">${pct(avgR1)}</div></div>
+            <div style="font-size:18px;color:#aaa;">→</div>
+            <div style="text-align:center;"><div style="font-size:10px;color:#666;">Recall ${escHtml(version)}</div><div style="font-size:20px;font-weight:700;color:${col(avgRx)};">${pct(avgRx)}</div></div>
+            <div style="text-align:center;padding:4px 10px;border-radius:6px;background:${dR>=0?'#e8f5e9':'#ffebee'};"><div style="font-size:10px;color:#666;">Δ Recall</div><div style="font-size:20px;font-weight:700;color:${deltaCol(dR)};">${dR>=0?'+':''}${pct(dR)}</div></div>
+            <div style="width:1px;background:#ddd;height:40px;margin:0 4px;"></div>
+            <div style="text-align:center;"><div style="font-size:10px;color:#666;">Précision v1</div><div style="font-size:20px;font-weight:700;color:${col(avgP1)};">${pct(avgP1)}</div></div>
+            <div style="font-size:18px;color:#aaa;">→</div>
+            <div style="text-align:center;"><div style="font-size:10px;color:#666;">Précision ${escHtml(version)}</div><div style="font-size:20px;font-weight:700;color:${col(avgPx)};">${pct(avgPx)}</div></div>
+            <div style="text-align:center;padding:4px 10px;border-radius:6px;background:${dP>=0?'#e8f5e9':'#ffebee'};"><div style="font-size:10px;color:#666;">Δ Précision</div><div style="font-size:20px;font-weight:700;color:${deltaCol(dP)};">${dP>=0?'+':''}${pct(dP)}</div></div>
+            <div style="flex:1;"></div>
+            <button onclick="debugExportCompareCsv()" style="font-size:11px;padding:4px 10px;background:#555;color:white;border:none;border-radius:4px;cursor:pointer;">📥 CSV</button>
+        </div>`;
+    }
+
+    html += `<table style="width:100%;border-collapse:collapse;font-size:12px;">
+        <thead><tr style="background:#f0f0f0;position:sticky;top:0;">
+            <th style="padding:5px 6px;text-align:left;width:32px;">#</th>
+            <th style="padding:5px 6px;text-align:left;">Question</th>
+            <th style="padding:5px 6px;text-align:center;width:60px;">R v1</th>
+            <th style="padding:5px 6px;text-align:center;width:60px;">R ${escHtml(version)}</th>
+            <th style="padding:5px 6px;text-align:center;width:54px;">Δ</th>
+            <th style="padding:5px 6px;text-align:center;width:60px;">P v1</th>
+            <th style="padding:5px 6px;text-align:center;width:60px;">P ${escHtml(version)}</th>
+        </tr></thead><tbody>`;
+
+    for (let i = 0; i < rows.length; i++) {
+        const {q, data_v1, data_vx} = rows[i];
+        const s1 = (data_v1 && data_v1.score) || {};
+        const sx = (data_vx && data_vx.score) || {};
+        const isSelected = debugCompareSelected === i;
+        const bg = isSelected ? '#e3f2fd' : (i%2===0?'#fff':'#fafafa');
+
+        const r1 = s1.recall, rx = sx.recall;
+        const p1 = s1.precision, px = sx.precision;
+        const dR = (r1 !== null && r1 !== undefined && rx !== null && rx !== undefined) ? rx - r1 : null;
+
+        const cell = (v, c) => v !== null && v !== undefined
+            ? `<td style="padding:5px 6px;text-align:center;font-weight:700;color:${c || col(v)};">${pct(v)}</td>`
+            : `<td style="padding:5px 6px;text-align:center;color:#bbb;">—</td>`;
+        const deltaCell = dR !== null
+            ? `<td style="padding:5px 6px;text-align:center;font-weight:700;color:${deltaCol(dR)};">${dR>=0?'+':''}${pct(dR)}</td>`
+            : `<td style="padding:5px 6px;text-align:center;color:#bbb;">—</td>`;
+
+        html += `<tr style="background:${bg};cursor:pointer;border-bottom:1px solid #eee;" onclick="debugSelectCompareRow(${i})">
+            <td style="padding:5px 6px;color:#888;">${q.excel_row}</td>
+            <td style="padding:5px 6px;max-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${escHtml(q.question)}">${escHtml(q.question)}</td>
+            ${cell(r1)}${cell(rx)}${deltaCell}${cell(p1)}${cell(px)}
+        </tr>`;
+    }
+
+    if (running && rows.length < qs.length) {
+        const pending = qs.slice(rows.length, rows.length + 2);
+        for (const q of pending) {
+            html += `<tr style="color:#bbb;border-bottom:1px solid #eee;">
+                <td style="padding:5px 6px;">${q.excel_row}</td>
+                <td style="padding:5px 6px;font-style:italic;">${escHtml(q.question)}</td>
+                <td colspan="5" style="text-align:center;">⏳</td></tr>`;
+        }
+    }
+
+    html += '</tbody></table></div>';
+    return html;
+}
+
+function debugSelectCompareRow(i) {
+    debugCompareSelected = i;
+    document.getElementById('debugDetailContent').innerHTML = debugRenderCompareTable();
+    const entry = debugCompareResults[i];
+    if (!entry) return;
+    const dc = document.getElementById('debugDetailContent');
+    const detail = document.createElement('div');
+    detail.style.cssText = 'max-width:860px;margin-top:20px;padding-top:16px;border-top:2px solid #667eea;';
+    const version = document.getElementById('debugVersion').value;
+    detail.innerHTML = `<div style="font-size:11px;color:#888;margin-bottom:8px;">Ligne ${entry.q.excel_row} — ${escHtml(entry.q.question)}</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <div><div style="font-size:11px;font-weight:700;color:#6c757d;margin-bottom:6px;">v1 (vanilla)</div>${entry.data_v1 ? debugRenderResult(entry.data_v1) : '<em>erreur</em>'}</div>
+            <div><div style="font-size:11px;font-weight:700;color:#0d6efd;margin-bottom:6px;">${escHtml(version)}</div>${entry.data_vx ? debugRenderResult(entry.data_vx) : '<em>erreur</em>'}</div>
+        </div>`;
+    dc.appendChild(detail);
+    detail.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function debugExportCompareCsv() {
+    if (!debugCompareResults.length) return;
+    const version = document.getElementById('debugVersion').value;
+    const k = document.getElementById('debugK').value;
+    const lines = [`ligne,question,recall_v1,recall_${version},delta_recall,precision_v1,precision_${version},delta_precision,expected,hits_v1,hits_${version}`];
+    for (const {q, data_v1, data_vx} of debugCompareResults) {
+        const s1 = (data_v1 && data_v1.score) || {};
+        const sx = (data_vx && data_vx.score) || {};
+        const fmt = v => v !== null && v !== undefined ? (v*100).toFixed(0) : '';
+        const fmtD = (a, b) => (a !== null && a !== undefined && b !== null && b !== undefined) ? ((b-a)*100).toFixed(0) : '';
+        lines.push([
+            q.excel_row,
+            `"${(q.question||'').replace(/"/g,'""')}"`,
+            fmt(s1.recall), fmt(sx.recall), fmtD(s1.recall, sx.recall),
+            fmt(s1.precision), fmt(sx.precision), fmtD(s1.precision, sx.precision),
+            `"${(s1.expected||[]).join(';')}"`,
+            `"${(s1.hits||[]).join(';')}"`,
+            `"${(sx.hits||[]).join(';')}"`,
+        ].join(','));
+    }
+    const blob = new Blob(['﻿'+lines.join('\n')], {type:'text/csv;charset=utf-8;'});
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+    a.download = `compare_v1_vs_${version}_k${k}_${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
+}
+
+function escHtml(s) {
+    return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
+
+<!-- ════════════════════════════════════════
+     ONGLET ANNOTATION — styles + panel + JS
+════════════════════════════════════════ -->
+<style>
+/* ── Panel annotation global ── */
+#panel-annot { height: calc(100vh - 110px); display: none; flex-direction: column; overflow: hidden; background: #fff; }
+#panel-annot.active { display: flex; }
+
+/* ── Toolbar ── */
+.annot-toolbar {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    padding: 12px 18px; background: #f8f9fa; border-bottom: 2px solid #e0e0e0;
+    flex-shrink: 0;
+}
+.annot-toolbar label { font-size: 13px; font-weight: 600; color: #444; }
+.annot-file-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 14px; background: #667eea; color: #fff;
+    border: none; border-radius: 7px; font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: background .15s;
+}
+.annot-file-btn:hover { background: #5a6fd6; }
+.annot-file-btn.secondary { background: #fff; color: #667eea; border: 2px solid #667eea; }
+.annot-file-btn.secondary:hover { background: #f0f2ff; }
+.annot-file-btn.success { background: #22c55e; }
+.annot-file-btn.success:hover { background: #16a34a; }
+#annotFileInput { display: none; }
+.annot-filename { font-size: 12px; color: #888; max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.annot-stats { margin-left: auto; font-size: 12px; color: #666; display: flex; gap: 12px; }
+.annot-stat { display: flex; flex-direction: column; align-items: center; }
+.annot-stat-val { font-size: 18px; font-weight: 700; color: #667eea; line-height: 1; }
+.annot-stat-lbl { font-size: 10px; color: #999; text-transform: uppercase; }
+
+/* ── Legend ── */
+.annot-legend {
+    display: flex; gap: 14px; padding: 6px 18px; background: #fff;
+    border-bottom: 1px solid #e8e8e8; flex-shrink: 0; flex-wrap: wrap; align-items: center;
+}
+.annot-legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #666; }
+.annot-legend-swatch { width: 14px; height: 14px; border-radius: 3px; }
+.swatch-human { background: #d1fae5; border: 1px solid #6ee7b7; }
+.swatch-judge { background: #dbeafe; border: 1px solid #93c5fd; }
+
+/* ── Table wrapper ── */
+.annot-table-wrap {
+    flex: 1; overflow: auto;
+    padding: 0;
+}
+
+/* ── Tableau principal ── */
+.annot-table {
+    width: 100%; border-collapse: collapse; font-size: 13px;
+    table-layout: fixed;
+}
+.annot-table thead th {
+    position: sticky; top: 0; z-index: 10;
+    background: #667eea; color: #fff;
+    padding: 8px 6px; text-align: center; font-size: 11px; font-weight: 600;
+    border-right: 1px solid rgba(255,255,255,.2);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.annot-table thead th:first-child { text-align: left; padding-left: 10px; }
+.annot-table thead .th-group {
+    background: #4f5fcb; font-size: 10px; letter-spacing: .05em; text-transform: uppercase;
+}
+.annot-table tbody tr { border-bottom: 1px solid #ececec; transition: background .1s; }
+.annot-table tbody tr:hover { background: #fafbff; }
+.annot-table tbody tr.annot-expanded { background: #f5f7ff; }
+.annot-table td { padding: 6px 5px; vertical-align: middle; }
+.annot-table td.td-q { padding-left: 10px; }
+
+/* ── Cellule question ── */
+.annot-q-cell { display: flex; flex-direction: column; gap: 2px; }
+.annot-q-num { font-size: 10px; color: #aaa; }
+.annot-q-text { font-size: 12px; color: #333; line-height: 1.35;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 340px; }
+.annot-q-section { font-size: 10px; color: #999; font-style: italic; }
+
+/* ── Score + justification cells ── */
+.annot-score-cell { text-align: center; min-width: 50px; }
+.annot-dim-cell {
+    vertical-align: top; padding: 6px 5px !important; min-width: 140px;
+}
+.annot-dim-cell-inner { display: flex; flex-direction: column; gap: 5px; }
+.annot-score-row { display: flex; align-items: center; justify-content: center; gap: 6px; }
+
+.annot-score-input {
+    width: 42px; text-align: center; border: 1.5px solid #6ee7b7;
+    border-radius: 6px; padding: 3px 4px; font-size: 14px; font-weight: 700;
+    color: #065f46; background: #d1fae5; outline: none;
+    -moz-appearance: textfield; appearance: textfield;
+    transition: border-color .15s, background .15s;
+}
+.annot-score-input:focus { border-color: #22c55e; background: #ecfdf5; }
+.annot-score-input::-webkit-outer-spin-button,
+.annot-score-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+.annot-score-input.invalid { border-color: #ef4444; background: #fef2f2; color: #b91c1c; }
+
+.annot-judge-badge {
+    display: inline-block; min-width: 32px; padding: 3px 6px;
+    background: #dbeafe; color: #1d4ed8; border-radius: 6px;
+    font-size: 13px; font-weight: 700; text-align: center;
+    border: 1px solid #93c5fd;
+}
+.annot-judge-badge.empty { background: #f3f4f6; color: #9ca3af; border-color: #d1d5db; }
+
+/* justif inline humain */
+/* justif collapse */
+.annot-justif-wrap { overflow: hidden; max-height: 0; transition: max-height .2s ease; }
+.annot-justif-wrap.open { max-height: 200px; }
+.annot-justif-toggle { display: flex; align-items: center; gap: 4px; font-size: 10px; color: #888; cursor: pointer; margin-top: 3px; user-select: none; background: none; border: none; padding: 0; }
+.annot-justif-toggle:hover { color: #444; }
+.annot-justif-toggle .jtog-arrow { font-size: 9px; transition: transform .2s; }
+.annot-justif-toggle.open .jtog-arrow { transform: rotate(90deg); }
+
+.annot-inline-justif-h {
+    width: 100%; border: 1px solid #a7f3d0; border-radius: 5px;
+    padding: 4px 6px; font-size: 11px; line-height: 1.4;
+    resize: vertical; min-height: 44px; max-height: 120px;
+    font-family: inherit; background: #f0fdf4; color: #065f46;
+    transition: border-color .15s;
+}
+.annot-inline-justif-h:focus { outline: none; border-color: #22c55e; background: #ecfdf5; }
+.annot-inline-justif-h::placeholder { color: #9ca3af; font-style: italic; }
+
+/* justif inline juge (lecture seule) */
+.annot-inline-justif-j {
+    width: 100%; border: 1px solid #bfdbfe; border-radius: 5px;
+    padding: 4px 6px; font-size: 11px; line-height: 1.4; min-height: 44px;
+    background: #eff6ff; color: #1e40af; font-family: inherit;
+    white-space: pre-wrap; word-break: break-word;
+}
+.annot-inline-justif-j.empty { color: #9ca3af; font-style: italic; }
+
+/* ── Score global ── */
+.annot-global-h { font-weight: 700; color: #065f46; font-size: 13px; }
+.annot-global-j { font-weight: 700; color: #1d4ed8; font-size: 13px; }
+.annot-global-delta { font-size: 11px; }
+.delta-pos { color: #16a34a; }
+.delta-neg { color: #dc2626; }
+
+/* ── Expand button ── */
+.annot-expand-btn {
+    background: none; border: 1px solid #d1d5db; border-radius: 5px;
+    padding: 3px 8px; cursor: pointer; font-size: 11px; color: #666;
+    transition: all .15s; white-space: nowrap;
+}
+.annot-expand-btn:hover { background: #f0f2ff; border-color: #667eea; color: #667eea; }
+.annot-expand-btn.open { background: #667eea; color: #fff; border-color: #667eea; }
+
+/* ── Ligne détail (expansion) ── */
+.annot-detail-row { display: none; }
+.annot-detail-row.open { display: table-row; }
+.annot-detail-td { padding: 0 !important; border-bottom: 2px solid #667eea; }
+.annot-detail-inner {
+    padding: 16px 18px; background: #f8f9ff;
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;
+}
+/* sources list */
+.annot-sources-list { display: flex; flex-direction: column; gap: 6px; }
+.annot-source-item {
+    border: 1px solid #e5e7eb; border-radius: 6px; background: #fff;
+    font-size: 11px; overflow: hidden;
+}
+.annot-source-header {
+    display: flex; align-items: center; gap: 6px; padding: 5px 8px;
+    background: #f3f4f6; cursor: pointer; user-select: none;
+    border-bottom: 1px solid #e5e7eb;
+}
+.annot-source-header:hover { background: #e9ebf0; }
+.annot-source-type {
+    font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: 4px;
+    white-space: nowrap;
+}
+.src-type-raptor_summary              { background: #fef3c7; color: #92400e; }
+.src-type-raptor_entretiens_summaries { background: #fef3c7; color: #92400e; }
+.src-type-raptor_enquete_summary      { background: #ede9fe; color: #5b21b6; }
+.src-type-raptor_enquete_summaries    { background: #ede9fe; color: #5b21b6; }
+.src-type-raptor_summaries            { background: #ede9fe; color: #5b21b6; }
+.src-type-oppchovec_scores            { background: #dbeafe; color: #1e40af; }
+.src-type-oppchovec_score             { background: #dbeafe; color: #1e40af; }
+.src-type-communes_equipements        { background: #d1fae5; color: #065f46; }
+.src-type-communes_wiki               { background: #dcfce7; color: #166534; }
+.src-type-communes_geo                { background: #dcfce7; color: #166534; }
+.src-type-verbatim_evidence           { background: #fee2e2; color: #991b1b; }
+.src-type-portrait_entretiens         { background: #fce7f3; color: #9d174d; }
+.src-type-methodology                 { background: #f3f4f6; color: #6b7280; }
+.annot-source-commune { font-size: 10px; color: #6b7280; flex: 1; }
+.annot-source-score   { font-size: 10px; color: #9ca3af; margin-left: auto; }
+.annot-source-body { padding: 6px 8px; color: #374151; line-height: 1.45; display: none; white-space: pre-wrap; word-break: break-word; }
+.annot-source-body.open { display: block; }
+.annot-source-toggle { font-size: 10px; color: #667eea; }
+.annot-detail-col h4 { font-size: 12px; font-weight: 700; color: #444; margin-bottom: 10px; border-bottom: 1px solid #e0e0e0; padding-bottom: 4px; }
+.annot-justif-group { margin-bottom: 12px; }
+.annot-justif-label { font-size: 11px; font-weight: 600; color: #666; margin-bottom: 4px; }
+.annot-justif-input {
+    width: 100%; border: 1px solid #d1d5db; border-radius: 6px;
+    padding: 6px 8px; font-size: 12px; line-height: 1.4; resize: vertical; min-height: 52px;
+    font-family: inherit; background: #d1fae5; color: #065f46;
+    transition: border-color .15s;
+}
+.annot-justif-input:focus { outline: none; border-color: #22c55e; background: #ecfdf5; }
+.annot-justif-judge {
+    width: 100%; border: 1px solid #93c5fd; border-radius: 6px;
+    padding: 6px 8px; font-size: 12px; line-height: 1.4; min-height: 52px;
+    background: #dbeafe; color: #1e3a8a; font-family: inherit;
+}
+.annot-response-box {
+    background: #fff;
+    border: 1px solid #e0e0e0; border-radius: 6px; padding: 8px 10px;
+    font-size: 11px; color: #444; line-height: 1.5;
+    white-space: pre-wrap; word-break: break-word;
+}
+.annot-sujet-row { display: flex; gap: 10px; align-items: flex-start; flex-wrap: wrap; }
+.annot-sujet-field { display: flex; flex-direction: column; gap: 3px; }
+.annot-sujet-field label { font-size: 10px; color: #888; font-weight: 600; }
+.annot-sujet-field input, .annot-sujet-field select {
+    border: 1px solid #d1d5db; border-radius: 5px; padding: 4px 6px; font-size: 12px;
+    background: #d1fae5; color: #065f46; font-family: inherit;
+}
+.annot-sujet-field input:focus, .annot-sujet-field select:focus { outline: none; border-color: #22c55e; }
+</style>
+
+<!-- ── Panel HTML ── -->
+<div class="tab-panel" id="panel-annot">
+
+    <!-- Toolbar -->
+    <div class="annot-toolbar">
+        <input type="file" id="annotFileInput" accept=".xlsx,.xls">
+        <button class="annot-file-btn" onclick="document.getElementById('annotFileInput').click()">
+            📂 Charger Excel
+        </button>
+        <span class="annot-filename" id="annotFilename">Aucun fichier chargé</span>
+        <button class="annot-file-btn secondary" id="annotResetBtn" onclick="annotReset()" style="display:none">↺ Réinitialiser</button>
+        <button class="annot-file-btn success" id="annotDownloadBtn" onclick="annotDownload()" style="display:none">
+            ⬇️ Exporter Excel
+        </button>
+        <button class="annot-file-btn secondary" id="annotToggleJustifBtn" onclick="annotToggleAllJustifs()" style="display:none;margin-left:6px;">
+            📋 Justifications : <span id="annotJustifBtnLabel">visibles</span>
+        </button>
+        <div class="annot-stats" id="annotStats" style="display:none">
+            <div class="annot-stat"><span class="annot-stat-val" id="aStatN">0</span><span class="annot-stat-lbl">questions</span></div>
+            <div class="annot-stat"><span class="annot-stat-val" id="aStatRempli">0</span><span class="annot-stat-lbl">annotées</span></div>
+            <div class="annot-stat"><span class="annot-stat-val" id="aStatMoyH">—</span><span class="annot-stat-lbl">moy. humain</span></div>
+            <div class="annot-stat"><span class="annot-stat-val" id="aStatMoyJ">—</span><span class="annot-stat-lbl">moy. juge</span></div>
+        </div>
+    </div>
+
+    <!-- Légende -->
+    <div class="annot-legend" id="annotLegend" style="display:none">
+        <span style="font-size:11px;font-weight:600;color:#555;">Légende :</span>
+        <span class="annot-legend-item"><span class="annot-legend-swatch swatch-human"></span> Votre annotation (éditable)</span>
+        <span class="annot-legend-item"><span class="annot-legend-swatch swatch-judge"></span> Note juge GPT-4o (lecture seule)</span>
+        <span style="font-size:11px;color:#999;margin-left:6px;">Scores 1–5 · Tab pour naviguer · Clic sur ▶ pour voir justifications &amp; réponse RAG</span>
+    </div>
+
+    <!-- Tableau -->
+    <div class="annot-table-wrap" id="annotTableWrap">
+        <div id="annotEmptyState" style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:#bbb;gap:12px;">
+            <div style="font-size:48px;">📋</div>
+            <div style="font-size:15px;font-weight:600;">Chargez un fichier Excel d'annotations</div>
+            <div style="font-size:12px;">Format attendu : annotation_humaine_20q_final_v3_avec_juge.xlsx</div>
+            <button class="annot-file-btn" onclick="document.getElementById('annotFileInput').click()" style="margin-top:4px">
+                📂 Choisir un fichier
+            </button>
+        </div>
+        <table class="annot-table" id="annotTable" style="display:none">
+            <thead id="annotThead"></thead>
+            <tbody id="annotTbody"></tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════════════════════════
+   ONGLET ANNOTATION
+════════════════════════════════════════════════════════════ */
+
+// Mapping colonnes Excel (1-based) → clés internes
+const ANNOT_COLS = {
+    ligne:          1,   // A
+    section:        2,   // B
+    subsection:     3,   // C
+    question:       4,   // D
+    reponse:        5,   // E
+    sources:        6,   // F
+    // human scores (éditables)
+    pert_h:         7,   // G
+    fond_h:         11,  // K
+    nuan_h:         15,  // O
+    cohe_h:         19,  // S
+    // judge scores (lecture seule)
+    pert_j:         8,   // H
+    fond_j:         12,  // L
+    nuan_j:         16,  // P
+    cohe_j:         20,  // T
+    // human justifs
+    pert_h_jus:     9,   // I
+    fond_h_jus:     13,  // M
+    nuan_h_jus:     17,  // Q
+    cohe_h_jus:     21,  // U
+    // judge justifs
+    pert_j_jus:     10,  // J
+    fond_j_jus:     14,  // N
+    nuan_j_jus:     18,  // R
+    cohe_j_jus:     22,  // V
+    // score global (formule → recalcul JS)
+    sg_h:           23,  // W
+    sg_j:           24,  // X
+    // note sujet
+    applic_h:       25,  // Y
+    applic_j:       26,  // Z
+    note_suj_h:     27,  // AA
+    note_suj_j:     28,  // AB
+    sujet_eval_h:   29,  // AC
+    sujet_eval_j:   30,  // AD
+    justif_suj_h:   31,  // AE
+    justif_suj_j:   32,  // AF
+};
+
+const DIMS = [
+    { key: 'pert', label: 'Pertinence' },
+    { key: 'fond', label: 'Fondement factuel' },
+    { key: 'nuan', label: 'Nuance' },
+    { key: 'cohe', label: 'Cohérence' },
+];
+
+let annotWorkbook = null;   // workbook SheetJS original
+let annotRows = [];         // données parsées + modifiées
+let annotOriginalSheet = null;
+
+// ── Chargement fichier ──────────────────────────────────────
+document.getElementById('annotFileInput').addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    document.getElementById('annotFilename').textContent = file.name;
+    const reader = new FileReader();
+    reader.onload = ev => {
+        try {
+            annotWorkbook = XLSX.read(ev.target.result, { type: 'array' });
+            const sheetName = annotWorkbook.SheetNames[0];
+            annotOriginalSheet = annotWorkbook.Sheets[sheetName];
+            annotRows = annotParseSheet(annotOriginalSheet);
+            annotRenderTable();
+            document.getElementById('annotDownloadBtn').style.display = '';
+            document.getElementById('annotResetBtn').style.display = '';
+            document.getElementById('annotToggleJustifBtn').style.display = '';
+            document.getElementById('annotLegend').style.display = '';
+            document.getElementById('annotStats').style.display = '';
+            annotUpdateStats();
+        } catch(err) {
+            alert('Erreur lecture Excel : ' + err.message);
+        }
+    };
+    reader.readAsArrayBuffer(file);
+});
+
+// ── Parser la feuille ───────────────────────────────────────
+function annotParseSheet(ws) {
+    const range = XLSX.utils.decode_range(ws['!ref'] || 'A1');
+    const rows = [];
+    for (let r = 1; r <= range.e.r; r++) {  // r=0 = header
+        const get = c => {
+            const cell = ws[XLSX.utils.encode_cell({ r, c: c - 1 })];
+            if (!cell) return null;
+            // Les formules sont en .f, la valeur calculée en .v
+            if (cell.t === 'n') return cell.v != null ? cell.v : null;
+            return cell.v != null ? String(cell.v) : null;
+        };
+        const q = get(ANNOT_COLS.question);
+        if (!q) continue;
+
+        const sgH = annotCalcGlobal('h', {
+            pert_h: annotToNum(get(ANNOT_COLS.pert_h)),
+            fond_h: annotToNum(get(ANNOT_COLS.fond_h)),
+            nuan_h: annotToNum(get(ANNOT_COLS.nuan_h)),
+            cohe_h: annotToNum(get(ANNOT_COLS.cohe_h)),
+        });
+        const sgJ = annotCalcGlobal('j', {
+            pert_j: annotToNum(get(ANNOT_COLS.pert_j)),
+            fond_j: annotToNum(get(ANNOT_COLS.fond_j)),
+            nuan_j: annotToNum(get(ANNOT_COLS.nuan_j)),
+            cohe_j: annotToNum(get(ANNOT_COLS.cohe_j)),
+        });
+
+        rows.push({
+            _row: r,
+            ligne:       get(ANNOT_COLS.ligne),
+            section:     get(ANNOT_COLS.section) || '',
+            subsection:  get(ANNOT_COLS.subsection) || '',
+            question:    q,
+            reponse:     get(ANNOT_COLS.reponse) || '',
+            sources:     get(ANNOT_COLS.sources) || '',
+            pert_h:      annotToNum(get(ANNOT_COLS.pert_h)),
+            fond_h:      annotToNum(get(ANNOT_COLS.fond_h)),
+            nuan_h:      annotToNum(get(ANNOT_COLS.nuan_h)),
+            cohe_h:      annotToNum(get(ANNOT_COLS.cohe_h)),
+            pert_j:      annotToNum(get(ANNOT_COLS.pert_j)),
+            fond_j:      annotToNum(get(ANNOT_COLS.fond_j)),
+            nuan_j:      annotToNum(get(ANNOT_COLS.nuan_j)),
+            cohe_j:      annotToNum(get(ANNOT_COLS.cohe_j)),
+            pert_h_jus:  get(ANNOT_COLS.pert_h_jus) || '',
+            fond_h_jus:  get(ANNOT_COLS.fond_h_jus) || '',
+            nuan_h_jus:  get(ANNOT_COLS.nuan_h_jus) || '',
+            cohe_h_jus:  get(ANNOT_COLS.cohe_h_jus) || '',
+            pert_j_jus:  get(ANNOT_COLS.pert_j_jus) || '',
+            fond_j_jus:  get(ANNOT_COLS.fond_j_jus) || '',
+            nuan_j_jus:  get(ANNOT_COLS.nuan_j_jus) || '',
+            cohe_j_jus:  get(ANNOT_COLS.cohe_j_jus) || '',
+            sg_h:        sgH,
+            sg_j:        sgJ,
+            applic_h:    get(ANNOT_COLS.applic_h) || '',
+            applic_j:    get(ANNOT_COLS.applic_j) || '',
+            note_suj_h:  annotToNum(get(ANNOT_COLS.note_suj_h)),
+            note_suj_j:  annotToNum(get(ANNOT_COLS.note_suj_j)),
+            sujet_eval_h: get(ANNOT_COLS.sujet_eval_h) || '',
+            sujet_eval_j: get(ANNOT_COLS.sujet_eval_j) || '',
+            justif_suj_h: get(ANNOT_COLS.justif_suj_h) || '',
+            justif_suj_j: get(ANNOT_COLS.justif_suj_j) || '',
+            _expanded: false,
+        });
+    }
+    return rows;
+}
+
+function annotToNum(v) {
+    if (v === null || v === undefined || v === '') return null;
+    const n = Number(v);
+    return isNaN(n) ? null : n;
+}
+
+function annotCalcGlobal(who, data) {
+    const keys = who === 'h'
+        ? ['pert_h','fond_h','nuan_h','cohe_h']
+        : ['pert_j','fond_j','nuan_j','cohe_j'];
+    const vals = keys.map(k => data[k]).filter(v => v !== null && !isNaN(v));
+    if (!vals.length) return null;
+    return Math.round(vals.reduce((a,b)=>a+b,0)/vals.length * 100) / 100;
+}
+
+// ── Rendu du tableau ────────────────────────────────────────
+function annotRenderTable() {
+    document.getElementById('annotEmptyState').style.display = 'none';
+    const table = document.getElementById('annotTable');
+    table.style.display = '';
+
+    // En-tête
+    const thead = document.getElementById('annotThead');
+    thead.innerHTML = `
+    <tr class="th-group">
+        <th colspan="2" style="text-align:left;padding-left:10px;">Question</th>
+        ${DIMS.map(d => `<th colspan="2">${d.label}</th>`).join('')}
+        <th colspan="2">Score global</th>
+        <th>Δ</th>
+        <th></th>
+    </tr>
+    <tr>
+        <th style="width:28px;">#</th>
+        <th style="min-width:180px;text-align:left;">Question</th>
+        ${DIMS.map(d => `
+            <th style="min-width:140px;">👤 ${d.label.split(' ')[0]}</th>
+            <th style="min-width:140px;">🤖 ${d.label.split(' ')[0]}</th>
+        `).join('')}
+        <th style="width:55px;">👤 moy</th>
+        <th style="width:55px;">🤖 moy</th>
+        <th style="width:42px;">Δ</th>
+        <th style="width:62px;"></th>
+    </tr>`;
+
+    // Corps
+    const tbody = document.getElementById('annotTbody');
+    tbody.innerHTML = '';
+    annotRows.forEach((row, idx) => annotRenderRow(tbody, row, idx));
+}
+
+function annotRenderRow(tbody, row, idx) {
+    const tr = document.createElement('tr');
+    tr.id = `annot-row-${idx}`;
+    tr.innerHTML = annotRowHtml(row, idx);
+    tbody.appendChild(tr);
+
+    // Ligne de détail (expansion)
+    const trDetail = document.createElement('tr');
+    trDetail.id = `annot-detail-row-${idx}`;
+    trDetail.className = 'annot-detail-row';
+    trDetail.innerHTML = `<td class="annot-detail-td" colspan="14"><div class="annot-detail-inner" id="annot-detail-inner-${idx}"></div></td>`;
+    tbody.appendChild(trDetail);
+}
+
+function annotRowHtml(row, idx) {
+    const dimCells = DIMS.map(d => {
+        const hVal = row[`${d.key}_h`];
+        const jVal = row[`${d.key}_j`];
+        const hJus = escHtml(row[`${d.key}_h_jus`] || '');
+        const jJus = escHtml(row[`${d.key}_j_jus`] || '');
+        const invalid = hVal !== null && (hVal < 1 || hVal > 5) ? ' invalid' : '';
+        const hJusId = `jh-${idx}-${d.key}`;
+        const jJusId = `jj-${idx}-${d.key}`;
+        return `
+        <td class="annot-dim-cell">
+            <div class="annot-dim-cell-inner">
+                <div class="annot-score-row">
+                    <input class="annot-score-input${invalid}" type="number" min="1" max="5"
+                           value="${hVal !== null ? hVal : ''}" placeholder="—"
+                           oninput="annotUpdateScore(${idx},'${d.key}_h',this)"
+                           onchange="annotUpdateScore(${idx},'${d.key}_h',this)"
+                           title="Votre note ${d.label}">
+                </div>
+                <button class="annot-justif-toggle" onclick="annotToggleJustif('${hJusId}',this)">
+                    <span class="jtog-arrow">▶</span> justif
+                </button>
+                <div class="annot-justif-wrap" id="${hJusId}">
+                    <textarea class="annot-inline-justif-h"
+                        placeholder="Votre justification..."
+                        oninput="annotRows[${idx}]['${d.key}_h_jus']=this.value"
+                    >${hJus}</textarea>
+                </div>
+            </div>
+        </td>
+        <td class="annot-dim-cell">
+            <div class="annot-dim-cell-inner">
+                <div class="annot-score-row">
+                    <span class="annot-judge-badge${jVal === null ? ' empty' : ''}">${jVal !== null ? jVal : '—'}</span>
+                </div>
+                <button class="annot-justif-toggle" onclick="annotToggleJustif('${jJusId}',this)">
+                    <span class="jtog-arrow">▶</span> justif
+                </button>
+                <div class="annot-justif-wrap" id="${jJusId}">
+                    <div class="annot-inline-justif-j${jJus ? '' : ' empty'}">${jJus || 'Pas de justification'}</div>
+                </div>
+            </div>
+        </td>`;
+    }).join('');
+
+    const sgH = row.sg_h;
+    const sgJ = row.sg_j;
+    const delta = (sgH !== null && sgJ !== null) ? (sgH - sgJ) : null;
+    const deltaHtml = delta !== null
+        ? `<span class="${delta > 0.05 ? 'delta-pos' : delta < -0.05 ? 'delta-neg' : ''}">${delta > 0 ? '+' : ''}${delta.toFixed(2)}</span>`
+        : '—';
+
+    return `
+    <td class="td-q" style="width:30px;text-align:center;">
+        <div class="annot-q-num">${row.ligne || idx+1}</div>
+    </td>
+    <td class="td-q">
+        <div class="annot-q-cell">
+            <div class="annot-q-text" title="${escHtml(row.question)}">${escHtml(row.question)}</div>
+            <div class="annot-q-section">${escHtml(row.subsection || row.section)}</div>
+        </div>
+    </td>
+    ${dimCells}
+    <td class="annot-score-cell">
+        <span class="annot-global-h" id="annot-sgh-${idx}">${sgH !== null ? sgH.toFixed(2) : '—'}</span>
+    </td>
+    <td class="annot-score-cell">
+        <span class="annot-global-j">${sgJ !== null ? sgJ.toFixed(2) : '—'}</span>
+    </td>
+    <td class="annot-score-cell" id="annot-delta-${idx}">${deltaHtml}</td>
+    <td style="text-align:center;">
+        <button class="annot-expand-btn" id="annot-exp-btn-${idx}" onclick="annotToggleDetail(${idx})">📄 Réponse</button>
+    </td>`;
+}
+
+// ── Mise à jour score ────────────────────────────────────────
+function annotUpdateScore(idx, field, input) {
+    const val = input.value === '' ? null : Number(input.value);
+    if (val !== null && (val < 1 || val > 5)) {
+        input.classList.add('invalid');
+    } else {
+        input.classList.remove('invalid');
+    }
+    annotRows[idx][field] = val;
+    // Recalc global humain
+    const row = annotRows[idx];
+    row.sg_h = annotCalcGlobal('h', row);
+    const sgEl = document.getElementById(`annot-sgh-${idx}`);
+    if (sgEl) sgEl.textContent = row.sg_h !== null ? row.sg_h.toFixed(2) : '—';
+    // Delta
+    const delta = (row.sg_h !== null && row.sg_j !== null) ? (row.sg_h - row.sg_j) : null;
+    const deltaEl = document.getElementById(`annot-delta-${idx}`);
+    if (deltaEl) deltaEl.innerHTML = delta !== null
+        ? `<span class="${delta > 0.05 ? 'delta-pos' : delta < -0.05 ? 'delta-neg' : ''}">${delta > 0 ? '+' : ''}${delta.toFixed(2)}</span>`
+        : '—';
+    annotUpdateStats();
+}
+
+// ── Expansion détail ────────────────────────────────────────
+function annotToggleDetail(idx) {
+    const row = annotRows[idx];
+    row._expanded = !row._expanded;
+    const detailRow = document.getElementById(`annot-detail-row-${idx}`);
+    const btn = document.getElementById(`annot-exp-btn-${idx}`);
+    detailRow.classList.toggle('open', row._expanded);
+    btn.classList.toggle('open', row._expanded);
+    btn.textContent = row._expanded ? '▲ Réduire' : '📄 Réponse';
+    if (row._expanded) annotRenderDetail(idx);
+}
+
+function annotRenderDetail(idx) {
+    const row = annotRows[idx];
+    const container = document.getElementById(`annot-detail-inner-${idx}`);
+
+    // Note sujet
+    const sujHtml = `
+    <div class="annot-justif-group">
+        <div class="annot-justif-label" style="font-size:12px;margin-bottom:6px;">Note du sujet (facultatif)</div>
+        <div class="annot-sujet-row">
+            <div class="annot-sujet-field">
+                <label>Applicable ?</label>
+                <select onchange="annotRows[${idx}].applic_h=this.value">
+                    <option value="" ${!row.applic_h?'selected':''}>—</option>
+                    <option value="oui" ${row.applic_h==='oui'?'selected':''}>Oui</option>
+                    <option value="non" ${row.applic_h==='non'?'selected':''}>Non</option>
+                </select>
+            </div>
+            <div class="annot-sujet-field">
+                <label>Note sujet 👤</label>
+                <input type="number" min="1" max="5" style="width:56px;"
+                    value="${row.note_suj_h !== null ? row.note_suj_h : ''}"
+                    oninput="annotRows[${idx}].note_suj_h=this.value?Number(this.value):null">
+            </div>
+            <div class="annot-sujet-field">
+                <label>Note sujet 🤖</label>
+                <input type="number" readonly style="width:56px;background:#dbeafe;color:#1d4ed8;"
+                    value="${row.note_suj_j !== null ? row.note_suj_j : ''}">
+            </div>
+        </div>
+        <div class="annot-sujet-field" style="margin-top:6px;">
+            <label>Sujet évalué 👤</label>
+            <input type="text" style="width:100%;max-width:340px;"
+                placeholder="Libellé du sujet..."
+                value="${escHtml(row.sujet_eval_h)}"
+                oninput="annotRows[${idx}].sujet_eval_h=this.value">
+        </div>
+        <div class="annot-justif-group" style="margin-top:6px;">
+            <div class="annot-justif-label">Justification sujet 👤</div>
+            <textarea class="annot-justif-input" rows="2"
+                placeholder="Justification..."
+                oninput="annotRows[${idx}].justif_suj_h=this.value"
+            >${escHtml(row.justif_suj_h)}</textarea>
+        </div>
+        <div class="annot-justif-group" style="margin-top:4px;">
+            <div class="annot-justif-label" style="color:#1d4ed8;">Justification sujet 🤖</div>
+            <div class="annot-justif-judge">${escHtml(row.justif_suj_j)||'<i style="color:#9ca3af">—</i>'}</div>
+        </div>
+    </div>`;
+
+    const sourcesHtml = annotRenderSources(row.sources);
+
+    container.innerHTML = `
+    <div class="annot-detail-col">
+        <h4>🏷️ Note du sujet (facultatif)</h4>
+        ${sujHtml}
+    </div>
+    <div class="annot-detail-col">
+        <h4>📄 Réponse RAG complète</h4>
+        <div class="annot-response-box">${escHtml(row.reponse)}</div>
+    </div>
+    <div class="annot-detail-col">
+        ${sourcesHtml}
+    </div>`;
+}
+
+function annotParseSources(text) {
+    if (!text) return [];
+    // Normalize Windows line endings
+    const normalized = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+    const parts = normalized.split(/--- Source \d+ \[([^\]]*)\] ---\n?/);
+    const results = [];
+    for (let i = 1; i < parts.length; i += 2) {
+        const meta = parts[i] || '';
+        const body = (parts[i + 1] || '').trim();
+        if (!body) continue;
+        const scoreMatch = meta.match(/score=([\d.]+)/);
+        // Key is "source_type" in the metadata
+        const typeMatch = meta.match(/source_type=([^,\]]+)/);
+        const commMatch = meta.match(/commune=([^,\]]+)/);
+        results.push({
+            score: scoreMatch ? parseFloat(scoreMatch[1]) : null,
+            type: typeMatch ? typeMatch[1].trim() : null,
+            commune: commMatch ? commMatch[1].trim() : null,
+            body: body,
+        });
+    }
+    return results;
+}
+
+function annotRenderSources(text) {
+    const sources = annotParseSources(text);
+    if (!sources.length) {
+        return `<h4>📦 Sources RAG</h4><div style="color:#9ca3af;font-size:12px;font-style:italic;">Aucune source disponible</div>`;
+    }
+    const items = sources.map((s, i) => {
+        const typeClass = s.type ? `src-type-${s.type.replace(/[^a-z0-9_]/gi, '_')}` : '';
+        const typeBadge = s.type
+            ? `<span class="annot-source-type ${typeClass}">${escHtml(s.type)}</span>`
+            : '';
+        const commune = s.commune ? `<span class="annot-source-commune">${escHtml(s.commune)}</span>` : '';
+        const score = s.score !== null ? `<span class="annot-source-score">score: ${s.score.toFixed(3)}</span>` : '';
+        return `
+        <div class="annot-source-item">
+            <div class="annot-source-header" onclick="this.nextElementSibling.classList.toggle('open')">
+                <span style="font-size:10px;color:#6b7280;min-width:22px;">#${i+1}</span>
+                ${typeBadge}
+                ${commune}
+                ${score}
+            </div>
+            <div class="annot-source-body">${escHtml(s.body)}</div>
+        </div>`;
+    }).join('');
+    return `<h4>📦 Sources RAG (${sources.length})</h4><div class="annot-sources-list">${items}</div>`;
+}
+
+// ── Stats ────────────────────────────────────────────────────
+function annotUpdateStats() {
+    const n = annotRows.length;
+    const rempli = annotRows.filter(r => DIMS.every(d => r[`${d.key}_h`] !== null)).length;
+    const moyH = annotRows.filter(r=>r.sg_h!==null).map(r=>r.sg_h);
+    const moyJ = annotRows.filter(r=>r.sg_j!==null).map(r=>r.sg_j);
+    document.getElementById('aStatN').textContent = n;
+    document.getElementById('aStatRempli').textContent = rempli;
+    document.getElementById('aStatMoyH').textContent = moyH.length
+        ? (moyH.reduce((a,b)=>a+b,0)/moyH.length).toFixed(2) : '—';
+    document.getElementById('aStatMoyJ').textContent = moyJ.length
+        ? (moyJ.reduce((a,b)=>a+b,0)/moyJ.length).toFixed(2) : '—';
+}
+
+// ── Réinitialiser ────────────────────────────────────────────
+function annotReset() {
+    annotRows = [];
+    annotWorkbook = null;
+    document.getElementById('annotFilename').textContent = 'Aucun fichier chargé';
+    document.getElementById('annotTable').style.display = 'none';
+    document.getElementById('annotEmptyState').style.display = '';
+    document.getElementById('annotDownloadBtn').style.display = 'none';
+    document.getElementById('annotResetBtn').style.display = 'none';
+    document.getElementById('annotToggleJustifBtn').style.display = 'none';
+    document.getElementById('annotStats').style.display = 'none';
+    document.getElementById('annotLegend').style.display = 'none';
+    document.getElementById('annotFileInput').value = '';
+    document.getElementById('annotThead').innerHTML = '';
+    document.getElementById('annotTbody').innerHTML = '';
+}
+
+// ── Téléchargement ───────────────────────────────────────────
+let annotJustifVisible = false; // collapsed by default
+
+function annotToggleJustif(wrapId, btn) {
+    const wrap = document.getElementById(wrapId);
+    if (!wrap) return;
+    const open = wrap.classList.toggle('open');
+    btn.classList.toggle('open', open);
+}
+
+function annotToggleAllJustifs() {
+    annotJustifVisible = !annotJustifVisible;
+    document.querySelectorAll('.annot-justif-wrap').forEach(el => {
+        el.classList.toggle('open', annotJustifVisible);
+    });
+    document.querySelectorAll('.annot-justif-toggle').forEach(btn => {
+        btn.classList.toggle('open', annotJustifVisible);
+    });
+    document.getElementById('annotJustifBtnLabel').textContent = annotJustifVisible ? 'visibles' : 'masquées';
+}
+
+function annotDownload() {
+    if (!annotWorkbook || !annotRows.length) return;
+    const sheetName = annotWorkbook.SheetNames[0];
+    const ws = annotWorkbook.Sheets[sheetName];
+
+    const setCell = (r, c, val) => {
+        const addr = XLSX.utils.encode_cell({ r: r - 1, c: c - 1 });
+        if (val === null || val === undefined || val === '') {
+            delete ws[addr];
+        } else {
+            ws[addr] = { v: val, t: typeof val === 'number' ? 'n' : 's' };
+        }
+    };
+
+    annotRows.forEach(row => {
+        const r = row._row + 1; // +1 car header en row 0
+        DIMS.forEach(d => {
+            setCell(r, ANNOT_COLS[`${d.key}_h`],     row[`${d.key}_h`]);
+            setCell(r, ANNOT_COLS[`${d.key}_h_jus`], row[`${d.key}_h_jus`]);
+        });
+        setCell(r, ANNOT_COLS.applic_h,     row.applic_h);
+        setCell(r, ANNOT_COLS.note_suj_h,   row.note_suj_h);
+        setCell(r, ANNOT_COLS.sujet_eval_h, row.sujet_eval_h);
+        setCell(r, ANNOT_COLS.justif_suj_h, row.justif_suj_h);
+        // Score global humain (valeur calculée, pas de formule)
+        setCell(r, ANNOT_COLS.sg_h, row.sg_h);
+    });
+
+    const filename = `annotation_editee_${new Date().toISOString().slice(0,10)}.xlsx`;
+    XLSX.writeFile(annotWorkbook, filename);
+}
+
 </script>
 </body>
 </html>

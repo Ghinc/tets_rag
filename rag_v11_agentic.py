@@ -69,7 +69,8 @@ TOOLS = [
             "Recherche dans les résumés RAPTOR hiérarchiques : synthèses analytiques pré-calculées "
             "par groupe démographique (âge, profession, commune, dimension QdV). "
             "Idéal pour les questions qualitatives générales, perceptions, tendances. "
-            "Utilise cet outil en premier pour les questions ouvertes."
+            "Utilise cet outil en premier pour les questions ouvertes. "
+            "Sources : verbatims et entretiens citoyens (bien-être subjectif)."
         ),
         "input_schema": {
             "type": "object",
@@ -85,7 +86,8 @@ TOOLS = [
         "description": (
             "Recherche dans les verbatims citoyens bruts avec filtres démographiques optionnels. "
             "Idéal pour des questions ciblées sur un groupe spécifique (âge, profession, commune, dimension). "
-            "Utilise les filtres pour affiner si la question mentionne un groupe précis."
+            "Utilise les filtres pour affiner si la question mentionne un groupe précis. "
+            "Sources : verbatims bruts citoyens (bien-être subjectif)."
         ),
         "input_schema": {
             "type": "object",
@@ -115,7 +117,8 @@ TOOLS = [
         "description": (
             "Recherche les scores OppChoVec (Opportunités / Choix / Vécu) par commune. "
             "Utiliser pour toute question sur des indicateurs chiffrés de bien-être, "
-            "classements, comparaisons de scores entre communes."
+            "classements, comparaisons de scores entre communes. "
+            "Sources : indicateurs OppChoVec (bien-être OBJECTIF — données territoriales indépendantes des perceptions citoyennes)."
         ),
         "input_schema": {
             "type": "object",
@@ -146,6 +149,29 @@ TOOLS = [
         },
     },
     {
+        "name": "enquete_scores_search",
+        "description": (
+            "Recherche les scores moyens par dimension issus de l'enquête qualité de vie, agrégés par commune. "
+            "Ces scores (1-5) couvrent : Transports, Éducation, Réseaux téléphoniques, Institutions, "
+            "Tourisme, Sécurité, Santé, Situation pro, Revenus, Temps travail/perso, Logement, "
+            "Services locaux, Culture, Soutien social, Vie associative, Environnement. "
+            "Utiliser pour toute question sur la satisfaction des habitants vis-à-vis d'une dimension "
+            "précise (ex: 'comment les habitants évaluent les transports ?', 'score santé Bastia'). "
+            "Sources : scores de satisfaction déclarée par dimension (bien-être SUBJECTIF perçu — distinct des indicateurs OppChoVec objectifs)."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "query": {
+                    "type": "string",
+                    "description": "Dimension ou commune à rechercher (ex: 'transports Ajaccio', 'environnement', 'santé')",
+                },
+                "k": {"type": "integer", "description": "Nombre de communes (défaut 5)", "default": 5},
+            },
+            "required": ["query"],
+        },
+    },
+    {
         "name": "decompose",
         "description": (
             "Décompose une question complexe en sous-questions indépendantes et complémentaires. "
@@ -172,16 +198,47 @@ _SYSTEM_EXECUTOR = (
     "s'appuyant sur des verbatims citoyens et des indicateurs territoriaux (scores OppChoVec). "
     "Tu as accès à plusieurs outils de recherche. Utilise-les de façon ciblée et itérative "
     "pour construire un contexte suffisant avant de répondre. "
-    "\n\nGuide d'utilisation :\n"
+    "\n\nCONTEXTE DES DONNÉES :\n"
+    "- Les synthèses RAPTOR et verbatims (subjectif/quali) sont issus de l'enquête citoyenne menée auprès des habitants de Corse. "
+    "Si on te demande ce que disent les habitants ou les résultats de l'enquête citoyenne, utilise summary_search ou verbatim_search.\n"
+    "- enquete_scores_search → scores de satisfaction déclarés dans cette même enquête citoyenne (bien-être SUBJECTIF)\n"
+    "- score_lookup → scores OppChoVec (bien-être OBJECTIF, indépendant des opinions) — "
+    "C'EST L'INDICATEUR OBJECTIF DE RÉFÉRENCE ; pour toute question sur les indicateurs objectifs "
+    "ou une comparaison quanti/quali, utilise cet outil et commente les résultats. "
+    "Ne jamais conclure à l'absence d'indicateurs objectifs sans avoir utilisé score_lookup.\n"
+    "- Les données d'équipements communaux (médecins, écoles, commerces, taux d'activité…) "
+    "peuvent aussi apparaître dans le contexte via d'autres outils — elles constituent des indicateurs objectifs complémentaires.\n"
+    "\nGuide d'utilisation :\n"
     "- Pour les questions qualitatives générales : commence par summary_search\n"
     "- Pour les questions sur un groupe précis : utilise verbatim_search avec filtres\n"
-    "- Pour les indicateurs chiffrés : utilise score_lookup\n"
+    "- Pour les scores OppChoVec (bien-être territorial) : utilise score_lookup\n"
+    "- Pour les scores de satisfaction par dimension (transports, santé, logement…) : utilise enquete_scores_search\n"
     "- Pour les questions géographiques : utilise geo_neighbors\n"
     "- Pour les questions complexes multi-aspects : utilise decompose puis traite les sous-questions\n"
     "- Arrête de chercher quand tu as suffisamment d'information pour répondre avec confiance\n"
-    "\nRègle absolue : Réponds TOUJOURS en français. "
-    "Ne fabrique JAMAIS d'information absente du contexte. "
-    "Si le contexte est insuffisant, dis-le clairement."
+    "\nDISTINCTION IMPORTANTE :\n"
+    "- score_lookup → bien-être OBJECTIF (indicateurs territoriaux OppChoVec, indépendants des opinions)\n"
+    "- enquete_scores_search → bien-être SUBJECTIF (satisfaction perçue et déclarée par les habitants dans l'enquête citoyenne)\n"
+    "Pour une question sur le bien-être global ou les indicateurs objectifs d'une commune, "
+    "utilise OBLIGATOIREMENT score_lookup + enquete_scores_search. "
+    "Ne jamais répondre 'aucun indicateur objectif disponible' sans avoir utilisé score_lookup.\n"
+    "ATTENTION — définitions opérationnelles des sous-indicateurs OppChoVec (ne pas surinterprèter) : "
+    "Opp = éducation moyenne + diversité CSP + accessibilité mobilité + couverture TIC/haut débit. "
+    "Cho = % population avec droit de vote + absence de quartiers prioritaires (QPV) — "
+    "PAS une mesure de libertés individuelles au sens large. "
+    "Vec = revenu fiscal moyen + qualité du logement + stabilité de l'emploi + accès aux services en <20 min. "
+    "Ces scores sont des proxies (0-10, relatif aux 360 communes corses uniquement) — ne pas extrapoler.\n"
+    "\nRÈGLES DE RÉDACTION — à respecter absolument dans ta réponse finale : "
+    "N'utilise JAMAIS les termes techniques internes : ne mentionne pas 'RAPTOR', "
+    "'subjectif/quali', 'objectif/quanti', 'OppChoVec intégré', 'synthèse RAPTOR', etc. "
+    "Pour citer tes sources, utilise des formulations naturelles : "
+    "'selon l'enquête citoyenne', 'les habitants interrogés estiment que', "
+    "'les indicateurs territoriaux montrent que', 'selon les données géographiques'. "
+    "Réponds TOUJOURS en français. "
+    "Ne fabrique JAMAIS d'information absente du contexte — aucun chiffre, nom, rang ou fait inventé. "
+    "Si après tes recherches le contexte reste insuffisant pour répondre à un point précis, "
+    "dis-le explicitement ('je ne dispose pas de données suffisantes sur ce point'). "
+    "Une réponse partielle honnête est toujours préférable à une réponse complète inventée."
 )
 
 
@@ -381,6 +438,32 @@ class AgenticRAGPipeline:
             except Exception as e:
                 return f"Erreur geo_neighbors : {e}"
 
+        elif name == "enquete_scores_search":
+            try:
+                query = params.get("query", "")
+                k = params.get("k", 5)
+                q_emb = self._embed_model.encode(f"query: {query}").tolist()
+                col = self._chroma_client.get_collection("enquete_scores_commune")
+                n = min(k, col.count())
+                if n == 0:
+                    return "Collection enquete_scores_commune vide."
+                res = col.query(
+                    query_embeddings=[q_emb],
+                    n_results=n,
+                    include=["documents", "metadatas"],
+                )
+                docs = res["documents"][0]
+                metas = res["metadatas"][0]
+                if not docs:
+                    return "Aucun score trouvé pour cette requête."
+                lines = [
+                    f"[{meta.get('commune', '?')} — {meta.get('n_repondants', '?')} répondants]\n{doc[:600]}"
+                    for doc, meta in zip(docs, metas)
+                ]
+                return "\n\n".join(lines)
+            except Exception as e:
+                return f"Erreur enquete_scores_search : {e}"
+
         elif name == "decompose":
             try:
                 from rag_v10_raptor_subq import decompose_question
@@ -575,7 +658,7 @@ class AgenticRAGPipeline:
             if any(kw in question.lower() for kw in _OPPCHOVEC_KEYWORDS):
                 opp_docs = self._raptor.query_oppchovec(question, k=3)
                 if opp_docs:
-                    context_str += "\n\n[Scores OppChoVec]\n" + "\n\n".join(
+                    context_str += "\n\n[Scores OppChoVec (objectif/quanti)]\n" + "\n\n".join(
                         d["text"] for d in opp_docs
                     )
                     raptor_sources += [

@@ -19,6 +19,12 @@ import sys
 import json
 import asyncio
 import uuid
+
+# Forcer UTF-8 sur Windows pour éviter les UnicodeEncodeError sur les print() du pipeline
+if sys.stdout.encoding and sys.stdout.encoding.lower() != "utf-8":
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+if sys.stderr.encoding and sys.stderr.encoding.lower() != "utf-8":
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 import tempfile
 import subprocess
 import shutil
@@ -31,6 +37,10 @@ from fastapi.responses import HTMLResponse, StreamingResponse, FileResponse
 from pydantic import BaseModel, Field, ConfigDict
 import uvicorn
 from dotenv import load_dotenv
+
+# SentenceTransformer DOIT être importé avant chromadb (conflit libs natives sur Windows).
+# rag_v1_class importe chromadb au niveau module → pré-charger ST ici pour éviter le segfault.
+from sentence_transformers import SentenceTransformer as _ST_preload  # noqa: F401
 
 # Imports des différentes versions RAG
 from rag_v1_class import BasicRAGPipeline, RetrievalResult as RetrievalResult_v1
@@ -107,6 +117,15 @@ except ImportError as e:
     AgenticRAGPipeline = None
     V11_AVAILABLE = False
 
+# Import optionnel des ablations (V_vanilla, V_decomp, V_decomp_raptor)
+try:
+    from rag_ablations import VanillaRAG, DecompOnlyRAG
+    ABLATIONS_AVAILABLE = True
+except ImportError as e:
+    print(f"AVERTISSEMENT: ablations non disponibles ({e})")
+    VanillaRAG = DecompOnlyRAG = None
+    ABLATIONS_AVAILABLE = False
+
 # Charger les variables d'environnement
 load_dotenv()
 
@@ -115,8 +134,9 @@ load_dotenv()
 class QueryRequest(BaseModel):
     """Modèle de requête pour poser une question"""
     question: str = Field(..., description="Question à poser au chatbot", min_length=1)
-    rag_version: Literal["v1", "v2", "v2.1", "v2.2", "v3", "v4", "v5", "v6", "v7", "v8", "v9", "v10", "v11"] = Field("v2", description="Version du RAG à utiliser")
-    k: int = Field(5, description="Nombre de documents à récupérer", ge=1, le=20)
+    rag_version: Literal["v1", "v2", "v2.1", "v2.2", "v3", "v4", "v5", "v6", "v7", "v8", "v9", "v10", "v11",
+                         "v_vanilla_k10", "v_vanilla_k25", "v_decomp", "v_decomp_raptor"] = Field("v2", description="Version du RAG à utiliser")
+    k: int = Field(5, description="Nombre de documents à récupérer", ge=1, le=100)
     use_reranking: bool = Field(True, description="Utiliser le reranking (v2/v3/v4 uniquement)")
     include_quantitative: bool = Field(True, description="Inclure les données quantitatives (v2/v3/v4 uniquement)")
     commune_filter: Optional[str] = Field(None, description="Filtrer par commune spécifique")
@@ -212,6 +232,11 @@ rag_pipelines = {
     "v9": None,
     "v10": None,
     "v11": None,
+    # Ablations
+    "v_vanilla_k10":    None,
+    "v_vanilla_k25":    None,
+    "v_decomp":         None,
+    "v_decomp_raptor":  None,
 }
 
 # Mots-clés déclenchant la recherche dans oppchovec_scores
@@ -231,6 +256,39 @@ def _is_oppchovec_question(question: str) -> bool:
     """Retourne True si la question porte (en partie) sur les scores OppChoVec."""
     q = question.lower()
     return any(kw in q for kw in _OPPCHOVEC_KEYWORDS)
+
+
+_BIENEETRE_KEYWORDS = [
+    "bien-être", "bien être", "bienetre", "bien-etre",
+    "qualité de vie", "qualite de vie",
+    "comment se porte", "comment vivent", "comment vit",
+    "portrait global", "portrait de",
+    "satisfaction globale", "conditions de vie",
+]
+
+# Si ces mots-clés sont présents, la question est purement qualitative/perception :
+# ne pas déclencher force_mixed ni l'injection OppChoVec
+_QUALI_OVERRIDE_KEYWORDS = [
+    "ressenti", "ressentent", "ressent", "ressens",
+    "perçoivent", "perçoit", "perception", "perceptions",
+    "que pensent", "que pense", "avis des", "opinion",
+    "témoignages", "verbatims", "verbatim",
+    "enquête citoyenne", "enquete citoyenne",
+    "comment vivent-ils", "comment vivent-elles",
+    "comment les habitants", "comment les résidents",
+    "comment les gens",
+]
+
+
+def _is_bieneetre_question(question: str) -> bool:
+    """Retourne True si la question porte sur le bien-être/QdV global d'une commune
+    (mixte quali+quanti attendu). Exclut les questions purement qualitatives/perception
+    et les questions purement factuelles/OppChoVec."""
+    q = question.lower()
+    # Si la question est explicitement sur le ressenti/perception, rester en mode quali pur
+    if any(kw in q for kw in _QUALI_OVERRIDE_KEYWORDS):
+        return False
+    return any(kw in q for kw in _BIENEETRE_KEYWORDS)
 
 
 def initialize_all_rags():
@@ -254,9 +312,19 @@ def initialize_all_rags():
         )
 
     # === INITIALISER RAG v1 ===
-    # Désactivé : chroma_txt corrompu (Rust panic sur sqlite bindings)
-    print("\n[1/10] RAG v1 désactivé (chroma_txt corrompu)")
-    rag_pipelines["v1"] = None
+    print("\n[1/10] Initialisation RAG v1 (basique)...")
+    try:
+        rag_pipelines["v1"] = BasicRAGPipeline(
+            openai_api_key=openai_api_key,
+            chroma_path="./chroma_portrait",
+            collection_name="portrait_verbatims",
+            llm_model="gpt-4o-mini",
+            embedding_model="BAAI/bge-m3",
+        )
+        print("OK RAG v1 initialise")
+    except Exception as e:
+        print(f"AVERTISSEMENT: RAG v1 non disponible : {e}")
+        rag_pipelines["v1"] = None
 
     # === INITIALISER RAG v2 ===
     # Désactivé : chroma_v2 corrompu (Rust panic sur sqlite bindings)
@@ -281,35 +349,18 @@ def initialize_all_rags():
                 use_hybrid=True
             )
             print("OK RAG v2.1 initialisé")
-        except Exception as e:
+        except BaseException as e:
             print(f"AVERTISSEMENT: RAG v2.1 non disponible: {e}")
             import traceback
             traceback.print_exc()
             rag_pipelines["v2.1"] = None
 
-    # === INITIALISER RAG v2.2 (Portrait) ===
-    print("\n[2.2/10] Initialisation RAG v2.2 (Portrait)...")
-    try:
-        rag_pipelines["v2.2"] = PortraitRAGPipeline(
-            chroma_path="./chroma_portrait",
-            collection_name="portrait_verbatims",
-            embedding_model="BAAI/bge-m3",
-            reranker_model="BAAI/bge-reranker-v2-m3",
-            llm_model="gpt-3.5-turbo",
-            openai_api_key=openai_api_key,
-            quant_data_path="df_mean_by_commune.csv"
-        )
-        # Afficher les stats portrait
-        stats = rag_pipelines["v2.2"].get_portrait_stats()
-        if stats.get('count', 0) > 0:
-            print(f"OK RAG v2.2 initialisé ({stats['count']} verbatims portrait)")
-        else:
-            print("OK RAG v2.2 initialisé (pas de verbatims portrait indexés)")
-    except Exception as e:
-        print(f"AVERTISSEMENT: RAG v2.2 non disponible: {e}")
-        import traceback
-        traceback.print_exc()
-        rag_pipelines["v2.2"] = None
+    # === RAG v2.2 ===
+    # Désactivé : chromadb.PersistentClient provoque un Rust panic fatal (pyo3_runtime.PanicException)
+    # qui corrompt l'état interne partagé de ChromaDB pour tout le processus,
+    # empêchant v9/v10/v11 de s'initialiser ensuite.
+    print("\n[2.2/10] RAG v2.2 désactivé (chroma_portrait — Rust panic ChromaDB)")
+    rag_pipelines["v2.2"] = None
 
     # === RAG v3, v4, v5 ===
     # Désactivés : utilisent chroma_v2 qui provoque un Rust panic fatal
@@ -339,7 +390,7 @@ def initialize_all_rags():
                 openai_api_key=openai_api_key
             )
             print("OK RAG v6 initialisé")
-        except Exception as e:
+        except BaseException as e:
             print(f"AVERTISSEMENT: RAG v6 non disponible: {e}")
             rag_pipelines["v6"] = None
 
@@ -359,7 +410,7 @@ def initialize_all_rags():
                 neo4j_password=""
             )
             print("OK RAG v7 initialisé")
-        except Exception as e:
+        except BaseException as e:
             print(f"AVERTISSEMENT: RAG v7 non disponible: {e}")
             import traceback
             traceback.print_exc()
@@ -381,7 +432,7 @@ def initialize_all_rags():
                 neo4j_password=""
             )
             print("OK RAG v8 initialisé")
-        except Exception as e:
+        except BaseException as e:
             print(f"AVERTISSEMENT: RAG v8 non disponible: {e}")
             print("  Note: v8 nécessite APOC Extended installé dans Neo4j")
             import traceback
@@ -403,7 +454,7 @@ def initialize_all_rags():
             raptor.init()
             rag_pipelines["v9"] = raptor
             print(f"OK RAG v9 initialisé ({raptor.summary_count} synthèses RAPTOR)")
-        except Exception as e:
+        except BaseException as e:
             print(f"AVERTISSEMENT: RAG v9 non disponible: {e}")
             rag_pipelines["v9"] = None
 
@@ -422,7 +473,7 @@ def initialize_all_rags():
             v10.init()
             rag_pipelines["v10"] = v10
             print(f"OK RAG v10 initialisé")
-        except Exception as e:
+        except BaseException as e:
             print(f"AVERTISSEMENT: RAG v10 non disponible: {e}")
             rag_pipelines["v10"] = None
 
@@ -437,11 +488,40 @@ def initialize_all_rags():
             v11.init()
             rag_pipelines["v11"] = v11
             print("OK RAG v11 initialisé (Agentic ReAct+CRAG)")
-        except Exception as e:
+        except BaseException as e:
             print(f"AVERTISSEMENT: RAG v11 non disponible: {e}")
             import traceback
             traceback.print_exc()
             rag_pipelines["v11"] = None
+
+    # [Ablations] V_vanilla_k10, V_vanilla_k25, V_decomp, V_decomp_raptor
+    print("\n[Ablations] Initialisation des configs d'ablation...")
+    if not ABLATIONS_AVAILABLE:
+        print("AVERTISSEMENT: ablations non disponibles (import échoué)")
+    else:
+        try:
+            abl_vanilla = VanillaRAG(chroma_path="./chroma_portrait")
+            abl_vanilla.init()
+            rag_pipelines["v_vanilla_k10"] = abl_vanilla
+            rag_pipelines["v_vanilla_k25"] = abl_vanilla  # même instance, k passé à query()
+            print("OK V_vanilla initialisé (k10 + k25 partagent la même instance)")
+        except BaseException as e:
+            print(f"AVERTISSEMENT: V_vanilla non disponible: {e}")
+
+        try:
+            abl_decomp = DecompOnlyRAG(chroma_path="./chroma_portrait")
+            abl_decomp.init()
+            rag_pipelines["v_decomp"] = abl_decomp
+            print("OK V_decomp initialisé")
+        except BaseException as e:
+            print(f"AVERTISSEMENT: V_decomp non disponible: {e}")
+
+        # V_decomp_raptor = v10 avec use_bilan=False — réutilise le pipeline v10 déjà initialisé
+        if rag_pipelines.get("v10") is not None:
+            rag_pipelines["v_decomp_raptor"] = rag_pipelines["v10"]
+            print("OK V_decomp_raptor initialisé (réutilise pipeline v10 avec use_bilan=False)")
+        else:
+            print("AVERTISSEMENT: V_decomp_raptor non disponible (v10 absent)")
 
     # Résumé
     print("\n" + "="*60)
@@ -459,7 +539,12 @@ def initialize_all_rags():
 async def lifespan(app: FastAPI):
     """Gestion du cycle de vie de l'application"""
     # Startup
-    initialize_all_rags()
+    try:
+        initialize_all_rags()
+    except BaseException as e:
+        print(f"AVERTISSEMENT: Initialisation RAG partielle ou échouée: {e}")
+        import traceback
+        traceback.print_exc()
     yield
     # Shutdown (si nécessaire)
     pass
@@ -913,7 +998,7 @@ def query_rag(request: QueryRequest):
             if _is_oppchovec_question(request.question):
                 opp_docs = rag.query_oppchovec(request.question, k=3)
                 if opp_docs:
-                    opp_block = "\n\n[Scores OppChoVec (quanti) par commune]\n" + "\n\n".join(
+                    opp_block = "\n\n[Scores OppChoVec (objectif/quanti) par commune]\n" + "\n\n".join(
                         d["text"] for d in opp_docs
                     )
                     context_str = context_str + opp_block
@@ -926,12 +1011,36 @@ def query_rag(request: QueryRequest):
                     {"role": "system", "content": (
                         "Tu es un assistant spécialisé dans l'analyse de la qualité de vie en Corse. "
                         "Réponds à la question en te basant UNIQUEMENT sur le contexte fourni. "
-                        "Les sources sont étiquetées (quali) pour les verbatims et synthèses de perceptions citoyennes, "
-                        "et (quanti) pour les scores et indicateurs chiffrés (OppChoVec, enquêtes). "
-                        "Pour une question portant sur des indicateurs chiffrés, appuie-toi prioritairement sur les sources (quanti). "
-                        "Pour une question de perception ou d'opinion, priorise les sources (quali). "
-                        "Pour une question mixte, utilise les deux de façon complémentaire. "
-                        "Cite des extraits quand c'est pertinent. Sois factuel et nuancé."
+                        "Le contexte contient plusieurs types de sources : "
+                        "les blocs [Synthèse RAPTOR ...] et [Scores enquête ...] proviennent de l'enquête citoyenne (perceptions et satisfaction déclarées par les habitants) ; "
+                        "les blocs [Scores OppChoVec ...] et [Données OppChoVec ...] sont LES INDICATEURS TERRITORIAUX OBJECTIFS DE RÉFÉRENCE "
+                        "(scores agrégés 0-10 : Opportunités / Choix / Vécu, indépendants des opinions) ; "
+                        "les blocs [Équipements et services commune ...] sont aussi des indicateurs objectifs factuels "
+                        "(médecins, écoles, commerces, taux d'activité, taux de pauvreté, prix immobilier, etc.) ; "
+                        "les blocs [Structure territoriale ...] et [Géographie ...] sont des données géographiques factuelles. "
+                        "RÈGLES DE RÉDACTION — à respecter absolument : "
+                        "N'utilise JAMAIS les termes techniques internes dans ta réponse : ne mentionne pas 'RAPTOR', 'subjectif/quali', 'objectif/quanti', 'OppChoVec intégré', etc. "
+                        "Pour citer tes sources, utilise des formulations naturelles : 'selon l'enquête citoyenne', 'les habitants interrogés estiment que', 'les indicateurs territoriaux montrent que', 'selon les données géographiques'. "
+                        "Pour une question de perception/satisfaction → appuie-toi sur les données d'enquête. "
+                        "Pour une question d'indicateurs objectifs ou de rang territorial → appuie-toi sur les scores OppChoVec. "
+                        "RÈGLE ABSOLUE : si le contexte contient un bloc [Scores OppChoVec ...] ou [Données OppChoVec ...], "
+                        "tu DOIS le commenter — ne jamais écrire 'aucun indicateur objectif disponible' quand ce bloc est présent. "
+                        "ATTENTION — définitions opérationnelles des sous-indicateurs OppChoVec (ne pas surinterprèter) : "
+                        "Opp = éducation moyenne + diversité CSP + accessibilité mobilité + couverture TIC/haut débit. "
+                        "Cho = % population avec droit de vote + absence de quartiers prioritaires (QPV) — "
+                        "PAS une mesure de libertés individuelles au sens large. "
+                        "Vec = revenu fiscal moyen + qualité du logement + stabilité de l'emploi + accès aux services en <20 min. "
+                        "Ces scores sont des proxies statistiques (0-10, relatif aux 360 communes corses uniquement). "
+                        "Ne pas extrapoler leur signification au-delà de ces composantes concrètes. "
+                        "Pour une question mixte quanti/quali → croise scores OppChoVec + données d'enquête (et équipements si présents). "
+                        "RÈGLE GÉOGRAPHIQUE STRICTE : réponds UNIQUEMENT sur la/les commune(s) mentionnée(s) dans la question. "
+                        "Ne cite JAMAIS d'autres communes comme exemples si elles n'ont pas été demandées. "
+                        "Si un bloc de contexte précise 'tous résidents' ou 'Corse entière', indique-le explicitement dans ta réponse. "
+                        "Si les données sont limitées (pas de données CSP-spécifiques pour cette commune), sois sobre : "
+                        "dis-le en une phrase et utilise ce que tu as (score OppChoVec communal, données globales CSP), sans te diluer sur d'autres communes. "
+                        "Cite des extraits courts quand c'est pertinent. Sois factuel et nuancé. "
+                        "IMPORTANT — honnêteté sur les lacunes : si le contexte fourni ne contient pas l'information nécessaire pour répondre à un point précis, dis-le clairement ('je ne dispose pas de données sur ce point'). "
+                        "Ne brode jamais, n'invente jamais de chiffres, de noms ou de faits absents du contexte. Une réponse partielle honnête vaut mieux qu'une réponse complète inventée."
                     )},
                     {"role": "user", "content": f"Contexte :\n{context_str}\n\nQuestion : {request.question}"}
                 ],
@@ -967,54 +1076,81 @@ def query_rag(request: QueryRequest):
 
         elif request.rag_version == "v10":
             # v10 : RAPTOR + Sous-questions + Notation
-            # Pré-fetch OppChoVec pour l'injecter dans chaque sous-question si pertinent
-            opp_docs_v10 = []
+            # OppChoVec est maintenant récupéré par sous-question dans RaptorRetriever.query().
+            # On conserve un pré-fetch léger uniquement pour guider le décomposeur (extra_context)
+            # quand la question est sur le bien-être global ou sur OppChoVec explicitement.
+            enquete_docs_v10 = []
             extra_ctx_v10 = ""
-            if _is_oppchovec_question(request.question):
-                opp_docs_v10 = rag.retriever.query_oppchovec(request.question, k=3)
-                if opp_docs_v10:
-                    extra_ctx_v10 = "[Données OppChoVec (quanti)]\n" + "\n\n".join(d["text"] for d in opp_docs_v10)
+            is_bieneetre_v10 = _is_bieneetre_question(request.question)
+
+            if is_bieneetre_v10:
+                # Injecter les scores d'enquête par commune pour guider la décomposition
+                enquete_col = rag.retriever._extra_cols.get("enquete_scores_commune")
+                if enquete_col:
+                    try:
+                        q_emb = rag.retriever._encode_query(request.question)
+                        res = enquete_col.query(
+                            query_embeddings=[q_emb],
+                            n_results=min(3, enquete_col.count()),
+                            include=["documents", "metadatas"],
+                        )
+                        enquete_docs_v10 = res["documents"][0] if res["documents"] else []
+                    except Exception:
+                        enquete_docs_v10 = []
+                if enquete_docs_v10:
+                    extra_ctx_v10 = "[Scores enquête par commune (subjectif/quanti)]\n" + "\n\n".join(enquete_docs_v10)
+
             answer, retrieval_results, v10_scoring, v10_sub_qa = rag.query(
                 question=request.question,
                 k=request.k,
                 n_subquestions=request.n_subquestions,
                 extra_context=extra_ctx_v10,
+                force_mixed=is_bieneetre_v10,
             )
-            # Enrichissement OppChoVec : ajout des scores en sources + complément de réponse
-            if opp_docs_v10:
-                opp_sources = [
-                    {
-                        "rank": len(retrieval_results) + i,
-                        "source_type": "oppchovec_score",
-                        "commune": d["meta"].get("commune"),
-                        "oppchovec_0_10": d["meta"].get("oppchovec_0_10"),
-                        "opp_0_10": d["meta"].get("opp_0_10"),
-                        "cho_0_10": d["meta"].get("cho_0_10"),
-                        "vec_0_10": d["meta"].get("vec_0_10"),
-                        "extrait": d["text"][:1500],
-                    }
-                    for i, d in enumerate(opp_docs_v10)
-                ]
-                retrieval_results = retrieval_results + opp_sources
-                # Ajouter un appendice factuel avec les scores (communes seulement, pas la méthodologie)
-                commune_docs = [d for d in opp_docs_v10 if d["meta"].get("oppchovec_0_10") is not None]
-                if commune_docs:
-                    scores_lines = "\n".join(
-                        f"- {d['meta'].get('commune') or d['meta'].get('zone', '?')} : OppChoVec={d['meta']['oppchovec_0_10']:.2f}/10 "
-                        f"(Opp={d['meta']['opp_0_10']:.2f}, Cho={d['meta']['cho_0_10']:.2f}, "
-                        f"Vec={d['meta']['vec_0_10']:.2f})"
-                        for d in commune_docs
-                    )
-                    answer = answer + f"\n\n**Scores OppChoVec (données chiffrées) :**\n{scores_lines}"
+
+        elif request.rag_version == "v_decomp_raptor":
+            answer, retrieval_results, v10_scoring, v10_sub_qa = rag.query(
+                question=request.question,
+                k=request.k,
+                n_subquestions=request.n_subquestions,
+                use_bilan=False,
+            )
+
+        elif request.rag_version == "v_decomp":
+            answer, retrieval_results, v10_scoring, v10_sub_qa = rag.query(
+                question=request.question,
+                k=request.k,
+                n_subquestions=request.n_subquestions,
+            )
+
+        elif request.rag_version == "v_vanilla_k10":
+            answer, retrieval_results = rag.query(request.question, k=10)
+            v10_sub_qa = None
+
+        elif request.rag_version == "v_vanilla_k25":
+            answer, retrieval_results = rag.query(request.question, k=25)
+            v10_sub_qa = None
 
         # Convertir les résultats en format API
-        if request.rag_version in ("v9", "v10", "v11"):
-            # v9 retourne List[Dict] avec clés: rank, type/commune, extrait, etc.
+        if request.rag_version in ("v_vanilla_k10", "v_vanilla_k25", "v_decomp"):
+            # ablations retournent List[Dict] avec clés: content, metadata, source_type, label
             sources = [
                 Source(
-                    content=result.get('extrait', ''),
-                    score=1.0 - result.get('rank', 0) * 0.1,  # score décroissant par rang
-                    metadata={k: v for k, v in result.items() if k != 'extrait'}
+                    content=result.get('content', ''),
+                    score=1.0,
+                    metadata={**result.get('metadata', {}),
+                              "source_type": result.get('source_type', ''),
+                              "label": result.get('label', '')}
+                )
+                for result in retrieval_results
+            ]
+        elif request.rag_version in ("v9", "v10", "v11", "v_decomp_raptor"):
+            # v9/v10/v11 retournent List[Dict] avec clés: rank, type/commune, extrait, etc.
+            sources = [
+                Source(
+                    content=result.get('extrait', result.get('content', '')),
+                    score=1.0 - result.get('rank', 0) * 0.1,
+                    metadata={k: v for k, v in result.items() if k not in ('extrait', 'content')}
                 )
                 for result in retrieval_results
             ]
@@ -1089,7 +1225,7 @@ def query_rag(request: QueryRequest):
             metadata=metadata,
             rag_version_used=request.rag_version,
             timestamp=datetime.now().isoformat(),
-            sub_questions=v10_sub_qa if request.rag_version in ("v10", "v11") else None
+            sub_questions=v10_sub_qa if request.rag_version in ("v10", "v11", "v_decomp", "v_decomp_raptor") else None
         )
 
         print(f"[{datetime.now().isoformat()}] Réponse générée ({request.rag_version}) avec {len(sources)} sources")
@@ -1299,12 +1435,16 @@ async def browse_quantitative(
 
 @app.get("/api/browse/quanti_summaries", tags=["Browse"])
 async def browse_quanti_summaries():
-    """Retourne les synthèses RAPTOR quantitatives groupées par vue analytique."""
+    """Retourne les synthèses RAPTOR enquête citoyenne groupées par vue analytique."""
     try:
         import chromadb as _chromadb
         chroma = _chromadb.PersistentClient(path="./chroma_portrait")
-        col = chroma.get_collection("raptor_quanti_summaries")
-        res = col.get(include=["documents", "metadatas"])
+        col = chroma.get_collection("raptor_enquete_summaries")
+        # Exclure les docs spéciaux (methodology, global) — garder uniquement les synthèses groupées
+        res = col.get(
+            where={"source_type": {"$eq": "enquete_responses"}},
+            include=["documents", "metadatas"],
+        )
 
         grouped: Dict[str, list] = {}
         for doc, meta in zip(res["documents"], res["metadatas"]):
@@ -1318,13 +1458,63 @@ async def browse_quanti_summaries():
             ))
 
         view_order = [
-            "age_range*profession", "age_range*commune", "profession*commune",
-            "age_range", "profession", "commune",
+            "enquete_age_range*profession", "enquete_age_range*commune", "enquete_profession*commune",
+            "enquete_age_range", "enquete_profession", "enquete_commune",
+            "enquete_dimension*commune", "enquete_dimension*age_range", "enquete_dimension*profession",
+            "enquete_dimension",
         ]
         ordered: Dict[str, list] = {v: grouped[v] for v in view_order if v in grouped}
         ordered.update({v: grouped[v] for v in grouped if v not in view_order})
 
         return {"total": sum(len(v) for v in ordered.values()), "views": ordered}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/browse/equipements", tags=["Browse"])
+async def browse_equipements(commune: Optional[str] = None):
+    """Retourne les données équipements/emploi/services par commune."""
+    try:
+        import chromadb as _chromadb
+        chroma = _chromadb.PersistentClient(path="./chroma_portrait")
+        col = chroma.get_collection("communes_equipements")
+        kwargs: dict = {"include": ["documents", "metadatas"]}
+        if commune:
+            kwargs["where"] = {"commune": {"$eq": commune}}
+        res = col.get(**kwargs)
+        docs = [
+            {"commune": m.get("commune", ""), "content": doc}
+            for doc, m in zip(res["documents"], res["metadatas"])
+        ]
+        docs.sort(key=lambda x: x["commune"])
+        communes = sorted(set(d["commune"] for d in docs if d["commune"]))
+        return {"total": len(docs), "docs": docs, "communes": communes}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/browse/communes_profil", tags=["Browse"])
+async def browse_communes_profil(commune: Optional[str] = None):
+    """Retourne le profil démographique des répondants enquête par commune."""
+    try:
+        import chromadb as _chromadb
+        chroma = _chromadb.PersistentClient(path="./chroma_portrait")
+        col = chroma.get_collection("communes_profil")
+        kwargs: dict = {"include": ["documents", "metadatas"]}
+        if commune:
+            kwargs["where"] = {"commune": {"$eq": commune}}
+        res = col.get(**kwargs)
+        docs = [
+            {
+                "commune":      m.get("commune", ""),
+                "n_repondants": m.get("n_repondants", 0),
+                "content":      doc,
+            }
+            for doc, m in zip(res["documents"], res["metadatas"])
+        ]
+        docs.sort(key=lambda x: (-x["n_repondants"], x["commune"]))
+        communes = sorted(set(d["commune"] for d in docs if d["commune"]))
+        return {"total": len(docs), "docs": docs, "communes": communes}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -1427,6 +1617,149 @@ async def browse_entretiens(commune: Optional[str] = None):
         return {"total_chunks": len(res["documents"]), "entretiens": entretiens, "communes": communes_list}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/browse/classements_communes", tags=["Browse"])
+async def browse_classements_communes():
+    """Retourne les classements des communes par score perçu (enquête QdV Likert)."""
+    import pandas as pd
+    import numpy as np
+    import unicodedata
+
+    def _norm(s: str) -> str:
+        return "".join(c for c in unicodedata.normalize("NFD", s.lower())
+                       if unicodedata.category(c) != "Mn")
+
+    def _find_col(columns, kw):
+        kw_n = _norm(kw)
+        for col in columns:
+            if kw_n in _norm(col):
+                return col
+        return None
+
+    LIKERT_MAP = {
+        "Très satisfait": 5.0, "Satisfait": 4.0, "Neutre": 3.0,
+        "Peu satisfait": 2.0, "Très peu satisfait": 1.0,
+        "Très bien entouré": 5.0, "Bien entouré": 4.0, "Moyennement entouré": 3.0,
+        "Peu entouré": 2.0, "Très peu entouré": 1.0,
+        "Très impliqué": 5.0, "Impliqué": 4.0, "Moyennement Impliqué": 3.0,
+        "Peu impliqué": 2.0, "Très peu impliqué": 1.0,
+    }
+
+    DIM_KEYWORDS = {
+        "Transports":             ["services de transport", "transports en commun", "seau routier", "encombrement"],
+        "Santé":                  ["offre de sant", "decins generalistes", "attente pour avoir", "decins sp"],
+        "Éducation":              ["ducation"],
+        "Logement":               ["votre logement"],
+        "Revenus":                ["vos revenus"],
+        "Emploi":                 ["votre situation professionnelle"],
+        "Sécurité":               ["curit"],
+        "Culture":                ["la culture"],
+        "Services de proximité":  ["services autour de chez vous"],
+        "Réseau":                 ["couverture"],
+        "Ratio vie pro/vie perso":["partition de votre temps"],
+        "Communauté et relations":["entour", "impliqu"],
+        "Tourisme":               ["tourisme"],
+        "Institutions":           ["institutions"],
+    }
+    MIN_N = 3
+
+    CSV_PATH = "./donnees_brutes/sortie_questionnaire_traited.csv"
+    try:
+        df = pd.read_csv(CSV_PATH, index_col=0)
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="Fichier CSV introuvable")
+
+    col_a = _find_col(list(df.columns), "commune")
+    col_b = None
+    for col in df.columns:
+        if col != col_a and _norm("commune") in _norm(col):
+            col_b = col
+            break
+    if col_a and col_b:
+        df["_commune"] = df[col_a].fillna(df[col_b]).astype(str).str.strip()
+    elif col_a:
+        df["_commune"] = df[col_a].astype(str).str.strip()
+    else:
+        raise HTTPException(status_code=500, detail="Colonne commune introuvable")
+
+    # Résoudre colonnes Likert
+    col_map: Dict[str, list] = {}
+    for dim, kws in DIM_KEYWORDS.items():
+        cols = [c for kw in kws for c in [_find_col(list(df.columns), kw)] if c]
+        seen: list = []
+        for c in cols:
+            if c not in seen:
+                seen.append(c)
+        if seen:
+            col_map[dim] = seen
+
+    col_bonheur   = _find_col(list(df.columns), "heureux")
+    col_qdv       = _find_col(list(df.columns), "qualite de vie")
+    col_confiance = _find_col(list(df.columns), "confiance en l")
+
+    def to_num(val) -> Optional[float]:
+        if not isinstance(val, str):
+            try:
+                fv = float(val)
+                return fv if 1.0 <= fv <= 5.0 else None
+            except (ValueError, TypeError):
+                return None
+        v = val.strip()
+        if "moyennement" in v.lower():
+            return 3.0
+        return LIKERT_MAP.get(v)
+
+    def mean_col(grp, col) -> Optional[float]:
+        if not col or col not in grp.columns:
+            return None
+        vals = [to_num(v) for v in grp[col] if to_num(v) is not None]
+        return round(sum(vals) / len(vals), 2) if vals else None
+
+    def dim_mean(grp, cols) -> Optional[float]:
+        vals = [to_num(v) for col in cols if col in grp.columns
+                for v in grp[col] if to_num(v) is not None]
+        return round(sum(vals) / len(vals), 2) if vals else None
+
+    results: Dict[str, list] = {k: [] for k in ["global", "bien_etre", "confiance_avenir"] + list(col_map.keys())}
+
+    for commune, grp in df.groupby("_commune"):
+        if not commune or commune.lower() in ("nan", "inconnue", ""):
+            continue
+        n = len(grp)
+        if n < MIN_N:
+            continue
+
+        dim_scores = {dim: dim_mean(grp, cols) for dim, cols in col_map.items()}
+        valid_dims = [s for s in dim_scores.values() if s is not None]
+        global_sc = round(sum(valid_dims) / len(valid_dims), 2) if valid_dims else None
+
+        be_vals = [v for v in [mean_col(grp, col_bonheur), mean_col(grp, col_qdv)] if v is not None]
+        be_sc = round(sum(be_vals) / len(be_vals), 2) if be_vals else None
+        conf_sc = mean_col(grp, col_confiance)
+
+        entry = {"commune": commune, "n": n}
+
+        if global_sc is not None:
+            results["global"].append({**entry, "score": global_sc})
+        if be_sc is not None:
+            results["bien_etre"].append({**entry, "score": be_sc})
+        if conf_sc is not None:
+            results["confiance_avenir"].append({**entry, "score": conf_sc})
+        for dim, sc in dim_scores.items():
+            if sc is not None:
+                results[dim].append({**entry, "score": sc})
+
+    for key in results:
+        results[key].sort(key=lambda x: -x["score"])
+        for i, row in enumerate(results[key], 1):
+            row["rang"] = i
+
+    return {
+        "rankings": results,
+        "dimensions": list(col_map.keys()),
+        "min_n": MIN_N,
+    }
 
 
 @app.get("/api/stats", tags=["Browse"])
@@ -1813,6 +2146,125 @@ async def eval_content(job_id: str):
     with open(path, encoding="utf-8") as f:
         content = f.read()
     return {"content": content, "filename": os.path.basename(path)}
+
+
+# ════════════════════════════════════════════════════════════════
+# ENDPOINTS DEBUG RETRIEVAL
+# ════════════════════════════════════════════════════════════════
+
+def _get_eval_functions():
+    """Importe les fonctions de scoring depuis eval_from_excel.py."""
+    import importlib.util, sys
+    eval_path = os.path.join(os.path.dirname(__file__), "eval_from_excel.py")
+    spec = importlib.util.spec_from_file_location("eval_from_excel", eval_path)
+    mod  = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+@app.get("/api/eval/questions", tags=["Debug"])
+def get_eval_questions(excel_path: str):
+    """Lit le fichier Excel et retourne les questions avec leur ground-truth retrieval."""
+    if not os.path.exists(excel_path):
+        raise HTTPException(status_code=404, detail=f"Fichier introuvable : {excel_path}")
+    try:
+        mod = _get_eval_functions()
+        questions = mod.load_questions(excel_path)
+        return {
+            "count": len(questions),
+            "questions": [
+                {
+                    "excel_row":    q["excel_row"],
+                    "section":      q["section"],
+                    "subsection":   q["subsection"],
+                    "question":     q["question"],
+                    "retrieval_gt": q["retrieval_gt"],
+                    "do_retrieval": q["do_retrieval"],
+                }
+                for q in questions
+            ]
+        }
+    except Exception as e:
+        import traceback; traceback.print_exc()
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+class DebugRetrievalRequest(BaseModel):
+    question:     str
+    retrieval_gt: Optional[str] = None
+    rag_version:  str = "v10"
+    k:            int = 7
+
+
+@app.post("/api/eval/debug_retrieval", tags=["Debug"])
+def debug_retrieval(req: DebugRetrievalRequest):
+    """
+    Lance une requête RAG et retourne les sources classifiées + le score retrieval.
+    Permet de diagnostiquer recall/precision question par question.
+    """
+    rag = rag_pipelines.get(req.rag_version)
+    if rag is None:
+        raise HTTPException(status_code=400, detail=f"Version {req.rag_version} non disponible")
+
+    try:
+        mod = _get_eval_functions()
+
+        # 1. Retrieval uniquement (pas de LLM) — on va chercher les sources
+        # directement via le RaptorRetriever commun à v9/v10/v11
+        retriever = getattr(rag, 'retriever', None) or rag
+        if hasattr(retriever, 'query'):
+            _, retrieval_results = retriever.query(question=req.question, k=req.k)
+        else:
+            raise HTTPException(status_code=400, detail="Version non supportée pour le debug")
+
+        # Normaliser v1 (RetrievalResult dataclass) en dicts compatibles classify_source
+        def _normalize_source(s):
+            if isinstance(s, dict):
+                return s
+            meta = getattr(s, 'metadata', {}) or {}
+            return {
+                "source_type": "verbatim_evidence",
+                "commune":     meta.get("nom", ""),
+                "dimension":   meta.get("dimension", ""),
+                "genre":       meta.get("genre", ""),
+                "age":         meta.get("age_exact", ""),
+                "extrait":     getattr(s, 'text', "")[:400],
+            }
+        retrieval_results = [_normalize_source(s) for s in retrieval_results]
+
+        # 2. Classer chaque source
+        classified = []
+        for s in retrieval_results:
+            cat = mod.classify_source(s)
+            classified.append({
+                "category":    cat,
+                "type":        s.get("type", ""),
+                "source_type": s.get("source_type", ""),
+                "commune":     s.get("commune", ""),
+                "view":        s.get("view", ""),
+                "rank":        s.get("rank", 0),
+                "extrait":     (s.get("extrait", "") or "")[:200],
+            })
+
+        # 3. Scorer le retrieval
+        score = mod.score_retrieval(retrieval_results, req.retrieval_gt)
+
+        # 4. Parser le GT pour affichage
+        gt_items = mod.parse_retrieval_ground_truth(req.retrieval_gt) if req.retrieval_gt else []
+
+        return {
+            "question":    req.question,
+            "score":       score,
+            "gt_items":    gt_items,
+            "classified":  classified,
+            "n_sources":   len(retrieval_results),
+        }
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        import traceback; traceback.print_exc()
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 # === POINT D'ENTRÉE ===

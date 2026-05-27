@@ -16,8 +16,8 @@ AGE_PATTERNS = {
 
 # Mapping des mots-clés vers les catégories d'âge
 AGE_KEYWORDS = {
-    'jeunes': ('15-24', 15, 24),
-    'jeune': ('15-24', 15, 24),
+    'jeunes': ('18-24', 18, 24),
+    'jeune': ('18-24', 18, 24),
     'jeunes adultes': ('25-34', 25, 34),
     'jeune adulte': ('25-34', 25, 34),
     'adultes': ('35-49', 35, 49),
@@ -28,10 +28,10 @@ AGE_KEYWORDS = {
     'senior': ('65+', 65, 100),
     'personnes âgées': ('65+', 65, 100),
     'personne âgée': ('65+', 65, 100),
-    'retraités': ('65+', 65, 100),  # Souvent associé aux seniors
+    'retraités': ('65+', 65, 100),
     'retraité': ('65+', 65, 100),
-    'étudiants': ('15-24', 15, 24),  # Souvent jeunes
-    'étudiant': ('15-24', 15, 24),
+    'étudiants': ('18-24', 18, 24),
+    'étudiant': ('18-24', 18, 24),
 }
 
 # Mapping des mots-clés vers le genre
@@ -212,7 +212,7 @@ def detect_age(question: str) -> Dict[str, Any]:
     match = re.search(r'\bmoins\s+de\s+(\d{1,2})\s*ans\b', question_lower)
     if match:
         result['age_max'] = int(match.group(1)) - 1
-        result['age_min'] = 15  # Âge minimum raisonnable
+        result['age_min'] = 18  # Âge minimum raisonnable
         return result
 
     # Pattern "plus de X ans"
