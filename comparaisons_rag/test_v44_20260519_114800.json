@@ -1,0 +1,1045 @@
+{
+  "metadata": {
+    "target_rows": [
+      46,
+      49,
+      50,
+      55
+    ],
+    "configs": [
+      "v_vanilla_k10",
+      "v_vanilla_k25",
+      "v_decomp",
+      "v_decomp_raptor"
+    ],
+    "judge": "v4.4",
+    "timestamp": "20260519_114800"
+  },
+  "results": {
+    "46": {
+      "v_vanilla_k10": {
+        "section_observee": "Gestion d’absence d’information / Absence totale de données",
+        "comportement_attendu_selon_grille": "Refus explicite ou approximation très signalée.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "non",
+        "sources_inventaire": [
+          {
+            "source": "oppchovec_classement",
+            "type": "quanti"
+          },
+          {
+            "source": "methodology",
+            "type": "quanti"
+          },
+          {
+            "source": "communes_profil",
+            "type": "quanti"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "non",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": false,
+        "signalements_detectes": [],
+        "elements_specifiques_question": [
+          "Ajaccio",
+          "OppChoVec",
+          "2018"
+        ],
+        "elements_traitement": [
+          {
+            "element": "Ajaccio",
+            "traitement": "precis"
+          },
+          {
+            "element": "OppChoVec",
+            "traitement": "precis"
+          },
+          {
+            "element": "2018",
+            "traitement": "omis"
+          }
+        ],
+        "raisonnement": "La réponse fournit un score OppChoVec pour Ajaccio sans mentionner l'année 2018, alors que la question demande spécifiquement cette année. Les données fournies ne couvrent pas 2018, ce qui aurait dû être signalé.",
+        "pertinence": 2,
+        "pertinence_justif": "La réponse ne traite pas l'élément temporel '2018', ce qui est crucial pour la question posée.",
+        "fondement_factuel": 4,
+        "fondement_factuel_justif": "Le score OppChoVec pour Ajaccio est correctement rapporté selon les sources, mais l'année 2018 n'est pas couverte.",
+        "nuance_incertitude": 2,
+        "nuance_incertitude_justif": "Aucune mention de l'absence de données spécifiques pour 2018, ce qui est une omission importante.",
+        "coherence_qualiquanti": 4,
+        "coherence_qualiquanti_justif": "Les données quantitatives sont correctement utilisées, mais l'absence de données pour 2018 n'est pas signalée.",
+        "score_global": 3.0,
+        "judge_error": null
+      },
+      "v_vanilla_k25": {
+        "section_observee": "Gestion d’absence d’information / Absence totale de données",
+        "comportement_attendu_selon_grille": "Refus explicite ou approximation très signalée.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "non",
+        "sources_inventaire": [
+          {
+            "source": "oppchovec_classement",
+            "type": "quanti"
+          },
+          {
+            "source": "methodology",
+            "type": "quanti"
+          },
+          {
+            "source": "communes_profil",
+            "type": "quanti"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "non",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": false,
+        "signalements_detectes": [],
+        "elements_specifiques_question": [
+          "Ajaccio",
+          "OppChoVec",
+          "2018"
+        ],
+        "elements_traitement": [
+          {
+            "element": "Ajaccio",
+            "traitement": "precis"
+          },
+          {
+            "element": "OppChoVec",
+            "traitement": "precis"
+          },
+          {
+            "element": "2018",
+            "traitement": "approximation_non_signalee"
+          }
+        ],
+        "raisonnement": "La réponse fournit un score OppChoVec pour Ajaccio sans signaler que les données ne couvrent pas spécifiquement l'année 2018, ce qui était attendu.",
+        "pertinence": 2,
+        "pertinence_justif": "La réponse ne signale pas l'absence de données spécifiques pour 2018, ce qui était attendu dans cette section.",
+        "fondement_factuel": 4,
+        "fondement_factuel_justif": "Le score OppChoVec pour Ajaccio est correctement rapporté à partir des sources fournies.",
+        "nuance_incertitude": 2,
+        "nuance_incertitude_justif": "Aucune mention de l'absence de données spécifiques pour 2018, manque de nuance sur la temporalité des données.",
+        "coherence_qualiquanti": 4,
+        "coherence_qualiquanti_justif": "Les données quantitatives sont correctement utilisées, mais le contexte temporel n'est pas précisé.",
+        "score_global": 3.0,
+        "judge_error": null
+      },
+      "v_decomp": {
+        "section_observee": "Gestion d’absence d’information / Absence totale de données",
+        "comportement_attendu_selon_grille": "Refus explicite ou approximation très signalée.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "non",
+        "sources_inventaire": [
+          {
+            "source": "oppchovec_classement",
+            "type": "quanti"
+          },
+          {
+            "source": "methodology",
+            "type": "quanti"
+          },
+          {
+            "source": "enquete_scores_commune",
+            "type": "quanti"
+          },
+          {
+            "source": "communes_profil",
+            "type": "quanti"
+          },
+          {
+            "source": "communes_equipements",
+            "type": "quanti"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "non",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": false,
+        "signalements_detectes": [
+          "Aucune donnée d’enquête citoyenne spécifique à Ajaccio n’est disponible pour compléter cette analyse."
+        ],
+        "elements_specifiques_question": [
+          "Ajaccio",
+          "score OppChoVec",
+          "2018"
+        ],
+        "elements_traitement": [
+          {
+            "element": "Ajaccio",
+            "traitement": "precis"
+          },
+          {
+            "element": "score OppChoVec",
+            "traitement": "precis"
+          },
+          {
+            "element": "2018",
+            "traitement": "approximation_non_signalee"
+          }
+        ],
+        "raisonnement": "La réponse fournit un score OppChoVec pour Ajaccio mais ne précise pas que les données ne sont pas spécifiques à 2018. Elle mentionne l'absence de données qualitatives.",
+        "pertinence": 3,
+        "pertinence_justif": "La réponse fournit des informations pertinentes sur Ajaccio mais ne précise pas que les données ne sont pas spécifiques à 2018.",
+        "fondement_factuel": 4,
+        "fondement_factuel_justif": "Les affirmations sont bien fondées sur les sources disponibles, mais il manque la précision temporelle.",
+        "nuance_incertitude": 4,
+        "nuance_incertitude_justif": "La réponse est bien nuancée, mentionnant l'absence de données qualitatives.",
+        "coherence_qualiquanti": 4,
+        "coherence_qualiquanti_justif": "Bonne intégration des données quantitatives, avec signalement de l'absence de données qualitatives.",
+        "score_global": 3.75,
+        "judge_error": null
+      },
+      "v_decomp_raptor": {
+        "section_observee": "Gestion d’absence d’information / Absence totale de données",
+        "comportement_attendu_selon_grille": "Refus explicite ou approximation très signalée.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "non",
+        "sources_inventaire": [
+          {
+            "source": "raptor_summary",
+            "type": "quali"
+          },
+          {
+            "source": "raptor_enquete_summary",
+            "type": "quali"
+          },
+          {
+            "source": "oppchovec_score",
+            "type": "quanti"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "non",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": false,
+        "signalements_detectes": [],
+        "elements_specifiques_question": [
+          "Ajaccio",
+          "OppChoVec",
+          "2018"
+        ],
+        "elements_traitement": [
+          {
+            "element": "Ajaccio",
+            "traitement": "precis"
+          },
+          {
+            "element": "OppChoVec",
+            "traitement": "approximation_non_signalee"
+          },
+          {
+            "element": "2018",
+            "traitement": "approximation_non_signalee"
+          }
+        ],
+        "raisonnement": "La réponse fournit un score OppChoVec pour Ajaccio sans préciser que les données ne sont pas disponibles pour 2018. Elle utilise des données récentes sans signaler l'absence de données pour l'année demandée.",
+        "pertinence": 2,
+        "pertinence_justif": "La réponse ne signale pas l'absence de données pour 2018 et présente des données récentes comme si elles répondaient à la question.",
+        "fondement_factuel": 3,
+        "fondement_factuel_justif": "Les données fournies sont correctes pour une période récente, mais ne correspondent pas à l'année demandée.",
+        "nuance_incertitude": 2,
+        "nuance_incertitude_justif": "Aucune mention de l'absence de données pour 2018, ce qui aurait dû être signalé.",
+        "coherence_qualiquanti": 3,
+        "coherence_qualiquanti_justif": "Les données quantitatives sont utilisées correctement, mais l'absence de données pour l'année spécifique n'est pas signalée.",
+        "score_global": 2.5,
+        "judge_error": null
+      }
+    },
+    "49": {
+      "v_vanilla_k10": {
+        "section_observee": "Gestion d’absence d’information / Comparaison impossible",
+        "comportement_attendu_selon_grille": "Refus explicite ou approximation très signalée.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "oui",
+        "sources_inventaire": [
+          {
+            "source": "oppchovec_classement",
+            "type": "quanti"
+          },
+          {
+            "source": "methodology",
+            "type": "quanti"
+          },
+          {
+            "source": "communes_profil",
+            "type": "quanti"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "non",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": false,
+        "signalements_detectes": [],
+        "elements_specifiques_question": [
+          "Ajaccio",
+          "Aïti",
+          "bien-être perçu",
+          "comparaison"
+        ],
+        "elements_traitement": [
+          {
+            "element": "Ajaccio",
+            "traitement": "precis"
+          },
+          {
+            "element": "Aïti",
+            "traitement": "omis"
+          },
+          {
+            "element": "bien-être perçu",
+            "traitement": "approximation_signalee"
+          },
+          {
+            "element": "comparaison",
+            "traitement": "approximation_signalee"
+          }
+        ],
+        "raisonnement": "La réponse signale explicitement l'absence de données pour Aïti, rendant la comparaison impossible. Les données pour Ajaccio sont mentionnées mais ne permettent pas de comparaison.",
+        "pertinence": 5,
+        "pertinence_justif": "La réponse traite précisément de l'impossibilité de comparaison en raison de l'absence de données pour Aïti.",
+        "fondement_factuel": 5,
+        "fondement_factuel_justif": "Les affirmations sont correctement fondées sur les sources disponibles, et l'absence de données pour Aïti est bien signalée.",
+        "nuance_incertitude": 5,
+        "nuance_incertitude_justif": "La réponse est bien nuancée, expliquant clairement pourquoi la comparaison est impossible.",
+        "coherence_qualiquanti": 5,
+        "coherence_qualiquanti_justif": "La réponse est cohérente avec les données quantitatives disponibles et signale l'absence de données qualitatives pour Aïti.",
+        "score_global": 5.0,
+        "judge_error": null
+      },
+      "v_vanilla_k25": {
+        "section_observee": "Gestion d’absence d’information / Comparaison impossible",
+        "comportement_attendu_selon_grille": "Refus explicite ou approximation très signalée.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "oui",
+        "sources_inventaire": [
+          {
+            "source": "oppchovec_classement",
+            "type": "quanti"
+          },
+          {
+            "source": "methodology",
+            "type": "quanti"
+          },
+          {
+            "source": "oppchovec_betti_0_10",
+            "type": "quanti"
+          },
+          {
+            "source": "communes_profil",
+            "type": "quanti"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "non",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": false,
+        "signalements_detectes": [],
+        "elements_specifiques_question": [
+          "Ajaccio",
+          "Aïti",
+          "bien-être perçu",
+          "comparaison"
+        ],
+        "elements_traitement": [
+          {
+            "element": "Ajaccio",
+            "traitement": "precis"
+          },
+          {
+            "element": "Aïti",
+            "traitement": "omis"
+          },
+          {
+            "element": "bien-être perçu",
+            "traitement": "approximation_signalee"
+          },
+          {
+            "element": "comparaison",
+            "traitement": "approximation_signalee"
+          }
+        ],
+        "raisonnement": "La réponse signale explicitement l'absence de données pour Aïti, rendant la comparaison impossible. Les données pour Ajaccio sont bien présentées mais ne permettent pas de comparaison.",
+        "pertinence": 5,
+        "pertinence_justif": "La réponse est pertinente car elle signale clairement l'impossibilité de comparer en raison de l'absence de données pour Aïti.",
+        "fondement_factuel": 5,
+        "fondement_factuel_justif": "Les affirmations sont correctement fondées sur les sources disponibles, et l'absence de données pour Aïti est bien signalée.",
+        "nuance_incertitude": 5,
+        "nuance_incertitude_justif": "La réponse est bien nuancée, expliquant clairement pourquoi la comparaison est impossible.",
+        "coherence_qualiquanti": 5,
+        "coherence_qualiquanti_justif": "La réponse utilise correctement les données quantitatives disponibles pour Ajaccio et signale l'absence de données qualitatives ou quantitatives pour Aïti.",
+        "score_global": 5.0,
+        "judge_error": null
+      },
+      "v_decomp": {
+        "section_observee": "Gestion d’absence d’information / Comparaison impossible",
+        "comportement_attendu_selon_grille": "Refus explicite ou approximation très signalée.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "non",
+        "sources_inventaire": [
+          {
+            "source": "oppchovec_classement",
+            "type": "quanti"
+          },
+          {
+            "source": "methodology",
+            "type": "quanti"
+          },
+          {
+            "source": "oppchovec_scores",
+            "type": "quanti"
+          },
+          {
+            "source": "enquete_scores_commune",
+            "type": "quanti"
+          },
+          {
+            "source": "communes_profil",
+            "type": "quanti"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "oui — la réponse prétend comparer des perceptions sans données qualitatives pour Aïti",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": true,
+        "signalements_detectes": [],
+        "elements_specifiques_question": [
+          "Ajaccio",
+          "Aïti",
+          "bien-être perçu",
+          "comparaison"
+        ],
+        "elements_traitement": [
+          {
+            "element": "Ajaccio",
+            "traitement": "precis"
+          },
+          {
+            "element": "Aïti",
+            "traitement": "precis"
+          },
+          {
+            "element": "bien-être perçu",
+            "traitement": "approximation_non_signalee"
+          },
+          {
+            "element": "comparaison",
+            "traitement": "approximation_non_signalee"
+          }
+        ],
+        "raisonnement": "La réponse tente de comparer le bien-être perçu entre Ajaccio et Aïti sans données qualitatives pour Aïti, et ne signale pas cette absence.",
+        "pertinence": 2,
+        "pertinence_justif": "La réponse ne respecte pas la grille : elle prétend comparer des perceptions sans données qualitatives pour Aïti, et ne signale pas cette absence.",
+        "fondement_factuel": 3,
+        "fondement_factuel_justif": "Les données quantitatives sont correctement utilisées, mais la comparaison des perceptions est infondée pour Aïti.",
+        "nuance_incertitude": 2,
+        "nuance_incertitude_justif": "Absence de signalement de l'absence de données qualitatives pour Aïti, ce qui est crucial pour la question posée.",
+        "coherence_qualiquanti": 2,
+        "coherence_qualiquanti_justif": "La réponse prétend comparer des perceptions sans données qualitatives pour Aïti, créant un déséquilibre non signalé.",
+        "score_global": 2.25,
+        "judge_error": null
+      },
+      "v_decomp_raptor": {
+        "section_observee": "Gestion d’absence d’information / Comparaison impossible",
+        "comportement_attendu_selon_grille": "Refus explicite ou approximation très signalée.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "non",
+        "sources_inventaire": [
+          {
+            "source": "raptor_summary:Ajaccio",
+            "type": "quali"
+          },
+          {
+            "source": "raptor_enquete_summary:Ajaccio",
+            "type": "quanti"
+          },
+          {
+            "source": "oppchovec_score:Ajaccio",
+            "type": "quanti"
+          },
+          {
+            "source": "oppchovec_score:Aiti",
+            "type": "quanti"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "oui — la réponse ne signale pas l'absence de données qualitatives pour Aïti",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": true,
+        "signalements_detectes": [],
+        "elements_specifiques_question": [
+          "Ajaccio",
+          "Aïti",
+          "bien-être perçu",
+          "comparaison"
+        ],
+        "elements_traitement": [
+          {
+            "element": "Ajaccio",
+            "traitement": "precis"
+          },
+          {
+            "element": "Aïti",
+            "traitement": "approximation_non_signalee"
+          },
+          {
+            "element": "bien-être perçu",
+            "traitement": "approximation_non_signalee"
+          },
+          {
+            "element": "comparaison",
+            "traitement": "approximation_non_signalee"
+          }
+        ],
+        "raisonnement": "La réponse tente une comparaison entre Ajaccio et Aïti sans signaler l'absence de données qualitatives pour Aïti, ce qui est nécessaire pour une comparaison des perceptions.",
+        "pertinence": 2,
+        "pertinence_justif": "La réponse ne respecte pas la grille attendue pour une comparaison impossible, car elle ne signale pas l'absence de données qualitatives pour Aïti.",
+        "fondement_factuel": 3,
+        "fondement_factuel_justif": "Les données pour Ajaccio sont correctement utilisées, mais l'absence de données pour Aïti n'est pas signalée, ce qui fausse la comparaison.",
+        "nuance_incertitude": 2,
+        "nuance_incertitude_justif": "La réponse manque de nuance en ne signalant pas clairement l'absence de données qualitatives pour Aïti.",
+        "coherence_qualiquanti": 3,
+        "coherence_qualiquanti_justif": "La réponse utilise des données qualitatives et quantitatives pour Ajaccio, mais l'absence de données qualitatives pour Aïti n'est pas signalée, ce qui déséquilibre l'analyse.",
+        "score_global": 2.5,
+        "judge_error": null
+      }
+    },
+    "50": {
+      "v_vanilla_k10": {
+        "section_observee": "Gestion d’absence d’information / Comparaison impossible",
+        "comportement_attendu_selon_grille": "Refus explicite ou approximation très signalée.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "non",
+        "sources_inventaire": [
+          {
+            "source": "oppchovec_classement",
+            "type": "quanti"
+          },
+          {
+            "source": "methodology",
+            "type": "quanti"
+          },
+          {
+            "source": "data_comp",
+            "type": "quanti"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "oui — la réponse appelle 'indicateurs qualitatifs' des données qui sont absentes",
+          "regle_2_surinterpretation_oppchovec": "oui — Vec interprété comme 'vécu des habitants' alors que c'est un proxy quanti",
+          "regle_3_absence_quali_non_signalee": "non — l'absence de données qualitatives est signalée",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": true,
+        "signalements_detectes": [
+          "Les documents ne fournissent aucun verbatim citoyen, entretien qualitatif ou enquête subjective sur Piedicorte-di-Gaggio."
+        ],
+        "elements_specifiques_question": [
+          "indicateurs objectifs",
+          "indicateurs qualitatifs",
+          "comparaison",
+          "Piedicorte-di-Gaggio"
+        ],
+        "elements_traitement": [
+          {
+            "element": "indicateurs objectifs",
+            "traitement": "precis"
+          },
+          {
+            "element": "indicateurs qualitatifs",
+            "traitement": "approximation_signalee"
+          },
+          {
+            "element": "comparaison",
+            "traitement": "approximation_signalee"
+          },
+          {
+            "element": "Piedicorte-di-Gaggio",
+            "traitement": "precis"
+          }
+        ],
+        "raisonnement": "La réponse signale l'absence de données qualitatives mais surinterprète Vec comme vécu subjectif. Mislabelling R1 et R2.",
+        "pertinence": 3,
+        "pertinence_justif": "La réponse signale l'absence de données qualitatives mais tente une comparaison partielle non justifiée.",
+        "fondement_factuel": 3,
+        "fondement_factuel_justif": "Surinterprétation de Vec comme vécu subjectif. Plafond Règle 2.",
+        "nuance_incertitude": 4,
+        "nuance_incertitude_justif": "Bonne signalisation de l'absence de données qualitatives, mais surinterprétation de Vec.",
+        "coherence_qualiquanti": 3,
+        "coherence_qualiquanti_justif": "Tentative de comparaison avec des données uniquement quantitatives, signalement partiel.",
+        "score_global": 3.25,
+        "judge_error": null
+      },
+      "v_vanilla_k25": {
+        "section_observee": "Gestion d’absence d’information / Comparaison impossible",
+        "comportement_attendu_selon_grille": "Refus explicite ou approximation très signalée.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "partiel",
+        "sources_inventaire": [
+          {
+            "source": "oppchovec_classement",
+            "type": "quanti"
+          },
+          {
+            "source": "methodology",
+            "type": "quanti"
+          },
+          {
+            "source": "data_comp",
+            "type": "quanti"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "non",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": false,
+        "signalements_detectes": [
+          "Les documents ne fournissent aucun verbatim citoyen, enquête qualitative ou entretien pour Piedicorte-di-Gaggio."
+        ],
+        "elements_specifiques_question": [
+          "indicateurs objectifs",
+          "indicateurs qualitatifs",
+          "comparaison",
+          "Piedicorte-di-Gaggio"
+        ],
+        "elements_traitement": [
+          {
+            "element": "indicateurs objectifs",
+            "traitement": "precis"
+          },
+          {
+            "element": "indicateurs qualitatifs",
+            "traitement": "approximation_signalee"
+          },
+          {
+            "element": "comparaison",
+            "traitement": "approximation_signalee"
+          },
+          {
+            "element": "Piedicorte-di-Gaggio",
+            "traitement": "precis"
+          }
+        ],
+        "raisonnement": "La réponse signale l'absence de données qualitatives et propose une comparaison partielle avec les données objectives disponibles, tout en indiquant les limites.",
+        "pertinence": 4,
+        "pertinence_justif": "La réponse signale correctement l'absence de données qualitatives et propose une comparaison partielle avec les données objectives.",
+        "fondement_factuel": 5,
+        "fondement_factuel_justif": "Les affirmations sont bien fondées sur les sources fournies, et l'absence de données qualitatives est correctement signalée.",
+        "nuance_incertitude": 5,
+        "nuance_incertitude_justif": "La réponse est bien nuancée, avec un signalement explicite des limites des données disponibles.",
+        "coherence_qualiquanti": 4,
+        "coherence_qualiquanti_justif": "Bonne intégration des données objectives avec un signalement clair de l'absence de données qualitatives.",
+        "score_global": 4.5,
+        "judge_error": null
+      },
+      "v_decomp": {
+        "section_observee": "Gestion d’absence d’information / Comparaison impossible",
+        "comportement_attendu_selon_grille": "Refus explicite ou approximation très signalée.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "oui",
+        "sources_inventaire": [
+          {
+            "source": "oppchovec_classement",
+            "type": "quanti"
+          },
+          {
+            "source": "methodology",
+            "type": "quanti"
+          },
+          {
+            "source": "data_comp",
+            "type": "quanti"
+          },
+          {
+            "source": "communes_equipements",
+            "type": "quanti"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "non",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": false,
+        "signalements_detectes": [
+          "absence de retours qualitatifs locaux",
+          "aucune enquête citoyenne ni verbatim d’habitants n’est disponible"
+        ],
+        "elements_specifiques_question": [
+          "Pedicorte-di-Gaggio",
+          "indicateurs objectifs",
+          "indicateurs qualitatifs",
+          "comparaison"
+        ],
+        "elements_traitement": [
+          {
+            "element": "Pedicorte-di-Gaggio",
+            "traitement": "precis"
+          },
+          {
+            "element": "indicateurs objectifs",
+            "traitement": "precis"
+          },
+          {
+            "element": "indicateurs qualitatifs",
+            "traitement": "approximation_signalee"
+          },
+          {
+            "element": "comparaison",
+            "traitement": "approximation_signalee"
+          }
+        ],
+        "raisonnement": "La réponse signale explicitement l'absence de données qualitatives pour Pedicorte-di-Gaggio et propose une analyse basée uniquement sur les données objectives disponibles, tout en soulignant les limites de cette approche.",
+        "pertinence": 4,
+        "pertinence_justif": "La réponse est pertinente car elle signale clairement l'absence de données qualitatives et propose une analyse des données objectives disponibles.",
+        "fondement_factuel": 5,
+        "fondement_factuel_justif": "Les affirmations sont bien fondées sur les données objectives disponibles et les limites sont correctement signalées.",
+        "nuance_incertitude": 5,
+        "nuance_incertitude_justif": "La réponse est bien nuancée, avec un bon usage des modalisateurs et un signalement explicite des limites des données disponibles.",
+        "coherence_qualiquanti": 5,
+        "coherence_qualiquanti_justif": "La réponse intègre correctement les données quantitatives disponibles et signale l'absence de données qualitatives, respectant ainsi l'équilibre attendu.",
+        "score_global": 4.75,
+        "judge_error": null
+      },
+      "v_decomp_raptor": {
+        "section_observee": "Gestion d’absence d’information / Comparaison impossible",
+        "comportement_attendu_selon_grille": "Refus explicite ou approximation très signalée.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "non",
+        "sources_inventaire": [
+          {
+            "source": "raptor_enquete_summary",
+            "type": "quanti"
+          },
+          {
+            "source": "communes_equipements",
+            "type": "quanti"
+          },
+          {
+            "source": "oppchovec_score",
+            "type": "quanti"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "oui — la réponse présente des données quantitatives comme des perceptions qualitatives",
+          "regle_2_surinterpretation_oppchovec": "oui — Vec interprété comme 'vécu quotidien' alors que c'est un proxy quanti",
+          "regle_3_absence_quali_non_signalee": "oui — aucune source quali spécifique à Piedicorte-di-Gaggio, manque non signalé",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": true,
+        "signalements_detectes": [],
+        "elements_specifiques_question": [
+          "indicateurs objectifs",
+          "indicateurs qualitatifs",
+          "comparaison",
+          "Piedicorte-di-Gaggio"
+        ],
+        "elements_traitement": [
+          {
+            "element": "indicateurs objectifs",
+            "traitement": "precis"
+          },
+          {
+            "element": "indicateurs qualitatifs",
+            "traitement": "approximation_non_signalee"
+          },
+          {
+            "element": "comparaison",
+            "traitement": "approximation_non_signalee"
+          },
+          {
+            "element": "Piedicorte-di-Gaggio",
+            "traitement": "precis"
+          }
+        ],
+        "raisonnement": "La réponse tente de comparer des indicateurs objectifs avec des perceptions sans données qualitatives spécifiques à Piedicorte-di-Gaggio, et sans signaler ce manque.",
+        "pertinence": 2,
+        "pertinence_justif": "La réponse ne respecte pas la section 'Comparaison impossible' en ne signalant pas l'absence de données qualitatives spécifiques.",
+        "fondement_factuel": 2,
+        "fondement_factuel_justif": "Mislabelling des données quantitatives comme qualitatives et surinterprétation de Vec.",
+        "nuance_incertitude": 2,
+        "nuance_incertitude_justif": "Absence de signalement des limites des données disponibles, ton trop affirmatif.",
+        "coherence_qualiquanti": 2,
+        "coherence_qualiquanti_justif": "Présente des données quantitatives comme des perceptions qualitatives sans signalement du manque de données qualitatives.",
+        "score_global": 2.0,
+        "judge_error": null
+      }
+    },
+    "55": {
+      "v_vanilla_k10": {
+        "section_observee": "Gestion d’absence d’information / Données non documentées dans les sources",
+        "comportement_attendu_selon_grille": "Réponse de fond avec signalement des limites des données disponibles.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "oui",
+        "sources_inventaire": [
+          {
+            "source": "methodology",
+            "type": "quanti"
+          },
+          {
+            "source": "oppchovec_betti_0_10",
+            "type": "quanti"
+          },
+          {
+            "source": "data_comp",
+            "type": "quanti"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "non",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": false,
+        "signalements_detectes": [
+          "Les documents ne précisent ni la fréquence, ni les lignes, ni les horaires des transports en commun à Bonifacio.",
+          "Aucune mention n'est faite des types de transports ou de leur adéquation aux besoins locaux."
+        ],
+        "elements_specifiques_question": [
+          "transports en commun",
+          "Bonifacio",
+          "évaluation fiable"
+        ],
+        "elements_traitement": [
+          {
+            "element": "transports en commun",
+            "traitement": "approximation_signalee"
+          },
+          {
+            "element": "Bonifacio",
+            "traitement": "precis"
+          },
+          {
+            "element": "évaluation fiable",
+            "traitement": "approximation_signalee"
+          }
+        ],
+        "raisonnement": "La réponse utilise les données disponibles pour indiquer un accès minimal aux transports en commun, mais signale clairement les limites des données pour évaluer la fiabilité opérationnelle.",
+        "pertinence": 4,
+        "pertinence_justif": "La réponse est pertinente en signalant les limites des données disponibles pour évaluer la fiabilité des transports en commun.",
+        "fondement_factuel": 5,
+        "fondement_factuel_justif": "Les affirmations sont correctement sourcées et les limites des données sont bien signalées.",
+        "nuance_incertitude": 5,
+        "nuance_incertitude_justif": "La réponse est bien nuancée, signalant explicitement les limites des données et la nécessité de données complémentaires.",
+        "coherence_qualiquanti": 5,
+        "coherence_qualiquanti_justif": "Bonne intégration des données quantitatives avec un signalement clair des limites qualitatives.",
+        "score_global": 4.75,
+        "judge_error": null
+      },
+      "v_vanilla_k25": {
+        "section_observee": "Gestion d’absence d’information / Données non documentées dans les sources",
+        "comportement_attendu_selon_grille": "Réponse de fond avec signalement des limites des données disponibles.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "oui",
+        "sources_inventaire": [
+          {
+            "source": "methodology",
+            "type": "quanti"
+          },
+          {
+            "source": "oppchovec_betti_0_10",
+            "type": "quanti"
+          },
+          {
+            "source": "data_comp",
+            "type": "quanti"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "non",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": false,
+        "signalements_detectes": [
+          "Aucune donnée qualitative (ex. : satisfaction des usagers, ponctualité) n'est disponible dans les documents.",
+          "Source manquante : Aucune enquête citoyenne ou verbatim ne documente l'expérience des usagers."
+        ],
+        "elements_specifiques_question": [
+          "transports en commun",
+          "Bonifacio",
+          "évaluation fiable"
+        ],
+        "elements_traitement": [
+          {
+            "element": "transports en commun",
+            "traitement": "approximation_signalee"
+          },
+          {
+            "element": "Bonifacio",
+            "traitement": "precis"
+          },
+          {
+            "element": "évaluation fiable",
+            "traitement": "approximation_signalee"
+          }
+        ],
+        "raisonnement": "La réponse signale clairement les limites des données disponibles pour évaluer les transports en commun à Bonifacio, en mentionnant l'absence de données qualitatives et les aspects non couverts par les données quantitatives.",
+        "pertinence": 4,
+        "pertinence_justif": "La réponse traite bien la question en signalant les limites des données disponibles, mais pourrait être plus précise sur les implications de ces limites.",
+        "fondement_factuel": 5,
+        "fondement_factuel_justif": "Les affirmations sont bien fondées sur les sources fournies, avec un bon respect des labels.",
+        "nuance_incertitude": 5,
+        "nuance_incertitude_justif": "La réponse est bien nuancée, signalant explicitement les limites des données et l'absence de données qualitatives.",
+        "coherence_qualiquanti": 5,
+        "coherence_qualiquanti_justif": "Bonne intégration des données quantitatives avec un signalement clair de l'absence de données qualitatives.",
+        "score_global": 4.75,
+        "judge_error": null
+      },
+      "v_decomp": {
+        "section_observee": "Gestion d’absence d’information / Données non documentées dans les sources",
+        "comportement_attendu_selon_grille": "Réponse de fond avec signalement des données manquantes.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "oui",
+        "sources_inventaire": [
+          {
+            "source": "oppchovec_classement",
+            "type": "quanti"
+          },
+          {
+            "source": "methodology",
+            "type": "quanti"
+          },
+          {
+            "source": "data_comp",
+            "type": "quanti"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "non",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": false,
+        "signalements_detectes": [
+          "aucune donnée disponible",
+          "aucune donnée objective ne permet d’évaluer"
+        ],
+        "elements_specifiques_question": [
+          "transports en commun",
+          "Bonifacio",
+          "évaluation fiable"
+        ],
+        "elements_traitement": [
+          {
+            "element": "transports en commun",
+            "traitement": "approximation_signalee"
+          },
+          {
+            "element": "Bonifacio",
+            "traitement": "precis"
+          },
+          {
+            "element": "évaluation fiable",
+            "traitement": "approximation_signalee"
+          }
+        ],
+        "raisonnement": "La réponse signale explicitement les limites des données disponibles pour évaluer les transports en commun à Bonifacio, en se basant sur le score Opp3 pour l'accessibilité, tout en notant l'absence de données sur la qualité et la fiabilité du service.",
+        "pertinence": 4,
+        "pertinence_justif": "La réponse est pertinente car elle traite spécifiquement de Bonifacio et des transports en commun, tout en signalant les limites des données disponibles.",
+        "fondement_factuel": 5,
+        "fondement_factuel_justif": "Les affirmations sont correctement sourcées et les limites des données sont bien signalées.",
+        "nuance_incertitude": 5,
+        "nuance_incertitude_justif": "La réponse est bien nuancée, avec un bon usage des modalisateurs pour signaler les limites des données.",
+        "coherence_qualiquanti": 4,
+        "coherence_qualiquanti_justif": "La réponse intègre bien les données quantitatives disponibles tout en signalant l'absence de données qualitatives nécessaires pour une évaluation complète.",
+        "score_global": 4.5,
+        "judge_error": null
+      },
+      "v_decomp_raptor": {
+        "section_observee": "Gestion d’absence d’information / Données non documentées dans les sources",
+        "comportement_attendu_selon_grille": "Réponse de fond avec modalisateurs explicites ET signalement des biais éventuels.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "oui",
+        "sources_inventaire": [
+          {
+            "source": "oppchovec_score:Bonifacio",
+            "type": "quanti"
+          },
+          {
+            "source": "raptor_enquete_summary",
+            "type": "quanti"
+          },
+          {
+            "source": "communes_equipements:Bonifacio",
+            "type": "quanti"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "non",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": false,
+        "signalements_detectes": [
+          "Aucune donnée territoriale ne permet d’évaluer isolément la fréquence, la couverture géographique ou la fiabilité des transports en commun à Bonifacio.",
+          "Cependant, ces données couvrent l’ensemble de la région : elles ne peuvent pas être attribuées spécifiquement à Bonifacio, où aucune enquête locale n’a été menée."
+        ],
+        "elements_specifiques_question": [
+          "transports en commun",
+          "Bonifacio",
+          "évaluation fiable"
+        ],
+        "elements_traitement": [
+          {
+            "element": "transports en commun",
+            "traitement": "approximation_signalee"
+          },
+          {
+            "element": "Bonifacio",
+            "traitement": "precis"
+          },
+          {
+            "element": "évaluation fiable",
+            "traitement": "approximation_signalee"
+          }
+        ],
+        "raisonnement": "La réponse signale explicitement l'absence de données spécifiques sur les transports en commun à Bonifacio et propose une évaluation prudente basée sur les données disponibles.",
+        "pertinence": 4,
+        "pertinence_justif": "La réponse traite les éléments spécifiques de la question avec une évaluation prudente et signale les lacunes de données.",
+        "fondement_factuel": 5,
+        "fondement_factuel_justif": "Les affirmations sont correctement sourcées et les limites des données disponibles sont bien signalées.",
+        "nuance_incertitude": 5,
+        "nuance_incertitude_justif": "La réponse est bien nuancée, avec des modalisateurs explicites et un signalement clair des limites des données.",
+        "coherence_qualiquanti": 4,
+        "coherence_qualiquanti_justif": "Bonne intégration des données quantitatives disponibles avec un signalement explicite des limites qualitatives.",
+        "score_global": 4.5,
+        "judge_error": null
+      }
+    }
+  }
+}

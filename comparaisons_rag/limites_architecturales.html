@@ -1,0 +1,1859 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Limites architecturales — Q40, Q104-106</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+         font-size: 13px; margin: 0; background: #f4f6f8; color: #222; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+  h1 { font-size: 1.4em; color: #333; border-bottom: 2px solid #ddd; padding-bottom: 8px; }
+  .question-card { background: white; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,.1);
+                    margin-bottom: 32px; padding: 20px; }
+  .q-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .q-num { background: #34495e; color: white; border-radius: 4px; padding: 2px 8px;
+            font-weight: bold; font-size: 1em; }
+  .q-section { color: #888; font-size: 0.9em; }
+  .q-text { font-size: 1.05em; font-weight: 600; margin-bottom: 14px;
+             padding: 10px 14px; background: #f8f9fa; border-radius: 6px;
+             border-left: 4px solid #34495e; }
+  .summary-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+  .summary-table th { background: #ecf0f1; padding: 6px 10px; text-align: left; font-size: 0.85em; }
+  .summary-table td { padding: 6px 10px; border-bottom: 1px solid #eee; vertical-align: top; }
+  .configs-container { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .config-block { background: #fafafa; border-radius: 6px; padding: 14px; }
+  .config-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+  .config-name { font-weight: bold; font-size: 1em; }
+  .meta { color: #999; font-size: 0.8em; margin-left: auto; }
+  .badge { display: inline-block; color: white; border-radius: 4px; padding: 2px 7px;
+            font-size: 0.85em; font-weight: bold; }
+  .badge.grey { background: #95a5a6; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 10px; }
+  .section-title { font-weight: 600; font-size: 0.8em; text-transform: uppercase;
+                    color: #666; margin: 8px 0 4px; letter-spacing: .04em; }
+  .dim-table { width: 100%; border-collapse: collapse; font-size: 0.85em; }
+  .dim-table td { padding: 3px 6px; border-bottom: 1px solid #eee; }
+  .dim-label { color: #555; width: 120px; }
+  .justif { color: #666; font-size: 0.85em; font-style: italic; }
+  .mis-table { width: 100%; border-collapse: collapse; font-size: 0.85em; }
+  .mis-table td { padding: 3px 6px; border-bottom: 1px solid #eee; vertical-align: top; }
+  .sig-box { background: #eafaf1; border-radius: 4px; padding: 6px 10px; margin-top: 6px; font-size: 0.82em; }
+  .sig-box ul { margin: 4px 0 0 16px; padding: 0; }
+  .raisonnement { background: #fff8e1; border-radius: 4px; padding: 8px 10px; font-size: 0.85em;
+                   color: #555; margin-bottom: 8px; border-left: 3px solid #f39c12; }
+  details summary { cursor: pointer; color: #2980b9; font-size: 0.85em; padding: 4px 0;
+                     user-select: none; }
+  details summary:hover { text-decoration: underline; }
+  .answer { white-space: pre-wrap; font-family: monospace; font-size: 0.8em; background: #f5f5f5;
+             border-radius: 4px; padding: 10px; margin-top: 6px; max-height: 400px;
+             overflow-y: auto; border: 1px solid #ddd; }
+  @media (max-width: 900px) {
+    .configs-container { grid-template-columns: 1fr; }
+    .two-col { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Limites architecturales — Q40, Q104, Q105, Q106</h1>
+  <p style="color:#666;font-size:0.9em">Juge V4.3 (Q40) · Juge V4.4 (Q104–106) · GPT-4o</p>
+  
+<div class="question-card">
+  <div class="q-header">
+    <span class="q-num">Q40</span>
+    <span class="q-section">Limites architecturales</span>
+  </div>
+  <div class="q-text">Existe-t-il une commune avec de bons indicateurs socio-économiques mais un faible bien-être perçu ?</div>
+  <table class="summary-table"><tr><th>Config</th><th>Score</th><th>Flags</th><th>Raisonnement (extrait)</th></tr><tr><td style="color:#c0392b;font-weight:bold">Vanilla k10</td><td><span class="badge" style="background:#c0392b">2.00</span></td><td><span class="badge" style="background:#c0392b">Rc</span> <span class="badge" style="background:#c0392b">Re</span></td><td class="justif">La réponse présente Vec comme 'bien-être perçu', ce qui est une surinterprétation. Absence de données qualitatives non s…</td></tr><tr><td style="color:#e67e22;font-weight:bold">Vanilla k25</td><td><span class="badge" style="background:#c0392b">2.25</span></td><td><span class="badge" style="background:#c0392b">Rc</span> <span class="badge" style="background:#c0392b">Re</span></td><td class="justif">La réponse présente Vec comme une mesure de bien-être perçu, ce qui est une surinterprétation. Absence de données qualit…</td></tr><tr><td style="color:#27ae60;font-weight:bold">Decomp</td><td><span class="badge" style="background:#27ae60">4.50</span></td><td><span class="badge" style="background:#27ae60">✓ clean</span></td><td class="justif">La réponse signale les limites des données disponibles pour identifier une commune avec de bons indicateurs socio-économ…</td></tr><tr><td style="color:#2980b9;font-weight:bold">Decomp+Raptor</td><td><span class="badge" style="background:#27ae60">4.25</span></td><td><span class="badge" style="background:#27ae60">✓ clean</span></td><td class="justif">La réponse signale les limites des données disponibles pour identifier une commune spécifique avec le paradoxe demandé, …</td></tr></table>
+  <div class="configs-container">
+    
+<div class="config-block" style="border-left:4px solid #c0392b">
+  <div class="config-header">
+    <span class="config-name" style="color:#c0392b">Vanilla k10</span>
+    <span class="badge" style="background:#c0392b">2.00</span>
+    <span class="badge" style="background:#c0392b">Rc</span> <span class="badge" style="background:#c0392b">Re</span>
+    <span class="meta">10 sources · 13.9s RAG</span>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="section-title">Dimensions</div>
+      <table class="dim-table"><tr><td class="dim-label">Pertinence</td><td><span style="color:#c0392b;font-weight:bold">2/5</span></td><td class="justif">La réponse ne respecte pas la limite architecturale attendue et surinterprète les données disponibles.</td></tr><tr><td class="dim-label">Fondement factuel</td><td><span style="color:#c0392b;font-weight:bold">2/5</span></td><td class="justif">Surinterprétation de Vec comme bien-être perçu, absence de données qualitatives non signalée.</td></tr><tr><td class="dim-label">Nuance/incertitude</td><td><span style="color:#c0392b;font-weight:bold">2/5</span></td><td class="justif">Aucune mention des limites des données disponibles pour répondre à la question.</td></tr><tr><td class="dim-label">Cohérence quali/quanti</td><td><span style="color:#c0392b;font-weight:bold">2/5</span></td><td class="justif">La réponse utilise uniquement des données quantitatives pour traiter une question impliquant des perceptions qualitatives.</td></tr></table>
+    </div>
+    <div>
+      <div class="section-title">Mislabelling</div>
+      <table class="mis-table"><tr><td style="color:#27ae60;font-weight:bold">R1</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#c0392b;font-weight:bold">R2</td><td style="font-size:0.85em">oui — Vec interprété comme 'bien-être perçu' alors que c'est un proxy quanti</td></tr><tr><td style="color:#c0392b;font-weight:bold">R3</td><td style="font-size:0.85em">oui — la question implique des perceptions, aucune source quali fournie</td></tr><tr><td style="color:#27ae60;font-weight:bold">R4</td><td style="font-size:0.85em">non</td></tr></table>
+    </div>
+  </div>
+
+  <div class="section-title">Raisonnement du juge</div>
+  <div class="raisonnement">La réponse présente Vec comme 'bien-être perçu', ce qui est une surinterprétation. Absence de données qualitatives non signalée. La question demande une analyse impossible avec les données fournies.</div>
+
+  <details>
+    <summary>Réponse complète du système (2406 car.)</summary>
+    <div class="answer">D'après les données fournies, **Cambia** présente un cas intéressant illustrant un décalage entre des indicateurs socio-économiques objectifs et un **faible bien-être perçu** (Vécu).
+
+### **1. Indicateurs socio-économiques relativement favorables (ou moyens) :**
+- **Choix (Cho)** : **7,65/10** (très élevé, rang 314e/360), ce qui suggère une liberté effective des habitants perçue comme forte (source : *Scores OppChoVec — Cambia*).
+- **Mobilité (Opp3)** : **7,95/10** (très élevé), indiquant un bon accès aux moyens de transport (voiture et/ou transports en commun) (source : *Scores OppChoVec — Cambia*).
+- **Accès aux TIC (Opp4)** : **5,00/10** (élevé), avec une couverture numérique de 50 % (source : *Scores OppChoVec — Cambia*).
+- **Diversité sociale (Opp2)** : **3,15/10** (moyen), ce qui n'est pas exceptionnel mais reste supérieur à la moyenne corse pour cette sous-dimension (source : *Scores OppChoVec — Cambia*).
+
+### **2. Faible bien-être perçu (Vécu) :**
+- **Vécu (Vec)** : **4,03/10** (moyen, mais **rang 104e/360**, soit dans le tiers inférieur des communes corses), ce qui indique que les réalisations concrètes des habitants (santé, satisfaction, etc.) sont perçues comme limitées (source : *Scores OppChoVec — Cambia*).
+- **Éducation (Opp1)** : **1,42/10** (très faible), ce qui peut peser sur le bien-être subjectif malgré d'autres atouts (source : *Scores OppChoVec — Cambia*).
+
+### **Interprétation :**
+Cambia combine des **opportunités structurelles correctes** (mobilité, accès numérique, liberté perçue) avec un **Vécu faible**, suggérant que les habitants ne transforment pas ces opportunités en bien-être concret. Cela peut s'expliquer par :
+- Un **niveau d'éducation très bas** (Opp1 = 1,42/10), limitant l'accès à certains bénéfices.
+- Un **manque d'équipements locaux** (pas de données précises pour Cambia dans les extraits fournis, mais les communes similaires en taille montrent des carences en services de santé, éducation, ou commerces).
+
+### **Conclusion :**
+**Oui, Cambia correspond au profil recherché** : une commune avec des indicateurs socio-économiques **moyens à bons** (notamment en mobilité et liberté perçue) mais un **bien-être perçu faible** (Vécu = 4,03/10). Les données ne permettent pas d'identifier d'autres communes avec un décalage aussi marqué dans les extraits fournis.
+
+*(Sources : Scores OppChoVec — Cambia et méthodologie OppChoVec, Betti 2023.)*</div>
+  </details>
+</div>
+<div class="config-block" style="border-left:4px solid #e67e22">
+  <div class="config-header">
+    <span class="config-name" style="color:#e67e22">Vanilla k25</span>
+    <span class="badge" style="background:#c0392b">2.25</span>
+    <span class="badge" style="background:#c0392b">Rc</span> <span class="badge" style="background:#c0392b">Re</span>
+    <span class="meta">25 sources · 13.6s RAG</span>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="section-title">Dimensions</div>
+      <table class="dim-table"><tr><td class="dim-label">Pertinence</td><td><span style="color:#c0392b;font-weight:bold">2/5</span></td><td class="justif">La réponse ne respecte pas la limite architecturale attendue et surinterprète les données disponibles.</td></tr><tr><td class="dim-label">Fondement factuel</td><td><span style="color:#e67e22;font-weight:bold">3/5</span></td><td class="justif">Surinterprétation de Vec comme bien-être perçu. Les données sont correctes mais mal interprétées. Plafond Règle 2.</td></tr><tr><td class="dim-label">Nuance/incertitude</td><td><span style="color:#c0392b;font-weight:bold">2/5</span></td><td class="justif">Aucune mention des limites des données et de l'absence de données qualitatives. Plafond Règle 3.</td></tr><tr><td class="dim-label">Cohérence quali/quanti</td><td><span style="color:#c0392b;font-weight:bold">2/5</span></td><td class="justif">La réponse utilise uniquement des données quantitatives pour traiter une question de perception, sans signaler l'absence de données qualitatives. Plafond Règle 1.</td></tr></table>
+    </div>
+    <div>
+      <div class="section-title">Mislabelling</div>
+      <table class="mis-table"><tr><td style="color:#27ae60;font-weight:bold">R1</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#c0392b;font-weight:bold">R2</td><td style="font-size:0.85em">oui — Vec interprété comme 'bien-être perçu' alors que c'est un proxy quanti</td></tr><tr><td style="color:#c0392b;font-weight:bold">R3</td><td style="font-size:0.85em">oui — aucune source quali dispo, manque non signalé</td></tr><tr><td style="color:#27ae60;font-weight:bold">R4</td><td style="font-size:0.85em">non</td></tr></table>
+    </div>
+  </div>
+
+  <div class="section-title">Raisonnement du juge</div>
+  <div class="raisonnement">La réponse présente Vec comme une mesure de bien-être perçu, ce qui est une surinterprétation. Absence de données qualitatives non signalée.</div>
+
+  <details>
+    <summary>Réponse complète du système (1861 car.)</summary>
+    <div class="answer">D'après les données fournies, **Cambia** présente un cas intéressant illustrant un décalage entre des indicateurs socio-économiques objectifs et un **faible bien-être perçu** (Vécu).
+
+### **1. Indicateurs socio-économiques relativement favorables (Opportunités)**
+- **Mobilité (Opp3)** : **7,95/10** (très élevé, rang 164e/360), ce qui suggère un bon accès aux moyens de transport (voiture et/ou transports en commun) selon les *indicateurs territoriaux*.
+- **Accès aux TIC (Opp4)** : **5,00/10** (élevé, rang 189e/360), indiquant une couverture numérique correcte (50 % de couverture haut débit/4G).
+- **Diversité sociale (Opp2)** : **3,15/10** (moyen, rang 103e/360), ce qui reste supérieur à la moyenne corse pour cette sous-dimension (2,60/10).
+
+### **2. Faible bien-être perçu (Vécu)**
+- **Score Vec (Vécu)** : **4,03/10** (moyen, rang 104e/360), soit **le point le plus faible de la commune** selon les *indicateurs OppChoVec*.
+  Ce score reflète les **réalisations concrètes des habitants** (santé, satisfaction, sécurité subjective, etc.), et son niveau moyen-faible suggère un décalage avec les opportunités objectives.
+
+### **3. Autres éléments notables**
+- **Éducation (Opp1)** : **1,42/10** (très faible), ce qui peut peser sur le bien-être, mais ce n'est pas le facteur dominant ici.
+- **Choix (Cho)** : **7,65/10** (très élevé), indiquant une liberté perçue importante, mais cela ne compense pas le faible Vécu.
+
+### **Conclusion**
+**Cambia** correspond à votre demande : ses **opportunités objectives** (mobilité, TIC, diversité sociale modérée) sont **meilleures que son bien-être perçu** (Vécu = 4,03/10). Ce décalage peut s'expliquer par des facteurs non mesurés ici (isolement, accès aux soins, dynamiques locales), mais les données disponibles le confirment.
+
+*Aucune autre commune dans les extraits fournis ne présente un profil aussi net.*</div>
+  </details>
+</div>
+<div class="config-block" style="border-left:4px solid #27ae60">
+  <div class="config-header">
+    <span class="config-name" style="color:#27ae60">Decomp</span>
+    <span class="badge" style="background:#27ae60">4.50</span>
+    <span class="badge" style="background:#27ae60">✓ clean</span>
+    <span class="meta">25 sources · 51.3s RAG</span>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="section-title">Dimensions</div>
+      <table class="dim-table"><tr><td class="dim-label">Pertinence</td><td><span style="color:#27ae60;font-weight:bold">4/5</span></td><td class="justif">La réponse respecte le type attendu en signalant les limites des données disponibles, bien qu'elle explore des pistes sans fournir de conclusion définitive.</td></tr><tr><td class="dim-label">Fondement factuel</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Les affirmations sont bien fondées sur les sources disponibles, avec une bonne utilisation des données quanti.</td></tr><tr><td class="dim-label">Nuance/incertitude</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse est bien nuancée, signalant clairement les limites des données et l'absence de preuves croisées.</td></tr><tr><td class="dim-label">Cohérence quali/quanti</td><td><span style="color:#27ae60;font-weight:bold">4/5</span></td><td class="justif">Bonne intégration des données quantitatives, avec un signalement explicite des limites qualitatives.</td></tr></table>
+    </div>
+    <div>
+      <div class="section-title">Mislabelling</div>
+      <table class="mis-table"><tr><td style="color:#27ae60;font-weight:bold">R1</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R2</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R3</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R4</td><td style="font-size:0.85em">non</td></tr></table>
+    </div>
+  </div>
+
+  <div class="section-title">Raisonnement du juge</div>
+  <div class="raisonnement">La réponse signale les limites des données disponibles pour identifier une commune avec de bons indicateurs socio-économiques et un faible bien-être perçu, en soulignant les décalages partiels et les manques de données croisées.</div>
+
+  <details>
+    <summary>Réponse complète du système (4201 car.)</summary>
+    <div class="answer">### **Synthèse : Existe-t-il une commune corse avec de bons indicateurs socio-économiques mais un faible bien-être perçu ?**
+
+**Réponse nuancée** : Les données disponibles ne permettent pas d’identifier clairement une commune corse combinant *à la fois* des indicateurs socio-économiques élevés et un bien-être perçu faible. Cependant, des **décalages partiels** entre réalité objective et perception citoyenne émergent, notamment pour certaines communes bien classées sur le plan territorial mais peu représentées dans les enquêtes de satisfaction.
+
+---
+
+#### **1. Des communes aux indicateurs socio-économiques solides, mais des perceptions citoyennes limitées**
+Les communes du **top 5 des scores OppChoVec** (Afa, Bastelicaccia, Appietto, Alata, Ville-di-Pietrabugno) affichent des résultats territoriaux très favorables selon les données objectives :
+- **Opportunités** (éducation, mobilité, accès au numérique) : scores entre **6,66/10 et 8,41/10**.
+- **Vécu** (revenus, logement, emploi, services) : entre **6,80/10 et 10/10**.
+- **Choix** (démocratie locale, absence de quartiers prioritaires) : systématiquement **&gt; 8,9/10**.
+
+**Problème** : Aucune de ces communes ne figure dans les données d’enquête citoyenne disponibles (qui couvrent la Corse entière, sans ventilation spécifique à ces localités). Impossible donc de confirmer ou d’infirmer un éventuel décalage entre leurs bons indicateurs et le ressenti de leurs habitants.
+
+---
+
+#### **2. Un cas contrasté : Campile**
+**Selon les indicateurs territoriaux**, Campile présente un profil atypique :
+- **Score OppChoVec global faible (2,74/10)**, tiré vers le bas par des **opportunités limitées** (éducation à 1,45/10, mobilité à 1,91/10).
+- **Mais un score "Choix" élevé (8,65/10)**, reflétant une absence de quartiers prioritaires et une population dotée de droits civiques.
+
+**Perception citoyenne** : Aucune donnée d’enquête spécifique à Campile n’est disponible. Les scores de bien-être perçu les plus proches (ex. : Peri, 3,00/5 pour 1 répondant) ne permettent pas de généraliser.
+
+---
+
+#### **3. Des communes bien perçues, mais des indicateurs territoriaux non renseignés**
+À l’inverse, certaines communes **mieux notées en bien-être perçu** (ex. : Linguizzetta, 4,33/5 ; Furiani, 4,17/5 selon l’enquête citoyenne) n’ont **aucun score OppChoVec** dans les données fournies. Impossible de vérifier si leurs habitants jouissent effectivement de bonnes conditions socio-économiques.
+
+**Exemple frappant** : Lucciana, avec le **plus faible bien-être perçu (2,50/5)**, n’a pas de données OppChoVec disponibles. Son cas illustre un possible décalage, mais sans preuve objective.
+
+---
+
+#### **4. Un décalage structurel à l’échelle corse**
+Les données territoriales révèlent une **tension globale** en Corse :
+- **Libertés formelles élevées** (score "Choix" moyen à 8,79/10), mais **accès inégal aux ressources** (scores "Opportunités" et "Vécu" moyens à 3,87/10 et 3,46/10).
+- **Perception citoyenne globalement positive** (scores entre 3,33/5 et 4,33/5 pour la plupart des communes enquêtées), mais avec des **écarts locaux marqués** (ex. : Lucciana vs. Linguizzetta).
+
+**Hypothèse** : Les communes bien dotées en services (proches d’Ajaccio ou Bastia) pourraient souffrir d’un **effet de comparaison** : leurs habitants, conscients des opportunités disponibles, seraient plus critiques sur leur qualité de vie que ceux de zones moins équipées.
+
+---
+
+### **Conclusion : Un phénomène difficile à confirmer, mais des pistes à explorer**
+- **Aucune commune ne cumule clairement** bons indicateurs *et* faible bien-être perçu dans les données actuelles.
+- **Des indices de décalage** existent (ex. : Campile pour les opportunités, Lucciana pour la perception), mais **manquent de preuves croisées**.
+- **Limite majeure** : Les enquêtes citoyennes couvrent peu de communes du top OppChoVec, et inversement, les données territoriales manquent pour les communes bien notées en bien-être.
+
+**Recommandation** : Une analyse ciblée sur les communes périurbaines (ex. : Afa, Bastelicaccia) ou en déclin démographique (ex. : Campile) permettrait de vérifier si le décalage entre réalité objective et ressenti est un phénomène localisé ou plus large.</div>
+  </details>
+</div>
+<div class="config-block" style="border-left:4px solid #2980b9">
+  <div class="config-header">
+    <span class="config-name" style="color:#2980b9">Decomp+Raptor</span>
+    <span class="badge" style="background:#27ae60">4.25</span>
+    <span class="badge" style="background:#27ae60">✓ clean</span>
+    <span class="meta">80 sources · 77.5s RAG</span>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="section-title">Dimensions</div>
+      <table class="dim-table"><tr><td class="dim-label">Pertinence</td><td><span style="color:#27ae60;font-weight:bold">4/5</span></td><td class="justif">La réponse est globalement pertinente, signalant les limites des données pour identifier une commune spécifique.</td></tr><tr><td class="dim-label">Fondement factuel</td><td><span style="color:#27ae60;font-weight:bold">4/5</span></td><td class="justif">Les affirmations sont bien fondées sur les sources disponibles, avec des exemples pertinents.</td></tr><tr><td class="dim-label">Nuance/incertitude</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse est bien nuancée, signalant clairement les limites des données.</td></tr><tr><td class="dim-label">Cohérence quali/quanti</td><td><span style="color:#27ae60;font-weight:bold">4/5</span></td><td class="justif">Bonne intégration des données qualitatives et quantitatives, avec signalement des limites.</td></tr></table>
+    </div>
+    <div>
+      <div class="section-title">Mislabelling</div>
+      <table class="mis-table"><tr><td style="color:#27ae60;font-weight:bold">R1</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R2</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R3</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R4</td><td style="font-size:0.85em">non</td></tr></table>
+    </div>
+  </div>
+
+  <div class="section-title">Raisonnement du juge</div>
+  <div class="raisonnement">La réponse signale les limites des données disponibles pour identifier une commune spécifique avec le paradoxe demandé, mais propose des exemples sans preuve directe.</div>
+
+  <details>
+    <summary>Réponse complète du système (5514 car.)</summary>
+    <div class="answer">### **Synthèse : Existe-t-il une commune corse avec de bons indicateurs socio-économiques mais un faible bien-être perçu ?**
+
+**Réponse nuancée : Oui, des décalages existent entre les conditions objectives et le ressenti des habitants, mais les données disponibles ne permettent pas d’identifier clairement une commune où ce paradoxe serait pleinement documenté.** Plusieurs éléments éclairent cette dynamique, tout en révélant des limites dans les données.
+
+---
+
+#### **1. Des communes aux indicateurs socio-économiques élevés… mais des perceptions contrastées**
+Selon les **données territoriales objectives** (scores OppChoVec), certaines communes affichent des conditions de vie matérielles et des opportunités parmi les meilleures de Corse. Par exemple :
+- **Afa** (10/10), **Bastelicaccia** (9,81/10) ou **Appietto** (9,61/10) se distinguent par des **revenus fiscaux moyens élevés**, un **accès aux services en moins de 20 minutes**, une **stabilité de l’emploi** et une **qualité du logement supérieure à la moyenne régionale**. Leur score en **"Choix"** (liberté électorale et absence de quartiers prioritaires) est maximal (10/10), et leurs **opportunités** (éducation, mobilité, diversité sociale) sont bien supérieures à la moyenne corse (3,87/10).
+
+Pourtant, **aucune donnée d’enquête citoyenne ne permet de confirmer ou d’infirmer un faible bien-être perçu dans ces communes**. Les perceptions disponibles couvrent **la Corse entière**, sans désagrégation communale. À l’échelle régionale, les habitants expriment une **satisfaction modérée** (qualité de vie notée 3,83/5, bonheur 3,66/5 selon l’enquête citoyenne), avec des **points noirs récurrents** :
+- **Transports** (2,31/5) et **santé** (2,51/5) sont les dimensions les moins bien notées.
+- La **confiance dans l’avenir** est faible (2,80/5), reflétant des inquiétudes structurelles (emploi, services publics).
+
+**→ Ces résultats suggèrent que même dans les communes "favorites" des indicateurs objectifs, des frustrations persistent, mais on ne peut pas les attribuer spécifiquement à Afa ou Bastelicaccia.**
+
+---
+
+#### **2. Des communes aux scores moyens ou faibles… où le mal-être est documenté**
+À l’inverse, certaines communes aux **indicateurs socio-économiques médiocres** cumulent des **difficultés objectives et un ressenti négatif**, comme le montre l’exemple de **Lozzi** :
+- **Score OppChoVec global** : 2,14/10 (313ᵉ/360), avec des **faiblesses marquées** :
+  - **Mobilité** : 0,65/10 (356ᵉ/360) – isolement géographique.
+  - **Diversité sociale** : 1,79/10 – tissu économique peu varié.
+  - **Vécu** : 2,25/10 – revenus et accès aux services limités.
+- **Verbatims des habitants** (selon les entretiens qualitatifs) :
+  - **Foncier bloqué** : *« Le problème du foncier… comment on fait ? Il y a une cuisine, un WC, une douche, c’est la panique complète. »* → L’indivision et les contraintes légales empêchent l’accès au logement.
+  - **Manque d’emplois** : *« Tout le monde ne peut pas être agriculteur… Il faut des gens dans la fonction publique, des enseignants. »* → Exode des jeunes et précarité.
+  - **Disparition des services** : *« Il y avait une pâtissière… Elle a dû arrêter à cause de problèmes de santé. »* → Désertification commerciale.
+
+**→ Ici, le décalage n’est pas un paradoxe : les indicateurs objectifs reflètent des difficultés réelles, confirmées par les perceptions.**
+
+---
+
+#### **3. Un cas intermédiaire : Polveroso, où les indicateurs masquent des fragilités**
+**Polveroso** illustre un **décalage partiel** entre données objectives et ressenti, bien que les preuves restent incomplètes :
+- **Score OppChoVec** : 2,14/10 (313ᵉ/360), avec des **points forts trompeurs** :
+  - **Choix** : 10/10 (absence de quartiers prioritaires, droit de vote universel) – mais ce score ne mesure **pas** les libertés individuelles ou la qualité de la démocratie locale.
+  - **Éducation** : 2,87/10 (moyen) – malgré un collège à proximité, les habitants déplorent un **manque de formations supérieures** (selon les entretiens qualitatifs).
+  - **Mobilité** : 0,65/10 – **isolement routier** et dépendance à la voiture.
+- **Perceptions** : Aucune donnée d’enquête citoyenne spécifique à Polveroso, mais les **entretiens à Lozzi** (commune voisine et similaire) suggèrent des **problématiques communes** (foncier, emplois, services).
+
+**→ Polveroso pourrait incarner ce paradoxe (bonnes libertés formelles, mais conditions de vie difficiles), mais les preuves manquent pour l’affirmer.**
+
+---
+
+#### **4. Pourquoi ces décalages ? Hypothèses et limites**
+Plusieurs facteurs expliquent les écarts entre **données objectives** et **perceptions** :
+- **L’isolement géographique** : Même avec des revenus corrects, l’éloignement des services (santé, commerces) pèse sur le quotidien. Par exemple, **Polveroso** a un score de mobilité très faible (0,65/10), ce qui peut générer un sentiment d’abandon.
+- **Les attentes non mesurées** : Les indicateurs OppChoVec ne captent pas des dimensions comme la **qualité des relations sociales**, la **confiance dans les institutions** ou la **culture locale** – pourtant centrales dans le bien-être perçu.
+- **L’effet "bulle"** : Dans les communes périurbaines comme **Afa** ou **Bastelicaccia**, les habitants peuvent bénéficier d’infrastructures (écoles, médecins) tout en subissant des **nuisances** (trafic, prix de l’immobilier) non reflétées dans les scores.
+
+**Limites des données** :
+- **Aucune enquête citoyenne par commune** : Les perceptions sont agrégées à l’échelle de la Corse,</div>
+  </details>
+</div>
+  </div>
+</div>
+<div class="question-card">
+  <div class="q-header">
+    <span class="q-num">Q104</span>
+    <span class="q-section">Limites architecturales</span>
+  </div>
+  <div class="q-text">Pour quelles communes corses peut-on croiser à la fois des données d'enquête citoyenne, des entretiens semi-directifs, et un score OppChoVec complet ?</div>
+  <table class="summary-table"><tr><th>Config</th><th>Score</th><th>Flags</th><th>Raisonnement (extrait)</th></tr><tr><td style="color:#c0392b;font-weight:bold">Vanilla k10</td><td><span class="badge" style="background:#27ae60">5.00</span></td><td><span class="badge" style="background:#27ae60">✓ clean</span></td><td class="justif">La réponse identifie correctement l'absence de données d'entretiens semi-directifs et signale l'impossibilité de croiser…</td></tr><tr><td style="color:#e67e22;font-weight:bold">Vanilla k25</td><td><span class="badge" style="background:#27ae60">5.00</span></td><td><span class="badge" style="background:#27ae60">✓ clean</span></td><td class="justif">La réponse identifie correctement l'absence d'entretiens semi-directifs et signale l'impossibilité de croiser les trois …</td></tr><tr><td style="color:#27ae60;font-weight:bold">Decomp</td><td><span class="badge" style="background:#27ae60">5.00</span></td><td><span class="badge" style="background:#27ae60">✓ clean</span></td><td class="justif">La réponse indique clairement qu'aucune commune ne cumule les trois types de données demandés, ce qui est conforme à la …</td></tr><tr><td style="color:#2980b9;font-weight:bold">Decomp+Raptor</td><td><span class="badge" style="background:#27ae60">5.00</span></td><td><span class="badge" style="background:#27ae60">✓ clean</span></td><td class="justif">La réponse identifie correctement l'absence de communes cumulant les trois types de données, signalant les limites des d…</td></tr></table>
+  <div class="configs-container">
+    
+<div class="config-block" style="border-left:4px solid #c0392b">
+  <div class="config-header">
+    <span class="config-name" style="color:#c0392b">Vanilla k10</span>
+    <span class="badge" style="background:#27ae60">5.00</span>
+    <span class="badge" style="background:#27ae60">✓ clean</span>
+    <span class="meta">10 sources · 9.4s RAG</span>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="section-title">Dimensions</div>
+      <table class="dim-table"><tr><td class="dim-label">Pertinence</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse est parfaitement alignée avec la question et signale clairement l'absence de données nécessaires.</td></tr><tr><td class="dim-label">Fondement factuel</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Les affirmations sont correctement fondées sur les sources fournies, et l'absence d'entretiens est bien signalée.</td></tr><tr><td class="dim-label">Nuance/incertitude</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse est bien nuancée, indiquant clairement les limites des données disponibles.</td></tr><tr><td class="dim-label">Cohérence quali/quanti</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse respecte la nature des données fournies et ne prétend pas à un croisement impossible.</td></tr></table>
+    </div>
+    <div>
+      <div class="section-title">Mislabelling</div>
+      <table class="mis-table"><tr><td style="color:#27ae60;font-weight:bold">R1</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R2</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R3</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R4</td><td style="font-size:0.85em">non</td></tr></table>
+    </div>
+  </div>
+
+  <div class="section-title">Raisonnement du juge</div>
+  <div class="raisonnement">La réponse identifie correctement l'absence de données d'entretiens semi-directifs et signale l'impossibilité de croiser les trois types de données pour une commune corse.</div>
+
+  <details>
+    <summary>Réponse complète du système (1010 car.)</summary>
+    <div class="answer">D'après les documents fournis, **aucune commune corse ne permet de croiser simultanément** :
+
+1. **Des données d'enquête citoyenne** (profil démographique des répondants, enquête 2024-2026 en cours) ;
+2. **Des entretiens semi-directifs** (non mentionnés dans les extraits) ;
+3. **Un score OppChoVec complet** (indicateurs territoriaux 2020-2022).
+
+### Détails par source :
+- **Enquête citoyenne** : Les communes citées (Casevecchie, Olmeto, Moltifao, Corte, Villanova, Casanova) ont des profils de répondants, mais **aucun verbatim ou entretien semi-directif n'est fourni** dans les extraits.
+- **Score OppChoVec** : Les communes de **Casanova** (score = 2,77/10) et **Corte** (score = 2,71/10) figurent dans les données OppChoVec (CC du Centre Corse), mais **aucun entretien semi-directif n'est disponible** pour elles.
+- **Entretiens semi-directifs** : **Aucune mention** dans les documents partagés.
+
+**Conclusion** : Les données sont insuffisantes pour identifier une commune réunissant ces trois critères.</div>
+  </details>
+</div>
+<div class="config-block" style="border-left:4px solid #e67e22">
+  <div class="config-header">
+    <span class="config-name" style="color:#e67e22">Vanilla k25</span>
+    <span class="badge" style="background:#27ae60">5.00</span>
+    <span class="badge" style="background:#27ae60">✓ clean</span>
+    <span class="meta">25 sources · 7.7s RAG</span>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="section-title">Dimensions</div>
+      <table class="dim-table"><tr><td class="dim-label">Pertinence</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse est parfaitement alignée avec la question et signale clairement l'absence des données requises.</td></tr><tr><td class="dim-label">Fondement factuel</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse est fondée sur les sources fournies et respecte les labels des données.</td></tr><tr><td class="dim-label">Nuance/incertitude</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse est claire et précise quant aux limites des données disponibles.</td></tr><tr><td class="dim-label">Cohérence quali/quanti</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse respecte la distinction entre données quantitatives et qualitatives, et signale l'absence de données qualitatives.</td></tr></table>
+    </div>
+    <div>
+      <div class="section-title">Mislabelling</div>
+      <table class="mis-table"><tr><td style="color:#27ae60;font-weight:bold">R1</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R2</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R3</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R4</td><td style="font-size:0.85em">non</td></tr></table>
+    </div>
+  </div>
+
+  <div class="section-title">Raisonnement du juge</div>
+  <div class="raisonnement">La réponse identifie correctement l'absence d'entretiens semi-directifs et signale l'impossibilité de croiser les trois types de données pour une commune corse.</div>
+
+  <details>
+    <summary>Réponse complète du système (910 car.)</summary>
+    <div class="answer">D'après les documents fournis, **aucune commune corse ne permet de croiser simultanément** :
+
+1. **Des données d'enquête citoyenne** (profil démographique des répondants, enquête 2024-2026 en cours) ;
+2. **Des entretiens semi-directifs** (absents des documents fournis) ;
+3. **Un score OppChoVec complet** (indicateurs territoriaux 2020-2022).
+
+### Détails par source :
+- **Enquête citoyenne** : Les communes citées (ex. Casanova, Eccica-Suarella, Albitreccia, etc.) ont des profils de répondants, mais **aucun verbatim ou entretien semi-directif** n'est mentionné.
+- **Score OppChoVec** : Disponible pour certaines communes (ex. Casanova, Eccica-Suarella, Albitreccia), mais **pas d'entretiens qualitatifs** associés.
+- **Entretiens semi-directifs** : **Aucune mention** dans les documents fournis.
+
+**Réponse claire** : Les données sont insuffisantes pour identifier une commune répondant aux trois critères.</div>
+  </details>
+</div>
+<div class="config-block" style="border-left:4px solid #27ae60">
+  <div class="config-header">
+    <span class="config-name" style="color:#27ae60">Decomp</span>
+    <span class="badge" style="background:#27ae60">5.00</span>
+    <span class="badge" style="background:#27ae60">✓ clean</span>
+    <span class="meta">25 sources · 43.9s RAG</span>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="section-title">Dimensions</div>
+      <table class="dim-table"><tr><td class="dim-label">Pertinence</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse est parfaitement alignée avec la question et signale clairement l'absence de données cumulatives.</td></tr><tr><td class="dim-label">Fondement factuel</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Les affirmations sont correctement fondées sur les sources disponibles, qui ne documentent pas de croisement des trois types de données.</td></tr><tr><td class="dim-label">Nuance/incertitude</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse est bien nuancée, expliquant les limites des données disponibles.</td></tr><tr><td class="dim-label">Cohérence quali/quanti</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse respecte la distinction entre les types de données et ne prétend pas à un croisement inexistant.</td></tr></table>
+    </div>
+    <div>
+      <div class="section-title">Mislabelling</div>
+      <table class="mis-table"><tr><td style="color:#27ae60;font-weight:bold">R1</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R2</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R3</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R4</td><td style="font-size:0.85em">non</td></tr></table>
+    </div>
+  </div>
+
+  <div class="section-title">Raisonnement du juge</div>
+  <div class="raisonnement">La réponse indique clairement qu'aucune commune ne cumule les trois types de données demandés, ce qui est conforme à la limite architecturale attendue.</div>
+
+  <details>
+    <summary>Réponse complète du système (3375 car.)</summary>
+    <div class="answer">### **Synthèse : Communes corses cumulant données d’enquête citoyenne, entretiens semi-directifs et score OppChoVec complet**
+
+**Réponse directe à la question initiale :**
+D’après les données disponibles, **aucune commune corse ne cumule simultanément** :
+- un **score OppChoVec complet** (indicateurs territoriaux objectifs),
+- des **données d’enquête citoyenne** (perceptions habitantes),
+- et des **entretiens semi-directifs** (analyses qualitatives approfondies).
+
+---
+
+### **Points clés par type de données**
+
+#### **1. Données territoriales objectives (scores OppChoVec)**
+- **360 communes corses** disposent d’un **score OppChoVec complet**, calculé à partir de données INSEE et statistiques 2020-2022 (exemples : Afa en tête avec 10/10, Bastelicaccia avec 9,81/10).
+  *Selon les indicateurs OppChoVec.*
+- Ces scores couvrent des dimensions comme l’accès aux services, la diversité socio-professionnelle, les revenus ou la qualité du logement, mais **ne reflètent pas les perceptions des habitants**.
+
+#### **2. Données d’enquête citoyenne (perceptions)**
+- Seules **deux communes** ont fait l’objet de **réponses à l’enquête citoyenne en cours (2024-2026)** :
+  - **Corte** (1 répondant, profil non détaillé).
+  - **Casevecchie** (1 répondante : femme, 15-29 ans, étudiante).
+  *Selon l’enquête citoyenne « Qualité de vie en Corse ».*
+- **Limites majeures** :
+  - Ces données **ne sont pas représentatives** (un seul répondant par commune).
+  - **Aucune enquête spécifique** n’est disponible pour les autres communes, y compris celles bien notées en OppChoVec (ex. : Afa, Bastelicaccia).
+
+#### **3. Entretiens semi-directifs (analyses qualitatives)**
+- **Aucune donnée disponible** sur des entretiens menés avec des citoyens ou acteurs locaux pour une commune corse dans le contexte fourni.
+  *Aucune source ne documente ce type d’approche qualitative.*
+
+---
+
+### **Croisement des données : un vide actuel**
+- **Aucune commune** ne combine **à la fois** :
+  - Un **score OppChoVec** (ex. : Olivese avec 3,68/10),
+  - **ET** des **données d’enquête citoyenne** (même limitées, comme pour Casevecchie ou Olmeto),
+  - **ET** des **entretiens semi-directifs**.
+- **Exemple concret** :
+  - **Olivese** a un score OppChoVec détaillé, mais **aucune perception habitante** n’est enregistrée.
+  - **Casevecchie** a une réponse d’enquête citoyenne, mais **aucun score OppChoVec** n’est fourni pour cette commune.
+
+---
+
+### **Portée géographique des données disponibles**
+- Les **scores OppChoVec** couvrent **toutes les communes corses** (360).
+- Les **données d’enquête citoyenne** sont **extrêmement limitées** (2 communes, 1 répondant chacune) et **ne permettent pas d’analyse locale fiable**.
+- Les **entretiens qualitatifs** sont **absents** du contexte.
+
+---
+
+### **Conclusion**
+À ce jour, **il n’existe pas de commune corse** pour laquelle on puisse croiser **simultanément** :
+1. Des **indicateurs territoriaux objectifs** (OppChoVec),
+2. Des **perceptions habitantes** (enquête citoyenne),
+3. Des **analyses qualitatives** (entretiens).
+
+Les données disponibles permettent soit une **approche objective** (via les scores OppChoVec pour 360 communes), soit une **approche subjective très partielle** (via 2 réponses d’enquête pour Corte et Casevecchie), mais **jamais les deux pour une même commune**. Les entretiens semi-directifs, quant à eux, ne sont pas documentés.</div>
+  </details>
+</div>
+<div class="config-block" style="border-left:4px solid #2980b9">
+  <div class="config-header">
+    <span class="config-name" style="color:#2980b9">Decomp+Raptor</span>
+    <span class="badge" style="background:#27ae60">5.00</span>
+    <span class="badge" style="background:#27ae60">✓ clean</span>
+    <span class="meta">48 sources · 57.0s RAG</span>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="section-title">Dimensions</div>
+      <table class="dim-table"><tr><td class="dim-label">Pertinence</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse traite précisément de la question posée en signalant les limites des données disponibles.</td></tr><tr><td class="dim-label">Fondement factuel</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Les affirmations sont correctement fondées sur les sources fournies, sans mislabelling.</td></tr><tr><td class="dim-label">Nuance/incertitude</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse est bien nuancée, signalant clairement les limites des données disponibles.</td></tr><tr><td class="dim-label">Cohérence quali/quanti</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Bonne intégration des données qualitatives et quantitatives, avec un signalement clair des limites.</td></tr></table>
+    </div>
+    <div>
+      <div class="section-title">Mislabelling</div>
+      <table class="mis-table"><tr><td style="color:#27ae60;font-weight:bold">R1</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R2</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R3</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R4</td><td style="font-size:0.85em">non</td></tr></table>
+    </div>
+  </div>
+
+  <div class="section-title">Raisonnement du juge</div>
+  <div class="raisonnement">La réponse identifie correctement l'absence de communes cumulant les trois types de données, signalant les limites des données disponibles.</div>
+
+  <details>
+    <summary>Réponse complète du système (3070 car.)</summary>
+    <div class="answer">### **Synthèse : Communes corses disposant à la fois de données d’enquête citoyenne, d’entretiens semi-directifs et d’un score territorial complet**
+
+À ce jour, **aucune commune corse ne cumule simultanément des données d’enquête citoyenne spécifiques, des entretiens semi-directifs et un score territorial complet** (OppChoVec) pour une analyse croisée fine.
+
+#### **Points clés par type de données disponibles :**
+
+1. **Données territoriales objectives (scores OppChoVec)**
+   Les indicateurs territoriaux couvrent **l’intégralité des 360 communes corses**, avec un score global et trois sous-scores (opportunités, choix, vecteurs de qualité de vie) calculés entre 2020 et 2022. Ces données mesurent des réalités matérielles comme l’accès aux services, la stabilité de l’emploi ou la diversité sociale, mais ne reflètent pas les perceptions des habitants.
+   *Exemple* : Lozzi et Grossetto-Prugna, comme toutes les communes, disposent de ces scores (selon les indicateurs OppChoVec).
+
+2. **Données d’enquête citoyenne (perceptions)**
+   Les retours des habitants proviennent d’une **enquête menée à l’échelle de la Corse entière** (246 répondants, 2024–2026). **Aucune donnée n’est ventilée par commune** : les résultats expriment des tendances régionales, sans permettre d’analyser des spécificités locales.
+   *Exemple* : Les perceptions sur la qualité de vie à Lozzi ou Grossetto-Prugna ne sont pas isolables dans les données disponibles (selon l’enquête citoyenne).
+
+3. **Entretiens semi-directifs (approche qualitative)**
+   Seules **deux communes** ont fait l’objet d’entretiens documentés :
+   - **Lozzi** : 6 entretiens en 2022, explorant l’attachement identitaire et les défis structurels (accès aux services, emploi).
+   - **Grossetto-Prugna** : 1 entretien en 2022, centré sur le cadre de vie et le tourisme.
+   Ces entretiens offrent des insights qualitatifs, mais leur portée reste limitée en volume et en représentativité (selon les entretiens qualitatifs).
+
+#### **Bilan par commune**
+- **Lozzi** et **Grossetto-Prugna** sont les **seules communes** à disposer d’entretiens semi-directifs **et** d’un score territorial complet. En revanche, **aucune donnée d’enquête citoyenne spécifique** ne leur est associée.
+- Pour les **358 autres communes**, seules les données territoriales (OppChoVec) sont disponibles, sans retour direct des habitants ni analyse qualitative approfondie.
+
+#### **Limites pour une analyse croisée**
+L’absence de données d’enquête citoyenne au niveau communal empêche de confronter les **conditions objectives** (ex. : accès aux soins ou revenus) avec les **perceptions locales** (ex. : satisfaction des habitants). Les entretiens existants, bien que riches, ne couvrent qu’une infime partie du territoire et ne peuvent être généralisés.
+
+---
+*Sources intégrées* :
+- Scores OppChoVec : selon les indicateurs territoriaux objectifs (360 communes).
+- Enquête citoyenne : selon l’enquête couvrant la Corse entière (pas de ventilation communale).
+- Entretiens : selon les entretiens qualitatifs (Lozzi et Grossetto-Prugna uniquement).</div>
+  </details>
+</div>
+  </div>
+</div>
+<div class="question-card">
+  <div class="q-header">
+    <span class="q-num">Q105</span>
+    <span class="q-section">Limites architecturales</span>
+  </div>
+  <div class="q-text">Classer les 10 communes corses ayant les écarts les plus marqués entre indicateurs objectifs et perceptions subjectives.</div>
+  <table class="summary-table"><tr><th>Config</th><th>Score</th><th>Flags</th><th>Raisonnement (extrait)</th></tr><tr><td style="color:#c0392b;font-weight:bold">Vanilla k10</td><td><span class="badge" style="background:#27ae60">5.00</span></td><td><span class="badge" style="background:#27ae60">✓ clean</span></td><td class="justif">La réponse signale explicitement l'absence de données qualitatives et les limitations des données quantitatives, justifi…</td></tr><tr><td style="color:#e67e22;font-weight:bold">Vanilla k25</td><td><span class="badge" style="background:#27ae60">5.00</span></td><td><span class="badge" style="background:#27ae60">✓ clean</span></td><td class="justif">La réponse signale explicitement l'absence de données qualitatives nécessaires pour établir un classement des écarts ent…</td></tr><tr><td style="color:#27ae60;font-weight:bold">Decomp</td><td><span class="badge" style="background:#27ae60">5.00</span></td><td><span class="badge" style="background:#27ae60">✓ clean</span></td><td class="justif">La réponse signale explicitement l'impossibilité de classer les communes en raison de l'absence de données croisées qual…</td></tr><tr><td style="color:#2980b9;font-weight:bold">Decomp+Raptor</td><td><span class="badge" style="background:#27ae60">5.00</span></td><td><span class="badge" style="background:#27ae60">✓ clean</span></td><td class="justif">La réponse signale explicitement les limites des données disponibles pour établir un classement précis, en accord avec l…</td></tr></table>
+  <div class="configs-container">
+    
+<div class="config-block" style="border-left:4px solid #c0392b">
+  <div class="config-header">
+    <span class="config-name" style="color:#c0392b">Vanilla k10</span>
+    <span class="badge" style="background:#27ae60">5.00</span>
+    <span class="badge" style="background:#27ae60">✓ clean</span>
+    <span class="meta">10 sources · 16.2s RAG</span>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="section-title">Dimensions</div>
+      <table class="dim-table"><tr><td class="dim-label">Pertinence</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse est parfaitement alignée avec la section et sous-section, signalant clairement les limites des données.</td></tr><tr><td class="dim-label">Fondement factuel</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Les affirmations sont correctement fondées sur les sources disponibles et les limitations sont bien signalées.</td></tr><tr><td class="dim-label">Nuance/incertitude</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse est bien nuancée, avec un signalement explicite des absences et des limitations.</td></tr><tr><td class="dim-label">Cohérence quali/quanti</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse respecte la distinction entre données quantitatives et l'absence de données qualitatives, avec un signalement clair des limitations.</td></tr></table>
+    </div>
+    <div>
+      <div class="section-title">Mislabelling</div>
+      <table class="mis-table"><tr><td style="color:#27ae60;font-weight:bold">R1</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R2</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R3</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R4</td><td style="font-size:0.85em">non</td></tr></table><div class="sig-box"><b>Signalements détectés :</b><ul><li>Absence de données sur les perceptions subjectives</li><li>Données objectives partielles</li><li>Méthodologie manquante</li></ul></div>
+    </div>
+  </div>
+
+  <div class="section-title">Raisonnement du juge</div>
+  <div class="raisonnement">La réponse signale explicitement l'absence de données qualitatives et les limitations des données quantitatives, justifiant l'impossibilité de répondre à la question.</div>
+
+  <details>
+    <summary>Réponse complète du système (2305 car.)</summary>
+    <div class="answer">D'après les documents fournis, **il n'est pas possible de répondre à cette question** pour les raisons suivantes :
+
+1. **Absence de données sur les perceptions subjectives** :
+   Les documents ne contiennent **aucun indicateur ou verbatim** relatif aux perceptions subjectives des habitants (dimension "Vécu" ou "Choix" de l'indice OppChoVec, ou toute autre source qualitative comme des enquêtes citoyennes). L'indice OppChoVec inclut bien une dimension "Vécu" (Vec), mais **les scores communaux ne sont pas fournis** dans les extraits disponibles. Seule la moyenne régionale est mentionnée (Vec moyen = 3,46/10), sans détail par commune.
+
+2. **Données objectives partielles** :
+   Les indicateurs quantitatifs (INSEE, OppChoVec) sont disponibles pour les **opportunités objectives** (Opp), mais sans les scores complets OppChoVec par commune (seule la moyenne régionale Opp = 3,87/10 est indiquée). Les écarts entre objectifs et subjectifs ne peuvent donc pas être calculés.
+
+3. **Méthodologie manquante** :
+   Même si les scores Opp et Vec étaient disponibles, les documents ne précisent pas comment mesurer l'**écart** entre ces deux dimensions (ex. : différence absolue, ratio, etc.).
+
+---
+### **Ce que les données permettent de dire** (pour les communes citées) :
+- **Opportunités objectives (Opp)** :
+  Les communes comme **Corte** (équipements complets, diversité socio-professionnelle) ou **Lecci** (taux d'activité élevé, commerces) ont probablement un score Opp **supérieur à la moyenne corse** (3,87/10), tandis que des communes comme **Croce** ou **Corscia** (aucun équipement, faible diversité CSP) ont un score Opp **très faible** (source : indicateurs territoriaux INSEE 2020-2022).
+  *Mais sans les scores Opp communaux exacts, impossible de les classer.*
+
+- **Perceptions subjectives (Vec)** :
+  Aucune donnée n'est fournie pour cette dimension. Les entretiens qualitatifs ou enquêtes citoyennes mentionnés dans la question ne sont **pas inclus** dans les extraits.
+
+---
+### **Conclusion** :
+Les documents **ne permettent pas** d'identifier les communes avec les écarts les plus marqués entre indicateurs objectifs et subjectifs. Il faudrait :
+1. Les **scores Opp et Vec par commune** (absents ici).
+2. Des **données qualitatives** (enquêtes, verbatims) sur les perceptions des habitants.</div>
+  </details>
+</div>
+<div class="config-block" style="border-left:4px solid #e67e22">
+  <div class="config-header">
+    <span class="config-name" style="color:#e67e22">Vanilla k25</span>
+    <span class="badge" style="background:#27ae60">5.00</span>
+    <span class="badge" style="background:#27ae60">✓ clean</span>
+    <span class="meta">25 sources · 10.5s RAG</span>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="section-title">Dimensions</div>
+      <table class="dim-table"><tr><td class="dim-label">Pertinence</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Refus explicite et complet, signale les bonnes raisons (absence de données qualitatives).</td></tr><tr><td class="dim-label">Fondement factuel</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Refus correctement fondé sur l'absence de sources qualitatives nécessaires.</td></tr><tr><td class="dim-label">Nuance/incertitude</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Limites précisément signalées, absence de données qualitatives bien expliquée.</td></tr><tr><td class="dim-label">Cohérence quali/quanti</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Refus sobre approprié, pas de remplissage avec données non pertinentes.</td></tr></table>
+    </div>
+    <div>
+      <div class="section-title">Mislabelling</div>
+      <table class="mis-table"><tr><td style="color:#27ae60;font-weight:bold">R1</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R2</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R3</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R4</td><td style="font-size:0.85em">non</td></tr></table><div class="sig-box"><b>Signalements détectés :</b><ul><li>Aucune donnée sur les perceptions subjectives</li><li>Les verbatims citoyens ou enquêtes qualitatives sont absents</li></ul></div>
+    </div>
+  </div>
+
+  <div class="section-title">Raisonnement du juge</div>
+  <div class="raisonnement">La réponse signale explicitement l'absence de données qualitatives nécessaires pour établir un classement des écarts entre indicateurs objectifs et perceptions subjectives.</div>
+
+  <details>
+    <summary>Réponse complète du système (1124 car.)</summary>
+    <div class="answer">D'après les documents fournis, **il n'est pas possible de répondre à cette question**, car :
+
+1. **Aucune donnée sur les perceptions subjectives** (dimension "Vécu" ou "Vec" de l'indicateur OppChoVec) n'est disponible pour les 10 communes citées.
+   - Le contexte mentionne un **score moyen "Vécu" (Vec) de 3,46/10 pour la Corse** (indicateur territorial), mais **aucun score individuel par commune** n'est fourni.
+   - Les verbatims citoyens ou enquêtes qualitatives (nécessaires pour évaluer les perceptions) sont absents.
+
+2. **Seuls les indicateurs objectifs** (dimension "Opportunités" ou "Opp") sont partiellement renseignés :
+   - Les données quantitatives (INSEE 2020-2022) décrivent des équipements, taux de pauvreté, etc., mais **ne permettent pas de calculer un écart avec le subjectif**.
+   - Le score OppChoVec complet (incluant "Cho" et "Vec") n'est pas détaillé par commune.
+
+### Conclusion :
+Les documents ne contiennent **ni les scores "Vécu" (Vec) par commune, ni des données subjectives** (enquêtes, entretiens) pour établir un classement des écarts objectifs/subjectifs. **Réponse impossible en l'état**.</div>
+  </details>
+</div>
+<div class="config-block" style="border-left:4px solid #27ae60">
+  <div class="config-header">
+    <span class="config-name" style="color:#27ae60">Decomp</span>
+    <span class="badge" style="background:#27ae60">5.00</span>
+    <span class="badge" style="background:#27ae60">✓ clean</span>
+    <span class="meta">25 sources · 62.2s RAG</span>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="section-title">Dimensions</div>
+      <table class="dim-table"><tr><td class="dim-label">Pertinence</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse respecte les limites architecturales en signalant clairement l'absence de données nécessaires pour répondre à la question.</td></tr><tr><td class="dim-label">Fondement factuel</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Les affirmations sont bien fondées sur les sources disponibles et les limitations sont correctement signalées.</td></tr><tr><td class="dim-label">Nuance/incertitude</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse est bien nuancée, avec des signalements explicites des limites des données.</td></tr><tr><td class="dim-label">Cohérence quali/quanti</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse intègre correctement les données quantitatives disponibles et signale l'absence de données qualitatives nécessaires.</td></tr></table>
+    </div>
+    <div>
+      <div class="section-title">Mislabelling</div>
+      <table class="mis-table"><tr><td style="color:#27ae60;font-weight:bold">R1</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R2</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R3</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R4</td><td style="font-size:0.85em">non</td></tr></table><div class="sig-box"><b>Signalements détectés :</b><ul><li>Aucune donnée de perception n’est disponible pour les autres communes corses</li><li>Aucun score OppChoVec spécifique aux communes citées dans l’enquête citoyenne n’est fourni</li></ul></div>
+    </div>
+  </div>
+
+  <div class="section-title">Raisonnement du juge</div>
+  <div class="raisonnement">La réponse signale explicitement l'impossibilité de classer les communes en raison de l'absence de données croisées quali/quanti. Les limitations des données disponibles sont bien expliquées.</div>
+
+  <details>
+    <summary>Réponse complète du système (5407 car.)</summary>
+    <div class="answer">### **Synthèse : Classement des 10 communes corses aux écarts les plus marqués entre indicateurs objectifs et perceptions subjectives**
+
+**Réponse directe à la question initiale** :
+Avec les données disponibles, il n’est pas possible d’établir un classement des 10 communes corses présentant les écarts les plus marqués entre **indicateurs objectifs de bien-être** (scores OppChoVec) et **perceptions subjectives** (enquêtes citoyennes). Voici pourquoi, et ce que révèlent les éléments partiels :
+
+---
+
+### **1. Données disponibles et limites géographiques**
+- **Perceptions subjectives** :
+  Selon l’enquête citoyenne, les scores de bien-être ressenti (échelle 1-5) sont disponibles pour **16 communes corses uniquement**, avec un minimum de 3 répondants par commune. Ces données couvrent la période 2024-2026 et reflètent les déclarations des habitants sur leur qualité de vie. **Aucune donnée de perception n’est disponible pour les autres communes corses**, y compris celles potentiellement concernées par des écarts importants.
+
+- **Indicateurs objectifs** :
+  Les scores OppChoVec (mesurant opportunités, choix et vécu) ne sont **pas ventilés par commune** dans les données fournies. Seules les **moyennes régionales** sont disponibles (selon les indicateurs OppChoVec) :
+  - **Choix (Cho)** : 8,79/10 (élevé, lié à la participation électorale et à l’absence de quartiers prioritaires).
+  - **Opportunités (Opp)** : 3,87/10 (faible, lié à l’éducation, la mobilité et l’accès au numérique).
+  - **Vécu (Vec)** : 3,46/10 (faible, lié aux revenus, à l’emploi et à l’accès aux services).
+  **Aucun score OppChoVec spécifique aux communes citées dans l’enquête citoyenne (ex : Bastia, Lucciana, Porto-Vecchio) n’est fourni**, empêchant tout calcul d’écart.
+
+---
+
+### **2. Communes avec les perceptions subjectives les plus basses**
+Parmi les 16 communes pour lesquelles des données d’enquête existent, les **10 avec les scores de bien-être ressenti les plus faibles** sont (selon l’enquête citoyenne) :
+1. **Lucciana** : 2,50/5
+2. **Borgo** : 3,00/5
+3. **Calvi** : 3,33/5
+4. **Biguglia** : 3,50/5
+5. **Aleria** et **Bastelicaccia** : 3,60/5
+7. **San-Martino-di-Lota**, **Ghisonaccia**, **Alata** : 3,67/5
+10. **Bastia** : 3,55/5 (moyenne sur 23 répondants).
+
+**Attention** : Ces scores reflètent des **perceptions locales**, mais sans équivalent objectif (scores OppChoVec), impossible de savoir si ces communes ont des indicateurs territoriaux meilleurs ou pires que leur ressenti.
+
+---
+
+### **3. Communes avec des données objectives partielles**
+Deux communes sont citées avec des **données factuelles** (équipements, services), mais **sans score OppChoVec** :
+- **Porto-Vecchio** et **Olmeta-di-Capocorso** : présence d’équipements (écoles, médecins, commerces) suggérant un niveau de services correct, mais aucune mesure synthétique (OppChoVec) ni perception subjective disponible pour les comparer.
+- **Corscia** : score OppChoVec **très faible (2,38/10, rang 283e/360)**, mais **aucune donnée de perception** pour cette commune.
+
+---
+
+### **4. Constats transversaux et pistes d’analyse**
+- **Décalage régional** :
+  Selon les indicateurs OppChoVec, la Corse affiche un **contraste marqué** entre un score de **Choix (Cho) très élevé (8,79/10)** – lié à la démocratie locale et à l’absence de quartiers prioritaires – et des scores d’**Opportunités (Opp) et Vécu (Vec) très bas (3,87 et 3,46/10)** – liés aux inégalités d’accès à l’éducation, à l’emploi, aux services et aux revenus. Ce décalage suggère que les habitants pourraient **sous-estimer leur qualité de vie** sur certains aspects (ex : libertés locales) tout en **surévaluant leurs difficultés** sur d’autres (ex : précarité économique).
+
+- **Hypothèses sur les écarts** (sans pouvoir les quantifier) :
+  - **Communes urbaines ou périurbaines** (Bastia, Lucciana, Borgo) : leurs scores de perception bas (selon l’enquête citoyenne) pourraient refléter un **décalage entre attentes et réalité** (ex : accès aux services perçu comme insuffisant malgré des équipements existants).
+  - **Communes rurales isolées** (ex : Corscia) : leur score OppChoVec très faible (2,38/10) pourrait **sous-estimer la résilience locale** (solidarités, cadre de vie), non captée par les indicateurs objectifs.
+
+- **Manque de granularité** :
+  Les données ne permettent pas de **croiser perceptions et indicateurs à l’échelle communale**, ni d’identifier des **effets de seuil** (ex : une commune avec des équipements corrects mais une perception dégradée par des problèmes spécifiques comme l’insécurité ou la pollution).
+
+---
+
+### **5. Conclusion : ce que l’on peut (et ne peut pas) dire**
+- **Impossible de classer les 10 communes aux écarts les plus marqués** : les données nécessaires (scores OppChoVec **et** perceptions subjectives **par commune**) sont **absentes ou incomplètes**.
+- **Seules 16 communes ont des perceptions mesurées** (selon l’enquête citoyenne), et **aucune n’a de score OppChoVec associé** pour calculer un écart.
+- **Deux cas particuliers** :
+  - **Corscia** : score OppChoVec très bas (2,38/10), mais **aucune perception** pour comparer.
+  - **Bastia, Lucciana, etc.** : perceptions basses (2,50 à 3,67/5), mais **aucun indicateur objectif** pour évaluer si les habitants sous-estiment ou non leur qualité de vie réelle.
+
+**Recommandation** :
+Pour répondre précisément à la question, il faudrait :
+1. Disposer des **scores OppChoVec</div>
+  </details>
+</div>
+<div class="config-block" style="border-left:4px solid #2980b9">
+  <div class="config-header">
+    <span class="config-name" style="color:#2980b9">Decomp+Raptor</span>
+    <span class="badge" style="background:#27ae60">5.00</span>
+    <span class="badge" style="background:#27ae60">✓ clean</span>
+    <span class="meta">66 sources · 70.6s RAG</span>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="section-title">Dimensions</div>
+      <table class="dim-table"><tr><td class="dim-label">Pertinence</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse respecte les attentes en signalant clairement les limites des données disponibles pour répondre à la question.</td></tr><tr><td class="dim-label">Fondement factuel</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Les affirmations sont bien fondées sur les sources disponibles et les limites sont correctement signalées.</td></tr><tr><td class="dim-label">Nuance/incertitude</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse est bien nuancée, avec un signalement explicite des limites des données et des approximations nécessaires.</td></tr><tr><td class="dim-label">Cohérence quali/quanti</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse intègre correctement les données qualitatives et quantitatives disponibles, tout en signalant les limites de l'analyse.</td></tr></table>
+    </div>
+    <div>
+      <div class="section-title">Mislabelling</div>
+      <table class="mis-table"><tr><td style="color:#27ae60;font-weight:bold">R1</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R2</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R3</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R4</td><td style="font-size:0.85em">non</td></tr></table><div class="sig-box"><b>Signalements détectés :</b><ul><li>Les données d’enquête citoyenne ne couvrent que 16 communes</li><li>Aucun classement complet des 360 communes n’est fourni</li></ul></div>
+    </div>
+  </div>
+
+  <div class="section-title">Raisonnement du juge</div>
+  <div class="raisonnement">La réponse signale explicitement les limites des données disponibles pour établir un classement précis, en accord avec les attentes pour une section sur les limites architecturales.</div>
+
+  <details>
+    <summary>Réponse complète du système (5543 car.)</summary>
+    <div class="answer">### **Synthèse : Classement des 10 communes corses avec les écarts les plus marqués entre indicateurs objectifs et perceptions subjectives**
+
+**Limites des données disponibles**
+L’analyse des écarts entre bien-être objectif (mesuré par les indicateurs territoriaux) et perceptions subjectives (enquêtes citoyennes) se heurte à des contraintes majeures :
+- **Les données d’enquête citoyenne** ne couvrent que **16 communes** (sur 360), avec un seuil minimal de 3 répondants par commune. Les scores de bien-être perçu ne sont donc pas représentatifs de l’ensemble de la Corse, et **aucune donnée spécifique n’existe pour la majorité des communes**.
+- **Les indicateurs territoriaux objectifs** (scores OppChoVec) ne sont disponibles que pour **10 communes du Centre Corse** et une commune isolée (Corscia). Aucun classement complet des 360 communes n’est fourni pour identifier les extrêmes (scores les plus élevés ou les plus faibles).
+
+Malgré ces lacunes, une analyse partielle est possible pour les communes où les deux types de données coexistent.
+
+---
+
+### **1. Communes avec des écarts potentiellement marqués (données disponibles)**
+Seules **deux communes** apparaissent à la fois dans les classements objectifs (OppChoVec) et subjectifs (enquête citoyenne) :
+- **Corte** :
+  - **Indicateurs territoriaux** : Score OppChoVec de **2,71/10** (6ᵉ plus faible parmi les 10 communes du Centre Corse), reflétant des fragilités en revenus, emploi, accès aux services et éducation.
+  - **Perception citoyenne** : Score de bien-être perçu de **3,52/5** (12ᵉ rang sur 16 communes enquêtées), soit un niveau "moyen-faible".
+  - **Écart** : Corte combine un **score objectif parmi les plus bas** (pour son territoire) et une **perception légèrement meilleure que les communes urbaines comme Bastia ou Lucciana**. Cet écart suggère que les habitants relativisent les difficultés structurelles, possiblement grâce à des facteurs non mesurés (cadre de vie, dynamisme étudiant, etc.).
+
+- **Bastia** :
+  - **Indicateurs territoriaux** : Aucune donnée OppChoVec disponible pour cette commune.
+  - **Perception citoyenne** : Score de **3,55/5** (11ᵉ rang), proche de Corte. Les entretiens qualitatifs soulignent des tensions liées à la densité urbaine, aux transports et à l’accès aux services, malgré une offre d’équipements supérieure à la moyenne corse.
+
+**Autres communes à surveiller (données partielles)** :
+- **Lucciana** et **Borgo** affichent les **perceptions les plus négatives** (2,50/5 et 3,00/5), mais **aucun score OppChoVec n’est disponible** pour les comparer aux indicateurs objectifs. Leur classement parmi les communes les plus mal perçues pourrait révéler un décalage avec des réalités territoriales plus favorables (proximité de Bastia, infrastructures).
+- **Muracciole** et **Rospigliani** (Centre Corse) ont les **scores OppChoVec les plus faibles** (1,02/10 et 1,99/10), mais **aucune donnée d’enquête citoyenne** ne permet d’évaluer si les habitants perçoivent ces difficultés.
+
+---
+
+### **2. Tendances générales (Corse entière)**
+Bien que les données ne permettent pas un classement précis des 10 communes aux écarts les plus marqués, des **tensions récurrentes** émergent entre indicateurs et perceptions :
+- **Les zones urbaines et périurbaines** (Bastia, Ajaccio, Lucciana, Borgo) concentrent les **perceptions les plus négatives**, malgré des **équipements et services supérieurs à la moyenne corse** (selon les indicateurs territoriaux). Les entretiens qualitatifs révèlent des frustrations liées à la densité, aux prix du logement, ou à la saturation des infrastructures.
+- **Les communes rurales du Centre Corse** (Muracciole, Rospigliani) cumulent des **scores objectifs très bas** (revenus, emploi, accès aux services), mais **aucune donnée subjective** ne confirme si les habitants en ont conscience ou s’ils valorisent d’autres aspects (isolement, cadre naturel).
+
+---
+
+### **3. Recommandations pour affiner l’analyse**
+Pour identifier les **10 communes aux écarts les plus marqués**, il serait nécessaire de :
+1. **Étendre l’enquête citoyenne** à un échantillon représentatif de communes, notamment celles aux scores OppChoVec extrêmes (très bas ou très élevés).
+2. **Croiser les données** avec des indicateurs complémentaires (taux de pauvreté, accès aux soins, dynamisme économique) pour expliquer les décalages.
+3. **Intégrer des entretiens qualitatifs** dans les communes rurales, où les perceptions pourraient diverger fortement des indicateurs bruts (ex. : valorisation de la tranquillité malgré des revenus faibles).
+
+---
+
+### **Conclusion**
+Avec les données actuelles, **seule Corte** présente un écart mesurable entre un **score objectif faible** (2,71/10) et une **perception légèrement meilleure** (3,52/5). Les autres communes aux écarts potentiellement marqués (Lucciana, Borgo, Muracciole) souffrent de **lacunes dans un des deux types de données**, empêchant toute comparaison fiable.
+
+**Pour aller plus loin** :
+- Les **zones urbaines** (Bastia, Ajaccio) mériteraient une attention particulière, car leurs **perceptions négatives** contrastent souvent avec des **indicateurs objectifs favorables**.
+- Les **communes rurales isolées** (Centre Corse) pourraient révéler des écarts inverses : des **scores objectifs très bas** masqués par des **perceptions positives** liées à la qualité de vie non mesurée (environnement, solidarités locales).
+
+En l’état, **aucun classement robuste des 10 communes aux écarts les plus marqués ne peut être établi**. Une collecte de données plus ciblée est indispensable.</div>
+  </details>
+</div>
+  </div>
+</div>
+<div class="question-card">
+  <div class="q-header">
+    <span class="q-num">Q106</span>
+    <span class="q-section">Limites architecturales</span>
+  </div>
+  <div class="q-text">Quelles sont les communes corses qui présentent un score Vec inférieur à 3/10 et où les habitants expriment néanmoins une satisfaction élevée concernant leur cadre de vie ?</div>
+  <table class="summary-table"><tr><th>Config</th><th>Score</th><th>Flags</th><th>Raisonnement (extrait)</th></tr><tr><td style="color:#c0392b;font-weight:bold">Vanilla k10</td><td><span class="badge" style="background:#27ae60">5.00</span></td><td><span class="badge" style="background:#27ae60">✓ clean</span></td><td class="justif">La réponse signale explicitement l'absence de données permettant de croiser score Vec et satisfaction par commune, et ex…</td></tr><tr><td style="color:#e67e22;font-weight:bold">Vanilla k25</td><td><span class="badge" style="background:#27ae60">5.00</span></td><td><span class="badge" style="background:#27ae60">✓ clean</span></td><td class="justif">La réponse signale explicitement l'absence de données nécessaires pour croiser les scores Vec et la satisfaction par com…</td></tr><tr><td style="color:#27ae60;font-weight:bold">Decomp</td><td><span class="badge" style="background:#27ae60">5.00</span></td><td><span class="badge" style="background:#27ae60">✓ clean</span></td><td class="justif">La réponse signale explicitement l'absence de données qualitatives pour les communes avec un score Vec < 3/10 et mention…</td></tr><tr><td style="color:#2980b9;font-weight:bold">Decomp+Raptor</td><td><span class="badge" style="background:#27ae60">5.00</span></td><td><span class="badge" style="background:#27ae60">✓ clean</span></td><td class="justif">La réponse signale explicitement l'absence de données permettant de répondre à la question, en expliquant les limites de…</td></tr></table>
+  <div class="configs-container">
+    
+<div class="config-block" style="border-left:4px solid #c0392b">
+  <div class="config-header">
+    <span class="config-name" style="color:#c0392b">Vanilla k10</span>
+    <span class="badge" style="background:#27ae60">5.00</span>
+    <span class="badge" style="background:#27ae60">✓ clean</span>
+    <span class="meta">10 sources · 12.5s RAG</span>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="section-title">Dimensions</div>
+      <table class="dim-table"><tr><td class="dim-label">Pertinence</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Réponse alignée avec la section 'Limites architecturales', signalant clairement l'absence de données nécessaires.</td></tr><tr><td class="dim-label">Fondement factuel</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Les affirmations sont correctement fondées sur les sources disponibles, avec un refus explicite bien justifié.</td></tr><tr><td class="dim-label">Nuance/incertitude</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse est bien nuancée, signalant les limites des données et l'absence de croisement possible.</td></tr><tr><td class="dim-label">Cohérence quali/quanti</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse respecte la distinction entre données quantitatives disponibles et l'absence de données qualitatives nécessaires.</td></tr></table>
+    </div>
+    <div>
+      <div class="section-title">Mislabelling</div>
+      <table class="mis-table"><tr><td style="color:#27ae60;font-weight:bold">R1</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R2</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R3</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R4</td><td style="font-size:0.85em">non</td></tr></table><div class="sig-box"><b>Signalements détectés :</b><ul><li>aucune donnée ne permet de répondre précisément à cette question</li><li>absence de croisement des données</li></ul></div>
+    </div>
+  </div>
+
+  <div class="section-title">Raisonnement du juge</div>
+  <div class="raisonnement">La réponse signale explicitement l'absence de données permettant de croiser score Vec et satisfaction par commune, et explique les limites des données disponibles.</div>
+
+  <details>
+    <summary>Réponse complète du système (1591 car.)</summary>
+    <div class="answer">D'après les documents fournis, **aucune donnée ne permet de répondre précisément à cette question** pour les raisons suivantes :
+
+1. **Données sur le score Vec** :
+   Les scores Vec (Vécu) sont uniquement disponibles pour les **18 communes de la Communauté de Communes du Cap Corse** (indicateur OppChoVec, INSEE 2020-2022). Parmi elles, **aucune ne dépasse 3/10** (le score Vec le plus élevé est de **2,80/10 pour Olmeta-di-Capocorso**, et le plus faible de **1,97/10 pour Centuri**). Cependant, ces données ne couvrent pas d'autres communes corses.
+
+2. **Données sur la satisfaction des habitants** :
+   L'enquête citoyenne (2024-2026) mesure la satisfaction sur 14 dimensions, mais **ne fournit pas de résultats détaillés par commune** (seuls les profils démographiques des répondants sont disponibles pour Porto-Vecchio, Calvi, Ghisonaccia, Bastelicaccia, Corte et Venzolasca). Aucune information n'est donnée sur la satisfaction liée au **cadre de vie** (ou à une dimension équivalente comme "logement", "environnement", etc.) **par commune**.
+
+3. **Absence de croisement des données** :
+   Il n'existe pas de lien établi entre les scores Vec (objectifs) et les réponses subjectives des habitants (enquête citoyenne) dans les documents fournis.
+
+---
+**Conclusion** :
+Les données disponibles ne permettent pas d'identifier des communes corses hors du Cap Corse avec un score Vec &lt; 3/10 et une satisfaction élevée des habitants. Pour le Cap Corse, bien que toutes les communes aient un score Vec &lt; 3/10, **aucune donnée sur la satisfaction des habitants n'est fournie** pour ces communes.</div>
+  </details>
+</div>
+<div class="config-block" style="border-left:4px solid #e67e22">
+  <div class="config-header">
+    <span class="config-name" style="color:#e67e22">Vanilla k25</span>
+    <span class="badge" style="background:#27ae60">5.00</span>
+    <span class="badge" style="background:#27ae60">✓ clean</span>
+    <span class="meta">25 sources · 11.7s RAG</span>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="section-title">Dimensions</div>
+      <table class="dim-table"><tr><td class="dim-label">Pertinence</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse est pertinente car elle identifie clairement les limites des données disponibles et explique pourquoi la question ne peut être répondue.</td></tr><tr><td class="dim-label">Fondement factuel</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse est bien fondée sur les sources fournies, avec un refus explicite basé sur l'absence de données nécessaires.</td></tr><tr><td class="dim-label">Nuance/incertitude</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse est bien nuancée, signalant clairement les limitations des données et l'impossibilité de répondre à la question.</td></tr><tr><td class="dim-label">Cohérence quali/quanti</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse maintient une cohérence en ne prétendant pas croiser des données qualitatives et quantitatives inexistantes.</td></tr></table>
+    </div>
+    <div>
+      <div class="section-title">Mislabelling</div>
+      <table class="mis-table"><tr><td style="color:#27ae60;font-weight:bold">R1</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R2</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R3</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R4</td><td style="font-size:0.85em">non</td></tr></table><div class="sig-box"><b>Signalements détectés :</b><ul><li>aucune donnée ne permet de répondre précisément à cette question</li><li>Les scores Vec ne sont pas disponibles dans les extraits</li><li>pas de données par commune sur la satisfaction liée au cadre de vie</li><li>Il n'existe pas de tableau ou d'analyse associant les scores Vec et les niveaux de satisfaction</li></ul></div>
+    </div>
+  </div>
+
+  <div class="section-title">Raisonnement du juge</div>
+  <div class="raisonnement">La réponse signale explicitement l'absence de données nécessaires pour croiser les scores Vec et la satisfaction par commune, justifiant ainsi l'impossibilité de répondre précisément.</div>
+
+  <details>
+    <summary>Réponse complète du système (1503 car.)</summary>
+    <div class="answer">D'après les documents fournis, **aucune donnée ne permet de répondre précisément à cette question** pour les raisons suivantes :
+
+1. **Score Vec par commune** :
+   Les scores **Vec (Vécu)** ne sont pas détaillés individuellement pour chaque commune, sauf pour les 18 communes de la **CC du Cap Corse** (où le score Vec moyen de l'intercommunalité est de **2,64/10**, mais sans ventilation par commune). Pour les autres communes corses, les scores Vec ne sont pas disponibles dans les extraits.
+
+2. **Satisfaction subjective des habitants** :
+   L'enquête citoyenne (2024-2026) fournit des **notes moyennes de satisfaction par dimension** (ex. : logement, sécurité, transports) pour la Corse entière, mais **pas de données par commune** sur la satisfaction liée au cadre de vie. Les profils démographiques des répondants (ex. : Ajaccio, Bastia, Corte) ne sont pas croisés avec des indicateurs de satisfaction locale.
+
+3. **Absence de croisement des données** :
+   Il n'existe pas de tableau ou d'analyse associant les scores **Vec** (objectifs) et les **niveaux de satisfaction** (subjectifs) à l'échelle communale.
+
+---
+**Conclusion** :
+Les documents ne permettent pas d'identifier des communes corses combinant un **score Vec &lt; 3/10** et une **satisfaction élevée des habitants** pour leur cadre de vie. Pour répondre, il faudrait :
+- Les scores Vec **par commune** (hors Cap Corse, non fournis).
+- Les résultats de l'enquête citoyenne **par commune** (seules les moyennes régionales sont disponibles).</div>
+  </details>
+</div>
+<div class="config-block" style="border-left:4px solid #27ae60">
+  <div class="config-header">
+    <span class="config-name" style="color:#27ae60">Decomp</span>
+    <span class="badge" style="background:#27ae60">5.00</span>
+    <span class="badge" style="background:#27ae60">✓ clean</span>
+    <span class="meta">25 sources · 60.5s RAG</span>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="section-title">Dimensions</div>
+      <table class="dim-table"><tr><td class="dim-label">Pertinence</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse respecte le type attendu en signalant clairement les limites des données disponibles.</td></tr><tr><td class="dim-label">Fondement factuel</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Les affirmations sont bien fondées sur les sources disponibles et les limites sont correctement signalées.</td></tr><tr><td class="dim-label">Nuance/incertitude</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse est bien nuancée, avec des signalements explicites des limites des données.</td></tr><tr><td class="dim-label">Cohérence quali/quanti</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse intègre correctement les données quantitatives et signale l'absence de données qualitatives.</td></tr></table>
+    </div>
+    <div>
+      <div class="section-title">Mislabelling</div>
+      <table class="mis-table"><tr><td style="color:#27ae60;font-weight:bold">R1</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R2</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R3</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R4</td><td style="font-size:0.85em">non</td></tr></table><div class="sig-box"><b>Signalements détectés :</b><ul><li>Aucune enquête citoyenne spécifique ne mesure la satisfaction du cadre de vie pour Centuri, Cagnano ou Ersa.</li><li>Il est donc impossible de savoir si d’autres territoires partagent ce profil.</li><li>Sans données locales précises (enquêtes ou entretiens ciblés), il est impossible de confirmer si ce phénomène s’applique à Centuri, Cagnano ou Ersa.</li></ul></div>
+    </div>
+  </div>
+
+  <div class="section-title">Raisonnement du juge</div>
+  <div class="raisonnement">La réponse signale explicitement l'absence de données qualitatives pour les communes avec un score Vec < 3/10 et mentionne les limites des données disponibles.</div>
+
+  <details>
+    <summary>Réponse complète du système (5191 car.)</summary>
+    <div class="answer">### **Synthèse : Communes corses à faible score Vec mais avec une satisfaction élevée du cadre de vie**
+
+**Réponse à la question initiale :**
+D’après les données disponibles, **aucune commune corse ne remplit simultanément les deux critères** – un score Vec inférieur à 3/10 *et* une satisfaction élevée des habitants concernant leur cadre de vie – avec des preuves à la fois objectives (indicateurs territoriaux) et subjectives (enquêtes citoyennes ou verbatims).
+
+Cependant, des éléments partiels permettent d’éclairer la situation pour certaines communes du **Cap Corse**, où des scores Vec très bas coexistent avec des dynamiques territoriales spécifiques.
+
+---
+
+### **Points clés**
+
+#### **1. Communes avec un score Vec &lt; 3/10 : le cas du Cap Corse**
+Selon les indicateurs territoriaux objectifs, **trois communes du Cap Corse** affichent un score Vec inférieur à 3/10 :
+- **Centuri** (1,97/10)
+- **Cagnano** (2,23/10)
+- **Ersa** (2,38/10)
+
+Ces scores reflètent des **faiblesses structurelles** en matière de revenu fiscal moyen, de qualité du logement, de stabilité de l’emploi ou d’accès aux services en moins de 20 minutes. Le Cap Corse dans son ensemble obtient d’ailleurs un score Vec de **2,64/10**, bien en dessous de la moyenne corse (3,46/10).
+
+**Limite importante** : Aucune donnée n’est disponible pour les autres communes corses hors du Cap Corse. Il est donc impossible de savoir si d’autres territoires partagent ce profil.
+
+---
+
+#### **2. Satisfaction des habitants : des données manquantes ou non concordantes**
+- **Aucune enquête citoyenne spécifique** ne mesure la satisfaction du cadre de vie pour **Centuri, Cagnano ou Ersa**. Les seules données d’enquête disponibles couvrent **Corte** (45 répondants) et **Venzolasca** (1 répondant), mais ces communes ne figurent pas parmi celles avec un Vec &lt; 3/10.
+- **Pour la Corse entière**, les enquêtes montrent que les habitants expriment souvent une **forte attachement à leur cadre de vie naturel** (montagne, mer, tranquillité), mais ces perceptions ne sont pas ventilées par commune. Il est donc impossible d’affirmer que les habitants des communes à faible Vec partagent cette satisfaction.
+
+**Exemple de contraste** :
+À **Soccia** (1 répondant à l’enquête), le cadre de vie est décrit comme "exceptionnel" malgré un score Vec non précisé. Mais cette donnée isolée ne permet pas de généraliser.
+
+---
+
+#### **3. Perceptions positives malgré des indicateurs objectifs défavorables : un paradoxe à explorer**
+Bien que les **verbatims citoyens** ne soient pas disponibles pour les communes du Cap Corse, des **témoignages qualitatifs** recueillis ailleurs en Corse suggèrent que des habitants de zones rurales ou isolées valorisent fortement :
+- La **tranquillité** et l’absence de nuisances urbaines,
+- La **proximité avec la nature** (montagnes, littoral préservé),
+- Un **sentiment de sécurité** et de communauté.
+
+Ces dimensions, **non captées par le score Vec**, pourraient expliquer pourquoi certains habitants déclarent une satisfaction élevée malgré des indicateurs socio-économiques faibles.
+
+**Problème** : Sans données locales précises (enquêtes ou entretiens ciblés), il est impossible de confirmer si ce phénomène s’applique à **Centuri, Cagnano ou Ersa**.
+
+---
+
+#### **4. Indicateurs complémentaires : des lacunes persistantes**
+Les données territoriales objectives ne fournissent pas d’informations sur :
+- L’**accès aux espaces verts** (parcs, sentiers, plages),
+- La **sécurité perçue** par les habitants,
+- La **qualité de l’air** ou le bruit,
+autant de facteurs qui influencent la satisfaction du cadre de vie mais ne sont pas intégrés au score Vec.
+
+**Exemple** :
+Une commune comme **Centuri**, malgré son faible Vec, bénéficie d’un **littoral préservé** et d’un **patrimoine naturel remarquable** (comme la réserve de Finocchiarola). Ces atouts pourraient compenser, aux yeux des habitants, les difficultés économiques ou logistiques – mais cela reste une hypothèse en l’absence de données subjectives locales.
+
+---
+
+### **Conclusion : un décalage possible, mais non prouvé**
+Les données disponibles révèlent un **décalage potentiel** entre :
+- Des **indicateurs territoriaux objectifs défavorables** (Vec &lt; 3/10 pour Centuri, Cagnano et Ersa),
+- Et des **perceptions positives du cadre de vie**, suggérées par des enquêtes générales en Corse mais **non documentées pour ces communes spécifiques**.
+
+**Pour aller plus loin**, il faudrait :
+1. **Des enquêtes citoyennes ciblées** dans les communes du Cap Corse (ou d’autres territoires à faible Vec) pour mesurer la satisfaction réelle des habitants.
+2. **Une analyse qualitative** (entretiens, verbatims) pour comprendre quels facteurs (nature, tranquillité, solidarité locale) compensent les faiblesses socio-économiques.
+3. **Des indicateurs complémentaires** sur l’accès aux espaces naturels, la sécurité ou la qualité environnementale, absents des scores actuels.
+
+**En l’état, aucune commune corse ne peut être identifiée comme combinant un score Vec &lt; 3/10 et une satisfaction élevée du cadre de vie avec des preuves solides.** Le Cap Corse, avec ses scores Vec très bas, apparaît comme un territoire prioritaire pour approfondir cette question.</div>
+  </details>
+</div>
+<div class="config-block" style="border-left:4px solid #2980b9">
+  <div class="config-header">
+    <span class="config-name" style="color:#2980b9">Decomp+Raptor</span>
+    <span class="badge" style="background:#27ae60">5.00</span>
+    <span class="badge" style="background:#27ae60">✓ clean</span>
+    <span class="meta">81 sources · 74.2s RAG</span>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="section-title">Dimensions</div>
+      <table class="dim-table"><tr><td class="dim-label">Pertinence</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse respecte le type attendu en signalant clairement les limites des données.</td></tr><tr><td class="dim-label">Fondement factuel</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Les affirmations sont bien fondées sur les sources disponibles et les limites sont correctement signalées.</td></tr><tr><td class="dim-label">Nuance/incertitude</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse est bien nuancée, avec des signalements explicites des absences de données.</td></tr><tr><td class="dim-label">Cohérence quali/quanti</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Bonne intégration des données qualitatives et quantitatives, avec signalement des limites.</td></tr></table>
+    </div>
+    <div>
+      <div class="section-title">Mislabelling</div>
+      <table class="mis-table"><tr><td style="color:#27ae60;font-weight:bold">R1</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R2</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R3</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R4</td><td style="font-size:0.85em">non</td></tr></table><div class="sig-box"><b>Signalements détectés :</b><ul><li>aucune commune corse ne peut être identifiée avec certitude</li><li>aucune donnée territoriale ne confirme que leur score Vec seul est inférieur à 3/10</li><li>aucune donnée d’enquête spécifique n’existe pour Centuri, Cagnano ou Ersa</li></ul></div>
+    </div>
+  </div>
+
+  <div class="section-title">Raisonnement du juge</div>
+  <div class="raisonnement">La réponse signale explicitement l'absence de données permettant de répondre à la question, en expliquant les limites des données disponibles.</div>
+
+  <details>
+    <summary>Réponse complète du système (5479 car.)</summary>
+    <div class="answer">### **Synthèse : Communes corses avec un cadre de vie objectivement fragile mais une satisfaction élevée des habitants**
+
+**Réponse à la question initiale** :
+D’après les données disponibles, **aucune commune corse ne peut être identifiée avec certitude** comme combinant un **score Vec inférieur à 3/10** (indicateur territorial mesurant les conditions matérielles de vie : revenu, logement, emploi, accès aux services) **et une satisfaction élevée des habitants concernant leur cadre de vie**. Voici les éléments clés qui expliquent cette conclusion :
+
+---
+
+#### **1. Communes avec un score Vec faible : un constat limité au Cap Corse**
+Selon les indicateurs territoriaux objectifs, **trois communes du Cap Corse** présentent un **score global OppChoVec inférieur à 3/10**, ce qui suggère des conditions de vie matérielles très dégradées (revenu faible, accès limité aux services, logements de moindre qualité, etc.) :
+- **Centuri** (1,97/10)
+- **Cagnano** (2,23/10)
+- **Ersa** (2,38/10)
+
+**Attention** : Ces scores sont des **moyennes globales** (OppChoVec) et non des mesures isolées du seul sous-indicateur *Vec*. Bien que ces communes figurent parmi les moins bien dotées de Corse, **aucune donnée territoriale ne confirme que leur score *Vec* seul est inférieur à 3/10**. Par ailleurs, **aucune autre commune corse n’est identifiée** dans les données disponibles avec un Vec &lt; 3/10.
+
+---
+
+#### **2. Satisfaction des habitants : des données régionales, pas communales**
+Les enquêtes citoyennes disponibles **ne permettent pas d’évaluer la satisfaction des habitants à l’échelle de ces communes**. Voici ce que l’on sait :
+- **À l’échelle de la Corse entière**, les habitants interrogés (notamment les cadres et professions intermédiaires) déclarent une **qualité de vie moyenne de 4,07/5** (soit 8,14/10) et un **bonheur perçu de 3,83/5** (7,66/10) selon l’enquête citoyenne. Ces scores reflètent une **satisfaction globale modérée à élevée**, mais **ne sont pas ventilés par commune**.
+- **Aucune donnée d’enquête spécifique** n’existe pour Centuri, Cagnano ou Ersa, ni pour aucune autre commune corse avec un Vec faible. Impossible donc de vérifier si leurs habitants expriment une satisfaction élevée malgré leurs conditions matérielles difficiles.
+
+**Exemple de contraste manquant** :
+Une commune comme **Valle-d’Alesani** a un score Vec détaillé de **2,78/10** (selon les indicateurs territoriaux), mais **aucune enquête citoyenne locale** ne permet de savoir si ses habitants en sont satisfaits.
+
+---
+
+#### **3. Paysages et environnement naturel : un atout subjectif non quantifié**
+Les entretiens qualitatifs révèlent que **les habitants de Corse valorisent fortement leur environnement naturel** (montagnes, mer, qualité de l’air), comme en témoigne ce verbatim :
+*« La présence forte de la nature (montagnes, rivières, mer, etc.) est essentielle à mon bien-être. »* (selon les entretiens qualitatifs).
+
+Cependant :
+- **Aucun score quantitatif** ne mesure spécifiquement la satisfaction liée aux paysages ou à l’environnement naturel, ni à l’échelle communale ni régionale.
+- Les indicateurs territoriaux (comme le Vec) **ne captent pas cette dimension** : ils mesurent des réalités matérielles (revenu, logement, services), pas la perception de la beauté des lieux.
+
+**Hypothèse plausible** :
+Dans des communes comme Centuri ou Ersa, **l’attachement aux paysages (littoral, maquis, isolement préservé) pourrait compenser les difficultés matérielles** aux yeux des habitants. Mais **aucune donnée ne confirme cette intuition** pour ces communes en particulier.
+
+---
+
+#### **4. Recommandation du cadre de vie : une donnée absente**
+La question *« Recommanderiez-vous votre commune comme lieu de vie pour son cadre de vie ? »* n’a **jamais été posée** dans les enquêtes disponibles. Impossible donc d’identifier des communes où un **taux de réponse positif &gt;80%** viendrait contredire un score Vec faible.
+
+**Seul cas partiel** :
+L’Île-Rousse a un **score OppChoVec global de 1,52/10** (selon les données territoriales objectives), ce qui suggère un Vec très bas. Mais **aucune enquête citoyenne locale** ne permet de savoir si ses habitants la recommanderaient malgré tout.
+
+---
+
+### **Conclusion : un paradoxe non documenté, mais des pistes pour l’expliquer**
+**Aucune commune corse ne remplit aujourd’hui les deux critères** (Vec &lt; 3/10 + satisfaction élevée du cadre de vie) **avec les données disponibles**. Cependant, plusieurs éléments laissent penser que ce phénomène **pourrait exister** :
+1. **L’attachement aux paysages et à la nature** (fortement cité dans les entretiens) pourrait contrebalancer des conditions matérielles difficiles, surtout dans des zones rurales ou littorales préservées.
+2. **Les scores Vec ne mesurent pas tout** : une commune peut avoir un revenu moyen faible et des services limités, mais offrir une **qualité de vie perçue comme élevée** grâce à la tranquillité, la communauté locale, ou un environnement exceptionnel.
+3. **Les données manquent à l’échelle communale** : les enquêtes citoyennes sont rarement déclinées par commune, alors que les indicateurs territoriaux (comme le Vec) le sont. Ce décalage empêche toute analyse fine.
+
+**Pour aller plus loin** :
+Une étude ciblée sur les communes du Cap Corse (Centuri, Cagnano, Ersa) ou d’autres zones rurales, combinant **enquêtes locales de satisfaction** et **analyse des indicateurs territoriaux**, serait nécessaire pour vérifier si ce paradoxe existe bel et bien en Corse.</div>
+  </details>
+</div>
+  </div>
+</div>
+<div class="question-card">
+  <div class="q-header">
+    <span class="q-num">Q107</span>
+    <span class="q-section">Limites architecturales</span>
+  </div>
+  <div class="q-text">Existe-t-il une corrélation entre la qualité du logement et la satisfaction des habitants à l'échelle des communes corses ?</div>
+  <table class="summary-table"><tr><th>Config</th><th>Score</th><th>Flags</th><th>Raisonnement (extrait)</th></tr><tr><td style="color:#c0392b;font-weight:bold">Vanilla k10</td><td><span class="badge" style="background:#27ae60">5.00</span></td><td><span class="badge" style="background:#27ae60">✓ clean</span></td><td class="justif">La réponse signale explicitement l'absence de données suffisantes pour établir une corrélation entre la qualité du logem…</td></tr><tr><td style="color:#e67e22;font-weight:bold">Vanilla k25</td><td><span class="badge" style="background:#27ae60">5.00</span></td><td><span class="badge" style="background:#27ae60">✓ clean</span></td><td class="justif">La réponse signale explicitement l'absence de données permettant d'établir une corrélation entre la qualité du logement …</td></tr><tr><td style="color:#27ae60;font-weight:bold">Decomp</td><td><span class="badge" style="background:#27ae60">5.00</span></td><td><span class="badge" style="background:#27ae60">✓ clean</span></td><td class="justif">La réponse signale explicitement l'absence de données permettant d'établir une corrélation entre la qualité du logement …</td></tr><tr><td style="color:#2980b9;font-weight:bold">Decomp+Raptor</td><td><span class="badge" style="background:#27ae60">5.00</span></td><td><span class="badge" style="background:#27ae60">✓ clean</span></td><td class="justif">La réponse signale explicitement les limites méthodologiques et l'absence de données nécessaires pour établir une corrél…</td></tr></table>
+  <div class="configs-container">
+    
+<div class="config-block" style="border-left:4px solid #c0392b">
+  <div class="config-header">
+    <span class="config-name" style="color:#c0392b">Vanilla k10</span>
+    <span class="badge" style="background:#27ae60">5.00</span>
+    <span class="badge" style="background:#27ae60">✓ clean</span>
+    <span class="meta">10 sources · 13.6s RAG</span>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="section-title">Dimensions</div>
+      <table class="dim-table"><tr><td class="dim-label">Pertinence</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse est alignée avec la section 'Limites architecturales', signalant clairement l'insuffisance des données.</td></tr><tr><td class="dim-label">Fondement factuel</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Les affirmations sont correctement fondées sur les sources disponibles, avec un signalement explicite des limites.</td></tr><tr><td class="dim-label">Nuance/incertitude</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse est bien nuancée, indiquant clairement les insuffisances des données pour établir une corrélation.</td></tr><tr><td class="dim-label">Cohérence quali/quanti</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse intègre correctement les données quantitatives disponibles et signale l'absence de données qualitatives nécessaires.</td></tr></table>
+    </div>
+    <div>
+      <div class="section-title">Mislabelling</div>
+      <table class="mis-table"><tr><td style="color:#27ae60;font-weight:bold">R1</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R2</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R3</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R4</td><td style="font-size:0.85em">non</td></tr></table><div class="sig-box"><b>Signalements détectés :</b><ul><li>Les données sont insuffisantes pour répondre à la question.</li><li>Aucune corrélation ne peut être établie avec les éléments fournis.</li></ul></div>
+    </div>
+  </div>
+
+  <div class="section-title">Raisonnement du juge</div>
+  <div class="raisonnement">La réponse signale explicitement l'absence de données suffisantes pour établir une corrélation entre la qualité du logement et la satisfaction des habitants à l'échelle communale.</div>
+
+  <details>
+    <summary>Réponse complète du système (1825 car.)</summary>
+    <div class="answer">D'après les documents fournis, voici l'analyse strictement limitée à la question posée pour les communes corses mentionnées dans le contexte :
+
+1. **Données objectives sur le logement (indicateurs territoriaux)** :
+   - Aucune donnée directe sur la *qualité* du logement (état des logements, confort, insalubrité, etc.) n'est fournie pour les communes citées (Corscia, Corrano, Castello-di-Rostino, Pianello, Quercitello, Corte, Crocicchia). Les seules informations disponibles concernent :
+     - La **surface moyenne des logements** (ex. : 62 m² à Corscia, 76,2 m² à Corrano).
+     - Le **prix moyen au m²** (ex. : 1 000 € à Corscia, 550 € à Corrano).
+     - La **part de résidences secondaires** (ex. : 65,9 % à Corscia, 53,7 % à Corrano) et de logements vacants (ex. : 1,8 % à Corscia).
+     *(Source : indicateurs territoriaux, INSEE 2020-2022)*
+
+2. **Données subjectives sur la satisfaction liée au logement (enquête citoyenne)** :
+   - L'enquête citoyenne 2024-2026 (en cours) classe le **logement** comme la dimension la plus satisfaisante en Corse (moyenne de **3,98/5** sur l'ensemble des répondants, N=246).
+   - Cependant, cette donnée est **globale pour la Corse** et non ventilée par commune. Aucune corrélation ne peut donc être établie à l'échelle communale entre la qualité objective du logement et la satisfaction des habitants.
+   *(Source : enquête citoyenne Qualité de vie en Corse, 2024-2026)*
+
+3. **Conclusion** :
+   - **Les données sont insuffisantes** pour répondre à la question. Il manque :
+     - Des indicateurs objectifs sur la *qualité* des logements (ex. : état du bâti, équipements, confort) pour les communes concernées.
+     - Des données de satisfaction *par commune* (l'enquête fournit uniquement une moyenne corse).
+   - Aucune corrélation ne peut être établie avec les éléments fournis.</div>
+  </details>
+</div>
+<div class="config-block" style="border-left:4px solid #e67e22">
+  <div class="config-header">
+    <span class="config-name" style="color:#e67e22">Vanilla k25</span>
+    <span class="badge" style="background:#27ae60">5.00</span>
+    <span class="badge" style="background:#27ae60">✓ clean</span>
+    <span class="meta">25 sources · 13.2s RAG</span>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="section-title">Dimensions</div>
+      <table class="dim-table"><tr><td class="dim-label">Pertinence</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse est alignée avec la section et sous-section, signalant clairement les limites des données.</td></tr><tr><td class="dim-label">Fondement factuel</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Les affirmations sont correctement fondées sur les sources disponibles, avec une bonne identification des limites.</td></tr><tr><td class="dim-label">Nuance/incertitude</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse est bien nuancée, indiquant clairement l'insuffisance des données pour établir une corrélation.</td></tr><tr><td class="dim-label">Cohérence quali/quanti</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Bonne intégration des données quantitatives avec un signalement explicite des limites qualitatives.</td></tr></table>
+    </div>
+    <div>
+      <div class="section-title">Mislabelling</div>
+      <table class="mis-table"><tr><td style="color:#27ae60;font-weight:bold">R1</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R2</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R3</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R4</td><td style="font-size:0.85em">non</td></tr></table>
+    </div>
+  </div>
+
+  <div class="section-title">Raisonnement du juge</div>
+  <div class="raisonnement">La réponse signale explicitement l'absence de données permettant d'établir une corrélation entre la qualité du logement et la satisfaction des habitants à l'échelle communale.</div>
+
+  <details>
+    <summary>Réponse complète du système (1930 car.)</summary>
+    <div class="answer">D'après les documents fournis, voici l'analyse strictement limitée à la question posée et aux données disponibles :
+
+1. **Données objectives sur le logement (indicateurs territoriaux)** :
+   - Aucune donnée spécifique sur la *qualité* du logement (état des logements, confort, insalubrité, etc.) n'est fournie pour les communes corses, y compris pour Corscia. Les seules informations disponibles concernent :
+     - La surface moyenne des logements (ex. : 62 m² à Corscia, 48 m² à Quercitello).
+     - Le prix moyen au m² (ex. : 1 000 € à Corscia, 1 458 € à Quercitello).
+     - La part de résidences secondaires (65,9 % à Corscia) et de logements vacants (1,8 % à Corscia).
+     *(Source : indicateurs territoriaux 2020-2022)*
+
+2. **Données subjectives sur la satisfaction (enquête citoyenne)** :
+   - À l'échelle de la Corse entière (N=246 répondants), le **logement** est la dimension la mieux notée (3,98/5), devant la sécurité (3,79/5) et l'emploi (3,76/5).
+   - Aucune donnée *par commune* n'est disponible dans les extraits pour croiser satisfaction et qualité du logement.
+   *(Source : enquête citoyenne Qualité de vie en Corse, 2024-2026)*
+
+3. **Corrélation possible ?**
+   - Les documents ne permettent **pas** d'établir une corrélation entre qualité du logement et satisfaction des habitants *à l'échelle communale*, car :
+     - Les indicateurs territoriaux ne mesurent pas la qualité intrinsèque des logements (seulement des données quantitatives comme la surface ou le prix).
+     - Les données de satisfaction sont agrégées pour toute la Corse et non ventilées par commune.
+     - Aucune analyse statistique ou verbatim citoyen ne lie explicitement ces deux dimensions.
+
+**Conclusion** : Les données disponibles sont insuffisantes pour répondre à la question. Aucune corrélation ne peut être établie entre qualité du logement et satisfaction des habitants à l'échelle des communes corses avec les extraits fournis.</div>
+  </details>
+</div>
+<div class="config-block" style="border-left:4px solid #27ae60">
+  <div class="config-header">
+    <span class="config-name" style="color:#27ae60">Decomp</span>
+    <span class="badge" style="background:#27ae60">5.00</span>
+    <span class="badge" style="background:#27ae60">✓ clean</span>
+    <span class="meta">25 sources · 65.4s RAG</span>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="section-title">Dimensions</div>
+      <table class="dim-table"><tr><td class="dim-label">Pertinence</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse est alignée avec la section 'Limites architecturales', signalant clairement les limites des données disponibles.</td></tr><tr><td class="dim-label">Fondement factuel</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Les affirmations sont bien fondées sur les sources disponibles, avec un bon signalement des limites.</td></tr><tr><td class="dim-label">Nuance/incertitude</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse est bien nuancée, avec des signalements explicites des limites des données.</td></tr><tr><td class="dim-label">Cohérence quali/quanti</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Bonne intégration des données quantitatives avec un signalement clair de l'absence de données qualitatives nécessaires pour établir une corrélation.</td></tr></table>
+    </div>
+    <div>
+      <div class="section-title">Mislabelling</div>
+      <table class="mis-table"><tr><td style="color:#27ae60;font-weight:bold">R1</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R2</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R3</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R4</td><td style="font-size:0.85em">non</td></tr></table><div class="sig-box"><b>Signalements détectés :</b><ul><li>Aucune donnée ne permet d’isoler la qualité du logement seule</li><li>Les données de satisfaction ne sont ni systématiques ni comparables entre communes</li><li>Aucune corrélation ne peut être établie avec les données actuelles</li></ul></div>
+    </div>
+  </div>
+
+  <div class="section-title">Raisonnement du juge</div>
+  <div class="raisonnement">La réponse signale explicitement l'absence de données permettant d'établir une corrélation entre la qualité du logement et la satisfaction des habitants à l'échelle des communes corses.</div>
+
+  <details>
+    <summary>Réponse complète du système (6268 car.)</summary>
+    <div class="answer">### **Synthèse : Corrélation entre qualité du logement et satisfaction des habitants en Corse**
+
+À l’échelle des communes corses, les données disponibles ne permettent pas d’établir une corrélation claire entre la **qualité objective du logement** (mesurée par des indicateurs territoriaux) et la **satisfaction déclarée des habitants**. Plusieurs limites géographiques et méthodologiques expliquent cette difficulté, mais quelques tendances et constats émergent.
+
+---
+
+#### **1. La qualité du logement : un indicateur territorial partiel et agrégé**
+Les indicateurs territoriaux montrent que la **qualité du logement** est intégrée dans une mesure plus large, le **score de "vécu" (Vec)**, qui combine :
+- Le revenu fiscal moyen,
+- La qualité du logement,
+- La stabilité de l’emploi,
+- L’accès aux services en moins de 20 minutes.
+
+**Pour l’ensemble des communes corses**, ce score Vec s’élève en moyenne à **3,46/10** selon les données territoriales objectives. Cependant, ce chiffre ne reflète pas uniquement la qualité du logement, mais un ensemble de facteurs socio-économiques. **Aucune donnée ne permet d’isoler la qualité du logement seule** (ex. : état des bâtiments, confort, isolation, etc.) à l’échelle communale.
+
+Pour deux communes spécifiques (Corte et Corscia), des **données factuelles** complètent cette vision :
+- **Corte** : Prix moyen au m² de **2 200 €**, surface moyenne des logements de **75 m²**, et un taux de vacance de **12 %** (selon les indicateurs territoriaux).
+- **Corscia** : Prix moyen au m² de **1 100 €**, surface moyenne de **110 m²**, et un taux de vacance de **25 %** (selon les indicateurs territoriaux).
+Ces éléments suggèrent des différences marquées en termes de **coût, taille et occupation des logements**, mais ne mesurent pas directement leur qualité intrinsèque (ex. : vétusté, équipements, salubrité).
+
+---
+
+#### **2. La satisfaction des habitants : des données limitées et non ventilées par commune**
+Les **perceptions des habitants** sur leur logement et leur qualité de vie proviennent principalement de deux sources, mais aucune ne permet une analyse fine par commune :
+- **Enquête citoyenne à l’échelle de la Corse** (246 répondants) :
+  - Score global de satisfaction concernant le logement : **3,98/5** (selon l’enquête citoyenne).
+  - Ce score couvre l’ensemble de la région et ne distingue pas les variations entre communes.
+- **Enquête spécifique à Corte** (45 répondants) :
+  - Score moyen de **bonheur** : **3,60/5**,
+  - Score moyen de **qualité de vie** : **3,81/5** (selon l’enquête citoyenne).
+  Ces résultats reflètent une **satisfaction modérée**, mais ne ciblent pas spécifiquement le logement. **Aucune donnée de satisfaction sur le logement n’est disponible pour Corscia ou d’autres communes.**
+
+**Problème majeur** : Les données de satisfaction ne sont **ni systématiques ni comparables** entre communes. Sans mesures locales précises, il est impossible de croiser perception et réalité objective du logement.
+
+---
+
+#### **3. Absence de corrélation mesurable à ce stade**
+Pour établir une corrélation entre qualité du logement et satisfaction, il faudrait :
+1. **Des indicateurs objectifs de qualité du logement** par commune (ex. : état des bâtiments, confort, normes énergétiques),
+2. **Des scores de satisfaction déclarée** sur le logement, également ventilés par commune.
+
+**Or, ces deux conditions ne sont pas remplies** :
+- Le score Vec agrège plusieurs dimensions et ne permet pas d’isoler le logement.
+- Les enquêtes citoyennes disponibles couvrent soit la **Corse entière** (sans détail communal), soit **Corte** (sans focus sur le logement).
+
+**Conclusion** : **Aucune corrélation ne peut être établie** avec les données actuelles. Les écarts entre qualité objective et satisfaction subjective (ex. : communes où les logements sont "bons" mais mal perçus, ou inversement) ne sont pas identifiables faute de données comparables.
+
+---
+
+#### **4. Pistes pour comprendre les dynamiques locales**
+Malgré ces limites, quelques **éléments indirects** suggèrent des facteurs qui pourraient influencer la satisfaction :
+- **À Corte** :
+  - Les logements sont **plus chers et plus petits** qu’à Corscia, mais le taux de vacance est deux fois moindre (12 % contre 25 %), ce qui pourrait indiquer une **demande soutenue** et une attractivité relative (selon les indicateurs territoriaux).
+  - La satisfaction globale (3,81/5) reste modérée, ce qui pourrait refléter des **tensions** (coût de la vie, pression immobilière) malgré une qualité de vie perçue comme acceptable.
+- **À Corscia** :
+  - Les logements sont **plus grands et moins chers**, mais le taux de vacance élevé (25 %) suggère un **dépeuplement ou un déséquilibre offre/demande** (selon les indicateurs territoriaux).
+  - **Aucune donnée de satisfaction n’est disponible** pour cette commune, mais on peut supposer que des facteurs comme l’isolement ou le manque de services pourraient peser sur la perception, même avec des logements "objectivement" plus spacieux.
+
+**Hypothèse** : La satisfaction pourrait dépendre moins de la **qualité intrinsèque** du logement que de son **adéquation aux besoins locaux** (ex. : taille pour les familles, prix pour les jeunes, accessibilité aux services). Ces dimensions ne sont pas capturées par les indicateurs actuels.
+
+---
+
+### **Réponse finale à la question initiale**
+**À ce jour, il n’existe pas de preuve d’une corrélation entre la qualité du logement et la satisfaction des habitants à l’échelle des communes corses**, en raison de **l’absence de données comparables** :
+- Les **indicateurs territoriaux** (comme le score Vec) mesurent un ensemble de facteurs socio-économiques, mais ne permettent pas d’isoler la qualité du logement.
+- Les **enquêtes citoyennes** disponibles couvrent soit la **Corse entière** (sans détail communal), soit **Corte** (sans focus sur le logement), ce qui empêche toute analyse locale fine.
+
+**Pour aller plus loin**, il faudrait :
+1. **Des indicateurs objectifs de qualité du logement** par commune (ex. : diagnostics énergétiques, état des bâtiments),
+2. **Des enquêtes de satisfaction ciblées** sur le logement, menées dans plusieurs communes pour permettre des comparaisons.
+
+En l’état, les données suggèrent que d’autres facteurs (accès aux services,</div>
+  </details>
+</div>
+<div class="config-block" style="border-left:4px solid #2980b9">
+  <div class="config-header">
+    <span class="config-name" style="color:#2980b9">Decomp+Raptor</span>
+    <span class="badge" style="background:#27ae60">5.00</span>
+    <span class="badge" style="background:#27ae60">✓ clean</span>
+    <span class="meta">82 sources · 83.3s RAG</span>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="section-title">Dimensions</div>
+      <table class="dim-table"><tr><td class="dim-label">Pertinence</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse respecte les attentes de la section en signalant clairement les limites méthodologiques.</td></tr><tr><td class="dim-label">Fondement factuel</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Les affirmations sont bien fondées sur les sources disponibles et les limites sont correctement signalées.</td></tr><tr><td class="dim-label">Nuance/incertitude</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse est bien nuancée, avec des signalements explicites des limites des données.</td></tr><tr><td class="dim-label">Cohérence quali/quanti</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Bonne intégration des données qualitatives et quantitatives avec signalement des limites.</td></tr></table>
+    </div>
+    <div>
+      <div class="section-title">Mislabelling</div>
+      <table class="mis-table"><tr><td style="color:#27ae60;font-weight:bold">R1</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R2</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R3</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R4</td><td style="font-size:0.85em">non</td></tr></table><div class="sig-box"><b>Signalements détectés :</b><ul><li>Aucune donnée territoriale ne permet aujourd’hui de mesurer la qualité du logement de manière indépendante à l’échelle communale.</li><li>Aucune corrélation statistique (coefficient de Pearson ou autre) n’a pu être calculée entre qualité du logement et satisfaction, faute de données comparables.</li></ul></div>
+    </div>
+  </div>
+
+  <div class="section-title">Raisonnement du juge</div>
+  <div class="raisonnement">La réponse signale explicitement les limites méthodologiques et l'absence de données nécessaires pour établir une corrélation statistique précise.</div>
+
+  <details>
+    <summary>Réponse complète du système (6507 car.)</summary>
+    <div class="answer">### **Synthèse : Corrélation entre qualité du logement et satisfaction des habitants en Corse**
+
+La question d’une éventuelle corrélation entre la qualité du logement et la satisfaction des habitants en Corse se heurte à des limites méthodologiques importantes, mais les données disponibles permettent d’esquisser des tendances générales, tout en soulignant des écarts entre perceptions citoyennes et réalités territoriales.
+
+---
+
+#### **1. La qualité du logement : un facteur objectif intégré dans un indicateur plus large**
+Les indicateurs territoriaux montrent que la **qualité du logement** est prise en compte dans le score global de **bien-être vécu (Vec)**, qui évalue les conditions matérielles des communes corses (revenu, emploi, accès aux services, et logement). Pour la Corse entière, ce score s’établit à **3,46/10** selon les données territoriales objectives, un niveau moyen qui reflète des difficultés structurelles. Cependant, ce chiffre ne permet pas d’isoler la contribution spécifique du logement : il s’agit d’une mesure agrégée, où le logement est pondéré aux côtés d’autres déterminants socio-économiques.
+
+*Aucune donnée territoriale ne permet aujourd’hui de mesurer la qualité du logement de manière indépendante à l’échelle communale.*
+
+---
+
+#### **2. Une satisfaction globale modérée, mais des perceptions contrastées**
+Selon l’enquête citoyenne couvrant la Corse entière, les habitants expriment une **satisfaction modérée** quant à leur qualité de vie (3,83/5) et leur bonheur (3,66/5). Cependant, cette perception positive masque des **inquiétudes profondes** :
+- La **confiance dans l’avenir** est très faible (2,80/5), révélant un décalage entre le présent perçu comme acceptable et un futur perçu comme incertain.
+- Le logement est cité comme une **préoccupation majeure** dans les entretiens qualitatifs, notamment en zones urbaines et touristiques (*"L’accès au logement est un point crucial dans nos cités touristiques"*, selon un verbatim). Les tensions sur le marché immobilier (prix élevés, pénurie de logements abordables) et la qualité des habitats (vétusté, insalubrité) sont fréquemment mentionnées.
+
+Ces perceptions subjectives ne sont **pas directement comparables** aux scores territoriaux (Vec), qui mesurent des conditions objectives. Par exemple, une commune peut afficher un score Vec moyen tout en concentrant des inégalités internes (logements sociaux dégradés vs résidences secondaires haut de gamme), ce que les indicateurs agrégés ne captent pas.
+
+---
+
+#### **3. Des données trop parcellaires pour établir une corrélation statistique**
+Pour répondre précisément à la question d’une corrélation, il faudrait :
+- **Des scores de qualité du logement isolés** (et non intégrés dans le Vec) pour chaque commune.
+- **Des données de satisfaction au logement** ventilées par commune, alors que l’enquête citoyenne disponible couvre la Corse entière sans distinction locale.
+
+Les deux communes documentées dans les données (Aleria et Corscia) illustrent cette limite :
+- **Aleria** : L’enquête citoyenne révèle une insatisfaction marquée chez les 25-34 ans (échantillon restreint, N=2), liée à la précarité et à l’accès au logement. Pourtant, sans score Vec spécifique à Aleria, impossible de comparer cette perception à la réalité objective.
+- **Corscia** : Aucune donnée d’enquête n’est disponible pour cette commune, empêchant toute analyse locale.
+
+*Aucune corrélation statistique (coefficient de Pearson ou autre) n’a pu être calculée entre qualité du logement et satisfaction, faute de données comparables.*
+
+---
+
+#### **4. Des tendances géographiques suggérées, mais non confirmées**
+Les entretiens qualitatifs et les retours d’enquête laissent entrevoir des **disparités territoriales** :
+- **Zones littorales et touristiques** (Ajaccio, Bastia, Porto-Vecchio, Calvi) : Les tensions sur le logement y sont exacerbées par la pression immobilière (résidences secondaires, locations saisonnières), ce qui alimente un sentiment d’exclusion chez les résidents permanents. Les indicateurs territoriaux pourraient y refléter un Vec moyen (logements chers mais de qualité variable), tandis que la satisfaction citoyenne serait tirée vers le bas par l’inaccessibilité.
+- **Zones rurales de l’intérieur** : Les entretiens évoquent des enjeux de vétusté et d’isolement, mais avec une satisfaction parfois préservée grâce à un cadre de vie perçu comme plus apaisé. Les scores Vec y seraient probablement plus faibles (revenus modestes, accès limité aux services), mais les perceptions pourraient être moins négatives qu’attendu.
+
+Cependant, **ces tendances restent hypothétiques** : les données disponibles ne permettent pas de les quantifier ni de les confirmer systématiquement.
+
+---
+
+### **Conclusion : Un lien probable, mais des preuves insuffisantes**
+Les éléments disponibles suggèrent **l’existence d’un lien entre qualité du logement et satisfaction des habitants en Corse**, mais ce lien ne peut être ni mesuré précisément ni généralisé à l’échelle communale. Trois constats émergent :
+1. **Le logement est un déterminant clé du bien-être** : Il est à la fois un marqueur objectif (intégré dans les scores territoriaux) et une préoccupation majeure pour les citoyens, surtout dans les zones sous pression immobilière.
+2. **Les perceptions et les réalités objectives divergent** : Une commune peut afficher des indicateurs moyens tout en concentrant des inégalités internes (ex : logements sociaux dégradés vs villas luxueuses), ce que les scores agrégés ne reflètent pas.
+3. **Les données manquent pour une analyse fine** : L’absence de scores de qualité du logement isolés et de données de satisfaction ventilées par commune empêche toute corrélation statistique robuste.
+
+**Recommandations pour approfondir** :
+- **Affiner les indicateurs** : Créer un score spécifique à la qualité du logement (état des bâtiments, surpeuplement, accessibilité financière) pour le comparer aux perceptions.
+- **Cibler les enquêtes** : Mener des études locales (ex : Bastia, Porto-Vecchio) pour croiser données objectives et ressentis, en évitant les biais de surreprésentation urbaine.
+- **Explorer les écarts** : Analyser les communes où les scores territoriaux et les perceptions divergent fortement (ex : zones rurales avec Vec faible mais satisfaction élevée).
+
+En l’état actuel, la question reste ouverte, mais les signaux d’alerte sur le logement en Corse – tant dans les chiffres que dans les témoignages – appellent une attention particulière des acteurs publics.</div>
+  </details>
+</div>
+  </div>
+</div>
+<div class="question-card">
+  <div class="q-header">
+    <span class="q-num">Q108</span>
+    <span class="q-section">Limites architecturales</span>
+  </div>
+  <div class="q-text">Sur l'ensemble du corpus, comment l'âge des répondants influence-t-il leur perception du bien-être territorial ?</div>
+  <table class="summary-table"><tr><th>Config</th><th>Score</th><th>Flags</th><th>Raisonnement (extrait)</th></tr><tr><td style="color:#c0392b;font-weight:bold">Vanilla k10</td><td><span class="badge" style="background:#27ae60">5.00</span></td><td><span class="badge" style="background:#27ae60">✓ clean</span></td><td class="justif">La réponse signale explicitement l'absence de données suffisantes pour analyser l'influence de l'âge sur la perception d…</td></tr><tr><td style="color:#e67e22;font-weight:bold">Vanilla k25</td><td><span class="badge" style="background:#27ae60">5.00</span></td><td><span class="badge" style="background:#27ae60">✓ clean</span></td><td class="justif">La réponse signale explicitement l'absence de données qualitatives et quantitatives suffisantes pour analyser l'influenc…</td></tr><tr><td style="color:#27ae60;font-weight:bold">Decomp</td><td><span class="badge" style="background:#27ae60">4.25</span></td><td><span class="badge" style="background:#27ae60">✓ clean</span></td><td class="justif">La réponse signale explicitement les limites des données disponibles pour analyser l'influence de l'âge sur la perceptio…</td></tr><tr><td style="color:#2980b9;font-weight:bold">Decomp+Raptor</td><td><span class="badge" style="background:#27ae60">5.00</span></td><td><span class="badge" style="background:#27ae60">✓ clean</span></td><td class="justif">La réponse signale explicitement l'absence de données croisées entre âge et perception du bien-être, respectant la limit…</td></tr></table>
+  <div class="configs-container">
+    
+<div class="config-block" style="border-left:4px solid #c0392b">
+  <div class="config-header">
+    <span class="config-name" style="color:#c0392b">Vanilla k10</span>
+    <span class="badge" style="background:#27ae60">5.00</span>
+    <span class="badge" style="background:#27ae60">✓ clean</span>
+    <span class="meta">10 sources · 12.8s RAG</span>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="section-title">Dimensions</div>
+      <table class="dim-table"><tr><td class="dim-label">Pertinence</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse est parfaitement alignée avec la section et sous-section, signalant clairement les limites des données disponibles.</td></tr><tr><td class="dim-label">Fondement factuel</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Les affirmations sont correctement fondées sur les sources fournies, avec un refus explicite basé sur l'absence de données pertinentes.</td></tr><tr><td class="dim-label">Nuance/incertitude</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse est bien nuancée, avec un signalement explicite des limites des données et des recommandations pour une analyse future.</td></tr><tr><td class="dim-label">Cohérence quali/quanti</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse maintient une cohérence parfaite entre les données quantitatives disponibles et l'absence de données qualitatives, sans prétendre à une analyse impossible.</td></tr></table>
+    </div>
+    <div>
+      <div class="section-title">Mislabelling</div>
+      <table class="mis-table"><tr><td style="color:#27ae60;font-weight:bold">R1</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R2</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R3</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R4</td><td style="font-size:0.85em">non</td></tr></table><div class="sig-box"><b>Signalements détectés :</b><ul><li>aucune donnée ne permet d'analyser l'influence de l'âge</li><li>Les données disponibles ne permettent pas de répondre à la question</li></ul></div>
+    </div>
+  </div>
+
+  <div class="section-title">Raisonnement du juge</div>
+  <div class="raisonnement">La réponse signale explicitement l'absence de données suffisantes pour analyser l'influence de l'âge sur la perception du bien-être territorial, en raison d'échantillons trop réduits et de l'absence de verbatims qualitatifs.</div>
+
+  <details>
+    <summary>Réponse complète du système (1676 car.)</summary>
+    <div class="answer">D'après les documents fournis, **aucune donnée ne permet d'analyser l'influence de l'âge des répondants sur leur perception du bien-être territorial à Patrimonio** (ou dans les autres communes citées). Voici les raisons :
+
+1. **Données quantitatives insuffisantes** :
+   - L'enquête citoyenne en cours (2024-2026) ne fournit **qu'un seul verbatim par commune** (sauf Luri, avec 2 répondants). Les échantillons sont trop réduits pour établir des corrélations entre âge et perception du bien-être.
+   - Exemple pour Patrimonio : **1 répondante de 45-59 ans** (travailleuse indépendante). Aucune comparaison possible avec d'autres tranches d'âge.
+
+2. **Absence de verbatims qualitatifs** :
+   - Les profils démographiques (âge, genre, CSP) sont listés, mais **aucun extrait d'entretien ou réponse ouverte** n'est fourni pour analyser les perceptions subjectives liées à l'âge.
+
+3. **Indicateurs OppChoVec objectifs** :
+   - Le score OppChoVec (2,35/10 pour Patrimonio) mesure des **conditions territoriales objectives** (éducation, mobilité, etc.), **indépendantes des perceptions individuelles**. Il ne reflète pas l'influence de l'âge sur le vécu.
+
+### Conclusion :
+Les données disponibles **ne permettent pas** de répondre à la question. Pour une analyse valide, il faudrait :
+- Un échantillon représentatif par tranche d'âge dans l'enquête citoyenne.
+- Des verbatims qualitatifs explicitant les perceptions des répondants selon leur âge.
+- Une étude spécifique croisant âge et sous-scores du Vécu (Vec) dans l'indice OppChoVec (non disponible ici).
+
+*Source : Enquête citoyenne Qualité de vie en Corse (2024-2026, en cours) ; Scores OppChoVec (INSEE 2020-2022, calcul 2025).*</div>
+  </details>
+</div>
+<div class="config-block" style="border-left:4px solid #e67e22">
+  <div class="config-header">
+    <span class="config-name" style="color:#e67e22">Vanilla k25</span>
+    <span class="badge" style="background:#27ae60">5.00</span>
+    <span class="badge" style="background:#27ae60">✓ clean</span>
+    <span class="meta">25 sources · 15.6s RAG</span>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="section-title">Dimensions</div>
+      <table class="dim-table"><tr><td class="dim-label">Pertinence</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Refus explicite et complet, signalant les raisons de l'impossibilité d'analyse.</td></tr><tr><td class="dim-label">Fondement factuel</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Refus correctement fondé sur l'absence de données pertinentes.</td></tr><tr><td class="dim-label">Nuance/incertitude</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Limites des données disponibles clairement signalées.</td></tr><tr><td class="dim-label">Cohérence quali/quanti</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Refus sobre approprié, pas de remplissage avec données non pertinentes.</td></tr></table>
+    </div>
+    <div>
+      <div class="section-title">Mislabelling</div>
+      <table class="mis-table"><tr><td style="color:#27ae60;font-weight:bold">R1</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R2</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R3</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R4</td><td style="font-size:0.85em">non</td></tr></table><div class="sig-box"><b>Signalements détectés :</b><ul><li>aucune donnée ne permet d’analyser l’influence de l’âge des répondants</li><li>absence de verbatims ou d’enquêtes qualitatives</li><li>données quantitatives limitées</li><li>pas de croisement âge/indicateurs</li></ul></div>
+    </div>
+  </div>
+
+  <div class="section-title">Raisonnement du juge</div>
+  <div class="raisonnement">La réponse signale explicitement l'absence de données qualitatives et quantitatives suffisantes pour analyser l'influence de l'âge sur la perception du bien-être territorial.</div>
+
+  <details>
+    <summary>Réponse complète du système (1948 car.)</summary>
+    <div class="answer">D’après les documents fournis, **aucune donnée ne permet d’analyser l’influence de l’âge des répondants sur leur perception du bien-être territorial à Patrimonio** (ou sur toute autre commune corse mentionnée). Voici les raisons précises :
+
+1. **Absence de verbatims ou d’enquêtes qualitatives** :
+   Les profils démographiques des répondants (âge, genre, CSP) sont fournis pour plusieurs communes (dont Patrimonio), mais **aucun extrait d’entretien ou réponse qualitative** n’est disponible pour lier ces profils à une perception du bien-être. Par exemple, le répondant de Patrimonio (femme, 45-59 ans, travailleuse indépendante) n’a pas exprimé de jugement sur son vécu territorial.
+
+2. **Données quantitatives limitées** :
+   - L’enquête citoyenne en cours (2024-2026) ne fournit **qu’un seul répondant par commune** (sauf Luri et Castirla avec 2 répondants), ce qui est insuffisant pour établir des corrélations statistiques entre âge et perception.
+   - Les indicateurs OppChoVec (basés sur des données INSEE 2020-2022) sont **objectifs et territoriaux**, et non subjectifs ou liés à l’âge des habitants.
+
+3. **Pas de croisement âge/indicateurs** :
+   Les sous-scores OppChoVec (ex. : éducation, mobilité) sont calculés à l’échelle communale et ne sont pas ventilés par tranche d’âge. Par exemple, le score "Opp1 — Éducation" (2.53/10 à Patrimonio) reflète le niveau moyen de la population, sans distinction d’âge.
+
+### Conclusion :
+Les données disponibles **ne permettent pas** de répondre à la question. Pour analyser l’influence de l’âge, il faudrait :
+- Des **entretiens qualitatifs** associant âge et perception du bien-être (ex. : "Les 45-59 ans se plaignent-ils du manque de services ?").
+- Une **enquête quantitative** avec un échantillon représentatif par tranche d’âge (actuellement, 1 à 2 répondants/commune).
+
+*Source : Profils démographiques (enquête citoyenne 2024-2026) et scores OppChoVec (indicateurs territoriaux 2020-2022).*</div>
+  </details>
+</div>
+<div class="config-block" style="border-left:4px solid #27ae60">
+  <div class="config-header">
+    <span class="config-name" style="color:#27ae60">Decomp</span>
+    <span class="badge" style="background:#27ae60">4.25</span>
+    <span class="badge" style="background:#27ae60">✓ clean</span>
+    <span class="meta">25 sources · 65.1s RAG</span>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="section-title">Dimensions</div>
+      <table class="dim-table"><tr><td class="dim-label">Pertinence</td><td><span style="color:#27ae60;font-weight:bold">4/5</span></td><td class="justif">La réponse respecte le comportement attendu en signalant les limites des données disponibles.</td></tr><tr><td class="dim-label">Fondement factuel</td><td><span style="color:#27ae60;font-weight:bold">4/5</span></td><td class="justif">Les affirmations sont correctement fondées sur les données disponibles et les limites sont bien signalées.</td></tr><tr><td class="dim-label">Nuance/incertitude</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse est bien nuancée, avec des signalements explicites des limites des données.</td></tr><tr><td class="dim-label">Cohérence quali/quanti</td><td><span style="color:#27ae60;font-weight:bold">4/5</span></td><td class="justif">Bonne intégration des données quantitatives avec un signalement clair des limites qualitatives.</td></tr></table>
+    </div>
+    <div>
+      <div class="section-title">Mislabelling</div>
+      <table class="mis-table"><tr><td style="color:#27ae60;font-weight:bold">R1</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R2</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R3</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R4</td><td style="font-size:0.85em">non</td></tr></table><div class="sig-box"><b>Signalements détectés :</b><ul><li>Limite majeure : ces effectifs ne permettent pas d’analyser finement l’influence de l’âge</li><li>Les tendances ci-dessous doivent donc être interprétées avec prudence</li></ul></div>
+    </div>
+  </div>
+
+  <div class="section-title">Raisonnement du juge</div>
+  <div class="raisonnement">La réponse signale explicitement les limites des données disponibles pour analyser l'influence de l'âge sur la perception du bien-être territorial, en raison de la faible taille et de la répartition inégale des échantillons.</div>
+
+  <details>
+    <summary>Réponse complète du système (5903 car.)</summary>
+    <div class="answer">### **Influence de l’âge sur la perception du bien-être territorial en Corse : synthèse des données disponibles**
+
+Les données disponibles, bien que limitées en volume et en représentativité, permettent d’esquisser quelques tendances sur la manière dont l’âge influence la perception du bien-être territorial en Corse. Voici les principaux constats, en distinguant les perceptions déclarées par les habitants et les réalités territoriales objectives.
+
+---
+
+#### **1. Une répartition très inégale des répondants par âge, limitant les comparaisons**
+Les données d’enquête citoyenne couvrent la Corse entière, mais révèlent des effectifs très réduits et déséquilibrés selon les communes :
+- **Talasani** : seul un jeune de 15-29 ans a répondu (100 % des répondants).
+- **Linguizzetta** : répartition équilibrée entre 30-44 ans, 45-59 ans et 60-74 ans (3 répondants au total).
+- **Patrimonio** : un seul répondant, âgé de 45-59 ans.
+- **Luri** : seulement 2 répondants (30-44 ans et 60-74 ans).
+
+**Limite majeure** : ces effectifs ne permettent pas d’analyser finement l’influence de l’âge, d’autant que l’enquête est encore en cours (2024-2026). Les tendances ci-dessous doivent donc être interprétées avec prudence.
+
+---
+
+#### **2. Perceptions du bien-être selon l’âge : des contrastes marqués, mais des données fragmentaires**
+Les enquêtes citoyennes disponibles ne couvrent que quelques tranches d’âge et communes, avec des résultats contrastés :
+
+- **65 ans et plus (Ghisonaccia)** :
+  Selon l’enquête citoyenne, les seniors de Ghisonaccia expriment une **satisfaction moyenne de 3,35/5**, avec des écarts importants selon les dimensions du bien-être :
+  - **Points forts** : logement (4,11/5), emploi (3,89/5) et sécurité (3,89/5). Ces scores suggèrent une appréciation du cadre de vie résidentiel et de la stabilité économique.
+  - **Points faibles** : transports (1,92/5), tourisme (2,00/5) et santé (2,14/5). Les difficultés d’accessibilité et l’offre de services sanitaires apparaissent comme des sources majeures d’insatisfaction pour cette tranche d’âge.
+
+  *Aucune donnée comparable n’est disponible pour les autres communes ou tranches d’âge chez les seniors.*
+
+- **Moins de 30 ans et 30-49 ans** :
+  Aucune donnée d’enquête citoyenne ne permet d’évaluer leur perception du bien-être territorial. Les tranches 25-34 ans et 30-44 ans sont mentionnées dans les effectifs globaux (respectivement 41 et 62 répondants en Corse), mais sans ventilation des scores de satisfaction.
+
+- **50-64 ans** :
+  Aucune donnée spécifique à cette tranche d’âge n’est disponible pour les communes citées (Luri, Talasani, Linguizzetta, Patrimonio). Les seules données existantes concernent Ghisonaccia, mais elles ne sont pas ventilées par âge dans les réponses fournies.
+
+---
+
+#### **3. Des indicateurs territoriaux qui nuancent les perceptions, mais sans lien direct avec l’âge**
+Les données objectives (indicateurs OppChoVec) offrent un éclairage complémentaire sur les conditions de vie, bien qu’elles ne soient pas croisées avec l’âge des habitants :
+- **Ghisonaccia** (commune pour laquelle des données seniors sont disponibles) :
+  Selon les indicateurs territoriaux, Ghisonaccia présente des scores moyens pour les trois dimensions clés :
+  - **Opportunités** (éducation, diversité sociale, mobilité, accès au numérique) : **5,8/10**.
+  - **Choix** (participation électorale, absence de quartiers prioritaires) : **6,2/10**.
+  - **Vecteurs de bien-être** (revenu, logement, emploi, accès aux services) : **5,9/10**.
+
+  Ces scores, proches de la moyenne corse, suggèrent un territoire **ni particulièrement favorisé ni défavorisé**, avec des marges de progression notamment en matière d’accès aux services (santé, transports), ce qui rejoint les insatisfactions exprimées par les seniors dans l’enquête citoyenne.
+
+- **Autres communes** :
+  Aucune donnée OppChoVec n’est fournie pour Talasani, Linguizzetta, Patrimonio ou Luri. Il est donc impossible de comparer les réalités territoriales avec les perceptions locales.
+
+---
+
+#### **4. Synthèse des tendances et limites**
+**Ce que les données permettent de dire** :
+- **Les seniors (65+) de Ghisonaccia** perçoivent leur bien-être de manière **hétérogène** : satisfaction pour le logement et l’emploi, mais frustration sur les transports et la santé. Ces perceptions semblent cohérentes avec les indicateurs territoriaux, qui pointent des **défis d’accessibilité aux services**.
+- **Les jeunes (15-29 ans)** : leur perception n’est pas documentée, hormis le cas isolé de Talasani (1 répondant). Leur bien-être pourrait être influencé par des critères différents (emploi, loisirs, mobilité), mais aucune donnée ne permet de le vérifier.
+- **Les actifs (30-64 ans)** : aucune tendance ne se dégage en l’absence de données de satisfaction ventilées par âge.
+
+**Ce que les données ne permettent pas de dire** :
+- **Comparer les tranches d’âge** : les effectifs sont trop faibles et les données trop parcellaires pour établir des liens robustes entre âge et perception du bien-être.
+- **Généraliser à d’autres communes** : les résultats de Ghisonaccia (seniors) ou Talasani (jeunes) ne sont pas extrapolables, faute de données similaires ailleurs.
+- **Croiser perceptions et réalités territoriales** : les indicateurs OppChoVec existent pour Ghisonaccia, mais pas pour les autres communes, et ne sont pas ventilés par âge.
+
+---
+
+#### **5. Conclusion : des pistes, mais des lacunes persistantes**
+L’âge semble **moduler la perception du bien-être territorial**, du moins chez les seniors de Ghisonaccia, qui expriment des **priorités distinctes** (logement et emploi vs. transports et santé). Cependant, les données disponibles sont **trop fragmentaires** pour :
+- Confirmer cette tendance pour d’autres tranches d’âge (jeunes, actifs).
+- L’étendre à d’autres communes.
+- Distinguer clairement ce qui relève de **l’effet de l’âge** (besoins spécifiques) et de **l</div>
+  </details>
+</div>
+<div class="config-block" style="border-left:4px solid #2980b9">
+  <div class="config-header">
+    <span class="config-name" style="color:#2980b9">Decomp+Raptor</span>
+    <span class="badge" style="background:#27ae60">5.00</span>
+    <span class="badge" style="background:#27ae60">✓ clean</span>
+    <span class="meta">9 sources · 21.0s RAG</span>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="section-title">Dimensions</div>
+      <table class="dim-table"><tr><td class="dim-label">Pertinence</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse respecte la limite architecturale en signalant clairement l'absence de données croisées.</td></tr><tr><td class="dim-label">Fondement factuel</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Les affirmations sont correctement fondées sur les sources disponibles, avec un signalement explicite des limites.</td></tr><tr><td class="dim-label">Nuance/incertitude</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse est bien nuancée, avec des signalements explicites des lacunes analytiques.</td></tr><tr><td class="dim-label">Cohérence quali/quanti</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse intègre correctement les données disponibles et signale l'absence de croisement quali/quanti.</td></tr></table>
+    </div>
+    <div>
+      <div class="section-title">Mislabelling</div>
+      <table class="mis-table"><tr><td style="color:#27ae60;font-weight:bold">R1</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R2</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R3</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R4</td><td style="font-size:0.85em">non</td></tr></table><div class="sig-box"><b>Signalements détectés :</b><ul><li>aucune analyse spécifique ne permet d’établir un lien direct entre l’âge des répondants et leur perception du bien-être territorial</li><li>ces données ne sont pas mises en relation avec les perceptions du bien-être</li><li>aucune donnée ne croise ces dimensions avec l’âge des répondants</li></ul></div>
+    </div>
+  </div>
+
+  <div class="section-title">Raisonnement du juge</div>
+  <div class="raisonnement">La réponse signale explicitement l'absence de données croisées entre âge et perception du bien-être, respectant la limite architecturale.</div>
+
+  <details>
+    <summary>Réponse complète du système (2101 car.)</summary>
+    <div class="answer">### **Synthèse : Influence de l’âge sur la perception du bien-être territorial en Corse**
+
+À partir des données disponibles, **aucune analyse spécifique ne permet d’établir un lien direct entre l’âge des répondants et leur perception du bien-être territorial** sur l’ensemble du corpus étudié.
+
+#### **Points clés :**
+1. **Données démographiques disponibles, mais non croisées avec le bien-être**
+   - Les enquêtes citoyennes fournissent des profils d’âge (par exemple, à Corte, 34,7 % des répondants ont entre 15 et 29 ans, et 4,1 % entre 60 et 74 ans, selon l’enquête citoyenne). Cependant, **ces données ne sont pas mises en relation avec les perceptions du bien-être** (satisfaction globale, accès aux services, qualité de vie, etc.). Il n’est donc pas possible de déterminer si les jeunes, les actifs ou les seniors évaluent différemment leur cadre de vie.
+
+2. **Indicateurs territoriaux objectifs non ventilés par âge**
+   - Les scores OppChoVec (mesurant des dimensions comme l’accès aux services, la qualité du logement ou la stabilité de l’emploi) sont calculés à l’échelle communale et **ne distinguent pas les tranches d’âge**. Ils reflètent une moyenne globale, sans permettre d’identifier d’éventuelles disparités selon les générations.
+
+3. **Lacune analytique sur les perceptions par âge**
+   - Bien que les enquêtes citoyennes couvrent des ressentis variés (logement, transports, santé, etc.), **aucune donnée ne croise ces dimensions avec l’âge des répondants**. Par conséquent, il est impossible de conclure à des différences de perception entre jeunes, actifs ou retraités, ou d’identifier des facteurs territoriaux (accès aux soins, mobilité, etc.) qui affecteraient plus particulièrement une tranche d’âge.
+
+#### **Conclusion**
+Les données actuelles ne permettent pas d’évaluer l’influence de l’âge sur la perception du bien-être territorial en Corse. Pour répondre à cette question, une analyse ciblée serait nécessaire, croisant les tranches d’âge avec les indicateurs de satisfaction et les données territoriales objectives. À ce stade, **aucune tendance ne peut être dégagée**.</div>
+  </details>
+</div>
+  </div>
+</div>
+<div class="question-card">
+  <div class="q-header">
+    <span class="q-num">Q109</span>
+    <span class="q-section">Limites architecturales</span>
+  </div>
+  <div class="q-text">Dans quelle commune les 18-25 ans se sentent-ils le mieux ?</div>
+  <table class="summary-table"><tr><th>Config</th><th>Score</th><th>Flags</th><th>Raisonnement (extrait)</th></tr><tr><td style="color:#c0392b;font-weight:bold">Vanilla k10</td><td><span class="badge" style="background:#27ae60">5.00</span></td><td><span class="badge" style="background:#27ae60">✓ clean</span></td><td class="justif">La réponse signale explicitement l'absence de données qualitatives et l'inadéquation des indicateurs OppChoVec pour répo…</td></tr><tr><td style="color:#e67e22;font-weight:bold">Vanilla k25</td><td><span class="badge" style="background:#27ae60">5.00</span></td><td><span class="badge" style="background:#27ae60">✓ clean</span></td><td class="justif">La réponse signale explicitement l'absence de données spécifiques sur les 18-25 ans et leur ressenti, et conclut correct…</td></tr><tr><td style="color:#27ae60;font-weight:bold">Decomp</td><td><span class="badge" style="background:#27ae60">5.00</span></td><td><span class="badge" style="background:#27ae60">✓ clean</span></td><td class="justif">La réponse signale explicitement l'absence de données spécifiques pour les 18-25 ans et propose des pistes pour améliore…</td></tr><tr><td style="color:#2980b9;font-weight:bold">Decomp+Raptor</td><td><span class="badge" style="background:#27ae60">5.00</span></td><td><span class="badge" style="background:#27ae60">✓ clean</span></td><td class="justif">La réponse signale explicitement l'absence de données permettant de déterminer la commune où les 18-25 ans se sentent le…</td></tr></table>
+  <div class="configs-container">
+    
+<div class="config-block" style="border-left:4px solid #c0392b">
+  <div class="config-header">
+    <span class="config-name" style="color:#c0392b">Vanilla k10</span>
+    <span class="badge" style="background:#27ae60">5.00</span>
+    <span class="badge" style="background:#27ae60">✓ clean</span>
+    <span class="meta">10 sources · 15.6s RAG</span>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="section-title">Dimensions</div>
+      <table class="dim-table"><tr><td class="dim-label">Pertinence</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse refuse correctement en signalant les limites des données disponibles.</td></tr><tr><td class="dim-label">Fondement factuel</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Les affirmations sont bien fondées sur les sources fournies et les limites sont correctement signalées.</td></tr><tr><td class="dim-label">Nuance/incertitude</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse est bien nuancée, avec un signalement clair des limites des données.</td></tr><tr><td class="dim-label">Cohérence quali/quanti</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse ne prétend pas faire un croisement quali/quanti impossible avec les données disponibles.</td></tr></table>
+    </div>
+    <div>
+      <div class="section-title">Mislabelling</div>
+      <table class="mis-table"><tr><td style="color:#27ae60;font-weight:bold">R1</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R2</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R3</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R4</td><td style="font-size:0.85em">non</td></tr></table><div class="sig-box"><b>Signalements détectés :</b><ul><li>Aucune information directe ne permet de répondre précisément</li><li>Absence de données qualitatives ciblées</li><li>Indicateurs OppChoVec non adaptés</li><li>Données manquantes</li></ul></div>
+    </div>
+  </div>
+
+  <div class="section-title">Raisonnement du juge</div>
+  <div class="raisonnement">La réponse signale explicitement l'absence de données qualitatives et l'inadéquation des indicateurs OppChoVec pour répondre à la question sur les 18-25 ans.</div>
+
+  <details>
+    <summary>Réponse complète du système (2070 car.)</summary>
+    <div class="answer">D'après les données fournies, **aucune information directe** ne permet de répondre précisément à la question *"Dans quelle commune les 18-25 ans se sentent-ils le mieux ?"* pour les raisons suivantes :
+
+1. **Absence de données qualitatives ciblées** :
+   - Les **entretiens qualitatifs** (enquête citoyenne 2024-2026) ne fournissent pas de verbatims ou d'analyses spécifiques sur le ressenti des 18-25 ans par commune. Les profils démographiques des répondants incluent des tranches d'âge larges (ex. 15-29 ans), mais pas de focus sur les 18-25 ans en particulier.
+   - Aucune mention de satisfaction ou de bien-être subjectif pour cette tranche d'âge n'est disponible.
+
+2. **Indicateurs OppChoVec non adaptés** :
+   - L'indice **OppChoVec** mesure un **bien-être objectif** (opportunités, choix, vécu) à l'échelle communale, mais ne distingue pas les perceptions par âge. Par exemple, Bastia (6,88/10) ou Bastelicaccia (9,81/10) ont des scores élevés, mais ceux-ci reflètent des conditions territoriales moyennes, pas le ressenti d'une classe d'âge spécifique.
+   - La dimension **"Vécu" (Vec)** pourrait théoriquement inclure des aspects subjectifs, mais les données ne précisent pas si elle intègre des critères générationnels.
+
+3. **Données manquantes** :
+   - Aucune commune n'est citée dans les documents avec des éléments explicites sur les 18-25 ans (ex. accès aux loisirs, emploi jeune, logement étudiant).
+   - Les profils des répondants (ex. Ajaccio, Bastia) montrent une présence d'étudiants (15-29 ans), mais sans lien avec leur satisfaction.
+
+### Conclusion :
+Les documents fournis **ne permettent pas d'identifier** une commune où les 18-25 ans se sentiraient mieux. Pour répondre, il faudrait :
+- Des **enquêtes qualitatives** ciblant cette tranche d'âge (ex. entretiens sur leur qualité de vie).
+- Des **indicateurs spécifiques** (ex. taux de chômage des jeunes, offre de logements étudiants, accès aux transports pour les étudiants).
+
+*Source : Indicateurs OppChoVec (INSEE 2020-2022) et profils démographiques (enquête citoyenne 2024-2026, en cours).*</div>
+  </details>
+</div>
+<div class="config-block" style="border-left:4px solid #e67e22">
+  <div class="config-header">
+    <span class="config-name" style="color:#e67e22">Vanilla k25</span>
+    <span class="badge" style="background:#27ae60">5.00</span>
+    <span class="badge" style="background:#27ae60">✓ clean</span>
+    <span class="meta">25 sources · 13.3s RAG</span>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="section-title">Dimensions</div>
+      <table class="dim-table"><tr><td class="dim-label">Pertinence</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse refuse correctement en signalant les limites des données disponibles.</td></tr><tr><td class="dim-label">Fondement factuel</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Les affirmations sont bien fondées sur les sources fournies et les limites sont correctement signalées.</td></tr><tr><td class="dim-label">Nuance/incertitude</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse est bien nuancée, avec un signalement clair des insuffisances des données.</td></tr><tr><td class="dim-label">Cohérence quali/quanti</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse intègre correctement les données quantitatives disponibles tout en signalant l'absence de données qualitatives nécessaires.</td></tr></table>
+    </div>
+    <div>
+      <div class="section-title">Mislabelling</div>
+      <table class="mis-table"><tr><td style="color:#27ae60;font-weight:bold">R1</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R2</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R3</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R4</td><td style="font-size:0.85em">non</td></tr></table><div class="sig-box"><b>Signalements détectés :</b><ul><li>aucune donnée ne permet de répondre spécifiquement à la question</li><li>Les indicateurs OppChoVec [...] ne ciblent pas les tranches d'âge ni le ressenti subjectif</li><li>aucune donnée qualitative ou quantitative n'est fournie sur leur ressenti</li><li>Les données disponibles sont insuffisantes</li></ul></div>
+    </div>
+  </div>
+
+  <div class="section-title">Raisonnement du juge</div>
+  <div class="raisonnement">La réponse signale explicitement l'absence de données spécifiques sur les 18-25 ans et leur ressenti, et conclut correctement sur l'insuffisance des données disponibles.</div>
+
+  <details>
+    <summary>Réponse complète du système (1378 car.)</summary>
+    <div class="answer">D'après les documents fournis, **aucune donnée ne permet de répondre spécifiquement à la question du ressenti des 18-25 ans** concernant leur qualité de vie dans une commune corse.
+
+### Explications :
+1. **Données quantitatives (OppChoVec)** :
+   - Les indicateurs OppChoVec (2020-2022) mesurent un bien-être *objectif* (opportunités, choix, vécu) à l'échelle communale, mais ne ciblent pas les tranches d'âge ni le ressenti subjectif des 18-25 ans (source : indicateurs territoriaux INSEE/statistiques 2020-2022).
+
+2. **Enquête citoyenne (2024-2026)** :
+   - Les profils démographiques des répondants incluent des tranches d'âge (ex. 15-29 ans), mais **aucune donnée qualitative ou quantitative n'est fournie sur leur ressenti** (ex. satisfaction, bien-être subjectif). Les répondants de 15-29 ans sont présents dans plusieurs communes (ex. Ajaccio, Bastia, Corte), mais leur nombre est trop faible pour en tirer des conclusions (ex. 14 répondants à Ajaccio, 3 à Bastia, 17 à Corte).
+
+3. **Absence de focus sur les 18-25 ans** :
+   - La tranche 15-29 ans est large et ne permet pas d'isoler les 18-25 ans. Aucune enquête ne détaille leur perception spécifique.
+
+### Conclusion :
+Les données disponibles sont **insuffisantes** pour identifier une commune où les 18-25 ans se sentiraient mieux. Il faudrait des enquêtes ciblées sur cette tranche d'âge et leur ressenti subjectif.</div>
+  </details>
+</div>
+<div class="config-block" style="border-left:4px solid #27ae60">
+  <div class="config-header">
+    <span class="config-name" style="color:#27ae60">Decomp</span>
+    <span class="badge" style="background:#27ae60">5.00</span>
+    <span class="badge" style="background:#27ae60">✓ clean</span>
+    <span class="meta">25 sources · 63.7s RAG</span>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="section-title">Dimensions</div>
+      <table class="dim-table"><tr><td class="dim-label">Pertinence</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse respecte le type attendu en signalant clairement les limites des données disponibles.</td></tr><tr><td class="dim-label">Fondement factuel</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Les affirmations sont bien fondées sur les sources disponibles et les limites sont correctement signalées.</td></tr><tr><td class="dim-label">Nuance/incertitude</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse est bien nuancée, avec des signalements explicites des lacunes et des suggestions pour des améliorations futures.</td></tr><tr><td class="dim-label">Cohérence quali/quanti</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse intègre correctement les données quantitatives disponibles tout en signalant l'absence de données qualitatives.</td></tr></table>
+    </div>
+    <div>
+      <div class="section-title">Mislabelling</div>
+      <table class="mis-table"><tr><td style="color:#27ae60;font-weight:bold">R1</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R2</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R3</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R4</td><td style="font-size:0.85em">non</td></tr></table><div class="sig-box"><b>Signalements détectés :</b><ul><li>aucune commune corse ne peut être désignée avec certitude</li><li>lacunes importantes dans les données disponibles</li><li>Les indicateurs territoriaux ne permettent pas de classer les communes pour les 18-25 ans</li><li>Aucune commune ne peut être identifiée comme perçue positivement par les 18-25 ans</li></ul></div>
+    </div>
+  </div>
+
+  <div class="section-title">Raisonnement du juge</div>
+  <div class="raisonnement">La réponse signale explicitement l'absence de données spécifiques pour les 18-25 ans et propose des pistes pour améliorer la collecte de données.</div>
+
+  <details>
+    <summary>Réponse complète du système (4889 car.)</summary>
+    <div class="answer">### **Synthèse : Dans quelle commune les 18-25 ans se sentent-ils le mieux en Corse ?**
+
+À ce stade, **aucune commune corse ne peut être désignée avec certitude** comme celle où les 18-25 ans se sentent le mieux, en raison de **lacunes importantes dans les données disponibles**. Voici ce que l’on peut retenir, en distinguant les éléments objectifs et les perceptions, tout en précisant les limites géographiques et thématiques des informations :
+
+---
+
+#### **1. Données objectives : des indicateurs partiels, mais pas de mesure directe du bien-être des jeunes**
+Les **indicateurs territoriaux** (scores OppChoVec) ne permettent pas d’évaluer directement le bien-être ou l’attractivité pour les 18-25 ans, car :
+- **Aucun score ne cible spécifiquement la jeunesse** : les dimensions mesurées (opportunités éducatives, diversité sociale, mobilité, accès aux services, etc.) sont des **proxies indirects**, mais ne reflètent pas les loisirs, la vie sociale, ou les aspirations propres aux jeunes adultes.
+- **Les composantes les plus proches** (éducation, stabilité de l’emploi, accès aux TIC) ne sont pas disponibles à l’échelle communale dans les données fournies. Par exemple :
+  - La **stabilité de l’emploi** (incluse dans le score *Vécu*) pourrait intéresser les jeunes actifs, mais les scores par commune ne sont pas précisés.
+  - L’**accès aux TIC** (haut débit, couverture mobile) est un critère clé pour les jeunes, mais là encore, les données communales manquent.
+
+**Conclusion** : Les indicateurs territoriaux ne permettent pas de classer les communes pour les 18-25 ans. Ils offrent des pistes (ex. : communes avec de bonnes opportunités éducatives ou une diversité sociale élevée), mais **aucune mesure synthétique du "bien-être jeune"** n’existe dans les données actuelles.
+
+---
+
+#### **2. Perceptions des jeunes : des données fragmentaires et non spécifiques**
+Les **enquêtes citoyennes** disponibles ne ciblent pas les 18-25 ans de manière suffisamment précise pour répondre à la question :
+- **Aucun verbatim ou retour qualitatif** n’a été recueilli auprès de cette tranche d’âge sur leur cadre de vie ou leur attractivité résidentielle. Les quelques profils démographiques mentionnés (ex. : 2 étudiantes de 15-29 ans à Casanova et Casevecchie) sont **trop limités** pour en tirer des conclusions.
+- **Les données d’enquête couvrent la Corse entière** (et non des communes spécifiques) : aucune perception localisée (ex. : "les jeunes de Bastia se sentent mieux qu’à Ajaccio") n’est disponible. Par exemple :
+  - Si une enquête montrait que 70 % des jeunes corses citent Ajaccio comme ville attractive, cela refléterait une tendance **régionale**, pas une réalité communale précise.
+
+**Conclusion** : **Aucune commune ne peut être identifiée** comme perçue positivement par les 18-25 ans, faute de données qualitatives ou quantitatives ciblées.
+
+---
+
+#### **3. Points de vigilance et pistes pour affiner la réponse**
+Pour répondre rigoureusement à la question, il faudrait :
+- **Des indicateurs territoriaux adaptés** :
+  - Créer un score spécifique "Jeunesse" combinant accès aux études supérieures, offre de loisirs (salles de sport, bars, événements culturels), transports (fréquence des bus, covoiturage), ou colocation abordable.
+  - Exemple : Une commune comme **Bastia** pourrait se distinguer par ses écoles supérieures et sa vie nocturne, mais cela n’est pas mesuré actuellement.
+- **Des enquêtes ciblées auprès des 18-25 ans** :
+  - Interroger cette tranche d’âge sur leurs critères de bien-être (ex. : "Qu’est-ce qui fait que vous vous sentez bien dans votre commune ?") et leurs projets d’installation.
+  - Exemple : Une enquête qualitative à **Porto-Vecchio** pourrait révéler que les jeunes y restent pour les emplois saisonniers et la mer, malgré un coût de la vie élevé.
+
+---
+
+#### **4. Synthèse finale**
+**À ce jour, il est impossible de désigner une commune corse où les 18-25 ans se sentent le mieux**, en raison de :
+1. **L’absence de données objectives** mesurant spécifiquement le bien-être jeune (loisirs, vie sociale, attractivité résidentielle).
+2. **L’absence de perceptions localisées** : les enquêtes existantes ne ciblent pas cette tranche d’âge à l’échelle communale.
+
+**Recommandations pour avancer** :
+- **Pour les décideurs** : Intégrer des questions sur les loisirs et les aspirations résidentielles dans les prochaines enquêtes citoyennes, en ciblant les 18-25 ans.
+- **Pour les chercheurs** : Croiser les données territoriales (ex. : nombre de bars, salles de concert, résidences étudiantes) avec des entretiens qualitatifs pour identifier des communes "jeunes-friendly".
+- **Pour les jeunes** : Les communes les plus dynamiques (ex. : Ajaccio, Bastia, Corte) sont souvent citées *a priori* comme attractives, mais cela reste à confirmer par des données solides.
+
+**En l’état actuel des connaissances, la réponse est : on ne sait pas.**</div>
+  </details>
+</div>
+<div class="config-block" style="border-left:4px solid #2980b9">
+  <div class="config-header">
+    <span class="config-name" style="color:#2980b9">Decomp+Raptor</span>
+    <span class="badge" style="background:#27ae60">5.00</span>
+    <span class="badge" style="background:#27ae60">✓ clean</span>
+    <span class="meta">81 sources · 103.5s RAG</span>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="section-title">Dimensions</div>
+      <table class="dim-table"><tr><td class="dim-label">Pertinence</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse respecte le type attendu en signalant clairement les limites des données disponibles.</td></tr><tr><td class="dim-label">Fondement factuel</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Les affirmations sont bien fondées sur les sources disponibles et les limites sont correctement signalées.</td></tr><tr><td class="dim-label">Nuance/incertitude</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse est bien nuancée, avec des signalements explicites des limites des données.</td></tr><tr><td class="dim-label">Cohérence quali/quanti</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Bonne intégration des données qualitatives et quantitatives, avec signalement des limites.</td></tr></table>
+    </div>
+    <div>
+      <div class="section-title">Mislabelling</div>
+      <table class="mis-table"><tr><td style="color:#27ae60;font-weight:bold">R1</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R2</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R3</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R4</td><td style="font-size:0.85em">non</td></tr></table><div class="sig-box"><b>Signalements détectés :</b><ul><li>Les données disponibles ne permettent pas d’identifier une commune précise</li><li>Limite majeure : Aucun de ces indicateurs ne mesure directement le 'dynamisme jeunesse' ou le bien-être subjectif des 18-25 ans</li><li>Absence de données locales : Aucune enquête ne permet de comparer les perceptions des 18-25 ans commune par commune</li></ul></div>
+    </div>
+  </div>
+
+  <div class="section-title">Raisonnement du juge</div>
+  <div class="raisonnement">La réponse signale explicitement l'absence de données permettant de déterminer la commune où les 18-25 ans se sentent le mieux, en soulignant les limites des indicateurs disponibles.</div>
+
+  <details>
+    <summary>Réponse complète du système (5663 car.)</summary>
+    <div class="answer">### **Synthèse : Où les 18-25 ans se sentent-ils le mieux en Corse ?**
+
+Les données disponibles ne permettent pas d’identifier **une commune précise** où les 18-25 ans se sentiraient systématiquement mieux en Corse. Cependant, plusieurs éléments territoriaux et perceptions générales offrent des pistes pour comprendre leur bien-être, tout en soulignant des limites importantes.
+
+---
+
+#### **1. Des indicateurs territoriaux favorables, mais sans ciblage spécifique aux jeunes**
+Les données territoriales objectives (scores OppChoVec) révèlent des communes où les **conditions structurelles** pourraient favoriser le bien-être des jeunes, même si ces indicateurs ne mesurent pas directement leur ressenti. Voici les tendances clés :
+
+- **Opportunités (Opp)** :
+  Les communes avec les meilleurs scores en **éducation, diversité des métiers, mobilité et accès au numérique** (composantes de l’indicateur *Opp*) pourraient offrir un environnement plus dynamique pour les 18-25 ans. Par exemple, des communes comme **Ajaccio ou Bastia** affichent des scores élevés pour l’accès aux technologies et la diversité des catégories socioprofessionnelles (selon les indicateurs OppChoVec). Cependant, ces données ne distinguent pas les jeunes des autres tranches d’âge.
+
+- **Vécu (Vec)** :
+  Les communes où le **revenu moyen, la qualité du logement, la stabilité de l’emploi et l’accès aux services** (en moins de 20 minutes) sont les plus élevés pourraient aussi être perçues comme plus attractives. Là encore, ces critères sont globaux et ne reflètent pas spécifiquement la situation des jeunes (selon les indicateurs OppChoVec).
+
+**Limite majeure** : Aucun de ces indicateurs ne mesure directement le "dynamisme jeunesse" ou le bien-être subjectif des 18-25 ans. Ils donnent une image des **conditions générales**, pas des réalités vécues par cette tranche d’âge.
+
+---
+
+#### **2. Perceptions des 18-25 ans : un bilan mitigé à l’échelle de la Corse**
+Les enquêtes citoyennes disponibles couvrent **la Corse entière** et non des communes spécifiques. Elles révèlent des tendances globales pour les 18-24 ans :
+
+- **Satisfaction globale** :
+  Les jeunes interrogés déclarent un niveau de **bonheur moyen (3,61/5)** et une **qualité de vie perçue à 3,77/5** (selon l’enquête citoyenne). Ces scores restent modérés, sans variation communale identifiable.
+
+- **Confiance dans l’avenir** :
+  La confiance des 18-24 ans est **faible (2,91/5)**, avec des préoccupations récurrentes sur l’emploi et l’accès aux opportunités (selon l’enquête citoyenne). Les entretiens qualitatifs soulignent aussi des difficultés à concilier vie professionnelle et personnelle, sans lien avec une commune en particulier.
+
+- **Accès à la culture et aux loisirs** :
+  Les jeunes Corses perçoivent la culture comme un **levier d’émancipation et de lien social**, mais signalent des **difficultés d’accès en milieu rural** (selon l’enquête citoyenne). Aucune commune n’est citée comme particulièrement avantagée ou désavantagée sur ce point.
+
+**Absence de données locales** :
+Aucune enquête ne permet de comparer les perceptions des 18-25 ans **commune par commune**. Les verbatims disponibles (pour les 25-34 ans) mentionnent des localités comme **Corte, Ajaccio ou Bastia**, mais sans analyse systématique ni lien avec le bien-être des plus jeunes.
+
+---
+
+#### **3. Emploi et cadre de vie : des lacunes sur les données jeunes**
+- **Taux d’emploi des 18-25 ans** :
+  Aucune donnée territoriale ou d’enquête ne fournit de **taux d’emploi spécifique à cette tranche d’âge par commune**. Les indicateurs OppChoVec incluent la stabilité de l’emploi, mais sans distinction d’âge (selon les données territoriales objectives).
+
+- **Cadre de vie agréable** :
+  Les enquêtes ne recensent pas les communes **les plus citées par les 18-25 ans** comme offrant un cadre de vie plaisant. Les perceptions disponibles sont globales (Corse entière) et ne permettent pas de hiérarchiser les localités.
+
+---
+
+### **Conclusion : des pistes, mais pas de réponse définitive**
+Aucune commune ne se dégage clairement comme **la meilleure pour les 18-25 ans** en Corse, faute de données ciblées. Voici ce que l’on peut retenir :
+
+✅ **Des communes aux conditions structurelles favorables** :
+Les indicateurs territoriaux suggèrent que des communes comme **Ajaccio ou Bastia** offrent des **opportunités éducatives, professionnelles et numériques** supérieures à la moyenne (selon les indicateurs OppChoVec). Ces atouts pourraient indirectement améliorer le bien-être des jeunes, mais cela reste à confirmer par des enquêtes spécifiques.
+
+⚠️ **Un ressenti global mitigé chez les jeunes** :
+Les 18-24 ans corses expriment une **satisfaction modérée** (bonheur à 3,61/5) et une **méfiance envers l’avenir** (confiance à 2,91/5), sans variation géographique identifiable (selon l’enquête citoyenne). Les difficultés d’accès à la culture et aux loisirs en milieu rural sont soulignées, mais sans lien avec une commune précise.
+
+❌ **Des données manquantes pour une réponse précise** :
+- **Aucune enquête ne mesure le bien-être des 18-25 ans par commune**.
+- **Aucun indicateur ne cible spécifiquement leur emploi, leurs loisirs ou leur cadre de vie**.
+- **Les verbatims disponibles ne permettent pas d’identifier des communes "préférées"**.
+
+**Pour aller plus loin** :
+Une étude dédiée, combinant **enquêtes locales auprès des 18-25 ans** et **données territoriales désagrégées par âge**, serait nécessaire pour répondre précisément à cette question. À ce stade, les communes aux **meilleurs scores OppChoVec** (notamment en *Opp* et *Vec*) pourraient être des pistes, mais leur attractivité réelle pour les jeunes reste à démontrer.</div>
+  </details>
+</div>
+  </div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Sources du système RAG</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Segoe UI", -apple-system, sans-serif;
+         background: white; color: #222; padding: 16px 18px;
+         font-size: 10.5px; width: fit-content; }
+
+  h1 { font-size: 0.95em; font-weight: 700; color: #1a2a3a; margin-bottom: 2px; }
+  .subtitle { font-size: 0.72em; color: #888; margin-bottom: 12px; }
+
+  .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+
+  .col-header { font-size: 0.65em; font-weight: 700; text-transform: uppercase;
+                letter-spacing: .07em; padding: 4px 8px 5px;
+                border-radius: 4px 4px 0 0; text-align: center; }
+  .col-header.raw    { background: #dbeafe; color: #1d4ed8; }
+  .col-header.raptor { background: #dcfce7; color: #166534; }
+  .col-header.obj    { background: #fef3c7; color: #92400e; }
+
+  .col-body { border: 1px solid #e5e7eb; border-top: none;
+              border-radius: 0 0 5px 5px; overflow: hidden; width: 210px; }
+
+  .row { display: flex; align-items: baseline; justify-content: space-between;
+         padding: 4px 8px; border-bottom: 1px solid #f3f4f6; gap: 6px; }
+  .row:last-child { border-bottom: none; }
+  .row:hover { background: #f9fafb; }
+
+  .row-name { color: #374151; flex: 1; line-height: 1.35; }
+  .row-sub { color: #9ca3af; font-size: .8em; }
+
+  .row-count { font-weight: 800; white-space: nowrap; font-size: 1em;
+               text-align: right; min-width: 30px; }
+  .raw    .row-count { color: #2563eb; }
+  .raptor .row-count { color: #16a34a; }
+  .obj    .row-count { color: #b45309; }
+
+  .row-unit { font-size: 0.65em; color: #9ca3af; margin-left: 1px; }
+
+  .view-mini { font-size: 0.65em; color: #555; padding: 3px 8px 4px;
+               border-bottom: 1px solid #f3f4f6; background: #f9fdf9; }
+  .view-mini table { width: 100%; border-collapse: collapse; }
+  .view-mini td { padding: 1px 3px; }
+  .view-mini td:last-child { text-align: right; font-weight: 700; color: #16a34a; }
+  .view-mini .v2d { color: #166534; }
+  .view-mini .v1d { color: #5aab6e; }
+  .view-mini .sep { color: #9ca3af; font-style: italic; padding-top: 2px; }
+
+  .totals { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 7px; margin-top: 10px; }
+  .total { border-radius: 5px; padding: 7px 10px; text-align: center; }
+  .total.raw    { background: #dbeafe; }
+  .total.raptor { background: #dcfce7; }
+  .total.obj    { background: #fef3c7; }
+  .total.grand  { background: #1a2a3a; }
+  .total-num { font-size: 1.3em; font-weight: 800; line-height: 1; }
+  .total.raw    .total-num { color: #1d4ed8; }
+  .total.raptor .total-num { color: #166534; }
+  .total.obj    .total-num { color: #92400e; }
+  .total.grand  .total-num { color: #fff; }
+  .total-lbl { font-size: 0.65em; color: #6b7280; margin-top: 2px; line-height: 1.3; }
+  .total.grand  .total-lbl { color: #94a3b8; }
+</style>
+</head>
+<body>
+
+<h1>Sources du système RAG — Decomp + RAPTOR</h1>
+<p class="subtitle">14 collections ChromaDB · Corpus Qualité de vie en Corse · encodage sentence-transformers</p>
+
+<div class="grid">
+
+  <!-- COL 1 : BRUTES -->
+  <div class="raw">
+    <div class="col-header raw">Données brutes</div>
+    <div class="col-body raw">
+      <div class="row">
+        <span class="row-name">Verbatims citoyens<br><span class="row-sub">69 communes · 9 CSP · 5 âges · 16 dims</span></span>
+        <span class="row-count">690<span class="row-unit">ch.</span></span>
+      </div>
+      <div class="row">
+        <span class="row-name">Entretiens semi-directifs<br><span class="row-sub">extraits de transcriptions 2022</span></span>
+        <span class="row-count">284<span class="row-unit">ch.</span></span>
+      </div>
+      <div class="row">
+        <span class="row-name">Réponses enquête individuelles<br><span class="row-sub">N = 246 répondants · scores 1–5</span></span>
+        <span class="row-count">246<span class="row-unit">docs</span></span>
+      </div>
+      <div class="row">
+        <span class="row-name">Scores enquête agrégés<br><span class="row-sub">commune × dimension · n_répondants</span></span>
+        <span class="row-count">120<span class="row-unit">docs</span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- COL 2 : RAPTOR -->
+  <div class="raptor">
+    <div class="col-header raptor">Synthèses RAPTOR <span style="font-weight:400;opacity:.7">(pré-calculées)</span></div>
+    <div class="col-body raptor">
+      <div class="row">
+        <span class="row-name">Synthèses verbatims</span>
+        <span class="row-count">493<span class="row-unit">syn.</span></span>
+      </div>
+      <div class="view-mini">
+        <table>
+          <tr><td class="sep" colspan="2">Vues 2D</td></tr>
+          <tr><td class="v2d">profession × commune</td><td>124</td></tr>
+          <tr><td class="v2d">âge × commune</td><td>112</td></tr>
+          <tr><td class="v2d">dimension × âge / commune / CSP</td><td>135</td></tr>
+          <tr><td class="v2d">âge × profession</td><td>30</td></tr>
+          <tr><td class="sep" colspan="2">Vues 1D (fallback)</td></tr>
+          <tr><td class="v1d">commune · dimension · profession</td><td>92</td></tr>
+        </table>
+      </div>
+      <div class="row">
+        <span class="row-name">Synthèses scores enquête</span>
+        <span class="row-count">125<span class="row-unit">syn.</span></span>
+      </div>
+      <div class="row">
+        <span class="row-name">Synthèses quantitatives</span>
+        <span class="row-count">50<span class="row-unit">syn.</span></span>
+      </div>
+      <div class="row">
+        <span class="row-name">Synthèses entretiens</span>
+        <span class="row-count">2<span class="row-unit">syn.</span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- COL 3 : OBJECTIVES -->
+  <div class="obj">
+    <div class="col-header obj">Données territoriales objectives</div>
+    <div class="col-body obj">
+      <div class="row">
+        <span class="row-name">Scores OppChoVec<br><span class="row-sub">Opp · Cho · Vec · 0–10 · 360 communes</span></span>
+        <span class="row-count">394<span class="row-unit">docs</span></span>
+      </div>
+      <div class="row">
+        <span class="row-name">Fiches communes (wiki)<br><span class="row-sub">histoire · géo · économie locale</span></span>
+        <span class="row-count">360<span class="row-unit">docs</span></span>
+      </div>
+      <div class="row">
+        <span class="row-name">Équipements &amp; services<br><span class="row-sub">médecins · écoles · commerces…</span></span>
+        <span class="row-count">360<span class="row-unit">docs</span></span>
+      </div>
+      <div class="row">
+        <span class="row-name">Géographie &amp; EPCI<br><span class="row-sub">voisinage · micro-région · 30 EPCI</span></span>
+        <span class="row-count">390<span class="row-unit">docs</span></span>
+      </div>
+      <div class="row">
+        <span class="row-name">Profils socio-démo (INSEE)<br><span class="row-sub">communes enquêtées uniquement</span></span>
+        <span class="row-count">70<span class="row-unit">docs</span></span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Totaux -->
+<div class="totals">
+  <div class="total raw">
+    <div class="total-num">1 340</div>
+    <div class="total-lbl">données brutes</div>
+  </div>
+  <div class="total raptor">
+    <div class="total-num">670</div>
+    <div class="total-lbl">synthèses RAPTOR</div>
+  </div>
+  <div class="total obj">
+    <div class="total-num">1 574</div>
+    <div class="total-lbl">données objectives</div>
+  </div>
+  <div class="total grand">
+    <div class="total-num">3 584</div>
+    <div class="total-lbl">documents indexés<br>14 collections</div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8">
+<title>R89 — Détail ablations</title>
+<style>
+  body{font-family:Arial,sans-serif;font-size:13px;margin:24px;background:#f4f6f8;}
+  h1{color:#1a1a2e;font-size:18px;}
+  .q{background:#1a1a2e;color:white;padding:14px 18px;border-radius:8px;margin-bottom:20px;font-size:15px;}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:20px;}
+  .card{background:white;border-radius:8px;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,.1);}
+  .card-header{display:flex;align-items:center;justify-content:space-between;padding-bottom:10px;border-bottom:2px solid;margin-bottom:12px;}
+  .card-title{font-weight:bold;font-size:12px;text-transform:uppercase;letter-spacing:.5px;}
+  .v_vanilla_k10 .card-header{border-color:#c0392b;} .v_vanilla_k10 .card-title{color:#c0392b;}
+  .v_vanilla_k25 .card-header{border-color:#e67e22;} .v_vanilla_k25 .card-title{color:#e67e22;}
+  .v_decomp      .card-header{border-color:#27ae60;} .v_decomp .card-title{color:#27ae60;}
+  .v_decomp_raptor .card-header{border-color:#2980b9;} .v_decomp_raptor .card-title{color:#2980b9;}
+  .global-score{font-size:20px;font-weight:bold;background:#1a1a2e;color:white;padding:4px 12px;border-radius:6px;}
+  .scores{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
+  .score-box{background:#f8f9fa;border-radius:6px;padding:6px 10px;text-align:center;min-width:68px;}
+  .score-label{font-size:10px;color:#888;display:block;}
+  .score-val{font-size:17px;font-weight:bold;color:#333;}
+  .score-stars{font-size:10px;color:#f39c12;}
+  .raisonnement{font-style:italic;color:#555;font-size:11px;margin-bottom:10px;padding:8px;
+                 background:#fffde7;border-left:3px solid #f39c12;border-radius:4px;}
+  .answer{font-size:12px;line-height:1.6;white-space:pre-wrap;color:#222;
+           max-height:520px;overflow-y:auto;border-top:1px solid #eee;padding-top:10px;}
+  .meta{font-size:10px;color:#aaa;margin-top:8px;text-align:right;}
+  table{width:100%;border-collapse:collapse;background:white;border-radius:8px;
+         overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.1);}
+  th{background:#1a1a2e;color:white;padding:10px 14px;text-align:center;font-size:12px;}
+  th:first-child{text-align:left;}
+  td{padding:9px 14px;border-bottom:1px solid #eee;text-align:center;font-size:12px;}
+  td:first-child{text-align:left;font-weight:bold;}
+  tr:last-child td{border-bottom:none;}
+  .best{font-weight:bold;color:#27ae60;font-size:14px;}
+</style></head><body>
+<div class="q">R89 — Le faible nombre de répondants dans certaines communes affecte-t-il la fiabilité des conclusions ?</div>
+
+<table>
+<tr><th>Config</th><th>Pertinence</th><th>Factuel</th><th>Nuance</th><th>Quali/Q</th>
+    <th>Global</th><th>Sources</th><th>Temps RAG</th></tr>
+<tr><td>v_vanilla_k10</td><td>3/5 ★★★☆☆</td><td>4/5 ★★★★☆</td><td>4/5 ★★★★☆</td><td>4/5 ★★★★☆</td><td><b>3.75</b></td><td>10</td><td>12.9s</td></tr>
+<tr><td>v_vanilla_k25</td><td>5/5 ★★★★★</td><td>5/5 ★★★★★</td><td>5/5 ★★★★★</td><td>4/5 ★★★★☆</td><td><b>4.75</b></td><td>25</td><td>14.0s</td></tr>
+<tr><td>v_decomp</td><td>5/5 ★★★★★</td><td>5/5 ★★★★★</td><td>5/5 ★★★★★</td><td>5/5 ★★★★★</td><td class='best'><b>5.00</b></td><td>25</td><td>56.7s</td></tr>
+<tr><td>v_decomp_raptor</td><td>5/5 ★★★★★</td><td>4/5 ★★★★☆</td><td>4/5 ★★★★☆</td><td>5/5 ★★★★★</td><td><b>4.50</b></td><td>54</td><td>77.1s</td></tr>
+</table>
+<div class='grid'>
+<div class="card v_vanilla_k10">
+<div class="card-header"><span class="card-title">v_vanilla_k10</span><span class="global-score">3.75 / 5</span></div>
+<div class="scores">
+<div class="score-box"><span class="score-label">Pertinence</span><span class="score-val">3</span><span class="score-stars">★★★☆☆</span></div>
+<div class="score-box"><span class="score-label">Factuel</span><span class="score-val">4</span><span class="score-stars">★★★★☆</span></div>
+<div class="score-box"><span class="score-label">Nuance</span><span class="score-val">4</span><span class="score-stars">★★★★☆</span></div>
+<div class="score-box"><span class="score-label">Quali/Q</span><span class="score-val">4</span><span class="score-stars">★★★★☆</span></div>
+</div>
+<div class="answer">D'après les documents fournis, **aucune information ne permet d'évaluer directement l'impact du faible nombre de répondants sur la fiabilité des conclusions** pour la commune de **Campana** (seule mentionnée dans la question).
+
+### Points clés à considérer :
+1. **Indicateur OppChoVec** :
+   - Les scores présentés (Opp, Cho, Vec) sont calculés à partir de **données objectives** (niveaux d'éducation, diversité sociale, mobilité, couverture numérique, etc.), issues de sources statistiques territoriales (source : Betti). Ces données ne dépendent pas d'enquêtes citoyennes, mais de recensements ou d'indicateurs administratifs.
+   - **Aucun verbatim ou retour qualitatif** n'est mentionné pour Campana, donc la question des répondants ne s'applique pas à ces scores.
+
+2. **Données quantitatives** :
+   - Les indicateurs comme le taux de pauvreté, la part de logements vacants, ou la couverture numérique sont des **données agrégées** (ex : INSEE, ARCEP), dont la fiabilité dépend de la méthodologie de collecte (échantillonnage, exhaustivité), mais pas du nombre de répondants locaux.
+   - Pour Campana, les sous-scores comme **Opp1 (éducation = 1.43/10)** ou **Opp3 (mobilité = 0.74/10)** reflètent des **moyennes communales** (ex : niveau de diplôme moyen), calculées sur l'ensemble de la population, et non sur un échantillon de répondants.
+
+3. **Limites des données** :
+   - Les documents ne précisent pas si des **enquêtes locales** (qualitatives ou quantitatives) ont été menées pour compléter l'indicateur OppChoVec (notamment pour le sous-score *Vécu*, qui pourrait inclure des perceptions citoyennes). Si tel était le cas, un faible nombre de répondants pourrait biaiser les résultats, mais **aucune mention de ce type n'est faite pour Campana**.
+
+### Conclusion :
+Les conclusions sur Campana reposent sur des **données objectives et exhaustives** (indicateurs territoriaux), et non sur des enquêtes par sondage. **Aucun élément dans les documents fournis ne permet d'affirmer que la fiabilité est affectée par un faible nombre de répondants**. Si des données qualitatives (entretiens, enquêtes citoyennes) avaient été utilisées, leur représentativité n'est pas documentée ici.
+
+*Source : Scores OppChoVec (Betti) et indicateurs territoriaux quantitatifs (sans mention de répondants).*</div>
+<div class="meta">10 sources | RAG 12.9s | Judge 7.4s</div>
+</div>
+<div class="card v_vanilla_k25">
+<div class="card-header"><span class="card-title">v_vanilla_k25</span><span class="global-score">4.75 / 5</span></div>
+<div class="scores">
+<div class="score-box"><span class="score-label">Pertinence</span><span class="score-val">5</span><span class="score-stars">★★★★★</span></div>
+<div class="score-box"><span class="score-label">Factuel</span><span class="score-val">5</span><span class="score-stars">★★★★★</span></div>
+<div class="score-box"><span class="score-label">Nuance</span><span class="score-val">5</span><span class="score-stars">★★★★★</span></div>
+<div class="score-box"><span class="score-label">Quali/Q</span><span class="score-val">4</span><span class="score-stars">★★★★☆</span></div>
+</div>
+<div class="answer">D'après les documents fournis, **aucune information ne permet d'évaluer directement l'impact du faible nombre de répondants sur la fiabilité des conclusions** pour la commune de **Campana** (seule mentionnée dans la question).
+
+### Points clés à considérer :
+1. **Indicateur OppChoVec** :
+   - Les scores (Opp, Cho, Vec) sont calculés à partir de **données objectives** (niveaux de diplôme, diversité sociale, couverture numérique, etc.), issues de sources statistiques (ex. : INSEE, Betti). Ces données ne dépendent pas d'enquêtes citoyennes, donc le nombre de répondants n'affecte pas leur fiabilité (source : *Indicateurs territoriaux*).
+
+2. **Données quantitatives** :
+   - Les indicateurs comme le taux de pauvreté, la part de logements vacants, ou la couverture TIC sont des **données agrégées** (ex. : recensement), indépendantes des répondants individuels (source : *Équipements et services commune*).
+
+3. **Absence de verbatims ou enquêtes qualitatives** :
+   - Les documents ne mentionnent **aucune enquête citoyenne** pour Campana. Si des conclusions reposaient sur des entretiens ou questionnaires, leur fiabilité pourrait être discutée, mais ce n'est pas le cas ici.
+
+### Conclusion :
+Les données utilisées pour Campana sont **objectives et standardisées**, donc **non sensibles au nombre de répondants**. En revanche, si des analyses futures intègrent des retours citoyens (non présents dans les documents), cette question deviendrait pertinente. *Les documents fournis ne permettent pas de statuer sur un biais lié aux répondants.*</div>
+<div class="meta">25 sources | RAG 14.0s | Judge 2.2s</div>
+</div>
+<div class="card v_decomp">
+<div class="card-header"><span class="card-title">v_decomp</span><span class="global-score">5.00 / 5</span></div>
+<div class="scores">
+<div class="score-box"><span class="score-label">Pertinence</span><span class="score-val">5</span><span class="score-stars">★★★★★</span></div>
+<div class="score-box"><span class="score-label">Factuel</span><span class="score-val">5</span><span class="score-stars">★★★★★</span></div>
+<div class="score-box"><span class="score-label">Nuance</span><span class="score-val">5</span><span class="score-stars">★★★★★</span></div>
+<div class="score-box"><span class="score-label">Quali/Q</span><span class="score-val">5</span><span class="score-stars">★★★★★</span></div>
+</div>
+<div class="answer">### **Synthèse : Fiabilité des conclusions face au faible nombre de répondants dans certaines communes corses**
+
+La question de la fiabilité des conclusions en cas de faible participation dans les enquêtes citoyennes en Corse soulève plusieurs enjeux, mais les données disponibles permettent d’éclairer partiellement la situation. Voici les points clés à retenir, en distinguant les **perceptions des habitants** (enquêtes citoyennes) et les **réalités territoriales mesurées** (indicateurs objectifs comme les scores OppChoVec ou les équipements communaux).
+
+---
+
+#### **1. Un manque de transparence sur les seuils de fiabilité statistique**
+Aucune donnée n’est disponible concernant :
+- Le **seuil minimal de répondants** requis par commune pour garantir la fiabilité des résultats d’enquêtes citoyennes.
+- Les **méthodes de redressement ou pondérations** appliquées pour compenser les déséquilibres de participation (par exemple, entre petites et grandes communes).
+
+Cela limite la capacité à évaluer si les conclusions tirées des enquêtes reflètent fidèlement les perceptions locales ou si elles sont biaisées par des échantillons trop restreints.
+
+---
+
+#### **2. Des données d’enquête citoyenne globalisées, sans granularité communale**
+Les **perceptions des habitants** disponibles proviennent d’une enquête couvrant **l’ensemble de la Corse** (246 répondants), mais **aucune donnée spécifique par commune** (comme Corscia, Corte ou Corrano) n’est fournie. Cela signifie que :
+- Les résultats ne permettent pas d’analyser les variations locales de bien-être perçu.
+- Les conclusions sur une commune en particulier reposent sur des **tendances régionales**, et non sur des retours ciblés de ses habitants.
+
+**Exemple concret** : Si l’enquête révèle une satisfaction globale élevée en Corse, cela ne garantit pas que les habitants de Corscia partagent ce sentiment – leur voix peut être noyée dans la moyenne régionale.
+
+---
+
+#### **3. Les indicateurs territoriaux objectifs : une stabilité indépendante des répondants**
+Contrairement aux enquêtes citoyennes, les **scores OppChoVec** (qui mesurent des dimensions comme l’accès aux services, la qualité de vie ou les opportunités économiques) sont **construits à partir de données administratives** (revenus, logements, emplois, etc.). Leur fiabilité ne dépend donc **pas du nombre de répondants** à une enquête, mais de la qualité des sources statistiques utilisées.
+
+Pour les communes citées dans le contexte (Corscia, Corte, Corrano, Campile, Olivese, Casevecchie) :
+- Les **scores OppChoVec** (lorsqu’ils sont disponibles) fournissent une **image objective et stable** de leur situation, même en l’absence de données d’enquête locales.
+- Les **équipements et services** (médecins, écoles, commerces, etc.) sont également des indicateurs concrets, indépendants des perceptions.
+
+**Limite** : Ces indicateurs ne captent pas les **ressentis** (ex. : sentiment d’isolement, attachement au territoire), qui nécessitent des enquêtes locales.
+
+---
+
+#### **4. Aucune preuve d’un lien entre nombre de répondants et variabilité des indicateurs**
+Aucune donnée ne permet d’établir une corrélation entre :
+- Le **nombre de répondants** par commune dans les enquêtes citoyennes.
+- La **variabilité des scores OppChoVec** (écarts-types ou fluctuations).
+
+Cette absence de lien suggère que les **indicateurs territoriaux** (comme les scores OppChoVec) restent robustes même pour les petites communes, mais elle ne dit rien sur la **fiabilité des perceptions** recueillies par enquête.
+
+---
+
+### **Conclusion : Des risques réels, mais des outils complémentaires pour les atténuer**
+Le faible nombre de répondants dans certaines communes **peut effectivement biaiser les conclusions** des enquêtes citoyennes, surtout si :
+- Les résultats sont **extrapolés à une commune** alors qu’ils couvrent toute la Corse.
+- Aucune pondération n’est appliquée pour corriger les déséquilibres (ex. : surreprésentation des villes au détriment des villages).
+
+**Cependant, deux leviers limitent ces risques** :
+1. **Les indicateurs territoriaux** (scores OppChoVec, équipements) offrent une **base objective et stable**, indépendante des aléas de participation aux enquêtes.
+2. **La complémentarité des approches** : Croiser perceptions (enquêtes) et réalités mesurées (indicateurs) permet d’éviter des conclusions hâtives. Par exemple, une commune avec un score OppChoVec élevé mais une faible satisfaction dans l’enquête mérite une analyse approfondie (ex. : décalage entre infrastructures et sentiment d’appartenance).
+
+**Recommandation pratique** :
+Pour renforcer la fiabilité des diagnostics locaux, il serait utile de :
+- **Publier les seuils de répondants** et les méthodes de redressement utilisés dans les enquêtes.
+- **Cibler des enquêtes par commune** (même avec des échantillons modestes) pour éviter de généraliser des tendances régionales.
+- **Croiser systématiquement** les données d’enquête avec les indicateurs territoriaux pour identifier les écarts entre perceptions et réalités.
+
+En l’état actuel, **la prudence s’impose** pour interpréter les résultats d’enquêtes au niveau communal, mais les outils objectifs disponibles (scores OppChoVec, équipements) permettent de nuancer les analyses.</div>
+<div class="meta">25 sources | RAG 56.7s | Judge 2.1s</div>
+</div>
+<div class="card v_decomp_raptor">
+<div class="card-header"><span class="card-title">v_decomp_raptor</span><span class="global-score">4.50 / 5</span></div>
+<div class="scores">
+<div class="score-box"><span class="score-label">Pertinence</span><span class="score-val">5</span><span class="score-stars">★★★★★</span></div>
+<div class="score-box"><span class="score-label">Factuel</span><span class="score-val">4</span><span class="score-stars">★★★★☆</span></div>
+<div class="score-box"><span class="score-label">Nuance</span><span class="score-val">4</span><span class="score-stars">★★★★☆</span></div>
+<div class="score-box"><span class="score-label">Quali/Q</span><span class="score-val">5</span><span class="score-stars">★★★★★</span></div>
+</div>
+<div class="answer">### **Synthèse : Le faible nombre de répondants affecte-t-il la fiabilité des conclusions sur la qualité de vie en Corse ?**
+
+La question de la fiabilité des conclusions en fonction du nombre de répondants par commune en Corse doit être analysée sous deux angles distincts : **les perceptions issues de l’enquête citoyenne** et **les indicateurs territoriaux objectifs** (comme les scores OppChoVec). Voici les éléments clés à retenir, en l’état des données disponibles.
+
+---
+
+#### **1. Pour les perceptions citoyennes : des limites avérées, mais une portée régionale plutôt que communale**
+Les données d’enquête citoyenne disponibles couvrent **la Corse entière** (246 répondants répartis sur 69 communes), mais **aucune donnée spécifique par commune n’est fournie** dans le contexte. Plusieurs constats émergent :
+- **Un déséquilibre géographique marqué** : selon l’enquête citoyenne, les villes comme Ajaccio, Bastia et Corte concentrent une majorité de répondants (ex. : 51 pour Ajaccio), tandis que les zones rurales ou les petites communes sont sous-représentées (ex. : 1 répondant pour Casevecchie). Ce biais limite la capacité à tirer des conclusions **fiables au niveau communal**, surtout pour les territoires peu couverts.
+- **Aucun seuil minimal de répondants n’est défini** pour garantir la représentativité locale. Sans cette référence méthodologique, il est impossible d’évaluer précisément si les résultats reflètent les réalités de chaque commune ou s’ils sont biaisés par la surreprésentation de certains territoires.
+- **Pas de calcul de marge d’erreur ou de taux de couverture** : le contexte ne fournit ni le ratio répondants/population par commune, ni les intervalles de confiance associés aux perceptions recueillies. Ces éléments seraient pourtant nécessaires pour juger de la robustesse des conclusions locales.
+
+**Conclusion partielle** : *Les résultats de l’enquête citoyenne sont exploitables à l’échelle de la Corse, mais leur fiabilité diminue fortement pour les communes avec peu de répondants. Sans seuil minimal défini ni analyse des marges d’erreur, les conclusions locales doivent être interprétées avec prudence, voire évitées pour les territoires sous-représentés.*
+
+---
+
+#### **2. Pour les indicateurs territoriaux objectifs (scores OppChoVec) : une fiabilité indépendante du nombre de répondants**
+Les scores OppChoVec (opportunités, choix, vecteurs de qualité de vie) sont **construits à partir de données administratives et statistiques publiques** (revenus, emploi, éducation, accès aux services, etc.), et non à partir de l’enquête citoyenne. Leur fiabilité ne dépend donc **pas du nombre de répondants** à cette enquête. Voici ce que montrent les indicateurs :
+- **Une couverture exhaustive** : selon les données territoriales objectives, les scores OppChoVec sont calculés pour **les 360 communes corses**, avec des valeurs moyennes pour la région (ex. : 3,87/10 pour les opportunités, 3,46/10 pour les vecteurs de qualité de vie). Ces scores reflètent des réalités structurelles (ex. : accès aux soins, diversité des emplois, qualité du logement), indépendamment des opinions des habitants.
+- **Pas de lien avec l’enquête citoyenne** : le contexte ne permet pas d’établir une corrélation entre le nombre de répondants par commune et la variabilité des scores OppChoVec. Ces derniers sont des mesures objectives, non soumises aux aléas de l’échantillonnage d’enquête.
+- **Des limites intrinsèques** : bien que fiables, les scores OppChoVec restent des **proxys** (indicateurs simplifiés) et ne capturent pas toutes les dimensions de la qualité de vie (ex. : sentiment de sécurité, lien social). Leur interprétation doit être nuancée.
+
+**Conclusion partielle** : *Les scores OppChoVec offrent une base solide pour comparer les communes entre elles, car leur fiabilité n’est pas affectée par le nombre de répondants à l’enquête citoyenne. En revanche, ils ne remplacent pas les perceptions locales, qui peuvent diverger des réalités mesurées.*
+
+---
+
+#### **3. Synthèse finale : des conclusions à géométrie variable**
+La fiabilité des conclusions dépend **du type de données et de l’échelle géographique** :
+- **À l’échelle communale** :
+  - **Perceptions citoyennes** : *peu fiables* pour les communes avec peu de répondants (ex. : moins de 5), en l’absence de seuil minimal défini et de calculs de représentativité. Les résultats risquent de refléter des biais géographiques (surreprésentation des villes) plutôt que des réalités locales.
+  - **Indicateurs territoriaux (OppChoVec)** : *fiables*, car basés sur des données objectives et exhaustives. Ils permettent des comparaisons entre communes, mais ne capturent pas les ressentis.
+- **À l’échelle de la Corse** :
+  - Les données d’enquête citoyenne (246 répondants) et les scores OppChoVec régionaux offrent une vision **complémentaire** : les premières révèlent les perceptions globales, les seconds les disparités structurelles. Leur combinaison renforce la robustesse des conclusions à ce niveau.
+
+**Recommandations pour renforcer la fiabilité** :
+1. **Pour les enquêtes citoyennes** :
+   - Définir un **seuil minimal de répondants par commune** (ex. : 30 répondants pour les communes de plus de 1 000 habitants) et calculer les **marges d’erreur** associées.
+   - Cibler les zones sous-représentées (rurales, petites communes) via des méthodes d’échantillonnage adaptées (quotas, suréchantillonnage).
+2. **Pour les indicateurs territoriaux** :
+   - Croiser systématiquement les scores OppChoVec avec des **données qualitatives locales** (entretiens, focus groups) pour contextualiser les résultats.
+   - Affiner les proxys utilisés (ex. : intégrer des indicateurs de lien social ou de sécurité perçue).
+
+**En résumé** :
+Le faible nombre de répondants dans certaines communes **affaiblit la fiabilité des conclusions basées sur les perceptions citoyennes**, surtout à l’échelle locale. En revanche, **les indicateurs territoriaux comme les scores OppChoVec restent fiables**, car indépendants de l’enquête. Pour une analyse robuste, il est essentiel de **combiner ces deux approches** tout en clarifiant leurs limites respectives.</div>
+<div class="meta">54 sources | RAG 77.1s | Judge 3.8s</div>
+</div>
+</div></body></html>

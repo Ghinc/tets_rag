@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Raisonnement croisé quanti/quali — Q34, Q35</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+         font-size: 13px; margin: 0; background: #f4f6f8; color: #222; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+  h1 { font-size: 1.3em; color: #333; border-bottom: 2px solid #ddd; padding-bottom: 8px; margin-bottom: 6px; }
+  .subtitle { color: #666; font-size: 0.9em; margin-bottom: 20px; }
+  .legende-box { background: white; border-radius: 8px; padding: 16px 20px;
+                  box-shadow: 0 1px 4px rgba(0,0,0,.1); margin-bottom: 24px;
+                  border-left: 4px solid #8e44ad; }
+  .question-card { background: white; border-radius: 8px;
+                    box-shadow: 0 1px 4px rgba(0,0,0,.1); margin-bottom: 32px; padding: 20px; }
+  .q-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .q-num { background: #34495e; color: white; border-radius: 4px; padding: 2px 10px;
+            font-weight: bold; font-size: 1.05em; }
+  .q-section { color: #888; font-size: 0.88em; }
+  .q-text { font-size: 1.05em; font-weight: 600; margin-bottom: 14px;
+             padding: 10px 14px; background: #f8f9fa; border-radius: 6px;
+             border-left: 4px solid #34495e; }
+  .summary-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 0.88em; }
+  .summary-table th { background: #ecf0f1; padding: 6px 10px; text-align: left; font-size: 0.85em; border: 1px solid #ddd; }
+  .summary-table td { padding: 6px 10px; border: 1px solid #eee; vertical-align: top; }
+  .configs-container { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .config-block { background: #fafafa; border-radius: 6px; padding: 14px; }
+  .config-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+  .config-name { font-weight: bold; font-size: 1em; }
+  .meta { color: #999; font-size: 0.8em; margin-left: auto; }
+  .badge { display: inline-block; color: white; border-radius: 4px;
+            padding: 2px 8px; font-size: 0.85em; font-weight: bold; }
+  .badge.grey { background: #95a5a6; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 10px; }
+  .section-title { font-weight: 600; font-size: 0.78em; text-transform: uppercase;
+                    color: #666; margin: 8px 0 4px; letter-spacing: .04em; }
+  .dim-table { width: 100%; border-collapse: collapse; font-size: 0.84em; }
+  .dim-table td { padding: 3px 6px; border-bottom: 1px solid #eee; }
+  .dim-label { color: #555; width: 130px; }
+  .justif { color: #666; font-size: 0.84em; font-style: italic; }
+  .mis-table { width: 100%; border-collapse: collapse; font-size: 0.84em; }
+  .mis-table td { padding: 3px 6px; border-bottom: 1px solid #eee; vertical-align: top; }
+  .sig-box { background: #eafaf1; border-radius: 4px; padding: 6px 10px; margin-top: 6px; font-size: 0.82em; }
+  .sig-box ul { margin: 4px 0 0 16px; padding: 0; }
+  .raisonnement { background: #fff8e1; border-radius: 4px; padding: 8px 10px;
+                   font-size: 0.85em; color: #555; margin-bottom: 8px;
+                   border-left: 3px solid #f39c12; }
+  details summary { cursor: pointer; color: #2980b9; font-size: 0.85em;
+                     padding: 4px 0; user-select: none; }
+  details summary:hover { text-decoration: underline; }
+  .answer { white-space: pre-wrap; font-family: monospace; font-size: 0.8em;
+             background: #f5f5f5; border-radius: 4px; padding: 10px; margin-top: 6px;
+             max-height: 420px; overflow-y: auto; border: 1px solid #ddd; }
+  @media (max-width: 900px) {
+    .configs-container { grid-template-columns: 1fr; }
+    .two-col { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Raisonnement croisé quanti/quali — Q34, Q35</h1>
+  <p class="subtitle">
+    Sous-section <em>Comparaison croisée quanti/quali</em> · Juge V4.3 GPT-4o · 4 configurations
+  </p>
+  
+<div class="legende-box">
+  <div class="section-title" style="margin-bottom:8px">
+    Dimension clé : Cohérence quali/quanti (Q/Q)
+  </div>
+  <p>Cette dimension évalue si le système <strong>articule correctement</strong> les données objectives
+  (scores OppChoVec, indicateurs territoriaux) et les données subjectives (verbatims citoyens, enquête).
+  Une réponse idéale reconnaît la tension éventuelle entre les deux, la quantifie et l'interprète
+  sans hiérarchiser indûment l'un sur l'autre.</p>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;font-size:0.82em">
+    <span style="background:#d5f5e3;color:#1a7a40;padding:3px 10px;border-radius:4px">5/5 — articulation complète et nuancée</span>
+    <span style="background:#eafaf1;color:#27ae60;padding:3px 10px;border-radius:4px">4/5 — bonne intégration</span>
+    <span style="background:#fef9e7;color:#b7950b;padding:3px 10px;border-radius:4px">3/5 — partielle</span>
+    <span style="background:#fdecea;color:#c0392b;padding:3px 10px;border-radius:4px">≤ 2/5 — ignorée ou confuse</span>
+  </div>
+</div>
+  
+<div class="question-card">
+  <div class="q-header">
+    <span class="q-num">Q34</span>
+    <span class="q-section">Raisonnement comparatif — Comparaison croisée quanti/quali</span>
+  </div>
+  <div class="q-text">Les indicateurs objectifs et le bien-être perçu convergent-ils à Ajaccio ?</div>
+  <table class="summary-table"><tr><th>Config</th><th>Score</th><th>Pert.</th><th>Fact.</th><th>Nuance</th><th>Q/Q</th><th>Flags</th><th>Raisonnement (extrait)</th></tr><tr><td style="color:#c0392b;font-weight:bold">Vanilla k10</td><td><span class="badge" style="background:#27ae60">4.75</span></td><td style="color:#27ae60;font-weight:bold;text-align:center">5.0</td><td style="color:#27ae60;font-weight:bold;text-align:center">5.0</td><td style="color:#27ae60;font-weight:bold;text-align:center">4.0</td><td style="color:#27ae60;font-weight:bold;text-align:center">5.0</td><td><span class="badge" style="background:#27ae60">✓ clean</span></td><td class="justif">La réponse compare explicitement les scores OppChoVec avec les résultats de l'enquête de satisfaction, identifiant des convergence…</td></tr><tr><td style="color:#e67e22;font-weight:bold">Vanilla k25</td><td><span class="badge" style="background:#c0392b">2.75</span></td><td style="color:#e67e22;font-weight:bold;text-align:center">3.0</td><td style="color:#e67e22;font-weight:bold;text-align:center">3.0</td><td style="color:#e67e22;font-weight:bold;text-align:center">3.0</td><td style="color:#c0392b;font-weight:bold;text-align:center">2.0</td><td><span class="badge" style="background:#c0392b">Ri</span> <span class="badge" style="background:#c0392b">Re</span></td><td class="justif">La réponse compare les scores OppChoVec et les scores d'enquête, mais présente ces derniers comme qualitatifs sans signaler l'abse…</td></tr><tr><td style="color:#27ae60;font-weight:bold">Decomp</td><td><span class="badge" style="background:#c0392b">2.25</span></td><td style="color:#e67e22;font-weight:bold;text-align:center">3.0</td><td style="color:#c0392b;font-weight:bold;text-align:center">2.0</td><td style="color:#c0392b;font-weight:bold;text-align:center">2.0</td><td style="color:#c0392b;font-weight:bold;text-align:center">2.0</td><td><span class="badge" style="background:#c0392b">Ri</span> <span class="badge" style="background:#c0392b">Rc</span> <span class="badge" style="background:#c0392b">Re</span></td><td class="justif">La réponse utilise des scores quantitatifs pour discuter de perceptions sans signaler l'absence de données qualitatives. Surinterp…</td></tr><tr><td style="color:#2980b9;font-weight:bold">Decomp+Raptor</td><td><span class="badge" style="background:#27ae60">4.75</span></td><td style="color:#27ae60;font-weight:bold;text-align:center">5.0</td><td style="color:#27ae60;font-weight:bold;text-align:center">5.0</td><td style="color:#27ae60;font-weight:bold;text-align:center">4.0</td><td style="color:#27ae60;font-weight:bold;text-align:center">5.0</td><td><span class="badge" style="background:#27ae60">✓ clean</span></td><td class="justif">La réponse compare les indicateurs quantitatifs OppChoVec avec les perceptions qualitatives des habitants d'Ajaccio, en soulignant…</td></tr></table>
+  <div class="configs-container">
+    
+<div class="config-block" style="border-left:4px solid #c0392b">
+  <div class="config-header">
+    <span class="config-name" style="color:#c0392b">Vanilla k10</span>
+    <span class="badge" style="background:#27ae60">4.75</span>
+    <span class="badge" style="background:#27ae60">✓ clean</span>
+    <span class="meta">6 sources · 17.7s</span>
+  </div>
+  <div class="two-col">
+    <div>
+      <div class="section-title">Dimensions</div>
+      <table class="dim-table"><tr><td class="dim-label">Pertinence</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse traite précisément tous les éléments spécifiques de la question avec une comparaison claire entre les données objectives et subjectives.</td></tr><tr><td class="dim-label">Fondement factuel</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Les affirmations sont bien fondées sur les sources fournies, avec une interprétation correcte des scores OppChoVec et des résultats d'enquête.</td></tr><tr><td class="dim-label">Nuance / incertitude</td><td><span style="color:#27ae60;font-weight:bold">4/5</span></td><td class="justif">La réponse est bien nuancée, avec des explications possibles pour les divergences, mais pourrait inclure plus de modalisateurs pour renforcer l'incertitude.</td></tr><tr><td class="dim-label">Cohérence quali/quanti</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Intégration exemplaire des données quantitatives et qualitatives, avec une comparaison bien structurée et ciblée.</td></tr></table>
+    </div>
+    <div>
+      <div class="section-title">Mislabelling</div>
+      <table class="mis-table"><tr><td style="color:#27ae60;font-weight:bold">R1</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R2</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R3</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R4</td><td style="font-size:0.85em">non</td></tr></table>
+    </div>
+  </div>
+  <div class="section-title">Raisonnement du juge</div>
+  <div class="raisonnement">La réponse compare explicitement les scores OppChoVec avec les résultats de l'enquête de satisfaction, identifiant des convergences et divergences.</div>
+  <details>
+    <summary>Réponse complète (3336 car.)</summary>
+    <div class="answer">À Ajaccio, les indicateurs objectifs et le bien-être perçu présentent des convergences **partielles**, mais aussi des **divergences marquées**, selon les dimensions analysées dans les documents fournis.
+
+---
+
+### **Convergences (accord entre données objectives et subjectives)**
+1. **Accès aux TIC (numérique) et satisfaction liée aux réseaux**
+   - **Objectif** : Le score *Opp4* (accès aux TIC) est très élevé (9,35/10, rang 24e/360), avec une couverture haut débit/4G de 93,5 % (*indicateurs territoriaux*).
+   - **Subjectif** : La dimension *"Réseau"* obtient une note moyenne de **3,49/5** dans l’enquête qualité de vie (rang 7e/14), ce qui est cohérent avec une bonne couverture objective (*enquête citoyenne*).
+
+2. **Éducation**
+   - **Objectif** : Le score *Opp1* (niveau d’éducation moyen) est élevé (7,42/10, rang 24e/360), reflétant un niveau de diplôme correct dans la population (*indicateurs territoriaux*).
+   - **Subjectif** : La dimension *"Éducation"* est notée **3,44/5** (rang 8e/14), ce qui suggère une satisfaction modérée mais alignée sur les opportunités objectives (*enquête citoyenne*).
+
+3. **Offre en équipements et services**
+   - **Objectif** : Ajaccio dispose d’une densité élevée d’équipements (ex. : 80 médecins généralistes, 15 crèches, 6 lycées, 11 supermarchés) et d’un taux d’activité de 75,6 % (*indicateurs territoriaux*).
+   - **Subjectif** : Les dimensions *"Emploi"* (3,91/5, rang 1er) et *"Logement"* (3,84/5, rang 2e) sont les mieux notées, ce qui correspond à la forte offre en emplois salariés (87,8 %) et à la diversité du parc immobilier (*enquête citoyenne*).
+
+---
+
+### **Divergences (décalage entre données objectives et subjectives)**
+1. **Diversité sociale**
+   - **Objectif** : Le score *Opp2* (diversité sociale) est **faible** (1,96/10, rang 216e/360), avec un indice de Theil de 0,2787 indiquant une faible mixité des CSP (*indicateurs territoriaux*).
+   - **Subjectif** : La dimension *"Communauté et relations"* est notée **3,54/5** (rang 4e/14), ce qui suggère une perception positive des liens sociaux malgré la faible diversité objective (*enquête citoyenne*).
+   → **Explication possible** : Les répondants (majoritairement cadres/professions intermédiaires ou étudiants, *profil démographique*) peuvent sous-estimer les inégalités sociales.
+
+2. **Mobilité**
+   - **Objectif** : Le score *Opp3* (mobilité) est **très élevé** (8,99/10, rang 128e/360), grâce à un accès théorique aux transports en commun et à la voiture (*indicateurs territoriaux*).
+   - **Subjectif** : La dimension *"Transports"* obtient la **note la plus faible** (2,21/5, rang 14e/14) (*enquête citoyenne*).
+   → **Explication possible** : L’indicateur objectif mesure une *capacité théorique* (ex. : existence de transports), tandis que les répondants évaluent probablement la *qualité perçue* (fréquence, ponctualité, coût), absente des données.
+
+3. **Sécurité**
+   - **Objectif** : Le taux de coups et blessures volontaires est de **4,0 pour 1 000 habitants** (*indicateurs territoriaux*), un chiffre modéré.
+   - **Subjectif** : La dimension *"Sécurité"* est notée **3,81/5** (rang 3e/14), ce qui est élevé (*enquête citoyenne*).
+   → **Décalage** : La perception de sécurité semble meilleure que ce que suggèrent les statistiques criminelles.
+
+4. **Santé**
+   - **Objectif** : Ajaccio dispose d’un **</div>
+  </details>
+</div>
+<div class="config-block" style="border-left:4px solid #e67e22">
+  <div class="config-header">
+    <span class="config-name" style="color:#e67e22">Vanilla k25</span>
+    <span class="badge" style="background:#c0392b">2.75</span>
+    <span class="badge" style="background:#c0392b">Ri</span> <span class="badge" style="background:#c0392b">Re</span>
+    <span class="meta">6 sources · 21.2s</span>
+  </div>
+  <div class="two-col">
+    <div>
+      <div class="section-title">Dimensions</div>
+      <table class="dim-table"><tr><td class="dim-label">Pertinence</td><td><span style="color:#e67e22;font-weight:bold">3/5</span></td><td class="justif">La réponse traite bien la convergence/dévergence mais ne signale pas l'absence de données qualitatives.</td></tr><tr><td class="dim-label">Fondement factuel</td><td><span style="color:#e67e22;font-weight:bold">3/5</span></td><td class="justif">Les scores d'enquête sont présentés comme qualitatifs, ce qui est un mislabelling. Plafond Règle 1.</td></tr><tr><td class="dim-label">Nuance / incertitude</td><td><span style="color:#e67e22;font-weight:bold">3/5</span></td><td class="justif">Absence de signalement de l'absence de données qualitatives. Plafond Règle 3.</td></tr><tr><td class="dim-label">Cohérence quali/quanti</td><td><span style="color:#c0392b;font-weight:bold">2/5</span></td><td class="justif">Les scores d'enquête sont utilisés comme s'ils étaient qualitatifs, déséquilibrant l'analyse. Plafond Règle 1.</td></tr></table>
+    </div>
+    <div>
+      <div class="section-title">Mislabelling</div>
+      <table class="mis-table"><tr><td style="color:#c0392b;font-weight:bold">R1</td><td style="font-size:0.85em">oui — les scores d'enquête sont présentés comme qualitatifs alors qu'ils sont quantitatifs</td></tr><tr><td style="color:#27ae60;font-weight:bold">R2</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#c0392b;font-weight:bold">R3</td><td style="font-size:0.85em">oui — aucune source qualitative n'est fournie, mais le manque n'est pas signalé</td></tr><tr><td style="color:#27ae60;font-weight:bold">R4</td><td style="font-size:0.85em">non</td></tr></table>
+    </div>
+  </div>
+  <div class="section-title">Raisonnement du juge</div>
+  <div class="raisonnement">La réponse compare les scores OppChoVec et les scores d'enquête, mais présente ces derniers comme qualitatifs sans signaler l'absence de données qualitatives.</div>
+  <details>
+    <summary>Réponse complète (3302 car.)</summary>
+    <div class="answer">À Ajaccio, les indicateurs objectifs (OppChoVec) et le bien-être perçu (enquête citoyenne) présentent des convergences **partielles**, mais aussi des **divergences marquées**, comme le montrent les documents fournis.
+
+---
+
+### **Convergences**
+1. **Accès aux TIC et satisfaction numérique**
+   - **Objectif** : Le score Opp4 (accès aux TIC) est très élevé (9,35/10, rang 24e/360), avec une couverture haut débit/4G à 93,5 % (indicateurs territoriaux).
+   - **Subjectif** : La dimension "Réseau" obtient une note moyenne de **3,49/5** dans l’enquête qualité de vie (7e rang sur 14), ce qui est cohérent avec une satisfaction modérée malgré une bonne couverture objective.
+
+2. **Éducation**
+   - **Objectif** : Le score Opp1 (éducation) est élevé (7,42/10, rang 24e/360), reflétant un niveau de diplôme moyen correct (valeur brute : 5,760).
+   - **Subjectif** : La dimension "Éducation" est notée **3,44/5** (8e rang), ce qui suggère une perception alignée sur les données objectives, bien que mitigée.
+
+3. **Emploi et revenus**
+   - **Objectif** : La commune affiche un taux d’activité élevé (75,6 %) et une forte proportion d’emplois salariés (87,8 %), avec 12,9 % de cadres (indicateurs territoriaux).
+   - **Subjectif** : L’**emploi** est la dimension la mieux notée (3,91/5, 1er rang), et les **revenus** obtiennent 3,51/5 (5e rang). Ces scores confirment une perception positive des opportunités professionnelles, en phase avec les indicateurs objectifs.
+
+4. **Sécurité**
+   - **Objectif** : Le taux de coups et blessures volontaires est de 4,0 pour 1 000 habitants (indicateurs territoriaux), ce qui est modéré.
+   - **Subjectif** : La **sécurité** est notée 3,81/5 (3e rang), reflétant une perception plutôt rassurante malgré des chiffres objectifs moyens.
+
+---
+
+### **Divergences**
+1. **Mobilité**
+   - **Objectif** : Le score Opp3 (mobilité) est très élevé (8,99/10, rang 128e/360), avec un indicateur brut de 186,1/200 (indicateurs territoriaux). Cela suggère un bon accès aux transports ou à la voiture.
+   - **Subjectif** : Les **transports** sont la dimension **la moins bien notée** (2,21/5, 14e rang), avec un écart de 1,70 point par rapport à la meilleure note (emploi). Cette divergence est **très marquée** : malgré des infrastructures objectives solides, la perception des usagers est négative.
+
+2. **Diversité sociale**
+   - **Objectif** : Le score Opp2 (diversité sociale) est faible (1,96/10, rang 216e/360), avec un indice de Theil de 0,2787 (indicateurs territoriaux), indiquant une faible mixité des CSP.
+   - **Subjectif** : La dimension "Communauté et relations" est notée 3,54/5 (4e rang), ce qui suggère une perception **plus positive** que ne le laissent penser les données objectives. Les répondants semblent moins sensibles aux inégalités sociales que ne le mesure l’indice de Theil.
+
+3. **Santé**
+   - **Objectif** : La commune dispose d’un bon équipement (80 médecins généralistes, 31 pharmacies, 204 infirmiers pour 1 service d’urgence, indicateurs territoriaux).
+   - **Subjectif** : La **santé** est notée **2,58/5** (13e rang), et citée comme une **priorité** par les répondants. Malgré des ressources objectives, la perception est négative, possiblement liée à des problèmes d’accès ou de qualité perçue.
+
+4. **Score "Choix" (liberté effective)**
+   - **Objectif**</div>
+  </details>
+</div>
+<div class="config-block" style="border-left:4px solid #27ae60">
+  <div class="config-header">
+    <span class="config-name" style="color:#27ae60">Decomp</span>
+    <span class="badge" style="background:#c0392b">2.25</span>
+    <span class="badge" style="background:#c0392b">Ri</span> <span class="badge" style="background:#c0392b">Rc</span> <span class="badge" style="background:#c0392b">Re</span>
+    <span class="meta">23 sources · 58.8s</span>
+  </div>
+  <div class="two-col">
+    <div>
+      <div class="section-title">Dimensions</div>
+      <table class="dim-table"><tr><td class="dim-label">Pertinence</td><td><span style="color:#e67e22;font-weight:bold">3/5</span></td><td class="justif">La question demande un croisement quali/quanti mais aucune source quali n'est mobilisée, et le manque n'est pas signalé. Plafonné à 3 par Règle 3.</td></tr><tr><td class="dim-label">Fondement factuel</td><td><span style="color:#c0392b;font-weight:bold">2/5</span></td><td class="justif">Mislabelling des scores quantitatifs comme perceptions qualitatives et surinterprétation de Vec. Plafond Règle 1 et 2.</td></tr><tr><td class="dim-label">Nuance / incertitude</td><td><span style="color:#c0392b;font-weight:bold">2/5</span></td><td class="justif">Aucun signalement de l'absence de données qualitatives. Plafond Règle 3.</td></tr><tr><td class="dim-label">Cohérence quali/quanti</td><td><span style="color:#c0392b;font-weight:bold">2/5</span></td><td class="justif">L'équilibre annoncé est factice : tout est quantitatif, présenté comme un croisement. Plafond Règle 1.</td></tr></table>
+    </div>
+    <div>
+      <div class="section-title">Mislabelling</div>
+      <table class="mis-table"><tr><td style="color:#c0392b;font-weight:bold">R1</td><td style="font-size:0.85em">oui — la réponse présente des scores quantitatifs comme des perceptions qualitatives</td></tr><tr><td style="color:#c0392b;font-weight:bold">R2</td><td style="font-size:0.85em">oui — Vec interprété comme 'conditions matérielles correctes' sans signaler que c'est un proxy</td></tr><tr><td style="color:#c0392b;font-weight:bold">R3</td><td style="font-size:0.85em">oui — aucune source quali dispo, manque non signalé</td></tr><tr><td style="color:#27ae60;font-weight:bold">R4</td><td style="font-size:0.85em">non</td></tr></table>
+    </div>
+  </div>
+  <div class="section-title">Raisonnement du juge</div>
+  <div class="raisonnement">La réponse utilise des scores quantitatifs pour discuter de perceptions sans signaler l'absence de données qualitatives. Surinterprétation de Vec et mislabelling des scores quanti.</div>
+  <details>
+    <summary>Réponse complète (5964 car.)</summary>
+    <div class="answer">### **À Ajaccio, bien-être objectif et bien-être perçu : une convergence partielle, mais des tensions majeures**
+
+La question de la convergence entre les indicateurs objectifs et le bien-être perçu à Ajaccio révèle un paysage contrasté, où des atouts territoriaux indéniables coexistent avec des frustrations citoyennes marquées. Si certains aspects du quotidien des Ajacciens s’alignent sur les données objectives, d’autres montrent un décalage préoccupant, notamment en matière de libertés effectives et de confiance dans l’avenir.
+
+---
+
+#### **1. Des opportunités territoriales exceptionnelles, mais une satisfaction modérée**
+Selon les données territoriales objectives, **Ajaccio se distingue par des ressources parmi les plus favorables de Corse** :
+- **1er rang sur 360 communes** en opportunités (accès aux technologies, éducation, mobilité), avec un score maximal de **10/10**. L’accès au haut débit (9,35/10) et la connectivité (8,99/10) sont particulièrement performants, tout comme le niveau d’éducation (7,42/10).
+- **41e rang en "vécu" (4,80/10)**, un score moyen qui reflète des conditions matérielles correctes (revenu fiscal, qualité du logement, accès aux services en moins de 20 minutes).
+
+Pourtant, **les habitants expriment une satisfaction globale mitigée** (3,89/5 selon l’enquête citoyenne), avec des écarts notables :
+- **Les transports**, bien que théoriquement accessibles (score mobilité élevé), sont perçus comme le **point le plus critique** (2,21/5), suggérant des problèmes d’efficacité ou de congestion.
+- **Les services de proximité** (3,42/5) et la **vie associative** (2,64/5) obtiennent des notes faibles, malgré un accès objectif aux équipements.
+- **Le logement** (3,84/5) et la **sécurité** (3,81/5) sont les seuls domaines où la perception rejoint partiellement les indicateurs (qualité du logement incluse dans le score "vécu").
+
+**→ Conclusion partielle** : Les ressources territoriales d’Ajaccio sont parmi les meilleures de Corse, mais leur traduction concrète dans le quotidien des habitants est inégale, voire décevante sur certains aspects (transports, vie locale).
+
+---
+
+#### **2. Un paradoxe criant : des libertés formelles quasi inexistantes, une confiance en l’avenir fragilisée**
+Le **score "Choix" (1,27/10, 358e rang)** est le talon d’Achille d’Ajaccio selon les indicateurs objectifs. Ce score reflète :
+- Une **faible proportion de population avec droit de vote** (critère inclus dans l’indicateur).
+- La **présence de quartiers prioritaires (QPV)**, limitant la liberté effective des habitants concernés.
+
+Ce constat objectif trouve un écho dans les perceptions citoyennes :
+- La **confiance en l’avenir** est la dimension la plus faible de l’enquête (2,75/5), bien en dessous du bonheur déclaré (3,68/5).
+- Le **sentiment de liberté ou d’autonomie** n’est pas mesuré directement dans l’enquête, mais la faible satisfaction envers les **transports** et les **services publics** (2,95/5) pourrait refléter une frustration liée à des contraintes quotidiennes.
+
+**→ Conclusion partielle** : Ajaccio cumule des **opportunités exceptionnelles** et des **libertés effectives très limitées**, un déséquilibre qui pèse sur le moral des habitants. Les données objectives et subjectives convergent ici pour souligner une **fragilité structurelle**, malgré des atouts indéniables.
+
+---
+
+#### **3. Points de convergence et divergences : où les indicateurs et les perceptions se rejoignent (ou non)**
+| **Dimension**               | **Données territoriales objectives**       | **Perception citoyenne**                  | **Convergence ?**                          |
+|-----------------------------|--------------------------------------------|-------------------------------------------|--------------------------------------------|
+| **Accès aux services**      | Bon (score "vécu" : 4,80/10)               | Moyenne (3,42/5)                          | ❌ **Décalage** : accès théorique ≠ qualité perçue |
+| **Transports**              | Très bon (mobilité : 8,99/10)              | Très faible (2,21/5)                      | ❌ **Paradoxe** : infrastructures ≠ satisfaction |
+| **Logement**                | Qualité incluse dans le score "vécu"       | Satisfaction élevée (3,84/5)              | ✅ **Convergence**                         |
+| **Sécurité**                | Non mesurée directement                    | Satisfaction élevée (3,81/5)              | ⚠️ **Pas de donnée objective comparable**  |
+| **Emploi**                  | Stabilité incluse dans le score "vécu"     | Satisfaction élevée (3,91/5)              | ✅ **Convergence partielle**               |
+| **Libertés effectives**     | Très faible (score "Choix" : 1,27/10)      | Confiance en l’avenir faible (2,75/5)     | ✅ **Convergence** : frustration partagée  |
+
+---
+
+#### **4. Synthèse finale : une convergence partielle, mais des tensions structurelles**
+À Ajaccio, **les indicateurs objectifs et le bien-être perçu ne convergent que partiellement**, avec trois dynamiques clés :
+
+1. **Une convergence sur les aspects matériels** :
+   - Le logement, l’emploi et la sécurité sont des domaines où les **données territoriales** (qualité du logement, stabilité de l’emploi) et les **perceptions citoyennes** s’alignent positivement. Ces éléments contribuent à une **satisfaction modérée mais réelle** (3,89/5).
+
+2. **Un décalage flagrant sur les opportunités non exploitées** :
+   - Ajaccio dispose des **meilleures infrastructures de Corse** (éducation, TIC, mobilité), mais les habitants en tirent peu de bénéfices concrets. Les **transports** et les **services de proximité** sont perçus comme inefficaces, malgré leur accessibilité théorique. Ce décalage suggère des **problèmes de gouvernance ou d’organisation**, plutôt qu’un manque de ressources.
+
+3. **Une fracture profonde sur les libertés et l’avenir** :
+   - Le **score "Choix" catastrophique** (1,27/10) et la **faible confiance en l’avenir** (2,75/5) révèlent une **crise de sens** :</div>
+  </details>
+</div>
+<div class="config-block" style="border-left:4px solid #2980b9">
+  <div class="config-header">
+    <span class="config-name" style="color:#2980b9">Decomp+Raptor</span>
+    <span class="badge" style="background:#27ae60">4.75</span>
+    <span class="badge" style="background:#27ae60">✓ clean</span>
+    <span class="meta">67 sources · 72.7s</span>
+  </div>
+  <div class="two-col">
+    <div>
+      <div class="section-title">Dimensions</div>
+      <table class="dim-table"><tr><td class="dim-label">Pertinence</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">La réponse traite précisément tous les éléments spécifiques de la question avec une comparaison claire entre les données objectives et subjectives.</td></tr><tr><td class="dim-label">Fondement factuel</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Les affirmations sont bien fondées sur les sources fournies, avec une distinction claire entre les données quantitatives et qualitatives.</td></tr><tr><td class="dim-label">Nuance / incertitude</td><td><span style="color:#27ae60;font-weight:bold">4/5</span></td><td class="justif">La réponse est bien nuancée, mais pourrait encore mieux signaler les limites des données qualitatives.</td></tr><tr><td class="dim-label">Cohérence quali/quanti</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Intégration exemplaire des données qualitatives et quantitatives, avec une comparaison bien structurée.</td></tr></table>
+    </div>
+    <div>
+      <div class="section-title">Mislabelling</div>
+      <table class="mis-table"><tr><td style="color:#27ae60;font-weight:bold">R1</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R2</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R3</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R4</td><td style="font-size:0.85em">non</td></tr></table>
+    </div>
+  </div>
+  <div class="section-title">Raisonnement du juge</div>
+  <div class="raisonnement">La réponse compare les indicateurs quantitatifs OppChoVec avec les perceptions qualitatives des habitants d'Ajaccio, en soulignant les convergences et divergences.</div>
+  <details>
+    <summary>Réponse complète (5912 car.)</summary>
+    <div class="answer">### **Bien-être à Ajaccio : entre opportunités objectives et perceptions contrastées**
+
+À Ajaccio, les indicateurs territoriaux et le bien-être perçu par les habitants ne convergent que partiellement, révélant un décalage marqué entre les ressources disponibles et leur traduction concrète dans le quotidien. Si la ville se distingue par des atouts objectifs majeurs, ceux-ci peinent à se refléter dans la satisfaction globale des résidents, notamment sur des dimensions clés comme la mobilité, le logement ou la confiance en l’avenir.
+
+---
+
+#### **1. Une ville aux opportunités exceptionnelles, mais un vécu en demi-teinte**
+Selon les données territoriales objectives, Ajaccio se classe **19ᵉ sur 360 communes corses** avec un score global de **5,78/10**, un résultat qui cache des disparités internes frappantes :
+- **Opportunités maximales** : Avec un score de **10/10** (1ʳᵉ place en Corse), la ville offre un accès remarquable à l’éducation, aux technologies numériques (haut débit performant) et à la mobilité. Ces atouts devraient, en théorie, favoriser un cadre de vie dynamique et connecté.
+- **Un "vécu" moyen** : Le score de **4,80/10** (41ᵉ rang) reflète des conditions de vie correctes, mais sans exceller. Les indicateurs montrent un revenu fiscal moyen, une stabilité de l’emploi modérée et un accès aux services (santé, commerces) dans un rayon de 20 minutes, sans toutefois atteindre l’excellence.
+- **Un déficit criant de "choix"** : Avec seulement **1,27/10** (358ᵉ rang), Ajaccio se situe parmi les communes les moins bien classées sur cette dimension. Ce score s’explique par une faible diversité socio-professionnelle et l’absence de quartiers prioritaires (QPV), mais aussi par une perception limitée des libertés effectives, comme en témoignent les enquêtes citoyennes.
+
+---
+
+#### **2. Une satisfaction globale positive, mais des inquiétudes profondes**
+Selon l’enquête citoyenne, les Ajacciens expriment une **satisfaction moyenne de 3,85/5** pour leur qualité de vie, un score qui place leur ressenti dans une fourchette modérément positive. Cependant, cette appréciation masque des **fractures thématiques** et une **méfiance marquée envers l’avenir** :
+- **Points forts perçus** :
+  - **Revenus et pouvoir d’achat** : Thème le plus cité (12 verbatims), les habitants soulignent que les revenus permettent de couvrir les besoins essentiels (*"se payer un logement, la nourriture et quelques loisirs"*), même si des craintes persistent (*"tout augmente mais pas les salaires"*).
+  - **Santé** : Considérée comme une priorité absolue (*"si on n’a pas la santé, on n’a rien"*), bien que l’accès aux soins soit jugé perfectible (*"le meilleur médecin est malheureusement l’avion"*).
+  - **Équilibre vie pro/perso** : Valorisé comme un pilier du bien-être (*"une coupure est importante entre ces deux mondes"*).
+
+- **Points de tension** :
+  - **Environnement** : La nature et le climat sont appréciés (*"air frais, zones vertes, accès au soleil"*), mais la pollution (notamment liée aux bateaux de croisière) et la dégradation des espaces urbains sont des sujets de préoccupation récurrents.
+  - **Logement et transports** : Les verbatims révèlent des difficultés d’accès au logement et une **insatisfaction forte envers les transports** (2,20/5), malgré des indicateurs objectifs favorables (mobilité notée 8,99/10). Les habitants critiquent la congestion, la qualité du réseau de transports en commun (1,98/5) et l’encombrement, illustrant un décalage entre l’offre théorique et son usage concret.
+  - **Confiance en l’avenir** : Avec un score de **2,79/5**, cette dimension est la plus faible de l’enquête. Les Ajacciens expriment un pessimisme marqué, reflétant des craintes sur l’évolution économique, sociale et environnementale de la ville.
+
+---
+
+#### **3. Des écarts révélateurs entre données objectives et perceptions**
+Plusieurs dimensions illustrent un **décalage entre les mesures territoriales et le ressenti des habitants**, soulignant que la qualité de vie ne se réduit pas à la disponibilité des ressources :
+- **Mobilité et transports** :
+  - *Objectif* : Ajaccio obtient un score de **8,99/10** pour l’accessibilité, grâce à un réseau routier dense et des infrastructures de transport.
+  - *Perçu* : Les habitants évaluent les transports à seulement **2,20/5**, avec des critiques ciblées sur la congestion, le manque de fiabilité des transports en commun et leur coût. Ce contraste montre que la **qualité de service** et l’**expérience utilisateur** priment sur la simple existence des infrastructures.
+- **Accès aux services** :
+  - *Objectif* : Les indicateurs territoriaux confirment un bon accès aux services essentiels (santé, commerces) en moins de 20 minutes.
+  - *Perçu* : La satisfaction pour les services de proximité n’atteint que **3,42/5**, suggérant que la **disponibilité** ne garantit pas la **qualité** ou l’**adéquation aux besoins** (ex. : pénurie de médecins, files d’attente).
+- **Logement** :
+  - *Objectif* : Le score de "vécu" (4,80/10) inclut une évaluation moyenne de la qualité du logement.
+  - *Perçu* : Les verbatims révèlent des difficultés d’accès, notamment pour les ménages modestes, et une pression immobilière croissante. La **dimension financière** (prix, loyers) n’est pas captée par les indicateurs objectifs, mais pèse lourdement sur le ressenti.
+
+---
+
+#### **4. Un paradoxe ajaccien : pourquoi les opportunités ne se traduisent-elles pas en bien-être ?**
+Plusieurs hypothèses émergent pour expliquer ce décalage :
+- **Effet de seuil** : Ajaccio concentre des ressources exceptionnelles (éducation, numérique, mobilité), mais celles-ci profitent inégalement à la population. Les indicateurs objectifs mesurent une **offre globale**, tandis que les enquêtes citoyennes reflètent des **inégalités d’accès** ou des **dysfonctionnements locaux** (ex. : saturation des transports, désertification médicale dans certains quartiers).
+- **</div>
+  </details>
+</div>
+  </div>
+</div>
+<div class="question-card">
+  <div class="q-header">
+    <span class="q-num">Q35</span>
+    <span class="q-section">Raisonnement comparatif — Comparaison croisée quanti/quali</span>
+  </div>
+  <div class="q-text">Observe-t-on un écart significatif entre indicateurs objectifs et perception à Bastia ?</div>
+  <table class="summary-table"><tr><th>Config</th><th>Score</th><th>Pert.</th><th>Fact.</th><th>Nuance</th><th>Q/Q</th><th>Flags</th><th>Raisonnement (extrait)</th></tr><tr><td style="color:#c0392b;font-weight:bold">Vanilla k10</td><td><span class="badge" style="background:#c0392b">2.25</span></td><td style="color:#e67e22;font-weight:bold;text-align:center">3.0</td><td style="color:#c0392b;font-weight:bold;text-align:center">2.0</td><td style="color:#c0392b;font-weight:bold;text-align:center">2.0</td><td style="color:#c0392b;font-weight:bold;text-align:center">2.0</td><td><span class="badge" style="background:#c0392b">Ri</span> <span class="badge" style="background:#c0392b">Rc</span> <span class="badge" style="background:#c0392b">Re</span></td><td class="justif">La réponse présente des indicateurs quantitatifs comme s'ils étaient des perceptions qualitatives, sans signaler l'absence de donn…</td></tr><tr><td style="color:#e67e22;font-weight:bold">Vanilla k25</td><td><span class="badge" style="background:#c0392b">2.50</span></td><td style="color:#e67e22;font-weight:bold;text-align:center">3.0</td><td style="color:#e67e22;font-weight:bold;text-align:center">3.0</td><td style="color:#c0392b;font-weight:bold;text-align:center">2.0</td><td style="color:#c0392b;font-weight:bold;text-align:center">2.0</td><td><span class="badge" style="background:#c0392b">Rc</span> <span class="badge" style="background:#c0392b">Re</span></td><td class="justif">La réponse compare des indicateurs quantitatifs avec des perceptions supposées sans données qualitatives disponibles, et surinterp…</td></tr><tr><td style="color:#27ae60;font-weight:bold">Decomp</td><td><span class="badge" style="background:#e67e22">3.00</span></td><td style="color:#e67e22;font-weight:bold;text-align:center">3.0</td><td style="color:#e67e22;font-weight:bold;text-align:center">3.0</td><td style="color:#e67e22;font-weight:bold;text-align:center">3.0</td><td style="color:#e67e22;font-weight:bold;text-align:center">3.0</td><td><span class="badge" style="background:#c0392b">Ri</span></td><td class="justif">La réponse compare les scores OppChoVec et les scores d'enquête, mais présente ces derniers comme des perceptions qualitatives san…</td></tr><tr><td style="color:#2980b9;font-weight:bold">Decomp+Raptor</td><td><span class="badge" style="background:#27ae60">4.75</span></td><td style="color:#27ae60;font-weight:bold;text-align:center">5.0</td><td style="color:#27ae60;font-weight:bold;text-align:center">5.0</td><td style="color:#27ae60;font-weight:bold;text-align:center">4.0</td><td style="color:#27ae60;font-weight:bold;text-align:center">5.0</td><td><span class="badge" style="background:#27ae60">✓ clean</span></td><td class="justif">La réponse compare les indicateurs quantitatifs OppChoVec avec les perceptions qualitatives des habitants de Bastia, en soulignant…</td></tr></table>
+  <div class="configs-container">
+    
+<div class="config-block" style="border-left:4px solid #c0392b">
+  <div class="config-header">
+    <span class="config-name" style="color:#c0392b">Vanilla k10</span>
+    <span class="badge" style="background:#c0392b">2.25</span>
+    <span class="badge" style="background:#c0392b">Ri</span> <span class="badge" style="background:#c0392b">Rc</span> <span class="badge" style="background:#c0392b">Re</span>
+    <span class="meta">4 sources · 21.7s</span>
+  </div>
+  <div class="two-col">
+    <div>
+      <div class="section-title">Dimensions</div>
+      <table class="dim-table"><tr><td class="dim-label">Pertinence</td><td><span style="color:#e67e22;font-weight:bold">3/5</span></td><td class="justif">La question demande un croisement quali/quanti mais aucune source quali n'est mobilisée, et le manque n'est pas signalé. Plafonné à 3 par Règle 3.</td></tr><tr><td class="dim-label">Fondement factuel</td><td><span style="color:#c0392b;font-weight:bold">2/5</span></td><td class="justif">Mislabelling : mention de données qualitatives inexistantes et surinterprétation de Vec. Plafond Règle 1 et 2.</td></tr><tr><td class="dim-label">Nuance / incertitude</td><td><span style="color:#c0392b;font-weight:bold">2/5</span></td><td class="justif">Aucun signalement de l'absence de données qualitatives. Plafond Règle 3.</td></tr><tr><td class="dim-label">Cohérence quali/quanti</td><td><span style="color:#c0392b;font-weight:bold">2/5</span></td><td class="justif">L'équilibre annoncé est factice : tout est quantitatif, présenté comme un croisement. Plafond Règle 1.</td></tr></table>
+    </div>
+    <div>
+      <div class="section-title">Mislabelling</div>
+      <table class="mis-table"><tr><td style="color:#c0392b;font-weight:bold">R1</td><td style="font-size:0.85em">oui — la réponse mentionne des 'entretiens qualitatifs' et 'verbatims' non fournis</td></tr><tr><td style="color:#c0392b;font-weight:bold">R2</td><td style="font-size:0.85em">oui — Vec interprété comme 'insatisfactions locales' alors que c'est un proxy quanti</td></tr><tr><td style="color:#c0392b;font-weight:bold">R3</td><td style="font-size:0.85em">oui — aucune source quali dispo, manque non signalé</td></tr><tr><td style="color:#27ae60;font-weight:bold">R4</td><td style="font-size:0.85em">non</td></tr></table>
+    </div>
+  </div>
+  <div class="section-title">Raisonnement du juge</div>
+  <div class="raisonnement">La réponse présente des indicateurs quantitatifs comme s'ils étaient des perceptions qualitatives, sans signaler l'absence de données qualitatives. Mislabelling R1, R2, et R3.</div>
+  <details>
+    <summary>Réponse complète (3253 car.)</summary>
+    <div class="answer">Oui, on observe un écart significatif entre les indicateurs objectifs et la perception des habitants à Bastia, notamment sur deux dimensions clés :
+
+### 1. **Opportunités objectives élevées vs. perception du choix (liberté effective)**
+- **Indicateurs objectifs** :
+  Bastia obtient un score **Opportunités (Opp) très élevé (7,51/10, rang 7e/360)**, porté par :
+  - Un **accès aux TIC excellent (9,65/10, couverture 96,5%)** et une **mobilité élevée (8,65/10)** (source : *indicateurs territoriaux OppChoVec*).
+  - Une **offre abondante de services** (50 médecins généralistes, 220 infirmiers, 11 crèches, 7 lycées, etc.) et d’équipements commerciaux (source : *équipements et services quantitatifs*).
+  - Une **diversité sociale modérée (2,10/10)** et un **niveau d’éducation faible (1,28/10)**, mais compensés par les autres sous-dimensions.
+
+- **Perception du choix (Cho) nulle (0,00/10)** :
+  Le score **Choix (Cho)** est le plus faible de Corse (rang 360e/360), reflétant une **liberté effective perçue comme quasi inexistante** par les habitants. Cet écart suggère que :
+  - Les **ressources objectives** (emploi, services, mobilité) ne se traduisent pas en **capacités réelles** pour les individus (ex. : précarité, accès inégal aux opportunités).
+  - Les **entretiens qualitatifs** (non détaillés ici) pourraient révéler des freins structurels (coût du logement, segmentation sociale, etc.).
+
+---
+
+### 2. **Vécu (Vec) moyen vs. insatisfactions locales**
+- **Indicateur objectif** :
+  Le **Vécu (Vec) est moyen (3,23/10, rang 205e/360)** (source : *OppChoVec*), ce qui contraste avec :
+  - Un **taux de pauvreté élevé (19,3%)** et un **prix moyen au m² très haut (2 781 €/m²)** (source : *équipements et services quantitatifs*), limitant l’accès au logement.
+  - Un **taux de coups et blessures (6,2/1 000 habitants)**, supérieur à la moyenne corse, suggérant des tensions sociales.
+
+- **Perception des habitants** :
+  Les **verbatims de l’enquête qualité de vie** (non fournis ici) pourraient révéler des insatisfactions sur :
+  - La **sécurité** (liée au taux de criminalité).
+  - Le **coût de la vie** (logement, services).
+  - La **qualité des espaces publics** ou la **cohésion sociale**, malgré la diversité objective (Opp2).
+
+---
+
+### 3. **Décalage éducation/emploi**
+- **Indicateur objectif** :
+  Le **niveau d’éducation (Opp1) est très faible (1,28/10, rang 246e/360)**, alors que la commune compte **7 lycées et 5 collèges** (source : *équipements quantitatifs*).
+  - Cela suggère un **décrochage scolaire local** ou une **fuite des diplômés** vers d’autres territoires.
+  - La **part élevée de salariés (84,5%)** et de cadres (14,3%) contraste avec le faible score éducatif, indiquant peut-être une **main-d’œuvre qualifiée non résidente** (travailleurs pendulaires).
+
+- **Perception** :
+  Les **répondants de l’enquête** (profil : 52,2% de 45-59 ans, 26,1% de cadres/employés) pourraient exprimer des frustrations sur :
+  - L’**accès à la formation** pour les jeunes (seulement 13% de 15-29 ans parmi les répondants).
+  - La **précarité des emplois** (14,7% d’ouvriers, taux d’activité de 68,3%).
+
+---
+
+### Conclusion
+L’écart est **particulièrement marqué sur la dimension Choix (liberté effective)**, où les opportunités objectives (</div>
+  </details>
+</div>
+<div class="config-block" style="border-left:4px solid #e67e22">
+  <div class="config-header">
+    <span class="config-name" style="color:#e67e22">Vanilla k25</span>
+    <span class="badge" style="background:#c0392b">2.50</span>
+    <span class="badge" style="background:#c0392b">Rc</span> <span class="badge" style="background:#c0392b">Re</span>
+    <span class="meta">4 sources · 21.6s</span>
+  </div>
+  <div class="two-col">
+    <div>
+      <div class="section-title">Dimensions</div>
+      <table class="dim-table"><tr><td class="dim-label">Pertinence</td><td><span style="color:#e67e22;font-weight:bold">3/5</span></td><td class="justif">La réponse tente de comparer des indicateurs objectifs avec des perceptions, mais manque de données qualitatives et ne signale pas ce manque.</td></tr><tr><td class="dim-label">Fondement factuel</td><td><span style="color:#e67e22;font-weight:bold">3/5</span></td><td class="justif">Surinterprétation de Vec comme perception et absence de données qualitatives non signalée. Plafond Règle 2.</td></tr><tr><td class="dim-label">Nuance / incertitude</td><td><span style="color:#c0392b;font-weight:bold">2/5</span></td><td class="justif">Absence de signalement du manque de données qualitatives, surinterprétation de Vec. Plafond Règle 3.</td></tr><tr><td class="dim-label">Cohérence quali/quanti</td><td><span style="color:#c0392b;font-weight:bold">2/5</span></td><td class="justif">La réponse présente des données quantitatives comme si elles incluaient des perceptions qualitatives, sans signaler le manque de données qualitatives. Plafond Règle 1.</td></tr></table>
+    </div>
+    <div>
+      <div class="section-title">Mislabelling</div>
+      <table class="mis-table"><tr><td style="color:#27ae60;font-weight:bold">R1</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#c0392b;font-weight:bold">R2</td><td style="font-size:0.85em">oui — Vec interprété comme 'perception' alors que c'est un proxy quanti</td></tr><tr><td style="color:#c0392b;font-weight:bold">R3</td><td style="font-size:0.85em">oui — aucune source quali dispo, manque non signalé</td></tr><tr><td style="color:#27ae60;font-weight:bold">R4</td><td style="font-size:0.85em">non</td></tr></table>
+    </div>
+  </div>
+  <div class="section-title">Raisonnement du juge</div>
+  <div class="raisonnement">La réponse compare des indicateurs quantitatifs avec des perceptions supposées sans données qualitatives disponibles, et surinterprète Vec comme perception.</div>
+  <details>
+    <summary>Réponse complète (3478 car.)</summary>
+    <div class="answer">Oui, on observe un écart significatif entre les indicateurs objectifs et la perception à Bastia, notamment sur deux plans :
+
+### 1. **Opportunités objectives vs. perception du "Choix"**
+- **Indicateurs objectifs** :
+  Bastia obtient un score **Opp (Opportunités) très élevé (7,51/10, rang 7e/360)**, porté par :
+  - Un **accès aux TIC excellent (9,65/10, rang 13e/360)** (source : *indicateurs territoriaux*).
+  - Une **mobilité élevée (8,65/10)** (source : *indicateurs territoriaux*).
+  - Une **offre dense en équipements** (ex. : 50 médecins généralistes, 11 supermarchés, 7 lycées) (source : *équipements et services quantitatifs*).
+
+  Pourtant, le **score Choix (Cho) est nul (0,00/10, rang 360e/360)** (source : *OppChoVec*), suggérant que ces opportunités ne se traduisent pas par une liberté effective pour les habitants.
+
+- **Perception qualitative** :
+  Les entretiens qualitatifs ne sont pas fournis ici, mais le **profil démographique des répondants** (enquête citoyenne) révèle une surreprésentation de **salariés employés (26,1%) et cadres (26,1%)**, souvent sensibles aux inégalités d’accès aux ressources. Leur perception pourrait être influencée par :
+  - Un **taux de pauvreté élevé (19,3%)** (source : *équipements et services quantitatifs*), contrastant avec les opportunités théoriques.
+  - Un **prix immobilier élevé (2 781 €/m²)** (source : *équipements et services quantitatifs*), limitant l’accès au logement malgré les services disponibles.
+
+---
+
+### 2. **Éducation : un paradoxe marqué**
+- **Indicateur objectif** :
+  Le **score Opp1 (Éducation) est très faible (1,28/10, rang 246e/360)** (source : *OppChoVec*), malgré la présence de **7 lycées et 5 collèges** (source : *équipements et services quantitatifs*). Cela suggère que l’offre éducative ne se traduit pas par un **niveau de diplôme moyen élevé** dans la population.
+
+- **Perception possible** :
+  Les répondants (dont 21,7% sont fonctionnaires et 8,7% étudiants) pourraient percevoir ce décalage entre l’offre et les résultats, notamment si les établissements sont saturés ou inégalement accessibles.
+
+---
+
+### 3. **Diversité sociale : un enjeu sous-estimé ?**
+- **Indicateur objectif** :
+  Le **score Opp2 (Diversité sociale) est faible (2,10/10, rang 194e/360)** (source : *OppChoVec*), malgré une **mixité apparente des CSP** (14,3% de cadres, 14,7% d’ouvriers) (source : *équipements et services quantitatifs*). L’indice de Theil (0,2916) révèle une **ségrégation spatiale ou professionnelle**.
+
+- **Perception** :
+  Les répondants (majoritairement salariés ou fonctionnaires) pourraient ressentir cette ségrégation au quotidien, expliquant un décalage avec les indicateurs bruts.
+
+---
+
+### **Synthèse de l’écart**
+| **Dimension**          | **Indicateur objectif** (OppChoVec) | **Perception suggérée** (enquête + contexte) |
+|-------------------------|--------------------------------------|-----------------------------------------------|
+| **Opportunités globales** | Très élevées (7,51/10)              | Limitées par les inégalités (pauvreté, logement) |
+| **Éducation**           | Très faible (1,28/10)               | Offre existante mais résultats insuffisants   |
+| **Diversité sociale**   | Faible (2,10/10)                    | Ségrégation ressentie malgré la mixité CSP    |
+| **Choix (liberté)**     | Nul (0,00/10)                       | Opportunités théoriques ≠ accès réel          |
+
+**Conclusion** : Les données montrent un **écart structurel** entre les **opportun</div>
+  </details>
+</div>
+<div class="config-block" style="border-left:4px solid #27ae60">
+  <div class="config-header">
+    <span class="config-name" style="color:#27ae60">Decomp</span>
+    <span class="badge" style="background:#e67e22">3.00</span>
+    <span class="badge" style="background:#c0392b">Ri</span>
+    <span class="meta">25 sources · 68.2s</span>
+  </div>
+  <div class="two-col">
+    <div>
+      <div class="section-title">Dimensions</div>
+      <table class="dim-table"><tr><td class="dim-label">Pertinence</td><td><span style="color:#e67e22;font-weight:bold">3/5</span></td><td class="justif">La réponse traite bien de Bastia et compare les scores, mais ne signale pas que les scores d'enquête sont quantitatifs.</td></tr><tr><td class="dim-label">Fondement factuel</td><td><span style="color:#e67e22;font-weight:bold">3/5</span></td><td class="justif">Les données sont correctement sourcées, mais il y a un mislabelling des scores d'enquête comme qualitatifs.</td></tr><tr><td class="dim-label">Nuance / incertitude</td><td><span style="color:#e67e22;font-weight:bold">3/5</span></td><td class="justif">La réponse manque de signalement explicite sur la nature quantitative des scores d'enquête.</td></tr><tr><td class="dim-label">Cohérence quali/quanti</td><td><span style="color:#e67e22;font-weight:bold">3/5</span></td><td class="justif">La réponse présente un croisement quali/quanti sans signaler que les scores d'enquête sont quantitatifs.</td></tr></table>
+    </div>
+    <div>
+      <div class="section-title">Mislabelling</div>
+      <table class="mis-table"><tr><td style="color:#c0392b;font-weight:bold">R1</td><td style="font-size:0.85em">oui — la réponse présente des scores d'enquête quantitatifs comme perceptions qualitatives</td></tr><tr><td style="color:#27ae60;font-weight:bold">R2</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R3</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R4</td><td style="font-size:0.85em">non</td></tr></table>
+    </div>
+  </div>
+  <div class="section-title">Raisonnement du juge</div>
+  <div class="raisonnement">La réponse compare les scores OppChoVec et les scores d'enquête, mais présente ces derniers comme des perceptions qualitatives sans signaler qu'ils sont quantitatifs.</div>
+  <details>
+    <summary>Réponse complète (5742 car.)</summary>
+    <div class="answer">### **Synthèse : Écart entre indicateurs objectifs et perception du bien-être à Bastia**
+
+À Bastia, un **écart marqué** existe entre les indicateurs territoriaux objectifs et la perception qu’ont les habitants de leur qualité de vie. Si les données montrent une commune aux **opportunités structurelles fortes** (numérique, mobilité, éducation), elles révèlent aussi des **faiblesses structurelles majeures** (quartiers prioritaires, libertés effectives) qui ne se reflètent pas toujours dans les ressentis des Bastiais. Voici les points clés de cette divergence :
+
+---
+
+#### **1. Des opportunités objectives élevées, mais un vécu territorial médiocre**
+Selon les **données territoriales objectives**, Bastia se distingue par :
+- **Un accès exceptionnel aux infrastructures** : avec un score de **7,51/10** pour les *opportunités* (7ᵉ rang corse), la ville bénéficie d’un **haut débit quasi universel** (9,65/10) et d’une **mobilité très développée** (8,65/10). Ces atouts devraient théoriquement faciliter l’accès à l’emploi, aux services et aux loisirs.
+- **Un revenu fiscal moyen et un accès aux services corrects** : le *vécu* (3,23/10, 205ᵉ rang) reste dans la moyenne corse, avec des indicateurs modérés sur la qualité du logement ou la stabilité de l’emploi.
+
+**Pourtant, ces ressources ne se traduisent pas par un bien-être global élevé** : le score territorial synthétique de Bastia s’effondre à **2,72/10** (244ᵉ rang corse), en raison d’un **score "Choix" nul (0,00/10, dernier rang)**. Ce dernier reflète une **absence totale de quartiers hors QPV** (quartiers prioritaires de la politique de la ville) et une **couverture électorale problématique**, des contraintes structurelles qui pèsent sur les libertés effectives des habitants.
+
+---
+
+#### **2. Une perception citoyenne plus nuancée, mais globalement meilleure que les indicateurs objectifs**
+Les **23 répondants bastiais interrogés** expriment une **satisfaction mitigée**, mais **supérieure à ce que suggèrent les données territoriales** :
+- **Qualité de vie perçue à 3,82/5** (soit 76 % de satisfaction), un score **modéré mais bien au-dessus du 2,72/10 objectif**.
+- **Bonheur moyen à 3,55/5**, avec une **confiance en l’avenir très faible (2,68/5)**, révélant un **décalage entre le présent (acceptable) et l’avenir (incertain)**.
+- **Points forts perçus** :
+  - Le **logement** (4,05/5), cohérent avec des indicateurs objectifs favorables (faible vacance, demande élevée).
+  - Les **services de proximité** (3,82/5) et le **réseau social** (3,73/5), qui compensent partiellement les faiblesses structurelles.
+- **Points critiques perçus** :
+  - La **santé** (2,08/5), **très mal notée**, alors que Bastia dispose objectivement de **50 médecins généralistes, 220 infirmiers et un service d’urgence**. Cet écart suggère un **problème d’accessibilité perçue** (délais, saturation) plutôt qu’un manque d’équipements.
+  - Les **transports** (2,24/5), alors que les indicateurs montrent une **mobilité très développée (8,65/10)**. Là encore, la **qualité ou la fréquence des services** semble en cause, plus que leur existence.
+  - Les **institutions** (2,86/5), reflétant peut-être un **défiance envers les politiques locales**, en phase avec le score "Choix" nul (0,00/10) des données territoriales.
+
+---
+
+#### **3. Pourquoi un tel écart ? Hypothèses explicatives**
+Plusieurs facteurs peuvent expliquer cette **divergence entre données objectives et perceptions** :
+- **L’effet "ville dynamique mais inégalitaire"** : Bastia concentre des **opportunités** (emploi, éducation, numérique) qui profitent à une partie de la population, mais **masque des inégalités territoriales fortes** (quartiers prioritaires, précarité). Les habitants perçoivent cette **dualité** : certains bénéficient des atouts urbains, d’autres subissent les contraintes.
+- **Des indicateurs objectifs incomplets** : les scores OppChoVec ne capturent pas la **qualité subjective** des services (ex. : un hôpital saturé peut exister malgré un bon ratio médecins/habitants). De même, la **mobilité théorique** (réseau de bus) ne dit rien de la **ponctualité ou du confort** perçus.
+- **Un décalage entre ressources et vécu** : les Bastiais **valorisent leur cadre de vie** (logement, réseau social) et **minimisent les contraintes structurelles** (quartiers prioritaires, faible couverture électorale), sauf quand elles **impactent directement leur quotidien** (santé, transports).
+- **Un biais de résilience urbaine** : les habitants des grandes villes comme Bastia **s’adaptent aux difficultés** (ex. : contourner les problèmes de transports), ce qui peut **atténuer leur insatisfaction** malgré des indicateurs objectifs dégradés.
+
+---
+
+#### **4. Priorités d’action : où l’écart est-il le plus problématique ?**
+Les **domaines où l’écart est le plus marqué** méritent une attention particulière :
+| **Dimension**       | **Indicateur objectif**               | **Perception citoyenne** | **Écart**                     | **Piste d’explication**                          |
+|---------------------|---------------------------------------|--------------------------|-------------------------------|-------------------------------------------------|
+| **Santé**           | Équipements nombreux (50 médecins, etc.) | 2,08/5 (très faible)     | **Énorme**                    | Saturation des services, délais d’attente       |
+| **Transports**      | Mobilité très développée (8,65/10)    | 2,24/5 (faible)          | **Fort**                      | Fréquence, ponctualité, confort des transports  |
+| **Logement**        | Demande élevée, faible vacance        | 4,05/5 (élevé)           | **Cohérent**                  | Satisfaction liée à la localisation centrale    |
+| **Institutions**    | Score "Cho</div>
+  </details>
+</div>
+<div class="config-block" style="border-left:4px solid #2980b9">
+  <div class="config-header">
+    <span class="config-name" style="color:#2980b9">Decomp+Raptor</span>
+    <span class="badge" style="background:#27ae60">4.75</span>
+    <span class="badge" style="background:#27ae60">✓ clean</span>
+    <span class="meta">70 sources · 79.4s</span>
+  </div>
+  <div class="two-col">
+    <div>
+      <div class="section-title">Dimensions</div>
+      <table class="dim-table"><tr><td class="dim-label">Pertinence</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Tous les éléments spécifiques de la question sont traités de manière précise et ciblée.</td></tr><tr><td class="dim-label">Fondement factuel</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Les affirmations sont bien fondées sur les sources fournies, avec une bonne distinction entre données qualitatives et quantitatives.</td></tr><tr><td class="dim-label">Nuance / incertitude</td><td><span style="color:#27ae60;font-weight:bold">4/5</span></td><td class="justif">La réponse est bien nuancée, mais pourrait inclure plus de modalisateurs pour renforcer la gestion de l'incertitude.</td></tr><tr><td class="dim-label">Cohérence quali/quanti</td><td><span style="color:#27ae60;font-weight:bold">5/5</span></td><td class="justif">Intégration exemplaire des données qualitatives et quantitatives, avec une comparaison explicite et bien structurée.</td></tr></table>
+    </div>
+    <div>
+      <div class="section-title">Mislabelling</div>
+      <table class="mis-table"><tr><td style="color:#27ae60;font-weight:bold">R1</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R2</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R3</td><td style="font-size:0.85em">non</td></tr><tr><td style="color:#27ae60;font-weight:bold">R4</td><td style="font-size:0.85em">non</td></tr></table>
+    </div>
+  </div>
+  <div class="section-title">Raisonnement du juge</div>
+  <div class="raisonnement">La réponse compare les indicateurs quantitatifs OppChoVec avec les perceptions qualitatives des habitants de Bastia, en soulignant les écarts significatifs.</div>
+  <details>
+    <summary>Réponse complète (5780 car.)</summary>
+    <div class="answer">### **Synthèse : Un écart marqué entre réalité objective et perception à Bastia**
+
+À Bastia, les indicateurs territoriaux et les perceptions des habitants révèlent une **situation contrastée, voire paradoxale**, où les atouts objectifs ne se traduisent pas toujours par une satisfaction correspondante. Un écart significatif existe entre les données mesurées et le ressenti des Bastiais, avec des nuances importantes selon les dimensions de la qualité de vie.
+
+---
+
+#### **1. Une ville aux opportunités élevées, mais aux réalisations concrètes limitées**
+Selon les données territoriales objectives, Bastia se distingue par des **opportunités exceptionnelles** :
+- **Accès aux technologies et mobilité** : Bastia obtient des scores très élevés en couverture haut débit (9,65/10) et en accessibilité des transports (8,65/10), la classant parmi les **meilleures communes corses** sur ces critères (7ᵉ rang pour les opportunités globales).
+- **Dynamisme économique et éducatif** : La diversité des catégories socioprofessionnelles et l’offre éducative contribuent à ce score élevé, reflétant une ville bien connectée et dotée de ressources.
+
+Cependant, ces atouts ne se concrétisent pas dans le **vécu quotidien des habitants** :
+- **Un score de "Choix" nul (0,00/10, dernier rang)** : Ce score s’explique par la présence de **quartiers prioritaires de la politique de la ville (QPV)**, qui limitent les libertés effectives des habitants concernés, et par un taux de participation électorale faible, réduisant le sentiment d’influence sur les décisions locales.
+- **Un score de "Vécu" médiocre (3,23/10, 205ᵉ rang)** : Malgré les opportunités, les conditions matérielles (revenu fiscal moyen, qualité du logement, stabilité de l’emploi) et l’accès aux services essentiels (santé, commerces) restent **en deçà de la moyenne corse**. Cela se traduit par un **score global de bien-être objectif très faible (2,72/10, 244ᵉ rang)**, bien inférieur à la moyenne régionale (3,35/10).
+
+---
+
+#### **2. Une perception mitigée, entre satisfaction relative et inquiétudes profondes**
+Selon l’enquête citoyenne menée auprès de 23 habitants de Bastia, la **qualité de vie est perçue comme modérément positive**, mais avec des **disparités marquées** :
+- **Une satisfaction acceptable sur certains aspects** :
+  - Le **logement** (4,05/5) et les **services de proximité** (3,82/5) sont globalement bien notés, ce qui peut s’expliquer par les atouts objectifs de la ville (accès aux TIC, mobilité).
+  - La **qualité de vie globale** atteint **3,82/5** (soit environ **7,6/10**), un score légèrement supérieur à la moyenne des autres dimensions évaluées.
+- **Des insatisfactions majeures sur des enjeux critiques** :
+  - **Santé et transports** : Ces deux domaines obtiennent les **pires notes** (2,08/5 pour la santé, 2,24/5 pour les transports), malgré un score objectif de mobilité élevé (8,65/10). Les habitants pointent notamment :
+    - Un **manque criant de médecins spécialistes** (1,43/5).
+    - Des **transports en commun jugés insuffisants** (2,04/5) et un **encombrement routier problématique** (2,00/5), montrant que l’accessibilité théorique ne se traduit pas par une expérience fluide au quotidien.
+  - **Confiance dans l’avenir en berne** : Avec une note de **2,68/5** (soit **5,4/10**), les Bastiais expriment une **inquiétude marquée** quant aux perspectives futures, notamment en matière d’emploi et de services publics.
+- **Une population divisée** :
+  - Près de **la moitié des répondants (48 %)** se déclarent **insatisfaits ou neutres** (notes ≤ 3/5), avec **4 répondants sur 23** se disant **très insatisfaits** (note ≤ 2/5). Ces résultats révèlent une **fracture dans les perceptions**, où une partie des habitants profite des atouts de la ville, tandis que d’autres subissent ses limites.
+
+---
+
+#### **3. Un écart révélateur entre opportunités et vécu**
+L’écart entre les indicateurs objectifs et les perceptions s’explique par plusieurs facteurs :
+- **Les opportunités ne garantissent pas l’accès** : Bastia dispose d’infrastructures et de services (transports, TIC, éducation), mais leur **utilisation effective** est entravée par des **inégalités territoriales** (quartiers prioritaires) ou des **dysfonctionnements perçus** (santé, transports).
+- **Un décalage entre théorie et pratique** :
+  - La **mobilité** est bien notée objectivement, mais les habitants critiquent **l’encombrement et la qualité des transports en commun**, montrant que l’accessibilité ne suffit pas à assurer une expérience positive.
+  - La **santé** illustre un autre paradoxe : malgré une offre théorique, les **délais d’accès aux spécialistes** et la **qualité perçue des soins** sont jugés très insuffisants.
+- **Un sentiment d’exclusion** : Le score de "Choix" nul (0,00/10) reflète une **faible participation citoyenne** et la présence de quartiers prioritaires, ce qui peut alimenter un **sentiment de marginalisation** chez une partie de la population, malgré les opportunités globales de la ville.
+
+---
+
+#### **4. Conclusion : Une ville de contrastes, où les atouts ne comblent pas les lacunes vécues**
+À Bastia, **l’écart entre indicateurs objectifs et perceptions est significatif**, mais il n’est pas uniforme :
+- **Les opportunités sont réelles** (mobilité, TIC, éducation), et une partie des habitants en bénéficie, comme en témoignent les notes correctes sur le logement et les services de proximité.
+- **Les limites sont criantes** : Les conditions matérielles (revenu, emploi, logement), l’accès effectif aux services (santé, transports) et le sentiment d’exclusion (quartiers prioritaires, faible participation) **pèsent lourdement sur le vécu quotidien**, expliquant les **insatisfactions majeures** et la **méfiance envers l’avenir**.
+
+**En résumé** :
+- **Objectivement**, Bast</div>
+  </details>
+</div>
+  </div>
+</div>
+</div>
+</body>
+</html>

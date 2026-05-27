@@ -1,0 +1,851 @@
+{
+  "v_vanilla_k10": [
+    {
+      "excel_row": 9,
+      "section": "Retrieval mono-commune",
+      "subsection": "Retrieval factuel et interprétation",
+      "question": "Combien d’habitants ont répondu à l’enquête à Ajaccio ?",
+      "rag_status": "ok",
+      "answer": "D'après le document fourni, **51 habitants ont répondu à l'enquête qualité de vie à Ajaccio** (source : *Profil démographique des répondants — enquête qualité de vie en Corse*).",
+      "n_sources": 4,
+      "n_subquestions": 0,
+      "rag_elapsed_s": 3.7,
+      "raisonnement": "La question demande un chiffre précis et la réponse fournit exactement cela, basé sur une source claire et directe.",
+      "pertinence": 5,
+      "fondement_factuel": 5,
+      "nuance_incertitude": 5,
+      "coherence_qualiquanti": 5,
+      "score_global": 5.0,
+      "applicable_sujet": false,
+      "note_sujet": null,
+      "sujet_evalue": null,
+      "reason_non_applicable": "factuelle_brute",
+      "judge_error": null,
+      "judge_elapsed_s": 4.4,
+      "v41_raisonnement": "La réponse traite précisément tous les éléments de la question en fournissant le nombre exact de répondants à l'enquête à Ajaccio, basé sur la source fournie.",
+      "v41_type_reponse_attendue_observe": "reponse_substantielle",
+      "v41_type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+      "v41_coherence_type_reponse": "oui",
+      "v41_elements_specifiques_question": [
+        "nombre d'habitants",
+        "réponse à l'enquête",
+        "Ajaccio"
+      ],
+      "v41_elements_traitement": [
+        {
+          "element": "nombre d'habitants",
+          "traitement": "precis"
+        },
+        {
+          "element": "réponse à l'enquête",
+          "traitement": "precis"
+        },
+        {
+          "element": "Ajaccio",
+          "traitement": "precis"
+        }
+      ],
+      "v41_pertinence": 5,
+      "v41_pertinence_justif": "La réponse est parfaitement pertinente, répondant directement à la question avec les données précises demandées.",
+      "v41_fondement_factuel": 5,
+      "v41_fondement_factuel_justif": "L'affirmation est directement soutenue par la source 4, qui fournit le nombre exact de répondants.",
+      "v41_nuance_incertitude": 5,
+      "v41_nuance_incertitude_justif": "La réponse est catégorique car elle repose sur une donnée précise et sourcée, ce qui est approprié dans ce contexte.",
+      "v41_coherence_qualiquanti": 5,
+      "v41_coherence_qualiquanti_justif": "La réponse intègre de manière cohérente la donnée quantitative exacte demandée, sans besoin de données qualitatives supplémentaires.",
+      "v41_score_global": 5.0,
+      "v41_judge_error": null,
+      "judge_v41_elapsed_s": 3.2
+    },
+    {
+      "excel_row": 11,
+      "section": "Retrieval mono-commune",
+      "subsection": "Retrieval par sous-population",
+      "question": "Que pensent les entrepreneurs Ajacciens de la qualité de vie ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 14,
+      "section": "Retrieval mono-commune",
+      "subsection": "Retrieval source-spécifique",
+      "question": "Que révèlent les entretiens qualitatifs sur l'emploi à Lozzi ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 19,
+      "section": "Retrieval mono-commune",
+      "subsection": "Questions normatives / prescriptives",
+      "question": "Quels leviers d’action pour améliorer les dimensions du bien-être sous-évaluées à Ajaccio ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 24,
+      "section": "Retrieval mono-commune",
+      "subsection": "Analyse multi-source et cohérence des données",
+      "question": "Ajaccio peut-elle présenter un niveau de bien-être faible malgré des indicateurs objectifs satisfaisants ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 30,
+      "section": "Raisonnement comparatif",
+      "subsection": "Comparaisons avec hiérarchisation explicite",
+      "question": "La dimension environnement est-elle mieux évaluée par les habitants à Ajaccio ou à Bastia ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 36,
+      "section": "Raisonnement comparatif",
+      "subsection": "Comparaison croisée quanti/quali",
+      "question": "Observe-t-on un écart significatif entre indicateurs objectifs et perception à Bastia ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 41,
+      "section": "Limites architecturales",
+      "subsection": null,
+      "question": "Existe-t-il une commune avec de bons indicateurs socio-économiques mais un faible bien-être perçu ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 44,
+      "section": "Raisonnement comparatif",
+      "subsection": "Comparaison contre-intuitive",
+      "question": "Les communes les plus dynamiques économiquement sont-elles nécessairement celles où le bien-être perçu est le plus élevé ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 48,
+      "section": "Gestion d’absence d’information",
+      "subsection": "Données partielles ou insuffisantes",
+      "question": "Peut-on conclure solidement concernant le bien-être des entrepreneurs à Lozzi ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 51,
+      "section": "Gestion d’absence d’information",
+      "subsection": "Comparaison impossible",
+      "question": "Est-il possible de comparer les indicateurs objectifs et qualitatifs pour Piedicorte ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 52,
+      "section": "Gestion d’absence d’information",
+      "subsection": "Sous-populations peu représentées",
+      "question": "Les données disponibles permettent-elles d’analyser spécifiquement le bien-être des 18–25 ans à Lozzi ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 68,
+      "section": "Robustesse sémantique",
+      "subsection": "Bruit lexical",
+      "question": "Quel est le score moyen, euh, moyen, tu vois, du bien-être général ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 75,
+      "section": "Raisonnement causal et contre-intuitif",
+      "subsection": "Raisonnement causal multi-facteurs",
+      "question": "Les écarts observés entre indicateurs objectifs et perception subjective à Bastia peuvent-ils résulter de facteurs structurels non captés par les indicateurs quantitatifs ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 76,
+      "section": "Raisonnement causal et contre-intuitif",
+      "subsection": "Causalité inversée ou alternative",
+      "question": "Un faible bien-être perçu peut-il influencer la manière dont les habitants évaluent leur bien-être subjectif ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 83,
+      "section": "Raisonnement causal et contre-intuitif",
+      "subsection": "Limites de l’inférence causale",
+      "question": "Les données disponibles permettent-elles d’établir un lien de causalité entre densité de population et bien-être ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 89,
+      "section": "Gestion de l’incertitude et des biais",
+      "subsection": "Incertitude liée à la taille d’échantillon",
+      "question": "Le faible nombre de répondants dans certaines communes affecte-t-il la fiabilité des conclusions ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 97,
+      "section": "Gestion de l’incertitude et des biais",
+      "subsection": "Biais liés aux indicateurs",
+      "question": "Le score OppChoVec peut-il masquer des disparités internes importantes au sein d’une même commune ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 98,
+      "section": "Gestion de l’incertitude et des biais",
+      "subsection": "Risque de sur-interprétation",
+      "question": "Peut-on affirmer qu’une amélioration d’un indicateur spécifique entraînera nécessairement une hausse du bien-être global ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 104,
+      "section": "Raisonnement comparatif",
+      "subsection": "Comparaison intra-EPCI (CAPA)",
+      "question": "Quelle est la commune de la CAPA avec le meilleur score Vécu (Vec) ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    }
+  ],
+  "v_vanilla_k25": [
+    {
+      "excel_row": 9,
+      "section": "Retrieval mono-commune",
+      "subsection": "Retrieval factuel et interprétation",
+      "question": "Combien d’habitants ont répondu à l’enquête à Ajaccio ?",
+      "rag_status": "ok",
+      "answer": "D'après le document fourni, **51 habitants ont répondu à l'enquête qualité de vie à Ajaccio** (source : *Profil démographique des répondants — enquête qualité de vie en Corse*).",
+      "n_sources": 4,
+      "n_subquestions": 0,
+      "rag_elapsed_s": 3.8,
+      "raisonnement": "La question demande un chiffre précis, et la réponse fournit correctement le nombre de répondants à Ajaccio, basé sur les sources disponibles.",
+      "pertinence": 5,
+      "fondement_factuel": 5,
+      "nuance_incertitude": 5,
+      "coherence_qualiquanti": 5,
+      "score_global": 5.0,
+      "applicable_sujet": false,
+      "note_sujet": null,
+      "sujet_evalue": null,
+      "reason_non_applicable": "factuelle_brute",
+      "judge_error": null,
+      "judge_elapsed_s": 1.8,
+      "v41_raisonnement": "La réponse traite précisément tous les éléments de la question en fournissant le nombre exact de répondants à l'enquête à Ajaccio, basé sur une source spécifique.",
+      "v41_type_reponse_attendue_observe": "reponse_substantielle",
+      "v41_type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+      "v41_coherence_type_reponse": "oui",
+      "v41_elements_specifiques_question": [
+        "nombre d'habitants",
+        "réponse à l'enquête",
+        "Ajaccio"
+      ],
+      "v41_elements_traitement": [
+        {
+          "element": "nombre d'habitants",
+          "traitement": "precis"
+        },
+        {
+          "element": "réponse à l'enquête",
+          "traitement": "precis"
+        },
+        {
+          "element": "Ajaccio",
+          "traitement": "precis"
+        }
+      ],
+      "v41_pertinence": 5,
+      "v41_pertinence_justif": "La réponse est parfaitement pertinente, fournissant le nombre exact de répondants à l'enquête à Ajaccio.",
+      "v41_fondement_factuel": 5,
+      "v41_fondement_factuel_justif": "L'information est directement tirée de la source fournie, assurant un fondement factuel solide.",
+      "v41_nuance_incertitude": 5,
+      "v41_nuance_incertitude_justif": "La réponse est catégorique mais justifiée par une source précise, ce qui est approprié dans ce contexte.",
+      "v41_coherence_qualiquanti": 5,
+      "v41_coherence_qualiquanti_justif": "La réponse intègre correctement les données quantitatives disponibles, ciblées sur la question posée.",
+      "v41_score_global": 5.0,
+      "v41_judge_error": null,
+      "judge_v41_elapsed_s": 3.7
+    },
+    {
+      "excel_row": 11,
+      "section": "Retrieval mono-commune",
+      "subsection": "Retrieval par sous-population",
+      "question": "Que pensent les entrepreneurs Ajacciens de la qualité de vie ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 14,
+      "section": "Retrieval mono-commune",
+      "subsection": "Retrieval source-spécifique",
+      "question": "Que révèlent les entretiens qualitatifs sur l'emploi à Lozzi ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 19,
+      "section": "Retrieval mono-commune",
+      "subsection": "Questions normatives / prescriptives",
+      "question": "Quels leviers d’action pour améliorer les dimensions du bien-être sous-évaluées à Ajaccio ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 24,
+      "section": "Retrieval mono-commune",
+      "subsection": "Analyse multi-source et cohérence des données",
+      "question": "Ajaccio peut-elle présenter un niveau de bien-être faible malgré des indicateurs objectifs satisfaisants ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 30,
+      "section": "Raisonnement comparatif",
+      "subsection": "Comparaisons avec hiérarchisation explicite",
+      "question": "La dimension environnement est-elle mieux évaluée par les habitants à Ajaccio ou à Bastia ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 36,
+      "section": "Raisonnement comparatif",
+      "subsection": "Comparaison croisée quanti/quali",
+      "question": "Observe-t-on un écart significatif entre indicateurs objectifs et perception à Bastia ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 41,
+      "section": "Limites architecturales",
+      "subsection": null,
+      "question": "Existe-t-il une commune avec de bons indicateurs socio-économiques mais un faible bien-être perçu ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 44,
+      "section": "Raisonnement comparatif",
+      "subsection": "Comparaison contre-intuitive",
+      "question": "Les communes les plus dynamiques économiquement sont-elles nécessairement celles où le bien-être perçu est le plus élevé ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 48,
+      "section": "Gestion d’absence d’information",
+      "subsection": "Données partielles ou insuffisantes",
+      "question": "Peut-on conclure solidement concernant le bien-être des entrepreneurs à Lozzi ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 51,
+      "section": "Gestion d’absence d’information",
+      "subsection": "Comparaison impossible",
+      "question": "Est-il possible de comparer les indicateurs objectifs et qualitatifs pour Piedicorte ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 52,
+      "section": "Gestion d’absence d’information",
+      "subsection": "Sous-populations peu représentées",
+      "question": "Les données disponibles permettent-elles d’analyser spécifiquement le bien-être des 18–25 ans à Lozzi ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 68,
+      "section": "Robustesse sémantique",
+      "subsection": "Bruit lexical",
+      "question": "Quel est le score moyen, euh, moyen, tu vois, du bien-être général ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 75,
+      "section": "Raisonnement causal et contre-intuitif",
+      "subsection": "Raisonnement causal multi-facteurs",
+      "question": "Les écarts observés entre indicateurs objectifs et perception subjective à Bastia peuvent-ils résulter de facteurs structurels non captés par les indicateurs quantitatifs ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 76,
+      "section": "Raisonnement causal et contre-intuitif",
+      "subsection": "Causalité inversée ou alternative",
+      "question": "Un faible bien-être perçu peut-il influencer la manière dont les habitants évaluent leur bien-être subjectif ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 83,
+      "section": "Raisonnement causal et contre-intuitif",
+      "subsection": "Limites de l’inférence causale",
+      "question": "Les données disponibles permettent-elles d’établir un lien de causalité entre densité de population et bien-être ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 89,
+      "section": "Gestion de l’incertitude et des biais",
+      "subsection": "Incertitude liée à la taille d’échantillon",
+      "question": "Le faible nombre de répondants dans certaines communes affecte-t-il la fiabilité des conclusions ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 97,
+      "section": "Gestion de l’incertitude et des biais",
+      "subsection": "Biais liés aux indicateurs",
+      "question": "Le score OppChoVec peut-il masquer des disparités internes importantes au sein d’une même commune ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 98,
+      "section": "Gestion de l’incertitude et des biais",
+      "subsection": "Risque de sur-interprétation",
+      "question": "Peut-on affirmer qu’une amélioration d’un indicateur spécifique entraînera nécessairement une hausse du bien-être global ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 104,
+      "section": "Raisonnement comparatif",
+      "subsection": "Comparaison intra-EPCI (CAPA)",
+      "question": "Quelle est la commune de la CAPA avec le meilleur score Vécu (Vec) ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    }
+  ],
+  "v_decomp": [
+    {
+      "excel_row": 9,
+      "section": "Retrieval mono-commune",
+      "subsection": "Retrieval factuel et interprétation",
+      "question": "Combien d’habitants ont répondu à l’enquête à Ajaccio ?",
+      "rag_status": "ok",
+      "answer": "**Synthèse : Nombre de répondants à l’enquête qualité de vie à Ajaccio**\n\nL’enquête qualité de vie en Corse a enregistré **51 réponses valides** de la part des habitants d’Ajaccio, selon les données d’enquête citoyenne. Ces réponses proviennent d’un échantillon diversifié, composé à 60,8 % de femmes et 39,2 % d’hommes, avec une forte représentation des 45-59 ans (39,2 % des répondants). Les catégories socioprofessionnelles les plus représentées sont les cadres ou professions intermédiaires (33,3 %) et les étudiants (23,5 %).\n\nAucune donnée n’est disponible pour évaluer le taux de participation en pourcentage de la population ajaccienne, faute de connaître le nombre total d’habitants de la commune. De même, il n’est pas possible de situer la part d’Ajaccio dans l’ensemble des répondants corses, car le nombre total de participants à l’échelle régionale n’a pas été communiqué. Enfin, les réponses ne sont pas ventilées par période ou vague d’enquête : les informations disponibles se limitent à un profil global des participants.",
+      "n_sources": 20,
+      "n_subquestions": 5,
+      "rag_elapsed_s": 23.3,
+      "raisonnement": "La réponse indique correctement le nombre de répondants à Ajaccio, basé sur les sources fournies, et mentionne les limites de données disponibles.",
+      "pertinence": 5,
+      "fondement_factuel": 5,
+      "nuance_incertitude": 5,
+      "coherence_qualiquanti": 5,
+      "score_global": 5.0,
+      "applicable_sujet": false,
+      "note_sujet": null,
+      "sujet_evalue": null,
+      "reason_non_applicable": "factuelle_brute",
+      "judge_error": null,
+      "judge_elapsed_s": 2.6,
+      "v41_raisonnement": "La réponse fournit le nombre exact de répondants à l'enquête à Ajaccio, en s'appuyant sur les données disponibles. Elle mentionne également les limites concernant le taux de participation et la répartition régionale.",
+      "v41_type_reponse_attendue_observe": "reponse_substantielle",
+      "v41_type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+      "v41_coherence_type_reponse": "oui",
+      "v41_elements_specifiques_question": [
+        "nombre de répondants",
+        "Ajaccio",
+        "enquête"
+      ],
+      "v41_elements_traitement": [
+        {
+          "element": "nombre de répondants",
+          "traitement": "precis"
+        },
+        {
+          "element": "Ajaccio",
+          "traitement": "precis"
+        },
+        {
+          "element": "enquête",
+          "traitement": "precis"
+        }
+      ],
+      "v41_pertinence": 5,
+      "v41_pertinence_justif": "La réponse traite précisément tous les éléments de la question avec les données disponibles.",
+      "v41_fondement_factuel": 5,
+      "v41_fondement_factuel_justif": "Les affirmations sont parfaitement fondées sur les sources fournies, notamment la source 3 qui indique 51 répondants.",
+      "v41_nuance_incertitude": 5,
+      "v41_nuance_incertitude_justif": "La réponse signale clairement les limites des données disponibles, notamment l'absence de taux de participation et de répartition régionale.",
+      "v41_coherence_qualiquanti": 5,
+      "v41_coherence_qualiquanti_justif": "La réponse intègre de manière cohérente les données quantitatives sur le nombre de répondants et les profils démographiques.",
+      "v41_score_global": 5.0,
+      "v41_judge_error": null,
+      "judge_v41_elapsed_s": 12.4
+    },
+    {
+      "excel_row": 11,
+      "section": "Retrieval mono-commune",
+      "subsection": "Retrieval par sous-population",
+      "question": "Que pensent les entrepreneurs Ajacciens de la qualité de vie ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 14,
+      "section": "Retrieval mono-commune",
+      "subsection": "Retrieval source-spécifique",
+      "question": "Que révèlent les entretiens qualitatifs sur l'emploi à Lozzi ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 19,
+      "section": "Retrieval mono-commune",
+      "subsection": "Questions normatives / prescriptives",
+      "question": "Quels leviers d’action pour améliorer les dimensions du bien-être sous-évaluées à Ajaccio ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 24,
+      "section": "Retrieval mono-commune",
+      "subsection": "Analyse multi-source et cohérence des données",
+      "question": "Ajaccio peut-elle présenter un niveau de bien-être faible malgré des indicateurs objectifs satisfaisants ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 30,
+      "section": "Raisonnement comparatif",
+      "subsection": "Comparaisons avec hiérarchisation explicite",
+      "question": "La dimension environnement est-elle mieux évaluée par les habitants à Ajaccio ou à Bastia ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 36,
+      "section": "Raisonnement comparatif",
+      "subsection": "Comparaison croisée quanti/quali",
+      "question": "Observe-t-on un écart significatif entre indicateurs objectifs et perception à Bastia ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 41,
+      "section": "Limites architecturales",
+      "subsection": null,
+      "question": "Existe-t-il une commune avec de bons indicateurs socio-économiques mais un faible bien-être perçu ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 44,
+      "section": "Raisonnement comparatif",
+      "subsection": "Comparaison contre-intuitive",
+      "question": "Les communes les plus dynamiques économiquement sont-elles nécessairement celles où le bien-être perçu est le plus élevé ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 48,
+      "section": "Gestion d’absence d’information",
+      "subsection": "Données partielles ou insuffisantes",
+      "question": "Peut-on conclure solidement concernant le bien-être des entrepreneurs à Lozzi ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 51,
+      "section": "Gestion d’absence d’information",
+      "subsection": "Comparaison impossible",
+      "question": "Est-il possible de comparer les indicateurs objectifs et qualitatifs pour Piedicorte ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 52,
+      "section": "Gestion d’absence d’information",
+      "subsection": "Sous-populations peu représentées",
+      "question": "Les données disponibles permettent-elles d’analyser spécifiquement le bien-être des 18–25 ans à Lozzi ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 68,
+      "section": "Robustesse sémantique",
+      "subsection": "Bruit lexical",
+      "question": "Quel est le score moyen, euh, moyen, tu vois, du bien-être général ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 75,
+      "section": "Raisonnement causal et contre-intuitif",
+      "subsection": "Raisonnement causal multi-facteurs",
+      "question": "Les écarts observés entre indicateurs objectifs et perception subjective à Bastia peuvent-ils résulter de facteurs structurels non captés par les indicateurs quantitatifs ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 76,
+      "section": "Raisonnement causal et contre-intuitif",
+      "subsection": "Causalité inversée ou alternative",
+      "question": "Un faible bien-être perçu peut-il influencer la manière dont les habitants évaluent leur bien-être subjectif ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 83,
+      "section": "Raisonnement causal et contre-intuitif",
+      "subsection": "Limites de l’inférence causale",
+      "question": "Les données disponibles permettent-elles d’établir un lien de causalité entre densité de population et bien-être ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 89,
+      "section": "Gestion de l’incertitude et des biais",
+      "subsection": "Incertitude liée à la taille d’échantillon",
+      "question": "Le faible nombre de répondants dans certaines communes affecte-t-il la fiabilité des conclusions ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 97,
+      "section": "Gestion de l’incertitude et des biais",
+      "subsection": "Biais liés aux indicateurs",
+      "question": "Le score OppChoVec peut-il masquer des disparités internes importantes au sein d’une même commune ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 98,
+      "section": "Gestion de l’incertitude et des biais",
+      "subsection": "Risque de sur-interprétation",
+      "question": "Peut-on affirmer qu’une amélioration d’un indicateur spécifique entraînera nécessairement une hausse du bien-être global ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 104,
+      "section": "Raisonnement comparatif",
+      "subsection": "Comparaison intra-EPCI (CAPA)",
+      "question": "Quelle est la commune de la CAPA avec le meilleur score Vécu (Vec) ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    }
+  ],
+  "v_decomp_raptor": [
+    {
+      "excel_row": 9,
+      "section": "Retrieval mono-commune",
+      "subsection": "Retrieval factuel et interprétation",
+      "question": "Combien d’habitants ont répondu à l’enquête à Ajaccio ?",
+      "rag_status": "ok",
+      "answer": "**Synthèse : Nombre d’habitants ayant répondu à l’enquête à Ajaccio**\n\nSelon l’enquête citoyenne menée à Ajaccio, **51 habitants** ont participé en répondant à un questionnaire valide sur le bien-être. Parmi eux, **39 personnes** ont également partagé des témoignages détaillés (verbatims) utilisés pour une analyse qualitative des perceptions locales.\n\nCette participation correspond à un échantillon représentatif des retours directs des Ajacciens sur leur qualité de vie, bien que le taux de participation exact par rapport à la population totale de la commune ne puisse être calculé (la donnée démographique de référence n’étant pas disponible). Aucune comparaison avec d’autres communes corses de taille similaire ou avec les éditions précédentes de l’enquête n’est possible, faute de données complémentaires.\n\nEn résumé, **51 répondants ajacciens** constituent la base quantitative de cette enquête, tandis que les **39 verbatims** offrent un éclairage qualitatif sur leurs ressentis.",
+      "n_sources": 64,
+      "n_subquestions": 5,
+      "rag_elapsed_s": 39.5,
+      "raisonnement": "La question demande un chiffre précis, et la réponse fournit ce chiffre en s'appuyant sur les sources disponibles.",
+      "pertinence": 5,
+      "fondement_factuel": 5,
+      "nuance_incertitude": 4,
+      "coherence_qualiquanti": 5,
+      "score_global": 4.75,
+      "applicable_sujet": false,
+      "note_sujet": null,
+      "sujet_evalue": null,
+      "reason_non_applicable": "factuelle_brute",
+      "judge_error": null,
+      "judge_elapsed_s": 43.9,
+      "v41_raisonnement": "La réponse indique précisément que 51 habitants ont répondu à l'enquête à Ajaccio, avec 39 ayant fourni des verbatims, ce qui est conforme aux données des sources.",
+      "v41_type_reponse_attendue_observe": "reponse_substantielle",
+      "v41_type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+      "v41_coherence_type_reponse": "oui",
+      "v41_elements_specifiques_question": [
+        "nombre d'habitants",
+        "répondu",
+        "enquête",
+        "Ajaccio"
+      ],
+      "v41_elements_traitement": [
+        {
+          "element": "nombre d'habitants",
+          "traitement": "precis"
+        },
+        {
+          "element": "répondu",
+          "traitement": "precis"
+        },
+        {
+          "element": "enquête",
+          "traitement": "precis"
+        },
+        {
+          "element": "Ajaccio",
+          "traitement": "precis"
+        }
+      ],
+      "v41_pertinence": 5,
+      "v41_pertinence_justif": "La réponse traite précisément tous les éléments de la question avec les données disponibles dans les sources.",
+      "v41_fondement_factuel": 5,
+      "v41_fondement_factuel_justif": "Les affirmations sur le nombre de répondants et de verbatims sont directement sourcées et vérifiables dans les données fournies.",
+      "v41_nuance_incertitude": 4,
+      "v41_nuance_incertitude_justif": "La réponse mentionne l'absence de données démographiques de référence pour calculer le taux de participation, ce qui montre une bonne gestion des limites.",
+      "v41_coherence_qualiquanti": 5,
+      "v41_coherence_qualiquanti_justif": "La réponse intègre de manière équilibrée les données quantitatives (nombre de répondants) et qualitatives (verbatims), en cohérence avec les sources.",
+      "v41_score_global": 4.75,
+      "v41_judge_error": null,
+      "judge_v41_elapsed_s": 45.9
+    },
+    {
+      "excel_row": 11,
+      "section": "Retrieval mono-commune",
+      "subsection": "Retrieval par sous-population",
+      "question": "Que pensent les entrepreneurs Ajacciens de la qualité de vie ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 14,
+      "section": "Retrieval mono-commune",
+      "subsection": "Retrieval source-spécifique",
+      "question": "Que révèlent les entretiens qualitatifs sur l'emploi à Lozzi ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 19,
+      "section": "Retrieval mono-commune",
+      "subsection": "Questions normatives / prescriptives",
+      "question": "Quels leviers d’action pour améliorer les dimensions du bien-être sous-évaluées à Ajaccio ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 24,
+      "section": "Retrieval mono-commune",
+      "subsection": "Analyse multi-source et cohérence des données",
+      "question": "Ajaccio peut-elle présenter un niveau de bien-être faible malgré des indicateurs objectifs satisfaisants ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 30,
+      "section": "Raisonnement comparatif",
+      "subsection": "Comparaisons avec hiérarchisation explicite",
+      "question": "La dimension environnement est-elle mieux évaluée par les habitants à Ajaccio ou à Bastia ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 36,
+      "section": "Raisonnement comparatif",
+      "subsection": "Comparaison croisée quanti/quali",
+      "question": "Observe-t-on un écart significatif entre indicateurs objectifs et perception à Bastia ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 41,
+      "section": "Limites architecturales",
+      "subsection": null,
+      "question": "Existe-t-il une commune avec de bons indicateurs socio-économiques mais un faible bien-être perçu ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 44,
+      "section": "Raisonnement comparatif",
+      "subsection": "Comparaison contre-intuitive",
+      "question": "Les communes les plus dynamiques économiquement sont-elles nécessairement celles où le bien-être perçu est le plus élevé ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 48,
+      "section": "Gestion d’absence d’information",
+      "subsection": "Données partielles ou insuffisantes",
+      "question": "Peut-on conclure solidement concernant le bien-être des entrepreneurs à Lozzi ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 51,
+      "section": "Gestion d’absence d’information",
+      "subsection": "Comparaison impossible",
+      "question": "Est-il possible de comparer les indicateurs objectifs et qualitatifs pour Piedicorte ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 52,
+      "section": "Gestion d’absence d’information",
+      "subsection": "Sous-populations peu représentées",
+      "question": "Les données disponibles permettent-elles d’analyser spécifiquement le bien-être des 18–25 ans à Lozzi ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 68,
+      "section": "Robustesse sémantique",
+      "subsection": "Bruit lexical",
+      "question": "Quel est le score moyen, euh, moyen, tu vois, du bien-être général ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 75,
+      "section": "Raisonnement causal et contre-intuitif",
+      "subsection": "Raisonnement causal multi-facteurs",
+      "question": "Les écarts observés entre indicateurs objectifs et perception subjective à Bastia peuvent-ils résulter de facteurs structurels non captés par les indicateurs quantitatifs ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 76,
+      "section": "Raisonnement causal et contre-intuitif",
+      "subsection": "Causalité inversée ou alternative",
+      "question": "Un faible bien-être perçu peut-il influencer la manière dont les habitants évaluent leur bien-être subjectif ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 83,
+      "section": "Raisonnement causal et contre-intuitif",
+      "subsection": "Limites de l’inférence causale",
+      "question": "Les données disponibles permettent-elles d’établir un lien de causalité entre densité de population et bien-être ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 89,
+      "section": "Gestion de l’incertitude et des biais",
+      "subsection": "Incertitude liée à la taille d’échantillon",
+      "question": "Le faible nombre de répondants dans certaines communes affecte-t-il la fiabilité des conclusions ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 97,
+      "section": "Gestion de l’incertitude et des biais",
+      "subsection": "Biais liés aux indicateurs",
+      "question": "Le score OppChoVec peut-il masquer des disparités internes importantes au sein d’une même commune ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 98,
+      "section": "Gestion de l’incertitude et des biais",
+      "subsection": "Risque de sur-interprétation",
+      "question": "Peut-on affirmer qu’une amélioration d’un indicateur spécifique entraînera nécessairement une hausse du bien-être global ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    },
+    {
+      "excel_row": 104,
+      "section": "Raisonnement comparatif",
+      "subsection": "Comparaison intra-EPCI (CAPA)",
+      "question": "Quelle est la commune de la CAPA avec le meilleur score Vécu (Vec) ?",
+      "rag_status": "error",
+      "rag_error": "{\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"body\",\"k\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"judge_error\"}]}"
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+20 questions x 4 configs = 80 appels RAG + judge
+
+==========================================================
+Config: v_vanilla_k10  (k=10)
+==========================================================
+  [ 1/20] R9 V2=5.00 V4.1=5.00 | RAG 3.9s | 4src
+  [ 2/20] R11 RAG ERREUR 422
+  [ 3/20] R14 RAG ERREUR 422
+  [ 4/20] R19 RAG ERREUR 422
+  [ 5/20] R24 RAG ERREUR 422
+  [ 6/20] R30 RAG ERREUR 422
+  [ 7/20] R36 RAG ERREUR 422
+  [ 8/20] R41 RAG ERREUR 422
+  [ 9/20] R44 RAG ERREUR 422
+  [10/20] R48 RAG ERREUR 422
+  [11/20] R51 RAG ERREUR 422
+  [12/20] R52 RAG ERREUR 422
+  [13/20] R68 RAG ERREUR 422
+  [14/20] R75 RAG ERREUR 422
+  [15/20] R76 RAG ERREUR 422
+  [16/20] R83 RAG ERREUR 422
+  [17/20] R89 RAG ERREUR 422
+  [18/20] R97 RAG ERREUR 422
+  [19/20] R98 RAG ERREUR 422
+  [20/20] R104 RAG ERREUR 422
+
+==========================================================
+Config: v_vanilla_k25  (k=25)
+==========================================================
+  [ 1/20] R9 V2=5.00 V4.1=5.00 | RAG 4.5s | 4src
+  [ 2/20] R11 RAG ERREUR 422
+  [ 3/20] R14 RAG ERREUR 422
+  [ 4/20] R19 RAG ERREUR 422
+  [ 5/20] R24 RAG ERREUR 422
+  [ 6/20] R30 RAG ERREUR 422
+  [ 7/20] R36 RAG ERREUR 422
+  [ 8/20] R41 RAG ERREUR 422
+  [ 9/20] R44 RAG ERREUR 422
+  [10/20] R48 RAG ERREUR 422
+  [11/20] R51 RAG ERREUR 422
+  [12/20] R52 RAG ERREUR 422
+  [13/20] R68 RAG ERREUR 422
+  [14/20] R75 RAG ERREUR 422
+  [15/20] R76 RAG ERREUR 422
+  [16/20] R83 RAG ERREUR 422
+  [17/20] R89 RAG ERREUR 422
+  [18/20] R97 RAG ERREUR 422
+  [19/20] R98 RAG ERREUR 422
+  [20/20] R104 RAG ERREUR 422
+
+==========================================================
+Config: v_decomp  (k=5)
+==========================================================
+  [ 1/20] R9 V2=5.00 V4.1=5.00 | RAG 26.8s | 22src
+  [ 2/20] R11 RAG ERREUR 422
+  [ 3/20] R14 RAG ERREUR 422
+  [ 4/20] R19 RAG ERREUR 422
+  [ 5/20] R24 RAG ERREUR 422
+  [ 6/20] R30 RAG ERREUR 422
+  [ 7/20] R36 RAG ERREUR 422
+  [ 8/20] R41 RAG ERREUR 422
+  [ 9/20] R44 RAG ERREUR 422
+  [10/20] R48 RAG ERREUR 422
+  [11/20] R51 RAG ERREUR 422
+  [12/20] R52 RAG ERREUR 422
+  [13/20] R68 RAG ERREUR 422
+  [14/20] R75 RAG ERREUR 422
+  [15/20] R76 RAG ERREUR 422
+  [16/20] R83 RAG ERREUR 422
+  [17/20] R89 RAG ERREUR 422
+  [18/20] R97 RAG ERREUR 422
+  [19/20] R98 RAG ERREUR 422
+  [20/20] R104 RAG ERREUR 422
+
+==========================================================
+Config: v_decomp_raptor  (k=5)
+==========================================================
+  [ 1/20] R9 V2=4.50 V4.1=4.75 | RAG 29.2s | 61src
+  [ 2/20] R11 RAG ERREUR 422
+  [ 3/20] R14 RAG ERREUR 422
+  [ 4/20] R19 RAG ERREUR 422
+  [ 5/20] R24 RAG ERREUR 422
+  [ 6/20] R30 RAG ERREUR 422
+  [ 7/20] R36 RAG ERREUR 422
+  [ 8/20] R41 RAG ERREUR 422
+  [ 9/20] R44 RAG ERREUR 422
+  [10/20] R48 RAG ERREUR 422
+  [11/20] R51 RAG ERREUR 422
+  [12/20] R52 RAG ERREUR 422
+  [13/20] R68 RAG ERREUR 422
+  [14/20] R75 RAG ERREUR 422
+  [15/20] R76 RAG ERREUR 422
+  [16/20] R83 RAG ERREUR 422
+  [17/20] R89 RAG ERREUR 422
+  [18/20] R97 RAG ERREUR 422
+  [19/20] R98 RAG ERREUR 422
+  [20/20] R104 RAG ERREUR 422
+
+Sauvegarde : comparaisons_rag\ablations_20q_run_judge_20260514_192153.json
+
+--- TABLEAU V2 (moyennes sur 20 questions) ---
+Config                 Pertinence    Factuel     Nuance    Quali/Q     Global
+--------------------------------------------------------------------------------
+  v_vanilla_k10              5.00       5.00       5.00       5.00       5.00
+  v_vanilla_k25              5.00       5.00       5.00       5.00       5.00
+  v_decomp                   5.00       5.00       5.00       5.00       5.00
+  v_decomp_raptor            5.00       5.00       4.00       4.00       4.50
+
+--- TABLEAU V4.1 (moyennes sur 20 questions) ---
+Config                 Pertinence    Factuel     Nuance    Quali/Q     Global
+--------------------------------------------------------------------------------
+  v_vanilla_k10              5.00       5.00       5.00       5.00       5.00
+  v_vanilla_k25              5.00       5.00       5.00       5.00       5.00
+  v_decomp                   5.00       5.00       5.00       5.00       5.00
+  v_decomp_raptor            5.00       5.00       4.00       5.00       4.75

@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Test V4.5 — Q45 Q49 Q50</title>
+<style>
+body{font-family:Arial,sans-serif;font-size:14px;max-width:1350px;margin:0 auto;padding:20px;background:#f5f5f5}
+h1{border-bottom:3px solid #444;padding-bottom:8px;color:#222}
+h2{background:#ddd;padding:6px 14px;border-radius:4px;font-size:1em;color:#333;margin:28px 0 8px}
+.qblock{background:white;border-radius:8px;padding:18px;margin-bottom:24px;box-shadow:0 1px 5px rgba(0,0,0,.1)}
+.qtitle{font-size:1.05em;font-weight:bold;color:#111;margin-bottom:4px}
+.sub{display:inline-block;background:#555;color:white;font-size:.72em;padding:2px 8px;border-radius:10px;margin-bottom:12px}
+table{border-collapse:collapse;width:100%;margin-bottom:12px}
+th{background:#444;color:white;padding:6px 10px;font-size:.82em;text-align:center}
+td{border:1px solid #ddd;padding:5px 9px;font-size:.82em}
+.cfg{border-left:4px solid #bbb;padding:10px 14px;margin:8px 0;border-radius:0 6px 6px 0}
+.cfg-label{font-weight:bold;font-size:.88em;margin-bottom:3px}
+.mini{font-size:.75em;color:#777;margin-bottom:3px}
+.judge-r{font-size:.8em;color:#444;font-style:italic;border-left:2px solid #ddd;padding-left:8px;margin:4px 0}
+.sig{font-size:.78em;color:#1565c0;margin-top:3px}
+details summary{cursor:pointer;font-size:.83em;color:#1565c0;margin-top:4px}
+.answer-box{font-size:.82em;color:#333;line-height:1.5;max-height:300px;overflow-y:auto;border:1px solid #ddd;padding:8px;background:#fafafa;border-radius:4px;white-space:pre-wrap;margin-top:5px}
+</style>
+</head>
+<body>
+<h1>Test juge V4.5 — Q45, Q49, Q50 (toutes configs)</h1>
+<p style="color:#666">Juge GPT-4o · V4.5 = V4.4 + Exemple 9 · 20260519_142540</p>
+<h2>Gestion d’absence d’information</h2>
+<div class="qblock" id="q45">
+<div class="qtitle">Q45 — Quel est le niveau de bien-être subjectif à Aïti ?</div>
+<span class="sub">Absence totale de données</span>
+<table><tr><th>Config</th><th>V4.3</th><th>V4.4</th><th>V4.5</th><th>Δ V4.3→V4.5</th><th>Δ V4.4→V4.5</th><th>R3 V4.5</th></tr>
+<tr><td><b>Vanilla k10</b></td><td style="text-align:center"><span style="background:#388e3c;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">5.00</span></td><td style="text-align:center"><span style="color:#aaa">—</span></td><td style="text-align:center"><span style="background:#388e3c;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">5.00</span></td><td style="text-align:center;color:#666;font-weight:bold">+0.00</td><td style="text-align:center;color:#aaa">—</td><td style="text-align:center;color:#388e3c;font-weight:bold">NON</td></tr>
+<tr><td><b>Vanilla k25</b></td><td style="text-align:center"><span style="background:#388e3c;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">5.00</span></td><td style="text-align:center"><span style="color:#aaa">—</span></td><td style="text-align:center"><span style="background:#388e3c;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">5.00</span></td><td style="text-align:center;color:#666;font-weight:bold">+0.00</td><td style="text-align:center;color:#aaa">—</td><td style="text-align:center;color:#388e3c;font-weight:bold">NON</td></tr>
+<tr><td><b>Decomp</b></td><td style="text-align:center"><span style="background:#c62828;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">2.50</span></td><td style="text-align:center"><span style="color:#aaa">—</span></td><td style="text-align:center"><span style="background:#388e3c;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">4.50</span></td><td style="text-align:center;color:#388e3c;font-weight:bold">+2.00</td><td style="text-align:center;color:#aaa">—</td><td style="text-align:center;color:#388e3c;font-weight:bold">NON</td></tr>
+<tr><td><b>Decomp+RAPTOR</b></td><td style="text-align:center"><span style="background:#f57c00;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">3.50</span><span style="background:#c62828;color:white;font-size:0.65em;padding:1px 4px;border-radius:3px;margin-left:3px">MIS</span></td><td style="text-align:center"><span style="color:#aaa">—</span></td><td style="text-align:center"><span style="background:#388e3c;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">4.50</span></td><td style="text-align:center;color:#388e3c;font-weight:bold">+1.00</td><td style="text-align:center;color:#aaa">—</td><td style="text-align:center;color:#388e3c;font-weight:bold">NON</td></tr>
+</table>
+<div class="cfg" style="background:#e8f4f8;border-left-color:#bdbdbd">
+<div class="cfg-label">Vanilla k10 &nbsp; <span style="background:#388e3c;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">5.00</span> </div>
+<div class="mini">P=5.00 · F=5.00 · N=5.00 · Q/Q=5.00</div>
+<div class="sig">&#128269; Signalements : "aucune donnée sur le bien-être subjectif" · "pas de verbatims citoyens ou d&#x27;enquêtes qualitatives pour cette commune" · "impossible de répondre à la question avec les données actuelles"</div>
+<div class="judge-r">&#129516; La réponse signale explicitement l&#x27;absence de données qualitatives pour Aïti et explique pourquoi il est impossible de répondre à la question avec les données disponibles.</div>
+<details><summary>Voir la réponse RAG complète</summary>
+<div class="answer-box">D&#x27;après les documents fournis, **aucune donnée sur le bien-être subjectif** (perception des habitants) n&#x27;est disponible pour la commune d&#x27;Aïti.
+
+Les éléments partagés concernent uniquement :
+- L&#x27;**indice OppChoVec** (bien-être objectif territorial), avec un score global de **3,07/10** (moyen) pour Aïti (source : indicateurs territoriaux).
+- Les sous-scores objectifs (opportunités, choix, vécu), mais **pas de verbatims citoyens ou d&#x27;enquêtes qualitatives** pour cette commune.
+
+*Précision* : Les profils démographiques des répondants aux enquêtes qualité de vie concernent d&#x27;autres communes (Aghione, Sotta, Afa, etc.), mais **pas Aïti**. Il est donc impossible de répondre à la question avec les données actuelles.</div>
+</details>
+</div>
+<div class="cfg" style="background:#e8f0e8;border-left-color:#bdbdbd">
+<div class="cfg-label">Vanilla k25 &nbsp; <span style="background:#388e3c;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">5.00</span> </div>
+<div class="mini">P=5.00 · F=5.00 · N=5.00 · Q/Q=5.00</div>
+<div class="sig">&#128269; Signalements : "aucune donnée sur le bien-être subjectif (vécu perçu par les habitants) n&#x27;est di" · "Aucun verbatim citoyen ou enquête qualitative n&#x27;est associé à Aïti dans les extr" · "Les données sont insuffisantes pour évaluer le bien-être subjectif à Aïti"</div>
+<div class="judge-r">&#129516; La réponse signale explicitement l&#x27;absence de données qualitatives pour Aïti et précise que le score Vec ne reflète pas le ressenti subjectif.</div>
+<details><summary>Voir la réponse RAG complète</summary>
+<div class="answer-box">D&#x27;après les documents fournis, **aucune donnée sur le bien-être subjectif (vécu perçu par les habitants) n&#x27;est disponible spécifiquement pour la commune d&#x27;Aïti**.
+
+Les seules informations relatives à Aïti concernent :
+- **L&#x27;indice OppChoVec objectif** (indicateur territorial), avec un score *Vécu (Vec)* de **3,36/10** (moyen, rang 187e/360), issu des *indicateurs territoriaux* (Betti). Ce score reflète des réalisations concrètes (emploi, revenus, etc.), mais **pas le ressenti des habitants**.
+- **Aucun verbatim citoyen ou enquête qualitative** n&#x27;est associé à Aïti dans les extraits fournis.
+
+**Réponse** : Les données sont insuffisantes pour évaluer le bien-être subjectif à Aïti. Seule une mesure objective (score Vec) est disponible, sans retour des habitants.</div>
+</details>
+</div>
+<div class="cfg" style="background:#f8f0e8;border-left-color:#bdbdbd">
+<div class="cfg-label">Decomp &nbsp; <span style="background:#388e3c;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">4.50</span> </div>
+<div class="mini">P=4.00 · F=5.00 · N=5.00 · Q/Q=4.00</div>
+<div class="sig">&#128269; Signalements : "Aucune enquête citoyenne spécifique à Aïti n’est disponible" · "les ressentis des habitants restent inconnus"</div>
+<div class="judge-r">&#129516; La réponse signale explicitement l&#x27;absence de données subjectives pour Aïti et utilise les données objectives disponibles pour fournir une approximation du bien-être.</div>
+<details><summary>Voir la réponse RAG complète</summary>
+<div class="answer-box">### **Synthèse sur le niveau de bien-être à Aïti**
+
+Le bien-être à Aïti présente un tableau contrasté, marqué par un **décalage entre des libertés formelles préservées et des conditions de vie concrètes limitées**, selon les indicateurs territoriaux disponibles.
+
+#### **1. Un bien-être territorial objectif moyen, mais inégal**
+Selon les données territoriales objectives, Aïti obtient un **score global de 3,07/10**, la plaçant au **187ᵉ rang sur 360 communes corses**. Ce résultat reflète des disparités internes fortes :
+- **Un cadre institutionnel et civique très favorable** : avec un score de **8,93/10** pour les *libertés et droits* (absence de quartiers prioritaires, population avec droits civiques), Aïti se distingue positivement.
+- **Des opportunités structurelles limitées** : le score de **3,65/10** révèle des faiblesses majeures, notamment en **éducation (1,12/10, 260ᵉ rang)** et en **mobilité (1,61/10, 311ᵉ rang)**. En revanche, la commune se distingue par une **diversité sociale élevée (6,26/10, 11ᵉ rang)**, un atout rare en milieu rural.
+- **Un vécu quotidien difficile** : le score de **3,36/10** pour les *conditions matérielles* (revenu, logement, emploi, accès aux services) confirme des défis concrets pour les habitants. Par exemple, l’accès aux services essentiels en moins de 20 minutes est probablement restreint, et la stabilité de l’emploi semble fragile.
+
+#### **2. Absence de données subjectives locales**
+Aucune **enquête citoyenne spécifique à Aïti** n’est disponible pour mesurer directement la satisfaction de vie, la perception de la tranquillité, de l’isolement ou d’autres dimensions subjectives. Les données d’enquête existantes couvrent d’autres communes corses, mais ne permettent pas d’extrapoler à Aïti. Ainsi, **les ressentis des habitants restent inconnus** dans le cadre de cette analyse.
+
+#### **3. Une situation stable, mais sans visibilité sur les tendances récentes**
+Aucune donnée n’indique une **évolution du bien-être à Aïti sur les trois dernières années**. Le score actuel (3,07/10) ne peut donc pas être comparé à des années antérieures pour identifier une amélioration ou une dégradation.
+
+---
+### **Points clés à retenir**
+- **Atouts** : Aïti bénéficie d’un **environnement civique très favorable** (score Choix élevé) et d’une **diversité sociale remarquable** pour une commune rurale.
+- **Faiblesses majeures** : **Éducation et mobilité très faibles**, ainsi que des **conditions de vie matérielles difficiles** (revenu, logement, emploi), pèsent sur le quotidien.
+- **Lacunes** : **Aucune donnée sur les perceptions des habitants** (satisfaction, sentiment d’isolement, etc.) ni sur les **tendances récentes** du bien-être.
+
+En résumé, Aïti apparaît comme une commune où **les libertés sont préservées, mais où les ressources et les opportunités concrètes restent limitées**, sans que l’on puisse mesurer l’impact de cette situation sur le ressenti des habitants.</div>
+</details>
+</div>
+<div class="cfg" style="background:#f0e8f8;border-left-color:#bdbdbd">
+<div class="cfg-label">Decomp+RAPTOR &nbsp; <span style="background:#388e3c;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">4.50</span> </div>
+<div class="mini">P=4.00 · F=5.00 · N=5.00 · Q/Q=4.00</div>
+<div class="sig">&#128269; Signalements : "Aucune donnée spécifique à Aïti n’existe pour confirmer ou infirmer ces tendance"</div>
+<div class="judge-r">&#129516; La réponse signale explicitement l&#x27;absence de données spécifiques à Aïti et utilise des données régionales pour donner un aperçu général, tout en précisant les limites de cette approche.</div>
+<details><summary>Voir la réponse RAG complète</summary>
+<div class="answer-box">### **Synthèse sur le niveau de bien-être subjectif à Aïti**
+
+#### **1. Perceptions des habitants : des données limitées à la Corse entière**
+Les enquêtes disponibles ne permettent pas d’évaluer directement le bien-être subjectif des habitants d’Aïti, car les résultats portent sur **l’ensemble de la Corse** :
+- **Satisfaction globale** : Les Corses interrogés expriment une qualité de vie modérée (3,83/5) et un bonheur perçu plutôt faible (3,66/5), selon l’enquête citoyenne.
+- **Confiance dans l’avenir** : Ce sentiment est particulièrement bas (2,80/5), reflétant des inquiétudes partagées à l’échelle régionale.
+
+*Aucune donnée spécifique à Aïti n’existe pour confirmer ou infirmer ces tendances locales.*
+
+---
+
+#### **2. Réalités territoriales objectives : un contraste marqué**
+Les indicateurs territoriaux révèlent une situation contrastée à Aïti :
+- **Un score global moyen** : Le niveau de bien-être objectif (3,07/10) place la commune dans la moyenne basse des villages corses, selon les données territoriales.
+- **Des libertés formelles élevées** : Le score &quot;Choix&quot; (8,93/10) indique que les habitants bénéficient de droits politiques solides (participation électorale, absence de quartiers prioritaires) et d’une bonne accessibilité aux infrastructures.
+- **Un quotidien difficile** : En revanche, le score &quot;Vécu&quot; (3,36/10) souligne des défis concrets :
+  - **Revenus et emploi** : Les revenus fiscaux moyens et la stabilité de l’emploi sont faibles.
+  - **Logement et services** : La qualité des logements et l’accès aux services essentiels (en moins de 20 minutes) restent limités.
+
+---
+
+#### **3. Synthèse analytique : un décalage entre droits et conditions de vie**
+À Aïti, le bien-être subjectif ne peut être pleinement évalué en l’absence de données locales. Cependant, les indicateurs objectifs dessinent un portrait nuancé :
+- **Un cadre institutionnel favorable** (libertés, mobilité) contraste avec **des conditions matérielles précaires** (revenus, logement, services).
+- Ce décalage pourrait expliquer un sentiment de frustration chez les habitants, similaire aux tendances observées en Corse (faible confiance dans l’avenir), mais cela reste à confirmer par une enquête locale.
+
+**En résumé** :
+- **Données subjectives** : Inconnues pour Aïti (seules des tendances corses sont disponibles).
+- **Données objectives** : Un village où les droits sont préservés, mais où le quotidien reste difficile, avec des inégalités structurelles entre libertés formelles et réalités socio-économiques.</div>
+</details>
+</div>
+</div>
+<h2>Gestion d’absence d’information</h2>
+<div class="qblock" id="q49">
+<div class="qtitle">Q49 — Peut-on comparer le bien-être perçu à Ajaccio et à Aïti ?</div>
+<span class="sub">Comparaison impossible</span>
+<table><tr><th>Config</th><th>V4.3</th><th>V4.4</th><th>V4.5</th><th>Δ V4.3→V4.5</th><th>Δ V4.4→V4.5</th><th>R3 V4.5</th></tr>
+<tr><td><b>Vanilla k10</b></td><td style="text-align:center"><span style="background:#388e3c;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">5.00</span></td><td style="text-align:center"><span style="background:#388e3c;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">5.00</span></td><td style="text-align:center"><span style="background:#388e3c;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">5.00</span></td><td style="text-align:center;color:#666;font-weight:bold">+0.00</td><td style="text-align:center;color:#666;font-weight:bold">+0.00</td><td style="text-align:center;color:#388e3c;font-weight:bold">NON</td></tr>
+<tr><td><b>Vanilla k25</b></td><td style="text-align:center"><span style="background:#388e3c;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">5.00</span></td><td style="text-align:center"><span style="background:#388e3c;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">5.00</span></td><td style="text-align:center"><span style="background:#388e3c;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">5.00</span></td><td style="text-align:center;color:#666;font-weight:bold">+0.00</td><td style="text-align:center;color:#666;font-weight:bold">+0.00</td><td style="text-align:center;color:#388e3c;font-weight:bold">NON</td></tr>
+<tr><td><b>Decomp</b></td><td style="text-align:center"><span style="background:#c62828;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">2.25</span></td><td style="text-align:center"><span style="background:#c62828;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">2.25</span><span style="background:#c62828;color:white;font-size:0.65em;padding:1px 4px;border-radius:3px;margin-left:3px">MIS</span></td><td style="text-align:center"><span style="background:#c62828;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">3.00</span><span style="background:#c62828;color:white;font-size:0.65em;padding:1px 4px;border-radius:3px;margin-left:3px">MIS</span></td><td style="text-align:center;color:#388e3c;font-weight:bold">+0.75</td><td style="text-align:center;color:#388e3c;font-weight:bold">+0.75</td><td style="text-align:center;color:#c62828;font-weight:bold">OUI</td></tr>
+<tr><td><b>Decomp+RAPTOR</b></td><td style="text-align:center"><span style="background:#c62828;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">2.50</span><span style="background:#c62828;color:white;font-size:0.65em;padding:1px 4px;border-radius:3px;margin-left:3px">MIS</span></td><td style="text-align:center"><span style="background:#c62828;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">2.50</span><span style="background:#c62828;color:white;font-size:0.65em;padding:1px 4px;border-radius:3px;margin-left:3px">MIS</span></td><td style="text-align:center"><span style="background:#c62828;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">2.25</span><span style="background:#c62828;color:white;font-size:0.65em;padding:1px 4px;border-radius:3px;margin-left:3px">MIS</span></td><td style="text-align:center;color:#c62828;font-weight:bold">-0.25</td><td style="text-align:center;color:#c62828;font-weight:bold">-0.25</td><td style="text-align:center;color:#c62828;font-weight:bold">OUI</td></tr>
+</table>
+<div class="cfg" style="background:#e8f4f8;border-left-color:#bdbdbd">
+<div class="cfg-label">Vanilla k10 &nbsp; <span style="background:#388e3c;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">5.00</span> </div>
+<div class="mini">P=5.00 · F=5.00 · N=5.00 · Q/Q=5.00</div>
+<div class="sig">&#128269; Signalements : "aucun score OppChoVec, indicateur territorial ou enquête citoyenne pour la commu" · "Aucune donnée équivalente n&#x27;est fournie pour Aïti" · "Les données sont insuffisantes pour établir une comparaison"</div>
+<div class="judge-r">&#129516; La réponse signale explicitement l&#x27;absence de données pour Aïti, justifiant l&#x27;impossibilité de comparaison avec Ajaccio.</div>
+<details><summary>Voir la réponse RAG complète</summary>
+<div class="answer-box">D&#x27;après les documents fournis, **il n&#x27;est pas possible de comparer le bien-être perçu à Ajaccio et à Aïti**, pour les raisons suivantes :
+
+1. **Absence de données sur Aïti** :
+   - Le contexte ne fournit **aucun score OppChoVec, indicateur territorial ou enquête citoyenne** pour la commune d&#x27;Aïti. Les documents se limitent aux communes citées (Ajaccio, Afa, Bastelicaccia, etc.), sans mention d&#x27;Aïti.
+
+2. **Sources disponibles uniquement pour Ajaccio** :
+   - Pour Ajaccio, les données incluent :
+     - Un **score OppChoVec global (5.78/10)** et ses sous-scores (Opp, Cho, Vec) *(source : indicateurs territoriaux)*.
+     - Une **enquête qualité de vie** avec 51 répondants (profil démographique et CSP) *(source : enquête citoyenne)*.
+   - Aucune donnée équivalente n&#x27;est fournie pour Aïti.
+
+3. **Règle géographique** :
+   - La question ne peut être traitée que pour les communes explicitement mentionnées dans les documents. Aïti n&#x27;y figure pas.
+
+**Conclusion** : Les données sont insuffisantes pour établir une comparaison.</div>
+</details>
+</div>
+<div class="cfg" style="background:#e8f0e8;border-left-color:#bdbdbd">
+<div class="cfg-label">Vanilla k25 &nbsp; <span style="background:#388e3c;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">5.00</span> </div>
+<div class="mini">P=5.00 · F=5.00 · N=5.00 · Q/Q=5.00</div>
+<div class="sig">&#128269; Signalements : "il n&#x27;est pas possible de comparer le bien-être perçu à Ajaccio et à Aïti" · "Absence de données sur Aïti" · "Ajaccio uniquement documentée"</div>
+<div class="judge-r">&#129516; La réponse signale explicitement l&#x27;absence de données pour Aïti, rendant la comparaison impossible. Les données pour Ajaccio sont bien documentées.</div>
+<details><summary>Voir la réponse RAG complète</summary>
+<div class="answer-box">D&#x27;après les documents fournis, **il n&#x27;est pas possible de comparer le bien-être perçu à Ajaccio et à Aïti**, pour les raisons suivantes :
+
+1. **Absence de données sur Aïti** :
+   - Les extraits des **Scores OppChoVec** ne mentionnent pas la commune d&#x27;Aïti (ni dans le classement des 360 communes, ni dans les détails des sous-scores).
+   - Aucune enquête qualitative ou quantitative (verbatims, profils démographiques) n&#x27;est fournie pour Aïti.
+
+2. **Ajaccio uniquement documentée** :
+   - Les données disponibles concernent **uniquement Ajaccio** (score OppChoVec, sous-scores, enquête citoyenne avec 51 répondants).
+   - Le score OppChoVec d&#x27;Ajaccio (5,78/10) et ses composantes (Opp=10,00 ; Cho=1,27 ; Vec=4,80) ne peuvent pas être mis en perspective sans équivalent pour Aïti.
+
+**Source** : Scores OppChoVec (indicateurs territoriaux) et enquête qualité de vie en Corse (profil démographique Ajaccio).</div>
+</details>
+</div>
+<div class="cfg" style="background:#f8f0e8;border-left-color:#c62828">
+<div class="cfg-label">Decomp &nbsp; <span style="background:#c62828;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">3.00</span><span style="background:#c62828;color:white;font-size:0.65em;padding:1px 4px;border-radius:3px;margin-left:3px">MIS</span> <span style="background:#c62828;color:white;font-size:.68em;padding:1px 5px;border-radius:3px;margin-left:5px">MISLABELLING</span></div>
+<div class="mini">P=3.00 · F=3.00 · N=3.00 · Q/Q=3.00</div>
+<div class="sig">&#128269; Signalements : "Absence de données subjectives" · "aucune enquête citoyenne spécifique à Aïti"</div>
+<div class="judge-r">&#129516; La réponse tente une comparaison en utilisant des données objectives et mentionne l&#x27;absence de données subjectives pour Aïti, mais surinterprète Vec comme perception et ne signale pas clairement l&#x27;impossibilité de comparaison des perceptions.</div>
+<details><summary>Voir la réponse RAG complète</summary>
+<div class="answer-box">### **Comparaison du bien-être perçu à Ajaccio et à Aïti : une analyse contrastée**
+
+La comparaison entre Ajaccio et Aïti révèle des réalités très différentes, tant sur le plan des **conditions de vie objectives** que des **perceptions des habitants**, bien que les données disponibles ne couvrent pas tous les aspects de manière équilibrée.
+
+---
+
+#### **1. Ajaccio : des ressources exceptionnelles, mais un vécu en demi-teinte**
+**Selon les indicateurs territoriaux objectifs**, Ajaccio se distingue par des **opportunités parmi les meilleures de Corse** :
+- **Accès à l’éducation, aux transports et au numérique** : des scores proches de l’excellence (respectivement 7,42/10, 8,99/10 et 9,35/10), plaçant la ville au **1er rang corse** pour les opportunités (10/10).
+- **Revenus, logement et stabilité de l’emploi** : un niveau moyen (4,80/10), avec un **accès aux services en moins de 20 minutes** bien noté, mais des disparités internes probables (quartiers prioritaires, inégalités sociales).
+- **Point noir majeur** : la **diversité socio-professionnelle et les libertés effectives** sont quasi inexistantes (1,27/10, **358e rang**), un score qui reflète une concentration des pouvoirs et des choix limités pour une partie de la population.
+
+**Selon l’enquête citoyenne** (menée auprès de 47 habitants d’Ajaccio), cette abondance de ressources ne se traduit pas par une **satisfaction élevée** :
+- **Bonheur perçu** : 3,68/5 et **qualité de vie déclarée** : 3,89/5, des scores **inférieurs à la moyenne corse** pour une ville aussi équipée.
+- **Points de frustration majeurs** :
+  - **Transports** (0,95/5) : un sujet récurrent de mécontentement, malgré un score objectif élevé (8,99/10), suggérant des problèmes de congestion, de coût ou de fiabilité.
+  - **Vie associative et lien social** (0,64/5) : un décalage frappant avec les infrastructures disponibles, révélant peut-être un sentiment d’isolement ou un manque d’animation locale.
+  - **Environnement et cadre de vie** : bien que non détaillé ici, les entretiens qualitatifs (non fournis) pourraient éclairer des tensions entre urbanisation et qualité de vie.
+
+**Synthèse pour Ajaccio** :
+Une ville **bien dotée en services et infrastructures**, mais où les **inégalités sociales et les frustrations quotidiennes** (transports, lien social) pèsent sur le bien-être ressenti. Les habitants bénéficient de **ressources objectives exceptionnelles**, mais leur **expérience concrète** est moins positive, soulignant un **décalage entre potentiel et vécu**.
+
+---
+
+#### **2. Aïti : des libertés élevées, mais des conditions matérielles fragiles**
+**Selon les indicateurs territoriaux objectifs**, Aïti présente un profil **très différent** :
+- **Libertés et diversité sociale** : un score **exceptionnel** (8,93/10, **parmi les meilleurs de Corse**), reflétant une **population diversifiée** (6,26/10 pour la diversité socio-professionnelle, 11e rang) et une **absence de quartiers prioritaires**.
+- **Opportunités limitées** : accès **très faible** à l’éducation (1,12/10) et à la mobilité (1,61/10), ainsi qu’une **couverture numérique insuffisante**, avec un score global d’opportunités de 3,65/10.
+- **Vécu quotidien difficile** : revenus, qualité du logement et stabilité de l’emploi **en dessous de la moyenne corse** (3,36/10), avec un **accès aux services** probablement limité (pas de données précises sur les équipements locaux).
+
+**Absence de données subjectives** :
+Contrairement à Ajaccio, **aucune enquête citoyenne spécifique à Aïti** n’est disponible dans les données transmises. Impossible donc de savoir comment les habitants perçoivent leur qualité de vie, leurs frustrations ou leurs satisfactions. Les indicateurs objectifs suggèrent des **conditions matérielles précaires**, mais sans retour des habitants, on ignore si ces contraintes sont compensées par d’autres facteurs (cadre de vie, solidarité locale, etc.).
+
+**Synthèse pour Aïti** :
+Une commune où les **libertés et la mixité sociale** sont fortes, mais où les **ressources et les conditions de vie quotidiennes** (emploi, éducation, mobilité) sont **limitées**. Le bien-être y dépend probablement davantage du **lien social et de l’autonomie locale** que des infrastructures, mais cette hypothèse reste à confirmer par des retours d’habitants.
+
+---
+
+#### **3. Comparaison directe : deux modèles de bien-être opposés**
+| **Critère**               | **Ajaccio**                          | **Aïti**                              | **Analyse**                                                                 |
+|---------------------------|--------------------------------------|---------------------------------------|-----------------------------------------------------------------------------|
+| **Opportunités**          | **10/10** (1er rang corse)           | **3,65/10**                           | Ajaccio concentre les services, l’éducation et les infrastructures. Aïti en est largement dépourvue. |
+| **Libertés (Choix)**      | **1,27/10** (358e rang)              | **8,93/10** (excellent)               | Paradoxe : Ajaccio offre peu de diversité sociale malgré ses ressources, tandis qu’Aïti, plus modeste, garantit une grande liberté. |
+| **Vécu quotidien**        | **4,80/10** (moyen)                  | **3,36/10** (faible)                  | À Ajaccio, les revenus et le logement sont moyens ; à Aïti, les conditions matérielles sont plus difficiles. |
+| **Perception des habitants** | **3,68/5 (bonheur) – 3,89/5 (qualité de vie)** | **Aucune donnée** | Les Ajacciens expriment une **insatisfaction relative** malgré les atouts objectifs. Pour Aïti, impossible de trancher sans retours locaux. |
+
+**Points clés de la comparaison** :
+1. **Ajaccio** : une **ville de contrastes**, où les **ressources objectives** (écoles, transports, emplois) sont abondantes, mais où les **inégalités et les frustrations** (transports, lien social</div>
+</details>
+</div>
+<div class="cfg" style="background:#f0e8f8;border-left-color:#c62828">
+<div class="cfg-label">Decomp+RAPTOR &nbsp; <span style="background:#c62828;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">2.25</span><span style="background:#c62828;color:white;font-size:0.65em;padding:1px 4px;border-radius:3px;margin-left:3px">MIS</span> <span style="background:#c62828;color:white;font-size:.68em;padding:1px 5px;border-radius:3px;margin-left:5px">MISLABELLING</span></div>
+<div class="mini">P=2.00 · F=3.00 · N=2.00 · Q/Q=2.00</div>
+<div class="sig" style="color:#c62828">&#9888; Aucun signalement détecté</div>
+<div class="judge-r">&#129516; La réponse tente une comparaison sans signaler l&#x27;absence de données qualitatives pour Aïti, ce qui est crucial pour une comparaison des perceptions.</div>
+<details><summary>Voir la réponse RAG complète</summary>
+<div class="answer-box">### **Comparaison du bien-être perçu à Ajaccio et à Aïti : une analyse contrastée**
+
+La comparaison du bien-être entre **Ajaccio** et **Aïti** révèle des réalités très différentes, marquées par des écarts importants en termes d’infrastructures, de conditions de vie et de perceptions citoyennes. Voici les principaux enseignements, en distinguant les données objectives et les ressentis des habitants.
+
+---
+
+#### **1. Ajaccio : des opportunités inégalement partagées**
+**Selon les indicateurs territoriaux objectifs**, Ajaccio se distingue par un **profil très contrasté** :
+- **Un niveau d’opportunités exceptionnel** (score maximal de 10/10) : la commune offre un accès privilégié à l’éducation, aux transports, aux technologies numériques et à une diversité d’emplois. Ces atouts en font un pôle attractif en Corse.
+- **Un vécu moyen** (4,8/10) : malgré ces ressources, le revenu fiscal moyen, la qualité du logement et la stabilité de l’emploi restent modérés, avec des disparités internes.
+- **Un point noir majeur** : les **libertés effectives** (score de 1,27/10) sont très limitées, en raison de la présence de quartiers prioritaires et d’une forte proportion de population sans droit de vote. Cela reflète des inégalités territoriales marquées, où les opportunités ne profitent pas à tous.
+
+**Selon l’enquête citoyenne** (39 habitants interrogés), les préoccupations des Ajacciens se concentrent sur :
+- **La précarité économique** : *&quot;Tout augmente mais pas les salaires&quot;*, *&quot;De nombreuses personnes vivent dans une situation précaire par manque d’argent&quot;* (enquête citoyenne). Le pouvoir d’achat et les revenus sont perçus comme insuffisants face au coût de la vie.
+- **L’accès aux soins** : *&quot;Le meilleur médecin est malheureusement l’avion&quot;* (enquête citoyenne), illustrant les difficultés d’accès aux professionnels de santé malgré les infrastructures hospitalières.
+- **L’environnement** : bien que la nature soit valorisée (*&quot;Air frais, zones vertes&quot;*), les habitants dénoncent la pollution liée aux bateaux de croisière et le manque d’espaces verts (enquête citoyenne).
+
+---
+
+#### **2. Aïti : des données objectives manquantes, mais des enjeux probablement distincts**
+**Aucun indicateur territorial objectif** (comme les scores OppChoVec) n’est disponible pour Aïti dans les données fournies. Cela limite la comparaison directe avec Ajaccio, mais suggère une réalité très différente :
+- **Une commune probablement moins dotée en infrastructures** : contrairement à Ajaccio, Aïti ne bénéficie pas d’un score d’opportunités élevé (éducation, mobilité, numérique), ce qui pourrait indiquer un accès plus restreint aux services essentiels.
+- **Des conditions de vie potentiellement plus rurales** : sans données précises, on peut supposer que les enjeux de bien-être à Aïti portent davantage sur l’isolement, l’accès aux soins ou aux commerces, plutôt que sur les inégalités urbaines.
+
+**Aucune donnée d’enquête citoyenne** n’est disponible pour Aïti. Les perceptions des habitants sur leur qualité de vie, leur environnement ou leur pouvoir d’achat restent donc inconnues.
+
+---
+
+#### **3. Points clés de la comparaison**
+| **Dimension**               | **Ajaccio**                                                                 | **Aïti**                                                                 |
+|-----------------------------|-----------------------------------------------------------------------------|--------------------------------------------------------------------------|
+| **Opportunités**            | **Très élevées** (10/10) : éducation, mobilité, numérique.                  | **Données manquantes** (probablement plus limitées).                     |
+| **Vécu quotidien**          | **Moyen** (4,8/10) : revenus et logement corrects, mais disparités internes. | **Inconnu** (peut-être plus difficile en milieu rural).                  |
+| **Libertés effectives**     | **Très faibles** (1,27/10) : quartiers prioritaires, exclusion politique.   | **Inconnu** (mais probablement moins de tensions urbaines).              |
+| **Perceptions citoyennes**  | Précarité économique, accès aux soins, pollution.                          | **Aucune donnée** (pas d’enquête disponible).                            |
+| **Environnement**           | Valorisé mais dégradé (pollution, manque d’espaces verts).                 | **Inconnu** (mais potentiellement plus préservé).                        |
+
+---
+
+#### **4. Synthèse : deux visages du bien-être en Corse**
+- **À Ajaccio**, le bien-être est **à deux vitesses** : la commune offre des opportunités uniques en Corse (emploi, éducation, transports), mais ces avantages ne profitent pas à tous. Les habitants soulignent des **inégalités criantes** (précarité, accès aux soins) et des **nuisances urbaines** (pollution, saturation des services). Les indicateurs territoriaux confirment ce paradoxe : un score d’opportunités maximal, mais un vécu et des libertés effectives médiocres.
+
+- **À Aïti**, l’absence de données objectives et subjectives empêche une comparaison fine. Cependant, le contexte corse suggère que les enjeux y sont probablement **moins liés aux inégalités urbaines** qu’à des défis ruraux : isolement, accès aux services de base, ou préservation de l’environnement. Contrairement à Ajaccio, les tensions sociales y seraient peut-être moins visibles, mais les ressources plus limitées.
+
+**En résumé** :
+- **Ajaccio** cumule **atouts structurels et frustrations citoyennes**, avec un bien-être **inégalement réparti**.
+- **Aïti** semble incarner une réalité **plus homogène mais moins documentée**, où les défis pourraient être davantage liés à l’éloignement qu’aux disparités internes.
+
+Pour affiner cette comparaison, des **données territoriales sur Aïti** (scores OppChoVec) et des **enquêtes citoyennes locales** seraient indispensables. À ce stade, les écarts entre les deux communes apparaissent **à la fois quantitatifs (infrastructures) et qualitatifs (perceptions)**, reflétant des modèles de développement distincts.</div>
+</details>
+</div>
+</div>
+<h2>Gestion d’absence d’information</h2>
+<div class="qblock" id="q50">
+<div class="qtitle">Q50 — Est-il possible de comparer les indicateurs objectifs et qualitatifs pour Pedicorte ?</div>
+<span class="sub">Comparaison impossible</span>
+<table><tr><th>Config</th><th>V4.3</th><th>V4.4</th><th>V4.5</th><th>Δ V4.3→V4.5</th><th>Δ V4.4→V4.5</th><th>R3 V4.5</th></tr>
+<tr><td><b>Vanilla k10</b></td><td style="text-align:center"><span style="background:#f57c00;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">3.50</span></td><td style="text-align:center"><span style="background:#c62828;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">3.25</span><span style="background:#c62828;color:white;font-size:0.65em;padding:1px 4px;border-radius:3px;margin-left:3px">MIS</span></td><td style="text-align:center"><span style="background:#388e3c;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">4.75</span></td><td style="text-align:center;color:#388e3c;font-weight:bold">+1.25</td><td style="text-align:center;color:#388e3c;font-weight:bold">+1.50</td><td style="text-align:center;color:#388e3c;font-weight:bold">NON</td></tr>
+<tr><td><b>Vanilla k25</b></td><td style="text-align:center"><span style="background:#c62828;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">2.00</span></td><td style="text-align:center"><span style="background:#388e3c;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">4.50</span></td><td style="text-align:center"><span style="background:#388e3c;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">4.50</span></td><td style="text-align:center;color:#388e3c;font-weight:bold">+2.50</td><td style="text-align:center;color:#666;font-weight:bold">+0.00</td><td style="text-align:center;color:#388e3c;font-weight:bold">NON</td></tr>
+<tr><td><b>Decomp</b></td><td style="text-align:center"><span style="background:#c62828;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">3.25</span></td><td style="text-align:center"><span style="background:#388e3c;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">4.75</span></td><td style="text-align:center"><span style="background:#388e3c;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">4.75</span></td><td style="text-align:center;color:#388e3c;font-weight:bold">+1.50</td><td style="text-align:center;color:#666;font-weight:bold">+0.00</td><td style="text-align:center;color:#388e3c;font-weight:bold">NON</td></tr>
+<tr><td><b>Decomp+RAPTOR</b></td><td style="text-align:center"><span style="background:#c62828;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">2.00</span><span style="background:#c62828;color:white;font-size:0.65em;padding:1px 4px;border-radius:3px;margin-left:3px">MIS</span></td><td style="text-align:center"><span style="background:#c62828;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">2.00</span><span style="background:#c62828;color:white;font-size:0.65em;padding:1px 4px;border-radius:3px;margin-left:3px">MIS</span></td><td style="text-align:center"><span style="background:#c62828;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">2.00</span><span style="background:#c62828;color:white;font-size:0.65em;padding:1px 4px;border-radius:3px;margin-left:3px">MIS</span></td><td style="text-align:center;color:#666;font-weight:bold">+0.00</td><td style="text-align:center;color:#666;font-weight:bold">+0.00</td><td style="text-align:center;color:#c62828;font-weight:bold">OUI</td></tr>
+</table>
+<div class="cfg" style="background:#e8f4f8;border-left-color:#bdbdbd">
+<div class="cfg-label">Vanilla k10 &nbsp; <span style="background:#388e3c;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">4.75</span> </div>
+<div class="mini">P=4.00 · F=5.00 · N=5.00 · Q/Q=5.00</div>
+<div class="sig">&#128269; Signalements : "Les documents ne fournissent aucun verbatim citoyen, entretien qualitatif ou enq" · "Impossible donc de comparer"</div>
+<div class="judge-r">&#129516; La réponse signale explicitement l&#x27;absence de données qualitatives pour Piedicorte-di-Gaggio, rendant la comparaison impossible. Les indicateurs objectifs sont bien détaillés.</div>
+<details><summary>Voir la réponse RAG complète</summary>
+<div class="answer-box">D&#x27;après les documents fournis, voici une comparaison possible entre les **indicateurs objectifs** (issus des *Scores OppChoVec* et des *équipements et services quantitatifs*) et les **indicateurs qualitatifs** (absents des extraits) pour **Piedicorte-di-Gaggio** :
+
+---
+
+### **1. Indicateurs objectifs disponibles**
+#### **a. Scores OppChoVec (bien-être objectif territorial)**
+- **Score global** : 3,12/10 (médiane corse), avec des contrastes marqués entre dimensions :
+  - **Opportunités (Opp = 5,29/10)** :
+    - *Éducation (Opp1)* : **2,63/10** (faible, rang 126e/360) → Niveau d&#x27;éducation moyen bas (valeur brute : 5,334 sur une échelle non précisée).
+    - *Diversité sociale (Opp2)* : **4,26/10** (moyen, rang 47e/360) → Indice de Theil de 0,4899 (diversité modérée des CSP).
+    - *Mobilité (Opp3)* : **8,96/10** (très élevé) → Accès à la voiture et/ou transports en commun (indicateur : 185,7/200).
+    - *TIC (Opp4)* : **5,00/10** (élevé) → Couverture Internet/4G à 50 %.
+  - **Choix (Cho = 8,00/10)** : Très élevé (rang 295e/360), mais la méthodologie détaillée de cette dimension n&#x27;est pas fournie.
+  - **Vécu (Vec = 1,40/10)** : Très faible (rang 339e/360), suggérant un décalage entre les opportunités théoriques et leur concrétisation par les habitants.
+  *Source : Indicateurs territoriaux (Scores OppChoVec, Betti).*
+
+#### **b. Équipements et services (données quantitatives)**
+- **Déserts de services** :
+  - Absence totale de commerces de proximité (0 supermarchés, épiceries, boulangeries, boucheries), d&#x27;établissements scolaires secondaires (0 collèges/lycées), de professionnels de santé (0 médecins, infirmiers, pharmacies), et de services sociaux (0 crèches, 0 agences Pôle emploi).
+  - Présence minimale : 1 école élémentaire, 1 point postal, 1 poste de police/gendarmerie.
+  - *Source : Enquête quantitative sur les équipements communaux.*
+- **Logement** :
+  - 67,2 % de résidences secondaires (très élevé), 3,9 % de logements vacants.
+  - Prix moyen au m² : 2 000 € (surface moyenne : 20 m², valeur atypique à vérifier).
+  - *Source : Indicateurs territoriaux (logement).*
+- **Socio-économie** :
+  - 11,2 % de cadres/professions intellectuelles, 0 % d&#x27;ouvriers (structure atypique).
+  - Taux de pauvreté : 18,4 % (proche de la moyenne corse).
+  - *Source : Enquête quantitative (emploi, revenus).*
+
+---
+
+### **2. Indicateurs qualitatifs absents**
+Les documents **ne fournissent aucun verbatim citoyen, entretien qualitatif ou enquête subjective** sur Piedicorte-di-Gaggio. Impossible donc de comparer :
+- **Perceptions habitantes** (ex. : sentiment d&#x27;isolement, satisfaction sur les services, qualité des relations sociales).
+- **Vécu territorial** (ex. : comment les habitants contournent-ils l&#x27;absence de commerces ? Quels sont leurs besoins prioritaires ?).
+- **Dynamiques locales** (ex. : initiatives associatives, projets municipaux).
+
+---
+
+### **3. Comparaison partielle possible**
+| **Aspect**               | **Indicateurs objectifs**                          | **Indicateurs qualitatifs (manquants)**          |
+|--------------------------|----------------------------------------------------|--------------------------------------------------|
+| **Accès aux services**   | 0 commerces, 0 santé, 0 écoles secondaires.        | Perception de l&#x27;isolement, stratégies d&#x27;adaptation. |
+| **Mobilité**             | Score Opp3 élevé (8,96/10</div>
+</details>
+</div>
+<div class="cfg" style="background:#e8f0e8;border-left-color:#bdbdbd">
+<div class="cfg-label">Vanilla k25 &nbsp; <span style="background:#388e3c;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">4.50</span> </div>
+<div class="mini">P=4.00 · F=5.00 · N=5.00 · Q/Q=4.00</div>
+<div class="sig">&#128269; Signalements : "Les documents ne fournissent aucun verbatim citoyen, enquête qualitative ou entr" · "Impossible donc de comparer : Perceptions subjectives, Dynamiques locales, Vécu "</div>
+<div class="judge-r">&#129516; La réponse signale explicitement l&#x27;absence de données qualitatives pour Piedicorte-di-Gaggio, tout en fournissant une analyse des indicateurs objectifs disponibles.</div>
+<details><summary>Voir la réponse RAG complète</summary>
+<div class="answer-box">D&#x27;après les documents fournis, voici une comparaison possible entre les **indicateurs objectifs** (issus des *Scores OppChoVec* et des *équipements et services quantitatifs*) et les **indicateurs qualitatifs** (non explicitement présents dans les extraits) pour **Piedicorte-di-Gaggio** :
+
+---
+
+### **1. Indicateurs objectifs disponibles**
+#### **a. Scores OppChoVec (source : indicateurs territoriaux)**
+- **Opportunités (Opp = 5.29/10)** :
+  - **Éducation (Opp1 = 2.63/10)** : Niveau d&#x27;éducation moyen faible (rang 126e/360), malgré un taux d&#x27;activité de 64.3% (source : *équipements et services*).
+  - **Diversité sociale (Opp2 = 4.26/10)** : Indice de Theil moyen (0.4899), cohérent avec une structure socio-professionnelle déséquilibrée (11.2% de cadres, 0% d&#x27;ouvriers, source : *équipements et services*).
+  - **Mobilité (Opp3 = 8.96/10)** : Très bon accès à la mobilité (voiture/transports), contrastant avec l&#x27;absence de commerces de proximité (0 supermarchés, 0 boulangeries, source : *équipements et services*).
+  - **TIC (Opp4 = 5.00/10)** : Couverture numérique moyenne (50% en haut débit/4G).
+
+- **Choix (Cho = 8.00/10)** : Liberté effective élevée (rang 295e/360), mais sans explication qualitative dans les documents.
+- **Vécu (Vec = 1.40/10)** : Très faible réalisation concrète des habitants (rang 339e/360), corrélé à :
+  - **Absence d&#x27;équipements** : 0 services médicaux, 0 crèches, 0 collèges/lycées (source : *équipements et services*).
+  - **Logement** : 67.2% de résidences secondaires (source : *équipements et services*), suggérant une faible attractivité pour les résidents permanents.
+
+#### **b. Équipements et services (source : données quantitatives)**
+- **Déserts commerciaux et médicaux** : Aucun commerce de base (boulangerie, supermarché), aucun professionnel de santé.
+- **Sécurité** : Taux de coups et blessures nul (0/1 000 hab.), mais présence d&#x27;un poste de police/gendarmerie.
+- **Pauvreté** : Taux de 18.4%, supérieur à la médiane corse (source : *équipements et services*).
+
+---
+
+### **2. Indicateurs qualitatifs absents**
+Les documents **ne fournissent aucun verbatim citoyen, enquête qualitative ou entretien** pour Piedicorte-di-Gaggio. Impossible donc de comparer :
+- **Perceptions subjectives** (ex. : sentiment d&#x27;isolement, satisfaction des habitants).
+- **Dynamiques locales** (ex. : initiatives associatives, projets communaux).
+- **Vécu des résidents** (ex. : qualité des relations sociales, accès aux loisirs).
+
+---
+
+### **3. Synthèse des comparaisons possibles**
+| **Dimension**       | **Indicateurs objectifs**                          | **Indicateurs qualitatifs** (manquants)          |
+|---------------------|----------------------------------------------------|--------------------------------------------------|
+| **Éducation**       | Niveau faible (Opp1 = 2.63/10)                     | Perception de l&#x27;offre scolaire par les parents   |
+| **Mobilité**        | Accès élevé (Opp3 = 8.96/10)                       | Sentiment d&#x27;enclavement malgré les transports    |
+| **Services**        | Absence de commerces/médecins                      | Stratégies des habitants pour pallier les manques|
+| **Logement**        | 67.2% de résidences secondaires                    | Attractivité pour les jeunes familles            |
+| **Sécurité**        | Taux de criminalité nul                            | Sentiment de sécurité des résidents              |
+
+---
+
+### **Conclusion**
+- **Oui**, une comparaison partielle est possible entre les **données objectives** (OppChoVec + équipements) pour Piedicorte-di-Gaggio.
+- **Non**, les données qualitatives sont **insuffisantes** pour une analyse</div>
+</details>
+</div>
+<div class="cfg" style="background:#f8f0e8;border-left-color:#bdbdbd">
+<div class="cfg-label">Decomp &nbsp; <span style="background:#388e3c;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">4.75</span> </div>
+<div class="mini">P=4.00 · F=5.00 · N=5.00 · Q/Q=5.00</div>
+<div class="sig">&#128269; Signalements : "aucune enquête citoyenne ni verbatim d’habitants n’est disponible pour Pedicorte" · "la comparaison reste déséquilibrée" · "il n’est pas possible de comparer rigoureusement les indicateurs objectifs et qu"</div>
+<div class="judge-r">&#129516; La réponse signale explicitement l&#x27;absence de données qualitatives pour Pedicorte-di-Gaggio, rendant la comparaison impossible. Elle propose des pistes pour combler ce manque.</div>
+<details><summary>Voir la réponse RAG complète</summary>
+<div class="answer-box">### **Comparaison des indicateurs pour Pedicorte-di-Gaggio : un territoire contrasté, mais des perceptions citoyennes absentes**
+
+La comparaison entre les **données objectives** et les **perceptions des habitants** à Pedicorte-di-Gaggio révèle une situation paradoxale, mais elle reste **incomplète en raison de l’absence de retours qualitatifs locaux**. Voici ce que l’on peut en dire aujourd’hui :
+
+---
+
+#### **1. Un territoire aux conditions de vie très dégradées, malgré des atouts structurels**
+Selon les **données territoriales objectives**, Pedicorte-di-Gaggio affiche un **score global de bien-être très faible (3,12/10)**, la classant parmi les communes corses les moins favorisées (180ᵉ sur 360). Ce résultat cache cependant des **disparités marquées** :
+
+- **Un &quot;Vécu&quot; (Vec) catastrophique (1,40/10, 339ᵉ rang)** :
+  Les conditions matérielles y sont extrêmement précaires. Les indicateurs montrent :
+  - Un **revenu fiscal moyen très bas**, une **qualité du logement médiocre** et une **instabilité de l’emploi** généralisée.
+  - Un **accès aux services essentiels quasi inexistant** : **aucun médecin, aucune école maternelle, aucun commerce alimentaire** sur la commune (selon les données territoriales objectives).
+  - Un **taux de pauvreté élevé (18,4 %)** et une **forte proportion de résidences secondaires (67,2 %)**, limitant la dynamique locale.
+
+- **Des &quot;Opportunités&quot; (Opp) correctes (5,29/10, 67ᵉ rang), portées par la mobilité** :
+  La commune se distingue par un **accès exceptionnel aux transports (8,96/10)**, ce qui compense partiellement son isolement géographique. En revanche, l’**éducation moyenne reste faible (2,63/10)** et la **diversité sociale limitée (4,26/10)**.
+
+- **Un &quot;Choix&quot; (Cho) très élevé (8,00/10, 295ᵉ rang), mais théorique** :
+  Ce score reflète l’**absence de quartiers prioritaires** et une **population stable**, mais ne garantit pas un épanouissement concret. En pratique, les habitants ont peu de marges de manœuvre pour améliorer leur quotidien, faute de services et d’emplois locaux.
+
+**→ En résumé** : Pedicorte-di-Gaggio est une commune où **les libertés formelles existent, mais où les conditions de vie réelles sont très difficiles**, en raison d’un manque criant d’équipements et de revenus stables.
+
+---
+
+#### **2. Des perceptions citoyennes manquantes : un angle mort pour l’analyse**
+Contrairement aux **données objectives**, **aucune enquête citoyenne ni verbatim d’habitants** n’est disponible pour Pedicorte-di-Gaggio. Impossible, donc, de savoir :
+- Si les résidents **perçoivent ces difficultés** de la même manière que les indicateurs les décrivent.
+- Quels sont leurs **points forts subjectifs** (cadre de vie, solidarité locale, etc.) ou leurs **frustrations majeures** (isolement, manque de services, etc.).
+- S’ils **minimisent ou amplifient** les problèmes révélés par les chiffres (ex. : la mobilité est-elle vraiment un atout vécu, ou un pis-aller ?).
+
+**→ Sans ces retours, la comparaison reste déséquilibrée** : on connaît les **faits**, mais pas les **ressentis**.
+
+---
+
+#### **3. Un paradoxe à explorer : pourquoi un tel écart entre &quot;Choix&quot; et &quot;Vécu&quot; ?**
+Les données objectives soulignent un **décalage frappant** entre :
+- **Ce que la commune &quot;offre&quot; sur le papier** (liberté de choix, absence de contraintes administratives) → **8,00/10**.
+- **Ce que les habitants en retirent concrètement** (revenus, logement, accès aux services) → **1,40/10**.
+
+**Hypothèses possibles (à confirmer par des enquêtes locales)** :
+- **L’effet &quot;résidences secondaires&quot;** : Avec 67 % de logements vacants ou occupés occasionnellement, la commune pourrait manquer de **dynamique collective** (commerces, associations, emplois locaux).
+- **La dépendance à la mobilité** : L’excellent score en transports suggère que les habitants **doivent systématiquement se déplacer** pour accéder aux services (médecins, écoles, emplois), ce qui pèse sur leur quotidien.
+- **Un décalage générationnel** : Les jeunes pourraient quitter la commune faute d’opportunités, laissant une population âgée et isolée.
+
+**→ Ces hypothèses mériteraient d’être confrontées aux perceptions des habitants** pour affiner l’analyse.
+
+---
+
+### **Conclusion : une comparaison impossible aujourd’hui, mais des pistes pour demain**
+À ce stade, **il n’est pas possible de comparer rigoureusement les indicateurs objectifs et qualitatifs pour Pedicorte-di-Gaggio**, faute de données citoyennes locales. Cependant, les **données territoriales objectives** dressent le portrait d’une commune :
+✅ **Avantagée sur le papier** (liberté de choix, mobilité).
+❌ **Très défavorisée dans les faits** (revenus, logement, services).
+
+**Pour aller plus loin**, il serait essentiel de :
+1. **Recueillir les perceptions des habitants** via des enquêtes ou entretiens, afin de vérifier si les difficultés objectives sont vécues comme telles.
+2. **Croiser ces retours avec les indicateurs** pour identifier d’éventuels écarts (ex. : un cadre de vie apprécié malgré des revenus faibles).
+3. **Analyser les dynamiques locales** (rôle des résidences secondaires, attractivité pour les jeunes, etc.) pour comprendre les causes des contrastes observés.
+
+En l’état, Pedicorte-di-Gaggio illustre un **cas typique de territoire rural corse** : des atouts structurels, mais des conditions de vie fragiles, dont l’impact réel sur les habitants reste à éclairer.</div>
+</details>
+</div>
+<div class="cfg" style="background:#f0e8f8;border-left-color:#c62828">
+<div class="cfg-label">Decomp+RAPTOR &nbsp; <span style="background:#c62828;color:white;padding:2px 8px;border-radius:10px;font-weight:bold;font-size:0.88em">2.00</span><span style="background:#c62828;color:white;font-size:0.65em;padding:1px 4px;border-radius:3px;margin-left:3px">MIS</span> <span style="background:#c62828;color:white;font-size:.68em;padding:1px 5px;border-radius:3px;margin-left:5px">MISLABELLING</span></div>
+<div class="mini">P=2.00 · F=2.00 · N=2.00 · Q/Q=2.00</div>
+<div class="sig" style="color:#c62828">&#9888; Aucun signalement détecté</div>
+<div class="judge-r">&#129516; La réponse tente une comparaison en utilisant des données quantitatives comme si elles étaient qualitatives, sans signaler l&#x27;absence de données qualitatives spécifiques à Piedicorte.</div>
+<details><summary>Voir la réponse RAG complète</summary>
+<div class="answer-box">### **Synthèse : Comparaison des indicateurs et perceptions de la qualité de vie à Piedicorte-di-Gaggio**
+
+#### **1. Un territoire aux contrastes marqués, révélé par les données objectives**
+Les indicateurs territoriaux dressent le portrait d’une commune où les **opportunités et libertés formelles** coexistent avec des **conditions de vie matérielles très dégradées** :
+- **Atouts** :
+  - **Mobilité et accès numérique** : Piedicorte-di-Gaggio se distingue par une **accessibilité très élevée** (8,96/10 selon les données territoriales), facilitant les déplacements vers d’autres zones. La couverture numérique (5/10) reste acceptable pour une commune rurale.
+  - **Libertés civiques** : Le score de **Choix (8/10)** reflète l’absence de quartiers prioritaires et une population disposant de droits politiques complets, un point fort par rapport à d’autres communes corses.
+- **Faiblesses critiques** :
+  - **Vécu quotidien très faible** : Avec un score de **1,4/10** (le plus bas des trois composantes), les indicateurs soulignent des **revenus fiscaux bas, un logement de qualité insuffisante, une précarité de l’emploi et un accès limité aux services essentiels** (commerces, santé, éducation) en moins de 20 minutes. Ce score place la commune au **339ᵉ rang sur 360** en Corse, un niveau alarmant.
+  - **Éducation et diversité sociale** : Le niveau d’éducation est **faible (2,63/10)**, tandis que la diversité des catégories socioprofessionnelles (4,26/10) reste moyenne, limitant les dynamiques locales.
+
+Ces données montrent une **fracture entre les potentialités du territoire** (mobilité, absence de contraintes administratives) **et la réalité vécue par ses habitants**, notamment en termes de pouvoir d’achat et d’accès aux services.
+
+---
+
+#### **2. Perceptions des habitants : des signaux partiels, mais révélateurs d’écarts**
+Les données d’enquête citoyenne disponibles couvrent **la Corse entière** et ne permettent pas d’isoler les perceptions spécifiques à Piedicorte-di-Gaggio. Cependant, elles offrent des pistes pour comprendre les **divergences entre indicateurs objectifs et ressentis** :
+- **Logement** : Les Corses interrogés évaluent globalement leur logement à **3,98/5** (selon l’enquête citoyenne), un score modéré qui contraste avec le **1,4/10 du score &quot;Vécu&quot;** pour Piedicorte. Cette différence suggère que les habitants pourraient **sous-estimer les difficultés matérielles** (qualité des logements, coût de la vie) ou s’en accommoder, malgré leur objectivité.
+- **Transports et mobilité** : Bien que les indicateurs territoriaux soulignent une **mobilité très élevée (8,96/10)**, les entretiens qualitatifs menés auprès de jeunes fonctionnaires de communes voisines (non spécifiques à Piedicorte) révèlent des **frustrations sur les fréquences et la fiabilité des transports**, notamment pour les trajets quotidiens. Cela pourrait indiquer que **l’offre existe, mais ne répond pas toujours aux besoins concrets** (horaires, desserte fine).
+- **Accès aux services** : Le score &quot;Vécu&quot; très faible (1,4/10) reflète un **accès limité aux services en moins de 20 minutes**. Pourtant, aucune plainte directe sur ce point n’émerge des enquêtes corses, ce qui pourrait traduire une **résignation** ou une adaptation des habitants à ces contraintes.
+
+---
+
+#### **3. Points de convergence et tensions entre données**
+- **Convergence sur les libertés** :
+  Le score **Choix (8/10)** et l’absence de quartiers prioritaires correspondent à une **perception positive des libertés individuelles** en Corse, sans signalement de restrictions particulières dans les enquêtes.
+- **Tensions majeures sur le quotidien** :
+  - **Revenus et emploi** : Le score &quot;Vécu&quot; très faible (1,4/10) indique une **précarité objective**, mais les enquêtes ne révèlent pas de **mobilisation forte** sur ces sujets à l’échelle corse. Cela pourrait s’expliquer par un **décalage entre les attentes** (les habitants ne comparent pas leur situation à d’autres territoires) ou par un **manque de visibilité des aides** (logement, insertion).
+  - **Éducation** : Le **niveau d’éducation faible (2,63/10)** n’est pas compensé par des perceptions positives dans les enquêtes, suggérant un **désintérêt ou un manque de solutions locales** pour améliorer cette dimension.
+
+---
+
+#### **4. Conclusion : une qualité de vie en tension entre potentialités et réalités**
+À Piedicorte-di-Gaggio, **la comparaison entre indicateurs objectifs et perceptions révèle une qualité de vie clivée** :
+- **Sur le papier**, la commune offre des **atouts structurels** (mobilité, libertés, couverture numérique) et se situe dans la **moyenne corse** (score global de 3,12/10, égal à la médiane).
+- **Dans la réalité**, les habitants subissent des **conditions de vie très difficiles** (revenus, logement, emploi), comme en témoigne le score &quot;Vécu&quot; catastrophique (1,4/10). Ces difficultés **ne transparaissent pas clairement dans les enquêtes citoyennes**, soit parce que les habitants les intègrent comme une norme, soit parce que les données disponibles ne captent pas leur spécificité locale.
+
+**Recommandations implicites** :
+- **Renforcer l’accès aux services** : Le score &quot;Vécu&quot; très faible appelle des **investissements ciblés** (maisons de santé, commerces de proximité, transports à la demande) pour réduire les inégalités d’accès.
+- **Améliorer la visibilité des aides** : Les écarts entre indicateurs et perceptions suggèrent un **besoin de communication** sur les dispositifs existants (logement, emploi, éducation).
+- **Enquêtes locales** : Pour affiner le diagnostic, des **consultations spécifiques à Piedicorte** seraient nécessaires, notamment sur les **besoins en emploi et en services publics**, afin de concilier les potentialités du territoire avec les attentes des habitants.
+
+En résumé, Piedicorte-di-Gaggio est un **territoire de paradoxes** : ses opportunités ne se traduisent pas en bien-être concret, et ses habitants semblent **s’adapter à des conditions objectivement difficiles**, sans que cela ne se reflète dans les données d’enquête disponibles.</div>
+</details>
+</div>
+</div>
+</body>
+</html>

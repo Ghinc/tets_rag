@@ -1,0 +1,2100 @@
+{
+  "pool_sizes": {
+    "Lozzi": 253,
+    "Ajaccio": 0,
+    "Bastia": 0
+  },
+  "metrics_by_config": {
+    "v_vanilla_k10": [
+      {
+        "excel_row": 9,
+        "section": "Retrieval mono-commune",
+        "subsection": "Retrieval factuel et interprétation",
+        "question": "Combien d’habitants ont répondu à l’enquête à Ajaccio ?",
+        "retrieval_gt": "Stats enquête",
+        "n_sources": 4,
+        "recall": 1.0,
+        "precision": 0.25,
+        "f1": 0.4,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=100% (1/1) · Precision=25% · F1=40%",
+        "expected": [
+          "stats_enquete"
+        ],
+        "retrieved": [
+          "equipements",
+          "methodology_oppchovec",
+          "oppchovec",
+          "stats_repondants"
+        ],
+        "hits": [
+          "stats_enquete"
+        ]
+      },
+      {
+        "excel_row": 11,
+        "section": "Retrieval mono-commune",
+        "subsection": "Retrieval par sous-population",
+        "question": "Que pensent les entrepreneurs Ajacciens de la qualité de vie ?",
+        "retrieval_gt": "RAPTOR Ajaccio x entrepreneurs/artisans",
+        "n_sources": 3,
+        "recall": 0.0,
+        "precision": 0.0,
+        "f1": 0.0,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=0% (0/2) · Precision=0% · F1=0%",
+        "expected": [
+          "raptor_enquete",
+          "raptor_portrait"
+        ],
+        "retrieved": [
+          "methodology_oppchovec",
+          "oppchovec",
+          "stats_repondants"
+        ],
+        "hits": []
+      },
+      {
+        "excel_row": 14,
+        "section": "Retrieval mono-commune",
+        "subsection": "Retrieval source-spécifique",
+        "question": "Que révèlent les entretiens qualitatifs sur l'emploi à Lozzi ?",
+        "retrieval_gt": "Entretiens Léa Lozzi",
+        "n_sources": 10,
+        "recall": 1.0,
+        "precision": 0.333,
+        "f1": 0.5,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=100% (1/1) · Precision=33% · F1=50%",
+        "expected": [
+          "entretiens"
+        ],
+        "retrieved": [
+          "entretiens",
+          "methodology_oppchovec",
+          "oppchovec"
+        ],
+        "hits": [
+          "entretiens"
+        ]
+      },
+      {
+        "excel_row": 19,
+        "section": "Retrieval mono-commune",
+        "subsection": "Questions normatives / prescriptives",
+        "question": "Quels leviers d’action pour améliorer les dimensions du bien-être sous-évaluées à Ajaccio ?",
+        "retrieval_gt": "RAPTOR Commune (Ajaccio), Score OppChoVec Ajaccio, Résultats enquêtes quanti",
+        "n_sources": 5,
+        "recall": 0.5,
+        "precision": 0.75,
+        "f1": 0.6,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=50% (2/4) · Precision=75% · F1=60%",
+        "expected": [
+          "oppchovec",
+          "raptor_enquete",
+          "raptor_portrait",
+          "stats_enquete"
+        ],
+        "retrieved": [
+          "methodology_oppchovec",
+          "oppchovec",
+          "stats_enquete",
+          "stats_repondants"
+        ],
+        "hits": [
+          "oppchovec",
+          "stats_enquete"
+        ]
+      },
+      {
+        "excel_row": 24,
+        "section": "Retrieval mono-commune",
+        "subsection": "Analyse multi-source et cohérence des données",
+        "question": "Ajaccio peut-elle présenter un niveau de bien-être faible malgré des indicateurs objectifs satisfaisants ?",
+        "retrieval_gt": "RAPTOR Ajaccio, Scores OppChoVec Ajaccio",
+        "n_sources": 6,
+        "recall": 0.333,
+        "precision": 0.2,
+        "f1": 0.25,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=33% (1/3) · Precision=20% · F1=25%",
+        "expected": [
+          "oppchovec",
+          "raptor_enquete",
+          "raptor_portrait"
+        ],
+        "retrieved": [
+          "equipements",
+          "methodology_oppchovec",
+          "oppchovec",
+          "stats_enquete",
+          "stats_repondants"
+        ],
+        "hits": [
+          "oppchovec"
+        ]
+      },
+      {
+        "excel_row": 30,
+        "section": "Raisonnement comparatif",
+        "subsection": "Comparaisons avec hiérarchisation explicite",
+        "question": "La dimension environnement est-elle mieux évaluée par les habitants à Ajaccio ou à Bastia ?",
+        "retrieval_gt": "RAPTOR commune (Ajaccio) x dimension (Environnement), RAPTOR commune (Bastia) x dimension (Environnement)",
+        "n_sources": 6,
+        "recall": 0.0,
+        "precision": 0.0,
+        "f1": 0.0,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=0% (0/1) · Precision=0% · F1=0%",
+        "expected": [
+          "raptor_enquete"
+        ],
+        "retrieved": [
+          "methodology_oppchovec",
+          "oppchovec",
+          "stats_repondants"
+        ],
+        "hits": []
+      },
+      {
+        "excel_row": 36,
+        "section": "Raisonnement comparatif",
+        "subsection": "Comparaison croisée quanti/quali",
+        "question": "Observe-t-on un écart significatif entre indicateurs objectifs et perception à Bastia ?",
+        "retrieval_gt": "OppChoVec Bastia, RAPTOR Bastia",
+        "n_sources": 4,
+        "recall": 0.333,
+        "precision": 0.25,
+        "f1": 0.286,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=33% (1/3) · Precision=25% · F1=29%",
+        "expected": [
+          "oppchovec",
+          "raptor_enquete",
+          "raptor_portrait"
+        ],
+        "retrieved": [
+          "equipements",
+          "methodology_oppchovec",
+          "oppchovec",
+          "stats_repondants"
+        ],
+        "hits": [
+          "oppchovec"
+        ]
+      },
+      {
+        "excel_row": 41,
+        "section": "Limites architecturales",
+        "subsection": "",
+        "question": "Existe-t-il une commune avec de bons indicateurs socio-économiques mais un faible bien-être perçu ?",
+        "retrieval_gt": "",
+        "n_sources": 10,
+        "recall": null,
+        "precision": null,
+        "f1": null,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "GT manquant (nan — skip)",
+        "expected": [],
+        "retrieved": [],
+        "hits": []
+      },
+      {
+        "excel_row": 44,
+        "section": "Raisonnement comparatif",
+        "subsection": "Comparaison contre-intuitive",
+        "question": "Les communes les plus dynamiques économiquement sont-elles nécessairement celles où le bien-être perçu est le plus élevé ?",
+        "retrieval_gt": "RAPTOR quali classement, RAPTOR quanti classement",
+        "n_sources": 10,
+        "recall": 0.0,
+        "precision": 0.0,
+        "f1": 0.0,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=0% (0/2) · Precision=0% · F1=0%",
+        "expected": [
+          "raptor_enquete",
+          "raptor_portrait"
+        ],
+        "retrieved": [
+          "methodology_oppchovec",
+          "oppchovec",
+          "stats_repondants"
+        ],
+        "hits": []
+      },
+      {
+        "excel_row": 48,
+        "section": "Gestion d’absence d’information",
+        "subsection": "Données partielles ou insuffisantes",
+        "question": "Peut-on conclure solidement concernant le bien-être des entrepreneurs à Lozzi ?",
+        "retrieval_gt": "RAPTOR quali commune (Lozzi) x CSP (entrepreneurs)",
+        "n_sources": 10,
+        "recall": 0.0,
+        "precision": 0.0,
+        "f1": 0.0,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=0% (0/1) · Precision=0% · F1=0%",
+        "expected": [
+          "raptor_portrait"
+        ],
+        "retrieved": [
+          "entretiens",
+          "methodology_oppchovec",
+          "oppchovec"
+        ],
+        "hits": []
+      },
+      {
+        "excel_row": 51,
+        "section": "Gestion d’absence d’information",
+        "subsection": "Comparaison impossible",
+        "question": "Est-il possible de comparer les indicateurs objectifs et qualitatifs pour Piedicorte ?",
+        "retrieval_gt": "OppChoVec Pedicorte, équipements Pedicorte (facultatif)",
+        "n_sources": 4,
+        "recall": 1.0,
+        "precision": 0.333,
+        "f1": 0.5,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=100% (1/1) · Precision=33% · F1=50%",
+        "expected": [
+          "oppchovec"
+        ],
+        "retrieved": [
+          "equipements",
+          "methodology_oppchovec",
+          "oppchovec"
+        ],
+        "hits": [
+          "oppchovec"
+        ]
+      },
+      {
+        "excel_row": 52,
+        "section": "Gestion d’absence d’information",
+        "subsection": "Sous-populations peu représentées",
+        "question": "Les données disponibles permettent-elles d’analyser spécifiquement le bien-être des 18–25 ans à Lozzi ?",
+        "retrieval_gt": "RAPTOR commune (Lozzi) x âge (jeunes - 18-25)",
+        "n_sources": 10,
+        "recall": 0.0,
+        "precision": 0.0,
+        "f1": 0.0,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=0% (0/1) · Precision=0% · F1=0%",
+        "expected": [
+          "raptor_enquete"
+        ],
+        "retrieved": [
+          "entretiens",
+          "methodology_oppchovec",
+          "oppchovec"
+        ],
+        "hits": []
+      },
+      {
+        "excel_row": 68,
+        "section": "Robustesse sémantique",
+        "subsection": "Bruit lexical",
+        "question": "Quel est le score moyen, euh, moyen, tu vois, du bien-être général ?",
+        "retrieval_gt": "Classement global OppChoVec",
+        "n_sources": 10,
+        "recall": 1.0,
+        "precision": 0.333,
+        "f1": 0.5,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=100% (1/1) · Precision=33% · F1=50%",
+        "expected": [
+          "oppchovec"
+        ],
+        "retrieved": [
+          "methodology_oppchovec",
+          "oppchovec",
+          "stats_enquete"
+        ],
+        "hits": [
+          "oppchovec"
+        ]
+      },
+      {
+        "excel_row": 75,
+        "section": "Raisonnement causal et contre-intuitif",
+        "subsection": "Raisonnement causal multi-facteurs",
+        "question": "Les écarts observés entre indicateurs objectifs et perception subjective à Bastia peuvent-ils résulter de facteurs structurels non captés par les indicateurs quantitatifs ?",
+        "retrieval_gt": "RAPTOR quali global, RAPTOR quanti global, Oppchovec global",
+        "n_sources": 4,
+        "recall": 0.333,
+        "precision": 0.25,
+        "f1": 0.286,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=33% (1/3) · Precision=25% · F1=29%",
+        "expected": [
+          "oppchovec",
+          "raptor_enquete",
+          "raptor_portrait"
+        ],
+        "retrieved": [
+          "equipements",
+          "methodology_oppchovec",
+          "oppchovec",
+          "stats_repondants"
+        ],
+        "hits": [
+          "oppchovec"
+        ]
+      },
+      {
+        "excel_row": 76,
+        "section": "Raisonnement causal et contre-intuitif",
+        "subsection": "Causalité inversée ou alternative",
+        "question": "Un faible bien-être perçu peut-il influencer la manière dont les habitants évaluent leur bien-être subjectif ?",
+        "retrieval_gt": "Rien (ça veut rien dire)",
+        "n_sources": 10,
+        "recall": null,
+        "precision": null,
+        "f1": null,
+        "refusal_case": true,
+        "raptor_credit": false,
+        "detail": "Refusal attendu (10 sources récupérées)",
+        "expected": [],
+        "retrieved": [],
+        "hits": []
+      },
+      {
+        "excel_row": 83,
+        "section": "Raisonnement causal et contre-intuitif",
+        "subsection": "Limites de l’inférence causale",
+        "question": "Les données disponibles permettent-elles d’établir un lien de causalité entre densité de population et bien-être ?",
+        "retrieval_gt": "OppChoVec global, wiki communes (facultatif)",
+        "n_sources": 10,
+        "recall": 1.0,
+        "precision": 0.333,
+        "f1": 0.5,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=100% (1/1) · Precision=33% · F1=50%",
+        "expected": [
+          "oppchovec"
+        ],
+        "retrieved": [
+          "methodology_oppchovec",
+          "oppchovec",
+          "stats_repondants"
+        ],
+        "hits": [
+          "oppchovec"
+        ]
+      },
+      {
+        "excel_row": 89,
+        "section": "Gestion de l’incertitude et des biais",
+        "subsection": "Incertitude liée à la taille d’échantillon",
+        "question": "Le faible nombre de répondants dans certaines communes affecte-t-il la fiabilité des conclusions ?",
+        "retrieval_gt": "Stats répondants",
+        "n_sources": 10,
+        "recall": 0.0,
+        "precision": 0.0,
+        "f1": 0.0,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=0% (0/1) · Precision=0% · F1=0%",
+        "expected": [
+          "stats_repondants"
+        ],
+        "retrieved": [
+          "equipements",
+          "methodology_oppchovec",
+          "oppchovec"
+        ],
+        "hits": []
+      },
+      {
+        "excel_row": 97,
+        "section": "Gestion de l’incertitude et des biais",
+        "subsection": "Biais liés aux indicateurs",
+        "question": "Le score OppChoVec peut-il masquer des disparités internes importantes au sein d’une même commune ?",
+        "retrieval_gt": "Explication oppchovec",
+        "n_sources": 10,
+        "recall": 1.0,
+        "precision": 0.667,
+        "f1": 0.8,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=100% (1/1) · Precision=67% · F1=80%",
+        "expected": [
+          "methodology_oppchovec"
+        ],
+        "retrieved": [
+          "methodology_oppchovec",
+          "oppchovec",
+          "stats_repondants"
+        ],
+        "hits": [
+          "methodology_oppchovec"
+        ]
+      },
+      {
+        "excel_row": 98,
+        "section": "Gestion de l’incertitude et des biais",
+        "subsection": "Risque de sur-interprétation",
+        "question": "Peut-on affirmer qu’une amélioration d’un indicateur spécifique entraînera nécessairement une hausse du bien-être global ?",
+        "retrieval_gt": "Explication Oppchovec, explications enquêtes",
+        "n_sources": 10,
+        "recall": 0.5,
+        "precision": 0.667,
+        "f1": 0.572,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=50% (1/2) · Precision=67% · F1=57%",
+        "expected": [
+          "methodology_enquete",
+          "methodology_oppchovec"
+        ],
+        "retrieved": [
+          "equipements",
+          "methodology_oppchovec",
+          "oppchovec"
+        ],
+        "hits": [
+          "methodology_oppchovec"
+        ]
+      },
+      {
+        "excel_row": 104,
+        "section": "Raisonnement comparatif",
+        "subsection": "Comparaison intra-EPCI (CAPA)",
+        "question": "Quelle est la commune de la CAPA avec le meilleur score Vécu (Vec) ?",
+        "retrieval_gt": "Classement Vec CAPA, zones_epci CA du Pays Ajaccien",
+        "n_sources": 10,
+        "recall": 0.5,
+        "precision": 0.333,
+        "f1": 0.4,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=50% (1/2) · Precision=33% · F1=40%",
+        "expected": [
+          "equipements",
+          "oppchovec"
+        ],
+        "retrieved": [
+          "methodology_oppchovec",
+          "oppchovec",
+          "stats_repondants"
+        ],
+        "hits": [
+          "oppchovec"
+        ]
+      }
+    ],
+    "v_vanilla_k25": [
+      {
+        "excel_row": 9,
+        "section": "Retrieval mono-commune",
+        "subsection": "Retrieval factuel et interprétation",
+        "question": "Combien d’habitants ont répondu à l’enquête à Ajaccio ?",
+        "retrieval_gt": "Stats enquête",
+        "n_sources": 4,
+        "recall": 1.0,
+        "precision": 0.25,
+        "f1": 0.4,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=100% (1/1) · Precision=25% · F1=40%",
+        "expected": [
+          "stats_enquete"
+        ],
+        "retrieved": [
+          "equipements",
+          "methodology_oppchovec",
+          "oppchovec",
+          "stats_repondants"
+        ],
+        "hits": [
+          "stats_enquete"
+        ]
+      },
+      {
+        "excel_row": 11,
+        "section": "Retrieval mono-commune",
+        "subsection": "Retrieval par sous-population",
+        "question": "Que pensent les entrepreneurs Ajacciens de la qualité de vie ?",
+        "retrieval_gt": "RAPTOR Ajaccio x entrepreneurs/artisans",
+        "n_sources": 3,
+        "recall": 0.0,
+        "precision": 0.0,
+        "f1": 0.0,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=0% (0/2) · Precision=0% · F1=0%",
+        "expected": [
+          "raptor_enquete",
+          "raptor_portrait"
+        ],
+        "retrieved": [
+          "methodology_oppchovec",
+          "oppchovec",
+          "stats_repondants"
+        ],
+        "hits": []
+      },
+      {
+        "excel_row": 14,
+        "section": "Retrieval mono-commune",
+        "subsection": "Retrieval source-spécifique",
+        "question": "Que révèlent les entretiens qualitatifs sur l'emploi à Lozzi ?",
+        "retrieval_gt": "Entretiens Léa Lozzi",
+        "n_sources": 25,
+        "recall": 1.0,
+        "precision": 0.333,
+        "f1": 0.5,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=100% (1/1) · Precision=33% · F1=50%",
+        "expected": [
+          "entretiens"
+        ],
+        "retrieved": [
+          "entretiens",
+          "methodology_oppchovec",
+          "oppchovec"
+        ],
+        "hits": [
+          "entretiens"
+        ]
+      },
+      {
+        "excel_row": 19,
+        "section": "Retrieval mono-commune",
+        "subsection": "Questions normatives / prescriptives",
+        "question": "Quels leviers d’action pour améliorer les dimensions du bien-être sous-évaluées à Ajaccio ?",
+        "retrieval_gt": "RAPTOR Commune (Ajaccio), Score OppChoVec Ajaccio, Résultats enquêtes quanti",
+        "n_sources": 5,
+        "recall": 0.5,
+        "precision": 0.75,
+        "f1": 0.6,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=50% (2/4) · Precision=75% · F1=60%",
+        "expected": [
+          "oppchovec",
+          "raptor_enquete",
+          "raptor_portrait",
+          "stats_enquete"
+        ],
+        "retrieved": [
+          "methodology_oppchovec",
+          "oppchovec",
+          "stats_enquete",
+          "stats_repondants"
+        ],
+        "hits": [
+          "oppchovec",
+          "stats_enquete"
+        ]
+      },
+      {
+        "excel_row": 24,
+        "section": "Retrieval mono-commune",
+        "subsection": "Analyse multi-source et cohérence des données",
+        "question": "Ajaccio peut-elle présenter un niveau de bien-être faible malgré des indicateurs objectifs satisfaisants ?",
+        "retrieval_gt": "RAPTOR Ajaccio, Scores OppChoVec Ajaccio",
+        "n_sources": 6,
+        "recall": 0.333,
+        "precision": 0.2,
+        "f1": 0.25,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=33% (1/3) · Precision=20% · F1=25%",
+        "expected": [
+          "oppchovec",
+          "raptor_enquete",
+          "raptor_portrait"
+        ],
+        "retrieved": [
+          "equipements",
+          "methodology_oppchovec",
+          "oppchovec",
+          "stats_enquete",
+          "stats_repondants"
+        ],
+        "hits": [
+          "oppchovec"
+        ]
+      },
+      {
+        "excel_row": 30,
+        "section": "Raisonnement comparatif",
+        "subsection": "Comparaisons avec hiérarchisation explicite",
+        "question": "La dimension environnement est-elle mieux évaluée par les habitants à Ajaccio ou à Bastia ?",
+        "retrieval_gt": "RAPTOR commune (Ajaccio) x dimension (Environnement), RAPTOR commune (Bastia) x dimension (Environnement)",
+        "n_sources": 6,
+        "recall": 0.0,
+        "precision": 0.0,
+        "f1": 0.0,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=0% (0/1) · Precision=0% · F1=0%",
+        "expected": [
+          "raptor_enquete"
+        ],
+        "retrieved": [
+          "methodology_oppchovec",
+          "oppchovec",
+          "stats_repondants"
+        ],
+        "hits": []
+      },
+      {
+        "excel_row": 36,
+        "section": "Raisonnement comparatif",
+        "subsection": "Comparaison croisée quanti/quali",
+        "question": "Observe-t-on un écart significatif entre indicateurs objectifs et perception à Bastia ?",
+        "retrieval_gt": "OppChoVec Bastia, RAPTOR Bastia",
+        "n_sources": 4,
+        "recall": 0.333,
+        "precision": 0.25,
+        "f1": 0.286,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=33% (1/3) · Precision=25% · F1=29%",
+        "expected": [
+          "oppchovec",
+          "raptor_enquete",
+          "raptor_portrait"
+        ],
+        "retrieved": [
+          "equipements",
+          "methodology_oppchovec",
+          "oppchovec",
+          "stats_repondants"
+        ],
+        "hits": [
+          "oppchovec"
+        ]
+      },
+      {
+        "excel_row": 41,
+        "section": "Limites architecturales",
+        "subsection": "",
+        "question": "Existe-t-il une commune avec de bons indicateurs socio-économiques mais un faible bien-être perçu ?",
+        "retrieval_gt": "",
+        "n_sources": 25,
+        "recall": null,
+        "precision": null,
+        "f1": null,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "GT manquant (nan — skip)",
+        "expected": [],
+        "retrieved": [],
+        "hits": []
+      },
+      {
+        "excel_row": 44,
+        "section": "Raisonnement comparatif",
+        "subsection": "Comparaison contre-intuitive",
+        "question": "Les communes les plus dynamiques économiquement sont-elles nécessairement celles où le bien-être perçu est le plus élevé ?",
+        "retrieval_gt": "RAPTOR quali classement, RAPTOR quanti classement",
+        "n_sources": 25,
+        "recall": 0.0,
+        "precision": 0.0,
+        "f1": 0.0,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=0% (0/2) · Precision=0% · F1=0%",
+        "expected": [
+          "raptor_enquete",
+          "raptor_portrait"
+        ],
+        "retrieved": [
+          "methodology_oppchovec",
+          "oppchovec",
+          "stats_repondants"
+        ],
+        "hits": []
+      },
+      {
+        "excel_row": 48,
+        "section": "Gestion d’absence d’information",
+        "subsection": "Données partielles ou insuffisantes",
+        "question": "Peut-on conclure solidement concernant le bien-être des entrepreneurs à Lozzi ?",
+        "retrieval_gt": "RAPTOR quali commune (Lozzi) x CSP (entrepreneurs)",
+        "n_sources": 25,
+        "recall": 0.0,
+        "precision": 0.0,
+        "f1": 0.0,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=0% (0/1) · Precision=0% · F1=0%",
+        "expected": [
+          "raptor_portrait"
+        ],
+        "retrieved": [
+          "entretiens",
+          "methodology_oppchovec",
+          "oppchovec"
+        ],
+        "hits": []
+      },
+      {
+        "excel_row": 51,
+        "section": "Gestion d’absence d’information",
+        "subsection": "Comparaison impossible",
+        "question": "Est-il possible de comparer les indicateurs objectifs et qualitatifs pour Piedicorte ?",
+        "retrieval_gt": "OppChoVec Pedicorte, équipements Pedicorte (facultatif)",
+        "n_sources": 4,
+        "recall": 1.0,
+        "precision": 0.333,
+        "f1": 0.5,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=100% (1/1) · Precision=33% · F1=50%",
+        "expected": [
+          "oppchovec"
+        ],
+        "retrieved": [
+          "equipements",
+          "methodology_oppchovec",
+          "oppchovec"
+        ],
+        "hits": [
+          "oppchovec"
+        ]
+      },
+      {
+        "excel_row": 52,
+        "section": "Gestion d’absence d’information",
+        "subsection": "Sous-populations peu représentées",
+        "question": "Les données disponibles permettent-elles d’analyser spécifiquement le bien-être des 18–25 ans à Lozzi ?",
+        "retrieval_gt": "RAPTOR commune (Lozzi) x âge (jeunes - 18-25)",
+        "n_sources": 25,
+        "recall": 0.0,
+        "precision": 0.0,
+        "f1": 0.0,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=0% (0/1) · Precision=0% · F1=0%",
+        "expected": [
+          "raptor_enquete"
+        ],
+        "retrieved": [
+          "entretiens",
+          "methodology_oppchovec",
+          "oppchovec"
+        ],
+        "hits": []
+      },
+      {
+        "excel_row": 68,
+        "section": "Robustesse sémantique",
+        "subsection": "Bruit lexical",
+        "question": "Quel est le score moyen, euh, moyen, tu vois, du bien-être général ?",
+        "retrieval_gt": "Classement global OppChoVec",
+        "n_sources": 25,
+        "recall": 1.0,
+        "precision": 0.25,
+        "f1": 0.4,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=100% (1/1) · Precision=25% · F1=40%",
+        "expected": [
+          "oppchovec"
+        ],
+        "retrieved": [
+          "methodology_oppchovec",
+          "oppchovec",
+          "stats_enquete",
+          "stats_repondants"
+        ],
+        "hits": [
+          "oppchovec"
+        ]
+      },
+      {
+        "excel_row": 75,
+        "section": "Raisonnement causal et contre-intuitif",
+        "subsection": "Raisonnement causal multi-facteurs",
+        "question": "Les écarts observés entre indicateurs objectifs et perception subjective à Bastia peuvent-ils résulter de facteurs structurels non captés par les indicateurs quantitatifs ?",
+        "retrieval_gt": "RAPTOR quali global, RAPTOR quanti global, Oppchovec global",
+        "n_sources": 4,
+        "recall": 0.333,
+        "precision": 0.25,
+        "f1": 0.286,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=33% (1/3) · Precision=25% · F1=29%",
+        "expected": [
+          "oppchovec",
+          "raptor_enquete",
+          "raptor_portrait"
+        ],
+        "retrieved": [
+          "equipements",
+          "methodology_oppchovec",
+          "oppchovec",
+          "stats_repondants"
+        ],
+        "hits": [
+          "oppchovec"
+        ]
+      },
+      {
+        "excel_row": 76,
+        "section": "Raisonnement causal et contre-intuitif",
+        "subsection": "Causalité inversée ou alternative",
+        "question": "Un faible bien-être perçu peut-il influencer la manière dont les habitants évaluent leur bien-être subjectif ?",
+        "retrieval_gt": "Rien (ça veut rien dire)",
+        "n_sources": 25,
+        "recall": null,
+        "precision": null,
+        "f1": null,
+        "refusal_case": true,
+        "raptor_credit": false,
+        "detail": "Refusal attendu (25 sources récupérées)",
+        "expected": [],
+        "retrieved": [],
+        "hits": []
+      },
+      {
+        "excel_row": 83,
+        "section": "Raisonnement causal et contre-intuitif",
+        "subsection": "Limites de l’inférence causale",
+        "question": "Les données disponibles permettent-elles d’établir un lien de causalité entre densité de population et bien-être ?",
+        "retrieval_gt": "OppChoVec global, wiki communes (facultatif)",
+        "n_sources": 25,
+        "recall": 1.0,
+        "precision": 0.333,
+        "f1": 0.5,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=100% (1/1) · Precision=33% · F1=50%",
+        "expected": [
+          "oppchovec"
+        ],
+        "retrieved": [
+          "methodology_oppchovec",
+          "oppchovec",
+          "stats_repondants"
+        ],
+        "hits": [
+          "oppchovec"
+        ]
+      },
+      {
+        "excel_row": 89,
+        "section": "Gestion de l’incertitude et des biais",
+        "subsection": "Incertitude liée à la taille d’échantillon",
+        "question": "Le faible nombre de répondants dans certaines communes affecte-t-il la fiabilité des conclusions ?",
+        "retrieval_gt": "Stats répondants",
+        "n_sources": 25,
+        "recall": 0.0,
+        "precision": 0.0,
+        "f1": 0.0,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=0% (0/1) · Precision=0% · F1=0%",
+        "expected": [
+          "stats_repondants"
+        ],
+        "retrieved": [
+          "equipements",
+          "methodology_oppchovec",
+          "oppchovec"
+        ],
+        "hits": []
+      },
+      {
+        "excel_row": 97,
+        "section": "Gestion de l’incertitude et des biais",
+        "subsection": "Biais liés aux indicateurs",
+        "question": "Le score OppChoVec peut-il masquer des disparités internes importantes au sein d’une même commune ?",
+        "retrieval_gt": "Explication oppchovec",
+        "n_sources": 25,
+        "recall": 1.0,
+        "precision": 0.667,
+        "f1": 0.8,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=100% (1/1) · Precision=67% · F1=80%",
+        "expected": [
+          "methodology_oppchovec"
+        ],
+        "retrieved": [
+          "methodology_oppchovec",
+          "oppchovec",
+          "stats_repondants"
+        ],
+        "hits": [
+          "methodology_oppchovec"
+        ]
+      },
+      {
+        "excel_row": 98,
+        "section": "Gestion de l’incertitude et des biais",
+        "subsection": "Risque de sur-interprétation",
+        "question": "Peut-on affirmer qu’une amélioration d’un indicateur spécifique entraînera nécessairement une hausse du bien-être global ?",
+        "retrieval_gt": "Explication Oppchovec, explications enquêtes",
+        "n_sources": 25,
+        "recall": 0.5,
+        "precision": 0.667,
+        "f1": 0.572,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=50% (1/2) · Precision=67% · F1=57%",
+        "expected": [
+          "methodology_enquete",
+          "methodology_oppchovec"
+        ],
+        "retrieved": [
+          "equipements",
+          "methodology_oppchovec",
+          "oppchovec"
+        ],
+        "hits": [
+          "methodology_oppchovec"
+        ]
+      },
+      {
+        "excel_row": 104,
+        "section": "Raisonnement comparatif",
+        "subsection": "Comparaison intra-EPCI (CAPA)",
+        "question": "Quelle est la commune de la CAPA avec le meilleur score Vécu (Vec) ?",
+        "retrieval_gt": "Classement Vec CAPA, zones_epci CA du Pays Ajaccien",
+        "n_sources": 25,
+        "recall": 0.5,
+        "precision": 0.333,
+        "f1": 0.4,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=50% (1/2) · Precision=33% · F1=40%",
+        "expected": [
+          "equipements",
+          "oppchovec"
+        ],
+        "retrieved": [
+          "methodology_oppchovec",
+          "oppchovec",
+          "stats_repondants"
+        ],
+        "hits": [
+          "oppchovec"
+        ]
+      }
+    ],
+    "v_decomp": [
+      {
+        "excel_row": 9,
+        "section": "Retrieval mono-commune",
+        "subsection": "Retrieval factuel et interprétation",
+        "question": "Combien d’habitants ont répondu à l’enquête à Ajaccio ?",
+        "retrieval_gt": "Stats enquête",
+        "n_sources": 21,
+        "recall": 1.0,
+        "precision": 0.4,
+        "f1": 0.571,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=100% (1/1) · Precision=40% · F1=57%",
+        "expected": [
+          "stats_enquete"
+        ],
+        "retrieved": [
+          "equipements",
+          "methodology_oppchovec",
+          "oppchovec",
+          "stats_enquete",
+          "stats_repondants"
+        ],
+        "hits": [
+          "stats_enquete"
+        ]
+      },
+      {
+        "excel_row": 11,
+        "section": "Retrieval mono-commune",
+        "subsection": "Retrieval par sous-population",
+        "question": "Que pensent les entrepreneurs Ajacciens de la qualité de vie ?",
+        "retrieval_gt": "RAPTOR Ajaccio x entrepreneurs/artisans",
+        "n_sources": 18,
+        "recall": 0.0,
+        "precision": 0.0,
+        "f1": 0.0,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=0% (0/2) · Precision=0% · F1=0%",
+        "expected": [
+          "raptor_enquete",
+          "raptor_portrait"
+        ],
+        "retrieved": [
+          "equipements",
+          "methodology_oppchovec",
+          "oppchovec",
+          "stats_repondants"
+        ],
+        "hits": []
+      },
+      {
+        "excel_row": 14,
+        "section": "Retrieval mono-commune",
+        "subsection": "Retrieval source-spécifique",
+        "question": "Que révèlent les entretiens qualitatifs sur l'emploi à Lozzi ?",
+        "retrieval_gt": "Entretiens Léa Lozzi",
+        "n_sources": 25,
+        "recall": 1.0,
+        "precision": 0.333,
+        "f1": 0.5,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=100% (1/1) · Precision=33% · F1=50%",
+        "expected": [
+          "entretiens"
+        ],
+        "retrieved": [
+          "entretiens",
+          "methodology_oppchovec",
+          "oppchovec"
+        ],
+        "hits": [
+          "entretiens"
+        ]
+      },
+      {
+        "excel_row": 19,
+        "section": "Retrieval mono-commune",
+        "subsection": "Questions normatives / prescriptives",
+        "question": "Quels leviers d’action pour améliorer les dimensions du bien-être sous-évaluées à Ajaccio ?",
+        "retrieval_gt": "RAPTOR Commune (Ajaccio), Score OppChoVec Ajaccio, Résultats enquêtes quanti",
+        "n_sources": 23,
+        "recall": 0.5,
+        "precision": 0.75,
+        "f1": 0.6,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=50% (2/4) · Precision=75% · F1=60%",
+        "expected": [
+          "oppchovec",
+          "raptor_enquete",
+          "raptor_portrait",
+          "stats_enquete"
+        ],
+        "retrieved": [
+          "methodology_oppchovec",
+          "oppchovec",
+          "stats_enquete",
+          "stats_repondants"
+        ],
+        "hits": [
+          "oppchovec",
+          "stats_enquete"
+        ]
+      },
+      {
+        "excel_row": 24,
+        "section": "Retrieval mono-commune",
+        "subsection": "Analyse multi-source et cohérence des données",
+        "question": "Ajaccio peut-elle présenter un niveau de bien-être faible malgré des indicateurs objectifs satisfaisants ?",
+        "retrieval_gt": "RAPTOR Ajaccio, Scores OppChoVec Ajaccio",
+        "n_sources": 25,
+        "recall": 0.333,
+        "precision": 0.25,
+        "f1": 0.286,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=33% (1/3) · Precision=25% · F1=29%",
+        "expected": [
+          "oppchovec",
+          "raptor_enquete",
+          "raptor_portrait"
+        ],
+        "retrieved": [
+          "equipements",
+          "methodology_oppchovec",
+          "oppchovec",
+          "stats_enquete"
+        ],
+        "hits": [
+          "oppchovec"
+        ]
+      },
+      {
+        "excel_row": 30,
+        "section": "Raisonnement comparatif",
+        "subsection": "Comparaisons avec hiérarchisation explicite",
+        "question": "La dimension environnement est-elle mieux évaluée par les habitants à Ajaccio ou à Bastia ?",
+        "retrieval_gt": "RAPTOR commune (Ajaccio) x dimension (Environnement), RAPTOR commune (Bastia) x dimension (Environnement)",
+        "n_sources": 25,
+        "recall": 0.0,
+        "precision": 0.0,
+        "f1": 0.0,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=0% (0/1) · Precision=0% · F1=0%",
+        "expected": [
+          "raptor_enquete"
+        ],
+        "retrieved": [
+          "methodology_oppchovec",
+          "oppchovec",
+          "stats_enquete"
+        ],
+        "hits": []
+      },
+      {
+        "excel_row": 36,
+        "section": "Raisonnement comparatif",
+        "subsection": "Comparaison croisée quanti/quali",
+        "question": "Observe-t-on un écart significatif entre indicateurs objectifs et perception à Bastia ?",
+        "retrieval_gt": "OppChoVec Bastia, RAPTOR Bastia",
+        "n_sources": 23,
+        "recall": 0.333,
+        "precision": 0.25,
+        "f1": 0.286,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=33% (1/3) · Precision=25% · F1=29%",
+        "expected": [
+          "oppchovec",
+          "raptor_enquete",
+          "raptor_portrait"
+        ],
+        "retrieved": [
+          "methodology_oppchovec",
+          "oppchovec",
+          "stats_enquete",
+          "stats_repondants"
+        ],
+        "hits": [
+          "oppchovec"
+        ]
+      },
+      {
+        "excel_row": 41,
+        "section": "Limites architecturales",
+        "subsection": "",
+        "question": "Existe-t-il une commune avec de bons indicateurs socio-économiques mais un faible bien-être perçu ?",
+        "retrieval_gt": "",
+        "n_sources": 25,
+        "recall": null,
+        "precision": null,
+        "f1": null,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "GT manquant (nan — skip)",
+        "expected": [],
+        "retrieved": [],
+        "hits": []
+      },
+      {
+        "excel_row": 44,
+        "section": "Raisonnement comparatif",
+        "subsection": "Comparaison contre-intuitive",
+        "question": "Les communes les plus dynamiques économiquement sont-elles nécessairement celles où le bien-être perçu est le plus élevé ?",
+        "retrieval_gt": "RAPTOR quali classement, RAPTOR quanti classement",
+        "n_sources": 25,
+        "recall": 0.0,
+        "precision": 0.0,
+        "f1": 0.0,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=0% (0/2) · Precision=0% · F1=0%",
+        "expected": [
+          "raptor_enquete",
+          "raptor_portrait"
+        ],
+        "retrieved": [
+          "equipements",
+          "methodology_oppchovec",
+          "oppchovec",
+          "stats_enquete",
+          "stats_repondants"
+        ],
+        "hits": []
+      },
+      {
+        "excel_row": 48,
+        "section": "Gestion d’absence d’information",
+        "subsection": "Données partielles ou insuffisantes",
+        "question": "Peut-on conclure solidement concernant le bien-être des entrepreneurs à Lozzi ?",
+        "retrieval_gt": "RAPTOR quali commune (Lozzi) x CSP (entrepreneurs)",
+        "n_sources": 25,
+        "recall": 0.0,
+        "precision": 0.0,
+        "f1": 0.0,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=0% (0/1) · Precision=0% · F1=0%",
+        "expected": [
+          "raptor_portrait"
+        ],
+        "retrieved": [
+          "entretiens",
+          "methodology_oppchovec",
+          "oppchovec"
+        ],
+        "hits": []
+      },
+      {
+        "excel_row": 51,
+        "section": "Gestion d’absence d’information",
+        "subsection": "Comparaison impossible",
+        "question": "Est-il possible de comparer les indicateurs objectifs et qualitatifs pour Piedicorte ?",
+        "retrieval_gt": "OppChoVec Pedicorte, équipements Pedicorte (facultatif)",
+        "n_sources": 19,
+        "recall": 1.0,
+        "precision": 0.25,
+        "f1": 0.4,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=100% (1/1) · Precision=25% · F1=40%",
+        "expected": [
+          "oppchovec"
+        ],
+        "retrieved": [
+          "equipements",
+          "methodology_oppchovec",
+          "oppchovec",
+          "stats_enquete"
+        ],
+        "hits": [
+          "oppchovec"
+        ]
+      },
+      {
+        "excel_row": 52,
+        "section": "Gestion d’absence d’information",
+        "subsection": "Sous-populations peu représentées",
+        "question": "Les données disponibles permettent-elles d’analyser spécifiquement le bien-être des 18–25 ans à Lozzi ?",
+        "retrieval_gt": "RAPTOR commune (Lozzi) x âge (jeunes - 18-25)",
+        "n_sources": 25,
+        "recall": 0.0,
+        "precision": 0.0,
+        "f1": 0.0,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=0% (0/1) · Precision=0% · F1=0%",
+        "expected": [
+          "raptor_enquete"
+        ],
+        "retrieved": [
+          "entretiens",
+          "methodology_oppchovec",
+          "oppchovec"
+        ],
+        "hits": []
+      },
+      {
+        "excel_row": 68,
+        "section": "Robustesse sémantique",
+        "subsection": "Bruit lexical",
+        "question": "Quel est le score moyen, euh, moyen, tu vois, du bien-être général ?",
+        "retrieval_gt": "Classement global OppChoVec",
+        "n_sources": 25,
+        "recall": 1.0,
+        "precision": 0.25,
+        "f1": 0.4,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=100% (1/1) · Precision=25% · F1=40%",
+        "expected": [
+          "oppchovec"
+        ],
+        "retrieved": [
+          "methodology_oppchovec",
+          "oppchovec",
+          "stats_enquete",
+          "stats_repondants"
+        ],
+        "hits": [
+          "oppchovec"
+        ]
+      },
+      {
+        "excel_row": 75,
+        "section": "Raisonnement causal et contre-intuitif",
+        "subsection": "Raisonnement causal multi-facteurs",
+        "question": "Les écarts observés entre indicateurs objectifs et perception subjective à Bastia peuvent-ils résulter de facteurs structurels non captés par les indicateurs quantitatifs ?",
+        "retrieval_gt": "RAPTOR quali global, RAPTOR quanti global, Oppchovec global",
+        "n_sources": 24,
+        "recall": 0.333,
+        "precision": 0.2,
+        "f1": 0.25,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=33% (1/3) · Precision=20% · F1=25%",
+        "expected": [
+          "oppchovec",
+          "raptor_enquete",
+          "raptor_portrait"
+        ],
+        "retrieved": [
+          "equipements",
+          "methodology_oppchovec",
+          "oppchovec",
+          "stats_enquete",
+          "stats_repondants"
+        ],
+        "hits": [
+          "oppchovec"
+        ]
+      },
+      {
+        "excel_row": 76,
+        "section": "Raisonnement causal et contre-intuitif",
+        "subsection": "Causalité inversée ou alternative",
+        "question": "Un faible bien-être perçu peut-il influencer la manière dont les habitants évaluent leur bien-être subjectif ?",
+        "retrieval_gt": "Rien (ça veut rien dire)",
+        "n_sources": 25,
+        "recall": null,
+        "precision": null,
+        "f1": null,
+        "refusal_case": true,
+        "raptor_credit": false,
+        "detail": "Refusal attendu (25 sources récupérées)",
+        "expected": [],
+        "retrieved": [],
+        "hits": []
+      },
+      {
+        "excel_row": 83,
+        "section": "Raisonnement causal et contre-intuitif",
+        "subsection": "Limites de l’inférence causale",
+        "question": "Les données disponibles permettent-elles d’établir un lien de causalité entre densité de population et bien-être ?",
+        "retrieval_gt": "OppChoVec global, wiki communes (facultatif)",
+        "n_sources": 25,
+        "recall": 1.0,
+        "precision": 0.25,
+        "f1": 0.4,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=100% (1/1) · Precision=25% · F1=40%",
+        "expected": [
+          "oppchovec"
+        ],
+        "retrieved": [
+          "equipements",
+          "methodology_oppchovec",
+          "oppchovec",
+          "stats_repondants"
+        ],
+        "hits": [
+          "oppchovec"
+        ]
+      },
+      {
+        "excel_row": 89,
+        "section": "Gestion de l’incertitude et des biais",
+        "subsection": "Incertitude liée à la taille d’échantillon",
+        "question": "Le faible nombre de répondants dans certaines communes affecte-t-il la fiabilité des conclusions ?",
+        "retrieval_gt": "Stats répondants",
+        "n_sources": 25,
+        "recall": 1.0,
+        "precision": 0.2,
+        "f1": 0.333,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=100% (1/1) · Precision=20% · F1=33%",
+        "expected": [
+          "stats_repondants"
+        ],
+        "retrieved": [
+          "equipements",
+          "methodology_oppchovec",
+          "oppchovec",
+          "stats_enquete",
+          "stats_repondants"
+        ],
+        "hits": [
+          "stats_repondants"
+        ]
+      },
+      {
+        "excel_row": 97,
+        "section": "Gestion de l’incertitude et des biais",
+        "subsection": "Biais liés aux indicateurs",
+        "question": "Le score OppChoVec peut-il masquer des disparités internes importantes au sein d’une même commune ?",
+        "retrieval_gt": "Explication oppchovec",
+        "n_sources": 25,
+        "recall": 1.0,
+        "precision": 0.5,
+        "f1": 0.667,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=100% (1/1) · Precision=50% · F1=67%",
+        "expected": [
+          "methodology_oppchovec"
+        ],
+        "retrieved": [
+          "equipements",
+          "methodology_oppchovec",
+          "oppchovec",
+          "stats_repondants"
+        ],
+        "hits": [
+          "methodology_oppchovec"
+        ]
+      },
+      {
+        "excel_row": 98,
+        "section": "Gestion de l’incertitude et des biais",
+        "subsection": "Risque de sur-interprétation",
+        "question": "Peut-on affirmer qu’une amélioration d’un indicateur spécifique entraînera nécessairement une hausse du bien-être global ?",
+        "retrieval_gt": "Explication Oppchovec, explications enquêtes",
+        "n_sources": 25,
+        "recall": 0.5,
+        "precision": 0.667,
+        "f1": 0.572,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=50% (1/2) · Precision=67% · F1=57%",
+        "expected": [
+          "methodology_enquete",
+          "methodology_oppchovec"
+        ],
+        "retrieved": [
+          "equipements",
+          "methodology_oppchovec",
+          "oppchovec"
+        ],
+        "hits": [
+          "methodology_oppchovec"
+        ]
+      },
+      {
+        "excel_row": 104,
+        "section": "Raisonnement comparatif",
+        "subsection": "Comparaison intra-EPCI (CAPA)",
+        "question": "Quelle est la commune de la CAPA avec le meilleur score Vécu (Vec) ?",
+        "retrieval_gt": "Classement Vec CAPA, zones_epci CA du Pays Ajaccien",
+        "n_sources": 16,
+        "recall": 0.5,
+        "precision": 0.333,
+        "f1": 0.4,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=50% (1/2) · Precision=33% · F1=40%",
+        "expected": [
+          "equipements",
+          "oppchovec"
+        ],
+        "retrieved": [
+          "methodology_oppchovec",
+          "oppchovec",
+          "stats_repondants"
+        ],
+        "hits": [
+          "oppchovec"
+        ]
+      }
+    ],
+    "v_decomp_raptor": [
+      {
+        "excel_row": 9,
+        "section": "Retrieval mono-commune",
+        "subsection": "Retrieval factuel et interprétation",
+        "question": "Combien d’habitants ont répondu à l’enquête à Ajaccio ?",
+        "retrieval_gt": "Stats enquête",
+        "n_sources": 63,
+        "recall": 1.0,
+        "precision": 0.25,
+        "f1": 0.4,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=100% (1/1) · Precision=25% · F1=40%",
+        "expected": [
+          "stats_enquete"
+        ],
+        "retrieved": [
+          "equipements",
+          "methodology_enquete",
+          "oppchovec",
+          "raptor_enquete",
+          "raptor_portrait",
+          "stats_enquete",
+          "stats_repondants",
+          "verbatims"
+        ],
+        "hits": [
+          "stats_enquete"
+        ]
+      },
+      {
+        "excel_row": 11,
+        "section": "Retrieval mono-commune",
+        "subsection": "Retrieval par sous-population",
+        "question": "Que pensent les entrepreneurs Ajacciens de la qualité de vie ?",
+        "retrieval_gt": "RAPTOR Ajaccio x entrepreneurs/artisans",
+        "n_sources": 58,
+        "recall": 1.0,
+        "precision": 0.25,
+        "f1": 0.4,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=100% (2/2) · Precision=25% · F1=40%",
+        "expected": [
+          "raptor_enquete",
+          "raptor_portrait"
+        ],
+        "retrieved": [
+          "equipements",
+          "methodology_enquete",
+          "oppchovec",
+          "raptor_enquete",
+          "raptor_portrait",
+          "stats_enquete",
+          "stats_repondants",
+          "verbatims"
+        ],
+        "hits": [
+          "raptor_enquete",
+          "raptor_portrait"
+        ]
+      },
+      {
+        "excel_row": 14,
+        "section": "Retrieval mono-commune",
+        "subsection": "Retrieval source-spécifique",
+        "question": "Que révèlent les entretiens qualitatifs sur l'emploi à Lozzi ?",
+        "retrieval_gt": "Entretiens Léa Lozzi",
+        "n_sources": 70,
+        "recall": 1.0,
+        "precision": 0.143,
+        "f1": 0.25,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=100% (1/1) · Precision=14% · F1=25%",
+        "expected": [
+          "entretiens"
+        ],
+        "retrieved": [
+          "entretiens",
+          "equipements",
+          "methodology_enquete",
+          "oppchovec",
+          "raptor_enquete",
+          "raptor_portrait",
+          "verbatims"
+        ],
+        "hits": [
+          "entretiens"
+        ]
+      },
+      {
+        "excel_row": 19,
+        "section": "Retrieval mono-commune",
+        "subsection": "Questions normatives / prescriptives",
+        "question": "Quels leviers d’action pour améliorer les dimensions du bien-être sous-évaluées à Ajaccio ?",
+        "retrieval_gt": "RAPTOR Commune (Ajaccio), Score OppChoVec Ajaccio, Résultats enquêtes quanti",
+        "n_sources": 71,
+        "recall": 1.0,
+        "precision": 0.556,
+        "f1": 0.715,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=100% (4/4) · Precision=56% · F1=72%",
+        "expected": [
+          "oppchovec",
+          "raptor_enquete",
+          "raptor_portrait",
+          "stats_enquete"
+        ],
+        "retrieved": [
+          "classement",
+          "equipements",
+          "methodology_enquete",
+          "oppchovec",
+          "raptor_enquete",
+          "raptor_portrait",
+          "stats_enquete",
+          "stats_repondants",
+          "verbatims"
+        ],
+        "hits": [
+          "oppchovec",
+          "raptor_enquete",
+          "raptor_portrait",
+          "stats_enquete"
+        ]
+      },
+      {
+        "excel_row": 24,
+        "section": "Retrieval mono-commune",
+        "subsection": "Analyse multi-source et cohérence des données",
+        "question": "Ajaccio peut-elle présenter un niveau de bien-être faible malgré des indicateurs objectifs satisfaisants ?",
+        "retrieval_gt": "RAPTOR Ajaccio, Scores OppChoVec Ajaccio",
+        "n_sources": 70,
+        "recall": 1.0,
+        "precision": 0.375,
+        "f1": 0.545,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=100% (3/3) · Precision=38% · F1=55%",
+        "expected": [
+          "oppchovec",
+          "raptor_enquete",
+          "raptor_portrait"
+        ],
+        "retrieved": [
+          "equipements",
+          "methodology_enquete",
+          "oppchovec",
+          "raptor_enquete",
+          "raptor_portrait",
+          "stats_enquete",
+          "stats_repondants",
+          "verbatims"
+        ],
+        "hits": [
+          "oppchovec",
+          "raptor_enquete",
+          "raptor_portrait"
+        ]
+      },
+      {
+        "excel_row": 30,
+        "section": "Raisonnement comparatif",
+        "subsection": "Comparaisons avec hiérarchisation explicite",
+        "question": "La dimension environnement est-elle mieux évaluée par les habitants à Ajaccio ou à Bastia ?",
+        "retrieval_gt": "RAPTOR commune (Ajaccio) x dimension (Environnement), RAPTOR commune (Bastia) x dimension (Environnement)",
+        "n_sources": 70,
+        "recall": 1.0,
+        "precision": 0.143,
+        "f1": 0.25,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=100% (1/1) · Precision=14% · F1=25%",
+        "expected": [
+          "raptor_enquete"
+        ],
+        "retrieved": [
+          "methodology_enquete",
+          "oppchovec",
+          "raptor_enquete",
+          "raptor_portrait",
+          "stats_enquete",
+          "stats_repondants",
+          "verbatims"
+        ],
+        "hits": [
+          "raptor_enquete"
+        ]
+      },
+      {
+        "excel_row": 36,
+        "section": "Raisonnement comparatif",
+        "subsection": "Comparaison croisée quanti/quali",
+        "question": "Observe-t-on un écart significatif entre indicateurs objectifs et perception à Bastia ?",
+        "retrieval_gt": "OppChoVec Bastia, RAPTOR Bastia",
+        "n_sources": 69,
+        "recall": 1.0,
+        "precision": 0.375,
+        "f1": 0.545,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=100% (3/3) · Precision=38% · F1=55%",
+        "expected": [
+          "oppchovec",
+          "raptor_enquete",
+          "raptor_portrait"
+        ],
+        "retrieved": [
+          "equipements",
+          "methodology_enquete",
+          "oppchovec",
+          "raptor_enquete",
+          "raptor_portrait",
+          "stats_enquete",
+          "stats_repondants",
+          "verbatims"
+        ],
+        "hits": [
+          "oppchovec",
+          "raptor_enquete",
+          "raptor_portrait"
+        ]
+      },
+      {
+        "excel_row": 41,
+        "section": "Limites architecturales",
+        "subsection": "",
+        "question": "Existe-t-il une commune avec de bons indicateurs socio-économiques mais un faible bien-être perçu ?",
+        "retrieval_gt": "",
+        "n_sources": 63,
+        "recall": null,
+        "precision": null,
+        "f1": null,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "GT manquant (nan — skip)",
+        "expected": [],
+        "retrieved": [],
+        "hits": []
+      },
+      {
+        "excel_row": 44,
+        "section": "Raisonnement comparatif",
+        "subsection": "Comparaison contre-intuitive",
+        "question": "Les communes les plus dynamiques économiquement sont-elles nécessairement celles où le bien-être perçu est le plus élevé ?",
+        "retrieval_gt": "RAPTOR quali classement, RAPTOR quanti classement",
+        "n_sources": 80,
+        "recall": 1.0,
+        "precision": 0.2,
+        "f1": 0.333,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=100% (2/2) · Precision=20% · F1=33%",
+        "expected": [
+          "raptor_enquete",
+          "raptor_portrait"
+        ],
+        "retrieved": [
+          "classement",
+          "entretiens",
+          "equipements",
+          "methodology_enquete",
+          "oppchovec",
+          "raptor_enquete",
+          "raptor_portrait",
+          "stats_enquete",
+          "stats_repondants",
+          "verbatims"
+        ],
+        "hits": [
+          "raptor_enquete",
+          "raptor_portrait"
+        ]
+      },
+      {
+        "excel_row": 48,
+        "section": "Gestion d’absence d’information",
+        "subsection": "Données partielles ou insuffisantes",
+        "question": "Peut-on conclure solidement concernant le bien-être des entrepreneurs à Lozzi ?",
+        "retrieval_gt": "RAPTOR quali commune (Lozzi) x CSP (entrepreneurs)",
+        "n_sources": 59,
+        "recall": 1.0,
+        "precision": 0.125,
+        "f1": 0.222,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=100% (1/1) · Precision=12% · F1=22%",
+        "expected": [
+          "raptor_portrait"
+        ],
+        "retrieved": [
+          "entretiens",
+          "equipements",
+          "methodology_enquete",
+          "oppchovec",
+          "raptor_enquete",
+          "raptor_portrait",
+          "stats_enquete",
+          "verbatims"
+        ],
+        "hits": [
+          "raptor_portrait"
+        ]
+      },
+      {
+        "excel_row": 51,
+        "section": "Gestion d’absence d’information",
+        "subsection": "Comparaison impossible",
+        "question": "Est-il possible de comparer les indicateurs objectifs et qualitatifs pour Piedicorte ?",
+        "retrieval_gt": "OppChoVec Pedicorte, équipements Pedicorte (facultatif)",
+        "n_sources": 33,
+        "recall": 1.0,
+        "precision": 0.143,
+        "f1": 0.25,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=100% (1/1) · Precision=14% · F1=25%",
+        "expected": [
+          "oppchovec"
+        ],
+        "retrieved": [
+          "equipements",
+          "methodology_enquete",
+          "oppchovec",
+          "raptor_enquete",
+          "raptor_portrait",
+          "stats_enquete",
+          "verbatims"
+        ],
+        "hits": [
+          "oppchovec"
+        ]
+      },
+      {
+        "excel_row": 52,
+        "section": "Gestion d’absence d’information",
+        "subsection": "Sous-populations peu représentées",
+        "question": "Les données disponibles permettent-elles d’analyser spécifiquement le bien-être des 18–25 ans à Lozzi ?",
+        "retrieval_gt": "RAPTOR commune (Lozzi) x âge (jeunes - 18-25)",
+        "n_sources": 45,
+        "recall": 1.0,
+        "precision": 0.125,
+        "f1": 0.222,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=100% (1/1) · Precision=12% · F1=22%",
+        "expected": [
+          "raptor_enquete"
+        ],
+        "retrieved": [
+          "entretiens",
+          "equipements",
+          "methodology_enquete",
+          "oppchovec",
+          "raptor_enquete",
+          "raptor_portrait",
+          "stats_enquete",
+          "verbatims"
+        ],
+        "hits": [
+          "raptor_enquete"
+        ]
+      },
+      {
+        "excel_row": 68,
+        "section": "Robustesse sémantique",
+        "subsection": "Bruit lexical",
+        "question": "Quel est le score moyen, euh, moyen, tu vois, du bien-être général ?",
+        "retrieval_gt": "Classement global OppChoVec",
+        "n_sources": 9,
+        "recall": 1.0,
+        "precision": 0.2,
+        "f1": 0.333,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=100% (1/1) · Precision=20% · F1=33%",
+        "expected": [
+          "oppchovec"
+        ],
+        "retrieved": [
+          "methodology_enquete",
+          "oppchovec",
+          "raptor_enquete",
+          "stats_enquete",
+          "stats_repondants"
+        ],
+        "hits": [
+          "oppchovec"
+        ]
+      },
+      {
+        "excel_row": 75,
+        "section": "Raisonnement causal et contre-intuitif",
+        "subsection": "Raisonnement causal multi-facteurs",
+        "question": "Les écarts observés entre indicateurs objectifs et perception subjective à Bastia peuvent-ils résulter de facteurs structurels non captés par les indicateurs quantitatifs ?",
+        "retrieval_gt": "RAPTOR quali global, RAPTOR quanti global, Oppchovec global",
+        "n_sources": 65,
+        "recall": 1.0,
+        "precision": 0.375,
+        "f1": 0.545,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=100% (3/3) · Precision=38% · F1=55%",
+        "expected": [
+          "oppchovec",
+          "raptor_enquete",
+          "raptor_portrait"
+        ],
+        "retrieved": [
+          "equipements",
+          "methodology_enquete",
+          "oppchovec",
+          "raptor_enquete",
+          "raptor_portrait",
+          "stats_enquete",
+          "stats_repondants",
+          "verbatims"
+        ],
+        "hits": [
+          "oppchovec",
+          "raptor_enquete",
+          "raptor_portrait"
+        ]
+      },
+      {
+        "excel_row": 76,
+        "section": "Raisonnement causal et contre-intuitif",
+        "subsection": "Causalité inversée ou alternative",
+        "question": "Un faible bien-être perçu peut-il influencer la manière dont les habitants évaluent leur bien-être subjectif ?",
+        "retrieval_gt": "Rien (ça veut rien dire)",
+        "n_sources": 69,
+        "recall": null,
+        "precision": null,
+        "f1": null,
+        "refusal_case": true,
+        "raptor_credit": false,
+        "detail": "Refusal attendu (69 sources récupérées)",
+        "expected": [],
+        "retrieved": [],
+        "hits": []
+      },
+      {
+        "excel_row": 83,
+        "section": "Raisonnement causal et contre-intuitif",
+        "subsection": "Limites de l’inférence causale",
+        "question": "Les données disponibles permettent-elles d’établir un lien de causalité entre densité de population et bien-être ?",
+        "retrieval_gt": "OppChoVec global, wiki communes (facultatif)",
+        "n_sources": 56,
+        "recall": 1.0,
+        "precision": 0.111,
+        "f1": 0.2,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=100% (1/1) · Precision=11% · F1=20%",
+        "expected": [
+          "oppchovec"
+        ],
+        "retrieved": [
+          "entretiens",
+          "equipements",
+          "methodology_enquete",
+          "oppchovec",
+          "raptor_enquete",
+          "raptor_portrait",
+          "stats_enquete",
+          "stats_repondants",
+          "verbatims"
+        ],
+        "hits": [
+          "oppchovec"
+        ]
+      },
+      {
+        "excel_row": 89,
+        "section": "Gestion de l’incertitude et des biais",
+        "subsection": "Incertitude liée à la taille d’échantillon",
+        "question": "Le faible nombre de répondants dans certaines communes affecte-t-il la fiabilité des conclusions ?",
+        "retrieval_gt": "Stats répondants",
+        "n_sources": 56,
+        "recall": 1.0,
+        "precision": 0.111,
+        "f1": 0.2,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=100% (1/1) · Precision=11% · F1=20%",
+        "expected": [
+          "stats_repondants"
+        ],
+        "retrieved": [
+          "entretiens",
+          "equipements",
+          "methodology_enquete",
+          "oppchovec",
+          "raptor_enquete",
+          "raptor_portrait",
+          "stats_enquete",
+          "stats_repondants",
+          "verbatims"
+        ],
+        "hits": [
+          "stats_repondants"
+        ]
+      },
+      {
+        "excel_row": 97,
+        "section": "Gestion de l’incertitude et des biais",
+        "subsection": "Biais liés aux indicateurs",
+        "question": "Le score OppChoVec peut-il masquer des disparités internes importantes au sein d’une même commune ?",
+        "retrieval_gt": "Explication oppchovec",
+        "n_sources": 64,
+        "recall": 1.0,
+        "precision": 0.111,
+        "f1": 0.2,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=100% (1/1) · Precision=11% · F1=20%",
+        "expected": [
+          "methodology_oppchovec"
+        ],
+        "retrieved": [
+          "classement",
+          "entretiens",
+          "equipements",
+          "methodology_enquete",
+          "oppchovec",
+          "raptor_enquete",
+          "raptor_portrait",
+          "stats_repondants",
+          "verbatims"
+        ],
+        "hits": [
+          "methodology_oppchovec"
+        ]
+      },
+      {
+        "excel_row": 98,
+        "section": "Gestion de l’incertitude et des biais",
+        "subsection": "Risque de sur-interprétation",
+        "question": "Peut-on affirmer qu’une amélioration d’un indicateur spécifique entraînera nécessairement une hausse du bien-être global ?",
+        "retrieval_gt": "Explication Oppchovec, explications enquêtes",
+        "n_sources": 9,
+        "recall": 1.0,
+        "precision": 0.4,
+        "f1": 0.571,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=100% (2/2) · Precision=40% · F1=57%",
+        "expected": [
+          "methodology_enquete",
+          "methodology_oppchovec"
+        ],
+        "retrieved": [
+          "equipements",
+          "methodology_enquete",
+          "oppchovec",
+          "raptor_enquete",
+          "stats_repondants"
+        ],
+        "hits": [
+          "methodology_enquete",
+          "methodology_oppchovec"
+        ]
+      },
+      {
+        "excel_row": 104,
+        "section": "Raisonnement comparatif",
+        "subsection": "Comparaison intra-EPCI (CAPA)",
+        "question": "Quelle est la commune de la CAPA avec le meilleur score Vécu (Vec) ?",
+        "retrieval_gt": "Classement Vec CAPA, zones_epci CA du Pays Ajaccien",
+        "n_sources": 113,
+        "recall": 1.0,
+        "precision": 0.4,
+        "f1": 0.571,
+        "refusal_case": false,
+        "raptor_credit": false,
+        "detail": "Recall=100% (2/2) · Precision=40% · F1=57%",
+        "expected": [
+          "equipements",
+          "oppchovec"
+        ],
+        "retrieved": [
+          "equipements",
+          "oppchovec",
+          "raptor_enquete",
+          "raptor_portrait",
+          "stats_repondants"
+        ],
+        "hits": [
+          "equipements",
+          "oppchovec"
+        ]
+      }
+    ]
+  }
+}

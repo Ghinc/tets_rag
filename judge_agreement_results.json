@@ -1,0 +1,83 @@
+{
+  "n_samples": 20,
+  "dimensions": {
+    "pertinence": {
+      "pearson": 0.1894,
+      "p_pearson": 0.424,
+      "spearman": 0.2309,
+      "p_spearman": 0.3273,
+      "mae": 0.55,
+      "bias": -0.15,
+      "exact_pct": 55.0,
+      "within_1_pct": 90.0,
+      "mean_h": 4.35,
+      "mean_j": 4.5
+    },
+    "fondement_factuel": {
+      "pearson": 0.4908,
+      "p_pearson": 0.028,
+      "spearman": 0.4883,
+      "p_spearman": 0.0289,
+      "mae": 0.8,
+      "bias": 0.8,
+      "exact_pct": 35.0,
+      "within_1_pct": 85.0,
+      "mean_h": 4.7,
+      "mean_j": 3.9
+    },
+    "nuance_incertitude": {
+      "pearson": 0.1314,
+      "p_pearson": 0.5809,
+      "spearman": 0.1679,
+      "p_spearman": 0.4792,
+      "mae": 0.7,
+      "bias": 0.3,
+      "exact_pct": 55.0,
+      "within_1_pct": 75.0,
+      "mean_h": 4.45,
+      "mean_j": 4.15
+    },
+    "coherence_qualiquanti": {
+      "pearson": 0.0237,
+      "p_pearson": 0.9211,
+      "spearman": 0.1139,
+      "p_spearman": 0.6324,
+      "mae": 0.8,
+      "bias": 0.3,
+      "exact_pct": 35.0,
+      "within_1_pct": 90.0,
+      "mean_h": 4.4,
+      "mean_j": 4.1
+    },
+    "score_global": {
+      "pearson": 0.4038,
+      "p_pearson": 0.0775,
+      "spearman": 0.4235,
+      "p_spearman": 0.0628,
+      "mae": 0.613,
+      "bias": 0.312,
+      "exact_pct": 0.0,
+      "within_1_pct": 90.0,
+      "mean_h": 4.475,
+      "mean_j": 4.162
+    }
+  },
+  "outliers": [
+    {
+      "ligne": 19,
+      "question": "Quels leviers d’action pour améliorer les dimensions du bien-être sous-évaluées à Ajaccio ?",
+      "score_h": 5.0,
+      "score_j": 3.75,
+      "abs_diff": 1.25,
+      "worst_dim": "nuance_incertitude"
+    },
+    {
+      "ligne": 24,
+      "question": "Ajaccio peut-elle présenter un niveau de bien-être faible malgré des indicateurs objectifs satisfais",
+      "score_h": 3.5,
+      "score_j": 4.75,
+      "abs_diff": 1.25,
+      "worst_dim": "coherence_qualiquanti"
+    }
+  ]
+}

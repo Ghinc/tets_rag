@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Entrepreneurs en Corse — Decomp+Raptor</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+         font-size: 14px; margin: 0; background: #f4f6f8; color: #222; }
+  .topbar { background: #2c3e50; color: white; padding: 14px 28px; }
+  .topbar h1 { margin: 0 0 4px; font-size: 1.1em; }
+  .topbar .meta { font-size: 0.82em; opacity: .75; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 24px; }
+
+  /* Carte principale réponse */
+  .answer-card { background: white; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,.12);
+                 padding: 28px 32px; margin-bottom: 24px; }
+  .answer-card h2 { margin-top: 0; font-size: 1.15em; color: #2c3e50;
+                    border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; }
+  .answer-card h3 { font-size: 1em; color: #34495e; margin-top: 24px; }
+  .answer-card h4 { font-size: 0.92em; color: #555; margin-top: 16px; }
+  .answer-card p { line-height: 1.7; }
+  .answer-card ul { line-height: 1.8; padding-left: 20px; }
+  .answer-card blockquote { border-left: 3px solid #bdc3c7; margin: 10px 0 10px 0;
+                             padding: 6px 14px; background: #fafafa; color: #555;
+                             font-style: italic; border-radius: 0 4px 4px 0; }
+  .score-badge { display: inline-block; background: #e67e22; color: white;
+                 border-radius: 4px; padding: 2px 10px; font-weight: bold;
+                 font-size: 0.88em; margin-left: 8px; }
+  .score-badge.green { background: #27ae60; }
+  .score-badge.red { background: #c0392b; }
+  .score-badge.grey { background: #95a5a6; }
+
+  /* Tableau scores */
+  .score-table { border-collapse: collapse; margin: 14px 0; width: auto; min-width: 360px; }
+  .score-table th { background: #ecf0f1; padding: 6px 16px; text-align: left;
+                    font-size: 0.85em; border: 1px solid #ddd; }
+  .score-table td { padding: 6px 16px; border: 1px solid #eee; }
+  .score-table tr:hover td { background: #fafafa; }
+
+  /* Sous-questions */
+  .subq-section { background: white; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,.12);
+                  padding: 0; margin-bottom: 24px; overflow: hidden; }
+  .subq-header { background: #34495e; color: white; padding: 10px 20px; font-weight: bold;
+                 font-size: 0.95em; }
+  .subq-block { border-bottom: 1px solid #ecf0f1; padding: 16px 20px; }
+  .subq-block:last-child { border-bottom: none; }
+  .subq-label { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; }
+  .subq-num { background: #2980b9; color: white; border-radius: 4px;
+              padding: 1px 8px; font-weight: bold; font-size: 0.85em; white-space: nowrap; }
+  .subq-q { font-weight: 600; color: #34495e; font-size: 0.95em; }
+  .subq-answer { background: #f8f9fa; border-radius: 6px; padding: 12px 16px;
+                 font-size: 0.88em; line-height: 1.7; color: #444;
+                 border-left: 3px solid #2980b9; white-space: pre-wrap; }
+
+  /* Sources */
+  .sources-section { background: white; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,.12);
+                     padding: 0; overflow: hidden; }
+  .sources-header { background: #7f8c8d; color: white; padding: 10px 20px; font-weight: bold;
+                    font-size: 0.95em; }
+  .sources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                  gap: 10px; padding: 16px 20px; }
+  .source-chip { background: #f0f2f5; border-radius: 6px; padding: 8px 12px; font-size: 0.82em; }
+  .source-chip .src-type { font-weight: bold; color: #2c3e50; }
+  .source-chip .src-sq { color: #888; font-size: 0.85em; }
+
+  .info-bar { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; font-size: 0.85em; }
+  .info-pill { background: white; border-radius: 20px; padding: 5px 14px;
+               box-shadow: 0 1px 3px rgba(0,0,0,.1); color: #555; }
+  .info-pill strong { color: #2c3e50; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <h1>Comment les entrepreneurs de Corse ressentent-ils leur bien-être ?</h1>
+  <div class="meta">Config : Decomp+Raptor (v10, use_bilan=False) &nbsp;·&nbsp;
+    Mistral Large (décomposition + synthèse) &nbsp;·&nbsp; Claude Haiku (sous-questions) &nbsp;·&nbsp;
+    Vue RAPTOR : <code>profession</code> (N=60 verbatims) &nbsp;·&nbsp; 72 sources mobilisées
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="info-bar">
+    <span class="info-pill"><strong>Section :</strong> hors-benchmark (question générée)</span>
+    <span class="info-pill"><strong>Sous-questions :</strong> 5</span>
+    <span class="info-pill"><strong>Sources :</strong> 72</span>
+    <span class="info-pill"><strong>Note estimée :</strong> 3/5 (bien-être professionnel des entrepreneurs corses)</span>
+    <span class="info-pill"><strong>Modèle juge :</strong> Mistral Large (auto-évaluation)</span>
+  </div>
+
+  <!-- ── RÉPONSE FINALE ─────────────────────────────────────────────────── -->
+  <div class="answer-card">
+    <h2>Réponse finale — Synthèse Mistral Large</h2>
+
+    <p>Les entrepreneurs corses expriment un <strong>bien-être professionnel contrasté</strong>, marqué par une satisfaction modérée mais fragilisée par des tensions structurelles. Leur ressenti révèle un équilibre vie professionnelle/vie personnelle plutôt préservé, tandis que des défis économiques, logistiques et sanitaires pèsent lourdement sur leur quotidien et leur confiance en l'avenir.</p>
+
+    <h3>1. Un équilibre vie pro/vie perso globalement satisfaisant, mais fragile</h3>
+    <p>Selon l'enquête citoyenne, les entrepreneurs corses évaluent positivement leur <strong>équilibre entre vie professionnelle et vie personnelle</strong> (3,85/5), avec 75 % des répondants lui attribuant une note de ★4 ou ★5. Ce score reflète une perception d'épanouissement, comme en témoignent les verbatims :</p>
+    <blockquote>« Un bon équilibre entre une vie personnelle et professionnelle est important pour un épanouissement total »</blockquote>
+    <blockquote>« Si l'on a de bonnes et belles relations, alors tout est possible »</blockquote>
+    <p>Ces déclarations soulignent l'importance des <strong>liens sociaux et communautaires</strong> dans la construction de ce bien-être. Cependant, cet équilibre reste <strong>menacé par des contraintes externes</strong> : les coûts élevés (transports, charges) et les difficultés d'accès aux services (soins, infrastructures) génèrent des tensions qui pourraient, à terme, éroder cette satisfaction.</p>
+
+    <h3>2. Des sources de stress majeures : santé, transports et pression économique</h3>
+    <p>Trois dimensions émergent comme <strong>principales sources d'insatisfaction et de stress</strong> pour les entrepreneurs corses :</p>
+
+    <h4>Accès aux soins défaillant</h4>
+    <table class="score-table">
+      <tr><th>Dimension</th><th>Score enquête citoyenne</th></tr>
+      <tr><td>Accès aux médecins spécialistes</td><td><span class="score-badge red">1,85/5</span></td></tr>
+      <tr><td>Délai pour consulter un généraliste</td><td><span class="score-badge red">2,90/5</span></td></tr>
+      <tr><td>Accès aux soins (global)</td><td><span class="score-badge red">2,55/5</span></td></tr>
+    </table>
+    <p>La santé est le <strong>point le plus critique</strong>. Les entrepreneurs dénoncent un <em>« manque cruel de médecins spécialisés »</em>. Cette situation pèse non seulement sur leur bien-être personnel, mais aussi sur leur capacité à maintenir une activité sereine.</p>
+
+    <h4>Transports et logistique coûteux et inefficaces</h4>
+    <table class="score-table">
+      <tr><th>Dimension</th><th>Score enquête citoyenne</th></tr>
+      <tr><td>Transports en commun</td><td><span class="score-badge red">1,65/5</span> (&gt;50 % notent ★1)</td></tr>
+      <tr><td>Transports (global)</td><td><span class="score-badge red">2,19/5</span></td></tr>
+    </table>
+    <blockquote>« La pression du coût des transports est insupportable »</blockquote>
+    <p>Ces coûts logistiques alourdissent les charges et réduisent la compétitivité, surtout dans un territoire insulaire où les déplacements sont incontournables.</p>
+
+    <h4>Revenus insuffisants et charges excessives</h4>
+    <table class="score-table">
+      <tr><th>Dimension</th><th>Score enquête citoyenne</th></tr>
+      <tr><td>Satisfaction emploi (global)</td><td><span class="score-badge">3,65/5</span></td></tr>
+      <tr><td>Satisfaction revenus</td><td><span class="score-badge">3,15/5</span></td></tr>
+      <tr><td>Confiance dans l'avenir</td><td><span class="score-badge red">2,90/5</span></td></tr>
+    </table>
+    <blockquote>« Notre société embauche 7 personnes en CDI et notre société est toujours et encore taxée sur tous les niveaux »</blockquote>
+
+    <h3>3. Un environnement professionnel ambivalent : entre autonomie et défiance institutionnelle</h3>
+
+    <h4>Points positifs</h4>
+    <ul>
+      <li>Autonomie valorisée et capacité à concilier travail et vie privée</li>
+      <li>Satisfaction globale vis-à-vis de l'emploi : <span class="score-badge green">3,65/5</span></li>
+      <li>Relations sociales et communautaires comme leviers de résilience</li>
+    </ul>
+
+    <h4>Points négatifs</h4>
+    <table class="score-table">
+      <tr><th>Dimension</th><th>Score enquête citoyenne</th></tr>
+      <tr><td>Confiance dans les institutions</td><td><span class="score-badge red">2,60/5</span> (majorité ≤ ★2)</td></tr>
+      <tr><td>Accès aux services de proximité</td><td><span class="score-badge">3,15/5</span></td></tr>
+    </table>
+    <p>Certains entrepreneurs évoquent la nécessité de <em>« lutter enfin contre la mafia »</em>, suggérant un sentiment d'insécurité juridique ou économique.</p>
+
+    <h3>4. Des attentes implicites, mais peu formalisées</h3>
+    <p>Les données disponibles ne permettent pas d'identifier des <strong>revendications précises</strong> en matière de politiques publiques. Les entrepreneurs expriment des <strong>attentes fortes de manière indirecte</strong> :</p>
+    <ul>
+      <li><strong>Réduction des charges</strong> (fiscales, logistiques) pour améliorer compétitivité et pouvoir d'achat</li>
+      <li><strong>Amélioration des infrastructures</strong> (transports, santé) pour faciliter le quotidien</li>
+      <li><strong>Renforcement de la confiance dans les institutions</strong>, perçues comme peu fiables</li>
+    </ul>
+
+    <h3>Conclusion : Un bien-être en tension, entre épanouissement personnel et contraintes structurelles</h3>
+    <table class="score-table">
+      <tr><th>Côté</th><th>Éléments clés</th></tr>
+      <tr><td><strong style="color:#27ae60">Positif</strong></td>
+          <td>Autonomie · équilibre vie pro/perso (3,85/5) · liens sociaux</td></tr>
+      <tr><td><strong style="color:#c0392b">Négatif</strong></td>
+          <td>Accès aux soins (1,85/5) · transports (1,65/5) · défiance institutionnelle (2,60/5) · confiance avenir (2,90/5)</td></tr>
+    </table>
+    <p>Leur bien-être dépend ainsi <strong>moins de leur activité elle-même</strong> que des <strong>conditions externes</strong> (infrastructures, santé, fiscalité) qui, si elles étaient améliorées, pourraient transformer leur satisfaction modérée en un épanouissement durable.</p>
+  </div>
+
+  <!-- ── SOUS-QUESTIONS ─────────────────────────────────────────────────── -->
+  <div class="subq-section">
+    <div class="subq-header">Détail des 5 sous-questions — Claude Haiku</div>
+
+    <div class="subq-block">
+      <div class="subq-label">
+        <span class="subq-num">SQ1</span>
+        <span class="subq-q">Quels sont les verbatims des entrepreneurs corses concernant leur satisfaction globale vis-à-vis de leur bien-être au travail ?</span>
+      </div>
+      <div class="subq-answer">Selon l'enquête citoyenne, les entrepreneurs et travailleurs indépendants corses expriment une satisfaction modérée vis-à-vis de leur bien-être au travail. La satisfaction globale liée à l'emploi est de 3,65/5, avec une répartition équilibrée des notes (30 % à ★3, 30 % à ★4, 25 % à ★5).
+
+Selon les entretiens qualitatifs, les verbatims reflètent une ambivalence entre épanouissement personnel et contraintes structurelles. Un entrepreneur de 44 ans exprime : « C'est la santé, l'argent et l'amour qui font le bonheur », soulignant l'importance des conditions matérielles et relationnelles. Un autre (46 ans) évoque la centralité du travail : « Le travail est important pour moi, mais pas le travail seulement pour gagner de l'argent ».
+
+Les principales insatisfactions portent sur l'accès aux soins (2,55/5), les transports (2,19/5) et les revenus (3,15/5), tandis que l'équilibre vie professionnelle/personnelle est mieux évalué (3,85/5). Ces tensions révèlent un bien-être conditionné par des contraintes externes plutôt que par l'activité entrepreneuriale elle-même.</div>
+    </div>
+
+    <div class="subq-block">
+      <div class="subq-label">
+        <span class="subq-num">SQ2</span>
+        <span class="subq-q">Quelles sont les principales sources de stress ou d'insatisfaction mentionnées par les entrepreneurs corses dans les enquêtes de bien-être ?</span>
+      </div>
+      <div class="subq-answer">Selon l'enquête citoyenne, les entrepreneurs corses identifient quatre sources majeures de stress :
+
+1. Santé et accès aux soins (2,55/5) — Le point le plus critique. L'accès aux médecins spécialistes est noté 1,85/5 (majorité à ★1), et les délais pour un généraliste atteignent 2,90/5. Les verbatims dénoncent un « manque cruel de médecins spécialisés ».
+
+2. Transports et mobilité (2,19/5) — Les transports en commun sont notés 1,65/5, avec plus de la moitié des répondants à ★1. Verbatim : « La pression du coût des transports est insupportable ».
+
+3. Revenus et charges (3,15/5) — Frustration face aux taxes et charges, malgré un emploi (3,65/5). Verbatim : « Notre société embauche 7 personnes en CDI et est toujours taxée sur tous les niveaux ».
+
+4. Confiance dans l'avenir (2,90/5) et institutions (2,60/5) — Pessimisme marqué sur les perspectives économiques locales et défiance envers les pouvoirs publics.</div>
+    </div>
+
+    <div class="subq-block">
+      <div class="subq-label">
+        <span class="subq-num">SQ3</span>
+        <span class="subq-q">Quels aspects de leur environnement professionnel sont perçus comme améliorant ou détériorant leur bien-être selon les entrepreneurs corses ?</span>
+      </div>
+      <div class="subq-answer">Aspects détériorant le bien-être :
+— Pression économique et charges structurelles (selon l'enquête citoyenne) : revenus insuffisants, fiscalité lourde, coûts logistiques liés à l'insularité
+— Défiance institutionnelle (2,60/5) : sentiment d'abandon par les pouvoirs publics, certains verbatims évoquant la nécessité de « lutter contre la mafia »
+— Accès limité aux services (santé, transports) comme frein au développement de l'activité
+
+Aspects améliorant le bien-être :
+— Autonomie professionnelle valorisée : capacité à organiser son travail selon ses priorités
+— Liens sociaux et communautaires (selon les entretiens qualitatifs) : « Si l'on a de bonnes et belles relations, alors tout est possible »
+— Satisfaction emploi globale (3,65/5) : l'activité entrepreneuriale en elle-même est source d'épanouissement malgré les contraintes
+
+Les entrepreneurs corses semblent donc trouver leur équilibre dans leur autonomie et leurs relations, plutôt que dans les conditions macro-économiques ou institutionnelles, perçues très négativement.</div>
+    </div>
+
+    <div class="subq-block">
+      <div class="subq-label">
+        <span class="subq-num">SQ4</span>
+        <span class="subq-q">Comment les entrepreneurs corses évaluent-ils leur équilibre vie professionnelle/vie personnelle dans les retours qualitatifs des enquêtes ?</span>
+      </div>
+      <div class="subq-answer">Selon l'enquête citoyenne, les entrepreneurs et travailleurs indépendants corses évaluent positivement leur équilibre vie professionnelle/vie personnelle : score de 3,85/5, avec 75 % des répondants à ★4 ou ★5 et seulement 10 % à ★1 ou ★2.
+
+Les verbatims qualitatifs confirment cette satisfaction relative. Un entrepreneur exprime : « Un bon équilibre entre une vie personnelle et professionnelle est important pour un épanouissement total », traduisant une conscience aiguë de l'importance de cet équilibre. Un autre souligne le rôle central des relations humaines : « Si l'on a de bonnes et belles relations, alors tout est possible ».
+
+Ces retours suggèrent que les entrepreneurs corses parviennent à préserver une frontière satisfaisante entre leurs sphères professionnelle et personnelle, malgré les contraintes structurelles (charges, transports, accès aux soins). Cet équilibre semble constituer un facteur de résilience important face aux difficultés économiques et logistiques.</div>
+    </div>
+
+    <div class="subq-block">
+      <div class="subq-label">
+        <span class="subq-num">SQ5</span>
+        <span class="subq-q">Quelles attentes ou revendications les entrepreneurs corses expriment-ils en matière de politiques publiques pour améliorer leur bien-être ?</span>
+      </div>
+      <div class="subq-answer">Les données disponibles ne contiennent pas de verbatims ou données spécifiques sur les revendications politiques précises des entrepreneurs corses (formations, aides, simplification administrative). Les attentes émergent en creux, à travers les insatisfactions exprimées :
+
+— Réduction des charges et de la pression fiscale (implicite dans les verbatims sur la taxation)
+— Amélioration de l'accès aux soins, perçu comme prioritaire (score 2,55/5)
+— Développement des infrastructures de transport pour réduire les coûts liés à l'insularité
+— Renforcement de la confiance dans les institutions (score 2,60/5), suggérant un besoin de dialogue public-privé
+
+Ces attentes restent peu structurées dans les retours qualitatifs disponibles. Aucune donnée spécifique sur des demandes de formations, d'aides ou de simplification administrative n'est identifiable dans le corpus. Les entrepreneurs semblent exprimer davantage un besoin de conditions-cadres favorables (infrastructure, fiscalité) que des revendications programmatiques précises.</div>
+    </div>
+  </div>
+
+  <!-- ── SOURCES ─────────────────────────────────────────────────────────── -->
+  <div class="sources-section">
+    <div class="sources-header">Sources mobilisées — 72 au total (5 sous-questions × RAPTOR vue <code style="font-size:0.9em">profession</code>)</div>
+    <div class="sources-grid">
+      <div class="source-chip"><span class="src-type">RAPTOR verbatims</span><br><span class="src-sq">Vue : profession (N=60) · toutes SQ</span></div>
+      <div class="source-chip"><span class="src-type">RAPTOR scores enquête</span><br><span class="src-sq">Vue : profession · toutes SQ</span></div>
+      <div class="source-chip"><span class="src-type">Verbatims bruts (evidence)</span><br><span class="src-sq">Entrepreneurs ♂ 44 ans, 46 ans · SQ1–5</span></div>
+      <div class="source-chip"><span class="src-type">RAPTOR entretiens semi-directifs</span><br><span class="src-sq">Commune : Grosseto-Prugna · SQ1</span></div>
+      <div class="source-chip"><span class="src-type">Entretiens bruts (portrait)</span><br><span class="src-sq">Filtrés par profession · SQ3, SQ5</span></div>
+      <div class="source-chip"><span class="src-type">Enquête citoyenne (responses)</span><br><span class="src-sq">Filtrées par profession · SQ2, SQ4</span></div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
