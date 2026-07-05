@@ -262,7 +262,8 @@ class AgenticRAGPipeline:
 
     def init(self):
         """Charge les modèles et connecte aux collections ChromaDB."""
-        import chromadb
+        # SentenceTransformer DOIT être chargé avant chromadb (conflit de libs natives)
+        # → init() du RaptorRetriever en premier, chromadb ensuite
         from rag_v9_raptor import RaptorRetriever
 
         print("  [v11] Chargement RaptorRetriever...")
@@ -274,7 +275,8 @@ class AgenticRAGPipeline:
         self._raptor.init()
         self._embed_model = self._raptor._embed_model  # BGE-M3 partage, pas de double chargement
 
-        # Client Chroma pour acces direct aux collections geo
+        # Client Chroma pour acces direct aux collections geo (après sentence_transformers)
+        import chromadb
         self._chroma_client = chromadb.PersistentClient(path=self.chroma_path)
 
         # Clients LLM

@@ -154,6 +154,7 @@ class QueryRequest(BaseModel):
     n_subquestions: int = Field(5, ge=1, le=8, description="Nombre de sous-questions à générer (v10 uniquement)")
     max_iterations: int = Field(5, ge=1, le=8, description="Nombre max d'itérations ReAct (v11 uniquement)")
     use_fast_path: bool = Field(True, description="Fast path pour questions simples (v11 uniquement)")
+    temperature_override: Optional[float] = Field(None, description="Forcer une température fixe sur tous les LLM génératifs (None = températures de production)", ge=0.0, le=2.0)
 
     model_config = ConfigDict(
         json_schema_extra={
@@ -185,6 +186,7 @@ class QueryResponse(BaseModel):
     timestamp: str = Field(..., description="Horodatage de la réponse")
     context: Optional[str] = Field(None, description="Contexte complet passé au LLM (pour debug/export)")
     sub_questions: Optional[List[Dict]] = Field(None, description="Sous-questions et réponses intermédiaires (v10)")
+    sources_mobilisees: Optional[List[Dict]] = Field(None, description="Types de sources mobilisées par sous-question (structuré depuis bloc ===SOURCES_MOBILISEES===)")
 
 
 class HealthResponse(BaseModel):
@@ -842,6 +844,7 @@ def query_rag(request: QueryRequest):
         print(f"\n[{datetime.now().isoformat()}] Requête {request.rag_version} (LLM: {request.llm_model}): {request.question}")
         v10_scoring = {"applicable": False}  # valeur par defaut pour les versions != v10
         v10_sub_qa = None
+        v10_sources_mob = None
 
         # Changer le modèle LLM si différent du défaut
         if hasattr(rag, 'llm_model'):
@@ -1100,27 +1103,30 @@ def query_rag(request: QueryRequest):
                 if enquete_docs_v10:
                     extra_ctx_v10 = "[Scores enquête par commune (subjectif/quanti)]\n" + "\n\n".join(enquete_docs_v10)
 
-            answer, retrieval_results, v10_scoring, v10_sub_qa = rag.query(
+            answer, retrieval_results, v10_scoring, v10_sub_qa, v10_sources_mob = rag.query(
                 question=request.question,
                 k=request.k,
                 n_subquestions=request.n_subquestions,
                 extra_context=extra_ctx_v10,
                 force_mixed=is_bieneetre_v10,
+                temperature_override=request.temperature_override,
             )
 
         elif request.rag_version == "v_decomp_raptor":
-            answer, retrieval_results, v10_scoring, v10_sub_qa = rag.query(
+            answer, retrieval_results, v10_scoring, v10_sub_qa, v10_sources_mob = rag.query(
                 question=request.question,
                 k=request.k,
                 n_subquestions=request.n_subquestions,
                 use_bilan=False,
+                temperature_override=request.temperature_override,
             )
 
         elif request.rag_version == "v_decomp":
-            answer, retrieval_results, v10_scoring, v10_sub_qa = rag.query(
+            answer, retrieval_results, v10_scoring, v10_sub_qa, v10_sources_mob = rag.query(
                 question=request.question,
                 k=request.k,
                 n_subquestions=request.n_subquestions,
+                temperature_override=request.temperature_override,
             )
 
         elif request.rag_version == "v_vanilla_k10":
@@ -1225,7 +1231,8 @@ def query_rag(request: QueryRequest):
             metadata=metadata,
             rag_version_used=request.rag_version,
             timestamp=datetime.now().isoformat(),
-            sub_questions=v10_sub_qa if request.rag_version in ("v10", "v11", "v_decomp", "v_decomp_raptor") else None
+            sub_questions=v10_sub_qa if request.rag_version in ("v10", "v11", "v_decomp", "v_decomp_raptor") else None,
+            sources_mobilisees=v10_sources_mob if request.rag_version in ("v10", "v_decomp", "v_decomp_raptor") else None,
         )
 
         print(f"[{datetime.now().isoformat()}] Réponse générée ({request.rag_version}) avec {len(sources)} sources")

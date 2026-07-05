@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Stability Report — 20260630_114826</title>
+<style>
+body{font-family:system-ui,sans-serif;margin:2rem;background:#f8f9fa;color:#212529}
+h1{color:#2c3e50}h2{color:#34495e;border-bottom:2px solid #dee2e6;padding-bottom:.4rem}
+table{border-collapse:collapse;width:100%;margin:1rem 0}
+th{background:#343a40;color:#fff;padding:.5rem .7rem;text-align:left}
+td{padding:.4rem .7rem;border-bottom:1px solid #dee2e6}
+tr:hover td{background:#e9ecef}
+.good{color:#28a745;font-weight:bold}.warn{color:#fd7e14;font-weight:bold}
+.bad{color:#dc3545;font-weight:bold}
+details{margin:.5rem 0}summary{cursor:pointer;font-weight:bold;padding:.3rem}
+summary:hover{text-decoration:underline}
+pre{background:#fff;border:1px solid #dee2e6;padding:1rem;border-radius:4px;
+    white-space:pre-wrap;word-break:break-word;font-size:.85rem;max-height:400px;overflow-y:auto}
+.mob-table td{font-size:.82rem}.run-header{background:#e9ecef;font-weight:bold}
+</style>
+</head>
+<body>
+<h1>Harnais de stabilité RAG</h1>
+<p><strong>Date :</strong> 20260630_114826 &nbsp;|&nbsp;
+   <strong>Version :</strong> v_decomp_raptor &nbsp;|&nbsp;
+   <strong>k :</strong> 5 &nbsp;|&nbsp;
+   <strong>M runs :</strong> 5 &nbsp;|&nbsp;
+   <strong>Température :</strong> Production (naturelle) &nbsp;|&nbsp;
+   <strong>Questions :</strong> [41, 62]</p>
+
+<h2>Stabilité des IDs sources (pre-check)</h2>
+<p>IDs sources entre 2 appels : <strong style='color:green'>STABLE</strong> (run1: 0 src | run2: 0 src)</p>
+
+<h2>Tableau récapitulatif</h2>
+<table>
+<tr><th>Q</th><th>Question</th><th>Sem.cos µ</th><th>Sem.cos σ</th><th>BLEU</th><th>ROUGE-L</th><th>Jaccard</th><th>Ovlp@5</th><th>TypeOvlp (coarse)</th><th>Runs val.</th></tr>
+<tr><td>Q41</td><td title='Ajaccio peut-elle présenter un score objectif élevé tout en '>Raisonnement comparatif<br><small>Ajaccio peut-elle présenter un score objectif élev…</small></td><td class='warn'>0.9318</td><td>0.0122</td><td class='good'>0.4764</td><td class='bad'>0.2692</td><td class='good'>0.9600</td><td class='bad'>0.4000</td><td class='good'>0.8667</td><td>5/5</td></tr><tr><td>Q62</td><td title='Quelle commune arrive en tête du classement pour OppChoVec ?'>Robustesse sémantique<br><small>Quelle commune arrive en tête du classement pour O…</small></td><td class='warn'>0.9446</td><td>0.0126</td><td class='good'>0.6140</td><td class='warn'>0.4347</td><td class='good'>0.8965</td><td class='good'>1.0000</td><td class='good'>1.0000</td><td>5/5</td></tr><tr class='run-header'><td colspan='2'>GLOBAL (2 questions)</td><td class='warn'><strong>0.9382</strong></td><td>—</td><td class='good'><strong>0.5452</strong></td><td class='warn'><strong>0.3519</strong></td><td class='good'><strong>0.9283</strong></td><td class='warn'><strong>0.7000</strong></td><td class='good'><strong>0.9334</strong></td><td>10/10</td></tr>
+</table>
+<p><small>Légende : <span class='good'>■ ≥ seuil haut</span>
+<span class='warn'>■ entre seuils</span>
+<span class='bad'>■ &lt; seuil bas</span></small></p>
+
+
+<h2>Q41 — Ajaccio peut-elle présenter un score objectif élevé tout en étant mal évaluée pa</h2>
+<p><em>[Raisonnement comparatif / Comparaison contre-intuitive]</em></p>
+<p><code>Sem.cos µ: 0.932 | Sem.cos σ: 0.012 | BLEU: 0.476 | ROUGE-L: 0.269 | Jaccard: 0.960 | Ovlp@5: 0.400 | TypeOvlp(coarse): 0.867 [5/5 runs valides, orphelins: ['Synthèse verbatims enquête citoyenne — vue : dimension*commune — 23 répondants']]</code></p>
+<details open><summary>Types coarse mobilisés par run</summary>
+<table class='mob-table'><tr><th>Run</th><th>État</th><th>OppChoVec</th><th>Enquête cit.</th><th>Équipements</th></tr><tr><td>Run 1</td><td style='color:#28a745'>ok</td><td>✓</td><td>✓</td><td></td></tr><tr><td>Run 2</td><td style='color:#28a745'>ok</td><td>✓</td><td>✓</td><td></td></tr><tr><td>Run 3</td><td style='color:#28a745'>ok</td><td>✓</td><td>✓</td><td></td></tr><tr><td>Run 4 <small style='color:#c0392b'>[orphelins: Synthèse verbatims enquête citoyenne — vue : dimension*commune — 23 répondants]</small></td><td style='color:#28a745'>ok</td><td>✓</td><td>✓</td><td></td></tr><tr><td>Run 5 <small style='color:#c0392b'>[orphelins: Synthèse verbatims enquête citoyenne — vue : dimension*commune — 23 répondants]</small></td><td style='color:#28a745'>ok</td><td>✓</td><td>✓</td><td>✓</td></tr></table>
+</details>
+<details><summary>Types fins mobilisés par run (détail brut)</summary>
+<table class='mob-table'><tr><th>Run</th><th>Données enquête citoyenne — Aj</th><th>Indicateurs OppChoVec — Ajacci</th><th>Synthèse scores enquête citoye</th><th>Synthèse scores enquête citoye</th><th>Synthèse verbatims enquête cit</th><th>Synthèse verbatims enquête cit</th><th>Verbatims bruts enquête citoye</th><th>Équipements et services commun</th></tr><tr><td>Run 1</td><td>✓</td><td>✓</td><td>✓</td><td></td><td></td><td></td><td>✓</td><td></td></tr><tr><td>Run 2</td><td>✓</td><td>✓</td><td></td><td></td><td></td><td></td><td>✓</td><td></td></tr><tr><td>Run 3</td><td>✓</td><td>✓</td><td>✓</td><td></td><td>✓</td><td></td><td>✓</td><td></td></tr><tr><td>Run 4</td><td>✓</td><td>✓</td><td></td><td>✓</td><td></td><td>✓</td><td>✓</td><td></td></tr><tr><td>Run 5</td><td></td><td>✓</td><td></td><td>✓</td><td></td><td>✓</td><td>✓</td><td>✓</td></tr></table>
+</details>
+<details><summary>Réponses complètes (5 runs)</summary>
+<details><summary>Run 1 — 64.4s | 70 sources</summary><pre>**Synthèse : Ajaccio peut-elle présenter un score objectif élevé tout en étant mal évaluée par ses habitants ?**
+
+Oui, Ajaccio illustre parfaitement ce paradoxe : la ville affiche un **score objectif global de 5,78/10** selon les indicateurs territoriaux, la classant **19ᵉ sur 360 communes corses** [SQ1][SQ2], mais ses habitants lui attribuent une **note de satisfaction moyenne de 3,85/5 (soit environ 7,7/10)** [SQ3], avec des écarts marqués selon les dimensions du quotidien.
+
+### **1. Un score objectif contrasté, porté par des atouts structurels**
+Les indicateurs territoriaux révèlent une **ville aux ressources exceptionnelles**, mais dont les bénéfices ne se traduisent pas pleinement dans le vécu des habitants :
+- **Opportunités maximales** : Ajaccio obtient un **score parfait de 10/10** pour l’accès aux ressources (éducation, mobilité, numérique), se classant **1ʳᵉ commune corse** sur ce critère [SQ1]. Ces atouts devraient théoriquement favoriser une qualité de vie élevée.
+- **Faiblesses structurelles criantes** : En revanche, la ville est **358ᵉ sur 360** pour le critère "Choix" (1,27/10), reflétant des **contraintes démocratiques ou territoriales** (absence de quartiers prioritaires, structure électorale limitée) [SQ1]. Le "Vécu" (revenus, logement, emploi, accès aux services) reste **moyen (4,80/10, 41ᵉ rang)** [SQ1], ce qui tempère l’impact des opportunités offertes.
+
+### **2. Une satisfaction citoyenne modérée, grevée par des points noirs**
+Malgré ce score objectif correct, les habitants d’Ajaccio expriment une **insatisfaction ciblée sur des enjeux concrets** :
+- **Transports et santé : les talons d’Achille** : Ces deux domaines obtiennent les **pires notes** (2,21/5 pour les transports, 2,58/5 pour la santé) [SQ4]. Les habitants dénoncent notamment :
+  - L’**insuffisance des transports en commun** (1,98/5) et l’**encombrement routier** (2,02/5) [SQ4].
+  - L’**accès aux médecins spécialistes** (1,98/5, note la plus basse de toutes les dimensions) et les **délais d’attente** [SQ4].
+- **Confiance en l’avenir en berne** : La note de **2,79/5** pour la confiance en l’avenir [SQ3] révèle une **inquiétude persistante**, malgré une satisfaction relative pour le présent (emploi, sécurité, logement notés entre 3,8 et 3,9/5) [SQ5].
+
+### **3. Un décalage révélateur entre potentiel et réalité**
+L’écart entre le score objectif et la satisfaction déclarée s’explique par :
+- **Un déséquilibre entre ressources et vécu** : Ajaccio offre des **opportunités uniques en Corse** (éducation, mobilité, numérique), mais celles-ci ne se traduisent pas par une **amélioration tangible du quotidien** (revenus, emploi, accès aux soins) [SQ1][SQ5].
+- **Des frustrations ciblées** : Les habitants ne remettent pas en cause la **qualité globale du cadre de vie** (note de 3,85/5), mais pointent des **défauts structurels** (transports, santé, institutions) qui **minent leur expérience concrète** [SQ4][SQ5].
+- **Un effet "ville capitale"** : En tant que préfecture et pôle économique, Ajaccio concentre à la fois **des atouts majeurs** (services, emplois) et **des tensions** (saturation des infrastructures, inégalités d’accès), ce qui explique ce **profil en ciseaux** [SQ1][SQ2].
+
+### **Conclusion : une ville à deux vitesses**
+Ajaccio démontre qu’un **score objectif élevé** (porté par des ressources exceptionnelles) peut coexister avec une **évaluation citoyenne mitigée**, dès lors que ces ressources ne se répercutent pas sur le vécu quotidien. La ville cumule **des atouts indéniables** (1ʳᵉ pour les opportunités) et **des faiblesses persistantes** (transports, santé, confiance en l’avenir), créant un **paradoxe corse typique** : une capitale attractive sur le papier, mais dont les habitants peinent à en tirer pleinement profit.
+
+---</pre></details><details><summary>Run 2 — 72.2s | 69 sources</summary><pre>**Synthèse : Ajaccio peut-elle présenter un score objectif élevé tout en étant mal évaluée par ses habitants ?**
+
+Oui, Ajaccio illustre parfaitement ce paradoxe : la ville affiche un **score territorial objectif solide** tout en étant **perçue de manière mitigée par ses habitants**, avec des écarts marqués selon les dimensions du bien-être.
+
+### **1. Un score objectif élevé, porté par des opportunités exceptionnelles**
+Selon les indicateurs territoriaux, Ajaccio obtient un **score global de 5,78/10** [SQ1], la classant **19ᵉ sur 360 communes corses** [SQ2]. Ce résultat s’explique par des **atouts structurels remarquables** :
+- **Des opportunités maximales** (10/10) [SQ1] : la ville se distingue par son **accès à l’éducation, la diversité sociale, la mobilité et le numérique**, des critères où elle surpasse l’immense majorité des communes corses.
+- Un **vécu moyen mais correct** (4,80/10) [SQ1] : les revenus, la qualité du logement et l’accès aux services (en moins de 20 minutes) placent Ajaccio dans la moyenne haute des communes insulaires.
+
+Cependant, ce score global masque une **faiblesse critique** : la composante **"Choix"** (liberté effective) s’effondre à **1,27/10** [SQ1], reflétant des **défis politiques ou de gouvernance** (absence de quartiers prioritaires, droits de vote limités ?) qui pèsent sur la perception des habitants.
+
+---
+
+### **2. Une évaluation citoyenne modérée, marquée par des frustrations ciblées**
+Malgré ces atouts objectifs, les Ajacciens expriment une **satisfaction globale modérée** :
+- **Note moyenne de 3,85/5** (soit 7,7/10) pour la qualité de vie [SQ3], un score **inférieur de 2 points** au score territorial objectif (5,78/10) [SQ5].
+- **Seulement 2,79/5** (5,6/10) pour la confiance en l’avenir [SQ3], révélant un **décalage entre le présent perçu et les perspectives**.
+
+Les **points de friction** identifiés par les habitants expliquent ce décalage :
+- **Santé et transports** : **43 % des répondants** se déclarent **très insatisfaits** des transports (note de 2,20/5), et **78 %** le sont pour l’accès aux **médecins spécialistes** (1,98/5) [SQ4]. Ces domaines, pourtant cruciaux au quotidien, **ne se reflètent pas dans les indicateurs objectifs** (où l’accès aux services est jugé moyen).
+- **Coût de la vie et revenus** : Les verbatims soulignent une **pression économique** ("*tout augmente mais pas les salaires*") [SQ4], contrastant avec un **revenu fiscal moyen** intégré dans le score "Vécu" (4,80/10) [SQ1].
+- **Institutions et tourisme** : **41 % d’insatisfaits** pour les institutions (2,93/5) et **57 %** pour le tourisme (2,63/5) [SQ4], des dimensions où les indicateurs objectifs (comme le score "Choix" à 1,27/10) confirment des **défis structurels**.
+
+---
+
+### **3. Pourquoi ce paradoxe ?**
+Trois facteurs clés éclairent l’écart entre **données territoriales** et **perceptions** :
+1. **Des opportunités inégalement réparties** :
+   Les indicateurs objectifs mesurent des **moyennes** (ex. : accès à l’éducation ou au numérique), mais les habitants soulignent des **inégalités d’accès** (ex. : délais pour les spécialistes, saturation des transports) [SQ4]. Une offre théorique abondante ne garantit pas une **expérience quotidienne fluide**.
+
+2. **Des attentes élevées dans une ville préfecture** :
+   Ajaccio concentre **services et infrastructures**, ce qui **élève les exigences** des habitants. Une note de 3,85/5 pour la qualité de vie [SQ3] peut sembler décevante dans ce contexte, alors qu’elle serait perçue comme positive dans une commune rurale.
+
+3. **Un vécu dominé par des irritants concrets** :
+   Les indicateurs "Vécu" (4,80/10) [SQ1] intègrent des critères comme le **revenu moyen** ou la **stabilité de l’emploi**, mais les habitants **pondèrent davantage** les **difficultés immédiates** (santé, transports, coût de la vie) [SQ4]. Ces dernières, bien que non capturées par les scores globaux, **dominent leur ressenti**.
+
+---
+
+### **Conclusion : Une ville de contrastes, où l’objectif ne suffit pas**
+Ajaccio démontre qu’un **score territorial élevé** (5,78/10) [SQ1] peut coexister avec une **évaluation citoyenne modérée** (3,85/5) [SQ3], voire **critique sur des enjeux clés**. Ce paradoxe s’explique par :
+- **Des atouts structurels réels** (éducation, mobilité, numérique), mais **inégalement vécus** au quotidien.
+- **Des frustrations ciblées** (santé, transports, coût de la vie) qui **pèsent plus que les moyennes statistiques** dans le ressenti des habitants.
+- **Un décalage entre opportunités théoriques et liberté effective** : la ville offre des ressources, mais les habitants perçoivent des **contraintes** (politiques, économiques, logistiques) qui limitent leur bien-être.
+
+**En résumé** : Ajaccio est une commune **objectivement bien dotée**, mais où les **défis du quotidien** (accès aux soins, saturation des infrastructures, pression économique) **érodent la satisfaction**, malgré des indicateurs globaux favorables. Ce cas illustre l’importance de **croiser données territoriales et perceptions** pour saisir la complexité du bien-être urbain.</pre></details><details><summary>Run 3 — 63.1s | 69 sources</summary><pre>**Synthèse : Ajaccio peut-elle présenter un score objectif élevé tout en étant mal évaluée par ses habitants ?**
+
+Oui, Ajaccio illustre parfaitement cette apparente contradiction, mais avec des nuances importantes. La commune affiche un **score territorial objectif de 5,78/10**, la classant **19ᵉ sur 360 communes corses** [SQ1], un résultat intermédiaire qui masque des disparités internes majeures. D’un côté, ses **opportunités** (accès à l’éducation, mobilité, technologies) sont exceptionnelles, avec un score maximal de **10/10** [SQ1]. De l’autre, ses **faiblesses structurelles** – notamment un score de **1,27/10** pour les "choix" (libertés effectives) et **4,80/10** pour le "vécu" (conditions de vie concrètes) [SQ1] – limitent son potentiel.
+
+Pourtant, les habitants d’Ajaccio ne perçoivent pas cette situation de manière aussi tranchée. Leur **satisfaction globale** atteint **3,85/5** [SQ3], un niveau modéré qui reflète une **acceptation du quotidien** (emploi, sécurité, logement bien notés) [SQ3], mais aussi des **frustrations ciblées**. Les transports (**2,20/5**), la santé (**2,59/5**) et la confiance en l’avenir (**2,79/5**) [SQ3] tirent la note vers le bas, tandis que les verbatims révèlent des critiques sur la **pollution**, le **manque d’espaces verts** et les **délais d’accès aux soins spécialisés** [SQ4].
+
+**L’écart s’explique par trois facteurs clés** :
+1. **Les ressources ne suffisent pas** : Ajaccio dispose d’infrastructures et de services de qualité (écoles, mobilité, numérique), mais leur **accessibilité réelle** est entravée par des problèmes d’organisation (transports saturés, déserts médicaux) [SQ1][SQ4].
+2. **Un décalage entre opportunités et vécu** : Les habitants bénéficient d’un cadre propice (emploi, sécurité), mais subissent des **contraintes quotidiennes** (encombrements, attentes médicales) qui minent leur satisfaction [SQ3][SQ4].
+3. **Une inquiétude prospective** : Malgré un présent acceptable, la **confiance en l’avenir** est faible, reflétant des craintes sur la capacité de la ville à résoudre ses défis structurels (santé, environnement) [SQ3].
+
+**En résumé**, Ajaccio cumule des **atouts objectifs** (opportunités) et des **faiblesses perçues** (vécu, libertés), créant un paradoxe où la ville est à la fois **bien dotée** et **mal vécue**. Son score territorial moyen (5,78/10) ne capture pas cette complexité, tandis que les habitants, bien que globalement satisfaits, expriment des **mécontentements sectoriels** qui pèsent sur leur qualité de vie [SQ5].
+
+---</pre></details><details><summary>Run 4 — 76.4s | 70 sources</summary><pre>**Synthèse : Ajaccio peut-elle présenter un score objectif élevé tout en étant mal évaluée par ses habitants ?**
+
+Oui, Ajaccio illustre parfaitement cette apparente contradiction, où des indicateurs territoriaux solides coexistent avec une perception mitigée de ses habitants. Plusieurs éléments clés expliquent ce paradoxe.
+
+### **1. Un score objectif contrasté, mais globalement favorable**
+Les données territoriales objectives placent Ajaccio en **19ᵉ position sur 360 communes corses**, avec un score global de **5,78/10** [SQ1]. Ce résultat reflète une **excellence en opportunités** (10/10, 1ʳᵉ place), portée par un accès remarquable à l’éducation (7,42/10), à la mobilité (8,99/10) et aux technologies numériques (9,35/10) [SQ1]. Cependant, ce bilan est terni par deux faiblesses majeures :
+- Un **score de "Choix" extrêmement faible (1,27/10, 358ᵉ place)**, lié à l’absence de quartiers prioritaires et à une couverture électorale limitée [SQ1].
+- Un **vécu quotidien moyen (4,80/10, 41ᵉ place)**, où les revenus, la qualité du logement et l’accès aux services peinent à suivre le dynamisme des infrastructures [SQ1].
+
+Ainsi, Ajaccio se distingue par ses **ressources et équipements**, mais pâtit d’**inégalités sociales et d’un accès inégal aux droits civiques** [SQ2].
+
+---
+
+### **2. Une perception citoyenne en demi-teinte, marquée par des frustrations ciblées**
+Selon l’enquête citoyenne, les Ajacciens évaluent leur **qualité de vie à 3,85/5** [SQ3], un score modéré qui cache des disparités importantes :
+- **Points forts perçus** : L’emploi (3,91/5), la sécurité (3,81/5) et le logement (3,84/5) sont relativement bien notés, reflétant une satisfaction sur le cadre de vie immédiat [SQ3].
+- **Points noirs** : Les **transports (2,20/5)** et la **santé (2,59/5)** cristallisent les mécontentements, avec des critiques récurrentes sur les **transports en commun (1,98/5)**, les **délais pour les spécialistes (1,98/5)** et l’encombrement routier [SQ4]. Les verbatims soulignent aussi des **problèmes environnementaux** (pollution maritime, manque d’espaces verts) et une **méfiance envers les institutions (2,93/5)** [SQ4].
+- **Un pessimisme sur l’avenir** : La **confiance en l’avenir (2,79/5)** est particulièrement basse, révélant une inquiétude quant à la capacité de la ville à résoudre ses défis structurels [SQ3].
+
+---
+
+### **3. Un écart révélateur entre potentiel et réalité vécue**
+L’écart entre les indicateurs objectifs et les perceptions s’explique par trois facteurs :
+- **Des ressources sous-exploitées** : Ajaccio dispose d’atouts majeurs (éducation, mobilité, TIC), mais leur **accessibilité concrète** est remise en cause par les habitants, notamment pour les soins spécialisés ou les déplacements quotidiens [SQ4].
+- **Des inégalités invisibles dans les scores** : Le score de "Choix" (1,27/10) reflète des **déséquilibres sociaux** qui ne sont pas captés par les moyennes globales, mais qui pèsent sur le quotidien (ex. : accès aux droits, représentation politique) [SQ1].
+- **Un décalage entre infrastructures et services** : Les équipements existent (hôpitaux, écoles, réseaux numériques), mais leur **efficacité perçue** est entravée par des problèmes de gestion (délais, saturation) ou de pollution [SQ4].
+
+**Conclusion** : Ajaccio peut effectivement afficher un **score objectif élevé** grâce à ses infrastructures et opportunités, tout en étant **mal évaluée par ses habitants** en raison de **dysfonctionnements concrets** (transports, santé) et d’un **sentiment d’injustice sociale**. Ce paradoxe souligne que la qualité de vie ne se résume pas à des indicateurs techniques, mais dépend aussi de la **capacité à transformer les ressources en bien-être partagé** [SQ5].
+
+---</pre></details><details><summary>Run 5 — 70.1s | 70 sources</summary><pre>**Synthèse : Ajaccio peut-elle présenter un score objectif élevé tout en étant mal évaluée par ses habitants ?**
+
+Oui, Ajaccio illustre parfaitement ce paradoxe : la ville affiche des **atouts objectifs majeurs**, mais ceux-ci ne se traduisent pas par une satisfaction élevée de ses habitants, révélant un décalage entre les conditions structurelles et leur vécu au quotidien.
+
+### **1. Un score objectif contrasté, mais globalement favorable**
+Selon les indicateurs territoriaux, Ajaccio obtient un **score de bien-être global de 5,78/10** [SQ1], la classant **19ᵉ sur 360 communes corses** [SQ2]. Ce résultat s’explique par des **opportunités exceptionnelles** :
+- **Accès aux ressources** (éducation, mobilité, numérique, diversité sociale) noté **10/10** [SQ1], soit le meilleur score possible en Corse.
+- **Accès aux services** (commerces, santé, transports) jugé **bon en théorie** (composante *Vécu* à 4,80/10) [SQ1], avec une couverture TIC à 93,5 % [SQ5].
+
+Cependant, ce tableau est terni par deux faiblesses objectives :
+- Un **score *Choix* très faible (1,27/10)** [SQ1], reflétant une concentration de quartiers prioritaires et des inégalités d’accès aux droits politiques.
+- Des **disparités internes** : les opportunités ne profitent pas uniformément à tous les habitants, comme en témoignent les écarts de revenus ou de stabilité de l’emploi [SQ1].
+
+---
+
+### **2. Une satisfaction citoyenne modérée, voire critique sur certains aspects**
+Malgré ces atouts, les Ajacciens expriment une **satisfaction globale moyenne de 3,85/5** [SQ3], avec des **points de friction majeurs** :
+- **Transports et mobilité** : notés **2,20/5** [SQ3], en décalage total avec le score objectif de mobilité (8,99/10) [SQ5]. Les habitants dénoncent l’encombrement, le manque de transports en commun et l’état des routes [SQ3].
+- **Accès aux soins** : évalué à **2,59/5** [SQ3], alors que les équipements médicaux sont objectivement présents. Les délais d’attente (2,53/5) et le manque de spécialistes (1,98/5) sont pointés du doigt [SQ5].
+- **Coût de la vie et revenus** : cités dans **12 verbatims** comme une source de stress [SQ3], malgré un revenu fiscal moyen correct (composante *Vécu*) [SQ1].
+- **Confiance en l’avenir** : **2,79/5** [SQ3], un score bas qui contraste avec les opportunités économiques théoriques de la ville.
+
+---
+
+### **3. Pourquoi ce décalage ? Trois explications clés**
+- **L’effet "plafond de verre"** : Les indicateurs objectifs mesurent la *disponibilité* des ressources (ex. : nombre de médecins, couverture haut débit), mais pas leur *accessibilité réelle* (délais, coût, qualité). À Ajaccio, la **demande excède souvent l’offre** (santé, logements), créant des frustrations malgré des infrastructures correctes [SQ5].
+- **Les inégalités territoriales** : Le score *Choix* (1,27/10) [SQ1] révèle des **quartiers prioritaires** où les habitants ne bénéficient pas des mêmes opportunités que dans les zones aisées. Les verbatims soulignent des **fractures sociales et spatiales** [SQ3].
+- **Un environnement dégradé** : Si les Ajacciens apprécient la nature corse, **21 répondants** dénoncent la **pollution locale** (trafic, déchets) [SQ5], un facteur absent des indicateurs OppChoVec mais central dans leur ressenti.
+
+---
+
+### **4. Conclusion : un potentiel inabouti**
+Ajaccio cumule des **atouts structurels indéniables** (éducation, mobilité, services), mais ceux-ci sont **neutralisés par des dysfonctionnements concrets** (transports saturés, soins inaccessibles, inégalités) et une **qualité de vie perçue comme médiocre** sur le terrain. Ce décalage montre que **les opportunités ne suffisent pas** : leur traduction en bien-être quotidien dépend de leur **équité d’accès** et de leur **adéquation aux besoins réels** des habitants.
+
+**En résumé** :
+- **Objectivement**, Ajaccio est une ville bien dotée (19ᵉ/360) [SQ2], avec des opportunités uniques en Corse [SQ1].
+- **Subjectivement**, ses habitants en retirent une **satisfaction limitée** (3,85/5) [SQ3], en raison de **défauts d’exécution** (transports, santé) et d’**inégalités persistantes** [SQ5].</pre></details>
+</details>
+
+<h2>Q62 — Quelle commune arrive en tête du classement pour OppChoVec ?</h2>
+<p><em>[Robustesse sémantique / Reformulations indirectes]</em></p>
+<p><code>Sem.cos µ: 0.945 | Sem.cos σ: 0.013 | BLEU: 0.614 | ROUGE-L: 0.435 | Jaccard: 0.896 | Ovlp@5: 1.000 | TypeOvlp(coarse): 1.000 [5/5 runs valides, orphelins: ['Profil démographique commune — Omessa']]</code></p>
+<details open><summary>Types coarse mobilisés par run</summary>
+<table class='mob-table'><tr><th>Run</th><th>État</th><th>OppChoVec</th></tr><tr><td>Run 1</td><td style='color:#28a745'>ok</td><td>✓</td></tr><tr><td>Run 2</td><td style='color:#28a745'>ok</td><td>✓</td></tr><tr><td>Run 3</td><td style='color:#28a745'>ok</td><td>✓</td></tr><tr><td>Run 4</td><td style='color:#28a745'>ok</td><td>✓</td></tr><tr><td>Run 5 <small style='color:#c0392b'>[orphelins: Profil démographique commune — Omessa]</small></td><td style='color:#28a745'>ok</td><td>✓</td></tr></table>
+</details>
+<details><summary>Types fins mobilisés par run (détail brut)</summary>
+<table class='mob-table'><tr><th>Run</th><th>Indicateurs OppChoVec</th><th>Profil démographique commune —</th></tr><tr><td>Run 1</td><td>✓</td><td></td></tr><tr><td>Run 2</td><td>✓</td><td></td></tr><tr><td>Run 3</td><td>✓</td><td></td></tr><tr><td>Run 4</td><td>✓</td><td></td></tr><tr><td>Run 5</td><td>✓</td><td>✓</td></tr></table>
+</details>
+<details><summary>Réponses complètes (5 runs)</summary>
+<details><summary>Run 1 — 43.3s | 52 sources</summary><pre>**Synthèse finale :**
+
+La commune qui arrive en tête du classement pour la qualité de vie territoriale en Corse est **Afa**, avec un score maximal de **10,00/10** selon les données territoriales objectives [SQ1][SQ2]. Cette performance exceptionnelle s’explique par des résultats élevés dans tous les domaines évalués : les conditions matérielles (revenu, logement, emploi et accès aux services) y sont optimales (score Vec de 10,00/10), tandis que les opportunités (éducation, diversité sociale, mobilité et connectivité) et les choix (droits civiques, absence de quartiers prioritaires) atteignent respectivement 8,15/10 et 9,27/10 [SQ2].
+
+Afa devance de justesse **Bastelicaccia**, classée deuxième avec un score de 9,81/10, soit un écart de seulement **0,19 point** [SQ5]. Les trois communes suivantes dans ce classement sont **Appietto** (9,61/10), **Alata** (9,59/10) et **Calvi** (non détaillée ici, mais présente dans le top 5) [SQ4]. Ces communes, principalement situées dans le Pays Ajaccien ou ses alentours, bénéficient de dynamiques similaires, notamment en matière d’accès aux services et de stabilité économique [SQ4].
+
+Aucune donnée d’enquête citoyenne spécifique à Afa ou à ces communes n’est disponible pour nuancer ces résultats objectifs. Les perceptions des habitants, lorsqu’elles existent, couvrent la Corse dans son ensemble et ne permettent pas d’isoler des tendances locales [SQ1][SQ2][SQ4][SQ5].</pre></details><details><summary>Run 2 — 47.3s | 52 sources</summary><pre>**Synthèse finale :**
+
+La commune qui arrive en tête du classement pour la qualité de vie en Corse, selon les indicateurs territoriaux objectifs, est **Afa**. Elle obtient un score maximal de **10,00/10** [SQ1][SQ2], ce qui la place au **1er rang** parmi les 360 communes corses [SQ2]. Ce résultat reflète une performance exceptionnelle, notamment sur la composante "vécu" (Vec), où elle atteint également le score parfait de 10,00, ainsi que des scores élevés en "opportunités" (Opp : 8,15) et en "choix" (Cho : 9,27) [SQ1].
+
+Afa devance de justesse **Bastelicaccia**, classée deuxième avec un score de **9,81/10** [SQ4], soit un écart de seulement **0,19 point** [SQ5]. Les deux communes suivantes dans ce classement sont **Appietto** (3ᵉ, 9,61/10) et **Alata** (4ᵉ, 9,59/10) [SQ4]. Ces quatre communes, toutes situées dans le Pays Ajaccien ou la Vallée du Prunelli, se distinguent par des conditions favorables en matière d’accès aux services, de stabilité de l’emploi et de qualité du logement [SQ4].
+
+Aucune donnée d’enquête citoyenne spécifique à Afa ou à ces communes n’est disponible pour compléter cette analyse ; les résultats présentés reposent exclusivement sur des indicateurs territoriaux objectifs [SQ1][SQ2][SQ4][SQ5].</pre></details><details><summary>Run 3 — 48.3s | 52 sources</summary><pre>**Synthèse finale : Quelle commune arrive en tête du classement pour la qualité de vie en Corse ?**
+
+La commune d’**Afa** se distingue comme la première du classement corse en matière de qualité de vie territoriale, selon les indicateurs objectifs disponibles. Avec un **score maximal de 10,00/10** [SQ1][SQ2], elle surpasse l’ensemble des 360 communes de l’île, grâce à une performance exceptionnelle sur les trois dimensions évaluées :
+- **Opportunités** (éducation, diversité sociale, mobilité et accès au numérique) : 8,15/10 [SQ2].
+- **Choix** (droits civiques et absence de quartiers prioritaires) : 9,27/10 [SQ2].
+- **Vecteurs de bien-être** (revenu, logement, emploi et accès aux services) : 10,00/10 [SQ2], un résultat sans équivalent en Corse.
+
+Afa devance de justesse **Bastelicaccia**, deuxième avec un score de 9,81/10, soit un écart de seulement **0,19 point** [SQ5]. Les trois communes suivantes – **Appietto** (9,61/10), **Alata** (9,59/10) et **Sarrola-Carcopino** (non détaillée ici mais souvent citée dans les classements proches) – confirment la domination des communes du sud-ouest corse, notamment celles des intercommunalités du Pays Ajaccien et de la Vallée du Prunelli [SQ4]. Ces territoires cumulent des atouts structurels : dynamisme économique, accès facilité aux services essentiels et cadre de vie attractif.
+
+**À noter** :
+- Aucune donnée d’enquête citoyenne spécifique à Afa n’est disponible pour nuancer ces résultats objectifs. Les perceptions des habitants sur leur qualité de vie pourraient différer des indicateurs territoriaux, mais les données mobilisées ici couvrent l’ensemble de la Corse [SQ1][SQ2][SQ4].
+- L’écart minimal entre Afa et Bastelicaccia (0,19 point) souligne une homogénéité rare au sommet du classement, suggérant que ces deux communes offrent des conditions de vie très proches [SQ5].</pre></details><details><summary>Run 4 — 81.5s | 52 sources</summary><pre>=== SYNTHÈSE FINALE ===
+
+**Afa arrive en tête du classement des communes corses pour la qualité de vie territoriale**, selon les données territoriales objectives. Avec un **score maximal de 10,00/10** [SQ1][SQ2], cette commune du Pays Ajaccien se distingue comme la référence en Corse en matière d’opportunités, de choix et de conditions de vie. Ses performances sont particulièrement remarquables sur les **conditions de vie (Vec = 10,00/10)** – incluant revenu fiscal moyen, qualité du logement, stabilité de l’emploi et accès aux services en moins de 20 minutes – ainsi que sur les **opportunités (Opp = 8,15/10)** – éducation, diversité des catégories socioprofessionnelles, mobilité et couverture numérique [SQ1][SQ2].
+
+Afa devance de justesse **Bastelicaccia (9,81/10)**, deuxième du classement, avec un écart minime de **0,19 point** [SQ5]. Les trois communes suivantes – **Appietto (9,61/10)**, **Alata (9,59/10)** et **Bastelicaccia** – confirment la domination des communes du sud-ouest de l’île dans ce palmarès, avec des scores très élevés sur les **choix (Cho, absence de quartiers prioritaires et droits civiques)** et les **vecteurs de bien-être (Vec)** [SQ4]. Ces résultats soulignent une concentration géographique des meilleures conditions objectives de qualité de vie, notamment dans les intercommunalités du Pays Ajaccien et de la Vallée du Prunelli.
+
+**Aucune donnée d’enquête citoyenne spécifique à Afa n’est disponible** : les perceptions recueillies couvrent la Corse entière et ne permettent pas d’analyser les ressentis des habitants de cette commune en particulier [SQ1][SQ2].
+
+---</pre></details><details><summary>Run 5 — 59.6s | 52 sources</summary><pre>**Synthèse finale : Quelle commune arrive en tête du classement pour la qualité de vie territoriale en Corse ?**
+
+La commune qui arrive en tête du classement pour la qualité de vie territoriale en Corse, mesurée par des indicateurs objectifs, est **Afa**. Elle obtient le score maximal de **10,00/10** [SQ1][SQ2], se distinguant comme la seule commune corse à atteindre ce niveau d'excellence. Ce résultat reflète une performance exceptionnelle sur les trois dimensions évaluées : les opportunités (éducation, diversité socio-professionnelle, mobilité et couverture numérique), les choix (droits civiques et absence de quartiers prioritaires) et les vecteurs de bien-être (revenu, logement, emploi et accès aux services) [SQ2].
+
+Afa devance de justesse **Bastelicaccia**, classée deuxième avec un score de **9,81/10** [SQ4][SQ5]. L'écart entre les deux communes est minime (**0,19 point**) [SQ5], ce qui souligne une qualité de vie territoriale très élevée dans ces deux localités, toutes deux situées dans le Pays Ajaccien. Les troisième et quatrième places reviennent respectivement à **Appietto (9,61/10)** et **Alata (9,59/10)** [SQ4], confirmant la concentration de communes performantes dans cette zone géographique.
+
+Les indicateurs territoriaux montrent qu'Afa excelle particulièrement sur les *vecteurs de bien-être* (score parfait de 10,00/10), grâce à un revenu fiscal moyen élevé, une qualité du logement optimale, une stabilité de l'emploi et un accès rapide aux services essentiels [SQ2]. Les *opportunités* (8,15/10) et les *choix* (9,27/10) y sont également très bien notés, bien que légèrement en retrait par rapport à la composante "vecteurs" [SQ1].
+
+Aucune donnée d'enquête citoyenne spécifique à Afa ou aux autres communes citées n'est disponible : les perceptions des habitants interrogés couvrent la Corse entière et ne permettent pas d'analyser les ressentis locaux [SQ1][SQ2][SQ4].</pre></details>
+</details>
+
+
+<hr>
+<p><small>JSON bruts : <code>C:\These\Données2\fichiers_pour_rag\comparaisons_rag\stability</code></small></p>
+</body>
+</html>

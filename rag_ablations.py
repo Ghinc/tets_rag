@@ -17,6 +17,7 @@ from rag_v10_raptor_subq import (
     decompose_question,
     answer_subquestion,
     synthesize_answers,
+    _parse_sources_mobilisees,
     _call_mistral,
     CHROMA_PATH,
     DEFAULT_N_SUBQUESTIONS,
@@ -139,7 +140,8 @@ class DecompOnlyRAG:
         print("DecompOnlyRAG (V_decomp) initialisé")
 
     def query(self, question: str, k: int = 5,
-              n_subquestions: int = DEFAULT_N_SUBQUESTIONS
+              n_subquestions: int = DEFAULT_N_SUBQUESTIONS,
+              temperature_override: Optional[float] = None
               ) -> Tuple[str, List[Dict], Dict, List[Dict]]:
         assert self._initialized, "Appelez init() d'abord."
         retriever = self._pipeline.retriever
@@ -147,7 +149,8 @@ class DecompOnlyRAG:
         print(f"\n[v_decomp] Question : {question}")
         print(f"[v_decomp] Etape 1/3 : Décomposition (Mistral Large)...")
         try:
-            sub_questions = decompose_question(question, n=n_subquestions)
+            sub_questions = decompose_question(question, n=n_subquestions,
+                                               temperature_override=temperature_override)
         except RuntimeError as _e:
             print(f"[v_decomp] Question hors-domaine ou indécomposable : {_e}")
             _refusal = _call_mistral(
@@ -157,7 +160,7 @@ class DecompOnlyRAG:
                 "Réponds poliment que tu ne peux pas répondre à cette question.",
                 max_tokens=300, temperature=0.3,
             )
-            return _refusal, [], {}, []
+            return _refusal, [], {}, [], []
 
         print(f"[v_decomp] Etape 2/3 : Retrieval brut + Haiku par sous-question...")
         sub_qa_pairs: List[Tuple[str, str]] = []
@@ -166,7 +169,7 @@ class DecompOnlyRAG:
         for i, sq in enumerate(sub_questions, 1):
             print(f"  [{i}/{len(sub_questions)}] {sq[:80]}...")
             context_str, sources = _get_raw_sources(retriever, sq, k)
-            ans = answer_subquestion(sq, context_str)
+            ans = answer_subquestion(sq, context_str, temperature_override=temperature_override)
             sub_qa_pairs.append((sq, ans))
             for s in sources:
                 s["sub_question_idx"] = i
@@ -174,15 +177,17 @@ class DecompOnlyRAG:
             all_sources.extend(sources)
 
         print(f"[v_decomp] Etape 3/3 : Synthèse finale sans bilan (Mistral Large)...")
-        final_answer = synthesize_answers(
+        final_answer_raw = synthesize_answers(
             question, sub_qa_pairs,
             source_bilan=None,
             use_bilan=False,
+            temperature_override=temperature_override,
         )
+        final_answer, sources_mobilisees = _parse_sources_mobilisees(final_answer_raw)
 
         sub_qa_list = [
             {"idx": i + 1, "question": sq, "answer": ans}
             for i, (sq, ans) in enumerate(sub_qa_pairs)
         ]
         print("[v_decomp] Pipeline terminé.")
-        return final_answer, all_sources, {}, sub_qa_list
+        return final_answer, all_sources, {}, sub_qa_list, sources_mobilisees

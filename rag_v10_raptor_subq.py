@@ -12,10 +12,11 @@ Usage:
 """
 
 import os
+import re
 import json
 import time
 import argparse
-from typing import List, Tuple, Dict
+from typing import List, Tuple, Dict, Optional
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -143,7 +144,8 @@ _SYSTEM_DECOMPOSER = (
 
 def decompose_question(question: str, n: int = DEFAULT_N_SUBQUESTIONS,
                         extra_context: str = "",
-                        force_mixed: bool = False) -> List[str]:
+                        force_mixed: bool = False,
+                        temperature_override: Optional[float] = None) -> List[str]:
     """
     Utilise Mistral Large pour decomposer la question en N sous-questions.
     Chaque sous-question porte sur un aspect distinct (groupe demographique,
@@ -188,7 +190,8 @@ def decompose_question(question: str, n: int = DEFAULT_N_SUBQUESTIONS,
         f'{{\n  "sub_questions": [\n    "sous-question 1",\n    "sous-question 2"\n  ]\n}}'
     )
 
-    raw = _call_mistral(prompt, _SYSTEM_DECOMPOSER, max_tokens=600, temperature=0.4)
+    raw = _call_mistral(prompt, _SYSTEM_DECOMPOSER, max_tokens=600,
+                        temperature=temperature_override if temperature_override is not None else 0.4)
 
     # Parser le JSON (nettoyer si entoure de markdown)
     cleaned = raw.strip()
@@ -272,13 +275,15 @@ _SYSTEM_ANSWERER = (
 )
 
 
-def answer_subquestion(sub_question: str, context: str) -> str:
+def answer_subquestion(sub_question: str, context: str,
+                       temperature_override: Optional[float] = None) -> str:
     """
     Utilise Claude Haiku pour repondre a une sous-question a partir du contexte RAPTOR.
     Le contexte est tronque a 3000 caracteres pour maitriser les tokens.
     """
     prompt = f"Contexte (syntheses et verbatims) :\n{context[:15000]}\n\nSous-question : {sub_question}"
-    return _call_claude(prompt, _SYSTEM_ANSWERER)
+    return _call_claude(prompt, _SYSTEM_ANSWERER,
+                        temperature=temperature_override if temperature_override is not None else 0.2)
 
 
 # ============================================================
@@ -367,19 +372,120 @@ _SYSTEM_SYNTHESIZER_NO_BILAN = (
     "Corse entière), indique-le clairement sans inventer de données complémentaires d'autres communes. "
     "IMPORTANT — honnêteté sur les lacunes : si une sous-question n'a pas de réponse dans le contexte, "
     "indique-le explicitement ('aucune donnée disponible sur ce point') plutôt que de broder ou d'extrapoler. "
-    "Ne fabrique jamais de chiffres, de rangs ou de faits absents des réponses aux sous-questions."
+    "Ne fabrique jamais de chiffres, de rangs ou de faits absents des réponses aux sous-questions. "
+    "RÈGLE PROPORTIONNALITÉ : réponds strictement à ce qui est demandé, sans aller au-delà. "
+    "Si la question demande un score ou un fait précis, donne-le directement sans analyse superflue. "
+    "Calibre la longueur de ta réponse à la complexité réelle de la question : "
+    "une question factuelle appelle une réponse courte et directe ; "
+    "une question analytique complexe appelle une réponse structurée — mais toujours sans extrapoler. "
+    "RÈGLE CITATIONS INLINE OBLIGATOIRE : dans le corps de ta synthèse, ajoute un marqueur de source "
+    "entre crochets après chaque fait, chiffre ou constat intégré, en indiquant le numéro de la "
+    "sous-question d'où l'information provient — ex. : '...score global de 5,78/10 [SQ1]...' ou "
+    "'...les entrepreneurs expriment des réserves sur les transports [SQ4]...'. "
+    "Ces marqueurs [SQn] doivent être cohérents avec la section SOURCES MOBILISÉES finale. "
+    "RÈGLE SOURCES MOBILISÉES OBLIGATOIRE : après ta synthèse, ajoute IMPÉRATIVEMENT le bloc suivant "
+    "en respectant EXACTEMENT ce format (ne le modifie pas) :\n"
+    "===SOURCES_MOBILISEES===\n"
+    "**SQ1** : [libellé source 1] ; [libellé source 2]\n"
+    "**SQ2** : [libellé source 1]\n"
+    "...\n"
+    "===FIN_SOURCES===\n"
+    "Utilise les libellés exacts du bloc 'SOURCES DISPONIBLES PAR SOUS-QUESTION'. "
+    "Ne liste que les sources dont tu as réellement intégré les informations."
 )
+
+
+def _build_source_label(s: Dict) -> str:
+    """Convertit un dict source en libellé lisible pour le décideur."""
+    t = (s.get("type") or s.get("source_type") or "").lower()
+    view = s.get("view_name") or s.get("view") or ""
+    commune = s.get("commune") or s.get("dim1_value") or ""
+    n = s.get("n_persons") or s.get("num_chunks") or ""
+
+    if "raptor" in t and "enquete" in t:
+        label = "Synthèse scores enquête citoyenne"
+    elif "raptor" in t and "entretien" in t:
+        label = "Synthèse entretiens qualitatifs"
+    elif "raptor" in t:
+        label = "Synthèse verbatims enquête citoyenne"
+    elif "oppchovec" in t or "classement" in t:
+        label = "Indicateurs OppChoVec"
+    elif "verbatim" in t:
+        label = "Verbatims bruts enquête citoyenne"
+    elif "entretien" in t:
+        label = "Entretiens qualitatifs bruts"
+    elif "equipement" in t:
+        label = "Équipements et services communaux"
+    elif "wiki" in t:
+        label = "Fiche encyclopédique commune"
+    elif "profil" in t:
+        label = "Profil démographique commune"
+    elif "geo" in t or "epci" in t:
+        label = "Données géographiques / EPCI"
+    elif "enquete" in t:
+        label = "Données enquête citoyenne"
+    else:
+        label = t or "Source inconnue"
+
+    parts = [label]
+    if view and view not in ("", "N/A"):
+        parts.append(f"vue : {view}")
+    if commune:
+        parts.append(commune)
+    if n and "raptor" in t:
+        parts.append(f"{n} répondants")
+    return " — ".join(parts)
+
+
+def _parse_sources_mobilisees(answer: str) -> Tuple[str, List[Dict]]:
+    """
+    Extrait le bloc ===SOURCES_MOBILISEES=== de la réponse Mistral.
+    Retourne (answer_cleaned, sources_mobilisees_list).
+    sources_mobilisees_list = [{"sq": 1, "types": ["...", "..."]}, ...]
+    Tolère : variantes accentuées (MOBILISÉES) et troncature sans ===FIN_SOURCES=== (max_tokens atteint).
+    """
+    _PAT_OPEN  = r'===SOURCES_MOBILIS[EÉ]ES==='
+    _PAT_BLOCK = _PAT_OPEN + r'(.*?)===FIN_SOURCES==='
+
+    # Cas 1 : bloc complet (ouverture + fermeture)
+    m = re.search(_PAT_BLOCK, answer, re.DOTALL)
+    if m:
+        block = m.group(1).strip()
+        strip_pat = r'\s*' + _PAT_BLOCK
+    else:
+        # Cas 2 : ouverture présente mais FIN_SOURCES absent (réponse tronquée)
+        m = re.search(_PAT_OPEN, answer, re.DOTALL)
+        if not m:
+            return answer, []
+        block = answer[m.end():].strip()
+        strip_pat = r'\s*' + _PAT_OPEN + r'.*'  # supprimer jusqu'à la fin
+
+    result = []
+    for line in block.split('\n'):
+        line = line.strip()
+        if not line:
+            continue
+        mm = re.match(r'\*\*SQ(\d+)\*\*\s*:\s*(.*)', line)
+        if mm:
+            sq_idx = int(mm.group(1))
+            types = [t.strip() for t in mm.group(2).split(';') if t.strip()]
+            result.append({"sq": sq_idx, "types": types})
+    cleaned = re.sub(strip_pat, '', answer, flags=re.DOTALL).strip()
+    return cleaned, result
 
 
 def synthesize_answers(initial_question: str,
                         sub_qa_pairs: List[Tuple[str, str]],
                         source_bilan: Dict[int, Dict] = None,
-                        use_bilan: bool = True) -> str:
+                        use_bilan: bool = True,
+                        sources_per_subq: Dict[int, List[Dict]] = None,
+                        temperature_override: Optional[float] = None) -> str:
     """
     Utilise Mistral Large pour synthetiser les reponses aux sous-questions.
     source_bilan : dict {idx_sq -> {has_subjective, has_objective}} calcule
     deterministement depuis les sources retrievees (pas de LLM).
     use_bilan=False : ablation — skip du bloc bilan + system prompt sans références au bilan.
+    sources_per_subq : dict {idx_sq (1-based) -> [source_dict]} pour affichage des sources disponibles.
     """
     sub_answers_text = "\n\n".join(
         f"**Sous-question {i+1}** : {sq}\n**Reponse** : {ans[:1500]}"
@@ -408,19 +514,42 @@ def synthesize_answers(initial_question: str,
 
     system_prompt = _SYSTEM_SYNTHESIZER if use_bilan else _SYSTEM_SYNTHESIZER_NO_BILAN
 
+    # Bloc sources disponibles par sous-question (pour la règle SOURCES MOBILISÉES).
+    sources_block = ""
+    if sources_per_subq:
+        lines = []
+        for i, (sq, _) in enumerate(sub_qa_pairs, 1):
+            sq_sources = sources_per_subq.get(i, [])
+            if not sq_sources:
+                continue
+            # Dédupliquer les libellés
+            labels = list(dict.fromkeys(_build_source_label(s) for s in sq_sources))
+            lines.append(f"  [SQ{i}] \"{sq[:80]}\" :\n" +
+                         "\n".join(f"    - {lbl}" for lbl in labels))
+        if lines:
+            sources_block = (
+                "=== SOURCES DISPONIBLES PAR SOUS-QUESTION ===\n"
+                + "\n".join(lines)
+                + "\n=============================================\n\n"
+            )
+
     prompt = (
         f"Question initiale : {initial_question}\n\n"
         f"{bilan_block}"
+        f"{sources_block}"
         f"Voici les reponses aux sous-questions derivees :\n\n"
         f"{sub_answers_text}\n\n"
         f"Produis une synthese finale qui :\n"
         f"1. Repond directement a la question initiale\n"
         f"2. Integre les informations pertinentes des sous-reponses\n"
         f"3. Distingue donnees subjectives (perceptions citoyens) et donnees objectives (indicateurs)\n"
-        f"4. Ne mentionne PAS l'absence d'un type de donnees si le bilan indique sa presence"
+        f"4. Ne mentionne PAS l'absence d'un type de donnees si le bilan indique sa presence\n"
+        f"5. Inclut des marqueurs [SQn] inline après chaque fait ou chiffre cité\n"
+        f"6. Termine par le bloc ===SOURCES_MOBILISEES=== / ===FIN_SOURCES=== comme indiqué dans les règles"
     )
 
-    return _call_mistral(prompt, system_prompt, max_tokens=1500, temperature=0.3)
+    return _call_mistral(prompt, system_prompt, max_tokens=2500,
+                         temperature=temperature_override if temperature_override is not None else 0.3)
 
 
 # ============================================================
@@ -550,7 +679,8 @@ class RaptorSubQuestionPipeline:
               n_subquestions: int = DEFAULT_N_SUBQUESTIONS,
               extra_context: str = "",
               force_mixed: bool = False,
-              use_bilan: bool = True) -> Tuple[str, List[Dict], Dict, List[Dict]]:
+              use_bilan: bool = True,
+              temperature_override: Optional[float] = None) -> Tuple[str, List[Dict], Dict, List[Dict]]:
         """
         Pipeline complet v10.
 
@@ -600,19 +730,24 @@ class RaptorSubQuestionPipeline:
                     pass
             if _global_extra:
                 context_str = _global_extra + "\n\n" + context_str
-            _single_answer = answer_subquestion(question, context_str)
+            _single_answer = answer_subquestion(question, context_str, temperature_override=temperature_override)
             # Construire la réponse finale via synthétiseur (1 sous-question = la question elle-même)
             _single_pair = [(question, _single_answer)]
-            final_answer = synthesize_answers(question, _single_pair, {1: {"has_subjective": True, "has_objective": True}})
+            _global_raw = synthesize_answers(question, _single_pair,
+                                             source_bilan={1: {"has_subjective": True, "has_objective": True}},
+                                             use_bilan=use_bilan,
+                                             temperature_override=temperature_override)
+            final_answer, _global_sm = _parse_sources_mobilisees(_global_raw)
             scoring = {"applicable": False, "dimension": None, "score": None, "justification": "Question globale — scoring non applicable"}
             sub_qa_pairs_out = [{"idx": 1, "question": question, "answer": _single_answer}]
             print(f"[v10] Pipeline global termine.")
-            return final_answer, sources, scoring, sub_qa_pairs_out
+            return final_answer, sources, scoring, sub_qa_pairs_out, _global_sm
 
         # --- Etape 1 : Decomposition ---
         print(f"[v10] Etape 1/4 : Decomposition en {n_subquestions} sous-questions (Mistral Large)...")
         try:
-            sub_questions = decompose_question(question, n=n_subquestions, extra_context=extra_context, force_mixed=force_mixed)
+            sub_questions = decompose_question(question, n=n_subquestions, extra_context=extra_context, force_mixed=force_mixed,
+                                               temperature_override=temperature_override)
         except RuntimeError as _e:
             print(f"[v10] Question hors-domaine ou indécomposable : {_e}")
             _refusal = _call_mistral(
@@ -620,11 +755,12 @@ class RaptorSubQuestionPipeline:
                 "Tu es un assistant spécialisé en qualité de vie en Corse. "
                 "Cette question ne relève pas de ton domaine d'expertise. "
                 "Réponds poliment que tu ne peux pas répondre à cette question.",
-                max_tokens=300, temperature=0.3,
+                max_tokens=300,
+                temperature=temperature_override if temperature_override is not None else 0.3,
             )
             _empty_scoring = {"applicable": False, "dimension": None, "score": None,
                               "justification": "Question hors-domaine"}
-            return _refusal, [], _empty_scoring, []
+            return _refusal, [], _empty_scoring, [], []
         print(f"[v10] Sous-questions :")
         for i, sq in enumerate(sub_questions, 1):
             print(f"  {i}. {sq}")
@@ -678,7 +814,7 @@ class RaptorSubQuestionPipeline:
             merged_extra = "\n\n".join(x for x in [opp_extra, extra_context] if x)
             if merged_extra:
                 context_str = merged_extra + "\n\n" + context_str
-            ans = answer_subquestion(sq, context_str)
+            ans = answer_subquestion(sq, context_str, temperature_override=temperature_override)
             sub_qa_pairs.append((sq, ans))
             for s in sources:
                 s["sub_question_idx"] = i
@@ -701,7 +837,17 @@ class RaptorSubQuestionPipeline:
 
         # --- Etape 3 : Synthese finale ---
         print(f"\n[v10] Etape 3/4 : Synthese finale (Mistral Large)...")
-        final_answer = synthesize_answers(question, sub_qa_pairs, source_bilan, use_bilan=use_bilan)
+        # Grouper les sources par index de sous-question pour le bloc SOURCES DISPONIBLES.
+        sources_per_subq: Dict[int, List[Dict]] = {}
+        for s in all_sources:
+            idx = s.get("sub_question_idx", 0)
+            sources_per_subq.setdefault(idx, []).append(s)
+        final_answer_raw = synthesize_answers(
+            question, sub_qa_pairs, source_bilan,
+            use_bilan=use_bilan, sources_per_subq=sources_per_subq,
+            temperature_override=temperature_override,
+        )
+        final_answer, sources_mobilisees = _parse_sources_mobilisees(final_answer_raw)
 
         # --- Etape 4 : Notation de la dimension (optionnelle) ---
         print(f"\n[v10] Etape 4/4 : Notation de la dimension (Mistral Large)...")
@@ -717,7 +863,7 @@ class RaptorSubQuestionPipeline:
             {"idx": i + 1, "question": sq, "answer": ans}
             for i, (sq, ans) in enumerate(sub_qa_pairs)
         ]
-        return final_answer, all_sources, scoring, sub_qa_list
+        return final_answer, all_sources, scoring, sub_qa_list, sources_mobilisees
 
     def close(self):
         self.retriever.close()
