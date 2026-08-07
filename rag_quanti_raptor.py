@@ -108,6 +108,24 @@ QDV_DIMENSIONS = [
 # Chargement et nettoyage des données
 # ============================================================
 
+def _age_to_range(age_val) -> str:
+    """Tranches d'âge harmonisées avec raptor_enquete_summaries (même découpage)."""
+    try:
+        age = int(float(age_val))
+    except (ValueError, TypeError):
+        return "Non spécifié"
+    if age < 25:
+        return "18-24"
+    elif age < 35:
+        return "25-34"
+    elif age < 50:
+        return "35-49"
+    elif age < 65:
+        return "50-64"
+    else:
+        return "65+"
+
+
 def load_data() -> pd.DataFrame:
     """Charge le CSV et normalise les colonnes clés."""
     df = pd.read_csv(CSV_PATH, index_col=0)
@@ -117,12 +135,12 @@ def load_data() -> pd.DataFrame:
     col_b = "Dans quelle commune résidez-vous ? (T à Z)"
     df["commune"] = (df[col_a].fillna("") + df[col_b].fillna("")).str.strip()
 
-    # Renommage des colonnes de dimension
-    df["age_range"]  = df["Catégorie age"].str.strip()
+    # Tranches d'âge calculées depuis l'âge brut — harmonisées avec raptor_enquete_summaries
+    df["age_range"]  = df["Age"].apply(_age_to_range)
     df["profession"] = df["situation socioprofessionnelle"].str.strip()
 
-    # Nettoyage : supprimer lignes avec age_range invalide ou '0'
-    df = df[df["age_range"].isin(["15-29", "30-44", "45-59", "60-74", "75+"])]
+    # Nettoyage : supprimer lignes sans âge valide
+    df = df[df["age_range"] != "Non spécifié"]
 
     # Supprimer lignes où profession contient un nom de commune (erreur de saisie)
     valid_professions = set(IMPLICATION_MAP.keys()) | {

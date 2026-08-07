@@ -86,7 +86,7 @@ def _call_claude(prompt: str, system_prompt: str,
     api_key = os.getenv("ANTHROPIC_API_KEY") or os.getenv("CLAUDE_API_KEY")
     if not api_key:
         raise RuntimeError("ANTHROPIC_API_KEY (ou CLAUDE_API_KEY) non definie")
-    client = anthropic.Anthropic(api_key=api_key)
+    client = anthropic.Anthropic(api_key=api_key, timeout=300.0)
     for attempt in range(max_retries):
         try:
             response = client.messages.create(
@@ -99,10 +99,13 @@ def _call_claude(prompt: str, system_prompt: str,
             return response.content[0].text
         except Exception as e:
             err = str(e)
-            is_retryable = "429" in err or "529" in err or "overloaded" in err.lower() or "rate" in err.lower()
+            is_retryable = ("429" in err or "529" in err or "overloaded" in err.lower()
+                            or "rate" in err.lower() or "timeout" in err.lower()
+                            or "timed out" in err.lower() or "interrupted" in err.lower()
+                            or "connection" in err.lower())
             if is_retryable and attempt < max_retries - 1:
-                wait = 2 ** attempt * 3
-                print(f"    [RATE LIMIT] Claude : attente {wait}s (tentative {attempt+1}/{max_retries}) — {err[:80]}...")
+                wait = 2 ** attempt * 5
+                print(f"    [RETRY {attempt+1}/{max_retries}] Claude : attente {wait}s — {err[:80]}...")
                 time.sleep(wait)
             else:
                 print(f"    [ERREUR Claude] {err[:200]}")
@@ -141,10 +144,55 @@ _SYSTEM_DECOMPOSER = (
     "Reponds UNIQUEMENT avec un JSON valide contenant une liste de sous-questions."
 )
 
+# Ablation V_decomp_no_typing v1 : règles renumérotées (1)(2)(3) après suppression du typage.
+# Conservé pour reproductibilité des runs existants.
+_SYSTEM_DECOMPOSER_NO_TYPING = (
+    "Tu es un expert specialisé UNIQUEMENT dans l'analyse de données sur le bien-être en Corse, "
+    "a partir de verbatims citoyens et d'indicateurs territoriaux (scores OppChoVec, données d'enquêtes). "
+    "Ton rôle est de decomposer une question en sous-questions ciblees. "
+    "REGLES ABSOLUES : "
+    "(1) Ne genere PAS de sous-questions sur des donnees que tu n'as pas (ex: sous-indicateurs detailles, "
+    "ventilation demographique d'un score chiffre si non demandee). "
+    "Les scores OppChoVec sont UNIQUEMENT disponibles à l'échelle de la commune — "
+    "jamais par CSP, tranche d'âge, genre ou autre sous-population. "
+    "Ne genere donc JAMAIS de sous-question du type 'quel est le score OppChoVec des entrepreneurs/seniors/femmes à X'. "
+    "Si la question initiale concerne une sous-population et les indicateurs objectifs, "
+    "formule la sous-question sur le score communal global en précisant que la ventilation n'est pas disponible. "
+    "(2) Reste strictement dans le domaine de la question — ne glisse pas vers d'autres sujets. "
+    "(3) RÈGLE GÉOGRAPHIQUE CRITIQUE : si la question initiale ne mentionne aucune commune ou EPCI "
+    "spécifique de Corse, les sous-questions doivent rester au niveau GLOBAL CORSE. "
+    "Ne génère JAMAIS de sous-questions ciblant une commune particulière (ex: Ajaccio, Bastia, Corte…) "
+    "si elle n'est pas explicitement mentionnée dans la question initiale. "
+    "Reponds UNIQUEMENT avec un JSON valide contenant une liste de sous-questions."
+)
+
+# Ablation V_decomp_no_typing v2 : prompt reécrit sans numérotation ni structure qui évoque
+# une "règle 1" manquante. Le modèle reçoit uniquement les contraintes qu'il doit respecter,
+# énoncées sous forme de directives directes.
+_SYSTEM_DECOMPOSER_NO_TYPING_V2 = (
+    "Tu es un expert spécialisé UNIQUEMENT dans l'analyse de données sur le bien-être en Corse, "
+    "à partir de verbatims citoyens et d'indicateurs territoriaux (scores OppChoVec, données d'enquêtes). "
+    "Ton rôle est de décomposer une question en sous-questions ciblées.\n\n"
+    "DIRECTIVES IMPÉRATIVES :\n"
+    "— Ne génère JAMAIS de sous-questions sur des données inexistantes dans le corpus : "
+    "pas de sous-indicateurs détaillés ni de ventilation démographique d'un score chiffré. "
+    "Les scores OppChoVec sont uniquement disponibles à l'échelle de la commune entière — "
+    "jamais par CSP, tranche d'âge, genre ou autre sous-population. "
+    "Si la question concerne une sous-population et des indicateurs objectifs, "
+    "formule la sous-question sur le score communal global en précisant que la ventilation n'est pas disponible.\n"
+    "— Reste strictement dans le domaine de la question — ne dévie pas vers d'autres sujets.\n"
+    "— CONTRAINTE GÉOGRAPHIQUE : si la question initiale ne mentionne aucune commune ou EPCI "
+    "spécifique de Corse, les sous-questions doivent rester au niveau GLOBAL CORSE. "
+    "Ne génère JAMAIS de sous-questions ciblant une commune particulière (ex : Ajaccio, Bastia, Corte…) "
+    "si elle n'est pas explicitement mentionnée dans la question initiale.\n\n"
+    "Réponds UNIQUEMENT avec un JSON valide contenant une liste de sous-questions."
+)
+
 
 def decompose_question(question: str, n: int = DEFAULT_N_SUBQUESTIONS,
                         extra_context: str = "",
                         force_mixed: bool = False,
+                        no_typing: bool = False,
                         temperature_override: Optional[float] = None) -> List[str]:
     """
     Utilise Mistral Large pour decomposer la question en N sous-questions.
@@ -168,15 +216,29 @@ def decompose_question(question: str, n: int = DEFAULT_N_SUBQUESTIONS,
             f"{extra_context[:1500]}\n\n"
         )
 
-    mix_instruction = (
-        "IMPORTANT : cette question porte sur le bien-etre global, tu DOIS generer un mix : "
-        "au moins une sous-question qualitative (perceptions citoyens/verbatims) ET "
-        "au moins une sous-question quantitative (scores d'enquete ou indicateurs OppChoVec).\n"
-    ) if force_mixed else (
-        "Chaque sous-question doit rester du meme type que la question initiale "
-        "(factuelle si factuelle, qualitative si qualitative) et porter sur un aspect distinct.\n"
-        "INTERDIT : melanger questions chiffrees et questions de perception.\n"
-    )
+    if force_mixed:
+        mix_instruction = (
+            "IMPORTANT : cette question porte sur le bien-etre global, tu DOIS generer un mix : "
+            "au moins une sous-question qualitative (perceptions citoyens/verbatims) ET "
+            "au moins une sous-question quantitative (scores d'enquete ou indicateurs OppChoVec).\n"
+        )
+    elif no_typing:
+        mix_instruction = (
+            "Chaque sous-question doit porter sur un aspect distinct de la question initiale.\n"
+        )
+    else:
+        mix_instruction = (
+            "Si la question porte sur le bien-être global, la qualité de vie générale, "
+            "ou aborde à la fois des dimensions objectives (scores, indicateurs) et subjectives "
+            "(perceptions, ressenti des habitants), génère un MIX : au moins une sous-question "
+            "qualitative (perceptions citoyens/verbatims) ET au moins une sous-question quantitative "
+            "(scores d'enquête ou indicateurs OppChoVec). "
+            "Pour les questions purement factuelles (un score précis, un rang, une comparaison chiffrée) "
+            "ou purement qualitatives (uniquement les perceptions), reste dans le type dominant. "
+            "Dans tous les cas, chaque sous-question porte sur un aspect distinct.\n"
+        )
+
+    system_prompt = _SYSTEM_DECOMPOSER_NO_TYPING if no_typing else _SYSTEM_DECOMPOSER
 
     prompt = (
         f"{context_hint}"
@@ -190,7 +252,7 @@ def decompose_question(question: str, n: int = DEFAULT_N_SUBQUESTIONS,
         f'{{\n  "sub_questions": [\n    "sous-question 1",\n    "sous-question 2"\n  ]\n}}'
     )
 
-    raw = _call_mistral(prompt, _SYSTEM_DECOMPOSER, max_tokens=600,
+    raw = _call_mistral(prompt, system_prompt, max_tokens=600,
                         temperature=temperature_override if temperature_override is not None else 0.4)
 
     # Parser le JSON (nettoyer si entoure de markdown)
@@ -254,12 +316,19 @@ _SYSTEM_ANSWERER = (
     "précise clairement que ce score n'existe pas à ce niveau de granularité et fournis le score communal global à la place. "
     "Utilise des formulations naturelles : 'selon l'enquete citoyenne', 'les habitants estiment que', "
     "'les indicateurs territoriaux montrent', 'le score territorial est de X'. "
-    "RÈGLE ATTRIBUTION OBLIGATOIRE : pour tout chiffre, score ou constat cité, tu DOIS indiquer sa provenance "
-    "en une courte mention intégrée : "
-    "(a) données d'enquête citoyenne → 'selon l'enquête citoyenne' ; "
-    "(b) scores OppChoVec ou équipements → 'selon les données territoriales objectives' ou 'selon les indicateurs OppChoVec' ; "
-    "(c) entretiens semi-directifs → 'selon les entretiens qualitatifs'. "
-    "Ne cite JAMAIS un chiffre ou un constat sans sa source. "
+    "RÈGLE ATTRIBUTION OBLIGATOIRE — s'applique à CHAQUE phrase ou bullet qui énonce un fait, "
+    "un chiffre, un score, une perception ou un jugement de valeur : "
+    "tu DOIS indiquer la provenance de l'information dans cette même phrase, en début ou en fin. "
+    "Types de sources à distinguer explicitement : "
+    "(a) données d'enquête citoyenne (perceptions, satisfaction, verbatims) "
+    "→ 'selon l'enquête citoyenne', 'les habitants interrogés estiment que', 'les verbatims indiquent que' ; "
+    "(b) scores OppChoVec (indicateurs objectifs territoriaux) "
+    "→ 'selon les indicateurs OppChoVec', 'selon les données territoriales objectives', 'les indicateurs territoriaux montrent' ; "
+    "(c) données d'équipements communaux (médecins, écoles, commerces, taux d'activité…) "
+    "→ 'selon les données d'équipements communaux', 'les données de services communaux indiquent' ; "
+    "(d) entretiens semi-directifs → 'selon les entretiens qualitatifs', 'les entretiens révèlent'. "
+    "Ne cite JAMAIS un chiffre, un score ou une perception sans indiquer explicitement "
+    "s'il provient d'un indicateur objectif, d'une enquête citoyenne, d'équipements ou d'entretiens. "
     "RÈGLE PORTÉE GÉOGRAPHIQUE OBLIGATOIRE : si les données d'enquête citoyenne disponibles couvrent "
     "la Corse entière (contexte indiquant 'enquete_global', 'Corse entière', ou N=246 répondants tous horizons), "
     "tu DOIS le signaler explicitement : formule-le comme "
@@ -274,15 +343,26 @@ _SYSTEM_ANSWERER = (
     "ne brode pas et n'invente aucun chiffre, nom ou fait absent du contexte."
 )
 
+# Variante no_typing : supprime la priorisation par type de sous-question (signal de typage implicite).
+_SYSTEM_ANSWERER_NO_TYPING = _SYSTEM_ANSWERER.replace(
+    "Pour une sous-question chiffree sur le bien-etre territorial (rang, score), "
+    "appuie-toi prioritairement sur les indicateurs objectifs. "
+    "Pour une sous-question de perception ou de satisfaction, priorise les donnees d'enquete citoyenne. ",
+    "Appuie-toi sur l'ensemble des données disponibles dans le contexte (indicateurs objectifs "
+    "et données d'enquête) pour répondre à la sous-question, sans préjuger du type de données attendu. ",
+)
+
 
 def answer_subquestion(sub_question: str, context: str,
-                       temperature_override: Optional[float] = None) -> str:
+                       temperature_override: Optional[float] = None,
+                       no_typing: bool = False) -> str:
     """
     Utilise Claude Haiku pour repondre a une sous-question a partir du contexte RAPTOR.
     Le contexte est tronque a 3000 caracteres pour maitriser les tokens.
     """
     prompt = f"Contexte (syntheses et verbatims) :\n{context[:15000]}\n\nSous-question : {sub_question}"
-    return _call_claude(prompt, _SYSTEM_ANSWERER,
+    sys_prompt = _SYSTEM_ANSWERER_NO_TYPING if no_typing else _SYSTEM_ANSWERER
+    return _call_claude(prompt, sys_prompt,
                         temperature=temperature_override if temperature_override is not None else 0.2)
 
 
@@ -313,12 +393,19 @@ _SYSTEM_SYNTHESIZER = (
     "REGLE ABSOLUE : n'utilise JAMAIS les termes techniques internes dans ta reponse — "
     "ne mentionne pas 'RAPTOR', 'subjectif/quali', 'objectif/quanti', 'OppChoVec integre', etc. "
     "Utilise des formulations naturelles : 'selon l'enquete citoyenne', 'les indicateurs territoriaux montrent'. "
-    "RÈGLE ATTRIBUTION OBLIGATOIRE : pour tout chiffre, score ou constat intégré dans la synthèse, "
-    "tu DOIS mentionner sa provenance en une courte mention intégrée : "
-    "(a) données d'enquête citoyenne → 'selon l'enquête citoyenne' ; "
-    "(b) scores OppChoVec ou équipements → 'selon les données territoriales objectives' ou 'selon les indicateurs OppChoVec' ; "
-    "(c) entretiens semi-directifs → 'selon les entretiens qualitatifs'. "
-    "Ne cite JAMAIS un chiffre ou un constat sans sa source. "
+    "RÈGLE ATTRIBUTION OBLIGATOIRE — s'applique à CHAQUE phrase ou bullet qui énonce un fait, "
+    "un chiffre, un score, une perception ou un jugement de valeur dans la synthèse : "
+    "tu DOIS indiquer la provenance de l'information dans cette même phrase, en début ou en fin. "
+    "Types de sources à distinguer explicitement : "
+    "(a) données d'enquête citoyenne (perceptions, satisfaction, verbatims) "
+    "→ 'selon l'enquête citoyenne', 'les habitants interrogés estiment', 'les verbatims citoyens indiquent' ; "
+    "(b) scores OppChoVec (indicateurs objectifs territoriaux) "
+    "→ 'selon les indicateurs OppChoVec', 'selon les données territoriales objectives', 'les indicateurs territoriaux montrent' ; "
+    "(c) données d'équipements communaux (médecins, écoles, commerces, taux d'activité…) "
+    "→ 'selon les données d'équipements communaux', 'les données de services communaux indiquent' ; "
+    "(d) entretiens semi-directifs → 'selon les entretiens qualitatifs', 'les entretiens révèlent'. "
+    "Ne cite JAMAIS un chiffre, un score ou une perception sans indiquer explicitement "
+    "s'il provient d'un indicateur objectif, d'une enquête citoyenne, d'équipements ou d'entretiens. "
     "RÈGLE PORTÉE GÉOGRAPHIQUE OBLIGATOIRE : si les données d'enquête citoyenne utilisées couvrent "
     "la Corse entière (et non la commune interrogée spécifiquement), tu DOIS le signaler clairement dans la synthèse — "
     "par exemple : 'Les données d'enquête citoyenne disponibles couvrent la Corse entière ; "
@@ -355,12 +442,19 @@ _SYSTEM_SYNTHESIZER_NO_BILAN = (
     "REGLE ABSOLUE : n'utilise JAMAIS les termes techniques internes dans ta reponse — "
     "ne mentionne pas 'RAPTOR', 'subjectif/quali', 'objectif/quanti', 'OppChoVec integre', etc. "
     "Utilise des formulations naturelles : 'selon l'enquete citoyenne', 'les indicateurs territoriaux montrent'. "
-    "RÈGLE ATTRIBUTION OBLIGATOIRE : pour tout chiffre, score ou constat intégré dans la synthèse, "
-    "tu DOIS mentionner sa provenance en une courte mention intégrée : "
-    "(a) données d'enquête citoyenne → 'selon l'enquête citoyenne' ; "
-    "(b) scores OppChoVec ou équipements → 'selon les données territoriales objectives' ou 'selon les indicateurs OppChoVec' ; "
-    "(c) entretiens semi-directifs → 'selon les entretiens qualitatifs'. "
-    "Ne cite JAMAIS un chiffre ou un constat sans sa source. "
+    "RÈGLE ATTRIBUTION OBLIGATOIRE — s'applique à CHAQUE phrase ou bullet qui énonce un fait, "
+    "un chiffre, un score, une perception ou un jugement de valeur dans la synthèse : "
+    "tu DOIS indiquer la provenance de l'information dans cette même phrase, en début ou en fin. "
+    "Types de sources à distinguer explicitement : "
+    "(a) données d'enquête citoyenne (perceptions, satisfaction, verbatims) "
+    "→ 'selon l'enquête citoyenne', 'les habitants interrogés estiment', 'les verbatims citoyens indiquent' ; "
+    "(b) scores OppChoVec (indicateurs objectifs territoriaux) "
+    "→ 'selon les indicateurs OppChoVec', 'selon les données territoriales objectives', 'les indicateurs territoriaux montrent' ; "
+    "(c) données d'équipements communaux (médecins, écoles, commerces, taux d'activité…) "
+    "→ 'selon les données d'équipements communaux', 'les données de services communaux indiquent' ; "
+    "(d) entretiens semi-directifs → 'selon les entretiens qualitatifs', 'les entretiens révèlent'. "
+    "Ne cite JAMAIS un chiffre, un score ou une perception sans indiquer explicitement "
+    "s'il provient d'un indicateur objectif, d'une enquête citoyenne, d'équipements ou d'entretiens. "
     "RÈGLE PORTÉE GÉOGRAPHIQUE OBLIGATOIRE : si les données d'enquête citoyenne utilisées couvrent "
     "la Corse entière (et non la commune interrogée spécifiquement), tu DOIS le signaler clairement dans la synthèse — "
     "par exemple : 'Les données d'enquête citoyenne disponibles couvrent la Corse entière ; "
@@ -479,7 +573,8 @@ def synthesize_answers(initial_question: str,
                         source_bilan: Dict[int, Dict] = None,
                         use_bilan: bool = True,
                         sources_per_subq: Dict[int, List[Dict]] = None,
-                        temperature_override: Optional[float] = None) -> str:
+                        temperature_override: Optional[float] = None,
+                        no_typing: bool = False) -> str:
     """
     Utilise Mistral Large pour synthetiser les reponses aux sous-questions.
     source_bilan : dict {idx_sq -> {has_subjective, has_objective}} calcule
@@ -513,6 +608,15 @@ def synthesize_answers(initial_question: str,
         )
 
     system_prompt = _SYSTEM_SYNTHESIZER if use_bilan else _SYSTEM_SYNTHESIZER_NO_BILAN
+    if no_typing:
+        # Signal 3 (moyen) : "factuelle → courte, analytique → structurée" — remplace les labels
+        # de type par des descripteurs neutres pour ne pas inciter au typage implicite.
+        system_prompt = system_prompt.replace(
+            "une question factuelle appelle une réponse courte et directe ; "
+            "une question analytique complexe appelle une réponse structurée",
+            "une question simple appelle une réponse directe ; "
+            "une question complexe appelle une réponse structurée",
+        )
 
     # Bloc sources disponibles par sous-question (pour la règle SOURCES MOBILISÉES).
     sources_block = ""
@@ -542,7 +646,11 @@ def synthesize_answers(initial_question: str,
         f"Produis une synthese finale qui :\n"
         f"1. Repond directement a la question initiale\n"
         f"2. Integre les informations pertinentes des sous-reponses\n"
-        f"3. Distingue donnees subjectives (perceptions citoyens) et donnees objectives (indicateurs)\n"
+        + (
+            f"3. Integre les informations des sources disponibles de maniere appropriee a la question\n"
+            if no_typing else
+            f"3. Distingue donnees subjectives (perceptions citoyens) et donnees objectives (indicateurs)\n"
+        ) +
         f"4. Ne mentionne PAS l'absence d'un type de donnees si le bilan indique sa presence\n"
         f"5. Inclut des marqueurs [SQn] inline après chaque fait ou chiffre cité\n"
         f"6. Termine par le bloc ===SOURCES_MOBILISEES=== / ===FIN_SOURCES=== comme indiqué dans les règles"
@@ -680,6 +788,7 @@ class RaptorSubQuestionPipeline:
               extra_context: str = "",
               force_mixed: bool = False,
               use_bilan: bool = True,
+              no_typing: bool = False,
               temperature_override: Optional[float] = None) -> Tuple[str, List[Dict], Dict, List[Dict]]:
         """
         Pipeline complet v10.
@@ -747,7 +856,7 @@ class RaptorSubQuestionPipeline:
         print(f"[v10] Etape 1/4 : Decomposition en {n_subquestions} sous-questions (Mistral Large)...")
         try:
             sub_questions = decompose_question(question, n=n_subquestions, extra_context=extra_context, force_mixed=force_mixed,
-                                               temperature_override=temperature_override)
+                                               no_typing=no_typing, temperature_override=temperature_override)
         except RuntimeError as _e:
             print(f"[v10] Question hors-domaine ou indécomposable : {_e}")
             _refusal = _call_mistral(

@@ -34,7 +34,7 @@ from eval_from_excel import _JUDGE_V43_SYSTEM, _parse_judge_v43, _build_sources_
 XLSX      = r"C:\Users\comiti_g\Downloads\rag_evaluation_with_metrics_full.xlsx"
 BASE      = "http://localhost:8000/api/query"
 HEADERS   = {"Content-Type": "application/json"}
-VERSIONS  = ["v_vanilla_k10", "v_vanilla_k25", "v_decomp", "v_decomp_raptor"]
+VERSIONS  = ["v_vanilla_k10", "v_vanilla_k25", "v_decomp", "v_decomp_raptor", "v_decomp_no_typing"]
 OUT_DIR   = Path("comparaisons_rag")
 JUDGE_DELAY = 1.0  # secondes entre appels judge
 
@@ -115,10 +115,11 @@ def generate_html(results: dict, ts: str, n_q: int) -> Path:
     OUT_DIR.mkdir(exist_ok=True)
     versions = list(results.keys())
     _COLORS = {
-        "v_vanilla_k10":   "#c0392b",
-        "v_vanilla_k25":   "#e67e22",
-        "v_decomp":        "#27ae60",
-        "v_decomp_raptor": "#2980b9",
+        "v_vanilla_k10":      "#c0392b",
+        "v_vanilla_k25":      "#e67e22",
+        "v_decomp":           "#27ae60",
+        "v_decomp_raptor":    "#2980b9",
+        "v_decomp_no_typing": "#8e44ad",
     }
     dims = ["pertinence", "fondement_factuel", "nuance_incertitude",
             "coherence_qualiquanti", "score_global"]

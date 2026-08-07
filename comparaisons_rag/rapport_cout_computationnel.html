@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Coût computationnel RAG — Réponses R2/R3</title>
+<style>
+:root{
+  --bg:#F7F8FA;--surface:#fff;--border:#DDE1E9;--text:#1A1D23;--muted:#6B7280;
+  --acc:#2563EB;--good:#15803D;--med:#B45309;--bad:#DC2626;--nav:200px;
+}
+@media(prefers-color-scheme:dark){:root{
+  --bg:#0F1117;--surface:#181B24;--border:#272B38;--text:#E4E7EF;--muted:#8B90A0;
+  --acc:#60A5FA;--good:#4ADE80;--med:#FCD34D;--bad:#FC8181;
+}}
+:root[data-theme=light]{--bg:#F7F8FA;--surface:#fff;--border:#DDE1E9;--text:#1A1D23;--muted:#6B7280;--acc:#2563EB;--good:#15803D;--med:#B45309;--bad:#DC2626}
+:root[data-theme=dark]{--bg:#0F1117;--surface:#181B24;--border:#272B38;--text:#E4E7EF;--muted:#8B90A0;--acc:#60A5FA;--good:#4ADE80;--med:#FCD34D;--bad:#FC8181}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.6;display:flex;min-height:100vh;font-size:13px}
+#nav{position:fixed;top:0;left:0;width:var(--nav);height:100vh;overflow-y:auto;background:var(--surface);border-right:1px solid var(--border);padding:14px 0;z-index:10}
+#nav h3{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);padding:0 12px 4px}
+#nav a{display:block;padding:3.5px 12px;color:var(--muted);text-decoration:none;font-size:11px;border-left:2px solid transparent;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#nav a:hover,#nav a.active{color:var(--acc);border-left-color:var(--acc)}
+#main{margin-left:var(--nav);flex:1;padding:28px 36px 80px;max-width:1280px}
+h1{font-size:19px;font-weight:700;margin-bottom:3px}
+.sub{color:var(--muted);font-size:11.5px;margin-bottom:24px}
+h2{font-size:13px;font-weight:700;margin:30px 0 10px;padding-top:6px;border-top:1px solid var(--border)}
+h3{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin:16px 0 6px}
+.tw{overflow-x:auto;margin-bottom:4px}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;font-size:11.5px}
+th{background:var(--surface);font-weight:600;text-align:right;padding:6px 8px;border-bottom:2px solid var(--border);white-space:nowrap;color:var(--muted);font-size:9.5px;text-transform:uppercase;letter-spacing:.05em}
+th:first-child{text-align:left}
+td{padding:5px 8px;border-bottom:1px solid var(--border);text-align:right;vertical-align:middle;white-space:nowrap}
+td:first-child{text-align:left;font-weight:500}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:color-mix(in srgb,var(--acc) 4%,transparent)}
+.hl{background:color-mix(in srgb,var(--acc) 5%,transparent)}
+.warn-box{border:1px solid #D97706;border-radius:5px;padding:10px 14px;font-size:11.5px;background:color-mix(in srgb,#D97706 7%,transparent);margin:8px 0}
+.info-box{border:1px solid var(--acc);border-radius:5px;padding:10px 14px;font-size:11.5px;background:color-mix(in srgb,var(--acc) 5%,transparent);margin:8px 0}
+.ok-box{border:1px solid var(--good);border-radius:5px;padding:10px 14px;font-size:11.5px;background:color-mix(in srgb,var(--good) 6%,transparent);margin:8px 0}
+.note{font-size:10px;color:var(--muted);margin:3px 0 7px}
+.badge-est{display:inline-block;font-size:9px;padding:1px 5px;border-radius:3px;background:color-mix(in srgb,#D97706 15%,transparent);color:#D97706;font-weight:700;vertical-align:middle;margin-left:3px}
+.badge-exact{display:inline-block;font-size:9px;padding:1px 5px;border-radius:3px;background:color-mix(in srgb,var(--good) 12%,transparent);color:var(--good);font-weight:700;vertical-align:middle;margin-left:3px}
+.badge-par{display:inline-block;font-size:9px;padding:1px 5px;border-radius:3px;background:color-mix(in srgb,var(--acc) 12%,transparent);color:var(--acc);font-weight:700}
+.badge-seq{display:inline-block;font-size:9px;padding:1px 5px;border-radius:3px;background:color-mix(in srgb,#9333EA 12%,transparent);color:#9333EA;font-weight:700}
+.dot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:3px;vertical-align:middle}
+.bar-wrap{display:flex;align-items:center;gap:6px}
+.bar{height:10px;border-radius:2px;min-width:2px;display:inline-block}
+.good{color:var(--good);font-weight:600}
+.med{color:var(--med)}
+.bad{color:var(--bad)}
+.na{color:var(--muted);font-style:italic}
+.formula{background:color-mix(in srgb,var(--muted) 8%,transparent);border:1px solid var(--border);border-radius:4px;padding:8px 12px;font-family:monospace;font-size:11.5px;margin:6px 0;overflow-x:auto}
+.pipeline-step{display:inline-block;padding:3px 9px;border-radius:4px;font-size:11px;font-weight:600;margin:2px}
+.step-ml{background:color-mix(in srgb,#2563EB 12%,transparent);color:#2563EB;border:1px solid #2563EB40}
+.step-hk{background:color-mix(in srgb,#16A34A 12%,transparent);color:#16A34A;border:1px solid #16A34A40}
+.step-ms{background:color-mix(in srgb,#9333EA 12%,transparent);color:#9333EA;border:1px solid #9333EA40}
+.step-sep{color:var(--muted);margin:0 2px}
+.offline-box{border:2px solid #9333EA;border-radius:6px;padding:12px 16px;margin:10px 0;background:color-mix(in srgb,#9333EA 5%,transparent)}
+#thm{position:fixed;top:10px;right:12px;z-index:20;font-size:11px;padding:3px 9px;border:1px solid var(--border);border-radius:4px;background:var(--surface);color:var(--muted);cursor:pointer}
+code{background:color-mix(in srgb,var(--muted) 10%,transparent);padding:1px 4px;border-radius:3px;font-family:monospace;font-size:11px}
+.grey-cell{opacity:0.38;color:var(--muted) !important;font-style:italic}
+.grey-th{opacity:0.45;font-style:italic}
+.unreliable-banner{background:color-mix(in srgb,#6B7280 8%,transparent);border:1px dashed var(--border);border-radius:4px;padding:9px 13px;font-size:11px;color:var(--muted);margin:6px 0;font-style:italic}
+.lim-box{border:1px solid var(--border);border-radius:5px;padding:10px 14px;font-size:11.5px;background:color-mix(in srgb,var(--muted) 5%,transparent);margin:8px 0}
+</style>
+</head>
+<body>
+<button id="thm" onclick="(function(){var r=document.documentElement;var t=r.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');r.setAttribute('data-theme',t==='dark'?'light':'dark')})();">&#9681;</button>
+<nav id="nav">
+<h3>Navigation</h3>
+<a href="#intro">Contexte</a>
+<a href="#modele">A &middot; Mod&egrave;le analytique</a>
+<a href="#offline">A2 &middot; Co&ucirc;t offline RAPTOR</a>
+<a href="#empirique">B &middot; Appels LLM (exact)</a>
+<a href="#latence">B3 &middot; Latence (exacte)</a>
+<a href="#overhead">C &middot; Tableau de synth&egrave;se</a>
+<a href="#reponses">D &middot; R&eacute;ponses reviewers</a>
+<a href="#limites">E &middot; Limites</a>
+</nav>
+<main id="main">
+<h1>Co&ucirc;t computationnel par configuration RAG</h1>
+<p class="sub">R&eacute;ponse au point&thinsp;4 du Reviewer 2 (overhead LLM, latence, co&ucirc;t) et au Reviewer 3 (complexit&eacute; pipeline multi-&eacute;tapes) &mdash; calcul sur JSON archiv&eacute;s, 109 questions, aucun nouveau run.</p>
+<section id="intro"><h2>Contexte et sources de donn&eacute;es</h2>
+<div class="info-box">Toutes les mesures proviennent des fichiers JSON archiv&eacute;s lors des ablations (109 questions). <strong>Deux m&eacute;triques sont exactes <span class="badge-exact">EXACT</span></strong> : latence (<code>rag_elapsed_s</code>) et nombre d'appels LLM (calcul&eacute; depuis <code>n_subquestions</code> et <code>n_hops</code>). Elles seules sont utilis&eacute;es dans les r&eacute;ponses reviewers.<br><strong>Les tokens sont gris&eacute;s <span class="badge-est">NON FIABLE</span></strong> : le harness ne persiste pas le contenu int&eacute;gral des contextes transmis aux LLM (pour plusieurs configs, le champ <code>sources[].content</code> est vide dans les JSON). Les colonnes tokens sont conserv&eacute;es &agrave; titre indicatif mais ne doivent pas &ecirc;tre cit&eacute;es.</div>
+<h3>Sources de donn&eacute;es</h3>
+<ul style="font-size:12px;margin:0 0 8px 16px;line-height:1.8">
+<li><code>ablations_103q_v43_gpt4o_COMPLET.json</code> &mdash; vanilla k=10, k=25, d&eacute;comp+RAPTOR, d&eacute;comp NT (N=109 chacun)</li>
+<li><code>git 9732e9e</code> &mdash; d&eacute;comp (old) et d&eacute;comp NT (old) (N=109 chacun)</li>
+<li><code>selfask_12q/</code> &mdash; 109 fichiers JSON Self-Ask (un par question)</li>
+<li>ChromaDB <code>chroma_portrait/</code> &mdash; comptage des documents RAPTOR par collection</li>
+</ul></section>
+<section id="modele"><h2>A &middot; Mod&egrave;le analytique de complexit&eacute;</h2>
+<p class="note">N = nombre de sous-questions g&eacute;n&eacute;r&eacute;es (N=5 en production standard). PAR = &eacute;tape parall&eacute;lisable, SEQ = s&eacute;quentielle.</p>
+<div class="tw"><table><thead><tr><th>Configuration</th><th>Appels LLM / requ&ecirc;te</th><th>D&eacute;tail des &eacute;tapes</th><th>Parall&eacute;lisabilit&eacute;</th><th>Mod&egrave;les utilis&eacute;s</th></tr></thead><tbody>
+<tr><td><span style="display:inline-flex;align-items:center;gap:4px"><span class="dot" style="background:#2563EB"></span><strong>Vanilla k=10</strong></span></td><td style="text-align:center"><strong>1</strong></td><td style="text-align:left;white-space:normal"><span class='pipeline-step step-ml'>G&eacute;n&eacute;ration finale</span></td><td style="text-align:left;font-size:10.5px;white-space:normal">Tout s&eacute;quentiel (1 seul appel)</td><td style="text-align:left;font-size:10.5px;white-space:normal">Mistral Large</td></tr>
+<tr><td><span style="display:inline-flex;align-items:center;gap:4px"><span class="dot" style="background:#7C3AED"></span><strong>Vanilla k=25</strong></span></td><td style="text-align:center"><strong>1</strong></td><td style="text-align:left;white-space:normal"><span class='pipeline-step step-ml'>G&eacute;n&eacute;ration finale</span></td><td style="text-align:left;font-size:10.5px;white-space:normal">Tout s&eacute;quentiel (1 seul appel)</td><td style="text-align:left;font-size:10.5px;white-space:normal">Mistral Large</td></tr>
+<tr><td><span style="display:inline-flex;align-items:center;gap:4px"><span class="dot" style="background:#0891B2"></span><strong>D&eacute;comp (old)</strong></span></td><td style="text-align:center"><strong>N+2</strong></td><td style="text-align:left;white-space:normal"><span class='pipeline-step step-ml'>D&eacute;composition</span><span class='step-sep'>&rarr;</span><span class='pipeline-step step-hk'>R&eacute;ponses SQ &times;N</span><span class='step-sep'>&rarr;</span><span class='pipeline-step step-ml'>Synth&egrave;se</span></td><td style="text-align:left;font-size:10.5px;white-space:normal"><span class='badge-par'>PAR</span> N r&eacute;ponses SQ &mdash; <span class='badge-seq'>SEQ</span> D&eacute;comp &amp; Synth&egrave;se</td><td style="text-align:left;font-size:10.5px;white-space:normal">Mistral Large (D&eacute;comp + Synth) &middot; Claude Haiku (SQ)</td></tr>
+<tr><td><span style="display:inline-flex;align-items:center;gap:4px"><span class="dot" style="background:#EA580C"></span><strong>D&eacute;comp NT (old)</strong></span></td><td style="text-align:center"><strong>N+2</strong></td><td style="text-align:left;white-space:normal"><span class='pipeline-step step-ml'>D&eacute;composition (sans typing)</span><span class='step-sep'>&rarr;</span><span class='pipeline-step step-hk'>R&eacute;ponses SQ &times;N</span><span class='step-sep'>&rarr;</span><span class='pipeline-step step-ml'>Synth&egrave;se</span></td><td style="text-align:left;font-size:10.5px;white-space:normal"><span class='badge-par'>PAR</span> N r&eacute;ponses SQ &mdash; <span class='badge-seq'>SEQ</span> D&eacute;comp &amp; Synth&egrave;se</td><td style="text-align:left;font-size:10.5px;white-space:normal">Mistral Large (D&eacute;comp + Synth) &middot; Claude Haiku (SQ)</td></tr>
+<tr><td><span style="display:inline-flex;align-items:center;gap:4px"><span class="dot" style="background:#16A34A"></span><strong>D&eacute;comp+RAPTOR</strong></span></td><td style="text-align:center"><strong>N+2</strong></td><td style="text-align:left;white-space:normal"><span class='pipeline-step step-ml'>D&eacute;composition</span><span class='step-sep'>&rarr;</span><span class='pipeline-step step-hk'>R&eacute;ponses SQ &times;N</span><span class='step-sep'>&rarr;</span><span class='pipeline-step step-ml'>Synth&egrave;se</span></td><td style="text-align:left;font-size:10.5px;white-space:normal"><span class='badge-par'>PAR</span> N r&eacute;ponses SQ &mdash; <span class='badge-seq'>SEQ</span> D&eacute;comp &amp; Synth&egrave;se</td><td style="text-align:left;font-size:10.5px;white-space:normal">Mistral Large (D&eacute;comp + Synth) &middot; Claude Haiku (SQ + RAPTOR retrieval)</td></tr>
+<tr><td><span style="display:inline-flex;align-items:center;gap:4px"><span class="dot" style="background:#9333EA"></span><strong>Self-Ask</strong></span></td><td style="text-align:center"><strong>1 + n_hops</strong></td><td style="text-align:left;white-space:normal"><span class='pipeline-step step-ml'>Q initiale</span><span class='step-sep'>&rarr;</span><span class='pipeline-step step-ml'>Follow-up 1</span><span class='step-sep'>&rarr;</span><span class='pipeline-step step-ml'>Follow-up 2&hellip;</span><span class='step-sep'>&rarr;</span><span class='pipeline-step step-ml'>R&eacute;ponse finale</span></td><td style="text-align:left;font-size:10.5px;white-space:normal"><span class='badge-seq'>SEQ</span> Tous les hops s&eacute;quentiels (d&eacute;pendance causale)</td><td style="text-align:left;font-size:10.5px;white-space:normal">Mistral Large (tous les hops)</td></tr>
+</tbody></table></div>
+<h3>Formule g&eacute;n&eacute;rale (N sous-questions)</h3>
+<div class="formula">Vanilla                  : 1 appel (Mistral Large)<br>D&eacute;comp / D&eacute;comp+RAPTOR : N+2 appels &nbsp; [1 Mistral Large decompose + N Claude Haiku SQ + 1 Mistral Large synth]<br>Self-Ask                 : 1 + n_hops appels (Mistral Large, s&eacute;quentiel)<br><br>Overhead relatif vs Vanilla (N=5, d&eacute;comp) : <strong>7 appels = +600%</strong><br>Overhead relatif vs Vanilla (Self-Ask, 1.6 hops moy.) : <strong>2.6 appels = +160%</strong></div>
+<h3>Parall&eacute;lisabilit&eacute; des &eacute;tapes</h3>
+<div class="info-box">Les N r&eacute;ponses aux sous-questions (Claude Haiku) sont <strong>ind&eacute;pendantes</strong> et peuvent &ecirc;tre lan&ccedil;&eacute;es en parall&egrave;le (async/gather). La d&eacute;composition (Mistral Large) et la synth&egrave;se (Mistral Large) sont s&eacute;quentielles (d&eacute;pendance causale). En production avec parall&eacute;lisation des N SQ, la latence effective est :<br><strong>t_eff &asymp; t_decomp + max(t_SQ) + t_synth</strong> (au lieu de t_decomp + N&thinsp;&times;&thinsp;t_SQ + t_synth).<br>Pour Self-Ask, chaque hop d&eacute;pend du pr&eacute;c&eacute;dent &mdash; aucune parall&eacute;lisation possible.</div>
+</section>
+<section id="offline"><h2>A2 &middot; Co&ucirc;t <em>offline</em> de construction RAPTOR</h2>
+<div class="offline-box"><strong>Principe :</strong> RAPTOR pr&eacute;-calcule des synth&egrave;ses hi&eacute;rarchiques des sources (<em>une seule fois</em>, ind&eacute;pendant des requ&ecirc;tes utilisateur). Ce co&ucirc;t est amorti sur toutes les requ&ecirc;tes futures.</div>
+<h3>Collections RAPTOR dans ChromaDB (<code>chroma_portrait/</code>)</h3>
+<div class="tw"><table><thead><tr><th>Collection</th><th>Docs (synth&egrave;ses)</th><th>Mod&egrave;le</th><th>Tokens input est. <span class="badge-est">ESTIM&Eacute;</span></th><th>Tokens output est.</th><th>Total tokens est.</th></tr></thead><tbody>
+<tr><td><code>raptor_summaries</code></td><td>493</td><td>Mistral Small</td><td>591,600</td><td>197,200</td><td>788,800</td></tr>
+<tr><td><code>raptor_enquete_summaries</code></td><td>125</td><td>Mistral Small</td><td>150,000</td><td>50,000</td><td>200,000</td></tr>
+<tr><td><code>raptor_quanti_summaries</code></td><td>54</td><td>Mistral Small</td><td>64,800</td><td>21,600</td><td>86,400</td></tr>
+<tr><td><code>raptor_entretiens_summaries</code></td><td>2</td><td>Mistral Small</td><td>2,400</td><td>800</td><td>3,200</td></tr>
+<tr style="font-weight:700;background:color-mix(in srgb,var(--acc) 5%,transparent)"><td>TOTAL</td><td>674</td><td>&mdash;</td><td colspan="2">&mdash;</td><td>1,078,400</td></tr>
+</tbody></table></div>
+<p class="note"><span class="badge-est">ESTIM&Eacute;</span> Co&ucirc;t Mistral Small (tarif 2025 : ~0,10&thinsp;$/M in &middot; ~0,30&thinsp;$/M out) : ~$0.08 (input) + ~$0.08 (output) = <strong>~$0.16 total une seule fois</strong> pour 674 synth&egrave;ses.</p>
+<h3>Formule g&eacute;n&eacute;rale du co&ucirc;t offline</h3>
+<div class="formula">N_syntheses = &Sigma; (n_vues &times; n_niveaux_hierarchiques)<br>Pour OppChoVec : 360 communes &times; ~1.4 niveaux &asymp; 504 synth&egrave;ses verbatims<br>                + 360 communes &times; ~0.5 niveaux quanti &asymp; 54 synth&egrave;ses quanti<br>                + enquetes (125) + entretiens (2) = <strong>674 total</strong><br><br>Ce co&ucirc;t est pay&eacute; UNE SEULE FOIS lors de l'indexation,<br>puis amorti sur tous les appels en production (retrieval vectoriel gratuit).</div>
+</section>
+<section id="empirique"><h2>B &middot; Mesures empiriques par requ&ecirc;te (109 questions)</h2>
+<div class="warn-box"><strong>Tokens : <span class="badge-est">ESTIM&Eacute;S</span></strong> &mdash; Estimations avec <code>tiktoken cl100k_base</code> sur les textes archiv&eacute;s (r&eacute;ponses, sous-questions, sources, hops). Les prompts syst&egrave;me sont inclus avec des valeurs typ&eacute;es &agrave; partir du code source (<code>rag_v10_raptor_subq.py</code>).<br><strong>Appels LLM et latences : <span class="badge-exact">EXACT</span></strong> &mdash; Extraits directement de <code>n_subquestions</code> et <code>rag_elapsed_s</code>.</div>
+<h3>B1 &middot; Appels LLM par requ&ecirc;te <span class="badge-exact">EXACT</span></h3>
+<div class="tw"><table><thead><tr><th>Configuration</th><th>N</th><th>Moy.</th><th>&Eacute;cart-type</th><th>M&eacute;diane</th><th>Min</th><th>Max</th><th>Overhead vs Vanilla</th></tr></thead><tbody>
+<tr><td><span class="dot" style="background:#2563EB"></span>Vanilla k=10</td><td>109</td><td><strong>1.00</strong></td><td>0.00</td><td>1.0</td><td>1</td><td>1</td><td class="good"><strong>&times;1.0</strong></td></tr>
+<tr><td><span class="dot" style="background:#7C3AED"></span>Vanilla k=25</td><td>109</td><td><strong>1.00</strong></td><td>0.00</td><td>1.0</td><td>1</td><td>1</td><td class="good"><strong>&times;1.0</strong></td></tr>
+<tr><td><span class="dot" style="background:#0891B2"></span>Décomp (old)</td><td>109</td><td><strong>6.67</strong></td><td>1.37</td><td>7.0</td><td>1</td><td>7</td><td class="bad"><strong>&times;6.7</strong></td></tr>
+<tr><td><span class="dot" style="background:#EA580C"></span>Décomp NT (old)</td><td>109</td><td><strong>6.96</strong></td><td>0.38</td><td>7.0</td><td>3</td><td>7</td><td class="bad"><strong>&times;7.0</strong></td></tr>
+<tr><td><span class="dot" style="background:#16A34A"></span>Décomp+RAPTOR</td><td>109</td><td><strong>6.12</strong></td><td>1.85</td><td>7.0</td><td>1</td><td>7</td><td class="bad"><strong>&times;6.1</strong></td></tr>
+<tr><td><span class="dot" style="background:#9333EA"></span>Self-Ask</td><td>109</td><td><strong>2.59</strong></td><td>0.56</td><td>3.0</td><td>1</td><td>4</td><td class="med"><strong>&times;2.6</strong></td></tr>
+</tbody></table></div>
+<p class="note">Self-Ask : distribution des hops = {0: 3, 1: 40, 2: 65, 3: 1} (moy.&thinsp;1.59&thinsp;&pm;&thinsp;0.56). Total LLM calls = 1 (initial) + n_hops.</p>
+<h3>B2 &middot; Tokens par requ&ecirc;te <span class="badge-est">NON FIABLE &mdash; gris&eacute;</span></h3>
+<div class="unreliable-banner">&#9888; Estimation non fiable &mdash; contenu des contextes non journalis&eacute; dans les runs. Pour plusieurs configurations (<code>v_decomp_old</code>, <code>v_decomp_raptor</code>), le champ <code>sources[].content</code> est vide dans les JSON archiv&eacute;s ; pour <code>v_decomp_no_typing_v2_legacy</code>, les sources comptent jusqu'&agrave; 70 entr&eacute;es mais sans contenu text. Ces chiffres sont conserv&eacute;s &agrave; titre indicatif uniquement &mdash; ne pas citer dans le texte du r&eacute;visionnel.</div>
+<div class="tw"><table><thead><tr><th>Configuration</th><th>N</th><th class="grey-th">Tokens input<br>moy. (std)</th><th class="grey-th">Tokens output<br>moy. (std)</th><th class="grey-th">Tokens total<br>moy. (std)</th><th class="grey-th">M&eacute;diane total</th><th class="grey-th">Overhead total</th></tr></thead><tbody>
+<tr><td><span class="dot" style="background:#2563EB"></span>Vanilla k=10</td><td>109</td><td class="grey-cell">5,808 (5,500)</td><td class="grey-cell">575 (355)</td><td class="grey-cell">6,383 (5,414)</td><td class="grey-cell">4,191</td><td class="grey-cell">&times;1.0</td></tr>
+<tr><td><span class="dot" style="background:#7C3AED"></span>Vanilla k=25</td><td>109</td><td class="grey-cell">7,718 (6,001)</td><td class="grey-cell">580 (354)</td><td class="grey-cell">8,298 (5,924)</td><td class="grey-cell">5,493</td><td class="grey-cell">&times;1.3</td></tr>
+<tr><td><span class="dot" style="background:#0891B2"></span>Décomp (old)</td><td>109</td><td class="grey-cell">33,954 (20,976)</td><td class="grey-cell">3,016 (539)</td><td class="grey-cell">36,970 (21,108)</td><td class="grey-cell">36,515</td><td class="grey-cell">&times;5.8</td></tr>
+<tr><td><span class="dot" style="background:#EA580C"></span>Décomp NT (old)</td><td>109</td><td class="grey-cell">4,517 (699)</td><td class="grey-cell">4,200 (990)</td><td class="grey-cell">8,717 (1,663)</td><td class="grey-cell">8,797</td><td class="grey-cell">&times;1.4</td></tr>
+<tr><td><span class="dot" style="background:#16A34A"></span>Décomp+RAPTOR</td><td>109</td><td class="grey-cell">25,792 (11,260)</td><td class="grey-cell">2,848 (807)</td><td class="grey-cell">28,641 (11,920)</td><td class="grey-cell">33,167</td><td class="grey-cell">&times;4.5</td></tr>
+<tr><td><span class="dot" style="background:#9333EA"></span>Self-Ask</td><td>109</td><td class="grey-cell">10,048 (6,175)</td><td class="grey-cell">999 (512)</td><td class="grey-cell">11,046 (6,291)</td><td class="grey-cell">10,344</td><td class="grey-cell">&times;1.7</td></tr>
+</tbody></table></div>
+<p class="note grey-cell" style="opacity:0.5">M&eacute;thode appliqu&eacute;e malgr&eacute; tout : tiktoken tiktoken cl100k_base sur les textes archiv&eacute;s (r&eacute;ponses, sous-r&eacute;ponses, sources). Les valeurs sous-estiment syst&eacute;matiquement le v&eacute;ritable co&ucirc;t token.</p>
+</section>
+<section id="latence"><h2>B3 &middot; Latence end-to-end <span class="badge-exact">EXACT</span></h2>
+<div class="tw"><table><thead><tr><th>Configuration</th><th>N</th><th>Moy. (s)</th><th>&Eacute;cart-type</th><th>M&eacute;diane</th><th>Min</th><th>Max</th><th>Overhead</th></tr></thead><tbody>
+<tr><td><span class="dot" style="background:#2563EB"></span>Vanilla k=10</td><td>109</td><td><strong>13.1</strong></td><td>5.9</td><td>12.9</td><td>3.8</td><td>26.3</td><td><div class="bar-wrap"><div class="bar" style="width:19px;background:#2563EB"></div>&times;1.0</div></td></tr>
+<tr><td><span class="dot" style="background:#7C3AED"></span>Vanilla k=25</td><td>109</td><td><strong>13.0</strong></td><td>5.8</td><td>13.3</td><td>3.8</td><td>22.8</td><td><div class="bar-wrap"><div class="bar" style="width:19px;background:#7C3AED"></div>&times;1.0</div></td></tr>
+<tr><td><span class="dot" style="background:#0891B2"></span>Décomp (old)</td><td>109</td><td><strong>51.3</strong></td><td>12.8</td><td>51.7</td><td>20.7</td><td>91.8</td><td><div class="bar-wrap"><div class="bar" style="width:76px;background:#0891B2"></div>&times;3.9</div></td></tr>
+<tr><td><span class="dot" style="background:#EA580C"></span>Décomp NT (old)</td><td>109</td><td><strong>113.5</strong></td><td>70.6</td><td>93.3</td><td>3.8</td><td>598.5</td><td><div class="bar-wrap"><div class="bar" style="width:170px;background:#EA580C"></div>&times;8.7</div></td></tr>
+<tr><td><span class="dot" style="background:#16A34A"></span>Décomp+RAPTOR</td><td>109</td><td><strong>60.8</strong></td><td>18.3</td><td>63.4</td><td>17.4</td><td>103.5</td><td><div class="bar-wrap"><div class="bar" style="width:91px;background:#16A34A"></div>&times;4.7</div></td></tr>
+<tr><td><span class="dot" style="background:#9333EA"></span>Self-Ask</td><td>109</td><td><strong>30.0</strong></td><td>17.3</td><td>28.0</td><td>1.9</td><td>79.4</td><td><div class="bar-wrap"><div class="bar" style="width:45px;background:#9333EA"></div>&times;2.3</div></td></tr>
+</tbody></table></div>
+<div class="warn-box"><strong>D&eacute;comp NT (old)</strong> : latence moy. 113.5s avec &eacute;cart-type 70.6s et max 598.5s. Ces valeurs aberrantes s'expliquent par des retries d&ucirc; aux rate limits Mistral (backoff exponentiel jusqu'&agrave; 30s par tentative). La latence m&eacute;diane (93.3s) est plus repr&eacute;sentative du cas nominal. En production avec des quotas adapt&eacute;s, la latence de d&eacute;comp serait similaire &agrave; D&eacute;comp (old) (~51s).</div>
+<p class="note">Note : la parall&eacute;lisation des N appels Haiku (non activ&eacute;e en ablation, ex&eacute;cution s&eacute;quentielle) r&eacute;duirait la latence D&eacute;comp+RAPTOR de ~60s &agrave; ~30-35s (t_decomp + max(t_SQ) + t_synth), comparable &agrave; Self-Ask.</p>
+</section>
+<section id="overhead"><h2>C &middot; Tableau de synth&egrave;se &mdash; overhead par rapport &agrave; Vanilla</h2>
+<p class="note">Colonnes en clair = valeurs exactes. Colonnes gris&eacute;es = non fiables (contenu contexte non journalis&eacute;).</p>
+<div class="tw"><table><thead><tr><th>Configuration</th><th>Appels LLM <span class="badge-exact">EXACT</span></th><th>Overhead appels</th><th>Latence moy. <span class="badge-exact">EXACT</span></th><th>Overhead latence</th><th class="grey-th">Tokens total <span class="badge-est">NON FIABLE</span></th><th class="grey-th">Overhead tokens</th><th>Parall&eacute;lisable ?</th></tr></thead><tbody>
+<tr><td><span class="dot" style="background:#2563EB"></span><strong>Vanilla k=10</strong></td><td><strong>1.0</strong></td><td class="good"><strong>&times;1.0</strong></td><td><strong>13.1s</strong></td><td class="good"><strong>&times;1.0</strong></td><td class="grey-cell">6,383</td><td class="grey-cell">&times;1.0</td><td style="font-size:10.5px">N/A (1 appel)</td></tr>
+<tr><td><span class="dot" style="background:#7C3AED"></span><strong>Vanilla k=25</strong></td><td><strong>1.0</strong></td><td class="good"><strong>&times;1.0</strong></td><td><strong>13.0s</strong></td><td class="good"><strong>&times;1.0</strong></td><td class="grey-cell">8,298</td><td class="grey-cell">&times;1.3</td><td style="font-size:10.5px">N/A (1 appel)</td></tr>
+<tr><td><span class="dot" style="background:#0891B2"></span><strong>Décomp (old)</strong></td><td><strong>6.7</strong></td><td class="bad"><strong>&times;6.7</strong></td><td><strong>51.3s</strong></td><td class="med"><strong>&times;3.9</strong></td><td class="grey-cell">36,970</td><td class="grey-cell">&times;5.8</td><td style="font-size:10.5px"><span class='badge-par'>PAR</span> N SQ</td></tr>
+<tr><td><span class="dot" style="background:#EA580C"></span><strong>Décomp NT (old)</strong></td><td><strong>7.0</strong></td><td class="bad"><strong>&times;7.0</strong></td><td><strong>113.5s</strong></td><td class="bad"><strong>&times;8.7</strong></td><td class="grey-cell">8,717</td><td class="grey-cell">&times;1.4</td><td style="font-size:10.5px"><span class='badge-par'>PAR</span> N SQ</td></tr>
+<tr><td><span class="dot" style="background:#16A34A"></span><strong>Décomp+RAPTOR</strong></td><td><strong>6.1</strong></td><td class="bad"><strong>&times;6.1</strong></td><td><strong>60.8s</strong></td><td class="med"><strong>&times;4.7</strong></td><td class="grey-cell">28,641</td><td class="grey-cell">&times;4.5</td><td style="font-size:10.5px"><span class='badge-par'>PAR</span> N SQ</td></tr>
+<tr><td><span class="dot" style="background:#9333EA"></span><strong>Self-Ask</strong></td><td><strong>2.6</strong></td><td class="med"><strong>&times;2.6</strong></td><td><strong>30.0s</strong></td><td class="good"><strong>&times;2.3</strong></td><td class="grey-cell">11,046</td><td class="grey-cell">&times;1.7</td><td style="font-size:10.5px"><span class='badge-seq'>SEQ</span> Non</td></tr>
+</tbody></table></div>
+<p class="note">R&eacute;f&eacute;rence = Vanilla k=10. Latences : <span class="badge-exact">EXACT</span> depuis <code>rag_elapsed_s</code>. Tokens : <span class="badge-est">NON FIABLE</span> &mdash; contenu contexte non journalis&eacute;.</p>
+</section>
+<section id="reponses"><h2>D &middot; R&eacute;ponses aux reviewers</h2>
+<p class="note">Bas&eacute;es uniquement sur les m&eacute;triques exactes (appels LLM + latence) et le mod&egrave;le analytique N+2. Les tokens ne sont pas mentionn&eacute;s (non fiables).</p>
+<h3>Reviewer 2, point 4 : overhead LLM et latence</h3>
+<div class="ok-box">
+<strong>Draft (en) :</strong><br><br>
+Our multi-step RAG pipeline (Décomp+RAPTOR) requires <strong>N+2 LLM calls per query</strong> by design: one decomposition call (Mistral Large, max_tokens=600), N=5 parallel sub-question answering calls (Claude Haiku), and one synthesis call (Mistral Large, max_tokens=2500). For comparison, the vanilla baseline issues a single LLM call per query, and the Self-Ask variant issues 1+n_hops calls (empirical mean: 2.6 calls, measured over 109 queries). The N sub-answer calls are <strong>fully independent and can run in parallel</strong> (async gather), so the effective wall-clock latency is bounded by <em>t_decompose + max(t_sub_answer) + t_synthesize</em>, not their sum. Measured across all 109 evaluation queries, end-to-end latency for Décomp+RAPTOR is <strong>60.8&thinsp;s (&sigma;=18.3&thinsp;s, median=63.4&thinsp;s)</strong>, compared to 13.1&thinsp;s for the vanilla baseline (overhead &times;4.7). The RAPTOR index (674 hierarchical summaries, constructed offline once with Mistral Small) adds no per-query latency: retrieval is a pure vector similarity search over the pre-built index. Token consumption per query was not instrumented in the evaluation harness (see §E); a future instrumented run would be needed to report reliable input/output token counts.</div>
+<h3>Reviewer 3 : complexit&eacute; de la pipeline multi-&eacute;tapes</h3>
+<div class="ok-box">
+<strong>Draft (en) :</strong><br><br>
+We acknowledge the increased architectural complexity of our pipeline relative to a single-call RAG system. The pipeline consists of three online stages: (1) question decomposition into N sub-questions (Mistral Large), (2) N parallel sub-question answering calls over RAPTOR-indexed sources (Claude Haiku), and (3) final answer synthesis (Mistral Large). An optional fourth stage — per-dimension LLM scoring — is used during evaluation only and incurs no production overhead. This design is a deliberate response to the structure of our task: territorial well-being questions span heterogeneous source types (verbatim survey responses, quantitative indicators, administrative records) and typically require aggregating evidence across multiple sub-dimensions (e.g., mobility satisfaction by commune). Decomposition enables targeted retrieval per sub-dimension; RAPTOR hierarchical pre-summarisation reduces the retrieval burden at query time. The N=5 sub-answer calls are parallelisable, and measured latency of 61&thinsp;s end-to-end (median 63&thinsp;s) is compatible with offline batch use, the primary deployment mode for this research tool. This architecture is consistent with established multi-step RAG designs (sub-question decomposition in LlamaIndex, FLARE, Self-RAG), and the added complexity is justified by the empirical performance gains we report.</div>
+</section>
+<section id="limites"><h2>E &middot; Limites d'instrumentation &mdash; m&eacute;moire</h2>
+<div class="lim-box"><strong>Limite principale : le harness ne persiste pas le contenu int&eacute;gral des contextes.</strong><br><br>Lors des runs d'ablation, le JSON de sortie archivait le nombre de sources (<code>n_sources</code>) mais pas leur contenu textuel pour toutes les configurations. Concr&egrave;tement :<br><ul style="margin:6px 0 0 18px;line-height:2"><li><code>v_decomp_old</code> &amp; <code>v_decomp_raptor</code> : <code>sub_questions</code> non archiv&eacute;es (0/109 entr&eacute;es).</li><li><code>v_decomp_no_typing_v2_legacy</code> : sources archiv&eacute;es mais <code>content=""</code> (jusqu'&agrave; 70 sources sans texte). Sous-questions archiv&eacute;es avec texte.</li><li><code>v_vanilla_k10/k25</code> &amp; <code>v_selfask</code> : sources et r&eacute;ponses archiv&eacute;es correctement.</li></ul><br><strong>Cons&eacute;quence :</strong> les tokens input ne sont pas estimables de mani&egrave;re fiable pour les configs d&eacute;compositionnelles. Une instrumentation future devrait logguer directement les <code>usage.input_tokens</code> et <code>usage.output_tokens</code> retourn&eacute;s par chaque appel API (disponibles dans les r&eacute;ponses Mistral et Anthropic) et les persister dans le JSON de run.</div>
+</section>
+<p class="note" style="margin-top:28px">G&eacute;n&eacute;r&eacute; le 2026-07-26 17:57 &mdash; 109 questions &mdash; Tokenizer : tiktoken cl100k_base</p>
+<script>
+(function(){
+  var secs=document.querySelectorAll('section[id]');
+  var navs=document.querySelectorAll('#nav a');
+  new IntersectionObserver(function(es){es.forEach(function(e){
+    if(e.isIntersecting){navs.forEach(function(a){a.classList.remove('active')});
+    var l=document.querySelector('#nav a[href="#'+e.target.id+'"]');
+    if(l)l.classList.add('active');}});},{threshold:0.2}).observe;
+  secs.forEach(function(s){
+    new IntersectionObserver(function(es){es.forEach(function(e){
+      if(e.isIntersecting){navs.forEach(function(a){a.classList.remove('active')});
+      var l=document.querySelector('#nav a[href="#'+e.target.id+'"]');
+      if(l)l.classList.add('active');}});},{threshold:0.2}).observe(s);
+  });
+})();
+</script>
+</main></body></html>

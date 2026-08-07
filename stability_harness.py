@@ -353,6 +353,19 @@ def run_question(q_meta: dict, run_i: int, ts: str) -> dict:
 
     source_keys = [_make_source_key(s) for s in sources]
 
+    sources_detail = []
+    for rank_i, s in enumerate(sources):
+        meta = s.get("metadata", {})
+        sources_detail.append({
+            "source_type":      meta.get("type") or meta.get("source_type", ""),
+            "commune":          meta.get("commune") or meta.get("dim1_value", ""),
+            "view_name":        meta.get("view_name") or meta.get("view", ""),
+            "sub_question_idx": meta.get("sub_question_idx"),
+            "extrait":          (s.get("content") or "")[:500],
+            "score":            s.get("score"),
+            "rank":             meta.get("rank") if meta.get("rank") is not None else rank_i + 1,
+        })
+
     result = {
         "excel_row":          excel_row,
         "run":                run_i,
@@ -362,6 +375,7 @@ def run_question(q_meta: dict, run_i: int, ts: str) -> dict:
         "answer":             answer,
         "sources_mobilisees": sources_mob,
         "source_keys":        source_keys,
+        "sources_detail":     sources_detail,
         "n_sources":          len(sources),
         "sub_questions":      resp.get("sub_questions") or [],
         "elapsed_s":          elapsed,

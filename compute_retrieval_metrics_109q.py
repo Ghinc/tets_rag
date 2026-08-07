@@ -27,9 +27,10 @@ XLSX    = r'C:\Users\comiti_g\Downloads\rag_evaluation_with_metrics_full.xlsx'
 JSON    = 'comparaisons_rag/ablations_103q_v43_gpt4o_COMPLET.json'
 CHROMA  = 'chroma_portrait'
 RAPTOR_THRESHOLD = 0.30          # convention 30%
-CONFIGS = ['v_vanilla_k10', 'v_vanilla_k25', 'v_decomp', 'v_decomp_raptor']
+CONFIGS = ['v_vanilla_k10', 'v_vanilla_k25', 'v_decomp', 'v_decomp_raptor', 'v_decomp_no_typing']
 LABELS  = {'v_vanilla_k10': 'Vanilla k10', 'v_vanilla_k25': 'Vanilla k25',
-           'v_decomp': 'Decomp', 'v_decomp_raptor': 'Decomp+Raptor'}
+           'v_decomp': 'Decomp', 'v_decomp_raptor': 'Decomp+Raptor',
+           'v_decomp_no_typing': 'Decomp NoTyping'}
 RAPTOR_CONFIGS  = {'v_decomp_raptor'}           # accès direct aux résumés RAPTOR
 NO_RAPTOR_CONFIGS = set(CONFIGS) - RAPTOR_CONFIGS
 
@@ -261,9 +262,9 @@ def _source_type_of(s_meta: dict) -> str:
     if st in ('oppchovec_scores',) or 'oppchovec' in src.lower(): return 'oppchovec'
     if t == 'methodology' or st == 'methodology': return 'methodology'
     if t == 'classement_dimensions' or 'classement' in st: return 'classement'
-    if st == 'enquete_scores_commune' or 'enquete_score' in st: return 'stats_enquete'
+    if st in ('enquete_scores_commune', 'enquete_commune') or 'enquete_score' in st: return 'stats_enquete'
     if st == 'communes_profil' or 'profil' in st: return 'stats_repondants'
-    if st == 'portrait_entretiens': return 'entretiens'
+    if st in ('portrait_entretiens', 'entretien') or t == 'entretien': return 'entretiens'
     if st == 'portrait_verbatims':  return 'verbatims'
     if st == 'communes_wiki':       return 'wiki'
     if st in ('communes_equipements', 'equipements'): return 'equipements'

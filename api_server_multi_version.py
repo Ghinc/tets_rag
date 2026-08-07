@@ -119,7 +119,7 @@ except ImportError as e:
 
 # Import optionnel des ablations (V_vanilla, V_decomp, V_decomp_raptor)
 try:
-    from rag_ablations import VanillaRAG, DecompOnlyRAG
+    from rag_ablations import VanillaRAG, DecompOnlyRAG, DecompNoTypingRAG
     ABLATIONS_AVAILABLE = True
 except ImportError as e:
     print(f"AVERTISSEMENT: ablations non disponibles ({e})")
@@ -135,7 +135,8 @@ class QueryRequest(BaseModel):
     """Modèle de requête pour poser une question"""
     question: str = Field(..., description="Question à poser au chatbot", min_length=1)
     rag_version: Literal["v1", "v2", "v2.1", "v2.2", "v3", "v4", "v5", "v6", "v7", "v8", "v9", "v10", "v11",
-                         "v_vanilla_k10", "v_vanilla_k25", "v_decomp", "v_decomp_raptor"] = Field("v2", description="Version du RAG à utiliser")
+                         "v_vanilla_k10", "v_vanilla_k25", "v_decomp", "v_decomp_raptor",
+                         "v_decomp_no_typing", "v_decomp_raptor_no_typing"] = Field("v2", description="Version du RAG à utiliser")
     k: int = Field(5, description="Nombre de documents à récupérer", ge=1, le=100)
     use_reranking: bool = Field(True, description="Utiliser le reranking (v2/v3/v4 uniquement)")
     include_quantitative: bool = Field(True, description="Inclure les données quantitatives (v2/v3/v4 uniquement)")
@@ -235,10 +236,12 @@ rag_pipelines = {
     "v10": None,
     "v11": None,
     # Ablations
-    "v_vanilla_k10":    None,
-    "v_vanilla_k25":    None,
-    "v_decomp":         None,
-    "v_decomp_raptor":  None,
+    "v_vanilla_k10":       None,
+    "v_vanilla_k25":       None,
+    "v_decomp":            None,
+    "v_decomp_raptor":          None,
+    "v_decomp_no_typing":       None,
+    "v_decomp_raptor_no_typing": None,
 }
 
 # Mots-clés déclenchant la recherche dans oppchovec_scores
@@ -518,10 +521,20 @@ def initialize_all_rags():
         except BaseException as e:
             print(f"AVERTISSEMENT: V_decomp non disponible: {e}")
 
+        try:
+            abl_decomp_nt = DecompNoTypingRAG(chroma_path="./chroma_portrait")
+            abl_decomp_nt.init()
+            rag_pipelines["v_decomp_no_typing"] = abl_decomp_nt
+            print("OK V_decomp_no_typing initialisé")
+        except BaseException as e:
+            print(f"AVERTISSEMENT: V_decomp_no_typing non disponible: {e}")
+
         # V_decomp_raptor = v10 avec use_bilan=False — réutilise le pipeline v10 déjà initialisé
         if rag_pipelines.get("v10") is not None:
             rag_pipelines["v_decomp_raptor"] = rag_pipelines["v10"]
+            rag_pipelines["v_decomp_raptor_no_typing"] = rag_pipelines["v10"]
             print("OK V_decomp_raptor initialisé (réutilise pipeline v10 avec use_bilan=False)")
+            print("OK V_decomp_raptor_no_typing initialisé (réutilise pipeline v10, no_typing=True)")
         else:
             print("AVERTISSEMENT: V_decomp_raptor non disponible (v10 absent)")
 
@@ -1121,7 +1134,25 @@ def query_rag(request: QueryRequest):
                 temperature_override=request.temperature_override,
             )
 
+        elif request.rag_version == "v_decomp_raptor_no_typing":
+            answer, retrieval_results, v10_scoring, v10_sub_qa, v10_sources_mob = rag.query(
+                question=request.question,
+                k=request.k,
+                n_subquestions=request.n_subquestions,
+                use_bilan=False,
+                no_typing=True,
+                temperature_override=request.temperature_override,
+            )
+
         elif request.rag_version == "v_decomp":
+            answer, retrieval_results, v10_scoring, v10_sub_qa, v10_sources_mob = rag.query(
+                question=request.question,
+                k=request.k,
+                n_subquestions=request.n_subquestions,
+                temperature_override=request.temperature_override,
+            )
+
+        elif request.rag_version == "v_decomp_no_typing":
             answer, retrieval_results, v10_scoring, v10_sub_qa, v10_sources_mob = rag.query(
                 question=request.question,
                 k=request.k,
@@ -1138,7 +1169,7 @@ def query_rag(request: QueryRequest):
             v10_sub_qa = None
 
         # Convertir les résultats en format API
-        if request.rag_version in ("v_vanilla_k10", "v_vanilla_k25", "v_decomp"):
+        if request.rag_version in ("v_vanilla_k10", "v_vanilla_k25", "v_decomp", "v_decomp_no_typing"):
             # ablations retournent List[Dict] avec clés: content, metadata, source_type, label
             sources = [
                 Source(
@@ -1150,7 +1181,7 @@ def query_rag(request: QueryRequest):
                 )
                 for result in retrieval_results
             ]
-        elif request.rag_version in ("v9", "v10", "v11", "v_decomp_raptor"):
+        elif request.rag_version in ("v9", "v10", "v11", "v_decomp_raptor", "v_decomp_raptor_no_typing"):
             # v9/v10/v11 retournent List[Dict] avec clés: rank, type/commune, extrait, etc.
             sources = [
                 Source(
@@ -1231,8 +1262,8 @@ def query_rag(request: QueryRequest):
             metadata=metadata,
             rag_version_used=request.rag_version,
             timestamp=datetime.now().isoformat(),
-            sub_questions=v10_sub_qa if request.rag_version in ("v10", "v11", "v_decomp", "v_decomp_raptor") else None,
-            sources_mobilisees=v10_sources_mob if request.rag_version in ("v10", "v_decomp", "v_decomp_raptor") else None,
+            sub_questions=v10_sub_qa if request.rag_version in ("v10", "v11", "v_decomp", "v_decomp_raptor", "v_decomp_no_typing", "v_decomp_raptor_no_typing") else None,
+            sources_mobilisees=v10_sources_mob if request.rag_version in ("v10", "v_decomp", "v_decomp_raptor", "v_decomp_no_typing", "v_decomp_raptor_no_typing") else None,
         )
 
         print(f"[{datetime.now().isoformat()}] Réponse générée ({request.rag_version}) avec {len(sources)} sources")
@@ -2269,6 +2300,32 @@ def debug_retrieval(req: DebugRetrievalRequest):
 
     except HTTPException:
         raise
+    except Exception as e:
+        import traceback; traceback.print_exc()
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+class RetrieveRequest(BaseModel):
+    question: str
+    k:        int = 5
+
+
+@app.post("/api/retrieve", tags=["Debug"])
+def retrieve_raw(req: RetrieveRequest):
+    """
+    Retrieval brut : retourne context_str + sources pour une question,
+    sans passer par aucun LLM. Utilisé par les scripts d'ablation inline
+    qui ont besoin du retriever mais ne peuvent pas ouvrir ChromaDB directement.
+    """
+    rag = rag_pipelines.get("v_decomp_raptor") or rag_pipelines.get("v10")
+    if rag is None:
+        raise HTTPException(status_code=503, detail="Aucun pipeline v10/v_decomp_raptor disponible")
+    retriever = getattr(rag, "retriever", None)
+    if retriever is None or not hasattr(retriever, "query"):
+        raise HTTPException(status_code=503, detail="Retriever non disponible")
+    try:
+        context_str, sources = retriever.query(req.question, k=req.k)
+        return {"context_str": context_str, "sources": sources}
     except Exception as e:
         import traceback; traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))

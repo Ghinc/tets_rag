@@ -21,6 +21,7 @@ from rag_v10_raptor_subq import (
     _call_mistral,
     CHROMA_PATH,
     DEFAULT_N_SUBQUESTIONS,
+    _SYSTEM_DECOMPOSER_NO_TYPING,
 )
 
 # Collections RAPTOR à exclure pour les ablations "sans RAPTOR"
@@ -190,4 +191,79 @@ class DecompOnlyRAG:
             for i, (sq, ans) in enumerate(sub_qa_pairs)
         ]
         print("[v_decomp] Pipeline terminé.")
+        return final_answer, all_sources, {}, sub_qa_list, sources_mobilisees
+
+
+class DecompNoTypingRAG:
+    """
+    V_decomp_no_typing : identique à V_decomp, SAUF que le prompt du décomposeur
+    ne contient pas la règle de typage (règle 1 de _SYSTEM_DECOMPOSER retirée).
+    Ablation isolant la contribution de la contrainte de type sur les sous-questions.
+    """
+
+    def __init__(self, chroma_path: str = CHROMA_PATH):
+        self._chroma_path = chroma_path
+        self._pipeline: Optional[RaptorSubQuestionPipeline] = None
+        self._initialized = False
+
+    def init(self):
+        self._pipeline = RaptorSubQuestionPipeline(chroma_path=self._chroma_path)
+        self._pipeline.init()
+        self._initialized = True
+        print("DecompNoTypingRAG (V_decomp_no_typing) initialisé")
+
+    def query(self, question: str, k: int = 5,
+              n_subquestions: int = DEFAULT_N_SUBQUESTIONS,
+              temperature_override: Optional[float] = None
+              ) -> Tuple[str, List[Dict], Dict, List[Dict], List[Dict]]:
+        assert self._initialized, "Appelez init() d'abord."
+        retriever = self._pipeline.retriever
+
+        print(f"\n[v_decomp_no_typing] Question : {question}")
+        print(f"[v_decomp_no_typing] Etape 1/3 : Décomposition sans typage (Mistral Large)...")
+        try:
+            sub_questions = decompose_question(question, n=n_subquestions,
+                                               no_typing=True,
+                                               temperature_override=temperature_override)
+        except RuntimeError as _e:
+            print(f"[v_decomp_no_typing] Question hors-domaine ou indécomposable : {_e}")
+            _refusal = _call_mistral(
+                f"Question : {question}",
+                "Tu es un assistant spécialisé en qualité de vie en Corse. "
+                "Cette question ne relève pas de ton domaine d'expertise. "
+                "Réponds poliment que tu ne peux pas répondre à cette question.",
+                max_tokens=300, temperature=0.3,
+            )
+            return _refusal, [], {}, [], []
+
+        print(f"[v_decomp_no_typing] Etape 2/3 : Retrieval brut + Haiku par sous-question...")
+        sub_qa_pairs: List[Tuple[str, str]] = []
+        all_sources: List[Dict] = []
+
+        for i, sq in enumerate(sub_questions, 1):
+            print(f"  [{i}/{len(sub_questions)}] {sq[:80]}...")
+            context_str, sources = _get_raw_sources(retriever, sq, k)
+            ans = answer_subquestion(sq, context_str, temperature_override=temperature_override,
+                                     no_typing=True)
+            sub_qa_pairs.append((sq, ans))
+            for s in sources:
+                s["sub_question_idx"] = i
+                s["sub_question"] = sq
+            all_sources.extend(sources)
+
+        print(f"[v_decomp_no_typing] Etape 3/3 : Synthèse finale sans bilan (Mistral Large)...")
+        final_answer_raw = synthesize_answers(
+            question, sub_qa_pairs,
+            source_bilan=None,
+            use_bilan=False,
+            temperature_override=temperature_override,
+            no_typing=True,
+        )
+        final_answer, sources_mobilisees = _parse_sources_mobilisees(final_answer_raw)
+
+        sub_qa_list = [
+            {"idx": i + 1, "question": sq, "answer": ans}
+            for i, (sq, ans) in enumerate(sub_qa_pairs)
+        ]
+        print("[v_decomp_no_typing] Pipeline terminé.")
         return final_answer, all_sources, {}, sub_qa_list, sources_mobilisees

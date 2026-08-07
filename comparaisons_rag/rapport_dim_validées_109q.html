@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dimensions validées · Tests stat v3 -- RAG 109q</title>
+<style>
+:root{
+  --bg:#F7F8FA;--surface:#fff;--border:#DDE1E9;--text:#1A1D23;--muted:#6B7280;
+  --acc:#2563EB;--good:#15803D;--med:#B45309;--bad:#DC2626;--nav:210px;
+  --col-corr:rgba(124,58,237,.07);--col-eff:rgba(8,145,178,.07)
+}
+@media(prefers-color-scheme:dark){:root{
+  --bg:#0F1117;--surface:#181B24;--border:#272B38;--text:#E4E7EF;--muted:#8B90A0;
+  --acc:#60A5FA;--good:#4ADE80;--med:#FCD34D;--bad:#FC8181;
+  --col-corr:rgba(139,92,246,.1);--col-eff:rgba(34,211,238,.08)
+}}
+:root[data-theme=light]{
+  --bg:#F7F8FA;--surface:#fff;--border:#DDE1E9;--text:#1A1D23;--muted:#6B7280;
+  --acc:#2563EB;--good:#15803D;--med:#B45309;--bad:#DC2626;
+  --col-corr:rgba(124,58,237,.07);--col-eff:rgba(8,145,178,.07)
+}
+:root[data-theme=dark]{
+  --bg:#0F1117;--surface:#181B24;--border:#272B38;--text:#E4E7EF;--muted:#8B90A0;
+  --acc:#60A5FA;--good:#4ADE80;--med:#FCD34D;--bad:#FC8181;
+  --col-corr:rgba(139,92,246,.1);--col-eff:rgba(34,211,238,.08)
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  line-height:1.5;display:flex;min-height:100vh;font-size:13px}
+#nav{position:fixed;top:0;left:0;width:var(--nav);height:100vh;overflow-y:auto;
+  background:var(--surface);border-right:1px solid var(--border);padding:14px 0;z-index:10}
+#nav h3{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;
+  color:var(--muted);padding:0 12px 4px}
+#nav a{display:block;padding:3.5px 12px;color:var(--muted);text-decoration:none;
+  font-size:11px;border-left:2px solid transparent;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis}
+#nav a:hover,#nav a.active{color:var(--acc);border-left-color:var(--acc)}
+#main{margin-left:var(--nav);flex:1;padding:28px 34px 80px;max-width:1380px}
+h1{font-size:18px;font-weight:700;margin-bottom:3px}
+.sub{color:var(--muted);font-size:11.5px;margin-bottom:22px}
+h2{font-size:13px;font-weight:700;margin:30px 0 10px;padding-top:6px;
+  border-top:1px solid var(--border)}
+h3{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;
+  letter-spacing:.07em;margin:14px 0 5px}
+.tw{overflow-x:auto;margin-bottom:3px}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;font-size:11px}
+th{background:var(--surface);font-weight:600;text-align:right;padding:5px 6px;
+  border-bottom:2px solid var(--border);white-space:nowrap;color:var(--muted);
+  font-size:9.5px;text-transform:uppercase;letter-spacing:.05em}
+th:first-child{text-align:left}
+td{padding:4px 6px;border-bottom:1px solid var(--border);text-align:right;
+  vertical-align:middle;white-space:nowrap}
+td:first-child{text-align:left;font-weight:500}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:color-mix(in srgb,var(--acc) 4%,transparent)}
+.good{color:var(--good);font-weight:600}
+.med{color:var(--med)}
+.bad{color:var(--bad);font-weight:600}
+.na{color:var(--muted);font-style:italic}
+.dpos{color:var(--good)}.dneg{color:var(--bad)}.dzero{color:var(--muted)}
+.hl-cv{background:color-mix(in srgb,var(--acc) 4%,transparent)}
+.col-corr{background:var(--col-corr)}
+.col-eff{background:var(--col-eff)}
+.sig-yes{color:var(--good);font-weight:700}
+.sig-ns{color:var(--muted)}
+.ciz{color:var(--med);font-weight:600}
+.cnz{color:var(--good);font-weight:600}
+.sbadge{display:inline-block;font-size:9.5px;padding:1px 5px;border-radius:3px;
+  background:color-mix(in srgb,var(--acc) 12%,transparent);color:var(--acc);font-weight:600}
+.br{display:inline-block;font-size:9.5px;padding:1px 5px;border-radius:3px;
+  background:color-mix(in srgb,var(--muted) 12%,transparent);color:var(--muted);font-weight:600}
+.nbad-ok{display:inline-block;font-size:9.5px;padding:1px 5px;border-radius:3px;
+  background:color-mix(in srgb,var(--good) 12%,transparent);color:var(--good);font-weight:600}
+.nbad-mid{display:inline-block;font-size:9.5px;padding:1px 5px;border-radius:3px;
+  background:color-mix(in srgb,var(--med) 14%,transparent);color:var(--med);font-weight:600}
+.nbad-low{display:inline-block;font-size:9.5px;padding:1px 5px;border-radius:3px;
+  background:color-mix(in srgb,var(--bad) 12%,transparent);color:var(--bad);font-weight:600}
+.verdict-rob{display:inline-block;padding:1px 6px;border-radius:3px;font-size:9.5px;
+  font-weight:700;background:color-mix(in srgb,var(--good) 15%,transparent);color:var(--good)}
+.verdict-fra{display:inline-block;padding:1px 6px;border-radius:3px;font-size:9.5px;
+  font-weight:700;background:color-mix(in srgb,var(--med) 15%,transparent);color:var(--med)}
+.verdict-ns{display:inline-block;padding:1px 6px;border-radius:3px;font-size:9.5px;
+  font-weight:700;background:color-mix(in srgb,var(--muted) 12%,transparent);color:var(--muted)}
+.dot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:3px;
+  vertical-align:middle}
+.cfg{display:inline-flex;align-items:center;gap:2px}
+.inv-row td{background:color-mix(in srgb,#F59E0B 6%,transparent)}
+.pair-head td{background:color-mix(in srgb,var(--acc) 5%,transparent);
+  font-weight:700;border-top:2px solid var(--border);font-size:11px}
+.warn-box{border:1px solid #D97706;border-radius:5px;padding:9px 13px;font-size:11.5px;
+  background:color-mix(in srgb,#D97706 7%,transparent);margin:8px 0}
+.info-box{border:1px solid var(--acc);border-radius:5px;padding:9px 13px;font-size:11.5px;
+  background:color-mix(in srgb,var(--acc) 5%,transparent);margin:8px 0}
+.ok-box{border:1px solid var(--good);border-radius:5px;padding:9px 13px;font-size:11.5px;
+  background:color-mix(in srgb,var(--good) 6%,transparent);color:var(--good);margin:7px 0}
+.note{font-size:10px;color:var(--muted);margin:3px 0 7px}
+details{border:1px solid var(--border);border-radius:5px;margin-bottom:5px}
+summary{padding:7px 11px;cursor:pointer;font-size:11.5px;font-weight:600;
+  list-style:none;display:flex;justify-content:space-between;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"\25b8";color:var(--muted);font-size:10px;margin-left:6px}
+details[open] summary::after{content:"\25be"}
+details[open]{background:var(--surface)}
+.di{padding:0 11px 10px}
+#thm{position:fixed;top:10px;right:12px;z-index:20;font-size:11px;padding:3px 9px;
+  border:1px solid var(--border);border-radius:4px;background:var(--surface);
+  color:var(--muted);cursor:pointer;user-select:none}
+</style>
+</head>
+<body>
+<button id="thm" onclick="(function(){var r=document.documentElement;var t=r.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');r.setAttribute('data-theme',t==='dark'?'light':'dark')})();">&#9681;</button>
+<nav id="nav">
+<h3>Navigation</h3>
+<a href="#integrity">&#10003; Int&eacute;grit&eacute;</a>
+<a href="#calib-note">&#9888; Note V2/V4.3</a>
+<a href="#global">1 &middot; Scores globaux</a>
+<a href="#rang">2 &middot; Classements</a>
+<a href="#sections">3 &middot; Par section</a>
+<a href="#tests">4 &middot; Tests stat globaux</a>
+<a href="#synthese">C &middot; Synth&egrave;se</a>
+<a href="#tests-sec">5 &middot; Tests par section</a>
+<a href="#deltas">6 &middot; &#916; ablation</a>
+<a href="#corr">7 &middot; Corr&eacute;lations</a>
+<a href="#calib">8 &middot; Accord humain</a>
+</nav>
+<main id="main">
+<h1>Dimensions valid&eacute;es &middot; Tests stat + corrections + effect sizes &mdash; RAG 109q</h1>
+<p class="sub">composite_valide&thinsp;=&thinsp;mean(Nuance,&thinsp;Q/Q) &middot; composite_4dim&thinsp;=&thinsp;mean(P,&thinsp;F,&thinsp;N,&thinsp;Q/Q) &middot; Juge V4.3 gpt-4o &middot; Bootstrap seed=42&thinsp;N=10&thinsp;000 it.</p>
+<section id="integrity"><h2>Contr&#244;le d&#8217;int&eacute;grit&eacute; des sections</h2>
+<div class="ok-box">&#10003; 109/109 questions mapp&eacute;es -- toutes sections valid&eacute;es.</div>
+<div class="tw"><table><thead><tr><th>Section</th><th>N attendu</th><th>N trouv&eacute;</th></tr></thead><tbody>
+<tr><td><span class="sbadge">Mono-commune</span> Retrieval mono-commune</td><td>25</td><td class="good">25</td></tr>
+<tr><td><span class="sbadge">Comparatif</span> Raisonnement comparatif</td><td>19</td><td class="good">19</td></tr>
+<tr><td><span class="sbadge">Causal</span> Raisonnement causal et contre-intuitif</td><td>17</td><td class="good">17</td></tr>
+<tr><td><span class="sbadge">Incertitude</span> Gestion de l'incertitude et des biais</td><td>15</td><td class="good">15</td></tr>
+<tr><td><span class="sbadge">Absence info</span> Gestion de l'absence d'information</td><td>14</td><td class="good">14</td></tr>
+<tr><td><span class="sbadge">Robustesse</span> Robustesse sémantique</td><td>12</td><td class="good">12</td></tr>
+<tr><td><span class="sbadge">Limites</span> Limites architecturales</td><td>7</td><td class="good">7</td></tr>
+</tbody></table></div>
+<p class="note">Normalisation : apostrophes typographiques (U+2019...) &rarr; droites (U+0027). "Gestion d&#8217;absence" &rarr; "Gestion de l&#8217;absence".</p></section>
+<section id="calib-note"><h2>&#9888; Note m&eacute;thodologique : juge V2 vs V4.3</h2>
+<div class="warn-box">Les scores de l&#8217;article et la Table&thinsp;4 ont &eacute;t&eacute; produits avec le <strong>juge V2</strong> (gpt-4o prompt few-shot). Le <strong>juge V4.3</strong> (gpt-4o anti-mislabelling OppChoVec, identique aux ablations) a &eacute;t&eacute; re-jug&eacute; sur les m&ecirc;mes 20 r&eacute;ponses archiv&eacute;es (<code>annotation_editee_2026-05-12 (2).xlsx</code>) le 2026-07-26. Voir section&thinsp;8 pour le comparatif d&#8217;accord.</div></section>
+<section id="global"><h2>1 &middot; Scores globaux &mdash; 109 questions</h2>
+<div class="tw"><table><thead><tr><th>Config</th><th>N</th><th>Pertinence</th><th>Factuel</th><th>Nuance</th><th>Q/Q</th><th>composite_4dim</th><th class="hl-cv">composite_valide</th></tr></thead><tbody>
+<tr><td><span class="cfg"><span class="dot" style="background:#2563EB"></span>Vanilla k=10</span></td><td>109</td><td class="good">4.62</td><td class="good">4.75</td><td class="good">4.55</td><td class="good">4.60</td><td class="good">4.63</td><td class="good hl-cv"><strong>4.57</strong></td></tr>
+<tr><td><span class="cfg"><span class="dot" style="background:#7C3AED"></span>Vanilla k=25</span></td><td>109</td><td class="good">4.54</td><td class="good">4.67</td><td class="good">4.53</td><td class="good">4.52</td><td class="good">4.57</td><td class="good hl-cv"><strong>4.53</strong></td></tr>
+<tr><td><span class="cfg"><span class="dot" style="background:#0891B2"></span>Décomp (old)</span></td><td>109</td><td class="med">4.30</td><td class="good">4.52</td><td class="med">4.21</td><td class="med">4.15</td><td class="med">4.30</td><td class="med hl-cv"><strong>4.18</strong></td></tr>
+<tr><td><span class="cfg"><span class="dot" style="background:#EA580C"></span>Décomp NT(old)</span></td><td>109</td><td class="med">3.76</td><td class="med">3.73</td><td class="med">3.73</td><td class="med">3.68</td><td class="med">3.72</td><td class="med hl-cv"><strong>3.70</strong></td></tr>
+<tr><td><span class="cfg"><span class="dot" style="background:#16A34A"></span>Décomp+RAPTOR</span></td><td>109</td><td class="good">4.61</td><td class="good">4.72</td><td class="med">4.50</td><td class="good">4.66</td><td class="good">4.62</td><td class="good hl-cv"><strong>4.58</strong></td></tr>
+<tr><td><span class="cfg"><span class="dot" style="background:#9333EA"></span>Self-Ask</span></td><td>109</td><td class="med">4.25</td><td class="med">4.17</td><td class="med">4.20</td><td class="med">4.02</td><td class="med">4.16</td><td class="med hl-cv"><strong>4.11</strong></td></tr>
+</tbody></table></div></section>
+<section id="rang"><h2>2 &middot; Classements et inversions</h2>
+<p class="note">Ligne surlign&eacute;e = inversion de rang entre c4 et cv.</p>
+<div class="tw"><table><thead><tr><th>Config</th><th>composite_4dim</th><th>Rang c4</th><th class="hl-cv">composite_valide</th><th class="hl-cv">Rang cv</th><th>&#916; rang</th></tr></thead><tbody>
+<tr class="inv-row"><td><span class="cfg"><span class="dot" style="background:#2563EB"></span>Vanilla k=10</span></td><td class="good">4.63</td><td><span class="br">#1</span></td><td class="good hl-cv"><strong>4.57</strong></td><td class="hl-cv"><span class="br">#2</span></td><td><strong>+1</strong></td></tr>
+<tr><td><span class="cfg"><span class="dot" style="background:#7C3AED"></span>Vanilla k=25</span></td><td class="good">4.57</td><td><span class="br">#3</span></td><td class="good hl-cv"><strong>4.53</strong></td><td class="hl-cv"><span class="br">#3</span></td><td>=</td></tr>
+<tr><td><span class="cfg"><span class="dot" style="background:#0891B2"></span>Décomp (old)</span></td><td class="med">4.30</td><td><span class="br">#4</span></td><td class="med hl-cv"><strong>4.18</strong></td><td class="hl-cv"><span class="br">#4</span></td><td>=</td></tr>
+<tr><td><span class="cfg"><span class="dot" style="background:#EA580C"></span>Décomp NT(old)</span></td><td class="med">3.72</td><td><span class="br">#6</span></td><td class="med hl-cv"><strong>3.70</strong></td><td class="hl-cv"><span class="br">#6</span></td><td>=</td></tr>
+<tr class="inv-row"><td><span class="cfg"><span class="dot" style="background:#16A34A"></span>Décomp+RAPTOR</span></td><td class="good">4.62</td><td><span class="br">#2</span></td><td class="good hl-cv"><strong>4.58</strong></td><td class="hl-cv"><span class="br">#1</span></td><td><strong>-1</strong></td></tr>
+<tr><td><span class="cfg"><span class="dot" style="background:#9333EA"></span>Self-Ask</span></td><td class="med">4.16</td><td><span class="br">#5</span></td><td class="med hl-cv"><strong>4.11</strong></td><td class="hl-cv"><span class="br">#5</span></td><td>=</td></tr>
+</tbody></table></div></section>
+<section id="sections"><h2>3 &middot; Scores par section</h2>
+<h3>3a &middot; composite_4dim</h3>
+<div class="tw"><table><thead><tr><th>Section</th><th>N</th>
+<th><span class="dot" style="background:#2563EB;display:inline-block;width:7px;height:7px;border-radius:50%;vertical-align:middle"></span>Vanilla k=10</th>
+<th><span class="dot" style="background:#7C3AED;display:inline-block;width:7px;height:7px;border-radius:50%;vertical-align:middle"></span>Vanilla k=25</th>
+<th><span class="dot" style="background:#0891B2;display:inline-block;width:7px;height:7px;border-radius:50%;vertical-align:middle"></span>Décomp (old)</th>
+<th><span class="dot" style="background:#EA580C;display:inline-block;width:7px;height:7px;border-radius:50%;vertical-align:middle"></span>Décomp NT(old)</th>
+<th><span class="dot" style="background:#16A34A;display:inline-block;width:7px;height:7px;border-radius:50%;vertical-align:middle"></span>Décomp+RAPTOR</th>
+<th><span class="dot" style="background:#9333EA;display:inline-block;width:7px;height:7px;border-radius:50%;vertical-align:middle"></span>Self-Ask</th>
+</tr></thead><tbody>
+<tr><td><span class="sbadge">Mono-commune</span></td><td>25</td>
+<td class="good">4.73</td>
+<td class="good">4.64</td>
+<td class="med">3.94</td>
+<td class="bad">2.50</td>
+<td class="good">4.62</td>
+<td class="med">3.78</td>
+</tr>
+<tr><td><span class="sbadge">Comparatif</span></td><td>19</td>
+<td class="med">4.46</td>
+<td class="med">4.43</td>
+<td class="med">4.39</td>
+<td class="med">3.96</td>
+<td class="good">4.57</td>
+<td class="med">4.34</td>
+</tr>
+<tr><td><span class="sbadge">Causal</span></td><td>17</td>
+<td class="med">4.16</td>
+<td class="med">4.24</td>
+<td class="med">3.84</td>
+<td class="med">3.73</td>
+<td class="good">4.59</td>
+<td class="med">3.93</td>
+</tr>
+<tr><td><span class="sbadge">Incertitude</span></td><td>15</td>
+<td class="good">4.95</td>
+<td class="good">4.87</td>
+<td class="good">4.88</td>
+<td class="good">4.70</td>
+<td class="good">5.00</td>
+<td class="med">4.47</td>
+</tr>
+<tr><td><span class="sbadge">Absence info</span></td><td>14</td>
+<td class="good">4.64</td>
+<td class="med">4.43</td>
+<td class="med">4.05</td>
+<td class="med">3.73</td>
+<td class="med">3.98</td>
+<td class="good">4.59</td>
+</tr>
+<tr><td><span class="sbadge">Robustesse</span></td><td>12</td>
+<td class="good">4.98</td>
+<td class="good">4.85</td>
+<td class="good">4.77</td>
+<td class="good">4.65</td>
+<td class="good">4.88</td>
+<td class="med">3.62</td>
+</tr>
+<tr><td><span class="sbadge">Limites</span></td><td>7</td>
+<td class="good">4.57</td>
+<td class="good">4.61</td>
+<td class="good">4.82</td>
+<td class="med">3.71</td>
+<td class="good">4.89</td>
+<td class="good">5.00</td>
+</tr>
+</tbody></table></div>
+<h3>3b &middot; composite_valide</h3>
+<div class="tw"><table><thead><tr><th>Section</th><th>N</th>
+<th class="hl-cv"><span class="dot" style="background:#2563EB;display:inline-block;width:7px;height:7px;border-radius:50%;vertical-align:middle"></span>Vanilla k=10</th>
+<th class="hl-cv"><span class="dot" style="background:#7C3AED;display:inline-block;width:7px;height:7px;border-radius:50%;vertical-align:middle"></span>Vanilla k=25</th>
+<th class="hl-cv"><span class="dot" style="background:#0891B2;display:inline-block;width:7px;height:7px;border-radius:50%;vertical-align:middle"></span>Décomp (old)</th>
+<th class="hl-cv"><span class="dot" style="background:#EA580C;display:inline-block;width:7px;height:7px;border-radius:50%;vertical-align:middle"></span>Décomp NT(old)</th>
+<th class="hl-cv"><span class="dot" style="background:#16A34A;display:inline-block;width:7px;height:7px;border-radius:50%;vertical-align:middle"></span>Décomp+RAPTOR</th>
+<th class="hl-cv"><span class="dot" style="background:#9333EA;display:inline-block;width:7px;height:7px;border-radius:50%;vertical-align:middle"></span>Self-Ask</th>
+</tr></thead><tbody>
+<tr><td><span class="sbadge">Mono-commune</span></td><td>25</td>
+<td class="good hl-cv"><strong>4.62</strong></td>
+<td class="good hl-cv" style="outline:2px solid #D97706;border-radius:2px"><strong>4.54</strong></td>
+<td class="med hl-cv"><strong>3.72</strong></td>
+<td class="bad hl-cv"><strong>2.42</strong></td>
+<td class="good hl-cv" style="outline:2px solid #D97706;border-radius:2px"><strong>4.56</strong></td>
+<td class="med hl-cv"><strong>3.66</strong></td>
+</tr>
+<tr><td><span class="sbadge">Comparatif</span></td><td>19</td>
+<td class="med hl-cv" style="outline:2px solid #D97706;border-radius:2px"><strong>4.39</strong></td>
+<td class="med hl-cv" style="outline:2px solid #D97706;border-radius:2px"><strong>4.39</strong></td>
+<td class="med hl-cv" style="outline:2px solid #D97706;border-radius:2px"><strong>4.24</strong></td>
+<td class="med hl-cv"><strong>3.92</strong></td>
+<td class="med hl-cv" style="outline:2px solid #D97706;border-radius:2px"><strong>4.37</strong></td>
+<td class="med hl-cv" style="outline:2px solid #D97706;border-radius:2px"><strong>4.34</strong></td>
+</tr>
+<tr><td><span class="sbadge">Causal</span></td><td>17</td>
+<td class="med hl-cv"><strong>4.03</strong></td>
+<td class="med hl-cv"><strong>4.21</strong></td>
+<td class="med hl-cv" style="outline:2px solid #D97706;border-radius:2px"><strong>3.68</strong></td>
+<td class="med hl-cv" style="outline:2px solid #D97706;border-radius:2px"><strong>3.71</strong></td>
+<td class="good hl-cv"><strong>4.59</strong></td>
+<td class="med hl-cv"><strong>3.85</strong></td>
+</tr>
+<tr><td><span class="sbadge">Incertitude</span></td><td>15</td>
+<td class="good hl-cv"><strong>4.93</strong></td>
+<td class="good hl-cv"><strong>4.83</strong></td>
+<td class="good hl-cv"><strong>4.87</strong></td>
+<td class="good hl-cv"><strong>4.73</strong></td>
+<td class="good hl-cv"><strong>5.00</strong></td>
+<td class="med hl-cv"><strong>4.37</strong></td>
+</tr>
+<tr><td><span class="sbadge">Absence info</span></td><td>14</td>
+<td class="good hl-cv"><strong>4.68</strong></td>
+<td class="med hl-cv"><strong>4.46</strong></td>
+<td class="med hl-cv"><strong>4.04</strong></td>
+<td class="med hl-cv"><strong>3.71</strong></td>
+<td class="med hl-cv"><strong>4.04</strong></td>
+<td class="good hl-cv"><strong>4.61</strong></td>
+</tr>
+<tr><td><span class="sbadge">Robustesse</span></td><td>12</td>
+<td class="good hl-cv"><strong>4.96</strong></td>
+<td class="good hl-cv" style="outline:2px solid #D97706;border-radius:2px"><strong>4.83</strong></td>
+<td class="good hl-cv"><strong>4.67</strong></td>
+<td class="good hl-cv"><strong>4.62</strong></td>
+<td class="good hl-cv" style="outline:2px solid #D97706;border-radius:2px"><strong>4.83</strong></td>
+<td class="med hl-cv"><strong>3.62</strong></td>
+</tr>
+<tr><td><span class="sbadge">Limites</span></td><td>7</td>
+<td class="good hl-cv" style="outline:2px solid #D97706;border-radius:2px"><strong>4.57</strong></td>
+<td class="good hl-cv" style="outline:2px solid #D97706;border-radius:2px"><strong>4.57</strong></td>
+<td class="good hl-cv"><strong>4.86</strong></td>
+<td class="med hl-cv"><strong>3.86</strong></td>
+<td class="good hl-cv"><strong>4.93</strong></td>
+<td class="good hl-cv"><strong>5.00</strong></td>
+</tr>
+</tbody></table></div>
+<p class="note">Contour orange = inversion de rang entre c4 et cv dans cette section.</p>
+</section>
+<section id="tests"><h2>4 &middot; Tests de significativit&eacute; &mdash; niveau global</h2>
+<div class="info-box">Tests appari&eacute;s (question = unit&eacute;). Bootstrap BCa : 10,000&thinsp;it., seed=42. Permutation de signe : 10,000 it., bilat&eacute;rale. <strong>Famille F1</strong> = 10&thinsp;tests (5 paires &times; 2 composites) &mdash; Holm-Bonferroni (FWER) et Benjamini-Hochberg (FDR) appliqu&eacute;s dans F1. <strong>Hedges&thinsp;g</strong> : J = 1&minus;3/(4n&minus;5), IC 95&thinsp;% bootstrap (m&ecirc;mes r&eacute;&eacute;chantillons).</div>
+<h3>4a &middot; composite_4dim &mdash; Famille F1 (10 tests)</h3>
+<div class="tw"><table><thead><tr><th>Paire (A &minus; B)</th><th>N</th><th>&#916; observ&eacute;</th><th>IC BCa 95&thinsp;%</th><th>p brut</th><th class="col-corr">p Holm</th><th class="col-corr">p BH</th><th class="col-eff">Hedges g</th><th class="col-eff">IC g 95&thinsp;%</th><th class="col-eff">Interp.</th></tr></thead><tbody>
+<tr class="pair-head"><td colspan="10">Décomp+RAPTOR vs Vanilla k=10</td></tr>
+<tr><td style="padding-left:12px;font-size:10.5px">Décomp+RAPTOR vs Vanilla k=10</td><td>109</td><td><span class="dneg">-0.009</span></td><td><span class="ciz">[-0.156,+0.149]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=0.9285&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-eff"><span class="na">-0.011</span></td><td class="col-eff" style="font-size:10px">[-0.212,+0.175]</td><td class="col-eff" style="font-size:10px">négligeable</td></tr>
+<tr class="pair-head"><td colspan="10">Décomp+RAPTOR vs Décomp (old)</td></tr>
+<tr><td style="padding-left:12px;font-size:10.5px">Décomp+RAPTOR vs Décomp (old)</td><td>109</td><td><span class="dpos">+0.326</span></td><td><span class="cnz">[+0.193,+0.484]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-corr"><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-corr"><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-eff"><span class="med">+0.428</span></td><td class="col-eff" style="font-size:10px">[+0.271,+0.583]</td><td class="col-eff" style="font-size:10px">petit</td></tr>
+<tr class="pair-head"><td colspan="10">Décomp(old) vs Décomp NT -- ablation typing</td></tr>
+<tr><td style="padding-left:12px;font-size:10.5px">Décomp (old) vs Décomp NT(old)</td><td>109</td><td><span class="dpos">+0.573</span></td><td><span class="cnz">[+0.385,+0.780]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-corr"><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-corr"><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-eff"><span class="good">+0.544</span></td><td class="col-eff" style="font-size:10px">[+0.374,+0.723]</td><td class="col-eff" style="font-size:10px">moyen</td></tr>
+<tr class="pair-head"><td colspan="10">Décomp+RAPTOR vs Self-Ask</td></tr>
+<tr><td style="padding-left:12px;font-size:10.5px">Décomp+RAPTOR vs Self-Ask</td><td>109</td><td><span class="dpos">+0.461</span></td><td><span class="cnz">[+0.257,+0.667]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-yes">p=0.0001&thinsp;***</span></td><td class="col-corr"><span class="sig-yes">p=0.0005&thinsp;***</span></td><td class="col-corr"><span class="sig-yes">p=0.0002&thinsp;***</span></td><td class="col-eff"><span class="med">+0.422</span></td><td class="col-eff" style="font-size:10px">[+0.238,+0.614]</td><td class="col-eff" style="font-size:10px">petit</td></tr>
+<tr class="pair-head"><td colspan="10">Vanilla k=10 vs Vanilla k=25</td></tr>
+<tr><td style="padding-left:12px;font-size:10.5px">Vanilla k=10 vs Vanilla k=25</td><td>109</td><td><span class="dpos">+0.064</span></td><td><span class="ciz">[-0.023,+0.151]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=0.1716&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=0.6864&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=0.2451&thinsp;n.s.</span></td><td class="col-eff"><span class="na">+0.135</span></td><td class="col-eff" style="font-size:10px">[-0.048,+0.319]</td><td class="col-eff" style="font-size:10px">négligeable</td></tr>
+</tbody></table></div>
+<h3>4b &middot; composite_valide &mdash; Famille F1 (10 tests)</h3>
+<div class="tw"><table><thead><tr><th>Paire (A &minus; B)</th><th>N</th><th>&#916; observ&eacute;</th><th>IC BCa 95&thinsp;%</th><th>p brut</th><th class="col-corr">p Holm</th><th class="col-corr">p BH</th><th class="col-eff">Hedges g</th><th class="col-eff">IC g 95&thinsp;%</th><th class="col-eff">Interp.</th></tr></thead><tbody>
+<tr class="pair-head"><td colspan="10">Décomp+RAPTOR vs Vanilla k=10</td></tr>
+<tr><td style="padding-left:12px;font-size:10.5px">Décomp+RAPTOR vs Vanilla k=10</td><td>109</td><td><span class="dpos">+0.005</span></td><td><span class="ciz">[-0.156,+0.174]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-eff"><span class="na">+0.005</span></td><td class="col-eff" style="font-size:10px">[-0.194,+0.188]</td><td class="col-eff" style="font-size:10px">négligeable</td></tr>
+<tr class="pair-head"><td colspan="10">Décomp+RAPTOR vs Décomp (old)</td></tr>
+<tr><td style="padding-left:12px;font-size:10.5px">Décomp+RAPTOR vs Décomp (old)</td><td>109</td><td><span class="dpos">+0.399</span></td><td><span class="cnz">[+0.243,+0.569]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-corr"><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-corr"><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-eff"><span class="med">+0.467</span></td><td class="col-eff" style="font-size:10px">[+0.307,+0.627]</td><td class="col-eff" style="font-size:10px">petit</td></tr>
+<tr class="pair-head"><td colspan="10">Décomp(old) vs Décomp NT -- ablation typing</td></tr>
+<tr><td style="padding-left:12px;font-size:10.5px">Décomp (old) vs Décomp NT(old)</td><td>109</td><td><span class="dpos">+0.477</span></td><td><span class="cnz">[+0.280,+0.688]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-corr"><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-corr"><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-eff"><span class="med">+0.434</span></td><td class="col-eff" style="font-size:10px">[+0.262,+0.616]</td><td class="col-eff" style="font-size:10px">petit</td></tr>
+<tr class="pair-head"><td colspan="10">Décomp+RAPTOR vs Self-Ask</td></tr>
+<tr><td style="padding-left:12px;font-size:10.5px">Décomp+RAPTOR vs Self-Ask</td><td>109</td><td><span class="dpos">+0.468</span></td><td><span class="cnz">[+0.262,+0.674]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-corr"><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-corr"><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-eff"><span class="med">+0.420</span></td><td class="col-eff" style="font-size:10px">[+0.239,+0.617]</td><td class="col-eff" style="font-size:10px">petit</td></tr>
+<tr class="pair-head"><td colspan="10">Vanilla k=10 vs Vanilla k=25</td></tr>
+<tr><td style="padding-left:12px;font-size:10.5px">Vanilla k=10 vs Vanilla k=25</td><td>109</td><td><span class="dpos">+0.046</span></td><td><span class="ciz">[-0.055,+0.138]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=0.4073&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=0.5091&thinsp;n.s.</span></td><td class="col-eff"><span class="na">+0.087</span></td><td class="col-eff" style="font-size:10px">[-0.096,+0.278]</td><td class="col-eff" style="font-size:10px">négligeable</td></tr>
+</tbody></table></div>
+<p class="note">&dagger; p&lt;0.10 &nbsp; * p&lt;0.05 &nbsp; ** p&lt;0.01 &nbsp; *** p&lt;0.001 &ensp;|&ensp; Violet = corrections (famille F1) &mdash; Bleu = taille d&#8217;effet (Hedges g).</p>
+</section>
+<section id="synthese"><h2>C &middot; Tableau de synth&egrave;se &mdash; 4 paires prioritaires</h2>
+<div class="info-box">Verdict : <span class="verdict-rob">robuste</span> = p Holm &lt; 0.05 ET Hedges g &ge; moyen (0.5). <span class="verdict-fra">fragile</span> = p brut &lt; 0.05 mais ne passe pas Holm, ou passe Holm avec petit/n&eacute;gl. effet. <span class="verdict-ns">n.s.</span> = p brut &ge; 0.05.</div>
+<h3>Ca &middot; composite_4dim</h3>
+<div class="tw"><table><thead><tr><th>Paire</th><th>&#916;</th><th>IC BCa 95&thinsp;%</th><th>p brut</th><th class="col-corr">p Holm</th><th class="col-corr">p BH</th><th class="col-eff">Hedges g</th><th class="col-eff">IC g</th><th class="col-eff">Interp. g</th><th>Verdict</th></tr></thead><tbody>
+<tr><td style="font-size:10.5px;white-space:normal;max-width:220px">Décomp+RAPTOR vs Vanilla k=10</td><td><span class="dneg">-0.009</span></td><td><span class="ciz">[-0.156,+0.149]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=0.9285&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-eff"><span class="na">-0.011</span></td><td class="col-eff" style="font-size:10px">[-0.212,+0.175]</td><td class="col-eff" style="font-size:10px">négligeable</td><td><span class="verdict-ns">n.s.</span></td></tr>
+<tr><td style="font-size:10.5px;white-space:normal;max-width:220px">Décomp+RAPTOR vs Décomp (old)</td><td><span class="dpos">+0.326</span></td><td><span class="cnz">[+0.193,+0.484]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-corr"><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-corr"><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-eff"><span class="med">+0.428</span></td><td class="col-eff" style="font-size:10px">[+0.271,+0.583]</td><td class="col-eff" style="font-size:10px">petit</td><td><span class="verdict-fra">fragile (petit effet)</span></td></tr>
+<tr><td style="font-size:10.5px;white-space:normal;max-width:220px">Décomp(old) vs Décomp NT -- ablation typing</td><td><span class="dpos">+0.573</span></td><td><span class="cnz">[+0.385,+0.780]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-corr"><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-corr"><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-eff"><span class="good">+0.544</span></td><td class="col-eff" style="font-size:10px">[+0.374,+0.723]</td><td class="col-eff" style="font-size:10px">moyen</td><td><span class="verdict-rob">robuste</span></td></tr>
+<tr><td style="font-size:10.5px;white-space:normal;max-width:220px">Décomp+RAPTOR vs Self-Ask</td><td><span class="dpos">+0.461</span></td><td><span class="cnz">[+0.257,+0.667]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-yes">p=0.0001&thinsp;***</span></td><td class="col-corr"><span class="sig-yes">p=0.0005&thinsp;***</span></td><td class="col-corr"><span class="sig-yes">p=0.0002&thinsp;***</span></td><td class="col-eff"><span class="med">+0.422</span></td><td class="col-eff" style="font-size:10px">[+0.238,+0.614]</td><td class="col-eff" style="font-size:10px">petit</td><td><span class="verdict-fra">fragile (petit effet)</span></td></tr>
+</tbody></table></div>
+<h3>Cb &middot; composite_valide</h3>
+<div class="tw"><table><thead><tr><th>Paire</th><th>&#916;</th><th>IC BCa 95&thinsp;%</th><th>p brut</th><th class="col-corr">p Holm</th><th class="col-corr">p BH</th><th class="col-eff">Hedges g</th><th class="col-eff">IC g</th><th class="col-eff">Interp. g</th><th>Verdict</th></tr></thead><tbody>
+<tr><td style="font-size:10.5px;white-space:normal;max-width:220px">Décomp+RAPTOR vs Vanilla k=10</td><td><span class="dpos">+0.005</span></td><td><span class="ciz">[-0.156,+0.174]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-eff"><span class="na">+0.005</span></td><td class="col-eff" style="font-size:10px">[-0.194,+0.188]</td><td class="col-eff" style="font-size:10px">négligeable</td><td><span class="verdict-ns">n.s.</span></td></tr>
+<tr><td style="font-size:10.5px;white-space:normal;max-width:220px">Décomp+RAPTOR vs Décomp (old)</td><td><span class="dpos">+0.399</span></td><td><span class="cnz">[+0.243,+0.569]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-corr"><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-corr"><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-eff"><span class="med">+0.467</span></td><td class="col-eff" style="font-size:10px">[+0.307,+0.627]</td><td class="col-eff" style="font-size:10px">petit</td><td><span class="verdict-fra">fragile (petit effet)</span></td></tr>
+<tr><td style="font-size:10.5px;white-space:normal;max-width:220px">Décomp(old) vs Décomp NT -- ablation typing</td><td><span class="dpos">+0.477</span></td><td><span class="cnz">[+0.280,+0.688]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-corr"><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-corr"><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-eff"><span class="med">+0.434</span></td><td class="col-eff" style="font-size:10px">[+0.262,+0.616]</td><td class="col-eff" style="font-size:10px">petit</td><td><span class="verdict-fra">fragile (petit effet)</span></td></tr>
+<tr><td style="font-size:10.5px;white-space:normal;max-width:220px">Décomp+RAPTOR vs Self-Ask</td><td><span class="dpos">+0.468</span></td><td><span class="cnz">[+0.262,+0.674]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-corr"><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-corr"><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-eff"><span class="med">+0.420</span></td><td class="col-eff" style="font-size:10px">[+0.239,+0.617]</td><td class="col-eff" style="font-size:10px">petit</td><td><span class="verdict-fra">fragile (petit effet)</span></td></tr>
+</tbody></table></div>
+</section>
+<section id="tests-sec"><h2>5 &middot; Tests de significativit&eacute; &mdash; par section</h2>
+<p class="note">Correction Holm + BH appliqu&eacute;es par famille de section (F2&ndash;F8 = 10 tests chacune). N&lt;10 = estimations tr&egrave;s instables.</p>
+<details><summary><span class="sbadge">Mono-commune</span>&thinsp;Retrieval mono-commune &ensp;<span class="nbad-ok">N=25</span></summary><div class="di">
+<h3>a &middot; composite_4dim</h3>
+<div class="tw"><table><thead><tr><th>Paire (A &minus; B)</th><th>N</th><th>&#916;</th><th>IC BCa</th><th>p brut</th><th class="col-corr">p Holm</th><th class="col-corr">p BH</th><th class="col-eff">g</th><th class="col-eff">IC g</th><th class="col-eff">Interp.</th></tr></thead><tbody>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Vanilla k=10</td><td>25</td><td><span class="dneg">-0.110</span></td><td><span class="ciz">[-0.420,+0.130]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=0.5003&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=0.5559&thinsp;n.s.</span></td><td class="col-eff"><span class="na">-0.149</span></td><td class="col-eff" style="font-size:10px">[-0.509,+0.250]</td><td class="col-eff" style="font-size:10px">négligeable</td></tr>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Décomp (old)</td><td>25</td><td><span class="dpos">+0.680</span></td><td><span class="cnz">[+0.370,+1.010]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-yes">p=0.0001&thinsp;***</span></td><td class="col-corr"><span class="sig-yes">p=0.0007&thinsp;***</span></td><td class="col-corr"><span class="sig-yes">p=0.0002&thinsp;***</span></td><td class="col-eff"><span class="good">+0.808</span></td><td class="col-eff" style="font-size:10px">[+0.522,+1.190]</td><td class="col-eff" style="font-size:10px">grand</td></tr>
+<tr><td style="font-size:10.5px">Décomp (old) &minus; Décomp NT(old)</td><td>25</td><td><span class="dpos">+1.440</span></td><td><span class="cnz">[+1.030,+1.840]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-corr"><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-corr"><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-eff"><span class="good">+1.352</span></td><td class="col-eff" style="font-size:10px">[+1.006,+1.958]</td><td class="col-eff" style="font-size:10px">grand</td></tr>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Self-Ask</td><td>25</td><td><span class="dpos">+0.840</span></td><td><span class="cnz">[+0.460,+1.300]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-yes">p=0.0004&thinsp;***</span></td><td class="col-corr"><span class="sig-yes">p=0.0020&thinsp;**</span></td><td class="col-corr"><span class="sig-yes">p=0.0007&thinsp;***</span></td><td class="col-eff"><span class="good">+0.739</span></td><td class="col-eff" style="font-size:10px">[+0.436,+1.146]</td><td class="col-eff" style="font-size:10px">moyen</td></tr>
+<tr><td style="font-size:10.5px">Vanilla k=10 &minus; Vanilla k=25</td><td>25</td><td><span class="dpos">+0.090</span></td><td><span class="cnz">[+0.020,+0.180]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-yes">p=0.0783&thinsp;&dagger;</span></td><td class="col-corr"><span class="sig-ns">p=0.3132&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=0.1119&thinsp;n.s.</span></td><td class="col-eff"><span class="med">+0.405</span></td><td class="col-eff" style="font-size:10px">[+0.102,+0.671]</td><td class="col-eff" style="font-size:10px">petit</td></tr>
+</tbody></table></div>
+<h3>b &middot; composite_valide</h3>
+<div class="tw"><table><thead><tr><th>Paire (A &minus; B)</th><th>N</th><th>&#916;</th><th>IC BCa</th><th>p brut</th><th class="col-corr">p Holm</th><th class="col-corr">p BH</th><th class="col-eff">g</th><th class="col-eff">IC g</th><th class="col-eff">Interp.</th></tr></thead><tbody>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Vanilla k=10</td><td>25</td><td><span class="dneg">-0.060</span></td><td><span class="ciz">[-0.380,+0.220]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=0.8041&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=0.8041&thinsp;n.s.</span></td><td class="col-eff"><span class="na">-0.072</span></td><td class="col-eff" style="font-size:10px">[-0.488,+0.317]</td><td class="col-eff" style="font-size:10px">négligeable</td></tr>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Décomp (old)</td><td>25</td><td><span class="dpos">+0.840</span></td><td><span class="cnz">[+0.480,+1.180]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-yes">p=0.0001&thinsp;***</span></td><td class="col-corr"><span class="sig-yes">p=0.0007&thinsp;***</span></td><td class="col-corr"><span class="sig-yes">p=0.0002&thinsp;***</span></td><td class="col-eff"><span class="good">+0.906</span></td><td class="col-eff" style="font-size:10px">[+0.593,+1.348]</td><td class="col-eff" style="font-size:10px">grand</td></tr>
+<tr><td style="font-size:10.5px">Décomp (old) &minus; Décomp NT(old)</td><td>25</td><td><span class="dpos">+1.300</span></td><td><span class="cnz">[+0.880,+1.720]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-corr"><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-corr"><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-eff"><span class="good">+1.166</span></td><td class="col-eff" style="font-size:10px">[+0.825,+1.741]</td><td class="col-eff" style="font-size:10px">grand</td></tr>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Self-Ask</td><td>25</td><td><span class="dpos">+0.900</span></td><td><span class="cnz">[+0.540,+1.300]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-corr"><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-corr"><span class="sig-yes">p=0.0000&thinsp;***</span></td><td class="col-eff"><span class="good">+0.863</span></td><td class="col-eff" style="font-size:10px">[+0.545,+1.323]</td><td class="col-eff" style="font-size:10px">grand</td></tr>
+<tr><td style="font-size:10.5px">Vanilla k=10 &minus; Vanilla k=25</td><td>25</td><td><span class="dpos">+0.080</span></td><td><span class="ciz">[-0.020,+0.200]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=0.3155&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=0.9465&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=0.3944&thinsp;n.s.</span></td><td class="col-eff"><span class="med">+0.280</span></td><td class="col-eff" style="font-size:10px">[-0.110,+0.557]</td><td class="col-eff" style="font-size:10px">petit</td></tr>
+</tbody></table></div>
+</div></details>
+<details><summary><span class="sbadge">Comparatif</span>&thinsp;Raisonnement comparatif &ensp;<span class="nbad-mid">N=19 &#9888; N faible</span></summary><div class="di">
+<div class="warn-box">N=19 : N faible, intervalles larges, puissance limit&eacute;e.</div>
+<h3>a &middot; composite_4dim</h3>
+<div class="tw"><table><thead><tr><th>Paire (A &minus; B)</th><th>N</th><th>&#916;</th><th>IC BCa</th><th>p brut</th><th class="col-corr">p Holm</th><th class="col-corr">p BH</th><th class="col-eff">g</th><th class="col-eff">IC g</th><th class="col-eff">Interp.</th></tr></thead><tbody>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Vanilla k=10</td><td>19</td><td><span class="dpos">+0.105</span></td><td><span class="ciz">[-0.276,+0.632]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=0.7023&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-eff"><span class="na">+0.099</span></td><td class="col-eff" style="font-size:10px">[-0.462,+0.478]</td><td class="col-eff" style="font-size:10px">négligeable</td></tr>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Décomp (old)</td><td>19</td><td><span class="dpos">+0.171</span></td><td><span class="ciz">[-0.145,+0.618]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=0.4475&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-eff"><span class="na">+0.191</span></td><td class="col-eff" style="font-size:10px">[-0.331,+0.550]</td><td class="col-eff" style="font-size:10px">négligeable</td></tr>
+<tr><td style="font-size:10.5px">Décomp (old) &minus; Décomp NT(old)</td><td>19</td><td><span class="dpos">+0.434</span></td><td><span class="cnz">[+0.132,+1.026]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-yes">p=0.0325&thinsp;*</span></td><td class="col-corr"><span class="sig-ns">p=0.3250&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=0.3250&thinsp;n.s.</span></td><td class="col-eff"><span class="med">+0.443</span></td><td class="col-eff" style="font-size:10px">[+0.230,+0.714]</td><td class="col-eff" style="font-size:10px">petit</td></tr>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Self-Ask</td><td>19</td><td><span class="dpos">+0.224</span></td><td><span class="ciz">[-0.145,+0.711]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=0.3613&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-eff"><span class="med">+0.226</span></td><td class="col-eff" style="font-size:10px">[-0.259,+0.603]</td><td class="col-eff" style="font-size:10px">petit</td></tr>
+<tr><td style="font-size:10.5px">Vanilla k=10 &minus; Vanilla k=25</td><td>19</td><td><span class="dpos">+0.026</span></td><td><span class="ciz">[-0.158,+0.382]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=0.9440&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-eff"><span class="na">+0.046</span></td><td class="col-eff" style="font-size:10px">[-0.545,+0.377]</td><td class="col-eff" style="font-size:10px">négligeable</td></tr>
+</tbody></table></div>
+<h3>b &middot; composite_valide</h3>
+<div class="tw"><table><thead><tr><th>Paire (A &minus; B)</th><th>N</th><th>&#916;</th><th>IC BCa</th><th>p brut</th><th class="col-corr">p Holm</th><th class="col-corr">p BH</th><th class="col-eff">g</th><th class="col-eff">IC g</th><th class="col-eff">Interp.</th></tr></thead><tbody>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Vanilla k=10</td><td>19</td><td><span class="dneg">-0.026</span></td><td><span class="ciz">[-0.500,+0.553]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-eff"><span class="na">-0.021</span></td><td class="col-eff" style="font-size:10px">[-0.664,+0.377]</td><td class="col-eff" style="font-size:10px">négligeable</td></tr>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Décomp (old)</td><td>19</td><td><span class="dpos">+0.132</span></td><td><span class="ciz">[-0.263,+0.579]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=0.6380&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-eff"><span class="na">+0.132</span></td><td class="col-eff" style="font-size:10px">[-0.363,+0.531]</td><td class="col-eff" style="font-size:10px">négligeable</td></tr>
+<tr><td style="font-size:10.5px">Décomp (old) &minus; Décomp NT(old)</td><td>19</td><td><span class="dpos">+0.316</span></td><td><span class="ciz">[-0.053,+0.921]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=0.3049&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-eff"><span class="med">+0.286</span></td><td class="col-eff" style="font-size:10px">[-0.207,+0.584]</td><td class="col-eff" style="font-size:10px">petit</td></tr>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Self-Ask</td><td>19</td><td><span class="dpos">+0.026</span></td><td><span class="ciz">[-0.421,+0.553]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-eff"><span class="na">+0.023</span></td><td class="col-eff" style="font-size:10px">[-0.568,+0.411]</td><td class="col-eff" style="font-size:10px">négligeable</td></tr>
+<tr><td style="font-size:10.5px">Vanilla k=10 &minus; Vanilla k=25</td><td>19</td><td><span class="dzero">0.000</span></td><td><span class="ciz">[-0.210,+0.316]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-eff"><span class="na">+0.000</span></td><td class="col-eff" style="font-size:10px">[-0.599,+0.347]</td><td class="col-eff" style="font-size:10px">négligeable</td></tr>
+</tbody></table></div>
+</div></details>
+<details><summary><span class="sbadge">Causal</span>&thinsp;Raisonnement causal et contre-intuitif &ensp;<span class="nbad-mid">N=17 &#9888; N faible</span></summary><div class="di">
+<div class="warn-box">N=17 : N faible, intervalles larges, puissance limit&eacute;e.</div>
+<h3>a &middot; composite_4dim</h3>
+<div class="tw"><table><thead><tr><th>Paire (A &minus; B)</th><th>N</th><th>&#916;</th><th>IC BCa</th><th>p brut</th><th class="col-corr">p Holm</th><th class="col-corr">p BH</th><th class="col-eff">g</th><th class="col-eff">IC g</th><th class="col-eff">Interp.</th></tr></thead><tbody>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Vanilla k=10</td><td>17</td><td><span class="dpos">+0.426</span></td><td><span class="ciz">[-0.029,+0.853]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-yes">p=0.0872&thinsp;&dagger;</span></td><td class="col-corr"><span class="sig-ns">p=0.4360&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=0.1453&thinsp;n.s.</span></td><td class="col-eff"><span class="med">+0.431</span></td><td class="col-eff" style="font-size:10px">[-0.015,+0.970]</td><td class="col-eff" style="font-size:10px">petit</td></tr>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Décomp (old)</td><td>17</td><td><span class="dpos">+0.750</span></td><td><span class="cnz">[+0.338,+1.206]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-yes">p=0.0051&thinsp;**</span></td><td class="col-corr"><span class="sig-yes">p=0.0459&thinsp;*</span></td><td class="col-corr"><span class="sig-yes">p=0.0255&thinsp;*</span></td><td class="col-eff"><span class="good">+0.771</span></td><td class="col-eff" style="font-size:10px">[+0.408,+1.273]</td><td class="col-eff" style="font-size:10px">moyen</td></tr>
+<tr><td style="font-size:10.5px">Décomp (old) &minus; Décomp NT(old)</td><td>17</td><td><span class="dpos">+0.103</span></td><td><span class="ciz">[-0.471,+0.471]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=0.7124&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=0.8353&thinsp;n.s.</span></td><td class="col-eff"><span class="na">+0.100</span></td><td class="col-eff" style="font-size:10px">[-0.327,+0.824]</td><td class="col-eff" style="font-size:10px">négligeable</td></tr>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Self-Ask</td><td>17</td><td><span class="dpos">+0.662</span></td><td><span class="cnz">[+0.191,+1.132]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-yes">p=0.0202&thinsp;*</span></td><td class="col-corr"><span class="sig-ns">p=0.1414&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-yes">p=0.0505&thinsp;&dagger;</span></td><td class="col-eff"><span class="good">+0.607</span></td><td class="col-eff" style="font-size:10px">[+0.193,+1.211]</td><td class="col-eff" style="font-size:10px">moyen</td></tr>
+<tr><td style="font-size:10.5px">Vanilla k=10 &minus; Vanilla k=25</td><td>17</td><td><span class="dneg">-0.073</span></td><td><span class="ciz">[-0.544,+0.191]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=0.7518&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=0.8353&thinsp;n.s.</span></td><td class="col-eff"><span class="na">-0.095</span></td><td class="col-eff" style="font-size:10px">[-0.482,+0.553]</td><td class="col-eff" style="font-size:10px">négligeable</td></tr>
+</tbody></table></div>
+<h3>b &middot; composite_valide</h3>
+<div class="tw"><table><thead><tr><th>Paire (A &minus; B)</th><th>N</th><th>&#916;</th><th>IC BCa</th><th>p brut</th><th class="col-corr">p Holm</th><th class="col-corr">p BH</th><th class="col-eff">g</th><th class="col-eff">IC g</th><th class="col-eff">Interp.</th></tr></thead><tbody>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Vanilla k=10</td><td>17</td><td><span class="dpos">+0.559</span></td><td><span class="cnz">[+0.118,+0.971]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-yes">p=0.0288&thinsp;*</span></td><td class="col-corr"><span class="sig-ns">p=0.1728&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-yes">p=0.0576&thinsp;&dagger;</span></td><td class="col-eff"><span class="good">+0.581</span></td><td class="col-eff" style="font-size:10px">[+0.174,+1.123]</td><td class="col-eff" style="font-size:10px">moyen</td></tr>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Décomp (old)</td><td>17</td><td><span class="dpos">+0.912</span></td><td><span class="cnz">[+0.441,+1.382]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-yes">p=0.0027&thinsp;**</span></td><td class="col-corr"><span class="sig-yes">p=0.0270&thinsp;*</span></td><td class="col-corr"><span class="sig-yes">p=0.0255&thinsp;*</span></td><td class="col-eff"><span class="good">+0.840</span></td><td class="col-eff" style="font-size:10px">[+0.454,+1.400]</td><td class="col-eff" style="font-size:10px">grand</td></tr>
+<tr><td style="font-size:10.5px">Décomp (old) &minus; Décomp NT(old)</td><td>17</td><td><span class="dneg">-0.029</span></td><td><span class="ciz">[-0.676,+0.412]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-eff"><span class="na">-0.025</span></td><td class="col-eff" style="font-size:10px">[-0.465,+0.554]</td><td class="col-eff" style="font-size:10px">négligeable</td></tr>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Self-Ask</td><td>17</td><td><span class="dpos">+0.735</span></td><td><span class="cnz">[+0.265,+1.206]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-yes">p=0.0130&thinsp;*</span></td><td class="col-corr"><span class="sig-ns">p=0.1040&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-yes">p=0.0433&thinsp;*</span></td><td class="col-eff"><span class="good">+0.688</span></td><td class="col-eff" style="font-size:10px">[+0.285,+1.293]</td><td class="col-eff" style="font-size:10px">moyen</td></tr>
+<tr><td style="font-size:10.5px">Vanilla k=10 &minus; Vanilla k=25</td><td>17</td><td><span class="dneg">-0.176</span></td><td><span class="ciz">[-0.735,+0.088]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=0.4968&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=0.7097&thinsp;n.s.</span></td><td class="col-eff"><span class="med">-0.208</span></td><td class="col-eff" style="font-size:10px">[-0.566,+0.363]</td><td class="col-eff" style="font-size:10px">petit</td></tr>
+</tbody></table></div>
+</div></details>
+<details><summary><span class="sbadge">Incertitude</span>&thinsp;Gestion de l'incertitude et des biais &ensp;<span class="nbad-mid">N=15 &#9888; N faible</span></summary><div class="di">
+<div class="warn-box">N=15 : N faible, intervalles larges, puissance limit&eacute;e.</div>
+<h3>a &middot; composite_4dim</h3>
+<div class="tw"><table><thead><tr><th>Paire (A &minus; B)</th><th>N</th><th>&#916;</th><th>IC BCa</th><th>p brut</th><th class="col-corr">p Holm</th><th class="col-corr">p BH</th><th class="col-eff">g</th><th class="col-eff">IC g</th><th class="col-eff">Interp.</th></tr></thead><tbody>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Vanilla k=10</td><td>15</td><td><span class="dpos">+0.050</span></td><td><span class="ciz">[+0.000,+0.150]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=0.4900&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=0.7497&thinsp;n.s.</span></td><td class="col-eff"><span class="med">+0.337</span></td><td class="col-eff" style="font-size:10px">[+0.000,+0.605]</td><td class="col-eff" style="font-size:10px">petit</td></tr>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Décomp (old)</td><td>15</td><td><span class="dpos">+0.117</span></td><td><span class="cnz">[+0.017,+0.333]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-ns">p=0.2482&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=0.6205&thinsp;n.s.</span></td><td class="col-eff"><span class="med">+0.392</span></td><td class="col-eff" style="font-size:10px">[+0.000,+0.668]</td><td class="col-eff" style="font-size:10px">petit</td></tr>
+<tr><td style="font-size:10.5px">Décomp (old) &minus; Décomp NT(old)</td><td>15</td><td><span class="dpos">+0.183</span></td><td><span class="ciz">[-0.083,+0.800]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=0.5593&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=0.7497&thinsp;n.s.</span></td><td class="col-eff"><span class="med">+0.217</span></td><td class="col-eff" style="font-size:10px">[-0.314,+0.605]</td><td class="col-eff" style="font-size:10px">petit</td></tr>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Self-Ask</td><td>15</td><td><span class="dpos">+0.533</span></td><td><span class="cnz">[+0.317,+1.000]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-yes">p=0.0004&thinsp;***</span></td><td class="col-corr"><span class="sig-yes">p=0.0040&thinsp;**</span></td><td class="col-corr"><span class="sig-yes">p=0.0020&thinsp;**</span></td><td class="col-eff"><span class="good">+0.797</span></td><td class="col-eff" style="font-size:10px">[+0.599,+1.544]</td><td class="col-eff" style="font-size:10px">moyen</td></tr>
+<tr><td style="font-size:10.5px">Vanilla k=10 &minus; Vanilla k=25</td><td>15</td><td><span class="dpos">+0.083</span></td><td><span class="ciz">[-0.017,+0.350]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=0.7497&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=0.7497&thinsp;n.s.</span></td><td class="col-eff"><span class="med">+0.234</span></td><td class="col-eff" style="font-size:10px">[-0.358,+0.492]</td><td class="col-eff" style="font-size:10px">petit</td></tr>
+</tbody></table></div>
+<h3>b &middot; composite_valide</h3>
+<div class="tw"><table><thead><tr><th>Paire (A &minus; B)</th><th>N</th><th>&#916;</th><th>IC BCa</th><th>p brut</th><th class="col-corr">p Holm</th><th class="col-corr">p BH</th><th class="col-eff">g</th><th class="col-eff">IC g</th><th class="col-eff">Interp.</th></tr></thead><tbody>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Vanilla k=10</td><td>15</td><td><span class="dpos">+0.067</span></td><td><span class="ciz">[+0.000,+0.133]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=0.4900&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=0.7497&thinsp;n.s.</span></td><td class="col-eff"><span class="med">+0.358</span></td><td class="col-eff" style="font-size:10px">[+0.000,+0.646]</td><td class="col-eff" style="font-size:10px">petit</td></tr>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Décomp (old)</td><td>15</td><td><span class="dpos">+0.133</span></td><td><span class="ciz">[+0.000,+0.300]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=0.2482&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=0.6205&thinsp;n.s.</span></td><td class="col-eff"><span class="med">+0.425</span></td><td class="col-eff" style="font-size:10px">[+0.000,+0.689]</td><td class="col-eff" style="font-size:10px">petit</td></tr>
+<tr><td style="font-size:10.5px">Décomp (old) &minus; Décomp NT(old)</td><td>15</td><td><span class="dpos">+0.133</span></td><td><span class="ciz">[-0.133,+0.667]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=0.7480&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=0.7497&thinsp;n.s.</span></td><td class="col-eff"><span class="na">+0.170</span></td><td class="col-eff" style="font-size:10px">[-0.415,+0.528]</td><td class="col-eff" style="font-size:10px">négligeable</td></tr>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Self-Ask</td><td>15</td><td><span class="dpos">+0.633</span></td><td><span class="cnz">[+0.400,+1.200]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-yes">p=0.0004&thinsp;***</span></td><td class="col-corr"><span class="sig-yes">p=0.0040&thinsp;**</span></td><td class="col-corr"><span class="sig-yes">p=0.0020&thinsp;**</span></td><td class="col-eff"><span class="good">+0.833</span></td><td class="col-eff" style="font-size:10px">[+0.646,+2.203]</td><td class="col-eff" style="font-size:10px">grand</td></tr>
+<tr><td style="font-size:10.5px">Vanilla k=10 &minus; Vanilla k=25</td><td>15</td><td><span class="dpos">+0.100</span></td><td><span class="ciz">[-0.067,+0.400]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=0.7497&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=0.7497&thinsp;n.s.</span></td><td class="col-eff"><span class="med">+0.219</span></td><td class="col-eff" style="font-size:10px">[-0.358,+0.531]</td><td class="col-eff" style="font-size:10px">petit</td></tr>
+</tbody></table></div>
+</div></details>
+<details><summary><span class="sbadge">Absence info</span>&thinsp;Gestion de l'absence d'information &ensp;<span class="nbad-mid">N=14 &#9888; N faible</span></summary><div class="di">
+<div class="warn-box">N=14 : N faible, intervalles larges, puissance limit&eacute;e.</div>
+<h3>a &middot; composite_4dim</h3>
+<div class="tw"><table><thead><tr><th>Paire (A &minus; B)</th><th>N</th><th>&#916;</th><th>IC BCa</th><th>p brut</th><th class="col-corr">p Holm</th><th class="col-corr">p BH</th><th class="col-eff">g</th><th class="col-eff">IC g</th><th class="col-eff">Interp.</th></tr></thead><tbody>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Vanilla k=10</td><td>14</td><td><span class="dneg">-0.661</span></td><td><span class="cnz">[-1.143,-0.357]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-yes">p=0.0041&thinsp;**</span></td><td class="col-corr"><span class="sig-yes">p=0.0410&thinsp;*</span></td><td class="col-corr"><span class="sig-yes">p=0.0205&thinsp;*</span></td><td class="col-eff"><span class="good">-0.808</span></td><td class="col-eff" style="font-size:10px">[-1.285,-0.550]</td><td class="col-eff" style="font-size:10px">grand</td></tr>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Décomp (old)</td><td>14</td><td><span class="dneg">-0.071</span></td><td><span class="ciz">[-0.375,+0.250]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=0.7639&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=0.8488&thinsp;n.s.</span></td><td class="col-eff"><span class="na">-0.108</span></td><td class="col-eff" style="font-size:10px">[-0.875,+0.358]</td><td class="col-eff" style="font-size:10px">négligeable</td></tr>
+<tr><td style="font-size:10.5px">Décomp (old) &minus; Décomp NT(old)</td><td>14</td><td><span class="dpos">+0.321</span></td><td><span class="ciz">[-0.268,+0.643]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=0.2087&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=0.3143&thinsp;n.s.</span></td><td class="col-eff"><span class="med">+0.360</span></td><td class="col-eff" style="font-size:10px">[-0.121,+1.255]</td><td class="col-eff" style="font-size:10px">petit</td></tr>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Self-Ask</td><td>14</td><td><span class="dneg">-0.607</span></td><td><span class="cnz">[-1.232,-0.107]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-yes">p=0.0696&thinsp;&dagger;</span></td><td class="col-corr"><span class="sig-ns">p=0.5568&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=0.2320&thinsp;n.s.</span></td><td class="col-eff"><span class="good">-0.520</span></td><td class="col-eff" style="font-size:10px">[-1.150,-0.063]</td><td class="col-eff" style="font-size:10px">moyen</td></tr>
+<tr><td style="font-size:10.5px">Vanilla k=10 &minus; Vanilla k=25</td><td>14</td><td><span class="dpos">+0.214</span></td><td><span class="cnz">[+0.018,+0.536]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-ns">p=0.2449&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=0.3143&thinsp;n.s.</span></td><td class="col-eff"><span class="med">+0.404</span></td><td class="col-eff" style="font-size:10px">[-0.252,+0.745]</td><td class="col-eff" style="font-size:10px">petit</td></tr>
+</tbody></table></div>
+<h3>b &middot; composite_valide</h3>
+<div class="tw"><table><thead><tr><th>Paire (A &minus; B)</th><th>N</th><th>&#916;</th><th>IC BCa</th><th>p brut</th><th class="col-corr">p Holm</th><th class="col-corr">p BH</th><th class="col-eff">g</th><th class="col-eff">IC g</th><th class="col-eff">Interp.</th></tr></thead><tbody>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Vanilla k=10</td><td>14</td><td><span class="dneg">-0.643</span></td><td><span class="cnz">[-1.143,-0.357]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-yes">p=0.0041&thinsp;**</span></td><td class="col-corr"><span class="sig-yes">p=0.0410&thinsp;*</span></td><td class="col-corr"><span class="sig-yes">p=0.0205&thinsp;*</span></td><td class="col-eff"><span class="good">-0.812</span></td><td class="col-eff" style="font-size:10px">[-1.282,-0.564]</td><td class="col-eff" style="font-size:10px">grand</td></tr>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Décomp (old)</td><td>14</td><td><span class="dzero">0.000</span></td><td><span class="ciz">[-0.286,+0.357]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-eff"><span class="na">+0.000</span></td><td class="col-eff" style="font-size:10px">[-0.723,+0.453]</td><td class="col-eff" style="font-size:10px">négligeable</td></tr>
+<tr><td style="font-size:10.5px">Décomp (old) &minus; Décomp NT(old)</td><td>14</td><td><span class="dpos">+0.321</span></td><td><span class="ciz">[-0.286,+0.643]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=0.2514&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=0.3143&thinsp;n.s.</span></td><td class="col-eff"><span class="med">+0.348</span></td><td class="col-eff" style="font-size:10px">[-0.124,+1.161]</td><td class="col-eff" style="font-size:10px">petit</td></tr>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Self-Ask</td><td>14</td><td><span class="dneg">-0.571</span></td><td><span class="cnz">[-1.214,-0.107]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-yes">p=0.0951&thinsp;&dagger;</span></td><td class="col-corr"><span class="sig-ns">p=0.6657&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=0.2378&thinsp;n.s.</span></td><td class="col-eff"><span class="med">-0.494</span></td><td class="col-eff" style="font-size:10px">[-1.088,-0.035]</td><td class="col-eff" style="font-size:10px">petit</td></tr>
+<tr><td style="font-size:10.5px">Vanilla k=10 &minus; Vanilla k=25</td><td>14</td><td><span class="dpos">+0.214</span></td><td><span class="cnz">[+0.036,+0.500]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-ns">p=0.2449&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=0.3143&thinsp;n.s.</span></td><td class="col-eff"><span class="med">+0.430</span></td><td class="col-eff" style="font-size:10px">[+0.000,+0.728]</td><td class="col-eff" style="font-size:10px">petit</td></tr>
+</tbody></table></div>
+</div></details>
+<details><summary><span class="sbadge">Robustesse</span>&thinsp;Robustesse sémantique &ensp;<span class="nbad-mid">N=12 &#9888; N faible</span></summary><div class="di">
+<div class="warn-box">N=12 : N faible, intervalles larges, puissance limit&eacute;e.</div>
+<h3>a &middot; composite_4dim</h3>
+<div class="tw"><table><thead><tr><th>Paire (A &minus; B)</th><th>N</th><th>&#916;</th><th>IC BCa</th><th>p brut</th><th class="col-corr">p Holm</th><th class="col-corr">p BH</th><th class="col-eff">g</th><th class="col-eff">IC g</th><th class="col-eff">Interp.</th></tr></thead><tbody>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Vanilla k=10</td><td>12</td><td><span class="dneg">-0.104</span></td><td><span class="cnz">[-0.229,-0.021]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-ns">p=0.1883&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=0.6277&thinsp;n.s.</span></td><td class="col-eff"><span class="med">-0.489</span></td><td class="col-eff" style="font-size:10px">[-1.122,+0.000]</td><td class="col-eff" style="font-size:10px">petit</td></tr>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Décomp (old)</td><td>12</td><td><span class="dpos">+0.104</span></td><td><span class="ciz">[-0.083,+0.271]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=0.4309&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=0.7182&thinsp;n.s.</span></td><td class="col-eff"><span class="med">+0.281</span></td><td class="col-eff" style="font-size:10px">[-0.289,+0.856]</td><td class="col-eff" style="font-size:10px">petit</td></tr>
+<tr><td style="font-size:10.5px">Décomp (old) &minus; Décomp NT(old)</td><td>12</td><td><span class="dpos">+0.125</span></td><td><span class="ciz">[-0.146,+0.562]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=0.6879&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=0.9827&thinsp;n.s.</span></td><td class="col-eff"><span class="na">+0.188</span></td><td class="col-eff" style="font-size:10px">[-0.415,+0.630]</td><td class="col-eff" style="font-size:10px">négligeable</td></tr>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Self-Ask</td><td>12</td><td><span class="dpos">+1.250</span></td><td><span class="cnz">[+0.792,+2.000]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-yes">p=0.0012&thinsp;**</span></td><td class="col-corr"><span class="sig-yes">p=0.0120&thinsp;*</span></td><td class="col-corr"><span class="sig-yes">p=0.0120&thinsp;*</span></td><td class="col-eff"><span class="good">+1.119</span></td><td class="col-eff" style="font-size:10px">[+0.820,+2.080]</td><td class="col-eff" style="font-size:10px">grand</td></tr>
+<tr><td style="font-size:10.5px">Vanilla k=10 &minus; Vanilla k=25</td><td>12</td><td><span class="dpos">+0.125</span></td><td><span class="ciz">[-0.042,+0.562]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-eff"><span class="med">+0.225</span></td><td class="col-eff" style="font-size:10px">[-0.514,+0.514]</td><td class="col-eff" style="font-size:10px">petit</td></tr>
+</tbody></table></div>
+<h3>b &middot; composite_valide</h3>
+<div class="tw"><table><thead><tr><th>Paire (A &minus; B)</th><th>N</th><th>&#916;</th><th>IC BCa</th><th>p brut</th><th class="col-corr">p Holm</th><th class="col-corr">p BH</th><th class="col-eff">g</th><th class="col-eff">IC g</th><th class="col-eff">Interp.</th></tr></thead><tbody>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Vanilla k=10</td><td>12</td><td><span class="dneg">-0.125</span></td><td><span class="ciz">[-0.333,+0.000]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=0.3766&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=0.7182&thinsp;n.s.</span></td><td class="col-eff"><span class="med">-0.374</span></td><td class="col-eff" style="font-size:10px">[-1.054,+0.151]</td><td class="col-eff" style="font-size:10px">petit</td></tr>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Décomp (old)</td><td>12</td><td><span class="dpos">+0.167</span></td><td><span class="ciz">[-0.125,+0.417]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=0.4051&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=0.7182&thinsp;n.s.</span></td><td class="col-eff"><span class="med">+0.315</span></td><td class="col-eff" style="font-size:10px">[-0.269,+0.827]</td><td class="col-eff" style="font-size:10px">petit</td></tr>
+<tr><td style="font-size:10.5px">Décomp (old) &minus; Décomp NT(old)</td><td>12</td><td><span class="dpos">+0.042</span></td><td><span class="ciz">[-0.250,+0.375]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-eff"><span class="na">+0.067</span></td><td class="col-eff" style="font-size:10px">[-0.514,+0.537]</td><td class="col-eff" style="font-size:10px">négligeable</td></tr>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Self-Ask</td><td>12</td><td><span class="dpos">+1.208</span></td><td><span class="cnz">[+0.667,+1.833]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-yes">p=0.0036&thinsp;**</span></td><td class="col-corr"><span class="sig-yes">p=0.0324&thinsp;*</span></td><td class="col-corr"><span class="sig-yes">p=0.0180&thinsp;*</span></td><td class="col-eff"><span class="good">+1.045</span></td><td class="col-eff" style="font-size:10px">[+0.698,+1.839]</td><td class="col-eff" style="font-size:10px">grand</td></tr>
+<tr><td style="font-size:10.5px">Vanilla k=10 &minus; Vanilla k=25</td><td>12</td><td><span class="dpos">+0.125</span></td><td><span class="ciz">[-0.083,+0.625]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-eff"><span class="na">+0.191</span></td><td class="col-eff" style="font-size:10px">[-0.514,+0.514]</td><td class="col-eff" style="font-size:10px">négligeable</td></tr>
+</tbody></table></div>
+</div></details>
+<details><summary><span class="sbadge">Limites</span>&thinsp;Limites architecturales &ensp;<span class="nbad-low">N=7 &#9888; N faible</span></summary><div class="di">
+<div class="warn-box">N&lt;10 : estimations tr&egrave;s instables, IC non fiables.</div>
+<h3>a &middot; composite_4dim</h3>
+<div class="tw"><table><thead><tr><th>Paire (A &minus; B)</th><th>N</th><th>&#916;</th><th>IC BCa</th><th>p brut</th><th class="col-corr">p Holm</th><th class="col-corr">p BH</th><th class="col-eff">g</th><th class="col-eff">IC g</th><th class="col-eff">Interp.</th></tr></thead><tbody>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Vanilla k=10</td><td>7</td><td><span class="dpos">+0.321</span></td><td><span class="ciz">[+0.000,+0.964]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-eff"><span class="med">+0.329</span></td><td class="col-eff" style="font-size:10px">[+0.000,+0.697]</td><td class="col-eff" style="font-size:10px">petit</td></tr>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Décomp (old)</td><td>7</td><td><span class="dpos">+0.071</span></td><td><span class="ciz">[-0.107,+0.321]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-eff"><span class="na">+0.198</span></td><td class="col-eff" style="font-size:10px">[-0.697,+0.697]</td><td class="col-eff" style="font-size:10px">négligeable</td></tr>
+<tr><td style="font-size:10.5px">Décomp (old) &minus; Décomp NT(old)</td><td>7</td><td><span class="dpos">+1.107</span></td><td><span class="cnz">[+0.321,+2.031]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-ns">p=0.1261&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=0.9180&thinsp;n.s.</span></td><td class="col-eff"><span class="good">+0.781</span></td><td class="col-eff" style="font-size:10px">[+0.329,+1.758]</td><td class="col-eff" style="font-size:10px">moyen</td></tr>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Self-Ask</td><td>7</td><td><span class="dneg">-0.107</span></td><td><span class="ciz">[-0.536,+0.000]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-eff"><span class="med">-0.329</span></td><td class="col-eff" style="font-size:10px">[-0.697,+0.000]</td><td class="col-eff" style="font-size:10px">petit</td></tr>
+<tr><td style="font-size:10.5px">Vanilla k=10 &minus; Vanilla k=25</td><td>7</td><td><span class="dneg">-0.036</span></td><td><span class="ciz">[-0.179,+0.000]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-eff"><span class="med">-0.329</span></td><td class="col-eff" style="font-size:10px">[-0.697,+0.000]</td><td class="col-eff" style="font-size:10px">petit</td></tr>
+</tbody></table></div>
+<h3>b &middot; composite_valide</h3>
+<div class="tw"><table><thead><tr><th>Paire (A &minus; B)</th><th>N</th><th>&#916;</th><th>IC BCa</th><th>p brut</th><th class="col-corr">p Holm</th><th class="col-corr">p BH</th><th class="col-eff">g</th><th class="col-eff">IC g</th><th class="col-eff">Interp.</th></tr></thead><tbody>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Vanilla k=10</td><td>7</td><td><span class="dpos">+0.357</span></td><td><span class="ciz">[+0.000,+1.071]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-eff"><span class="med">+0.329</span></td><td class="col-eff" style="font-size:10px">[+0.000,+0.697]</td><td class="col-eff" style="font-size:10px">petit</td></tr>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Décomp (old)</td><td>7</td><td><span class="dpos">+0.071</span></td><td><span class="ciz">[+0.000,+0.214]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-eff"><span class="med">+0.329</span></td><td class="col-eff" style="font-size:10px">[+0.000,+0.697]</td><td class="col-eff" style="font-size:10px">petit</td></tr>
+<tr><td style="font-size:10.5px">Décomp (old) &minus; Décomp NT(old)</td><td>7</td><td><span class="dpos">+1.000</span></td><td><span class="cnz">[+0.143,+2.000]&thinsp;&#10003; 0&notin;IC</span></td><td><span class="sig-ns">p=0.1836&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=0.9180&thinsp;n.s.</span></td><td class="col-eff"><span class="good">+0.642</span></td><td class="col-eff" style="font-size:10px">[+0.138,+1.500]</td><td class="col-eff" style="font-size:10px">moyen</td></tr>
+<tr><td style="font-size:10.5px">Décomp+RAPTOR &minus; Self-Ask</td><td>7</td><td><span class="dneg">-0.071</span></td><td><span class="ciz">[-0.357,+0.000]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-eff"><span class="med">-0.329</span></td><td class="col-eff" style="font-size:10px">[-0.697,+0.000]</td><td class="col-eff" style="font-size:10px">petit</td></tr>
+<tr><td style="font-size:10.5px">Vanilla k=10 &minus; Vanilla k=25</td><td>7</td><td><span class="dzero">0.000</span></td><td><span class="ciz">[+0.000,+0.000]&thinsp;&#9888; 0&isin;IC</span></td><td><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-corr"><span class="sig-ns">p=1.0000&thinsp;n.s.</span></td><td class="col-eff"><span class="na">--</span></td><td class="col-eff" style="font-size:10px"><span class="na">--</span></td><td class="col-eff" style="font-size:10px"><span class="na">--</span></td></tr>
+</tbody></table></div>
+</div></details>
+</section>
+<section id="deltas"><h2>6 &middot; &#916; ablation</h2>
+<h3>6a &middot; &#916; vs D&eacute;comp+RAPTOR (r&eacute;f&eacute;rence)</h3>
+<div class="tw"><table><thead><tr><th>Config</th><th>c4</th><th>&#916; c4</th><th class="hl-cv">cv</th><th class="hl-cv">&#916; cv</th></tr></thead><tbody>
+<tr><td><span class="cfg"><span class="dot" style="background:#2563EB"></span>Vanilla k=10</span></td><td class="good">4.63</td><td><span class="dpos">+0.009</span></td><td class="good hl-cv"><strong>4.57</strong></td><td class="hl-cv"><span class="dneg">-0.005</span></td></tr>
+<tr><td><span class="cfg"><span class="dot" style="background:#7C3AED"></span>Vanilla k=25</span></td><td class="good">4.57</td><td><span class="dneg">-0.055</span></td><td class="good hl-cv"><strong>4.53</strong></td><td class="hl-cv"><span class="dneg">-0.050</span></td></tr>
+<tr><td><span class="cfg"><span class="dot" style="background:#0891B2"></span>Décomp (old)</span></td><td class="med">4.30</td><td><span class="dneg">-0.326</span></td><td class="med hl-cv"><strong>4.18</strong></td><td class="hl-cv"><span class="dneg">-0.399</span></td></tr>
+<tr><td><span class="cfg"><span class="dot" style="background:#EA580C"></span>Décomp NT(old)</span></td><td class="med">3.72</td><td><span class="dneg">-0.900</span></td><td class="med hl-cv"><strong>3.70</strong></td><td class="hl-cv"><span class="dneg">-0.876</span></td></tr>
+<tr><td><span class="cfg"><span class="dot" style="background:#16A34A"></span>Décomp+RAPTOR</span></td><td class="good">4.62</td><td><span class="dzero">0.000</span></td><td class="good hl-cv"><strong>4.58</strong></td><td class="hl-cv"><span class="dzero">0.000</span></td></tr>
+<tr><td><span class="cfg"><span class="dot" style="background:#9333EA"></span>Self-Ask</span></td><td class="med">4.16</td><td><span class="dneg">-0.461</span></td><td class="med hl-cv"><strong>4.11</strong></td><td class="hl-cv"><span class="dneg">-0.468</span></td></tr>
+</tbody></table></div>
+<h3>6b &middot; Ablation typing : D&eacute;comp(old) &minus; D&eacute;comp NT(old)</h3>
+<div class="tw"><table><thead><tr><th>Mesure</th><th>Décomp (old)</th><th>Décomp NT(old)</th><th>&#916;</th></tr></thead><tbody>
+<tr><td class=""><strong>composite_4dim</strong></td><td class="med">4.30</td><td class="med">3.72</td><td class=""><span class="dpos">+0.574</span></td></tr>
+<tr><td class=" hl-cv"><strong>composite_valide</strong></td><td class="med hl-cv">4.18</td><td class="med hl-cv">3.70</td><td class=" hl-cv"><span class="dpos">+0.477</span></td></tr>
+</tbody></table></div></section>
+<section id="corr"><h2>7 &middot; Corr&eacute;lation composite_4dim &harr; composite_valide</h2>
+<div class="tw"><table><thead><tr><th>P&eacute;rim&egrave;tre</th><th>N</th><th>Pearson r</th><th>p</th><th>Spearman r</th><th>p</th></tr></thead><tbody>
+<tr><td>Toutes configs confondues</td><td>654</td><td class="good">0.982</td><td style="font-size:10px">0.0000 <span class="sig-yes">***</span></td><td class="good">0.964</td><td style="font-size:10px">0.0000 <span class="sig-yes">***</span></td></tr>
+<tr><td>Vanilla k=10</td><td>109</td><td class="good">0.981</td><td style="font-size:10px">0.0000 <span class="sig-yes">***</span></td><td class="good">0.963</td><td style="font-size:10px">0.0000 <span class="sig-yes">***</span></td></tr>
+<tr><td>Vanilla k=25</td><td>109</td><td class="good">0.985</td><td style="font-size:10px">0.0000 <span class="sig-yes">***</span></td><td class="good">0.954</td><td style="font-size:10px">0.0000 <span class="sig-yes">***</span></td></tr>
+<tr><td>Décomp (old)</td><td>109</td><td class="good">0.977</td><td style="font-size:10px">0.0000 <span class="sig-yes">***</span></td><td class="good">0.964</td><td style="font-size:10px">0.0000 <span class="sig-yes">***</span></td></tr>
+<tr><td>Décomp NT(old)</td><td>109</td><td class="good">0.988</td><td style="font-size:10px">0.0000 <span class="sig-yes">***</span></td><td class="good">0.975</td><td style="font-size:10px">0.0000 <span class="sig-yes">***</span></td></tr>
+<tr><td>Décomp+RAPTOR</td><td>109</td><td class="good">0.952</td><td style="font-size:10px">0.0000 <span class="sig-yes">***</span></td><td class="good">0.955</td><td style="font-size:10px">0.0000 <span class="sig-yes">***</span></td></tr>
+<tr><td>Self-Ask</td><td>109</td><td class="good">0.980</td><td style="font-size:10px">0.0000 <span class="sig-yes">***</span></td><td class="good">0.958</td><td style="font-size:10px">0.0000 <span class="sig-yes">***</span></td></tr>
+</tbody></table></div></section>
+<section id="calib"><h2>8 &middot; Accord humain/juge &mdash; calibration V2 et V4.3 (N=20)</h2>
+<div class="info-box"><strong>Source</strong> : 20 r&eacute;ponses archiv&eacute;es dans <code>annotation_editee_2026-05-12 (2).xlsx</code>. Sources tronqu&eacute;es &agrave; 32&thinsp;767 car. (limite Excel), identiques pour V2 et V4.3 &rarr; comparabilit&eacute; pr&eacute;serv&eacute;e.<br><strong>Juges</strong> : V2 = gpt-4o few-shot (Table&thinsp;4 article) &middot; V4.3 = gpt-4o anti-mislabelling OppChoVec (re-jug&eacute; 2026-07-26).</div>
+<h3>8a &middot; Pearson r et MAE &mdash; V2 vs V4.3</h3>
+<p class="note">* p&lt;0.05 &nbsp; &dagger; p&lt;0.10 &nbsp; n.s. &ensp;&larr; CHANGE = statut de significativit&eacute; diff&eacute;rent V2/V4.3</p>
+<div class="tw"><table><thead><tr><th>Dimension</th><th>Pearson V2</th><th>p V2</th><th class="hl-cv">Pearson V4.3</th><th class="hl-cv">p V4.3</th><th>&#916; Pearson</th><th>MAE V2</th><th class="hl-cv">MAE V4.3</th><th>&plusmn;1 V2</th><th class="hl-cv">&plusmn;1 V4.3</th><th>&#916; sig.</th></tr></thead><tbody>
+<tr><td><strong>Pertinence</strong></td><td class="na">-0.067</td><td style="font-size:10px">0.780 <span style="color:var(--acc)">n.s.</span></td><td class="med hl-cv">+0.335</td><td class="hl-cv" style="font-size:10px">0.149 <span style="color:var(--acc)">n.s.</span></td><td><span class="dpos">+0.402</span></td><td>0.700</td><td class="hl-cv">0.700</td><td>85.0%</td><td class="hl-cv">85.0%</td><td><strong></strong></td></tr>
+<tr><td><strong>Factuel</strong></td><td class="na">+0.099</td><td style="font-size:10px">0.679 <span style="color:var(--acc)">n.s.</span></td><td class="good hl-cv">+0.522</td><td class="hl-cv" style="font-size:10px">0.018 <span style="color:var(--acc)">*</span></td><td><span class="dpos">+0.423</span></td><td>0.850</td><td class="hl-cv">0.350</td><td>85.0%</td><td class="hl-cv">90.0%</td><td class="bad"><strong>&larr; CHANGE</strong></td></tr>
+<tr><td><strong>Nuance</strong></td><td class="med">+0.367</td><td style="font-size:10px">0.111 <span style="color:var(--acc)">n.s.</span></td><td class="med hl-cv">+0.287</td><td class="hl-cv" style="font-size:10px">0.221 <span style="color:var(--acc)">n.s.</span></td><td><span class="dneg">-0.080</span></td><td>0.450</td><td class="hl-cv">0.800</td><td>95.0%</td><td class="hl-cv">85.0%</td><td><strong></strong></td></tr>
+<tr><td><strong>Q/Q</strong></td><td class="good">+0.507</td><td style="font-size:10px">0.023 <span style="color:var(--acc)">*</span></td><td class="med hl-cv">+0.236</td><td class="hl-cv" style="font-size:10px">0.317 <span style="color:var(--acc)">n.s.</span></td><td><span class="dneg">-0.271</span></td><td>0.600</td><td class="hl-cv">0.600</td><td>95.0%</td><td class="hl-cv">90.0%</td><td class="bad"><strong>&larr; CHANGE</strong></td></tr>
+<tr><td><strong>Score global</strong></td><td class="good">+0.471</td><td style="font-size:10px">0.036 <span style="color:var(--acc)">*</span></td><td class="good hl-cv">+0.535</td><td class="hl-cv" style="font-size:10px">0.015 <span style="color:var(--acc)">*</span></td><td><span class="dpos">+0.064</span></td><td>0.450</td><td class="hl-cv">0.562</td><td>95.0%</td><td class="hl-cv">85.0%</td><td><strong></strong></td></tr>
+<tr class="hl-cv"><td><strong>composite_valide</strong></td><td colspan="2" class="na" style="text-align:center">--</td><td class="med hl-cv">+0.296</td><td class="hl-cv" style="font-size:10px">0.206 <span style="color:var(--acc)">n.s.</span></td><td colspan="5" class="na" style="text-align:center">V4.3 uniquement</td><td></td></tr>
+</tbody></table></div>
+<div class="warn-box" style="margin-top:10px"><strong>Points critiques V4.3 vs V2 :</strong><br>(1) <strong>Factuel</strong> : NS en V2 &rarr; <strong>p=0.018&thinsp;* en V4.3</strong> (&larr; CHANGE).<br>(2) <strong>Q/Q</strong> : p=0.023&thinsp;* en V2 &rarr; <strong>NS en V4.3</strong> (&larr; CHANGE).<br>(3) <strong>composite_valide</strong> (mean Nuance+Q/Q) : NS dans les deux juges. La justification &laquo;&thinsp;dimensions valid&eacute;es&thinsp;&raquo; (Table&thinsp;4) ne se retrouve pas en V4.3.<br>(4) <strong>Score global</strong> : significatif dans les deux (V2&thinsp;: p=0.036 &middot; V4.3&thinsp;: p=0.015).</div>
+<p class="note">JSON V4.3 : <code>judge_agreement_v43_gpt4o_20q_20260726_160617.json</code></p>
+</section>
+<p class="note" style="margin-top:28px">G&eacute;n&eacute;r&eacute; le 2026-07-26 17:03 &mdash; Bootstrap seed=42, N=10,000&thinsp;it. &mdash; CSV&thinsp;: scores_dim_valid&eacute;es_109q.csv</p>
+<script>
+(function(){
+  var secs = document.querySelectorAll('section[id]');
+  var navLinks = document.querySelectorAll('#nav a');
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        navLinks.forEach(function(a){a.classList.remove('active')});
+        var l=document.querySelector('#nav a[href="#'+e.target.id+'"]');
+        if(l) l.classList.add('active');
+      }
+    });
+  },{threshold:0.2});
+  secs.forEach(function(s){obs.observe(s)});
+})();
+</script>
+</main></body></html>
