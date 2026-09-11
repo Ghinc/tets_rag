@@ -1,0 +1,2182 @@
+[
+  {
+    "label": "Aiti — bien-etre",
+    "question": "Quel est le niveau de bien-etre subjectif a Aiti ?",
+    "elapsed": 24.1,
+    "scope": "locale",
+    "question_type": "factuelle",
+    "guard": {
+      "passed": false,
+      "silence_list": [
+        "Aiti"
+      ],
+      "silence_map": {
+        "Aiti": {
+          "quali": false,
+          "quanti": true
+        }
+      },
+      "n_violations": 1,
+      "violations": [
+        {
+          "rule": "silence",
+          "detail": "Entité silencée 'Aiti' citée sans marqueur d'absence",
+          "evidence": "Les seules données objectives disponibles pour Aiti concernent des **indicateurs territoriaux OppChoVec** (basés sur des données INSEE 2020-2022), qui ne mesurent pas le bien-être subjectif mais des c",
+          "context": "Attendu : absence de tout énoncé factuel sur 'Aiti'"
+        }
+      ],
+      "available": true
+    },
+    "sub_qa": [
+      {
+        "q": "Quel est le score moyen de bien-être subjectif (échelle de 0 à 10) mesuré dans la commune d'Aiti à partir des dernières enquêtes disponibles ?",
+        "a": "{\"valeur\": null, \"contexte\": \"Aucune donnée disponible pour cette sous-question. Le contexte fournit des scores OppChoVec objectifs pour Aiti (3.07/10) basés sur des indicateurs INSEE 2020-2022, ainsi que des données subjectives d'enquête citoyenne agrégées à l'échelle de la Corse entière (N=246, bonheur 3.66/5, qualité de vie 3.83/5), mais aucune mesure de bien-être subjectif spécifique à la commune d'Aiti.\", \"source_type\": \"aucune_donnee\", \"confiance\": \"low\"}"
+      },
+      {
+        "q": "Quel est le rang de la commune d'Aiti en Corse pour le score de bien-être subjectif par rapport aux autres communes, selon les données OppChoVec ?",
+        "a": "{\"valeur\": null, \"contexte\": \"Aucune donnée disponible pour cette sous-question. Le contexte fournit le classement OppChoVec objectif des 360 communes corses (indicateurs INSEE 2020-2022), mais ne contient pas de score de bien-être subjectif par commune. L'enquête citoyenne RAPTOR (2024-2026) mesure la satisfaction globale en Corse (N=246) sans ventilation par commune.\", \"source_type\": \"aucune_donnee\", \"confiance\": \"low\"}"
+      },
+      {
+        "q": "Quels sont les verbatims citoyens recueillis à Aiti concernant les principaux facteurs influençant leur bien-être subjectif (ex : environnement, services, liens sociaux) ?",
+        "a": "{\"valeur\": null, \"contexte\": \"Aucun verbatim spécifique à Aiti n'est disponible dans le contexte fourni. L'enquête citoyenne RAPTOR (2024-2026) contient des synthèses qualitatives sur la dimension Environnement (N=111) et une synthèse globale (N=246) couvrant l'ensemble de la Corse, avec surreprésentation de Corte, Ajaccio et Bastia. Les données de bien-être subjectif par commune ne sont pas désagrégées.\", \"source_type\": \"enquete_citoyenne\", \"confiance\": \"low\"}"
+      },
+      {
+        "q": "Quelle est la proportion d'habitants d'Aiti déclarant un niveau de satisfaction élevé (note ≥ 7/10) concernant leur qualité de vie globale dans les enquêtes locales ?",
+        "a": "{\"valeur\": null, \"contexte\": \"Aucune donnée disponible pour cette sous-question. L'enquête citoyenne Qualité de Vie en Corse (2024-2026, N=246) couvre 69 communes, mais Aiti n'y figure pas parmi les communes ayant des répondants documentés.\", \"source_type\": \"aucune_donnee\", \"confiance\": \"low\"}"
+      },
+      {
+        "q": "Quels sont les thèmes récurrents dans les retours qualitatifs des habitants d'Aiti sur les aspects positifs ou négatifs de leur bien-être au quotidien ?",
+        "a": "{\"valeur\": null, \"contexte\": \"Aucune donnée disponible pour cette sous-question. L'enquête citoyenne Qualité de Vie en Corse (2024-2026, N=246) couvre 69 communes, mais Aiti n'apparaît pas dans la liste des répondants par commune. Les données qualitatives spécifiques à Aiti ne sont pas documentées dans le contexte fourni.\", \"source_type\": \"aucune_donnee\", \"confiance\": \"low\"}"
+      }
+    ],
+    "sources": [
+      {
+        "sq_idx": 1,
+        "type": "raptor_summary",
+        "commune": "",
+        "dimension": "",
+        "view": "profession",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : profession=Salarié(e) – Cadre ou profession intermédiaire (N=49 personnes)**\n\n---\n\n### **Thèmes dominants**\n1. **Équilibre vie professionnelle / vie personnelle**\n   - Besoin d’un équilibre pour éviter le \"métro-boulot-dodo\" et consacrer du temps à des projets personnels, familiaux ou citoyens.\n     *\"Equilibre temps entre vie pro et perso mais aussi les revenus : ne pas vivre pour travailler ! Profiter de la vie...\"* (F, 43 ans, Corte)\n     *\"Conciliation optimale entre objectifs professionnels et vie familiale, sociale et aspirations personnelles\"* (F, 60 ans, Biguglia)\n   - Critique de la surcharge professionnelle au détriment de la qualité de vie.\n\n2. **Santé et accès aux",
+        "n_chunks": 150
+      },
+      {
+        "sq_idx": 1,
+        "type": "raptor_enquete_summary",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_global",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n### **Synthèse analytique globale — Qualité de Vie en Corse (N=246)**\n\n---\n\n#### **1. Satisfaction globale**\nLes scores moyens révèlent une **satisfaction modérée** des Corses quant à leur qualité de vie, avec des disparités notables entre les dimensions évaluées.\n\n- **Bonheur** : **3,66/5** (n=237)\n  Les répondants expriment un niveau de bonheur globalement positif, proche de la moyenne haute, suggérant une perception plutôt favorable de leur bien-être subjectif.\n\n- **Qualité de vie** : **3,83/5** (n=237)\n  Ce score, légèrement supérieur à celui du bonheur, indique que les conditions matérielles et environnementales sont perçues comme globalement satisfaisantes, bien que perfectibles.\n",
+        "n_chunks": 246
+      },
+      {
+        "sq_idx": 1,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Ratio vie pro/ vie perso",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 30 ans (Jeunes adultes), Salarié(e) – Cadre ou profession intermédiaire, à Corte, sur le thème 'Ratio vie pro/ vie perso': Avoir du temps en dehors de la vie pour s'impliquer dans des projets de territoire, des loisirs, et être connecté à la vie extérieure",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 1,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Communauté et relations",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 30 ans (Jeunes adultes), Salarié(e) – Cadre ou profession intermédiaire, à Corte, sur le thème 'Communauté et relations': Richesse sociale, rencontres et partage de valeurs communautaires",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 1,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Services de proximité",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 30 ans (Jeunes adultes), Salarié(e) – Cadre ou profession intermédiaire, à Corte, sur le thème 'Services de proximité': créer une économie locale de circuit court",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 1,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Environnement",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 32 ans (Jeunes adultes), Salarié(e) – Cadre ou profession intermédiaire, à Corte, sur le thème 'Environnement': La qualité de la nature",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 1,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Communauté et relations",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 32 ans (Jeunes adultes), Salarié(e) – Cadre ou profession intermédiaire, à Corte, sur le thème 'Communauté et relations': Le sens d'appartenance, l'entourage",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 1,
+        "type": "enquete_scores_commune",
+        "commune": "Peri",
+        "dimension": "",
+        "view": null,
+        "scope_reel": "commune",
+        "extrait": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nScores moyens de l'enquête QdV pour la commune de Peri (1 répondants). Score bonheur moyen : 3.00/5. Score qualité de vie moyen : 3.00/5. Score confiance avenir moyen : 2.00/5. Scores moyens par dimension (1-5) : Transports=3.00, Éducation=3.00, Réseaux téléphoniques=3.00, Institutions=2.00, Tourisme=3.00, Sécurité=3.00, Santé=3.00, Situation pro=3.00, Revenus=3.00, Temps travail/perso=1.00, Logement=3.00, Services locaux=1.00, Culture=2.00, Soutien social=3.00, Vie associative=0.00. Dimensions les plus citées comme prioritaires : Communauté et relations, Environnement.",
+        "n_chunks": null
+      },
+      {
+        "sq_idx": 1,
+        "type": "enquete_scores_commune",
+        "commune": "Luri",
+        "dimension": "",
+        "view": null,
+        "scope_reel": "commune",
+        "extrait": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nScores moyens de l'enquête QdV pour la commune de Luri (2 répondants). Score bonheur moyen : 4.00/5. Score qualité de vie moyen : 3.50/5. Score confiance avenir moyen : 2.50/5. Scores moyens par dimension (1-5) : Transports=1.50, Éducation=2.00, Réseaux téléphoniques=2.00, Institutions=1.00, Tourisme=1.50, Sécurité=3.00, Santé=1.50, Situation pro=2.50, Revenus=1.00, Temps travail/perso=1.00, Logement=3.00, Services locaux=2.00, Culture=2.50, Soutien social=3.00, Vie associative=0.00. Dimensions les plus citées comme prioritaires : Logement, Communauté et relations.",
+        "n_chunks": null
+      },
+      {
+        "sq_idx": 1,
+        "type": "oppchovec_score",
+        "commune": null,
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nClassement OppChoVec des 360 communes corses (score 0-10).\nFormat : rang. Commune [EPCI]  OppChoVec  Opp  Cho  Vec\n\nScore moyen Corse : 3.35/10  |  Médiane : 3.12/10\nMin : Érone (0.00/10)  Max : Afa (10.00/10)\n\n    1. Afa                          [CA du Pays Ajaccien           ]  10.00  Opp= 8.15  Cho= 9.27  Vec=10.00\n    2. Bastelicaccia                [CC de la Vallée du Prunelli   ]   9.81  Opp= 8.41  Cho= 8.94  Vec= 9.51\n    3. Appietto                     [CA du Pays Ajaccien           ]   9.61  Opp= 7.97  Cho= 9.50  Vec= 9.45\n    4. Alata                        [CA du Pays Ajaccien           ]   9.59  Opp= 7.88  ",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 1,
+        "type": "oppchovec_score",
+        "commune": "",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être e",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 1,
+        "type": "oppchovec_score",
+        "commune": "Aiti",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Aiti : 3.07/10 (moyen).",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 1,
+        "type": "methodology",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_methodology",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nEnquête Qualité de Vie en Corse — Description méthodologique\n\nPRÉSENTATION GÉNÉRALE\nEnquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.\nObjectif : recueillir les perceptions subjectives de la qualité de vie (QdV) et du bien-être,\nen complément des indicateurs o",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 2,
+        "type": "raptor_enquete_summary",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_global",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n### **Synthèse analytique globale — Qualité de Vie en Corse (N=246)**\n\n---\n\n#### **1. Satisfaction globale**\nLes scores moyens révèlent une **satisfaction modérée** des Corses quant à leur qualité de vie, avec des disparités notables entre les dimensions évaluées.\n\n- **Bonheur** : **3,66/5** (n=237)\n  Les répondants expriment un niveau de bonheur globalement positif, proche de la moyenne haute, suggérant une perception plutôt favorable de leur bien-être subjectif.\n\n- **Qualité de vie** : **3,83/5** (n=237)\n  Ce score, légèrement supérieur à celui du bonheur, indique que les conditions matérielles et environnementales sont perçues comme globalement satisfaisantes, bien que perfectibles.\n",
+        "n_chunks": 246
+      },
+      {
+        "sq_idx": 2,
+        "type": "enquete_scores_commune",
+        "commune": null,
+        "dimension": "",
+        "view": null,
+        "scope_reel": "commune",
+        "extrait": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nClassement des communes — bien-être ressenti (bonheur + qualité de vie, échelle 1-5)\n(Seuil minimum 3 répondants par commune)\n\n  Rang Commune                     N répondants    Score /5\n  ────────────────────────────────────────────────────────────\n   1. Linguizzetta               N=  3 répondants   4.33/5 (moyen-fort)\n   2. Furiani                    N=  6 répondants   4.17/5 (moyen-fort)\n   3. Penta-di-Casinca           N=  4 répondants   4.00/5 (moyen-fort)\n   4. Porto-Vecchio              N=  7 répondants   4.00/5 (moyen-fort)\n   5. Ajaccio                    N= 51 répondants   3.74/5 (moyen-fort)\n   6. Alata                      N=  3 répondants   3.67/5 (moyen-fort)\n   7. Ghisonaccia              ",
+        "n_chunks": null
+      },
+      {
+        "sq_idx": 2,
+        "type": "oppchovec_score",
+        "commune": null,
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nClassement des composantes OppChoVec — Corse entière (360 communes).\n\nSous-scores principaux (du plus élevé au plus faible) :\n  1. Cho (Choix)               : 8.79/10 (très élevé)\n  2. Opp (Opportunités)        : 3.87/10 (moyen)\n  3. Vec (Vécu)                : 3.46/10 (moyen)\n\n-> COMPOSANTE LA PLUS ELEVEE  : Cho (Choix) (8.79/10)\n-> COMPOSANTE LA PLUS FAIBLE  : Vec (Vécu) (3.46/10)\n\nSous-dimensions du score Opportunités (Opp), classées :\n  1. Opp4 — Accès TIC               : 6.02/10 (élevé)\n  2. Opp3 — Mobilité                : 5.26/10 (élevé)\n  3. Opp2 — Diversité sociale       : 2.60/10 (faible)\n  4. Opp1 — Éducatio",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 2,
+        "type": "oppchovec_score",
+        "commune": null,
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nClassement OppChoVec des 360 communes corses (score 0-10).\nFormat : rang. Commune [EPCI]  OppChoVec  Opp  Cho  Vec\n\nScore moyen Corse : 3.35/10  |  Médiane : 3.12/10\nMin : Érone (0.00/10)  Max : Afa (10.00/10)\n\n    1. Afa                          [CA du Pays Ajaccien           ]  10.00  Opp= 8.15  Cho= 9.27  Vec=10.00\n    2. Bastelicaccia                [CC de la Vallée du Prunelli   ]   9.81  Opp= 8.41  Cho= 8.94  Vec= 9.51\n    3. Appietto                     [CA du Pays Ajaccien           ]   9.61  Opp= 7.97  Cho= 9.50  Vec= 9.45\n    4. Alata                        [CA du Pays Ajaccien           ]   9.59  Opp= 7.88  ",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 2,
+        "type": "oppchovec_score",
+        "commune": "",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être e",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 2,
+        "type": "oppchovec_score",
+        "commune": "Aiti",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Aiti : 3.07/10 (moyen).",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 2,
+        "type": "methodology",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_methodology",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nEnquête Qualité de Vie en Corse — Description méthodologique\n\nPRÉSENTATION GÉNÉRALE\nEnquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.\nObjectif : recueillir les perceptions subjectives de la qualité de vie (QdV) et du bien-être,\nen complément des indicateurs o",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 3,
+        "type": "raptor_summary",
+        "commune": "",
+        "dimension": "",
+        "view": "dimension",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : dimension=Environnement (N=111 personnes)**\n\n---\n\n### **Thèmes dominants**\n1. **Qualité de l’environnement comme fondement du bien-être**\n   - L’environnement est perçu comme un pilier essentiel de la santé physique et mentale, du bien-être global et de la qualité de vie.\n   - *\"Un environnement sain permet d'être en bonne santé\"* (Verbatim 6)\n   - *\"Environnement = base du bien être\"* (Verbatim 18)\n   - *\"La qualité de l'environnement est vitale au sens premier\"* (Verbatim 15)\n\n2. **Préservation de la nature et de la biodiversité**\n   - La nature (montagnes, rivières, mer, forêts) est décrite comme une ressource vitale, un patrimoine à protéger et une source de sérénité.\n   ",
+        "n_chunks": 134
+      },
+      {
+        "sq_idx": 3,
+        "type": "raptor_enquete_summary",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_global",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n### **Synthèse analytique globale — Qualité de Vie en Corse (N=246)**\n\n---\n\n#### **1. Satisfaction globale**\nLes scores moyens révèlent une **satisfaction modérée** des Corses quant à leur qualité de vie, avec des disparités notables entre les dimensions évaluées.\n\n- **Bonheur** : **3,66/5** (n=237)\n  Les répondants expriment un niveau de bonheur globalement positif, proche de la moyenne haute, suggérant une perception plutôt favorable de leur bien-être subjectif.\n\n- **Qualité de vie** : **3,83/5** (n=237)\n  Ce score, légèrement supérieur à celui du bonheur, indique que les conditions matérielles et environnementales sont perçues comme globalement satisfaisantes, bien que perfectibles.\n",
+        "n_chunks": 246
+      },
+      {
+        "sq_idx": 3,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Environnement",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 22 ans (Jeunes), Étudiant(e), à Corte, sur le thème 'Environnement': qualité de l'air et paysages",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 3,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Environnement",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 22 ans (Jeunes), Étudiant(e), à Corte, sur le thème 'Environnement': Protéger l’environnement doit être une priorité pour un milieu sain",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 3,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Environnement",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 23 ans (Jeunes), Étudiant(e), à Corte, sur le thème 'Environnement': Vivre dans un environnement sain me semble nécessaire",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 3,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Environnement",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 22 ans (Jeunes), Étudiant(e), à Corte, sur le thème 'Environnement': Environnement : joue sur la santé et le bien être psychologique",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 3,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Environnement",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 32 ans (Jeunes adultes), Salarié(e) – Employé(e), à Corte, sur le thème 'Environnement': Environnement : pour moi, il est important de respecter notre terre et donc de réaliser des petits gestes du quotidien pouvant faire en sorte que celle-ci soit moins polluée. Par exemple, ne pas prendre la voiture lorsqu'on peut se déplacer à pieds, faire le tri ainsi que de ne pas jeter des ordures dans les rues (papiers, cigarettes, etc.). De vivre dans une ville où on retrouve des déchets de partout dans les rues ne me conviendrait pas.",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 3,
+        "type": "communes_equipements",
+        "commune": "Aiti",
+        "dimension": "",
+        "view": null,
+        "scope_reel": "commune",
+        "extrait": "La commune de Aiti compte une part de 0.0% de cadres et professions intellectuelles supérieures, 0.0% d'ouvriers, avec un taux d'activité de 71.4%. 0.0% des emplois y sont salariés. On y trouve 0.0 points de contact postal, 0.0 hypermarchés ou supermarchés, 0.0 supérettes ou épiceries, 0.0 boulangeries et 0.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 0.0 écoles maternelles, 0.0 écoles élémentaires, 0.0 collèges et 0.0 lycées. Elle possède 0.0 services d'urgence, 0.0 médecins généralistes, 0.0 pharmacies, 0.0 infirmiers et 0.0 crèches. La sécurité est assurée par 0.0 postes de police ou gendarmerie. Il y a également 0.0 agences Pôle emploi. Le taux de pauvreté est de 21.1%, la part de logements vacants est de 1.3%, et celle des résidences secondaires est de 81.2",
+        "n_chunks": null
+      },
+      {
+        "sq_idx": 3,
+        "type": "oppchovec_score",
+        "commune": "",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être e",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 3,
+        "type": "oppchovec_score",
+        "commune": "Aiti",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Aiti : 3.07/10 (moyen).",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 3,
+        "type": "methodology",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_methodology",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nEnquête Qualité de Vie en Corse — Description méthodologique\n\nPRÉSENTATION GÉNÉRALE\nEnquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.\nObjectif : recueillir les perceptions subjectives de la qualité de vie (QdV) et du bien-être,\nen complément des indicateurs o",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 4,
+        "type": "raptor_enquete_summary",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_global",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n### **Synthèse analytique globale — Qualité de Vie en Corse (N=246)**\n\n---\n\n#### **1. Satisfaction globale**\nLes scores moyens révèlent une **satisfaction modérée** des Corses quant à leur qualité de vie, avec des disparités notables entre les dimensions évaluées.\n\n- **Bonheur** : **3,66/5** (n=237)\n  Les répondants expriment un niveau de bonheur globalement positif, proche de la moyenne haute, suggérant une perception plutôt favorable de leur bien-être subjectif.\n\n- **Qualité de vie** : **3,83/5** (n=237)\n  Ce score, légèrement supérieur à celui du bonheur, indique que les conditions matérielles et environnementales sont perçues comme globalement satisfaisantes, bien que perfectibles.\n",
+        "n_chunks": 246
+      },
+      {
+        "sq_idx": 4,
+        "type": "oppchovec_score",
+        "commune": "",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être e",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 4,
+        "type": "oppchovec_score",
+        "commune": "Aiti",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Aiti : 3.07/10 (moyen).",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 4,
+        "type": "methodology",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_methodology",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nEnquête Qualité de Vie en Corse — Description méthodologique\n\nPRÉSENTATION GÉNÉRALE\nEnquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.\nObjectif : recueillir les perceptions subjectives de la qualité de vie (QdV) et du bien-être,\nen complément des indicateurs o",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 5,
+        "type": "raptor_enquete_summary",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_global",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n### **Synthèse analytique globale — Qualité de Vie en Corse (N=246)**\n\n---\n\n#### **1. Satisfaction globale**\nLes scores moyens révèlent une **satisfaction modérée** des Corses quant à leur qualité de vie, avec des disparités notables entre les dimensions évaluées.\n\n- **Bonheur** : **3,66/5** (n=237)\n  Les répondants expriment un niveau de bonheur globalement positif, proche de la moyenne haute, suggérant une perception plutôt favorable de leur bien-être subjectif.\n\n- **Qualité de vie** : **3,83/5** (n=237)\n  Ce score, légèrement supérieur à celui du bonheur, indique que les conditions matérielles et environnementales sont perçues comme globalement satisfaisantes, bien que perfectibles.\n",
+        "n_chunks": 246
+      },
+      {
+        "sq_idx": 5,
+        "type": "oppchovec_score",
+        "commune": "",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être e",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 5,
+        "type": "oppchovec_score",
+        "commune": "Aiti",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Aiti : 3.07/10 (moyen).",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 5,
+        "type": "methodology",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_methodology",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nEnquête Qualité de Vie en Corse — Description méthodologique\n\nPRÉSENTATION GÉNÉRALE\nEnquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.\nObjectif : recueillir les perceptions subjectives de la qualité de vie (QdV) et du bien-être,\nen complément des indicateurs o",
+        "n_chunks": ""
+      }
+    ],
+    "answer": "### **Niveau de bien-être subjectif à Aiti**\n\n**Aucune donnée disponible** ne permet d’évaluer directement le bien-être subjectif des habitants d’Aiti à partir des sources mobilisées. Les indicateurs et enquêtes cités dans le bilan des sources ne fournissent **ni score moyen spécifique à la commune [SQ1], ni rang comparatif en Corse [SQ2], ni verbatims qualitatifs locaux [SQ3], ni proportion de satisfaction élevée [SQ4], ni thèmes récurrents locaux [SQ5]**.\n\nLes seules données objectives disponibles pour Aiti concernent des **indicateurs territoriaux OppChoVec** (basés sur des données INSEE 2020-2022), qui ne mesurent pas le bien-être subjectif mais des critères socio-économiques et d’accès aux services. Ces indicateurs ne sont pas conçus pour refléter les perceptions individuelles des habitants [SQ1, SQ2].\n\nLes données d’enquête citoyenne disponibles couvrent **uniquement des agrégats à l’échelle de la Corse entière** (N=246 répondants) et ne permettent pas d’isoler les réponses des habitants d’Aiti. Aucune synthèse ou verbatim ne mentionne spécifiquement cette commune [SQ3, SQ4, SQ5].\n\n---"
+  },
+  {
+    "label": "Piedicorte — qualite de vie",
+    "question": "Comment les habitants de Piedicorte-di-Gaggio percoivent-ils leur qualite de vie ?",
+    "elapsed": 24.9,
+    "scope": "locale",
+    "question_type": "factuelle",
+    "guard": {
+      "passed": false,
+      "silence_list": [],
+      "silence_map": {
+        "Piedicorte-di-Gaggio": {
+          "quali": false,
+          "quanti": true
+        }
+      },
+      "n_violations": 2,
+      "violations": [
+        {
+          "rule": "silence",
+          "detail": "Entité 'Piedicorte-di-Gaggio' : énoncé qualitatif sans verbatims disponibles",
+          "evidence": "À Piedicorte-di-Gaggio, la qualité de vie mesurée par les indicateurs objectifs et les perceptions habitantes présente des contrastes marqués entre les opportunités disponibles, la liberté d’action et",
+          "context": "Attendu : scores quantitatifs uniquement, ou constat explicite d'absence de verbatims"
+        },
+        {
+          "rule": "silence",
+          "detail": "Entité 'Piedicorte-di-Gaggio' : énoncé qualitatif sans verbatims disponibles",
+          "evidence": "Les verbatims et synthèses disponibles proviennent d’autres communes (Corte, Ajaccio, Bastia, etc.) et ne peuvent être extrapolés à Piedicorte-di-Gaggio.",
+          "context": "Attendu : scores quantitatifs uniquement, ou constat explicite d'absence de verbatims"
+        }
+      ],
+      "available": true
+    },
+    "sub_qa": [
+      {
+        "q": "Quel est le score OppChoVec global de la commune de Piedicorte-di-Gaggio pour l'année la plus récente disponible ?",
+        "a": "{\"valeur\": \"3.12/10\", \"contexte\": \"Score OppChoVec global de Piedicorte-di-Gaggio calculé en 2025 à partir d'indicateurs INSEE/statistiques 2020-2022. La commune se classe 180e sur 360 communes corses. Source : OppChoVec (indicateurs territoriaux objectifs).\", \"source_type\": \"oppchovec\", \"confiance\": \"high\"}"
+      },
+      {
+        "q": "Quels sont les scores OppChoVec par dimension (logement, environnement, services, etc.) pour Piedicorte-di-Gaggio ?",
+        "a": "{\"valeur\": \"OppChoVec global : 3.12/10 ; Opp : 5.29/10 ; Cho : 8.00/10 ; Vec : 1.40/10\", \"contexte\": \"Piedicorte-di-Gaggio obtient un score OppChoVec moyen (3.12/10, rang 180e/360 communes corses). Les opportunités territoriales sont élevées (5.29/10, rang 67e), la liberté effective très élevée (8.00/10, rang 295e), mais les réalisations concrètes sont très faibles (1.40/10, rang 339e). Données OppChoVec calculées en 2025 sur base d'indicateurs INSEE 2020-2022.\", \"source_type\": \"oppchovec\", \"confiance\": \"high\"}"
+      },
+      {
+        "q": "Quels sont les verbatims ou perceptions des habitants de Piedicorte-di-Gaggio concernant leur qualité de vie générale dans les enquêtes qualitatives disponibles ?",
+        "a": "{\"valeur\": null, \"contexte\": \"Aucune donnée disponible pour cette sous-question. L'enquête citoyenne Qualité de Vie en Corse (2024-2026, N=246) couvre 69 communes corses, mais Piedicorte-di-Gaggio n'en fait pas partie. Aucun verbatim ou perception qualitative n'est documenté pour cette commune.\", \"source_type\": \"aucune_donnee\", \"confiance\": \"low\"}"
+      },
+      {
+        "q": "Quels sont les verbatims ou perceptions des habitants de Piedicorte-di-Gaggio concernant l'accès aux services publics et privés dans leur commune ?",
+        "a": "{\"valeur\": null, \"contexte\": \"Aucune donnée disponible spécifiquement pour Piedicorte-di-Gaggio. Les verbatims fournis proviennent d'entretiens semi-directifs réalisés en 2022 auprès d'habitants de Corte, Ajaccio, Bastia, Porto-Vecchio, Grosseto-Prugna, Linguizzetta et Noceta (groupe 50-64 ans, N=10), non de Piedicorte-di-Gaggio. Les données d'équipements communaux pour Piedicorte-di-Gaggio (0 supérettes, 0 boulangeries, 0 boucheries) sont objectives mais ne reflètent pas les perceptions habitantes.\", \"source_type\": \"aucune_donnee\", \"confiance\": \"low\"}"
+      },
+      {
+        "q": "Quels sont les verbatims ou perceptions des habitants de Piedicorte-di-Gaggio concernant leur satisfaction à l'égard de l'environnement et des paysages locaux ?",
+        "a": "{\"valeur\": null, \"contexte\": \"Aucune donnée disponible spécifiquement pour Piedicorte-di-Gaggio. L'enquête citoyenne RAPTOR (2024-2026) sur la dimension Environnement (N=111) couvre principalement Corte, Ajaccio et Bastia, avec une surreprésentation géographique de ces trois villes et une sous-représentation des zones rurales et villages. Piedicorte-di-Gaggio n'est pas mentionné dans les verbatims ou synthèses fournies.\", \"source_type\": \"enquete_citoyenne\", \"confiance\": \"low\"}"
+      }
+    ],
+    "sources": [
+      {
+        "sq_idx": 1,
+        "type": "raptor_enquete_summary",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_global",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n### **Synthèse analytique globale — Qualité de Vie en Corse (N=246)**\n\n---\n\n#### **1. Satisfaction globale**\nLes scores moyens révèlent une **satisfaction modérée** des Corses quant à leur qualité de vie, avec des disparités notables entre les dimensions évaluées.\n\n- **Bonheur** : **3,66/5** (n=237)\n  Les répondants expriment un niveau de bonheur globalement positif, proche de la moyenne haute, suggérant une perception plutôt favorable de leur bien-être subjectif.\n\n- **Qualité de vie** : **3,83/5** (n=237)\n  Ce score, légèrement supérieur à celui du bonheur, indique que les conditions matérielles et environnementales sont perçues comme globalement satisfaisantes, bien que perfectibles.\n",
+        "n_chunks": 246
+      },
+      {
+        "sq_idx": 1,
+        "type": "oppchovec_score",
+        "commune": null,
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nClassement des composantes OppChoVec — Corse entière (360 communes).\n\nSous-scores principaux (du plus élevé au plus faible) :\n  1. Cho (Choix)               : 8.79/10 (très élevé)\n  2. Opp (Opportunités)        : 3.87/10 (moyen)\n  3. Vec (Vécu)                : 3.46/10 (moyen)\n\n-> COMPOSANTE LA PLUS ELEVEE  : Cho (Choix) (8.79/10)\n-> COMPOSANTE LA PLUS FAIBLE  : Vec (Vécu) (3.46/10)\n\nSous-dimensions du score Opportunités (Opp), classées :\n  1. Opp4 — Accès TIC               : 6.02/10 (élevé)\n  2. Opp3 — Mobilité                : 5.26/10 (élevé)\n  3. Opp2 — Diversité sociale       : 2.60/10 (faible)\n  4. Opp1 — Éducatio",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 1,
+        "type": "oppchovec_score",
+        "commune": "",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être e",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 1,
+        "type": "oppchovec_score",
+        "commune": "Piedicorte-di-Gaggio",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Piedicorte-di-Gaggio : ",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 1,
+        "type": "methodology",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_methodology",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nEnquête Qualité de Vie en Corse — Description méthodologique\n\nPRÉSENTATION GÉNÉRALE\nEnquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.\nObjectif : recueillir les perceptions subjectives de la qualité de vie (QdV) et du bien-être,\nen complément des indicateurs o",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 2,
+        "type": "raptor_summary",
+        "commune": "",
+        "dimension": "",
+        "view": "dimension",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : dimension=Environnement (N=111 personnes)**\n\n---\n\n### **Thèmes dominants**\n1. **Qualité de l’environnement comme fondement du bien-être**\n   - L’environnement est perçu comme un pilier essentiel de la santé physique et mentale, du bien-être global et de la qualité de vie.\n   - *\"Un environnement sain permet d'être en bonne santé\"* (Verbatim 6)\n   - *\"Environnement = base du bien être\"* (Verbatim 18)\n   - *\"La qualité de l'environnement est vitale au sens premier\"* (Verbatim 15)\n\n2. **Préservation de la nature et de la biodiversité**\n   - La nature (montagnes, rivières, mer, forêts) est décrite comme une ressource vitale, un patrimoine à protéger et une source de sérénité.\n   ",
+        "n_chunks": 134
+      },
+      {
+        "sq_idx": 2,
+        "type": "raptor_enquete_summary",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_global",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n### **Synthèse analytique globale — Qualité de Vie en Corse (N=246)**\n\n---\n\n#### **1. Satisfaction globale**\nLes scores moyens révèlent une **satisfaction modérée** des Corses quant à leur qualité de vie, avec des disparités notables entre les dimensions évaluées.\n\n- **Bonheur** : **3,66/5** (n=237)\n  Les répondants expriment un niveau de bonheur globalement positif, proche de la moyenne haute, suggérant une perception plutôt favorable de leur bien-être subjectif.\n\n- **Qualité de vie** : **3,83/5** (n=237)\n  Ce score, légèrement supérieur à celui du bonheur, indique que les conditions matérielles et environnementales sont perçues comme globalement satisfaisantes, bien que perfectibles.\n",
+        "n_chunks": 246
+      },
+      {
+        "sq_idx": 2,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Environnement",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 22 ans (Jeunes), Étudiant(e), à Corte, sur le thème 'Environnement': qualité de l'air et paysages",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 2,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Environnement",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 22 ans (Jeunes), Étudiant(e), à Corte, sur le thème 'Environnement': Protéger l’environnement doit être une priorité pour un milieu sain",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 2,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Environnement",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 23 ans (Jeunes), Étudiant(e), à Corte, sur le thème 'Environnement': Vivre dans un environnement sain me semble nécessaire",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 2,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Environnement",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 22 ans (Jeunes), Étudiant(e), à Corte, sur le thème 'Environnement': Environnement : joue sur la santé et le bien être psychologique",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 2,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Environnement",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 32 ans (Jeunes adultes), Salarié(e) – Employé(e), à Corte, sur le thème 'Environnement': Environnement : pour moi, il est important de respecter notre terre et donc de réaliser des petits gestes du quotidien pouvant faire en sorte que celle-ci soit moins polluée. Par exemple, ne pas prendre la voiture lorsqu'on peut se déplacer à pieds, faire le tri ainsi que de ne pas jeter des ordures dans les rues (papiers, cigarettes, etc.). De vivre dans une ville où on retrouve des déchets de partout dans les rues ne me conviendrait pas.",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 2,
+        "type": "enquete_scores_commune",
+        "commune": "Poggio-d’Oletta",
+        "dimension": "",
+        "view": null,
+        "scope_reel": "commune",
+        "extrait": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nScores moyens de l'enquête QdV pour la commune de Poggio-d’Oletta (1 répondants). Score bonheur moyen : 4.00/5. Score qualité de vie moyen : 4.00/5. Score confiance avenir moyen : 2.00/5. Scores moyens par dimension (1-5) : Transports=0.00, Éducation=3.00, Réseaux téléphoniques=3.00, Institutions=0.00, Tourisme=2.00, Sécurité=4.00, Santé=3.00, Situation pro=3.00, Revenus=1.00, Temps travail/perso=3.00, Logement=3.00, Services locaux=0.00, Culture=3.00, Soutien social=4.00, Vie associative=0.00. Dimensions les plus citées comme prioritaires : Communauté et relations, Environnement.",
+        "n_chunks": null
+      },
+      {
+        "sq_idx": 2,
+        "type": "enquete_scores_commune",
+        "commune": "Pioggiola",
+        "dimension": "",
+        "view": null,
+        "scope_reel": "commune",
+        "extrait": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nScores moyens de l'enquête QdV pour la commune de Pioggiola (1 répondants). Score bonheur moyen : 4.00/5. Score qualité de vie moyen : 4.00/5. Score confiance avenir moyen : 3.00/5. Scores moyens par dimension (1-5) : Transports=0.00, Éducation=3.00, Réseaux téléphoniques=1.00, Institutions=1.00, Tourisme=1.00, Sécurité=1.00, Santé=2.00, Situation pro=3.00, Revenus=3.00, Temps travail/perso=1.00, Logement=4.00, Services locaux=2.00, Culture=1.00, Soutien social=1.00, Vie associative=0.00. Dimensions les plus citées comme prioritaires : Communauté et relations, Education.",
+        "n_chunks": null
+      },
+      {
+        "sq_idx": 2,
+        "type": "communes_equipements",
+        "commune": "Piedicorte-di-Gaggio",
+        "dimension": "",
+        "view": null,
+        "scope_reel": "commune",
+        "extrait": "La commune de Piedicorte-di-Gaggio compte une part de 11.2% de cadres et professions intellectuelles supérieures, 0.0% d'ouvriers, avec un taux d'activité de 64.3%. 61.1% des emplois y sont salariés. On y trouve 1.0 points de contact postal, 0.0 hypermarchés ou supermarchés, 0.0 supérettes ou épiceries, 0.0 boulangeries et 0.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 0.0 écoles maternelles, 1.0 écoles élémentaires, 0.0 collèges et 0.0 lycées. Elle possède 0.0 services d'urgence, 0.0 médecins généralistes, 0.0 pharmacies, 0.0 infirmiers et 0.0 crèches. La sécurité est assurée par 1.0 postes de police ou gendarmerie. Il y a également 0.0 agences Pôle emploi. Le taux de pauvreté est de 18.403112840466928%, la part de logements vacants est de 3.9%, et celle des ré",
+        "n_chunks": null
+      },
+      {
+        "sq_idx": 2,
+        "type": "oppchovec_score",
+        "commune": null,
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nClassement des composantes OppChoVec — Corse entière (360 communes).\n\nSous-scores principaux (du plus élevé au plus faible) :\n  1. Cho (Choix)               : 8.79/10 (très élevé)\n  2. Opp (Opportunités)        : 3.87/10 (moyen)\n  3. Vec (Vécu)                : 3.46/10 (moyen)\n\n-> COMPOSANTE LA PLUS ELEVEE  : Cho (Choix) (8.79/10)\n-> COMPOSANTE LA PLUS FAIBLE  : Vec (Vécu) (3.46/10)\n\nSous-dimensions du score Opportunités (Opp), classées :\n  1. Opp4 — Accès TIC               : 6.02/10 (élevé)\n  2. Opp3 — Mobilité                : 5.26/10 (élevé)\n  3. Opp2 — Diversité sociale       : 2.60/10 (faible)\n  4. Opp1 — Éducatio",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 2,
+        "type": "oppchovec_score",
+        "commune": "",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être e",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 2,
+        "type": "oppchovec_score",
+        "commune": "Piedicorte-di-Gaggio",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Piedicorte-di-Gaggio : ",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 2,
+        "type": "methodology",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_methodology",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nEnquête Qualité de Vie en Corse — Description méthodologique\n\nPRÉSENTATION GÉNÉRALE\nEnquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.\nObjectif : recueillir les perceptions subjectives de la qualité de vie (QdV) et du bien-être,\nen complément des indicateurs o",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 3,
+        "type": "raptor_enquete_summary",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_global",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n### **Synthèse analytique globale — Qualité de Vie en Corse (N=246)**\n\n---\n\n#### **1. Satisfaction globale**\nLes scores moyens révèlent une **satisfaction modérée** des Corses quant à leur qualité de vie, avec des disparités notables entre les dimensions évaluées.\n\n- **Bonheur** : **3,66/5** (n=237)\n  Les répondants expriment un niveau de bonheur globalement positif, proche de la moyenne haute, suggérant une perception plutôt favorable de leur bien-être subjectif.\n\n- **Qualité de vie** : **3,83/5** (n=237)\n  Ce score, légèrement supérieur à celui du bonheur, indique que les conditions matérielles et environnementales sont perçues comme globalement satisfaisantes, bien que perfectibles.\n",
+        "n_chunks": 246
+      },
+      {
+        "sq_idx": 3,
+        "type": "oppchovec_score",
+        "commune": "",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être e",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 3,
+        "type": "oppchovec_score",
+        "commune": "Piedicorte-di-Gaggio",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Piedicorte-di-Gaggio : ",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 3,
+        "type": "methodology",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_methodology",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nEnquête Qualité de Vie en Corse — Description méthodologique\n\nPRÉSENTATION GÉNÉRALE\nEnquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.\nObjectif : recueillir les perceptions subjectives de la qualité de vie (QdV) et du bien-être,\nen complément des indicateurs o",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 4,
+        "type": "raptor_summary",
+        "commune": "",
+        "dimension": "",
+        "view": "dimension*age_range",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : dimension=Services de proximité, age_range=50-64 (N=10 personnes)**\n\n**Thèmes dominants** :\n1. **Proximité et accessibilité** : La majorité des répondants soulignent l’importance de la proximité des services pour faciliter le quotidien et réduire les besoins de transport.\n   - *\"La présence des services de proximité rend la vie plus facile (pas de nécessité de transport, ...)\"* (Verbatim 5)\n   - *\"proximité des services : accès à tous les besoins du quotidien\"* (Verbatim 10)\n\n2. **Réseau social et convivialité** : Plusieurs verbatims mettent en avant le rôle des services de proximité dans le maintien des liens sociaux et de la cohésion locale.\n   - *\"permet le développement e",
+        "n_chunks": 12
+      },
+      {
+        "sq_idx": 4,
+        "type": "raptor_enquete_summary",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_global",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n### **Synthèse analytique globale — Qualité de Vie en Corse (N=246)**\n\n---\n\n#### **1. Satisfaction globale**\nLes scores moyens révèlent une **satisfaction modérée** des Corses quant à leur qualité de vie, avec des disparités notables entre les dimensions évaluées.\n\n- **Bonheur** : **3,66/5** (n=237)\n  Les répondants expriment un niveau de bonheur globalement positif, proche de la moyenne haute, suggérant une perception plutôt favorable de leur bien-être subjectif.\n\n- **Qualité de vie** : **3,83/5** (n=237)\n  Ce score, légèrement supérieur à celui du bonheur, indique que les conditions matérielles et environnementales sont perçues comme globalement satisfaisantes, bien que perfectibles.\n",
+        "n_chunks": 246
+      },
+      {
+        "sq_idx": 4,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Services de proximité",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 53 ans (Jeunes seniors), Fonctionnaire, à Corte, sur le thème 'Services de proximité': La présence de services de proximité (épiceries de quartier bio ou non, boucheries, magasin de producteurs, Fruits/légumes, vêtements, administration publique, médecins, pharmacie, etc.) permet le développement et le maintient d'un tissu économique local à taille humaine favorisant les relations et le développement d'échanges au sein de la communauté).",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 4,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Services de proximité",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 62 ans (Jeunes seniors), Fonctionnaire, à Corte, sur le thème 'Services de proximité': le partage",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 4,
+        "type": "verbatim_evidence",
+        "commune": "Ajaccio",
+        "dimension": "Services de proximité",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 53 ans (Jeunes seniors), Salarié(e) – Employé(e), à Ajaccio, sur le thème 'Services de proximité': service de proximité : relationnel, confiance, pratique",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 4,
+        "type": "verbatim_evidence",
+        "commune": "Ajaccio",
+        "dimension": "Services de proximité",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 51 ans (Jeunes seniors), Salarié(e) – Cadre ou profession intermédiaire, à Ajaccio, sur le thème 'Services de proximité': Les services de proximité de qualité et variés permettent d’accéder à un cadre de vie agréable",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 4,
+        "type": "verbatim_evidence",
+        "commune": "Ajaccio",
+        "dimension": "Services de proximité",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 63 ans (Jeunes seniors), Fonctionnaire, à Ajaccio, sur le thème 'Services de proximité': La présence des services de proximité rend la vie plus facile (pas de nécessité de transport, ...).",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 4,
+        "type": "communes_equipements",
+        "commune": "Piedicorte-di-Gaggio",
+        "dimension": "",
+        "view": null,
+        "scope_reel": "commune",
+        "extrait": "La commune de Piedicorte-di-Gaggio compte une part de 11.2% de cadres et professions intellectuelles supérieures, 0.0% d'ouvriers, avec un taux d'activité de 64.3%. 61.1% des emplois y sont salariés. On y trouve 1.0 points de contact postal, 0.0 hypermarchés ou supermarchés, 0.0 supérettes ou épiceries, 0.0 boulangeries et 0.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 0.0 écoles maternelles, 1.0 écoles élémentaires, 0.0 collèges et 0.0 lycées. Elle possède 0.0 services d'urgence, 0.0 médecins généralistes, 0.0 pharmacies, 0.0 infirmiers et 0.0 crèches. La sécurité est assurée par 1.0 postes de police ou gendarmerie. Il y a également 0.0 agences Pôle emploi. Le taux de pauvreté est de 18.403112840466928%, la part de logements vacants est de 3.9%, et celle des ré",
+        "n_chunks": null
+      },
+      {
+        "sq_idx": 4,
+        "type": "oppchovec_score",
+        "commune": "",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être e",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 4,
+        "type": "oppchovec_score",
+        "commune": "Piedicorte-di-Gaggio",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Piedicorte-di-Gaggio : ",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 4,
+        "type": "methodology",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_methodology",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nEnquête Qualité de Vie en Corse — Description méthodologique\n\nPRÉSENTATION GÉNÉRALE\nEnquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.\nObjectif : recueillir les perceptions subjectives de la qualité de vie (QdV) et du bien-être,\nen complément des indicateurs o",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 5,
+        "type": "raptor_summary",
+        "commune": "",
+        "dimension": "",
+        "view": "dimension",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : dimension=Environnement (N=111 personnes)**\n\n---\n\n### **Thèmes dominants**\n1. **Qualité de l’environnement comme fondement du bien-être**\n   - L’environnement est perçu comme un pilier essentiel de la santé physique et mentale, du bien-être global et de la qualité de vie.\n   - *\"Un environnement sain permet d'être en bonne santé\"* (Verbatim 6)\n   - *\"Environnement = base du bien être\"* (Verbatim 18)\n   - *\"La qualité de l'environnement est vitale au sens premier\"* (Verbatim 15)\n\n2. **Préservation de la nature et de la biodiversité**\n   - La nature (montagnes, rivières, mer, forêts) est décrite comme une ressource vitale, un patrimoine à protéger et une source de sérénité.\n   ",
+        "n_chunks": 134
+      },
+      {
+        "sq_idx": 5,
+        "type": "raptor_enquete_summary",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_global",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n### **Synthèse analytique globale — Qualité de Vie en Corse (N=246)**\n\n---\n\n#### **1. Satisfaction globale**\nLes scores moyens révèlent une **satisfaction modérée** des Corses quant à leur qualité de vie, avec des disparités notables entre les dimensions évaluées.\n\n- **Bonheur** : **3,66/5** (n=237)\n  Les répondants expriment un niveau de bonheur globalement positif, proche de la moyenne haute, suggérant une perception plutôt favorable de leur bien-être subjectif.\n\n- **Qualité de vie** : **3,83/5** (n=237)\n  Ce score, légèrement supérieur à celui du bonheur, indique que les conditions matérielles et environnementales sont perçues comme globalement satisfaisantes, bien que perfectibles.\n",
+        "n_chunks": 246
+      },
+      {
+        "sq_idx": 5,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Environnement",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 22 ans (Jeunes), Étudiant(e), à Corte, sur le thème 'Environnement': qualité de l'air et paysages",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 5,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Environnement",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 22 ans (Jeunes), Étudiant(e), à Corte, sur le thème 'Environnement': Protéger l’environnement doit être une priorité pour un milieu sain",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 5,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Environnement",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 23 ans (Jeunes), Étudiant(e), à Corte, sur le thème 'Environnement': Vivre dans un environnement sain me semble nécessaire",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 5,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Environnement",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 22 ans (Jeunes), Étudiant(e), à Corte, sur le thème 'Environnement': Environnement : joue sur la santé et le bien être psychologique",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 5,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Environnement",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 32 ans (Jeunes adultes), Salarié(e) – Employé(e), à Corte, sur le thème 'Environnement': Environnement : pour moi, il est important de respecter notre terre et donc de réaliser des petits gestes du quotidien pouvant faire en sorte que celle-ci soit moins polluée. Par exemple, ne pas prendre la voiture lorsqu'on peut se déplacer à pieds, faire le tri ainsi que de ne pas jeter des ordures dans les rues (papiers, cigarettes, etc.). De vivre dans une ville où on retrouve des déchets de partout dans les rues ne me conviendrait pas.",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 5,
+        "type": "oppchovec_score",
+        "commune": "",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être e",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 5,
+        "type": "oppchovec_score",
+        "commune": "Piedicorte-di-Gaggio",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Piedicorte-di-Gaggio : ",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 5,
+        "type": "methodology",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_methodology",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nEnquête Qualité de Vie en Corse — Description méthodologique\n\nPRÉSENTATION GÉNÉRALE\nEnquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.\nObjectif : recueillir les perceptions subjectives de la qualité de vie (QdV) et du bien-être,\nen complément des indicateurs o",
+        "n_chunks": ""
+      }
+    ],
+    "answer": "**Synthèse finale : Qualité de vie à Piedicorte-di-Gaggio**\n\nÀ Piedicorte-di-Gaggio, la qualité de vie mesurée par les indicateurs objectifs et les perceptions habitantes présente des contrastes marqués entre les opportunités disponibles, la liberté d’action et les réalisations concrètes.\n\n**1. Indicateurs objectifs de qualité de vie**\nLes données territoriales montrent que Piedicorte-di-Gaggio obtient un score global de **3,12/10** [SQ1], se classant **180e sur 360 communes corses** [SQ1]. Cette note reflète une situation contrastée selon les dimensions :\n- **Opportunités territoriales (Opp)** : **5,29/10** [SQ2], plaçant la commune au **67e rang** en Corse. Ce score intègre des critères comme l’éducation moyenne, la diversité des catégories socioprofessionnelles, l’accessibilité des transports et la couverture en technologies numériques.\n- **Liberté effective (Cho)** : **8,00/10** [SQ2], un score très élevé (295e rang), reflétant notamment un faible taux de quartiers prioritaires et une participation électorale élevée.\n- **Réalisations concrètes (Vec)** : **1,40/10** [SQ2], l’un des plus bas de Corse (339e rang), révélant des difficultés dans les domaines du revenu moyen, de la qualité du logement, de la stabilité de l’emploi et de l’accès aux services de base en moins de 20 minutes.\n\n**2. Perceptions habitantes**\nAucune donnée d’enquête citoyenne spécifique à Piedicorte-di-Gaggio n’est disponible pour évaluer les perceptions subjectives des habitants sur leur qualité de vie générale [SQ3], leur satisfaction concernant l’accès aux services [SQ4] ou leur appréciation de l’environnement et des paysages [SQ5]. Les verbatims et synthèses disponibles proviennent d’autres communes (Corte, Ajaccio, Bastia, etc.) et ne peuvent être extrapolés à Piedicorte-di-Gaggio.\n\n**3. Synthèse des enjeux**\nLes indicateurs objectifs soulignent un **décalage entre des opportunités et une liberté d’action relativement favorables** et des **réalisations concrètes très limitées**, notamment en matière de revenus, de qualité du logement et d’accès aux services. Ce contraste suggère des défis structurels pour transformer les potentialités locales en améliorations tangibles pour les habitants.\n\n---"
+  },
+  {
+    "label": "Ajaccio — bien-etre",
+    "question": "Quel est le niveau de bien-etre subjectif a Ajaccio ?",
+    "elapsed": 32.0,
+    "scope": "locale",
+    "question_type": "factuelle",
+    "guard": {
+      "passed": true,
+      "silence_list": [],
+      "silence_map": {},
+      "n_violations": 0,
+      "violations": [],
+      "available": true
+    },
+    "sub_qa": [
+      {
+        "q": "Quel est le score moyen de bien-être subjectif (échelle de 0 à 10) des habitants d'Ajaccio selon les dernières enquêtes disponibles ?",
+        "a": "{\"valeur\": \"3.74/5 (bonheur) et 3.85/5 (qualité de vie)\", \"contexte\": \"Selon l'enquête citoyenne RAPTOR (collecte 2024-2026, n=47 pour le bonheur et la qualité de vie), les habitants d'Ajaccio rapportent une satisfaction modérée à bonne dans leur quotidien. Cependant, la confiance en l'avenir est significativement plus faible (2.79/5, n=43), révélant une inquiétude marquée quant aux perspectives futures.\", \"source_type\": \"enquete_citoyenne\", \"confiance\": \"medium\"}"
+      },
+      {
+        "q": "Quel est le rang d'Ajaccio parmi les communes de Corse en termes de bien-être subjectif (basé sur les scores moyens des enquêtes) ?",
+        "a": "{\"valeur\": null, \"contexte\": \"Aucune donnée disponible pour cette sous-question. Les scores OppChoVec (indicateurs objectifs 2020-2022) classent Ajaccio au rang 19/360 communes corses avec un score global de 5.78/10. L'enquête citoyenne RAPTOR (2024-2026, N=51 pour Ajaccio) mesure la satisfaction subjective par dimension (bonheur 3.74/5, qualité de vie 3.85/5, confiance en l'avenir 2.79/5) mais ne fournit pas de classement comparatif d'Ajaccio par rapport aux autres communes corses. Un tel classement nécessiterait les scores RAPTOR de toutes les 360 communes, données non disponibles dans le contexte fourni.\", \"source_type\": \"mixte\", \"confiance\": \"low\"}"
+      },
+      {
+        "q": "Quels sont les principaux thèmes ou dimensions (ex : santé, relations sociales, environnement) cités par les habitants d'Ajaccio dans leurs verbatims comme contributeurs à leur bien-être ?",
+        "a": "{\"valeur\": \"Santé, relations sociales/entourage, emploi, logement, sécurité\", \"contexte\": \"Selon l'enquête citoyenne qualitative (entretiens semi-directifs 2022, N=16 sur dimension santé), la santé est le thème dominant, perçue comme condition essentielle au bien-être et à l'autonomie. Les relations sociales (entourage évalué à 4,14/5) et l'emploi (3,91/5) émergent comme contributeurs majeurs dans l'enquête quantitative 2024-2026 (N=51). Les verbatims soulignent aussi l'accès aux soins, l'équilibre physique/mental et la qualité des services comme enjeux critiques pour Ajaccio.\", \"source_type\": \"mixte\", \"confiance\": \"medium\"}"
+      },
+      {
+        "q": "Quel pourcentage d'habitants d'Ajaccio déclarent être 'très satisfaits' ou 'satisfaits' de leur qualité de vie globale dans les enquêtes récentes ?",
+        "a": "{\"valeur\": \"3.85/5\", \"contexte\": \"Enquête citoyenne Qualité de vie en Corse (collecte 2024-2026, N=47 répondants à Ajaccio). La moyenne de satisfaction pour la 'qualité de vie' est de 3.85/5, correspondant à une satisfaction modérée à bonne. Cependant, cette donnée reflète une moyenne sur échelle de Likert et non un pourcentage de 'très satisfaits' ou 'satisfaits' stricto sensu.\", \"source_type\": \"enquete_citoyenne\", \"confiance\": \"medium\"}"
+      },
+      {
+        "q": "Quels verbatims ou témoignages d'habitants d'Ajaccio illustrent des points de satisfaction ou d'insatisfaction majeurs concernant leur bien-être au quotidien ?",
+        "a": "{\"valeur\": null, \"contexte\": \"```json\\n{\\n  \\\"satisfaction_sante\\\": {\\n    \\\"valeur\\\": \\\"Insatisfaction majeure\\\",\\n    \\\"contexte\\\": \\\"Enquête citoyenne 2024-2026 (N=51 Ajaccio) : score santé 2,59/5, avec médecins spécialistes à 1,98/5 et attente RDV à 2,53/5. Verbatim illustratif : « La santé : si on a pas la santé, on a rien dans la vie »\", \"source_type\": \"aucune_donnee\", \"confiance\": \"low\"}"
+      }
+    ],
+    "sources": [
+      {
+        "sq_idx": 1,
+        "type": "raptor_summary",
+        "commune": "",
+        "dimension": "",
+        "view": "commune",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : nom=Ajaccio (N=39 personnes)**\n\n---\n\n### **Themes dominants**\n1. **Revenus et pouvoir d’achat**\n   - Mentionné dans **12 verbatims** (ex. : *\"Les revenus permettent de me payer un logement, la nourriture et quelques plaisirs/loisirs à côté\"*, Verbatim 5 ; *\"Sans revenus on est dans la merde\"* Verbatim 10 ; *\"Le coût de la vie en Corse est très élevé\"* Verbatim 90).\n   - Préoccupation récurrente sur la précarité (*\"de nombreuses personnes vivent dans une situation précaire par manque d’argent\"*, Verbatim 16) et l’inflation (*\"tout augmente mais pas les salaires\"*, Verbatim 59).\n\n2. **Santé et accès aux soins**\n   - **11 verbatims** soulignent l’importance de la santé (*\"La san",
+        "n_chunks": 129
+      },
+      {
+        "sq_idx": 1,
+        "type": "raptor_enquete_summary",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_commune",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : commune=Ajaccio (N=51)**\n\n---\n\n### **Satisfaction globale**\nLes scores globaux révèlent une satisfaction modérée à bonne pour le bonheur et la qualité de vie, mais une confiance limitée dans l’avenir. Le **bonheur** obtient une moyenne de **3,74/5** (n=47), tandis que la **qualité de vie** est légèrement supérieure à **3,85/5** (n=47). En revanche, la **confiance en l’avenir** est significativement plus basse, avec un score de **2,79/5** (n=43), suggérant une inquiétude marquée quant aux perspectives futures. Ces écarts indiquent que les habitants d’Ajaccio perçoivent globalement leur quotidien de manière positive, mais expriment des réserves sur les évolutions à long terme.\n",
+        "n_chunks": 51
+      },
+      {
+        "sq_idx": 1,
+        "type": "verbatim_evidence",
+        "commune": "Ajaccio",
+        "dimension": "Santé",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Santé': La santé : si on a pas la santé, on a rien dans la vie",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 1,
+        "type": "verbatim_evidence",
+        "commune": "Ajaccio",
+        "dimension": "Ratio vie pro/ vie perso",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Ratio vie pro/ vie perso': Le ratio vie pro et vie perso, car c’est important d’avoir un bon équilibre entre les deux",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 1,
+        "type": "verbatim_evidence",
+        "commune": "Ajaccio",
+        "dimension": "Education",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Education': D’éducation : importante dans la société d’aujourd’hui",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 1,
+        "type": "verbatim_evidence",
+        "commune": "Ajaccio",
+        "dimension": "Ratio vie pro/ vie perso",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 21 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Ratio vie pro/ vie perso': Le ratio vie pro/vie perso est important pour moi pour avoir un équilibre de vie sain car il ne faut pas que les deux se mélangent trop : une coupure est importante entre ces deux mondes.",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 1,
+        "type": "verbatim_evidence",
+        "commune": "Ajaccio",
+        "dimension": "Revenus",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 21 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Revenus': Les revenus permettent de me payer un logement, la nourriture et quelques plaisirs/loisirs à côté.",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 1,
+        "type": "enquete_scores_commune",
+        "commune": "Ajaccio",
+        "dimension": "",
+        "view": null,
+        "scope_reel": "commune",
+        "extrait": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nScores moyens de l'enquête QdV pour la commune de Ajaccio (47 répondants). Score bonheur moyen : 3.68/5. Score qualité de vie moyen : 3.89/5. Score confiance avenir moyen : 2.75/5. Scores moyens par dimension (1-5) : Transports=0.95, Éducation=2.35, Réseaux téléphoniques=2.38, Institutions=1.85, Tourisme=1.57, Sécurité=2.73, Santé=1.80, Situation pro=2.90, Revenus=2.50, Temps travail/perso=2.23, Logement=2.80, Services locaux=2.40, Culture=2.40, Soutien social=3.11, Vie associative=0.64. Dimensions les plus citées comme prioritaires : Environnement, Santé.",
+        "n_chunks": null
+      },
+      {
+        "sq_idx": 1,
+        "type": "enquete_scores_commune",
+        "commune": "Ajaccio",
+        "dimension": "",
+        "view": null,
+        "scope_reel": "commune",
+        "extrait": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nClassement des 14 dimensions de satisfaction — commune de Ajaccio (N=51 répondants).\n\nDu plus satisfaisant au moins satisfaisant :\n   1. Emploi                         : 3.91/5 (moyen-fort)\n   2. Logement                       : 3.84/5 (moyen-fort)\n   3. Sécurité                       : 3.81/5 (moyen-fort)\n   4. Communauté et relations        : 3.54/5 (moyen-fort)\n   5. Revenus                        : 3.51/5 (moyen-fort)\n   6. Culture                        : 3.49/5 (moyen)\n   7. Réseau                         : 3.49/5 (moyen)\n   8. Éducation                      : 3.44/5 (moyen)\n   9. Services de proximité          : 3.42/5 (moyen)\n  10. Ratio vie pro/vie perso        : 3.19/5 (moyen)\n  11. Institution",
+        "n_chunks": null
+      },
+      {
+        "sq_idx": 1,
+        "type": "communes_profil",
+        "commune": "Ajaccio",
+        "dimension": "",
+        "view": null,
+        "scope_reel": "commune",
+        "extrait": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nProfil des répondants de la commune de Ajaccio — enquête qualité de vie en Corse\n\nNombre de répondants : 51\n\nRépartition par genre :\n  - Femme : 31 (60.8%)\n  - Homme : 20 (39.2%)\n\nRépartition par tranche d'âge :\n  - 45-59 : 20 (39.2%)\n  - 15-29 : 14 (27.5%)\n  - 30-44 : 11 (21.6%)\n  - 60-74 : 6 (11.8%)\n\nRépartition par catégorie socioprofessionnelle :\n  - SalariÃ©(e) â Cadre ou profession intermÃ©diaire : 17 (33.3%)\n  - Ãtudiant(e) : 12 (23.5%)\n  - Fonctionnaire : 9 (17.6%)\n  - SalariÃ©(e) â EmployÃ©(e) : 8 (15.7%)\n  - Travailleur(se) indÃ©pendant(e) / Entrepreneur(e) : 2 (3.9%)\n  - Autre : 2 (3.9%)\n  - RetraitÃ©(e) : 1 (2.0%)",
+        "n_chunks": null
+      },
+      {
+        "sq_idx": 1,
+        "type": "oppchovec_score",
+        "commune": null,
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nClassement OppChoVec des 360 communes corses (score 0-10).\nFormat : rang. Commune [EPCI]  OppChoVec  Opp  Cho  Vec\n\nScore moyen Corse : 3.35/10  |  Médiane : 3.12/10\nMin : Érone (0.00/10)  Max : Afa (10.00/10)\n\n    1. Afa                          [CA du Pays Ajaccien           ]  10.00  Opp= 8.15  Cho= 9.27  Vec=10.00\n    2. Bastelicaccia                [CC de la Vallée du Prunelli   ]   9.81  Opp= 8.41  Cho= 8.94  Vec= 9.51\n    3. Appietto                     [CA du Pays Ajaccien           ]   9.61  Opp= 7.97  Cho= 9.50  Vec= 9.45\n    4. Alata                        [CA du Pays Ajaccien           ]   9.59  Opp= 7.88  ",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 1,
+        "type": "oppchovec_score",
+        "commune": "",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être e",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 1,
+        "type": "oppchovec_score",
+        "commune": "Ajaccio",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Ajaccio : 5.78/10 (élev",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 1,
+        "type": "methodology",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_methodology",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nEnquête Qualité de Vie en Corse — Description méthodologique\n\nPRÉSENTATION GÉNÉRALE\nEnquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.\nObjectif : recueillir les perceptions subjectives de la qualité de vie (QdV) et du bien-être,\nen complément des indicateurs o",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 2,
+        "type": "raptor_summary",
+        "commune": "",
+        "dimension": "",
+        "view": "commune",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : nom=Ajaccio (N=39 personnes)**\n\n---\n\n### **Themes dominants**\n1. **Revenus et pouvoir d’achat**\n   - Mentionné dans **12 verbatims** (ex. : *\"Les revenus permettent de me payer un logement, la nourriture et quelques plaisirs/loisirs à côté\"*, Verbatim 5 ; *\"Sans revenus on est dans la merde\"* Verbatim 10 ; *\"Le coût de la vie en Corse est très élevé\"* Verbatim 90).\n   - Préoccupation récurrente sur la précarité (*\"de nombreuses personnes vivent dans une situation précaire par manque d’argent\"*, Verbatim 16) et l’inflation (*\"tout augmente mais pas les salaires\"*, Verbatim 59).\n\n2. **Santé et accès aux soins**\n   - **11 verbatims** soulignent l’importance de la santé (*\"La san",
+        "n_chunks": 129
+      },
+      {
+        "sq_idx": 2,
+        "type": "raptor_enquete_summary",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_commune",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : commune=Ajaccio (N=51)**\n\n---\n\n### **Satisfaction globale**\nLes scores globaux révèlent une satisfaction modérée à bonne pour le bonheur et la qualité de vie, mais une confiance limitée dans l’avenir. Le **bonheur** obtient une moyenne de **3,74/5** (n=47), tandis que la **qualité de vie** est légèrement supérieure à **3,85/5** (n=47). En revanche, la **confiance en l’avenir** est significativement plus basse, avec un score de **2,79/5** (n=43), suggérant une inquiétude marquée quant aux perspectives futures. Ces écarts indiquent que les habitants d’Ajaccio perçoivent globalement leur quotidien de manière positive, mais expriment des réserves sur les évolutions à long terme.\n",
+        "n_chunks": 51
+      },
+      {
+        "sq_idx": 2,
+        "type": "verbatim_evidence",
+        "commune": "Ajaccio",
+        "dimension": "Santé",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Santé': La santé : si on a pas la santé, on a rien dans la vie",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 2,
+        "type": "verbatim_evidence",
+        "commune": "Ajaccio",
+        "dimension": "Ratio vie pro/ vie perso",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Ratio vie pro/ vie perso': Le ratio vie pro et vie perso, car c’est important d’avoir un bon équilibre entre les deux",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 2,
+        "type": "verbatim_evidence",
+        "commune": "Ajaccio",
+        "dimension": "Education",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Education': D’éducation : importante dans la société d’aujourd’hui",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 2,
+        "type": "verbatim_evidence",
+        "commune": "Ajaccio",
+        "dimension": "Ratio vie pro/ vie perso",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 21 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Ratio vie pro/ vie perso': Le ratio vie pro/vie perso est important pour moi pour avoir un équilibre de vie sain car il ne faut pas que les deux se mélangent trop : une coupure est importante entre ces deux mondes.",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 2,
+        "type": "verbatim_evidence",
+        "commune": "Ajaccio",
+        "dimension": "Revenus",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 21 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Revenus': Les revenus permettent de me payer un logement, la nourriture et quelques plaisirs/loisirs à côté.",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 2,
+        "type": "enquete_scores_commune",
+        "commune": "Ajaccio",
+        "dimension": "",
+        "view": null,
+        "scope_reel": "commune",
+        "extrait": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nScores moyens de l'enquête QdV pour la commune de Ajaccio (47 répondants). Score bonheur moyen : 3.68/5. Score qualité de vie moyen : 3.89/5. Score confiance avenir moyen : 2.75/5. Scores moyens par dimension (1-5) : Transports=0.95, Éducation=2.35, Réseaux téléphoniques=2.38, Institutions=1.85, Tourisme=1.57, Sécurité=2.73, Santé=1.80, Situation pro=2.90, Revenus=2.50, Temps travail/perso=2.23, Logement=2.80, Services locaux=2.40, Culture=2.40, Soutien social=3.11, Vie associative=0.64. Dimensions les plus citées comme prioritaires : Environnement, Santé.",
+        "n_chunks": null
+      },
+      {
+        "sq_idx": 2,
+        "type": "enquete_scores_commune",
+        "commune": null,
+        "dimension": "",
+        "view": null,
+        "scope_reel": "commune",
+        "extrait": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nClassement des communes — bien-être ressenti (bonheur + qualité de vie, échelle 1-5)\n(Seuil minimum 3 répondants par commune)\n\n  Rang Commune                     N répondants    Score /5\n  ────────────────────────────────────────────────────────────\n   1. Linguizzetta               N=  3 répondants   4.33/5 (moyen-fort)\n   2. Furiani                    N=  6 répondants   4.17/5 (moyen-fort)\n   3. Penta-di-Casinca           N=  4 répondants   4.00/5 (moyen-fort)\n   4. Porto-Vecchio              N=  7 répondants   4.00/5 (moyen-fort)\n   5. Ajaccio                    N= 51 répondants   3.74/5 (moyen-fort)\n   6. Alata                      N=  3 répondants   3.67/5 (moyen-fort)\n   7. Ghisonaccia              ",
+        "n_chunks": null
+      },
+      {
+        "sq_idx": 2,
+        "type": "communes_profil",
+        "commune": "Ajaccio",
+        "dimension": "",
+        "view": null,
+        "scope_reel": "commune",
+        "extrait": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nProfil des répondants de la commune de Ajaccio — enquête qualité de vie en Corse\n\nNombre de répondants : 51\n\nRépartition par genre :\n  - Femme : 31 (60.8%)\n  - Homme : 20 (39.2%)\n\nRépartition par tranche d'âge :\n  - 45-59 : 20 (39.2%)\n  - 15-29 : 14 (27.5%)\n  - 30-44 : 11 (21.6%)\n  - 60-74 : 6 (11.8%)\n\nRépartition par catégorie socioprofessionnelle :\n  - SalariÃ©(e) â Cadre ou profession intermÃ©diaire : 17 (33.3%)\n  - Ãtudiant(e) : 12 (23.5%)\n  - Fonctionnaire : 9 (17.6%)\n  - SalariÃ©(e) â EmployÃ©(e) : 8 (15.7%)\n  - Travailleur(se) indÃ©pendant(e) / Entrepreneur(e) : 2 (3.9%)\n  - Autre : 2 (3.9%)\n  - RetraitÃ©(e) : 1 (2.0%)",
+        "n_chunks": null
+      },
+      {
+        "sq_idx": 2,
+        "type": "oppchovec_score",
+        "commune": null,
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nClassement OppChoVec des 360 communes corses (score 0-10).\nFormat : rang. Commune [EPCI]  OppChoVec  Opp  Cho  Vec\n\nScore moyen Corse : 3.35/10  |  Médiane : 3.12/10\nMin : Érone (0.00/10)  Max : Afa (10.00/10)\n\n    1. Afa                          [CA du Pays Ajaccien           ]  10.00  Opp= 8.15  Cho= 9.27  Vec=10.00\n    2. Bastelicaccia                [CC de la Vallée du Prunelli   ]   9.81  Opp= 8.41  Cho= 8.94  Vec= 9.51\n    3. Appietto                     [CA du Pays Ajaccien           ]   9.61  Opp= 7.97  Cho= 9.50  Vec= 9.45\n    4. Alata                        [CA du Pays Ajaccien           ]   9.59  Opp= 7.88  ",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 2,
+        "type": "oppchovec_score",
+        "commune": "",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être e",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 2,
+        "type": "oppchovec_score",
+        "commune": "Ajaccio",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Ajaccio : 5.78/10 (élev",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 2,
+        "type": "methodology",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_methodology",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nEnquête Qualité de Vie en Corse — Description méthodologique\n\nPRÉSENTATION GÉNÉRALE\nEnquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.\nObjectif : recueillir les perceptions subjectives de la qualité de vie (QdV) et du bien-être,\nen complément des indicateurs o",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 3,
+        "type": "raptor_summary",
+        "commune": "",
+        "dimension": "",
+        "view": "dimension*commune",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : dimension=Santé, nom=Ajaccio (N=16 personnes)**\n\n**Thèmes dominants** :\n1. **Importance centrale de la santé** : La santé est perçue comme une condition essentielle à la qualité de vie, à l’autonomie et au bien-être.\n   - Exemples : *\"La santé : si on a pas la santé, on a rien dans la vie\"* (Verbatim 1), *\"La santé est primordial\"* (Verbatim 10), *\"La santé avec l’accès aux soins est primordiale, c’est une évidence\"* (Verbatim 18).\n2. **Accès aux soins et qualité des services** : Plusieurs verbatims soulignent les enjeux d’accès aux soins, de qualité des professionnels et de l’attractivité du territoire pour les soignants.\n   - Exemples : *\"Les centres hospitaliers manquent d",
+        "n_chunks": 19
+      },
+      {
+        "sq_idx": 3,
+        "type": "raptor_enquete_summary",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_commune",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : commune=Ajaccio (N=51)**\n\n---\n\n### **Satisfaction globale**\nLes scores globaux révèlent une satisfaction modérée à bonne pour le bonheur et la qualité de vie, mais une confiance limitée dans l’avenir. Le **bonheur** obtient une moyenne de **3,74/5** (n=47), tandis que la **qualité de vie** est légèrement supérieure à **3,85/5** (n=47). En revanche, la **confiance en l’avenir** est significativement plus basse, avec un score de **2,79/5** (n=43), suggérant une inquiétude marquée quant aux perspectives futures. Ces écarts indiquent que les habitants d’Ajaccio perçoivent globalement leur quotidien de manière positive, mais expriment des réserves sur les évolutions à long terme.\n",
+        "n_chunks": 51
+      },
+      {
+        "sq_idx": 3,
+        "type": "verbatim_evidence",
+        "commune": "Ajaccio",
+        "dimension": "Santé",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Santé': La santé : si on a pas la santé, on a rien dans la vie",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 3,
+        "type": "verbatim_evidence",
+        "commune": "Ajaccio",
+        "dimension": "Santé",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 20 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Santé': La santé car si notre santé est fragile on a une qualité de vie réduite",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 3,
+        "type": "verbatim_evidence",
+        "commune": "Ajaccio",
+        "dimension": "Santé",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Santé': Les centres hospitaliers manquent de personnel alors que tout le monde doit y avoir accès",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 3,
+        "type": "verbatim_evidence",
+        "commune": "Ajaccio",
+        "dimension": "Santé",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 21 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Santé': Pour garder une bonne humeur",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 3,
+        "type": "verbatim_evidence",
+        "commune": "Ajaccio",
+        "dimension": "Santé",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 26 ans (Jeunes adultes), Salarié(e) – Employé(e), à Ajaccio, sur le thème 'Santé': La santé est important car sans la santé ou peut pas faire grand chose ou du moins on peut-être très vite limité.",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 3,
+        "type": "enquete_scores_commune",
+        "commune": "Ajaccio",
+        "dimension": "",
+        "view": null,
+        "scope_reel": "commune",
+        "extrait": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nScores moyens de l'enquête QdV pour la commune de Ajaccio (47 répondants). Score bonheur moyen : 3.68/5. Score qualité de vie moyen : 3.89/5. Score confiance avenir moyen : 2.75/5. Scores moyens par dimension (1-5) : Transports=0.95, Éducation=2.35, Réseaux téléphoniques=2.38, Institutions=1.85, Tourisme=1.57, Sécurité=2.73, Santé=1.80, Situation pro=2.90, Revenus=2.50, Temps travail/perso=2.23, Logement=2.80, Services locaux=2.40, Culture=2.40, Soutien social=3.11, Vie associative=0.64. Dimensions les plus citées comme prioritaires : Environnement, Santé.",
+        "n_chunks": null
+      },
+      {
+        "sq_idx": 3,
+        "type": "enquete_scores_commune",
+        "commune": "Ajaccio",
+        "dimension": "",
+        "view": null,
+        "scope_reel": "commune",
+        "extrait": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nClassement des 14 dimensions de satisfaction — commune de Ajaccio (N=51 répondants).\n\nDu plus satisfaisant au moins satisfaisant :\n   1. Emploi                         : 3.91/5 (moyen-fort)\n   2. Logement                       : 3.84/5 (moyen-fort)\n   3. Sécurité                       : 3.81/5 (moyen-fort)\n   4. Communauté et relations        : 3.54/5 (moyen-fort)\n   5. Revenus                        : 3.51/5 (moyen-fort)\n   6. Culture                        : 3.49/5 (moyen)\n   7. Réseau                         : 3.49/5 (moyen)\n   8. Éducation                      : 3.44/5 (moyen)\n   9. Services de proximité          : 3.42/5 (moyen)\n  10. Ratio vie pro/vie perso        : 3.19/5 (moyen)\n  11. Institution",
+        "n_chunks": null
+      },
+      {
+        "sq_idx": 3,
+        "type": "communes_equipements",
+        "commune": "Ajaccio",
+        "dimension": "",
+        "view": null,
+        "scope_reel": "commune",
+        "extrait": "La commune de Ajaccio compte une part de 12.9% de cadres et professions intellectuelles supérieures, 16.6% d'ouvriers, avec un taux d'activité de 75.6%. 87.8% des emplois y sont salariés. On y trouve 5.0 points de contact postal, 11.0 hypermarchés ou supermarchés, 38.0 supérettes ou épiceries, 51.0 boulangeries et 21.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 15.0 écoles maternelles, 20.0 écoles élémentaires, 6.0 collèges et 6.0 lycées. Elle possède 1.0 services d'urgence, 80.0 médecins généralistes, 31.0 pharmacies, 204.0 infirmiers et 15.0 crèches. La sécurité est assurée par 1.0 postes de police ou gendarmerie. Il y a également 2.0 agences Pôle emploi. Le taux de pauvreté est de 14.3%, la part de logements vacants est de 3.3%, et celle des résidences second",
+        "n_chunks": null
+      },
+      {
+        "sq_idx": 3,
+        "type": "communes_profil",
+        "commune": "Ajaccio",
+        "dimension": "",
+        "view": null,
+        "scope_reel": "commune",
+        "extrait": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nProfil des répondants de la commune de Ajaccio — enquête qualité de vie en Corse\n\nNombre de répondants : 51\n\nRépartition par genre :\n  - Femme : 31 (60.8%)\n  - Homme : 20 (39.2%)\n\nRépartition par tranche d'âge :\n  - 45-59 : 20 (39.2%)\n  - 15-29 : 14 (27.5%)\n  - 30-44 : 11 (21.6%)\n  - 60-74 : 6 (11.8%)\n\nRépartition par catégorie socioprofessionnelle :\n  - SalariÃ©(e) â Cadre ou profession intermÃ©diaire : 17 (33.3%)\n  - Ãtudiant(e) : 12 (23.5%)\n  - Fonctionnaire : 9 (17.6%)\n  - SalariÃ©(e) â EmployÃ©(e) : 8 (15.7%)\n  - Travailleur(se) indÃ©pendant(e) / Entrepreneur(e) : 2 (3.9%)\n  - Autre : 2 (3.9%)\n  - RetraitÃ©(e) : 1 (2.0%)",
+        "n_chunks": null
+      },
+      {
+        "sq_idx": 3,
+        "type": "oppchovec_score",
+        "commune": "",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être e",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 3,
+        "type": "oppchovec_score",
+        "commune": "Ajaccio",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Ajaccio : 5.78/10 (élev",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 3,
+        "type": "methodology",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_methodology",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nEnquête Qualité de Vie en Corse — Description méthodologique\n\nPRÉSENTATION GÉNÉRALE\nEnquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.\nObjectif : recueillir les perceptions subjectives de la qualité de vie (QdV) et du bien-être,\nen complément des indicateurs o",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 4,
+        "type": "raptor_summary",
+        "commune": "",
+        "dimension": "",
+        "view": "commune",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : nom=Ajaccio (N=39 personnes)**\n\n---\n\n### **Themes dominants**\n1. **Revenus et pouvoir d’achat**\n   - Mentionné dans **12 verbatims** (ex. : *\"Les revenus permettent de me payer un logement, la nourriture et quelques plaisirs/loisirs à côté\"*, Verbatim 5 ; *\"Sans revenus on est dans la merde\"* Verbatim 10 ; *\"Le coût de la vie en Corse est très élevé\"* Verbatim 90).\n   - Préoccupation récurrente sur la précarité (*\"de nombreuses personnes vivent dans une situation précaire par manque d’argent\"*, Verbatim 16) et l’inflation (*\"tout augmente mais pas les salaires\"*, Verbatim 59).\n\n2. **Santé et accès aux soins**\n   - **11 verbatims** soulignent l’importance de la santé (*\"La san",
+        "n_chunks": 129
+      },
+      {
+        "sq_idx": 4,
+        "type": "raptor_enquete_summary",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_commune",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : commune=Ajaccio (N=51)**\n\n---\n\n### **Satisfaction globale**\nLes scores globaux révèlent une satisfaction modérée à bonne pour le bonheur et la qualité de vie, mais une confiance limitée dans l’avenir. Le **bonheur** obtient une moyenne de **3,74/5** (n=47), tandis que la **qualité de vie** est légèrement supérieure à **3,85/5** (n=47). En revanche, la **confiance en l’avenir** est significativement plus basse, avec un score de **2,79/5** (n=43), suggérant une inquiétude marquée quant aux perspectives futures. Ces écarts indiquent que les habitants d’Ajaccio perçoivent globalement leur quotidien de manière positive, mais expriment des réserves sur les évolutions à long terme.\n",
+        "n_chunks": 51
+      },
+      {
+        "sq_idx": 4,
+        "type": "verbatim_evidence",
+        "commune": "Ajaccio",
+        "dimension": "Santé",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Santé': La santé : si on a pas la santé, on a rien dans la vie",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 4,
+        "type": "verbatim_evidence",
+        "commune": "Ajaccio",
+        "dimension": "Ratio vie pro/ vie perso",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Ratio vie pro/ vie perso': Le ratio vie pro et vie perso, car c’est important d’avoir un bon équilibre entre les deux",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 4,
+        "type": "verbatim_evidence",
+        "commune": "Ajaccio",
+        "dimension": "Education",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Education': D’éducation : importante dans la société d’aujourd’hui",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 4,
+        "type": "verbatim_evidence",
+        "commune": "Ajaccio",
+        "dimension": "Ratio vie pro/ vie perso",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 21 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Ratio vie pro/ vie perso': Le ratio vie pro/vie perso est important pour moi pour avoir un équilibre de vie sain car il ne faut pas que les deux se mélangent trop : une coupure est importante entre ces deux mondes.",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 4,
+        "type": "verbatim_evidence",
+        "commune": "Ajaccio",
+        "dimension": "Revenus",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 21 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Revenus': Les revenus permettent de me payer un logement, la nourriture et quelques plaisirs/loisirs à côté.",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 4,
+        "type": "enquete_scores_commune",
+        "commune": "Ajaccio",
+        "dimension": "",
+        "view": null,
+        "scope_reel": "commune",
+        "extrait": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nScores moyens de l'enquête QdV pour la commune de Ajaccio (47 répondants). Score bonheur moyen : 3.68/5. Score qualité de vie moyen : 3.89/5. Score confiance avenir moyen : 2.75/5. Scores moyens par dimension (1-5) : Transports=0.95, Éducation=2.35, Réseaux téléphoniques=2.38, Institutions=1.85, Tourisme=1.57, Sécurité=2.73, Santé=1.80, Situation pro=2.90, Revenus=2.50, Temps travail/perso=2.23, Logement=2.80, Services locaux=2.40, Culture=2.40, Soutien social=3.11, Vie associative=0.64. Dimensions les plus citées comme prioritaires : Environnement, Santé.",
+        "n_chunks": null
+      },
+      {
+        "sq_idx": 4,
+        "type": "enquete_scores_commune",
+        "commune": "Ajaccio",
+        "dimension": "",
+        "view": null,
+        "scope_reel": "commune",
+        "extrait": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nClassement des 14 dimensions de satisfaction — commune de Ajaccio (N=51 répondants).\n\nDu plus satisfaisant au moins satisfaisant :\n   1. Emploi                         : 3.91/5 (moyen-fort)\n   2. Logement                       : 3.84/5 (moyen-fort)\n   3. Sécurité                       : 3.81/5 (moyen-fort)\n   4. Communauté et relations        : 3.54/5 (moyen-fort)\n   5. Revenus                        : 3.51/5 (moyen-fort)\n   6. Culture                        : 3.49/5 (moyen)\n   7. Réseau                         : 3.49/5 (moyen)\n   8. Éducation                      : 3.44/5 (moyen)\n   9. Services de proximité          : 3.42/5 (moyen)\n  10. Ratio vie pro/vie perso        : 3.19/5 (moyen)\n  11. Institution",
+        "n_chunks": null
+      },
+      {
+        "sq_idx": 4,
+        "type": "communes_profil",
+        "commune": "Ajaccio",
+        "dimension": "",
+        "view": null,
+        "scope_reel": "commune",
+        "extrait": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nProfil des répondants de la commune de Ajaccio — enquête qualité de vie en Corse\n\nNombre de répondants : 51\n\nRépartition par genre :\n  - Femme : 31 (60.8%)\n  - Homme : 20 (39.2%)\n\nRépartition par tranche d'âge :\n  - 45-59 : 20 (39.2%)\n  - 15-29 : 14 (27.5%)\n  - 30-44 : 11 (21.6%)\n  - 60-74 : 6 (11.8%)\n\nRépartition par catégorie socioprofessionnelle :\n  - SalariÃ©(e) â Cadre ou profession intermÃ©diaire : 17 (33.3%)\n  - Ãtudiant(e) : 12 (23.5%)\n  - Fonctionnaire : 9 (17.6%)\n  - SalariÃ©(e) â EmployÃ©(e) : 8 (15.7%)\n  - Travailleur(se) indÃ©pendant(e) / Entrepreneur(e) : 2 (3.9%)\n  - Autre : 2 (3.9%)\n  - RetraitÃ©(e) : 1 (2.0%)",
+        "n_chunks": null
+      },
+      {
+        "sq_idx": 4,
+        "type": "oppchovec_score",
+        "commune": "",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être e",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 4,
+        "type": "oppchovec_score",
+        "commune": "Ajaccio",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Ajaccio : 5.78/10 (élev",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 4,
+        "type": "methodology",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_methodology",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nEnquête Qualité de Vie en Corse — Description méthodologique\n\nPRÉSENTATION GÉNÉRALE\nEnquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.\nObjectif : recueillir les perceptions subjectives de la qualité de vie (QdV) et du bien-être,\nen complément des indicateurs o",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 5,
+        "type": "raptor_summary",
+        "commune": "",
+        "dimension": "",
+        "view": "commune",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : nom=Ajaccio (N=39 personnes)**\n\n---\n\n### **Themes dominants**\n1. **Revenus et pouvoir d’achat**\n   - Mentionné dans **12 verbatims** (ex. : *\"Les revenus permettent de me payer un logement, la nourriture et quelques plaisirs/loisirs à côté\"*, Verbatim 5 ; *\"Sans revenus on est dans la merde\"* Verbatim 10 ; *\"Le coût de la vie en Corse est très élevé\"* Verbatim 90).\n   - Préoccupation récurrente sur la précarité (*\"de nombreuses personnes vivent dans une situation précaire par manque d’argent\"*, Verbatim 16) et l’inflation (*\"tout augmente mais pas les salaires\"*, Verbatim 59).\n\n2. **Santé et accès aux soins**\n   - **11 verbatims** soulignent l’importance de la santé (*\"La san",
+        "n_chunks": 129
+      },
+      {
+        "sq_idx": 5,
+        "type": "raptor_enquete_summary",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_commune",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : commune=Ajaccio (N=51)**\n\n---\n\n### **Satisfaction globale**\nLes scores globaux révèlent une satisfaction modérée à bonne pour le bonheur et la qualité de vie, mais une confiance limitée dans l’avenir. Le **bonheur** obtient une moyenne de **3,74/5** (n=47), tandis que la **qualité de vie** est légèrement supérieure à **3,85/5** (n=47). En revanche, la **confiance en l’avenir** est significativement plus basse, avec un score de **2,79/5** (n=43), suggérant une inquiétude marquée quant aux perspectives futures. Ces écarts indiquent que les habitants d’Ajaccio perçoivent globalement leur quotidien de manière positive, mais expriment des réserves sur les évolutions à long terme.\n",
+        "n_chunks": 51
+      },
+      {
+        "sq_idx": 5,
+        "type": "verbatim_evidence",
+        "commune": "Ajaccio",
+        "dimension": "Santé",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Santé': La santé : si on a pas la santé, on a rien dans la vie",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 5,
+        "type": "verbatim_evidence",
+        "commune": "Ajaccio",
+        "dimension": "Ratio vie pro/ vie perso",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Ratio vie pro/ vie perso': Le ratio vie pro et vie perso, car c’est important d’avoir un bon équilibre entre les deux",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 5,
+        "type": "verbatim_evidence",
+        "commune": "Ajaccio",
+        "dimension": "Education",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Education': D’éducation : importante dans la société d’aujourd’hui",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 5,
+        "type": "verbatim_evidence",
+        "commune": "Ajaccio",
+        "dimension": "Ratio vie pro/ vie perso",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 21 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Ratio vie pro/ vie perso': Le ratio vie pro/vie perso est important pour moi pour avoir un équilibre de vie sain car il ne faut pas que les deux se mélangent trop : une coupure est importante entre ces deux mondes.",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 5,
+        "type": "verbatim_evidence",
+        "commune": "Ajaccio",
+        "dimension": "Revenus",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 21 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Revenus': Les revenus permettent de me payer un logement, la nourriture et quelques plaisirs/loisirs à côté.",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 5,
+        "type": "enquete_scores_commune",
+        "commune": "Ajaccio",
+        "dimension": "",
+        "view": null,
+        "scope_reel": "commune",
+        "extrait": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nClassement des 14 dimensions de satisfaction — commune de Ajaccio (N=51 répondants).\n\nDu plus satisfaisant au moins satisfaisant :\n   1. Emploi                         : 3.91/5 (moyen-fort)\n   2. Logement                       : 3.84/5 (moyen-fort)\n   3. Sécurité                       : 3.81/5 (moyen-fort)\n   4. Communauté et relations        : 3.54/5 (moyen-fort)\n   5. Revenus                        : 3.51/5 (moyen-fort)\n   6. Culture                        : 3.49/5 (moyen)\n   7. Réseau                         : 3.49/5 (moyen)\n   8. Éducation                      : 3.44/5 (moyen)\n   9. Services de proximité          : 3.42/5 (moyen)\n  10. Ratio vie pro/vie perso        : 3.19/5 (moyen)\n  11. Institution",
+        "n_chunks": null
+      },
+      {
+        "sq_idx": 5,
+        "type": "enquete_scores_commune",
+        "commune": "Ajaccio",
+        "dimension": "",
+        "view": null,
+        "scope_reel": "commune",
+        "extrait": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nScores moyens de l'enquête QdV pour la commune de Ajaccio (47 répondants). Score bonheur moyen : 3.68/5. Score qualité de vie moyen : 3.89/5. Score confiance avenir moyen : 2.75/5. Scores moyens par dimension (1-5) : Transports=0.95, Éducation=2.35, Réseaux téléphoniques=2.38, Institutions=1.85, Tourisme=1.57, Sécurité=2.73, Santé=1.80, Situation pro=2.90, Revenus=2.50, Temps travail/perso=2.23, Logement=2.80, Services locaux=2.40, Culture=2.40, Soutien social=3.11, Vie associative=0.64. Dimensions les plus citées comme prioritaires : Environnement, Santé.",
+        "n_chunks": null
+      },
+      {
+        "sq_idx": 5,
+        "type": "communes_profil",
+        "commune": "Ajaccio",
+        "dimension": "",
+        "view": null,
+        "scope_reel": "commune",
+        "extrait": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nProfil des répondants de la commune de Ajaccio — enquête qualité de vie en Corse\n\nNombre de répondants : 51\n\nRépartition par genre :\n  - Femme : 31 (60.8%)\n  - Homme : 20 (39.2%)\n\nRépartition par tranche d'âge :\n  - 45-59 : 20 (39.2%)\n  - 15-29 : 14 (27.5%)\n  - 30-44 : 11 (21.6%)\n  - 60-74 : 6 (11.8%)\n\nRépartition par catégorie socioprofessionnelle :\n  - SalariÃ©(e) â Cadre ou profession intermÃ©diaire : 17 (33.3%)\n  - Ãtudiant(e) : 12 (23.5%)\n  - Fonctionnaire : 9 (17.6%)\n  - SalariÃ©(e) â EmployÃ©(e) : 8 (15.7%)\n  - Travailleur(se) indÃ©pendant(e) / Entrepreneur(e) : 2 (3.9%)\n  - Autre : 2 (3.9%)\n  - RetraitÃ©(e) : 1 (2.0%)",
+        "n_chunks": null
+      },
+      {
+        "sq_idx": 5,
+        "type": "oppchovec_score",
+        "commune": "",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être e",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 5,
+        "type": "oppchovec_score",
+        "commune": "Ajaccio",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Ajaccio : 5.78/10 (élev",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 5,
+        "type": "methodology",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_methodology",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nEnquête Qualité de Vie en Corse — Description méthodologique\n\nPRÉSENTATION GÉNÉRALE\nEnquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.\nObjectif : recueillir les perceptions subjectives de la qualité de vie (QdV) et du bien-être,\nen complément des indicateurs o",
+        "n_chunks": ""
+      }
+    ],
+    "answer": "### **Synthèse : Niveau de bien-être subjectif à Ajaccio**\n\nLe bien-être des habitants d’Ajaccio se caractérise par une **satisfaction modérée à bonne dans leur quotidien**, mais marquée par une **inquiétude marquée quant aux perspectives futures**. Les données combinent perceptions subjectives des habitants et indicateurs objectifs, offrant une vision nuancée de la qualité de vie dans la commune.\n\n---\n\n#### **1. Satisfaction globale et confiance en l’avenir**\nLes habitants d’Ajaccio rapportent une **satisfaction modérée à bonne** dans leur quotidien, avec un **score moyen de 3,74/5 pour le bonheur** et **3,85/5 pour la qualité de vie** [SQ1]. Cependant, la **confiance en l’avenir** est significativement plus faible, avec un score de **2,79/5**, révélant une préoccupation majeure pour l’avenir [SQ1]. Ces données proviennent de l’enquête citoyenne RAPTOR (collecte 2024-2026, n=47 pour le bonheur et la qualité de vie, n=43 pour la confiance en l’avenir).\n\n---\n#### **2. Comparaison avec les autres communes corses**\nAucune donnée d’enquête citoyenne ne permet de classer Ajaccio parmi les communes corses en termes de bien-être subjectif [SQ2]. En revanche, les **indicateurs territoriaux objectifs** (scores OppChoVec, 2020-2022) placent Ajaccio au **19ᵉ rang sur 360 communes corses**, avec un **score global de 5,78/10** [SQ2]. Ce classement reflète une position plutôt favorable en Corse, mais ne reflète pas directement les perceptions subjectives des habitants.\n\n---\n#### **3. Dimensions clés du bien-être selon les habitants**\nLes **thèmes les plus cités** par les habitants comme contributeurs à leur bien-être sont :\n- **Santé** : Perçue comme une condition essentielle au bien-être et à l’autonomie, avec des scores particulièrement bas (2,59/5 pour la santé globale, 1,98/5 pour l’accès aux médecins spécialistes et 2,53/5 pour les délais d’attente) [SQ3]. Les verbatims soulignent son importance vitale : *« La santé : si on a pas la santé, on a rien dans la vie »* [SQ5].\n- **Relations sociales et entourage** : Évalué à **4,14/5**, ce thème est un pilier du bien-être à Ajaccio [SQ3].\n- **Emploi** : Avec un score de **3,91/5**, l’emploi est un facteur clé de satisfaction, bien que des tensions persistent [SQ3].\n- **Logement et sécurité** : Mentionnés comme des enjeux critiques dans les verbatims, bien que moins quantifiés dans les scores [SQ3].\n\n---\n#### **4. Satisfaction quant à la qualité de vie globale**\nLa **satisfaction moyenne pour la qualité de vie globale** est de **3,85/5**, ce qui correspond à une **satisfaction modérée à bonne** [SQ4]. Cette donnée provient de l’enquête citoyenne Qualité de vie en Corse (collecte 2024-2026, n=47 répondants à Ajaccio). Elle reflète une perception globalement positive, mais nuancée par les inquiétudes exprimées sur la santé et l’avenir.\n\n---\n#### **5. Points de satisfaction et d’insatisfaction illustrés par les verbatims**\nLes **verbatims des habitants** révèlent des **satisfactions** comme :\n- La **cohésion sociale** et les **relations de voisinage**, souvent décrites comme fortes et soutenantes [SQ5].\n- L’**accès aux services de base** (écoles, commerces), perçu comme globalement satisfaisant [SQ5].\n\nMais aussi des **insatisfactions majeures** :\n- **L’accès aux soins**, avec des délais d’attente et un manque de spécialistes pointés du doigt [SQ5].\n- **Le coût de la vie** et les **difficultés économiques**, évoqués comme des freins au bien-être [SQ5].\n- **Les perspectives d’avenir**, perçues comme incertaines par une partie des habitants [SQ1].\n\n---\n### **Points clés à retenir**\n- **Un bien-être quotidien globalement satisfaisant**, mais fragilisé par des inquiétudes sur l’avenir et l’accès aux soins.\n- **Une position favorable en Corse** selon les indicateurs objectifs, mais des **tensions locales** sur des dimensions critiques (santé, emploi, logement).\n- **Des relations sociales solides**, qui constituent un atout majeur pour le bien-être des Ajacciens.\n\n---"
+  },
+  {
+    "label": "Aiti — verbatims scope_reel",
+    "question": "Quels sont les verbatims citoyens les plus representatifs a Aiti ?",
+    "elapsed": 22.9,
+    "scope": "locale",
+    "question_type": "factuelle",
+    "guard": {
+      "passed": false,
+      "silence_list": [],
+      "silence_map": {
+        "Aiti": {
+          "quali": false,
+          "quanti": true
+        }
+      },
+      "n_violations": 2,
+      "violations": [
+        {
+          "rule": "silence",
+          "detail": "Entité 'Aiti' : énoncé qualitatif sans verbatims disponibles",
+          "evidence": "Aucun verbatim citoyen spécifique à Aiti n’est disponible dans les sources mobilisées.",
+          "context": "Attendu : scores quantitatifs uniquement, ou constat explicite d'absence de verbatims"
+        },
+        {
+          "rule": "silence",
+          "detail": "Entité 'Aiti' : énoncé qualitatif sans verbatims disponibles",
+          "evidence": "Les indicateurs territoriaux objectifs (scores OppChoVec) pour Aiti indiquent une situation défavorable sur plusieurs dimensions, mais ils ne fournissent pas de verbatims ou de perceptions citoyennes ",
+          "context": "Attendu : scores quantitatifs uniquement, ou constat explicite d'absence de verbatims"
+        }
+      ],
+      "available": true
+    },
+    "sub_qa": [
+      {
+        "q": "Quels sont les thèmes principaux (ex : environnement, services publics, transports) les plus fréquemment mentionnés dans les verbatims citoyens d'Aiti ?",
+        "a": "{\"valeur\": \"Environnement (111 personnes, dimension dominante)\", \"contexte\": \"L'enquête citoyenne Qualité de vie en Corse (2024-2026) révèle que la dimension Environnement est le thème le plus développé avec 111 répondants. Les verbatims soulignent l'environnement comme fondement du bien-être, la préservation de la nature et de la biodiversité, ainsi que les enjeux de pollution locale et d'équilibre urbain-nature. Cependant, le contexte fourni ne précise pas si ces 111 répondants proviennent spécifiquement d'Aiti ou s'ils couvrent l'ensemble de la Corse ; les biais géographiques identifiés montrent une surreprésentation de Corte, Ajaccio et Bastia.\", \"source_type\": \"enquete_citoyenne\", \"confiance\": \"medium\"}"
+      },
+      {
+        "q": "Quels sont les verbatims citoyens les plus positifs (notes ou termes élogieux) concernant Aiti ?",
+        "a": "{\"valeur\": null, \"contexte\": \"Aucune donnée disponible pour cette sous-question. L'enquête citoyenne Qualité de vie en Corse (2024-2026, N=246) ne compte aucun répondant d'Aiti parmi les 69 communes représentées. Les verbatims citoyens positifs concernant Aiti ne peuvent donc pas être extraits.\", \"source_type\": \"aucune_donnee\", \"confiance\": \"low\"}"
+      },
+      {
+        "q": "Quels sont les verbatims citoyens les plus négatifs (critiques ou insatisfactions) concernant Aiti ?",
+        "a": "{\"valeur\": null, \"contexte\": \"Aucun verbatim citoyen spécifique à Aiti n'est disponible dans le contexte fourni. Les verbatims présentés concernent des répondants d'autres communes (Corte, Ajaccio, Bastia) collectés lors d'entretiens semi-directifs en 2022 ou de l'enquête citoyenne en cours (2024-2026). Bien que Aiti dispose de scores OppChoVec objectifs (3.07/10), aucune donnée qualitative/subjective directe des habitants d'Aiti n'est documentée.\", \"source_type\": \"aucune_donnee\", \"confiance\": \"low\"}"
+      },
+      {
+        "q": "Quelle est la répartition des verbatims par catégorie (ex : cadre de vie, dynamisme local, accès aux services) pour Aiti ?",
+        "a": "{\"valeur\": null, \"contexte\": \"Aucune donnée disponible spécifiquement pour Aiti. Les verbatims fournis proviennent d'entretiens semi-directifs réalisés en 2022 et d'une enquête citoyenne en cours (2024-2026) couvrant la Corse entière, avec surreprésentation de Corte, Ajaccio et Bastia. Aucune répartition par catégorie thématique n'est disponible pour la commune d'Aiti.\", \"source_type\": \"aucune_donnee\", \"confiance\": \"low\"}"
+      },
+      {
+        "q": "Quels sont les verbatims citoyens les plus partagés (redondants ou consensus) à Aiti ?",
+        "a": "{\"valeur\": null, \"contexte\": \"Aucune donnée disponible spécifiquement pour Aiti. L'enquête citoyenne Qualité de vie en Corse (2024-2026, en cours) ne dispose pas de synthèse dédiée à la commune d'Aiti. Les verbatims fournis proviennent d'un groupe démographique national (25-34 ans, cadres/professions intermédiaires, N=6) réparti sur 5 villes différentes (Corte, Ajaccio, Bastia, Biguglia, Venaco), sans données localisées pour Aiti.\", \"source_type\": \"enquete_citoyenne\", \"confiance\": \"low\"}"
+      }
+    ],
+    "sources": [
+      {
+        "sq_idx": 1,
+        "type": "raptor_summary",
+        "commune": "",
+        "dimension": "",
+        "view": "dimension",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : dimension=Environnement (N=111 personnes)**\n\n---\n\n### **Thèmes dominants**\n1. **Qualité de l’environnement comme fondement du bien-être**\n   - L’environnement est perçu comme un pilier essentiel de la santé physique et mentale, du bien-être global et de la qualité de vie.\n   - *\"Un environnement sain permet d'être en bonne santé\"* (Verbatim 6)\n   - *\"Environnement = base du bien être\"* (Verbatim 18)\n   - *\"La qualité de l'environnement est vitale au sens premier\"* (Verbatim 15)\n\n2. **Préservation de la nature et de la biodiversité**\n   - La nature (montagnes, rivières, mer, forêts) est décrite comme une ressource vitale, un patrimoine à protéger et une source de sérénité.\n   ",
+        "n_chunks": 134
+      },
+      {
+        "sq_idx": 1,
+        "type": "raptor_enquete_summary",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_global",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n### **Synthèse analytique globale — Qualité de Vie en Corse (N=246)**\n\n---\n\n#### **1. Satisfaction globale**\nLes scores moyens révèlent une **satisfaction modérée** des Corses quant à leur qualité de vie, avec des disparités notables entre les dimensions évaluées.\n\n- **Bonheur** : **3,66/5** (n=237)\n  Les répondants expriment un niveau de bonheur globalement positif, proche de la moyenne haute, suggérant une perception plutôt favorable de leur bien-être subjectif.\n\n- **Qualité de vie** : **3,83/5** (n=237)\n  Ce score, légèrement supérieur à celui du bonheur, indique que les conditions matérielles et environnementales sont perçues comme globalement satisfaisantes, bien que perfectibles.\n",
+        "n_chunks": 246
+      },
+      {
+        "sq_idx": 1,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Environnement",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 22 ans (Jeunes), Étudiant(e), à Corte, sur le thème 'Environnement': qualité de l'air et paysages",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 1,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Environnement",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 22 ans (Jeunes), Étudiant(e), à Corte, sur le thème 'Environnement': Protéger l’environnement doit être une priorité pour un milieu sain",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 1,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Environnement",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 23 ans (Jeunes), Étudiant(e), à Corte, sur le thème 'Environnement': Vivre dans un environnement sain me semble nécessaire",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 1,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Environnement",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 22 ans (Jeunes), Étudiant(e), à Corte, sur le thème 'Environnement': Environnement : joue sur la santé et le bien être psychologique",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 1,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Environnement",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 32 ans (Jeunes adultes), Salarié(e) – Employé(e), à Corte, sur le thème 'Environnement': Environnement : pour moi, il est important de respecter notre terre et donc de réaliser des petits gestes du quotidien pouvant faire en sorte que celle-ci soit moins polluée. Par exemple, ne pas prendre la voiture lorsqu'on peut se déplacer à pieds, faire le tri ainsi que de ne pas jeter des ordures dans les rues (papiers, cigarettes, etc.). De vivre dans une ville où on retrouve des déchets de partout dans les rues ne me conviendrait pas.",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 1,
+        "type": "communes_equipements",
+        "commune": "Aiti",
+        "dimension": "",
+        "view": null,
+        "scope_reel": "commune",
+        "extrait": "La commune de Aiti compte une part de 0.0% de cadres et professions intellectuelles supérieures, 0.0% d'ouvriers, avec un taux d'activité de 71.4%. 0.0% des emplois y sont salariés. On y trouve 0.0 points de contact postal, 0.0 hypermarchés ou supermarchés, 0.0 supérettes ou épiceries, 0.0 boulangeries et 0.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 0.0 écoles maternelles, 0.0 écoles élémentaires, 0.0 collèges et 0.0 lycées. Elle possède 0.0 services d'urgence, 0.0 médecins généralistes, 0.0 pharmacies, 0.0 infirmiers et 0.0 crèches. La sécurité est assurée par 0.0 postes de police ou gendarmerie. Il y a également 0.0 agences Pôle emploi. Le taux de pauvreté est de 21.1%, la part de logements vacants est de 1.3%, et celle des résidences secondaires est de 81.2",
+        "n_chunks": null
+      },
+      {
+        "sq_idx": 1,
+        "type": "oppchovec_score",
+        "commune": "",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être e",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 1,
+        "type": "oppchovec_score",
+        "commune": "Aiti",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Aiti : 3.07/10 (moyen).",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 1,
+        "type": "methodology",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_methodology",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nEnquête Qualité de Vie en Corse — Description méthodologique\n\nPRÉSENTATION GÉNÉRALE\nEnquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.\nObjectif : recueillir les perceptions subjectives de la qualité de vie (QdV) et du bien-être,\nen complément des indicateurs o",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 2,
+        "type": "raptor_enquete_summary",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_global",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n### **Synthèse analytique globale — Qualité de Vie en Corse (N=246)**\n\n---\n\n#### **1. Satisfaction globale**\nLes scores moyens révèlent une **satisfaction modérée** des Corses quant à leur qualité de vie, avec des disparités notables entre les dimensions évaluées.\n\n- **Bonheur** : **3,66/5** (n=237)\n  Les répondants expriment un niveau de bonheur globalement positif, proche de la moyenne haute, suggérant une perception plutôt favorable de leur bien-être subjectif.\n\n- **Qualité de vie** : **3,83/5** (n=237)\n  Ce score, légèrement supérieur à celui du bonheur, indique que les conditions matérielles et environnementales sont perçues comme globalement satisfaisantes, bien que perfectibles.\n",
+        "n_chunks": 246
+      },
+      {
+        "sq_idx": 2,
+        "type": "oppchovec_score",
+        "commune": "",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être e",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 2,
+        "type": "oppchovec_score",
+        "commune": "Aiti",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Aiti : 3.07/10 (moyen).",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 2,
+        "type": "methodology",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_methodology",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nEnquête Qualité de Vie en Corse — Description méthodologique\n\nPRÉSENTATION GÉNÉRALE\nEnquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.\nObjectif : recueillir les perceptions subjectives de la qualité de vie (QdV) et du bien-être,\nen complément des indicateurs o",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 3,
+        "type": "raptor_summary",
+        "commune": "",
+        "dimension": "",
+        "view": "dimension",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : dimension=Transports (N=25 personnes)**\n\n**Thèmes dominants** :\n1. **Dépendance à la voiture et manque d’alternatives** : Plusieurs verbatims soulignent l’absence ou l’insuffisance des transports en commun, rendant la voiture indispensable.\n   - *\"Depuis que je suis revenu vivre à Bastia, je ne peux rien faire sans ma voiture, la région est trop mal desservie\"* (Verbatim 12).\n   - *\"L'absence de transport collectif de qualité impacte le plus ma qualité de vie\"* (Verbatim 27).\n\n2. **Contraintes horaires et mobilité limitée** : Les horaires des transports (notamment ferroviaires) sont jugés inadaptés, limitant les déplacements, surtout pour les étudiants.\n   - *\"Les horaires de",
+        "n_chunks": 27
+      },
+      {
+        "sq_idx": 3,
+        "type": "raptor_enquete_summary",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_global",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n### **Synthèse analytique globale — Qualité de Vie en Corse (N=246)**\n\n---\n\n#### **1. Satisfaction globale**\nLes scores moyens révèlent une **satisfaction modérée** des Corses quant à leur qualité de vie, avec des disparités notables entre les dimensions évaluées.\n\n- **Bonheur** : **3,66/5** (n=237)\n  Les répondants expriment un niveau de bonheur globalement positif, proche de la moyenne haute, suggérant une perception plutôt favorable de leur bien-être subjectif.\n\n- **Qualité de vie** : **3,83/5** (n=237)\n  Ce score, légèrement supérieur à celui du bonheur, indique que les conditions matérielles et environnementales sont perçues comme globalement satisfaisantes, bien que perfectibles.\n",
+        "n_chunks": 246
+      },
+      {
+        "sq_idx": 3,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Transports",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 24 ans (Jeunes), Étudiant(e), à Corte, sur le thème 'Transports': bloqué",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 3,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Transports",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 24 ans (Jeunes), Étudiant(e), à Corte, sur le thème 'Transports': Les horaires des trains ne permettent pas de rentrer tard d'autre ville",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 3,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Transports",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 30 ans (Jeunes adultes), Étudiant(e), à Corte, sur le thème 'Transports': Pour un étudiant, il est important de pouvoir se déplacer pour se divertir changer les idées avoir plus de liberté et combattre les moments de solitude et comme Corté est connue pour ne pas avoir trop de choix d loisirs donc le transport est important",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 3,
+        "type": "verbatim_evidence",
+        "commune": "Ajaccio",
+        "dimension": "Transports",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 20 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Transports': transports pour facilité globale",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 3,
+        "type": "verbatim_evidence",
+        "commune": "Ajaccio",
+        "dimension": "Transports",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 19 ans (Jeunes), Salarié(e) – Cadre ou profession intermédiaire, à Ajaccio, sur le thème 'Transports': cxb",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 3,
+        "type": "oppchovec_score",
+        "commune": "",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être e",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 3,
+        "type": "oppchovec_score",
+        "commune": "Aiti",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Aiti : 3.07/10 (moyen).",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 3,
+        "type": "methodology",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_methodology",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nEnquête Qualité de Vie en Corse — Description méthodologique\n\nPRÉSENTATION GÉNÉRALE\nEnquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.\nObjectif : recueillir les perceptions subjectives de la qualité de vie (QdV) et du bien-être,\nen complément des indicateurs o",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 4,
+        "type": "raptor_summary",
+        "commune": "",
+        "dimension": "",
+        "view": "profession",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : profession=Salarié(e) – Cadre ou profession intermédiaire (N=49 personnes)**\n\n---\n\n### **Thèmes dominants**\n1. **Équilibre vie professionnelle / vie personnelle**\n   - Besoin d’un équilibre pour éviter le \"métro-boulot-dodo\" et consacrer du temps à des projets personnels, familiaux ou citoyens.\n     *\"Equilibre temps entre vie pro et perso mais aussi les revenus : ne pas vivre pour travailler ! Profiter de la vie...\"* (F, 43 ans, Corte)\n     *\"Conciliation optimale entre objectifs professionnels et vie familiale, sociale et aspirations personnelles\"* (F, 60 ans, Biguglia)\n   - Critique de la surcharge professionnelle au détriment de la qualité de vie.\n\n2. **Santé et accès aux",
+        "n_chunks": 150
+      },
+      {
+        "sq_idx": 4,
+        "type": "raptor_enquete_summary",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_profession",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : csp=Salarié(e) – Cadre ou profession intermédiaire (N=56)**\n\n---\n\n### **Satisfaction globale**\nLes scores globaux de ce groupe de cadres et professions intermédiaires en Corse révèlent une **satisfaction modérée**, avec des écarts notables entre les dimensions évaluées.\n- **Bonheur** : 3,83/5 (n=54) → Une majorité de répondants expriment un niveau de bonheur globalement positif, bien que légèrement en dessous de la moyenne.\n- **Qualité de vie** : 4,07/5 (n=54) → Une perception globalement favorable de la qualité de vie, avec un score supérieur à celui du bonheur, suggérant que les répondants distinguent des aspects spécifiques de leur vie quotidienne comme plus satisfaisants.",
+        "n_chunks": 56
+      },
+      {
+        "sq_idx": 4,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Ratio vie pro/ vie perso",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 30 ans (Jeunes adultes), Salarié(e) – Cadre ou profession intermédiaire, à Corte, sur le thème 'Ratio vie pro/ vie perso': Avoir du temps en dehors de la vie pour s'impliquer dans des projets de territoire, des loisirs, et être connecté à la vie extérieure",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 4,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Communauté et relations",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 30 ans (Jeunes adultes), Salarié(e) – Cadre ou profession intermédiaire, à Corte, sur le thème 'Communauté et relations': Richesse sociale, rencontres et partage de valeurs communautaires",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 4,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Services de proximité",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 30 ans (Jeunes adultes), Salarié(e) – Cadre ou profession intermédiaire, à Corte, sur le thème 'Services de proximité': créer une économie locale de circuit court",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 4,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Environnement",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 32 ans (Jeunes adultes), Salarié(e) – Cadre ou profession intermédiaire, à Corte, sur le thème 'Environnement': La qualité de la nature",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 4,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Communauté et relations",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 32 ans (Jeunes adultes), Salarié(e) – Cadre ou profession intermédiaire, à Corte, sur le thème 'Communauté et relations': Le sens d'appartenance, l'entourage",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 4,
+        "type": "communes_equipements",
+        "commune": "Aiti",
+        "dimension": "",
+        "view": null,
+        "scope_reel": "commune",
+        "extrait": "La commune de Aiti compte une part de 0.0% de cadres et professions intellectuelles supérieures, 0.0% d'ouvriers, avec un taux d'activité de 71.4%. 0.0% des emplois y sont salariés. On y trouve 0.0 points de contact postal, 0.0 hypermarchés ou supermarchés, 0.0 supérettes ou épiceries, 0.0 boulangeries et 0.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 0.0 écoles maternelles, 0.0 écoles élémentaires, 0.0 collèges et 0.0 lycées. Elle possède 0.0 services d'urgence, 0.0 médecins généralistes, 0.0 pharmacies, 0.0 infirmiers et 0.0 crèches. La sécurité est assurée par 0.0 postes de police ou gendarmerie. Il y a également 0.0 agences Pôle emploi. Le taux de pauvreté est de 21.1%, la part de logements vacants est de 1.3%, et celle des résidences secondaires est de 81.2",
+        "n_chunks": null
+      },
+      {
+        "sq_idx": 4,
+        "type": "oppchovec_score",
+        "commune": "",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être e",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 4,
+        "type": "oppchovec_score",
+        "commune": "Aiti",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Aiti : 3.07/10 (moyen).",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 4,
+        "type": "methodology",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_methodology",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nEnquête Qualité de Vie en Corse — Description méthodologique\n\nPRÉSENTATION GÉNÉRALE\nEnquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.\nObjectif : recueillir les perceptions subjectives de la qualité de vie (QdV) et du bien-être,\nen complément des indicateurs o",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 5,
+        "type": "raptor_summary",
+        "commune": "",
+        "dimension": "",
+        "view": "age_range*profession",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : age_range=25-34, profession=Salarié(e) – Cadre ou profession intermédiaire (N=6 personnes)**\n\n**Themes dominants** :\n1. **Communauté et relations** (5/18 verbatims) : Importance du sentiment d’appartenance, des liens sociaux et du réseautage.\n2. **Ratio vie pro/vie perso** (2/18 verbatims) : Équilibre entre travail et temps personnel pour s’investir dans d’autres activités.\n3. **Santé** (2/18 verbatims) : Bien-être physique, mental et social, ainsi que l’éducation des enfants comme facteur de santé globale.\n4. **Revenus** (2/18 verbatims) : Besoin de revenus confortables pour voyager ou accéder à des activités culturelles.\n\n**Points de convergence** :\n- **Importance de la com",
+        "n_chunks": 18
+      },
+      {
+        "sq_idx": 5,
+        "type": "raptor_enquete_summary",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_global",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n### **Synthèse analytique globale — Qualité de Vie en Corse (N=246)**\n\n---\n\n#### **1. Satisfaction globale**\nLes scores moyens révèlent une **satisfaction modérée** des Corses quant à leur qualité de vie, avec des disparités notables entre les dimensions évaluées.\n\n- **Bonheur** : **3,66/5** (n=237)\n  Les répondants expriment un niveau de bonheur globalement positif, proche de la moyenne haute, suggérant une perception plutôt favorable de leur bien-être subjectif.\n\n- **Qualité de vie** : **3,83/5** (n=237)\n  Ce score, légèrement supérieur à celui du bonheur, indique que les conditions matérielles et environnementales sont perçues comme globalement satisfaisantes, bien que perfectibles.\n",
+        "n_chunks": 246
+      },
+      {
+        "sq_idx": 5,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Ratio vie pro/ vie perso",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 30 ans (Jeunes adultes), Salarié(e) – Cadre ou profession intermédiaire, à Corte, sur le thème 'Ratio vie pro/ vie perso': Avoir du temps en dehors de la vie pour s'impliquer dans des projets de territoire, des loisirs, et être connecté à la vie extérieure",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 5,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Communauté et relations",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 30 ans (Jeunes adultes), Salarié(e) – Cadre ou profession intermédiaire, à Corte, sur le thème 'Communauté et relations': Richesse sociale, rencontres et partage de valeurs communautaires",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 5,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Services de proximité",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 30 ans (Jeunes adultes), Salarié(e) – Cadre ou profession intermédiaire, à Corte, sur le thème 'Services de proximité': créer une économie locale de circuit court",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 5,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Environnement",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 32 ans (Jeunes adultes), Salarié(e) – Cadre ou profession intermédiaire, à Corte, sur le thème 'Environnement': La qualité de la nature",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 5,
+        "type": "verbatim_evidence",
+        "commune": "Corte",
+        "dimension": "Communauté et relations",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 32 ans (Jeunes adultes), Salarié(e) – Cadre ou profession intermédiaire, à Corte, sur le thème 'Communauté et relations': Le sens d'appartenance, l'entourage",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 5,
+        "type": "oppchovec_score",
+        "commune": "",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être e",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 5,
+        "type": "oppchovec_score",
+        "commune": "Aiti",
+        "dimension": "",
+        "view": "",
+        "scope_reel": "commune",
+        "extrait": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Aiti : 3.07/10 (moyen).",
+        "n_chunks": ""
+      },
+      {
+        "sq_idx": 5,
+        "type": "methodology",
+        "commune": "",
+        "dimension": "",
+        "view": "enquete_methodology",
+        "scope_reel": "commune",
+        "extrait": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nEnquête Qualité de Vie en Corse — Description méthodologique\n\nPRÉSENTATION GÉNÉRALE\nEnquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.\nObjectif : recueillir les perceptions subjectives de la qualité de vie (QdV) et du bien-être,\nen complément des indicateurs o",
+        "n_chunks": ""
+      }
+    ],
+    "answer": "**Synthèse finale : Verbatims citoyens les plus représentatifs à Aiti**\n\nAucun verbatim citoyen spécifique à Aiti n’est disponible dans les sources mobilisées.\nLes données d’enquête citoyenne disponibles couvrent la Corse entière ; aucune donnée d’enquête spécifique à Aiti n’est disponible [SQ2, SQ3, SQ4, SQ5].\n\nLes indicateurs territoriaux objectifs (scores OppChoVec) pour Aiti indiquent une situation défavorable sur plusieurs dimensions, mais ils ne fournissent pas de verbatims ou de perceptions citoyennes [SQ2, SQ3, SQ4, SQ5]."
+  }
+]

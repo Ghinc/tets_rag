@@ -1,0 +1,482 @@
+{
+  "excel_row": 1,
+  "section": "Retrieval mono-commune",
+  "subsection": "Retrieval descriptif global",
+  "question": "Comment les habitants d'Ajaccio ressentent-ils le bien-être ?",
+  "rag_status": "ok",
+  "answer": "### **Synthèse : Comment les habitants d'Ajaccio ressentent-ils le bien-être ?**\n\nÀ Ajaccio, le bien-être des habitants se caractérise par un **décalage marqué entre les ressources territoriales objectives et les perceptions citoyennes**, révélant une qualité de vie contrastée.\n\n#### **1. Une satisfaction globale modérée, mais des disparités fortes selon les dimensions**\nLes habitants d'Ajaccio expriment une **satisfaction globale modérée-forte**, avec un score de bien-être ressenti de **3,74/5** et une qualité de vie évaluée à **3,89/5** [SQ3]. Cependant, cette moyenne cache des écarts importants entre les domaines :\n- **Points forts** : L’emploi (**3,91/5**) et le logement (**3,84/5**) sont les dimensions les mieux notées, reflétant une stabilité économique et un accès au logement perçu comme satisfaisant [SQ3].\n- **Points faibles** : Les **transports (2,21/5)** et la **santé (2,58/5)** concentrent les insatisfactions les plus fortes, avec un écart de **1,70 point** entre la dimension la plus et la moins bien notée [SQ3]. Ces résultats suggèrent que malgré une offre de services dense (80 médecins généralistes, 31 pharmacies, 204 infirmiers [SQ2]), la perception des habitants reste critique, notamment sur l’accessibilité et la qualité des soins.\n\n#### **2. Un territoire riche en opportunités, mais un vécu quotidien en demi-teinte**\nLes **indicateurs territoriaux objectifs** placent Ajaccio en position avantageuse à l’échelle corse :\n- **Score global de 5,78/10**, classant la commune **19ᵉ sur 360** [SQ1], avec des atouts majeurs :\n  - **Opportunités exceptionnelles (10/10)** : Ajaccio se distingue par son **accès aux technologies (9,35/10 pour la couverture haut débit)** et sa **mobilité (8,99/10)**, ainsi qu’un niveau d’éducation élevé (7,42/10) [SQ1][SQ5]. Ces ressources en font un pôle attractif pour l’emploi et les services.\n  - **Vécu moyen (4,80/10)** : Le revenu fiscal, la qualité du logement et l’accès aux services en moins de 20 minutes sont dans la moyenne corse, mais ne se traduisent pas par une satisfaction proportionnelle chez les habitants [SQ1].\n- **Faiblesse structurelle sur le \"choix\" (1,27/10)** : Ce score très bas s’explique par l’absence de quartiers prioritaires (QPV) et une structure démographique spécifique, sans lien direct avec les libertés individuelles [SQ1][SQ5]. Il illustre une limite des indicateurs objectifs, qui ne captent pas toujours les réalités vécues.\n\n#### **3. Des priorités citoyennes en tension avec les atouts territoriaux**\nLes habitants interrogés placent l’**environnement et la santé** en tête de leurs préoccupations [SQ2], alors que les données territoriales montrent une offre de soins et d’éducation parmi les plus denses de Corse (15 écoles maternelles, 20 écoles élémentaires, 6 collèges/lycées [SQ2]). Ce paradoxe suggère que :\n- **L’accès quantitatif aux services ne suffit pas** : La satisfaction en santé (2,58/5) reste faible malgré 80 médecins généralistes, pointant des enjeux de qualité, de délais ou d’inégalités d’accès [SQ3].\n- **Les transports cristallisent les frustrations** : Avec la note la plus basse (2,21/5), ce domaine est perçu comme un frein majeur au quotidien, malgré une mobilité objective élevée (8,99/10) [SQ1][SQ3]. Les verbatims citoyens (bien que non détaillés ici) soulignent probablement des problèmes de congestion, de coût ou de fiabilité [SQ2].\n\n#### **4. Une confiance en l’avenir fragile**\nMalgré une satisfaction globale modérée, les Ajacciens expriment une **confiance en l’avenir limitée (2,75/5)** [SQ3], reflétant des inquiétudes sur les perspectives économiques, environnementales ou sociales. Ce score, inférieur à la moyenne de satisfaction, pourrait traduire :\n- Une **sensibilité aux inégalités** : Le contraste entre les opportunités territoriales (10/10) et le vécu quotidien (4,80/10) peut générer un sentiment d’injustice ou de précarité relative.\n- Des **enjeux urbains non résolus** : Pollution, saturation des infrastructures ou pression immobilière, souvent cités dans les grandes villes, pourraient peser sur le moral des habitants.\n\n---\n### **Conclusion : Un bien-être à deux vitesses**\nÀ Ajaccio, le bien-être se lit comme une **équation déséquilibrée** :\n- **Côté ressources** : La commune dispose d’atouts objectifs exceptionnels (éducation, mobilité, TIC, emploi), la plaçant parmi les territoires les plus favorisés de Corse [SQ1][SQ5].\n- **Côté vécu** : Les habitants perçoivent une qualité de vie **inégale**, avec des satisfactions fortes sur l’emploi et le logement, mais des frustrations persistantes sur les transports, la santé et l’environnement [SQ3]. Ces écarts révèlent que les **indicateurs territoriaux ne captent pas toute la complexité du bien-être ressenti**, notamment les dimensions subjectives comme la qualité des services ou le sentiment de sécurité.\n\nPour améliorer le bien-être ajaccien, les leviers pourraient inclure :\n- **Un focus sur les transports et la santé** : Améliorer la fiabilité des déplacements et l’accès aux soins *perçu* (au-delà de l’offre quantitative).\n- **Renforcer la confiance en l’avenir** : Via des politiques ciblant les inégalités territoriales ou les enjeux environnementaux, priorités citoyennes majeures [SQ2].\n\n---",
+  "sub_questions": [
+    {
+      "idx": 1,
+      "question": "Quel est le score OppChoVec global de bien-être ressenti à l'échelle de la commune d'Ajaccio, tel que mesuré par les indicateurs territoriaux disponibles ?",
+      "answer": "# Score OppChoVec global d'Ajaccio\n\nSelon les indicateurs territoriaux objectifs, **Ajaccio affiche un score OppChoVec global de 5.78/10**, la plaçant au **rang 19e sur 360 communes corses** — une position élevée à l'échelle territoriale.\n\nCe score global masque cependant une **forte hétérogénéité entre ses trois composantes** :\n\n1. **Opportunités (Opp) : 10.00/10 (très élevé, rang 1er)** — Ajaccio excelle en ressources territoriales objectives, particulièrement en accès TIC (9.35/10, couverture 93.5%) et mobilité (8.99/10). Le niveau d'éducation moyen y est également élevé (7.42/10, rang 24e).\n\n2. **Choix (Cho) : 1.27/10 (très faible, rang 358e)** — C'est la composante la plus déficitaire, reflétant l'absence de quartiers prioritaires et une structure démographique/électorale spécifique à la commune.\n\n3. **Vécu (Vec) : 4.80/10 (moyen, rang 41e)** — Les réalisations concrètes (revenu fiscal, qualité du logement, stabilité de l'emploi, accès aux services) se situent à un niveau intermédiaire.\n\n**Contraste avec les perceptions citoyennes** : selon l'enquête citoyenne (47 répondants à Ajaccio), le score de bonheur moyen est de 3.68/5 et la confiance en l'avenir particulièrement basse (2.75/5), suggérant un décalage entre les ressources territoriales objectives et le bien-être ressenti par les habitants."
+    },
+    {
+      "idx": 2,
+      "question": "Quels sont les principaux thèmes émergents des verbatims citoyens d'Ajaccio concernant le bien-être (ex : qualité de vie, accès aux services, environnement, liens sociaux) ?",
+      "answer": "# Analyse des thèmes émergents — Ajaccio\n\nLe contexte fourni ne contient **pas de verbatims citoyens détaillés** pour Ajaccio. Les données disponibles se limitent à des scores quantifiés d'enquête (satisfaction par dimension) et à des indicateurs objectifs territoriaux.\n\nCependant, selon l'enquête citoyenne menée à Ajaccio (N=51 répondants), les **priorités déclarées par les habitants** pointent vers deux thèmes majeurs :\n\n1. **Environnement et Santé** — identifiés comme les dimensions les plus citées comme prioritaires par les répondants.\n\n2. **Transports** — émerge comme la préoccupation la plus aiguë, avec le score de satisfaction le plus faible (2.21/5), révélant une insatisfaction structurelle sur cette dimension.\n\nLes données d'équipements communaux montrent par ailleurs qu'Ajaccio dispose d'une offre de services de proximité dense (80 médecins généralistes, 31 pharmacies, 204 infirmiers, 15 écoles maternelles, 20 écoles élémentaires), ce qui contraste avec la faible satisfaction déclarée en santé (2.58/5) et éducation (3.44/5) — suggérant un écart entre l'offre objective et la perception citoyenne.\n\n**Pour accéder aux verbatims bruts et aux justifications qualitatives détaillées**, il faudrait consulter les entretiens semi-directifs ou les réponses ouvertes de l'enquête, qui ne sont pas inclus dans ce contexte."
+    },
+    {
+      "idx": 3,
+      "question": "Comment les habitants d'Ajaccio évaluent-ils leur satisfaction globale dans les enquêtes locales ou régionales sur le bien-être (ex : notes moyennes, tendances récentes) ?",
+      "answer": "# Satisfaction globale des habitants d'Ajaccio\n\nSelon l'enquête citoyenne sur la qualité de vie en Corse (collecte 2024-2026), les habitants d'Ajaccio expriment une **satisfaction globale modérée-forte** :\n\n- **Score de bien-être ressenti** : 3.74/5 (moyen-fort), plaçant Ajaccio au **5e rang sur 16 communes** évaluées (N=51 répondants).\n- **Score de qualité de vie moyen** : 3.89/5 (moyen-fort).\n- **Score de bonheur moyen** : 3.68/5 (moyen-fort).\n- **Score de confiance en l'avenir** : 2.75/5 (moyen), révélant une préoccupation plus marquée quant aux perspectives futures.\n\n**Disparités par dimension** : Les habitants sont les plus satisfaits de l'**emploi** (3.91/5) et du **logement** (3.84/5), mais expriment une insatisfaction notable concernant les **transports** (2.21/5, note la plus faible) et la **santé** (2.58/5). L'écart entre la dimension la plus et la moins satisfaisante atteint **1.70 points**, indiquant des inégalités de satisfaction selon les domaines de vie.\n\nCes données reflètent une satisfaction globale **stable et modérée**, sans tendance récente disponible (le millésime couvre 2024-2026, enquête en cours)."
+    },
+    {
+      "idx": 4,
+      "question": "Quels indicateurs territoriaux objectifs (ex : accès aux soins, offre culturelle, sécurité, transports) sont les plus fréquemment associés au bien-être dans les retours des habitants d'Ajaccio ?",
+      "answer": "# Analyse des indicateurs territoriaux associés au bien-être à Ajaccio\n\nSelon l'enquête citoyenne menée à Ajaccio (N=51 répondants), les dimensions de bien-être les plus satisfaisantes sont **l'emploi (3.91/5)**, le **logement (3.84/5)** et la **sécurité (3.81/5)**, tandis que les **transports (2.21/5)** constituent la dimension la moins satisfaisante, avec un écart de 1.70 points entre les extrêmes.\n\nCette hiérarchie contraste partiellement avec les indicateurs territoriaux objectifs. D'un côté, selon les données d'équipements communaux, Ajaccio dispose d'une offre de services importante : 80 médecins généralistes, 204 infirmiers, 31 pharmacies, 15 écoles maternelles, 20 écoles élémentaires, 6 collèges et 6 lycées. Le taux d'activité atteint 75.6%, soutenant la satisfaction déclarée en matière d'emploi. De l'autre, selon les indicateurs territoriaux objectifs, la **santé** ne figure qu'à la 13e place de satisfaction (2.58/5), malgré une couverture médicale dense, suggérant que l'accès quantitatif aux soins ne suffit pas à générer une satisfaction perçue.\n\nAu niveau territorial global, selon les indicateurs OppChoVec, Ajaccio affiche un score d'opportunités très élevé (10.00/10, rang 1er/360), porté notamment par l'accès aux TIC (9.35/10) et la mobilité (8.99/10). Cependant, le score de **choix** reste très faible (1.27/10, rang 358e/360), reflétant l'absence de quartiers prioritaires mais aussi des contraintes structurelles. Cette tension entre opportunités objectives et satisfaction perçue suggère que les habitants valorisent davantage l'**emploi stable**, le **logement accessible** et la **sécurité** que l'infrastructure numérique ou la diversité sociale."
+    },
+    {
+      "idx": 5,
+      "question": "Existe-t-il des écarts significatifs entre le score OppChoVec d'Ajaccio et la moyenne des scores des autres communes corses, et si oui, quels facteurs pourraient les expliquer (sans ventilation démographique) ?",
+      "answer": "# Écarts significatifs entre Ajaccio et la moyenne corse\n\n## Écarts objectifs mesurés\n\nSelon les indicateurs territoriaux objectifs, **Ajaccio affiche un score OppChoVec global de 5.78/10, classée 19e sur 360 communes corses** — soit une position **bien au-dessus de la moyenne territoriale corse** (qui s'établit à 5.37/10, calculée à partir des trois sous-scores moyens : Opp 3.87, Cho 8.79, Vec 3.46).\n\nCependant, cette performance globale masque des **disparités extrêmes** entre ses trois composantes :\n\n| Composante | Ajaccio | Moyenne Corse | Écart |\n|---|---|---|---|\n| **Opportunités (Opp)** | 10.00/10 (rang 1er) | 3.87/10 | **+6.13 points** |\n| **Choix (Cho)** | 1.27/10 (rang 358e) | 8.79/10 | **−7.52 points** |\n| **Vécu (Vec)** | 4.80/10 (rang 41e) | 3.46/10 | **+1.34 points** |\n\n## Facteurs explicatifs\n\n**Sur les Opportunités (Opp)**, Ajaccio domine largement grâce à :\n- **Accès TIC (Opp4)** : 9.35/10 (couverture 93.5%) — bien supérieur à la moyenne corse (6.02/10)\n- **Mobilité (Opp3)** : 8.99/10 — nettement au-dessus de la moyenne (5.26/10), reflétant une meilleure accessibilité routière et transport urbain\n- **Éducation (Opp1)** : 7.42/10 — supérieur à la moyenne corse (2.35/10), cohérent avec le statut de capitale régionale\n\n**Sur le Choix (Cho)**, l'effondrement d'Ajaccio (1.27/10, 358e rang) contraste radicalement avec la moyenne corse (8.79/10). Selon la définition opérationnelle, ce score reflète la présence de **quartiers prioritaires (QPV)** et des enjeux de droits civiques. Ajaccio, en tant que ville-centre, concentre probablement des zones urbaines sensibles absentes des petites communes rurales corses.\n\n**Sur le Vécu (Vec)**, Ajaccio surpasse légèrement la moyenne (4.80 vs 3.46/10), suggérant un accès aux services et une stabilité d'emploi relativement meilleurs, malgré les tensions urbaines.\n\n## Synthèse\n\nAjaccio incarne un **paradoxe territorial** : une ville dotée d'excellentes ressources objectives (éducation, numérique, mobilité) mais confrontée à des **fractures socio-spatiales internes** (quartiers prioritaires) qui dégradent drastiquement son score de liberté effective — un profil inverse des petites communes rurales corses, riches en cohésion"
+    }
+  ],
+  "n_subquestions": 5,
+  "n_sources": 25,
+  "rag_elapsed_s": 62.4,
+  "sources": [
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nClassement des composantes OppChoVec — Corse entière (360 communes).\n\nSous-scores principaux (du plus élevé au plus faible) :\n  1. Cho (Choix)               : 8.79/10 (très élevé)\n  2. Opp (Opportunités)        : 3.87/10 (moyen)\n  3. Vec (Vécu)                : 3.46/10 (moyen)\n\n-> COMPOSANTE LA PLUS ELEVEE  : Cho (Choix) (8.79/10)\n-> COMPOSANTE LA PLUS FAIBLE  : Vec (Vécu) (3.46/10)\n\nSous-dimensions du score Opportunités (Opp), classées :\n  1. Opp4 — Accès TIC               : 6.02/10 (élevé)\n  2. Opp3 — Mobilité                : 5.26/10 (élevé)\n  3. Opp2 — Diversité sociale       : 2.60/10 (faible)\n  4. Opp1 — Éducation               : 2.35/10 (faible)\n\n-> SOUS-DIMENSION OPP LA PLUS ELEVEE : Opp4 — Accès TIC (6.02/10)\n-> SOUS-DIMENSION OPP LA PLUS FAIBLE : Opp1 — Éducation (2.35/10)",
+      "metadata": {
+        "type": "classement",
+        "epci": "",
+        "zone": "Corse",
+        "source": "oppchovec_classement",
+        "source_type": "oppchovec_scores",
+        "label": "Scores OppChoVec — Corse"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théorique >= 30 min de trajet.\n\n• Opp4 — Avoir accès aux TIC (poids 0,25)\n  Couverture locale par Internet haut débit (>= 30 Mbit/s) et réseau 4G.\n\nDIMENSION 2 — CHOIX (Cho)\nLa liberté de choix effective dont disposent les individus sur ce territoire.\n\n• Cho1 — Ne pas être discriminé(e) (poids 0,5)\n  Présence ou absence de quartiers cibles de la politique de la ville dans la commune (indicateur pénalisant la concentration de précarité).\n\n• Cho2 — Avoir les moyens d'influencer les décisions publiques (poids 0,5)\n  Proportion d'individus ayant le droit de vote (nationalité française, >= 18 ans) parmi la population en âge de travailler (>= 16 ans).\n\nDIMENSION 3 — VÉCU (Vec)\nLes réalisations effectives des individus — ce qui a été réellement accompli et vécu.\n\n• Vec1 — Avoir un revenu décent (poids 0,25)\n  Revenu fiscal moyen par foyer fiscal dans la commune.\n\n• Vec2 — Avoir un logement décent (poids 0,25, réparti sur 3 sous-indicateurs)\n  - Vec2a : Nombre moyen de personnes par pièce (surpeuplement)\n  - Vec2b : Proportion de logements avec équipements sanitaires complets (eau chaude, douche/baignoire, chauffage, cuisine avec évier)\n  - Vec2c : Proportion de la population vivant dans une habitation individuelle\n\n• Vec3 — Être bien inséré sur le marché du travail (poids 0,25)\n  Stabilité des emplois des résidents (5 niveaux : chômeur, emploi aidé, contrat ponctuel, CDD, emploi stable — CDI, fonctionnaire, indépendant).\n\n• Vec4 — Être proche des services (poids 0,25)\n  Nombre d'établissements de vie courante accessibles en moins de 20 minutes (santé, éducation, commerces, culture, administration), calculé par algorithme de plus court chemin (Dijkstra) sur réseau routier.\n\nCALCUL DE L'INDICE\n\nÉtape 1 — Standardisation (commensurabilité) :\n  V(i,j,k) = (Xijk − Xjk,min) / (Xjk,max − Xjk,min)\n  Chaque sous-indicateur est ramené entre 0 (minimum observé) et 1 (maximum observé).\n\nÉtape 2 — Agrégation par dimension (moyenne pondérée) :\n  Dk(i) = Σ pjk × V(i,j,k)\n  Les poids pjk sont égaux au sein de chaque dimension.\n\nÉtape 3 — Indice global (avec aversion à la pauvreté et complémentarité) :\n  OppChoVec(i) = agrégation des 3 dimensions Dk avec :\n    - paramètre β = 2,5 (aversion à la pauvreté : pénalise les très faibles scores)\n    - paramètre γ = 1,5 (complémentarité : pénalise les déséquilibres entre dimensions)\n  Le résultat brut (0-1) est ensuite renormalisé sur 0-10 pour l'application corse.\n\nINTERPRÉTATION DE L'ÉCHELLE 0-10\n\n- 0 = niveau de bien-être minimal parmi les 360 communes corses\n- 10 = niveau de bien-être maximal parmi les 360 communes corses\n- ~5 = niveau médian corse\n\nUn score élevé signifie que la commune offre à la fois de bonnes opportunités, une réelle liberté de choix et un vécu satisfaisant. Un score faible peut refléter un déficit sur une ou plusieurs dimensions. Les trois scores partiels (Opp, Cho, Vec) permettent de diagnostiquer la nature du déficit : une commune peut avoir de bonnes opportunités (Opp élevé) mais un vécu difficile (Vec faible), signalant un décalage entre l'offre territoriale et les conditions de vie réelles.\n\nSource : Bourdeau-Lepage L. (2011), adapté pour la Corse. Données : oppchovec_betti_0_10.",
+      "metadata": {
+        "source": "methodology",
+        "commune": "",
+        "type": "methodology",
+        "source_type": "oppchovec_scores",
+        "label": "Scores OppChoVec — "
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Ajaccio : 5.78/10 (élevé).\n\nSous-scores principaux de Ajaccio :\n  • Opportunités (Opp) : 10.00/10 (très élevé)  — rang 1e/360\n  • Choix (Cho)        : 1.27/10 (très faible)  — rang 358e/360\n  • Vécu (Vec)         : 4.80/10 (moyen)  — rang 41e/360\n  • OppChoVec global   : rang 19e/360\n\nSous-dimensions du score Opportunités (Opp) de Ajaccio :\n  • Opp1 — Éducation      : 7.42/10 (élevé)  [valeur brute : 5.760] — rang 24e/360\n  • Opp2 — Diversité soc. : 1.96/10 (faible)  [indice Theil : 0.2787] — rang 216e/360\n  • Opp3 — Mobilité       : 8.99/10 (très élevé)  [indicateur : 186.1/200] — rang 128e/360\n  • Opp4 — TIC (numérique): 9.35/10 (très élevé)  [couverture : 93.5%] — rang 24e/360\n\nAnalyse de Ajaccio :\n- Ajaccio se distingue surtout par ses opportunités (Opp=10.00/10).\n- Le point le plus faible de Ajaccio est le score Choix (1.27/10).\n\nValeurs brutes (non normalisées) de Ajaccio :\n- OppChoVec brut : 0.1026\n- Opp brut : 0.7095\n- Cho brut : 0.4294\n- Vec brut : 0.5801",
+      "metadata": {
+        "commune": "Ajaccio",
+        "rank_vec": 41,
+        "rank_opp3": 128,
+        "rank_opp": 1,
+        "rank_opp4": 24,
+        "rank_cho": 358,
+        "rank_total": 19,
+        "cho_0_10": 1.265509,
+        "vec_0_10": 4.796981,
+        "opp4_0_10": 9.35,
+        "opp1_0_10": 7.4157,
+        "opp2_0_10": 1.9557,
+        "rank_opp2": 216,
+        "oppchovec_0_10": 5.779754,
+        "opp_0_10": 10.0,
+        "rank_opp1": 24,
+        "opp3_0_10": 8.9891,
+        "source": "oppchovec_betti_0_10",
+        "source_type": "oppchovec_scores",
+        "label": "Scores OppChoVec — Ajaccio"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nScores moyens de l'enquête QdV pour la commune de Ajaccio (47 répondants). Score bonheur moyen : 3.68/5. Score qualité de vie moyen : 3.89/5. Score confiance avenir moyen : 2.75/5. Scores moyens par dimension (1-5) : Transports=0.95, Éducation=2.35, Réseaux téléphoniques=2.38, Institutions=1.85, Tourisme=1.57, Sécurité=2.73, Santé=1.80, Situation pro=2.90, Revenus=2.50, Temps travail/perso=2.23, Logement=2.80, Services locaux=2.40, Culture=2.40, Soutien social=3.11, Vie associative=0.64. Dimensions les plus citées comme prioritaires : Environnement, Santé.",
+      "metadata": {
+        "nom": "Ajaccio",
+        "commune": "Ajaccio",
+        "data_type": "quanti",
+        "source_type": "enquete_scores_commune",
+        "n_repondants": 47,
+        "label": "Scores satisfaction commune (subjectif/quanti)"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nScores moyens de l'enquête QdV pour la commune de Poggio-d’Oletta (1 répondants). Score bonheur moyen : 4.00/5. Score qualité de vie moyen : 4.00/5. Score confiance avenir moyen : 2.00/5. Scores moyens par dimension (1-5) : Transports=0.00, Éducation=3.00, Réseaux téléphoniques=3.00, Institutions=0.00, Tourisme=2.00, Sécurité=4.00, Santé=3.00, Situation pro=3.00, Revenus=1.00, Temps travail/perso=3.00, Logement=3.00, Services locaux=0.00, Culture=3.00, Soutien social=4.00, Vie associative=0.00. Dimensions les plus citées comme prioritaires : Communauté et relations, Environnement.",
+      "metadata": {
+        "source_type": "enquete_scores_commune",
+        "data_type": "quanti",
+        "commune": "Poggio-d’Oletta",
+        "n_repondants": 1,
+        "nom": "Poggio-d’Oletta",
+        "label": "Scores satisfaction commune (subjectif/quanti)"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théorique >= 30 min de trajet.\n\n• Opp4 — Avoir accès aux TIC (poids 0,25)\n  Couverture locale par Internet haut débit (>= 30 Mbit/s) et réseau 4G.\n\nDIMENSION 2 — CHOIX (Cho)\nLa liberté de choix effective dont disposent les individus sur ce territoire.\n\n• Cho1 — Ne pas être discriminé(e) (poids 0,5)\n  Présence ou absence de quartiers cibles de la politique de la ville dans la commune (indicateur pénalisant la concentration de précarité).\n\n• Cho2 — Avoir les moyens d'influencer les décisions publiques (poids 0,5)\n  Proportion d'individus ayant le droit de vote (nationalité française, >= 18 ans) parmi la population en âge de travailler (>= 16 ans).\n\nDIMENSION 3 — VÉCU (Vec)\nLes réalisations effectives des individus — ce qui a été réellement accompli et vécu.\n\n• Vec1 — Avoir un revenu décent (poids 0,25)\n  Revenu fiscal moyen par foyer fiscal dans la commune.\n\n• Vec2 — Avoir un logement décent (poids 0,25, réparti sur 3 sous-indicateurs)\n  - Vec2a : Nombre moyen de personnes par pièce (surpeuplement)\n  - Vec2b : Proportion de logements avec équipements sanitaires complets (eau chaude, douche/baignoire, chauffage, cuisine avec évier)\n  - Vec2c : Proportion de la population vivant dans une habitation individuelle\n\n• Vec3 — Être bien inséré sur le marché du travail (poids 0,25)\n  Stabilité des emplois des résidents (5 niveaux : chômeur, emploi aidé, contrat ponctuel, CDD, emploi stable — CDI, fonctionnaire, indépendant).\n\n• Vec4 — Être proche des services (poids 0,25)\n  Nombre d'établissements de vie courante accessibles en moins de 20 minutes (santé, éducation, commerces, culture, administration), calculé par algorithme de plus court chemin (Dijkstra) sur réseau routier.\n\nCALCUL DE L'INDICE\n\nÉtape 1 — Standardisation (commensurabilité) :\n  V(i,j,k) = (Xijk − Xjk,min) / (Xjk,max − Xjk,min)\n  Chaque sous-indicateur est ramené entre 0 (minimum observé) et 1 (maximum observé).\n\nÉtape 2 — Agrégation par dimension (moyenne pondérée) :\n  Dk(i) = Σ pjk × V(i,j,k)\n  Les poids pjk sont égaux au sein de chaque dimension.\n\nÉtape 3 — Indice global (avec aversion à la pauvreté et complémentarité) :\n  OppChoVec(i) = agrégation des 3 dimensions Dk avec :\n    - paramètre β = 2,5 (aversion à la pauvreté : pénalise les très faibles scores)\n    - paramètre γ = 1,5 (complémentarité : pénalise les déséquilibres entre dimensions)\n  Le résultat brut (0-1) est ensuite renormalisé sur 0-10 pour l'application corse.\n\nINTERPRÉTATION DE L'ÉCHELLE 0-10\n\n- 0 = niveau de bien-être minimal parmi les 360 communes corses\n- 10 = niveau de bien-être maximal parmi les 360 communes corses\n- ~5 = niveau médian corse\n\nUn score élevé signifie que la commune offre à la fois de bonnes opportunités, une réelle liberté de choix et un vécu satisfaisant. Un score faible peut refléter un déficit sur une ou plusieurs dimensions. Les trois scores partiels (Opp, Cho, Vec) permettent de diagnostiquer la nature du déficit : une commune peut avoir de bonnes opportunités (Opp élevé) mais un vécu difficile (Vec faible), signalant un décalage entre l'offre territoriale et les conditions de vie réelles.\n\nSource : Bourdeau-Lepage L. (2011), adapté pour la Corse. Données : oppchovec_betti_0_10.",
+      "metadata": {
+        "type": "methodology",
+        "commune": "",
+        "source": "methodology",
+        "source_type": "oppchovec_scores",
+        "label": "Scores OppChoVec — "
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Ajaccio : 5.78/10 (élevé).\n\nSous-scores principaux de Ajaccio :\n  • Opportunités (Opp) : 10.00/10 (très élevé)  — rang 1e/360\n  • Choix (Cho)        : 1.27/10 (très faible)  — rang 358e/360\n  • Vécu (Vec)         : 4.80/10 (moyen)  — rang 41e/360\n  • OppChoVec global   : rang 19e/360\n\nSous-dimensions du score Opportunités (Opp) de Ajaccio :\n  • Opp1 — Éducation      : 7.42/10 (élevé)  [valeur brute : 5.760] — rang 24e/360\n  • Opp2 — Diversité soc. : 1.96/10 (faible)  [indice Theil : 0.2787] — rang 216e/360\n  • Opp3 — Mobilité       : 8.99/10 (très élevé)  [indicateur : 186.1/200] — rang 128e/360\n  • Opp4 — TIC (numérique): 9.35/10 (très élevé)  [couverture : 93.5%] — rang 24e/360\n\nAnalyse de Ajaccio :\n- Ajaccio se distingue surtout par ses opportunités (Opp=10.00/10).\n- Le point le plus faible de Ajaccio est le score Choix (1.27/10).\n\nValeurs brutes (non normalisées) de Ajaccio :\n- OppChoVec brut : 0.1026\n- Opp brut : 0.7095\n- Cho brut : 0.4294\n- Vec brut : 0.5801",
+      "metadata": {
+        "oppchovec_0_10": 5.779754,
+        "opp4_0_10": 9.35,
+        "vec_0_10": 4.796981,
+        "rank_cho": 358,
+        "rank_vec": 41,
+        "rank_opp": 1,
+        "rank_opp1": 24,
+        "rank_opp2": 216,
+        "opp_0_10": 10.0,
+        "rank_opp3": 128,
+        "source": "oppchovec_betti_0_10",
+        "opp3_0_10": 8.9891,
+        "commune": "Ajaccio",
+        "rank_total": 19,
+        "cho_0_10": 1.265509,
+        "rank_opp4": 24,
+        "opp1_0_10": 7.4157,
+        "opp2_0_10": 1.9557,
+        "source_type": "oppchovec_scores",
+        "label": "Scores OppChoVec — Ajaccio"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nScores moyens de l'enquête QdV pour la commune de Ajaccio (47 répondants). Score bonheur moyen : 3.68/5. Score qualité de vie moyen : 3.89/5. Score confiance avenir moyen : 2.75/5. Scores moyens par dimension (1-5) : Transports=0.95, Éducation=2.35, Réseaux téléphoniques=2.38, Institutions=1.85, Tourisme=1.57, Sécurité=2.73, Santé=1.80, Situation pro=2.90, Revenus=2.50, Temps travail/perso=2.23, Logement=2.80, Services locaux=2.40, Culture=2.40, Soutien social=3.11, Vie associative=0.64. Dimensions les plus citées comme prioritaires : Environnement, Santé.",
+      "metadata": {
+        "data_type": "quanti",
+        "n_repondants": 47,
+        "source_type": "enquete_scores_commune",
+        "nom": "Ajaccio",
+        "commune": "Ajaccio",
+        "label": "Scores satisfaction commune (subjectif/quanti)"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nClassement des 14 dimensions de satisfaction — commune de Ajaccio (N=51 répondants).\n\nDu plus satisfaisant au moins satisfaisant :\n   1. Emploi                         : 3.91/5 (moyen-fort)\n   2. Logement                       : 3.84/5 (moyen-fort)\n   3. Sécurité                       : 3.81/5 (moyen-fort)\n   4. Communauté et relations        : 3.54/5 (moyen-fort)\n   5. Revenus                        : 3.51/5 (moyen-fort)\n   6. Culture                        : 3.49/5 (moyen)\n   7. Réseau                         : 3.49/5 (moyen)\n   8. Éducation                      : 3.44/5 (moyen)\n   9. Services de proximité          : 3.42/5 (moyen)\n  10. Ratio vie pro/vie perso        : 3.19/5 (moyen)\n  11. Institutions                   : 2.93/5 (moyen)\n  12. Tourisme                       : 2.63/5 (moyen)\n  13. Santé                          : 2.58/5 (moyen)\n  14. Transports                     : 2.21/5 (faible)\n\n-> NOTE LA PLUS FAIBLE   : Transports (2.21/5)\n-> NOTE LA PLUS ELEVEE   : Emploi (3.91/5)\n-> ECART min/max         : 1.70 points",
+      "metadata": {
+        "commune": "Ajaccio",
+        "source_type": "enquete_scores_commune",
+        "scope": "commune",
+        "nom": "Ajaccio",
+        "label": "Scores satisfaction commune (subjectif/quanti)"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "La commune de Ajaccio compte une part de 12.9% de cadres et professions intellectuelles supérieures, 16.6% d'ouvriers, avec un taux d'activité de 75.6%. 87.8% des emplois y sont salariés. On y trouve 5.0 points de contact postal, 11.0 hypermarchés ou supermarchés, 38.0 supérettes ou épiceries, 51.0 boulangeries et 21.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 15.0 écoles maternelles, 20.0 écoles élémentaires, 6.0 collèges et 6.0 lycées. Elle possède 1.0 services d'urgence, 80.0 médecins généralistes, 31.0 pharmacies, 204.0 infirmiers et 15.0 crèches. La sécurité est assurée par 1.0 postes de police ou gendarmerie. Il y a également 2.0 agences Pôle emploi. Le taux de pauvreté est de 14.3%, la part de logements vacants est de 3.3%, et celle des résidences secondaires est de 9.2%. Le taux de coups et blessures volontaires est de 4.0 pour 1 000 habitants. Le prix moyen au m² est de 3666.90984455959€, pour une surface moyenne des logements de 71.7937823834197 m².",
+      "metadata": {
+        "source": "data_comp",
+        "data_type": "quanti",
+        "commune": "Ajaccio",
+        "source_type": "communes_equipements",
+        "label": "Équipements et services commune (objectif/quanti)"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théorique >= 30 min de trajet.\n\n• Opp4 — Avoir accès aux TIC (poids 0,25)\n  Couverture locale par Internet haut débit (>= 30 Mbit/s) et réseau 4G.\n\nDIMENSION 2 — CHOIX (Cho)\nLa liberté de choix effective dont disposent les individus sur ce territoire.\n\n• Cho1 — Ne pas être discriminé(e) (poids 0,5)\n  Présence ou absence de quartiers cibles de la politique de la ville dans la commune (indicateur pénalisant la concentration de précarité).\n\n• Cho2 — Avoir les moyens d'influencer les décisions publiques (poids 0,5)\n  Proportion d'individus ayant le droit de vote (nationalité française, >= 18 ans) parmi la population en âge de travailler (>= 16 ans).\n\nDIMENSION 3 — VÉCU (Vec)\nLes réalisations effectives des individus — ce qui a été réellement accompli et vécu.\n\n• Vec1 — Avoir un revenu décent (poids 0,25)\n  Revenu fiscal moyen par foyer fiscal dans la commune.\n\n• Vec2 — Avoir un logement décent (poids 0,25, réparti sur 3 sous-indicateurs)\n  - Vec2a : Nombre moyen de personnes par pièce (surpeuplement)\n  - Vec2b : Proportion de logements avec équipements sanitaires complets (eau chaude, douche/baignoire, chauffage, cuisine avec évier)\n  - Vec2c : Proportion de la population vivant dans une habitation individuelle\n\n• Vec3 — Être bien inséré sur le marché du travail (poids 0,25)\n  Stabilité des emplois des résidents (5 niveaux : chômeur, emploi aidé, contrat ponctuel, CDD, emploi stable — CDI, fonctionnaire, indépendant).\n\n• Vec4 — Être proche des services (poids 0,25)\n  Nombre d'établissements de vie courante accessibles en moins de 20 minutes (santé, éducation, commerces, culture, administration), calculé par algorithme de plus court chemin (Dijkstra) sur réseau routier.\n\nCALCUL DE L'INDICE\n\nÉtape 1 — Standardisation (commensurabilité) :\n  V(i,j,k) = (Xijk − Xjk,min) / (Xjk,max − Xjk,min)\n  Chaque sous-indicateur est ramené entre 0 (minimum observé) et 1 (maximum observé).\n\nÉtape 2 — Agrégation par dimension (moyenne pondérée) :\n  Dk(i) = Σ pjk × V(i,j,k)\n  Les poids pjk sont égaux au sein de chaque dimension.\n\nÉtape 3 — Indice global (avec aversion à la pauvreté et complémentarité) :\n  OppChoVec(i) = agrégation des 3 dimensions Dk avec :\n    - paramètre β = 2,5 (aversion à la pauvreté : pénalise les très faibles scores)\n    - paramètre γ = 1,5 (complémentarité : pénalise les déséquilibres entre dimensions)\n  Le résultat brut (0-1) est ensuite renormalisé sur 0-10 pour l'application corse.\n\nINTERPRÉTATION DE L'ÉCHELLE 0-10\n\n- 0 = niveau de bien-être minimal parmi les 360 communes corses\n- 10 = niveau de bien-être maximal parmi les 360 communes corses\n- ~5 = niveau médian corse\n\nUn score élevé signifie que la commune offre à la fois de bonnes opportunités, une réelle liberté de choix et un vécu satisfaisant. Un score faible peut refléter un déficit sur une ou plusieurs dimensions. Les trois scores partiels (Opp, Cho, Vec) permettent de diagnostiquer la nature du déficit : une commune peut avoir de bonnes opportunités (Opp élevé) mais un vécu difficile (Vec faible), signalant un décalage entre l'offre territoriale et les conditions de vie réelles.\n\nSource : Bourdeau-Lepage L. (2011), adapté pour la Corse. Données : oppchovec_betti_0_10.",
+      "metadata": {
+        "commune": "",
+        "source": "methodology",
+        "type": "methodology",
+        "source_type": "oppchovec_scores",
+        "label": "Scores OppChoVec — "
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Ajaccio : 5.78/10 (élevé).\n\nSous-scores principaux de Ajaccio :\n  • Opportunités (Opp) : 10.00/10 (très élevé)  — rang 1e/360\n  • Choix (Cho)        : 1.27/10 (très faible)  — rang 358e/360\n  • Vécu (Vec)         : 4.80/10 (moyen)  — rang 41e/360\n  • OppChoVec global   : rang 19e/360\n\nSous-dimensions du score Opportunités (Opp) de Ajaccio :\n  • Opp1 — Éducation      : 7.42/10 (élevé)  [valeur brute : 5.760] — rang 24e/360\n  • Opp2 — Diversité soc. : 1.96/10 (faible)  [indice Theil : 0.2787] — rang 216e/360\n  • Opp3 — Mobilité       : 8.99/10 (très élevé)  [indicateur : 186.1/200] — rang 128e/360\n  • Opp4 — TIC (numérique): 9.35/10 (très élevé)  [couverture : 93.5%] — rang 24e/360\n\nAnalyse de Ajaccio :\n- Ajaccio se distingue surtout par ses opportunités (Opp=10.00/10).\n- Le point le plus faible de Ajaccio est le score Choix (1.27/10).\n\nValeurs brutes (non normalisées) de Ajaccio :\n- OppChoVec brut : 0.1026\n- Opp brut : 0.7095\n- Cho brut : 0.4294\n- Vec brut : 0.5801",
+      "metadata": {
+        "opp3_0_10": 8.9891,
+        "rank_opp3": 128,
+        "source": "oppchovec_betti_0_10",
+        "opp_0_10": 10.0,
+        "rank_opp2": 216,
+        "opp4_0_10": 9.35,
+        "commune": "Ajaccio",
+        "rank_cho": 358,
+        "opp1_0_10": 7.4157,
+        "rank_opp1": 24,
+        "rank_vec": 41,
+        "rank_opp4": 24,
+        "oppchovec_0_10": 5.779754,
+        "rank_total": 19,
+        "vec_0_10": 4.796981,
+        "opp2_0_10": 1.9557,
+        "cho_0_10": 1.265509,
+        "rank_opp": 1,
+        "source_type": "oppchovec_scores",
+        "label": "Scores OppChoVec — Ajaccio"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nClassement des 14 dimensions de satisfaction — commune de Ajaccio (N=51 répondants).\n\nDu plus satisfaisant au moins satisfaisant :\n   1. Emploi                         : 3.91/5 (moyen-fort)\n   2. Logement                       : 3.84/5 (moyen-fort)\n   3. Sécurité                       : 3.81/5 (moyen-fort)\n   4. Communauté et relations        : 3.54/5 (moyen-fort)\n   5. Revenus                        : 3.51/5 (moyen-fort)\n   6. Culture                        : 3.49/5 (moyen)\n   7. Réseau                         : 3.49/5 (moyen)\n   8. Éducation                      : 3.44/5 (moyen)\n   9. Services de proximité          : 3.42/5 (moyen)\n  10. Ratio vie pro/vie perso        : 3.19/5 (moyen)\n  11. Institutions                   : 2.93/5 (moyen)\n  12. Tourisme                       : 2.63/5 (moyen)\n  13. Santé                          : 2.58/5 (moyen)\n  14. Transports                     : 2.21/5 (faible)\n\n-> NOTE LA PLUS FAIBLE   : Transports (2.21/5)\n-> NOTE LA PLUS ELEVEE   : Emploi (3.91/5)\n-> ECART min/max         : 1.70 points",
+      "metadata": {
+        "commune": "Ajaccio",
+        "source_type": "enquete_scores_commune",
+        "scope": "commune",
+        "nom": "Ajaccio",
+        "label": "Scores satisfaction commune (subjectif/quanti)"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nScores moyens de l'enquête QdV pour la commune de Ajaccio (47 répondants). Score bonheur moyen : 3.68/5. Score qualité de vie moyen : 3.89/5. Score confiance avenir moyen : 2.75/5. Scores moyens par dimension (1-5) : Transports=0.95, Éducation=2.35, Réseaux téléphoniques=2.38, Institutions=1.85, Tourisme=1.57, Sécurité=2.73, Santé=1.80, Situation pro=2.90, Revenus=2.50, Temps travail/perso=2.23, Logement=2.80, Services locaux=2.40, Culture=2.40, Soutien social=3.11, Vie associative=0.64. Dimensions les plus citées comme prioritaires : Environnement, Santé.",
+      "metadata": {
+        "commune": "Ajaccio",
+        "source_type": "enquete_scores_commune",
+        "data_type": "quanti",
+        "n_repondants": 47,
+        "nom": "Ajaccio",
+        "label": "Scores satisfaction commune (subjectif/quanti)"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nClassement des communes — bien-être ressenti (bonheur + qualité de vie, échelle 1-5)\n(Seuil minimum 3 répondants par commune)\n\n  Rang Commune                     N répondants    Score /5\n  ────────────────────────────────────────────────────────────\n   1. Linguizzetta               N=  3 répondants   4.33/5 (moyen-fort)\n   2. Furiani                    N=  6 répondants   4.17/5 (moyen-fort)\n   3. Penta-di-Casinca           N=  4 répondants   4.00/5 (moyen-fort)\n   4. Porto-Vecchio              N=  7 répondants   4.00/5 (moyen-fort)\n   5. Ajaccio                    N= 51 répondants   3.74/5 (moyen-fort)\n   6. Alata                      N=  3 répondants   3.67/5 (moyen-fort)\n   7. Ghisonaccia                N=  3 répondants   3.67/5 (moyen-fort)\n   8. San-Martino-di-Lota        N=  3 répondants   3.67/5 (moyen-fort)\n   9. Aleria                     N=  6 répondants   3.60/5 (moyen-fort)\n  10. Bastelicaccia              N=  5 répondants   3.60/5 (moyen-fort)\n  11. Bastia                     N= 23 répondants   3.55/5 (moyen-fort)\n  12. Corte                      N= 50 répondants   3.52/5 (moyen-fort)\n  13. Biguglia                   N=  4 répondants   3.50/5 (moyen-fort)\n  14. Calvi                      N=  3 répondants   3.33/5 (moyen)\n  15. Borgo                      N=  3 répondants   3.00/5 (moyen)\n  16. Lucciana                   N=  5 répondants   2.50/5 (moyen)\n\n-> COMMUNE LA MIEUX ÉVALUÉE   : Linguizzetta (4.33/5, N=3)\n-> COMMUNE LA MOINS BIEN ÉVAL. : Lucciana (2.50/5, N=5)\n\nNote : Moyenne des réponses aux questions sur le bonheur général et la qualité de vie globale.",
+      "metadata": {
+        "criterion": "bien_etre",
+        "scope": "communes_bien_etre",
+        "source_type": "enquete_scores_commune",
+        "label": "Scores satisfaction commune (subjectif/quanti)"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théorique >= 30 min de trajet.\n\n• Opp4 — Avoir accès aux TIC (poids 0,25)\n  Couverture locale par Internet haut débit (>= 30 Mbit/s) et réseau 4G.\n\nDIMENSION 2 — CHOIX (Cho)\nLa liberté de choix effective dont disposent les individus sur ce territoire.\n\n• Cho1 — Ne pas être discriminé(e) (poids 0,5)\n  Présence ou absence de quartiers cibles de la politique de la ville dans la commune (indicateur pénalisant la concentration de précarité).\n\n• Cho2 — Avoir les moyens d'influencer les décisions publiques (poids 0,5)\n  Proportion d'individus ayant le droit de vote (nationalité française, >= 18 ans) parmi la population en âge de travailler (>= 16 ans).\n\nDIMENSION 3 — VÉCU (Vec)\nLes réalisations effectives des individus — ce qui a été réellement accompli et vécu.\n\n• Vec1 — Avoir un revenu décent (poids 0,25)\n  Revenu fiscal moyen par foyer fiscal dans la commune.\n\n• Vec2 — Avoir un logement décent (poids 0,25, réparti sur 3 sous-indicateurs)\n  - Vec2a : Nombre moyen de personnes par pièce (surpeuplement)\n  - Vec2b : Proportion de logements avec équipements sanitaires complets (eau chaude, douche/baignoire, chauffage, cuisine avec évier)\n  - Vec2c : Proportion de la population vivant dans une habitation individuelle\n\n• Vec3 — Être bien inséré sur le marché du travail (poids 0,25)\n  Stabilité des emplois des résidents (5 niveaux : chômeur, emploi aidé, contrat ponctuel, CDD, emploi stable — CDI, fonctionnaire, indépendant).\n\n• Vec4 — Être proche des services (poids 0,25)\n  Nombre d'établissements de vie courante accessibles en moins de 20 minutes (santé, éducation, commerces, culture, administration), calculé par algorithme de plus court chemin (Dijkstra) sur réseau routier.\n\nCALCUL DE L'INDICE\n\nÉtape 1 — Standardisation (commensurabilité) :\n  V(i,j,k) = (Xijk − Xjk,min) / (Xjk,max − Xjk,min)\n  Chaque sous-indicateur est ramené entre 0 (minimum observé) et 1 (maximum observé).\n\nÉtape 2 — Agrégation par dimension (moyenne pondérée) :\n  Dk(i) = Σ pjk × V(i,j,k)\n  Les poids pjk sont égaux au sein de chaque dimension.\n\nÉtape 3 — Indice global (avec aversion à la pauvreté et complémentarité) :\n  OppChoVec(i) = agrégation des 3 dimensions Dk avec :\n    - paramètre β = 2,5 (aversion à la pauvreté : pénalise les très faibles scores)\n    - paramètre γ = 1,5 (complémentarité : pénalise les déséquilibres entre dimensions)\n  Le résultat brut (0-1) est ensuite renormalisé sur 0-10 pour l'application corse.\n\nINTERPRÉTATION DE L'ÉCHELLE 0-10\n\n- 0 = niveau de bien-être minimal parmi les 360 communes corses\n- 10 = niveau de bien-être maximal parmi les 360 communes corses\n- ~5 = niveau médian corse\n\nUn score élevé signifie que la commune offre à la fois de bonnes opportunités, une réelle liberté de choix et un vécu satisfaisant. Un score faible peut refléter un déficit sur une ou plusieurs dimensions. Les trois scores partiels (Opp, Cho, Vec) permettent de diagnostiquer la nature du déficit : une commune peut avoir de bonnes opportunités (Opp élevé) mais un vécu difficile (Vec faible), signalant un décalage entre l'offre territoriale et les conditions de vie réelles.\n\nSource : Bourdeau-Lepage L. (2011), adapté pour la Corse. Données : oppchovec_betti_0_10.",
+      "metadata": {
+        "commune": "",
+        "type": "methodology",
+        "source": "methodology",
+        "source_type": "oppchovec_scores",
+        "label": "Scores OppChoVec — "
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Ajaccio : 5.78/10 (élevé).\n\nSous-scores principaux de Ajaccio :\n  • Opportunités (Opp) : 10.00/10 (très élevé)  — rang 1e/360\n  • Choix (Cho)        : 1.27/10 (très faible)  — rang 358e/360\n  • Vécu (Vec)         : 4.80/10 (moyen)  — rang 41e/360\n  • OppChoVec global   : rang 19e/360\n\nSous-dimensions du score Opportunités (Opp) de Ajaccio :\n  • Opp1 — Éducation      : 7.42/10 (élevé)  [valeur brute : 5.760] — rang 24e/360\n  • Opp2 — Diversité soc. : 1.96/10 (faible)  [indice Theil : 0.2787] — rang 216e/360\n  • Opp3 — Mobilité       : 8.99/10 (très élevé)  [indicateur : 186.1/200] — rang 128e/360\n  • Opp4 — TIC (numérique): 9.35/10 (très élevé)  [couverture : 93.5%] — rang 24e/360\n\nAnalyse de Ajaccio :\n- Ajaccio se distingue surtout par ses opportunités (Opp=10.00/10).\n- Le point le plus faible de Ajaccio est le score Choix (1.27/10).\n\nValeurs brutes (non normalisées) de Ajaccio :\n- OppChoVec brut : 0.1026\n- Opp brut : 0.7095\n- Cho brut : 0.4294\n- Vec brut : 0.5801",
+      "metadata": {
+        "opp_0_10": 10.0,
+        "rank_opp3": 128,
+        "rank_opp": 1,
+        "cho_0_10": 1.265509,
+        "rank_opp4": 24,
+        "rank_opp1": 24,
+        "opp2_0_10": 1.9557,
+        "rank_opp2": 216,
+        "opp3_0_10": 8.9891,
+        "rank_total": 19,
+        "oppchovec_0_10": 5.779754,
+        "commune": "Ajaccio",
+        "vec_0_10": 4.796981,
+        "source": "oppchovec_betti_0_10",
+        "rank_cho": 358,
+        "rank_vec": 41,
+        "opp4_0_10": 9.35,
+        "opp1_0_10": 7.4157,
+        "source_type": "oppchovec_scores",
+        "label": "Scores OppChoVec — Ajaccio"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nScores moyens de l'enquête QdV pour la commune de Ajaccio (47 répondants). Score bonheur moyen : 3.68/5. Score qualité de vie moyen : 3.89/5. Score confiance avenir moyen : 2.75/5. Scores moyens par dimension (1-5) : Transports=0.95, Éducation=2.35, Réseaux téléphoniques=2.38, Institutions=1.85, Tourisme=1.57, Sécurité=2.73, Santé=1.80, Situation pro=2.90, Revenus=2.50, Temps travail/perso=2.23, Logement=2.80, Services locaux=2.40, Culture=2.40, Soutien social=3.11, Vie associative=0.64. Dimensions les plus citées comme prioritaires : Environnement, Santé.",
+      "metadata": {
+        "source_type": "enquete_scores_commune",
+        "commune": "Ajaccio",
+        "n_repondants": 47,
+        "nom": "Ajaccio",
+        "data_type": "quanti",
+        "label": "Scores satisfaction commune (subjectif/quanti)"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nClassement des 14 dimensions de satisfaction — commune de Ajaccio (N=51 répondants).\n\nDu plus satisfaisant au moins satisfaisant :\n   1. Emploi                         : 3.91/5 (moyen-fort)\n   2. Logement                       : 3.84/5 (moyen-fort)\n   3. Sécurité                       : 3.81/5 (moyen-fort)\n   4. Communauté et relations        : 3.54/5 (moyen-fort)\n   5. Revenus                        : 3.51/5 (moyen-fort)\n   6. Culture                        : 3.49/5 (moyen)\n   7. Réseau                         : 3.49/5 (moyen)\n   8. Éducation                      : 3.44/5 (moyen)\n   9. Services de proximité          : 3.42/5 (moyen)\n  10. Ratio vie pro/vie perso        : 3.19/5 (moyen)\n  11. Institutions                   : 2.93/5 (moyen)\n  12. Tourisme                       : 2.63/5 (moyen)\n  13. Santé                          : 2.58/5 (moyen)\n  14. Transports                     : 2.21/5 (faible)\n\n-> NOTE LA PLUS FAIBLE   : Transports (2.21/5)\n-> NOTE LA PLUS ELEVEE   : Emploi (3.91/5)\n-> ECART min/max         : 1.70 points",
+      "metadata": {
+        "nom": "Ajaccio",
+        "commune": "Ajaccio",
+        "scope": "commune",
+        "source_type": "enquete_scores_commune",
+        "label": "Scores satisfaction commune (subjectif/quanti)"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "La commune de Ajaccio compte une part de 12.9% de cadres et professions intellectuelles supérieures, 16.6% d'ouvriers, avec un taux d'activité de 75.6%. 87.8% des emplois y sont salariés. On y trouve 5.0 points de contact postal, 11.0 hypermarchés ou supermarchés, 38.0 supérettes ou épiceries, 51.0 boulangeries et 21.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 15.0 écoles maternelles, 20.0 écoles élémentaires, 6.0 collèges et 6.0 lycées. Elle possède 1.0 services d'urgence, 80.0 médecins généralistes, 31.0 pharmacies, 204.0 infirmiers et 15.0 crèches. La sécurité est assurée par 1.0 postes de police ou gendarmerie. Il y a également 2.0 agences Pôle emploi. Le taux de pauvreté est de 14.3%, la part de logements vacants est de 3.3%, et celle des résidences secondaires est de 9.2%. Le taux de coups et blessures volontaires est de 4.0 pour 1 000 habitants. Le prix moyen au m² est de 3666.90984455959€, pour une surface moyenne des logements de 71.7937823834197 m².",
+      "metadata": {
+        "data_type": "quanti",
+        "commune": "Ajaccio",
+        "source": "data_comp",
+        "source_type": "communes_equipements",
+        "label": "Équipements et services commune (objectif/quanti)"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nClassement des composantes OppChoVec — Corse entière (360 communes).\n\nSous-scores principaux (du plus élevé au plus faible) :\n  1. Cho (Choix)               : 8.79/10 (très élevé)\n  2. Opp (Opportunités)        : 3.87/10 (moyen)\n  3. Vec (Vécu)                : 3.46/10 (moyen)\n\n-> COMPOSANTE LA PLUS ELEVEE  : Cho (Choix) (8.79/10)\n-> COMPOSANTE LA PLUS FAIBLE  : Vec (Vécu) (3.46/10)\n\nSous-dimensions du score Opportunités (Opp), classées :\n  1. Opp4 — Accès TIC               : 6.02/10 (élevé)\n  2. Opp3 — Mobilité                : 5.26/10 (élevé)\n  3. Opp2 — Diversité sociale       : 2.60/10 (faible)\n  4. Opp1 — Éducation               : 2.35/10 (faible)\n\n-> SOUS-DIMENSION OPP LA PLUS ELEVEE : Opp4 — Accès TIC (6.02/10)\n-> SOUS-DIMENSION OPP LA PLUS FAIBLE : Opp1 — Éducation (2.35/10)",
+      "metadata": {
+        "zone": "Corse",
+        "epci": "",
+        "type": "classement",
+        "source": "oppchovec_classement",
+        "source_type": "oppchovec_scores",
+        "label": "Scores OppChoVec — Corse"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théorique >= 30 min de trajet.\n\n• Opp4 — Avoir accès aux TIC (poids 0,25)\n  Couverture locale par Internet haut débit (>= 30 Mbit/s) et réseau 4G.\n\nDIMENSION 2 — CHOIX (Cho)\nLa liberté de choix effective dont disposent les individus sur ce territoire.\n\n• Cho1 — Ne pas être discriminé(e) (poids 0,5)\n  Présence ou absence de quartiers cibles de la politique de la ville dans la commune (indicateur pénalisant la concentration de précarité).\n\n• Cho2 — Avoir les moyens d'influencer les décisions publiques (poids 0,5)\n  Proportion d'individus ayant le droit de vote (nationalité française, >= 18 ans) parmi la population en âge de travailler (>= 16 ans).\n\nDIMENSION 3 — VÉCU (Vec)\nLes réalisations effectives des individus — ce qui a été réellement accompli et vécu.\n\n• Vec1 — Avoir un revenu décent (poids 0,25)\n  Revenu fiscal moyen par foyer fiscal dans la commune.\n\n• Vec2 — Avoir un logement décent (poids 0,25, réparti sur 3 sous-indicateurs)\n  - Vec2a : Nombre moyen de personnes par pièce (surpeuplement)\n  - Vec2b : Proportion de logements avec équipements sanitaires complets (eau chaude, douche/baignoire, chauffage, cuisine avec évier)\n  - Vec2c : Proportion de la population vivant dans une habitation individuelle\n\n• Vec3 — Être bien inséré sur le marché du travail (poids 0,25)\n  Stabilité des emplois des résidents (5 niveaux : chômeur, emploi aidé, contrat ponctuel, CDD, emploi stable — CDI, fonctionnaire, indépendant).\n\n• Vec4 — Être proche des services (poids 0,25)\n  Nombre d'établissements de vie courante accessibles en moins de 20 minutes (santé, éducation, commerces, culture, administration), calculé par algorithme de plus court chemin (Dijkstra) sur réseau routier.\n\nCALCUL DE L'INDICE\n\nÉtape 1 — Standardisation (commensurabilité) :\n  V(i,j,k) = (Xijk − Xjk,min) / (Xjk,max − Xjk,min)\n  Chaque sous-indicateur est ramené entre 0 (minimum observé) et 1 (maximum observé).\n\nÉtape 2 — Agrégation par dimension (moyenne pondérée) :\n  Dk(i) = Σ pjk × V(i,j,k)\n  Les poids pjk sont égaux au sein de chaque dimension.\n\nÉtape 3 — Indice global (avec aversion à la pauvreté et complémentarité) :\n  OppChoVec(i) = agrégation des 3 dimensions Dk avec :\n    - paramètre β = 2,5 (aversion à la pauvreté : pénalise les très faibles scores)\n    - paramètre γ = 1,5 (complémentarité : pénalise les déséquilibres entre dimensions)\n  Le résultat brut (0-1) est ensuite renormalisé sur 0-10 pour l'application corse.\n\nINTERPRÉTATION DE L'ÉCHELLE 0-10\n\n- 0 = niveau de bien-être minimal parmi les 360 communes corses\n- 10 = niveau de bien-être maximal parmi les 360 communes corses\n- ~5 = niveau médian corse\n\nUn score élevé signifie que la commune offre à la fois de bonnes opportunités, une réelle liberté de choix et un vécu satisfaisant. Un score faible peut refléter un déficit sur une ou plusieurs dimensions. Les trois scores partiels (Opp, Cho, Vec) permettent de diagnostiquer la nature du déficit : une commune peut avoir de bonnes opportunités (Opp élevé) mais un vécu difficile (Vec faible), signalant un décalage entre l'offre territoriale et les conditions de vie réelles.\n\nSource : Bourdeau-Lepage L. (2011), adapté pour la Corse. Données : oppchovec_betti_0_10.",
+      "metadata": {
+        "type": "methodology",
+        "source": "methodology",
+        "commune": "",
+        "source_type": "oppchovec_scores",
+        "label": "Scores OppChoVec — "
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Ajaccio : 5.78/10 (élevé).\n\nSous-scores principaux de Ajaccio :\n  • Opportunités (Opp) : 10.00/10 (très élevé)  — rang 1e/360\n  • Choix (Cho)        : 1.27/10 (très faible)  — rang 358e/360\n  • Vécu (Vec)         : 4.80/10 (moyen)  — rang 41e/360\n  • OppChoVec global   : rang 19e/360\n\nSous-dimensions du score Opportunités (Opp) de Ajaccio :\n  • Opp1 — Éducation      : 7.42/10 (élevé)  [valeur brute : 5.760] — rang 24e/360\n  • Opp2 — Diversité soc. : 1.96/10 (faible)  [indice Theil : 0.2787] — rang 216e/360\n  • Opp3 — Mobilité       : 8.99/10 (très élevé)  [indicateur : 186.1/200] — rang 128e/360\n  • Opp4 — TIC (numérique): 9.35/10 (très élevé)  [couverture : 93.5%] — rang 24e/360\n\nAnalyse de Ajaccio :\n- Ajaccio se distingue surtout par ses opportunités (Opp=10.00/10).\n- Le point le plus faible de Ajaccio est le score Choix (1.27/10).\n\nValeurs brutes (non normalisées) de Ajaccio :\n- OppChoVec brut : 0.1026\n- Opp brut : 0.7095\n- Cho brut : 0.4294\n- Vec brut : 0.5801",
+      "metadata": {
+        "cho_0_10": 1.265509,
+        "opp1_0_10": 7.4157,
+        "source": "oppchovec_betti_0_10",
+        "rank_cho": 358,
+        "opp4_0_10": 9.35,
+        "rank_opp2": 216,
+        "rank_opp3": 128,
+        "commune": "Ajaccio",
+        "rank_vec": 41,
+        "rank_opp1": 24,
+        "rank_total": 19,
+        "rank_opp": 1,
+        "oppchovec_0_10": 5.779754,
+        "vec_0_10": 4.796981,
+        "opp_0_10": 10.0,
+        "opp3_0_10": 8.9891,
+        "opp2_0_10": 1.9557,
+        "rank_opp4": 24,
+        "source_type": "oppchovec_scores",
+        "label": "Scores OppChoVec — Ajaccio"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nScores moyens de l'enquête QdV pour la commune de Ajaccio (47 répondants). Score bonheur moyen : 3.68/5. Score qualité de vie moyen : 3.89/5. Score confiance avenir moyen : 2.75/5. Scores moyens par dimension (1-5) : Transports=0.95, Éducation=2.35, Réseaux téléphoniques=2.38, Institutions=1.85, Tourisme=1.57, Sécurité=2.73, Santé=1.80, Situation pro=2.90, Revenus=2.50, Temps travail/perso=2.23, Logement=2.80, Services locaux=2.40, Culture=2.40, Soutien social=3.11, Vie associative=0.64. Dimensions les plus citées comme prioritaires : Environnement, Santé.",
+      "metadata": {
+        "n_repondants": 47,
+        "source_type": "enquete_scores_commune",
+        "commune": "Ajaccio",
+        "data_type": "quanti",
+        "nom": "Ajaccio",
+        "label": "Scores satisfaction commune (subjectif/quanti)"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nProfil des répondants de la commune de Ajaccio — enquête qualité de vie en Corse\n\nNombre de répondants : 51\n\nRépartition par genre :\n  - Femme : 31 (60.8%)\n  - Homme : 20 (39.2%)\n\nRépartition par tranche d'âge :\n  - 45-59 : 20 (39.2%)\n  - 15-29 : 14 (27.5%)\n  - 30-44 : 11 (21.6%)\n  - 60-74 : 6 (11.8%)\n\nRépartition par catégorie socioprofessionnelle :\n  - SalariÃ©(e) â Cadre ou profession intermÃ©diaire : 17 (33.3%)\n  - Ãtudiant(e) : 12 (23.5%)\n  - Fonctionnaire : 9 (17.6%)\n  - SalariÃ©(e) â EmployÃ©(e) : 8 (15.7%)\n  - Travailleur(se) indÃ©pendant(e) / Entrepreneur(e) : 2 (3.9%)\n  - Autre : 2 (3.9%)\n  - RetraitÃ©(e) : 1 (2.0%)",
+      "metadata": {
+        "data_type": "quanti",
+        "commune": "Ajaccio",
+        "source_type": "communes_profil",
+        "n_repondants": 51,
+        "label": "Profil démographique des répondants (contextuel/quanti)"
+      },
+      "source_type": "",
+      "label": ""
+    }
+  ],
+  "raisonnement": "La réponse utilise des scores quantitatifs pour décrire le ressenti des habitants, mais surinterprète Vec comme une mesure subjective. Les perceptions sont abordées sans verbatims.",
+  "section_observee": "Retrieval mono-commune / Retrieval descriptif global",
+  "comportement_attendu_selon_grille": "Réponse précise et ciblée.",
+  "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+  "coherence_comportement_observe": "partiel",
+  "sources_inventaire": [
+    {
+      "source": "oppchovec_classement",
+      "type": "quanti"
+    },
+    {
+      "source": "enquete_scores_commune",
+      "type": "quanti"
+    },
+    {
+      "source": "communes_equipements",
+      "type": "quanti"
+    }
+  ],
+  "mislabelling_detecte": {
+    "regle_1_quali_quanti": "non",
+    "regle_2_surinterpretation_oppchovec": "oui — Vec interprété comme 'vécu quotidien' alors que c'est un proxy quanti",
+    "regle_3_absence_quali_non_signalee": "non",
+    "regle_4_extrapolation_sous_groupe": "non"
+  },
+  "mislabelling_flag": true,
+  "elements_specifiques_question": [
+    "Ajaccio",
+    "habitants",
+    "ressenti",
+    "bien-être"
+  ],
+  "elements_traitement": [
+    {
+      "element": "Ajaccio",
+      "traitement": "precis"
+    },
+    {
+      "element": "habitants",
+      "traitement": "precis"
+    },
+    {
+      "element": "ressenti",
+      "traitement": "approximation_non_signalee"
+    },
+    {
+      "element": "bien-être",
+      "traitement": "approximation_non_signalee"
+    }
+  ],
+  "pertinence": 3,
+  "pertinence_justif": "La réponse est partiellement alignée avec la question, mais le ressenti est traité par approximation non signalée.",
+  "fondement_factuel": 3,
+  "fondement_factuel_justif": "Surinterprétation de Vec comme vécu subjectif. Les scores sont corrects mais l'interprétation dépasse leur signification. Plafond Règle 2.",
+  "nuance_incertitude": 3,
+  "nuance_incertitude_justif": "Peu de modalisateurs pour signaler que les scores sont des proxies statistiques, pas des mesures subjectives.",
+  "coherence_qualiquanti": 3,
+  "coherence_qualiquanti_justif": "Les données quantitatives sont utilisées pour inférer des perceptions sans signalement explicite des limites de cette approche.",
+  "score_global": 3.0,
+  "judge_error": null
+}

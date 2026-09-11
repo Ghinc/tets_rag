@@ -1,0 +1,158 @@
+
+======================================================================
+Smoke test Phase 1 — 3 questions × 2 modes (LLM_BACKEND=api)
+======================================================================
+
+Chargement pipeline (bge-m3 -> CPU)...
+[v12] Patches appliqués — LLM_BACKEND='api'
+RAPTOR Retriever : 493 syntheses + oppchovec (394 docs) + raptor_enquete (125 syntheses) + 9 collections extra (portrait_entretiens, raptor_entretiens_summaries, enquete_responses, enquete_scores_commune, communes_wiki, communes_equipements, communes_geo, zones_epci, communes_profil)
+RAG v10 initialise (493 syntheses RAPTOR disponibles)
+[v12] bge-m3 → CPU (VRAM réservée au générateur)
+Chargement : 35s
+
+
+------------------------------------------------------------
+Question [causal] : Le niveau de bien-être à Ajaccio peut-il s'expliquer par une combinaison de fact
+
+  mode='baseline' : Le niveau de bien-être à Ajaccio peut-il s'expliquer par une...
+[v12] scope='locale'  question_type='factuelle'
+
+[v10] Question : Le niveau de bien-être à Ajaccio peut-il s'expliquer par une combinaison de facteurs environnementaux, socio-économiques et institutionnels ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quel est le score OppChoVec global de bien-être pour la commune d'Ajaccio, et comment se situe-t-il par rapport à la moyenne des communes corses ?
+  2. Quels sont les scores OppChoVec spécifiques aux dimensions environnementales (ex : qualité de l'air, espaces verts, nuisances) pour Ajaccio, et comment se comparent-ils aux autres communes corses ?
+  3. Quels sont les indicateurs socio-économiques clés (ex : taux de chômage, revenu médian, niveau d'éducation) disponibles pour Ajaccio, et comment ces valeurs influencent-elles le score de bien-être global ?
+  4. Quels sont les scores OppChoVec liés aux dimensions institutionnelles (ex : accès aux services publics, sécurité, gouvernance locale) pour Ajaccio, et quelle est leur corrélation avec le bien-être perçu ?
+  5. Quelles sont les perceptions des habitants d'Ajaccio concernant l'impact des facteurs environnementaux, socio-économiques et institutionnels sur leur qualité de vie (verbatims ou résultats d'enquêtes locales) ?
+[v10] OppChoVec pré-injecté pour commune : Ajaccio
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quel est le score OppChoVec global de bien-être pour la commune d'Ajaccio, et co...
+  [RAPTOR] Dimensions detectees: {'nom': 'Ajaccio', 'noms': ['Ajaccio']}
+  [RAPTOR] Vue trouvee: commune (N=129)
+  [2/5] Quels sont les scores OppChoVec spécifiques aux dimensions environnementales (ex...
+  [RAPTOR] Dimensions detectees: {'nom': 'Ajaccio', 'noms': ['Ajaccio'], 'dimension': 'Environnement'}
+  [RAPTOR] Vue trouvee: dimension*commune (N=23)
+  [3/5] Quels sont les indicateurs socio-économiques clés (ex : taux de chômage, revenu ...
+  [RAPTOR] Dimensions detectees: {'nom': 'Ajaccio', 'noms': ['Ajaccio'], 'dimension': 'Education'}
+  [RAPTOR] Vue trouvee: dimension*commune (N=8)
+  [4/5] Quels sont les scores OppChoVec liés aux dimensions institutionnelles (ex : accè...
+  [RAPTOR] Dimensions detectees: {'nom': 'Ajaccio', 'noms': ['Ajaccio'], 'dimension': 'Sécurité'}
+  [RAPTOR] Vue trouvee: commune (N=129)
+  [5/5] Quelles sont les perceptions des habitants d'Ajaccio concernant l'impact des fac...
+  [RAPTOR] Dimensions detectees: {'nom': 'Ajaccio', 'noms': ['Ajaccio'], 'dimension': 'Environnement'}
+  [RAPTOR] Vue trouvee: dimension*commune (N=23)
+
+[v10] Etape 3/4 : Synthese finale (Mistral Large)...
+
+[v10] Etape 4/4 : Notation de la dimension (Mistral Large)...
+  -> Notation non applicable (Désactivée en v12 (chemin d'inférence)...)
+[v10] Pipeline termine.
+  baseline : 87.5s | answer_compl=3189 | total_compl=5680
+
+  mode='phase1' : Le niveau de bien-être à Ajaccio peut-il s'expliquer par une...
+[v12] scope='locale'  question_type='factuelle'
+
+[v10] Question : Le niveau de bien-être à Ajaccio peut-il s'expliquer par une combinaison de facteurs environnementaux, socio-économiques et institutionnels ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quel est le score OppChoVec global de la commune d'Ajaccio, et comment se situe-t-il par rapport à la moyenne des communes corses en termes de bien-être environnemental (ex : qualité de l'air, espaces verts, nuisances) ?
+  2. Quel est le score OppChoVec socio-économique d'Ajaccio (ex : revenus, emploi, accès aux services), et comment se compare-t-il aux autres communes de Corse de taille similaire ?
+  3. Quel est le score OppChoVec institutionnel d'Ajaccio (ex : confiance dans les institutions locales, efficacité des services publics), et quel est son rang parmi les communes corses ?
+  4. Quels sont les principaux verbatims citoyens recueillis à Ajaccio concernant les facteurs environnementaux (ex : pollution, accès à la nature) influençant leur bien-être, et quelles tendances se dégagent ?
+  5. Quels sont les verbatims ou perceptions des habitants d'Ajaccio sur l'impact des facteurs socio-économiques (ex : coût de la vie, opportunités professionnelles) et institutionnels (ex : transparence, réactivité des services) sur leur qualité de vie globale ?
+[v10] OppChoVec pré-injecté pour commune : Ajaccio
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quel est le score OppChoVec global de la commune d'Ajaccio, et comment se situe-...
+  [RAPTOR] Dimensions detectees: {'nom': 'Ajaccio', 'noms': ['Ajaccio'], 'dimension': 'Environnement'}
+  [RAPTOR] Vue trouvee: dimension*commune (N=23)
+    [ERREUR Claude] Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purcha
+  ERREUR : Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeCYz3BMiGdSs8KS5CWuX'}
+  phase1   : 7.3s | answer_compl=0 | total_compl=0
+
+------------------------------------------------------------
+Question [multi_communes] : Quelle commune obtient le score objectif global le plus élevé entre Ajaccio et B
+
+  mode='baseline' : Quelle commune obtient le score objectif global le plus élev...
+[v12] scope='locale'  question_type='factuelle'
+
+[v10] Question : Quelle commune obtient le score objectif global le plus élevé entre Ajaccio et Bastia ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quel est le score OppChoVec global de la commune d'Ajaccio ?
+  2. Quel est le score OppChoVec global de la commune de Bastia ?
+  3. Quelle commune, entre Ajaccio et Bastia, présente le score OppChoVec le plus élevé ?
+  4. Quels sont les scores OppChoVec des sous-dimensions (ex : cadre de vie, services, sécurité) pour Ajaccio et Bastia, si disponibles ?
+  5. Existe-t-il des écarts significatifs entre les scores OppChoVec d'Ajaccio et de Bastia sur des indicateurs spécifiques (ex : accès aux soins, transports) ?
+[v10] Classement OppChoVec global injecté dans le contexte des sous-questions
+[v10] OppChoVec pré-injecté pour commune : Ajaccio
+[v10] OppChoVec pré-injecté pour commune : Bastia
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quel est le score OppChoVec global de la commune d'Ajaccio ?...
+  [RAPTOR] Dimensions detectees: {'nom': 'Ajaccio', 'noms': ['Ajaccio']}
+  [RAPTOR] Vue trouvee: commune (N=129)
+    [ERREUR Claude] Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purcha
+  ERREUR : Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeCYzLWuAauBLLorBydxY'}
+  baseline : 3.9s | answer_compl=0 | total_compl=0
+
+  mode='phase1' : Quelle commune obtient le score objectif global le plus élev...
+[v12] scope='locale'  question_type='factuelle'
+
+[v10] Question : Quelle commune obtient le score objectif global le plus élevé entre Ajaccio et Bastia ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quel est le score OppChoVec global de la commune d'Ajaccio ?
+  2. Quel est le score OppChoVec global de la commune de Bastia ?
+  3. Quelle commune, entre Ajaccio et Bastia, présente le score OppChoVec global le plus élevé ?
+  4. Quels sont les scores détaillés des sous-indicateurs OppChoVec (ex : cadre de vie, services, sécurité) pour Ajaccio ?
+  5. Quels sont les scores détaillés des sous-indicateurs OppChoVec (ex : cadre de vie, services, sécurité) pour Bastia ?
+[v10] Classement OppChoVec global injecté dans le contexte des sous-questions
+[v10] OppChoVec pré-injecté pour commune : Ajaccio
+[v10] OppChoVec pré-injecté pour commune : Bastia
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quel est le score OppChoVec global de la commune d'Ajaccio ?...
+  [RAPTOR] Dimensions detectees: {'nom': 'Ajaccio', 'noms': ['Ajaccio']}
+  [RAPTOR] Vue trouvee: commune (N=129)
+    [ERREUR Claude] Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purcha
+  ERREUR : Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeCYzbtckAioVB8XuR9xj'}
+  phase1   : 3.6s | answer_compl=0 | total_compl=0
+
+------------------------------------------------------------
+Question [no_data] : Quel est le niveau de bien-être subjectif à Aïti ?
+
+  mode='baseline' : Quel est le niveau de bien-être subjectif à Aïti ?...
+[v12] scope='globale'  question_type='factuelle'
+
+[v10] Question : Quel est le niveau de bien-être subjectif à Aïti ?
+[v10] Question globale Corse détectée (pas de commune) — bypass décomposition
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Vue trouvee: profession (N=150)
+[v10] Doc agrégat Corse injecté
+    [ERREUR Claude] Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purcha
+  ERREUR : Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeCYzgfbkQcV6ZTpHU7Ts'}
+  baseline : 1.1s | answer_compl=0 | total_compl=0
+
+  mode='phase1' : Quel est le niveau de bien-être subjectif à Aïti ?...
+[v12] scope='globale'  question_type='factuelle'
+
+[v10] Question : Quel est le niveau de bien-être subjectif à Aïti ?
+[v10] Question globale Corse détectée (pas de commune) — bypass décomposition
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Vue trouvee: profession (N=150)
+[v10] Doc agrégat Corse injecté
+    [ERREUR Claude] Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purcha
+  ERREUR : Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeCYznUbu6x9SVMQJCYXf'}
+  phase1   : 1.3s | answer_compl=0 | total_compl=0
+
+
+Résultats sauvegardés : C:\These\Données2\fichiers_pour_rag\comparaisons_rag\smoke_phase1\smoke_phase1_results.json
+
+-- Resume tokens answer ------------------------------------------
+Question          Base compl   P1 compl     Gain
+  causal                  3189          0    -100%
+  multi_communes             0          0        ?
+  no_data                    0          0        ?

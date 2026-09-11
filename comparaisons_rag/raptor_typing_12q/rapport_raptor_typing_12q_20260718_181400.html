@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Raptor Typing — 12q — V4.3 GPT-4o</title>
+<style>
+body{font-family:system-ui,sans-serif;font-size:13px;margin:20px;color:#1e293b;background:#f8fafc}
+h2{font-size:1.2rem;margin-bottom:4px}
+.subtitle{color:#64748b;font-size:0.85rem;margin-bottom:20px}
+
+/* DECISION */
+.decision-box{background:#fff;border:2px solid #1e293b;border-radius:8px;padding:18px 20px;
+  margin-bottom:28px;max-width:900px}
+.decision-title{font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.decision-note{font-size:11px;color:#64748b;margin-bottom:12px}
+.decision-table{border-collapse:collapse;font-size:13px;width:100%}
+.decision-table th{background:#f1f5f9;padding:6px 10px;text-align:left;border:1px solid #e2e8f0;
+  font-size:11px;text-transform:uppercase;letter-spacing:.05em}
+.decision-table td{padding:7px 10px;border:1px solid #e2e8f0}
+.ol{font-weight:600}
+.oc{text-align:center}
+.global-row td{background:#f8fafc}
+.decision-caption{margin-top:10px;font-size:11px;color:#64748b}
+
+/* Récap */
+.recap-table{border-collapse:collapse;margin-bottom:30px;font-size:13px}
+.recap-table th,td{border:1px solid #ddd;padding:5px 9px}
+.recap-table th{background:#f5f5f5;text-align:center}
+
+/* Détail */
+table.detail{border-collapse:collapse;width:100%;font-size:12.5px;margin-bottom:6px}
+.detail th{background:#f5f5f5;padding:5px 8px;border:1px solid #ddd;text-align:center;font-size:11px}
+.detail td{border:1px solid #ddd;padding:4px 8px;vertical-align:top}
+.q-num{font-weight:800;color:#2980b9;text-align:center;font-size:14px}
+.q-orient{font-size:10px;text-align:center;font-weight:600;border-radius:4px;padding:2px 6px;
+  white-space:nowrap}
+.orient-objective{background:#dbeafe;color:#1d4ed8}
+.orient-perception{background:#fce7f3;color:#9d174d}
+.orient-vaste{background:#e0e7ff;color:#4338ca}
+.q-text{max-width:280px;font-size:12px}
+.subsec{color:#94a3b8;font-style:italic}
+.mis-badge{display:inline-block;background:#fef2f2;color:#dc2626;border:1px solid #fca5a5;
+  border-radius:3px;font-size:9px;padding:1px 5px;font-weight:700}
+.mis-detail-cell{background:#fafafa;padding:8px 12px}
+.mis-cols{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:8px}
+.mis-col-lbl{font-weight:700;font-size:10px;text-transform:uppercase;color:#64748b;display:block;margin-bottom:3px}
+.mis-rule{margin-bottom:2px;font-size:11px}
+.mis-label{display:inline-block;font-size:9px;padding:1px 5px;border-radius:3px;
+  font-weight:700;margin-right:4px}
+.mis-oui{background:#fef2f2;color:#dc2626;border:1px solid #fca5a5}
+.mis-non-sm{background:#f0fdf4;color:#16a34a;border:1px solid #86efac}
+.mis-non{color:#16a34a;font-weight:600}
+.mis-val{color:#374151;font-size:11px}
+.rais-cols{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.rais-lbl{font-weight:600;color:#64748b;font-size:10px}
+.rais-col{font-size:11px;color:#374151;line-height:1.5}
+.mis-row-detail td{background:#fafafa}
+tr.q-row td{background:#fff}
+tr.q-row:nth-of-type(3n+1)>td, tr.q-row:nth-of-type(3n+2)>td{background:#fff}
+</style>
+</head>
+<body>
+<h2>v_decomp_raptor vs v_decomp_raptor_no_typing — 12 questions — Juge V4.3 (GPT-4o)</h2>
+<div class="subtitle">Généré le 2026-07-18 18:14 · k=5 · n_subquestions=5 · Juge : GPT-4o, grille V4.3, json_mode=True</div>
+
+
+<div class="decision-box">
+  <div class="decision-title">DÉCISION — Δ bruts juge V4.3</div>
+  <div class="decision-note">Δ = v_decomp_raptor − v_decomp_raptor_no_typing (positif = typage meilleur)</div>
+  <table class="decision-table">
+    <thead>
+      <tr>
+        <th>Périmètre</th>
+        <th>TYPAGE</th><th>NO_TYPING</th><th>Δ global</th>
+        <th>Mis. TYPAGE</th><th>Mis. NO_TYPING</th><th>Δ mis.</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="global-row">
+        <td class="ol"><strong>Global (n=12)</strong></td>
+        <td class="oc"><strong>4.48</strong></td>
+        <td class="oc"><strong>4.40</strong></td>
+        <td class="oc" style="color:#dc2626;font-weight:800;font-size:1.1em">+0.08</td>
+        <td class="oc"><strong>1/12</strong></td>
+        <td class="oc"><strong>0/12</strong></td>
+        <td class="oc" style="font-weight:700;color:#dc2626">+1</td>
+      </tr>
+      <tr><td class="ol">Objectif — QUANTI (n=5)</td><td class="oc">4.25</td><td class="oc">4.35</td><td class="oc" style="color:#dc2626;font-weight:700">-0.10</td><td class="oc">1/5</td><td class="oc">0/5</td><td class="oc" style="color:#dc2626;font-weight:600">+1</td></tr>
+      <tr><td class="ol">Perception — QUALI (n=4)</td><td class="oc">4.69</td><td class="oc">4.25</td><td class="oc" style="color:#16a34a;font-weight:700">+0.44</td><td class="oc">0/4</td><td class="oc">0/4</td><td class="oc" style="color:#64748b;font-weight:600">0</td></tr>
+      <tr><td class="ol">Vaste — BOTH (n=3)</td><td class="oc">4.58</td><td class="oc">4.67</td><td class="oc" style="color:#dc2626;font-weight:700">-0.08</td><td class="oc">0/3</td><td class="oc">0/3</td><td class="oc" style="color:#64748b;font-weight:600">0</td></tr>
+    </tbody>
+  </table>
+  <div class="decision-caption">
+    Δ global = +0.08 (TYPAGE > NO_TYPING) · Δ mislabelling = +1 (positif = plus de mislabelling avec typage)
+  </div>
+</div>
+
+<h3 style="margin-bottom:8px">Récapitulatif par config</h3>
+<table class="recap-table">
+  <thead>
+    <tr>
+      <th style="text-align:left">Config</th><th>N OK</th>
+      <th>Pertinence</th><th>Factuel</th><th>Nuance</th><th>Quali/Q</th><th>Global</th>
+      <th>Mislabelling</th>
+    </tr>
+  </thead>
+  <tbody><tr><td style="color:#2980b9;font-weight:700">v_decomp_raptor</td><td style="text-align:center">12/12</td><td style="text-align:center">4.58</td><td style="text-align:center">4.58</td><td style="text-align:center">4.00</td><td style="text-align:center">4.75</td><td style="text-align:center">4.48</td><td style="text-align:center;color:#dc2626">1/12 (8%)</td></tr><tr><td style="color:#8e44ad;font-weight:700">v_decomp_raptor_no_typing</td><td style="text-align:center">12/12</td><td style="text-align:center">4.33</td><td style="text-align:center">4.50</td><td style="text-align:center">4.08</td><td style="text-align:center">4.67</td><td style="text-align:center">4.40</td><td style="text-align:center;color:#dc2626">0/12 (0%)</td></tr></tbody>
+</table>
+
+<h3 style="margin-bottom:8px">Détail par question</h3>
+<table class="detail">
+  <thead>
+    <tr>
+      <th>#</th><th>Orient.</th><th>Question</th><th>Config</th>
+      <th>Pert.</th><th>Fact.</th><th>Nuance</th><th>Q/Q</th><th>Global</th><th>Mis.</th>
+      <th>Δ</th>
+    </tr>
+  </thead>
+  <tbody>
+  
+<tr class="q-row">
+  <td rowspan="3" class="q-num">Q2</td>
+  <td rowspan="3" class="q-orient orient-vaste">Vaste — BOTH</td>
+  <td rowspan="3" class="q-text" title="Peut-on considérer Ajaccio comme un territoire favorable au bien-être ?">Peut-on considérer Ajaccio comme un territoire favorable au bien-être <br><small class="subsec">Retrieval descriptif global</small></td>
+  <td style="color:#2980b9;font-weight:600;white-space:nowrap">TYPAGE</td>
+  <td style="text-align:center">5.00</td><td style="text-align:center">5.00</td><td style="text-align:center">4.00</td><td style="text-align:center">5.00</td><td style="text-align:center;font-weight:800;color:#2980b9">4.75</td><td style="text-align:center"></td>
+  <td rowspan="2" style="text-align:center;font-weight:800;color:#dc2626">-0.25</td>
+</tr>
+<tr>
+  <td style="color:#8e44ad;font-weight:600;white-space:nowrap">NO_TYPING</td>
+  <td style="text-align:center">5.00</td><td style="text-align:center">5.00</td><td style="text-align:center">5.00</td><td style="text-align:center">5.00</td><td style="text-align:center;font-weight:800;color:#8e44ad">5.00</td><td style="text-align:center"></td>
+</tr>
+<tr class="mis-row-detail">
+  <td colspan="6" class="mis-detail-cell">
+    <div class="mis-cols">
+      <div class="mis-col"><span class="mis-col-lbl">TYPAGE</span> <div class="mis-rule"><span class="mis-label mis-non-sm">regle_1_quali_quanti</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_2_surinterpretation_oppchovec</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_3_absence_quali_non_signalee</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_4_extrapolation_sous_groupe</span> <span class="mis-val">non</span></div></div>
+      <div class="mis-col"><span class="mis-col-lbl">NO_TYPING</span> <div class="mis-rule"><span class="mis-label mis-non-sm">regle_1_quali_quanti</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_2_surinterpretation_oppchovec</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_3_absence_quali_non_signalee</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_4_extrapolation_sous_groupe</span> <span class="mis-val">non</span></div></div>
+    </div>
+    <div class="rais-cols">
+      <div class="rais-col"><span class="rais-lbl">Raisonnement TYPAGE :</span> La réponse utilise des données qualitatives et quantitatives pour évaluer Ajaccio comme un territoire favorable au bien-être, en soulignant les opportunités et les défis.</div>
+      <div class="rais-col"><span class="rais-lbl">Raisonnement NO_TYPING :</span> La réponse utilise des données qualitatives et quantitatives pour évaluer Ajaccio comme un territoire favorable au bien-être, tout en soulignant les atouts et les limites.</div>
+    </div>
+  </td>
+  <td></td>
+</tr>
+<tr class="q-row">
+  <td rowspan="3" class="q-num">Q4</td>
+  <td rowspan="3" class="q-orient orient-objective">Objectif — QUANTI</td>
+  <td rowspan="3" class="q-text" title="Quel est le score moyen de bien-être à Ajaccio ?">Quel est le score moyen de bien-être à Ajaccio ?<br><small class="subsec">Retrieval factuel et interprétation</small></td>
+  <td style="color:#2980b9;font-weight:600;white-space:nowrap">TYPAGE</td>
+  <td style="text-align:center">5.00</td><td style="text-align:center">5.00</td><td style="text-align:center">4.00</td><td style="text-align:center">5.00</td><td style="text-align:center;font-weight:800;color:#2980b9">4.75</td><td style="text-align:center"></td>
+  <td rowspan="2" style="text-align:center;font-weight:800;color:#dc2626">-0.25</td>
+</tr>
+<tr>
+  <td style="color:#8e44ad;font-weight:600;white-space:nowrap">NO_TYPING</td>
+  <td style="text-align:center">5.00</td><td style="text-align:center">5.00</td><td style="text-align:center">5.00</td><td style="text-align:center">5.00</td><td style="text-align:center;font-weight:800;color:#8e44ad">5.00</td><td style="text-align:center"></td>
+</tr>
+<tr class="mis-row-detail">
+  <td colspan="6" class="mis-detail-cell">
+    <div class="mis-cols">
+      <div class="mis-col"><span class="mis-col-lbl">TYPAGE</span> <div class="mis-rule"><span class="mis-label mis-non-sm">regle_1_quali_quanti</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_2_surinterpretation_oppchovec</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_3_absence_quali_non_signalee</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_4_extrapolation_sous_groupe</span> <span class="mis-val">non</span></div></div>
+      <div class="mis-col"><span class="mis-col-lbl">NO_TYPING</span> <div class="mis-rule"><span class="mis-label mis-non-sm">regle_1_quali_quanti</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_2_surinterpretation_oppchovec</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_3_absence_quali_non_signalee</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_4_extrapolation_sous_groupe</span> <span class="mis-val">non</span></div></div>
+    </div>
+    <div class="rais-cols">
+      <div class="rais-col"><span class="rais-lbl">Raisonnement TYPAGE :</span> La réponse utilise les scores OppChoVec et les perceptions citoyennes pour fournir une vue d'ensemble du bien-être à Ajaccio, en soulignant les écarts entre opportunités et vécu.</div>
+      <div class="rais-col"><span class="rais-lbl">Raisonnement NO_TYPING :</span> La réponse utilise des scores OppChoVec et des perceptions citoyennes pour fournir une vue d'ensemble du bien-être à Ajaccio, en soulignant les divergences entre indicateurs objectifs et perceptions s</div>
+    </div>
+  </td>
+  <td></td>
+</tr>
+<tr class="q-row">
+  <td rowspan="3" class="q-num">Q5</td>
+  <td rowspan="3" class="q-orient orient-objective">Objectif — QUANTI</td>
+  <td rowspan="3" class="q-text" title="Quelle dimension OppChoVec obtient la note la plus faible à Ajaccio ?">Quelle dimension OppChoVec obtient la note la plus faible à Ajaccio ?<br><small class="subsec">Retrieval factuel et interprétation</small></td>
+  <td style="color:#2980b9;font-weight:600;white-space:nowrap">TYPAGE</td>
+  <td style="text-align:center">2.00</td><td style="text-align:center">2.00</td><td style="text-align:center">2.00</td><td style="text-align:center">3.00</td><td style="text-align:center;font-weight:800;color:#2980b9">2.25</td><td style="text-align:center"><span class="mis-badge">MIS</span></td>
+  <td rowspan="2" style="text-align:center;font-weight:800;color:#dc2626">-0.25</td>
+</tr>
+<tr>
+  <td style="color:#8e44ad;font-weight:600;white-space:nowrap">NO_TYPING</td>
+  <td style="text-align:center">2.00</td><td style="text-align:center">2.00</td><td style="text-align:center">3.00</td><td style="text-align:center">3.00</td><td style="text-align:center;font-weight:800;color:#8e44ad">2.50</td><td style="text-align:center"></td>
+</tr>
+<tr class="mis-row-detail">
+  <td colspan="6" class="mis-detail-cell">
+    <div class="mis-cols">
+      <div class="mis-col"><span class="mis-col-lbl">TYPAGE</span> <div class="mis-rule"><span class="mis-label mis-non-sm">regle_1_quali_quanti</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-oui">regle_2_surinterpretation_oppchovec</span> <span class="mis-val">oui — Vec interprété comme 'vécu des habitants' alors que c'est un proxy quanti</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_3_absence_quali_non_signalee</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_4_extrapolation_sous_groupe</span> <span class="mis-val">non</span></div></div>
+      <div class="mis-col"><span class="mis-col-lbl">NO_TYPING</span> <div class="mis-rule"><span class="mis-label mis-non-sm">regle_1_quali_quanti</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_2_surinterpretation_oppchovec</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_3_absence_quali_non_signalee</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_4_extrapolation_sous_groupe</span> <span class="mis-val">non</span></div></div>
+    </div>
+    <div class="rais-cols">
+      <div class="rais-col"><span class="rais-lbl">Raisonnement TYPAGE :</span> La réponse présente Vec comme la dimension la plus faible mais avec un score incorrect et surinterprète Vec comme 'vécu des habitants'.</div>
+      <div class="rais-col"><span class="rais-lbl">Raisonnement NO_TYPING :</span> La réponse identifie incorrectement 'Choix' comme la dimension la plus faible, alors que 'Vec' est la plus faible selon les données fournies.</div>
+    </div>
+  </td>
+  <td></td>
+</tr>
+<tr class="q-row">
+  <td rowspan="3" class="q-num">Q6</td>
+  <td rowspan="3" class="q-orient orient-objective">Objectif — QUANTI</td>
+  <td rowspan="3" class="q-text" title="Quel est le score OppChoVec d'Ajaccio, par catégorie ?">Quel est le score OppChoVec d'Ajaccio, par catégorie ?<br><small class="subsec">Retrieval factuel et interprétation</small></td>
+  <td style="color:#2980b9;font-weight:600;white-space:nowrap">TYPAGE</td>
+  <td style="text-align:center">5.00</td><td style="text-align:center">5.00</td><td style="text-align:center">4.00</td><td style="text-align:center">5.00</td><td style="text-align:center;font-weight:800;color:#2980b9">4.75</td><td style="text-align:center"></td>
+  <td rowspan="2" style="text-align:center;font-weight:800;color:#dc2626">0.00</td>
+</tr>
+<tr>
+  <td style="color:#8e44ad;font-weight:600;white-space:nowrap">NO_TYPING</td>
+  <td style="text-align:center">5.00</td><td style="text-align:center">5.00</td><td style="text-align:center">4.00</td><td style="text-align:center">5.00</td><td style="text-align:center;font-weight:800;color:#8e44ad">4.75</td><td style="text-align:center"></td>
+</tr>
+<tr class="mis-row-detail">
+  <td colspan="6" class="mis-detail-cell">
+    <div class="mis-cols">
+      <div class="mis-col"><span class="mis-col-lbl">TYPAGE</span> <div class="mis-rule"><span class="mis-label mis-non-sm">regle_1_quali_quanti</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_2_surinterpretation_oppchovec</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_3_absence_quali_non_signalee</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_4_extrapolation_sous_groupe</span> <span class="mis-val">non</span></div></div>
+      <div class="mis-col"><span class="mis-col-lbl">NO_TYPING</span> <div class="mis-rule"><span class="mis-label mis-non-sm">regle_1_quali_quanti</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_2_surinterpretation_oppchovec</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_3_absence_quali_non_signalee</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_4_extrapolation_sous_groupe</span> <span class="mis-val">non</span></div></div>
+    </div>
+    <div class="rais-cols">
+      <div class="rais-col"><span class="rais-lbl">Raisonnement TYPAGE :</span> La réponse fournit les scores OppChoVec pour Ajaccio, détaillant les sous-scores par catégorie (Opp, Cho, Vec) avec des explications sur chaque dimension.</div>
+      <div class="rais-col"><span class="rais-lbl">Raisonnement NO_TYPING :</span> La réponse fournit les scores OppChoVec pour Ajaccio, détaillant les sous-scores Opp, Cho, et Vec, et interprète ces scores en lien avec les perceptions des habitants.</div>
+    </div>
+  </td>
+  <td></td>
+</tr>
+<tr class="q-row">
+  <td rowspan="3" class="q-num">Q8</td>
+  <td rowspan="3" class="q-orient orient-objective">Objectif — QUANTI</td>
+  <td rowspan="3" class="q-text" title="Combien d’habitants ont répondu à l’enquête à Ajaccio ?">Combien d’habitants ont répondu à l’enquête à Ajaccio ?<br><small class="subsec">Retrieval factuel et interprétation</small></td>
+  <td style="color:#2980b9;font-weight:600;white-space:nowrap">TYPAGE</td>
+  <td style="text-align:center">5.00</td><td style="text-align:center">5.00</td><td style="text-align:center">4.00</td><td style="text-align:center">5.00</td><td style="text-align:center;font-weight:800;color:#2980b9">4.75</td><td style="text-align:center"></td>
+  <td rowspan="2" style="text-align:center;font-weight:800;color:#dc2626">0.00</td>
+</tr>
+<tr>
+  <td style="color:#8e44ad;font-weight:600;white-space:nowrap">NO_TYPING</td>
+  <td style="text-align:center">5.00</td><td style="text-align:center">5.00</td><td style="text-align:center">4.00</td><td style="text-align:center">5.00</td><td style="text-align:center;font-weight:800;color:#8e44ad">4.75</td><td style="text-align:center"></td>
+</tr>
+<tr class="mis-row-detail">
+  <td colspan="6" class="mis-detail-cell">
+    <div class="mis-cols">
+      <div class="mis-col"><span class="mis-col-lbl">TYPAGE</span> <div class="mis-rule"><span class="mis-label mis-non-sm">regle_1_quali_quanti</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_2_surinterpretation_oppchovec</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_3_absence_quali_non_signalee</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_4_extrapolation_sous_groupe</span> <span class="mis-val">non</span></div></div>
+      <div class="mis-col"><span class="mis-col-lbl">NO_TYPING</span> <div class="mis-rule"><span class="mis-label mis-non-sm">regle_1_quali_quanti</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_2_surinterpretation_oppchovec</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_3_absence_quali_non_signalee</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_4_extrapolation_sous_groupe</span> <span class="mis-val">non</span></div></div>
+    </div>
+    <div class="rais-cols">
+      <div class="rais-col"><span class="rais-lbl">Raisonnement TYPAGE :</span> La réponse fournit le nombre exact de répondants à l'enquête à Ajaccio, en distinguant les parties quantitative et qualitative.</div>
+      <div class="rais-col"><span class="rais-lbl">Raisonnement NO_TYPING :</span> La réponse fournit le nombre exact de répondants à l'enquête à Ajaccio, basé sur les sources quantitatives disponibles.</div>
+    </div>
+  </td>
+  <td></td>
+</tr>
+<tr class="q-row">
+  <td rowspan="3" class="q-num">Q9</td>
+  <td rowspan="3" class="q-orient orient-perception">Perception — QUALI</td>
+  <td rowspan="3" class="q-text" title="Comment les 18-25 ans ressentent-ils le bien-être ?">Comment les 18-25 ans ressentent-ils le bien-être ?<br><small class="subsec">Retrieval par sous-population</small></td>
+  <td style="color:#2980b9;font-weight:600;white-space:nowrap">TYPAGE</td>
+  <td style="text-align:center">4.00</td><td style="text-align:center">4.00</td><td style="text-align:center">4.00</td><td style="text-align:center">4.00</td><td style="text-align:center;font-weight:800;color:#2980b9">4.00</td><td style="text-align:center"></td>
+  <td rowspan="2" style="text-align:center;font-weight:800;color:#dc2626">+0.25</td>
+</tr>
+<tr>
+  <td style="color:#8e44ad;font-weight:600;white-space:nowrap">NO_TYPING</td>
+  <td style="text-align:center">3.00</td><td style="text-align:center">4.00</td><td style="text-align:center">4.00</td><td style="text-align:center">4.00</td><td style="text-align:center;font-weight:800;color:#8e44ad">3.75</td><td style="text-align:center"></td>
+</tr>
+<tr class="mis-row-detail">
+  <td colspan="6" class="mis-detail-cell">
+    <div class="mis-cols">
+      <div class="mis-col"><span class="mis-col-lbl">TYPAGE</span> <div class="mis-rule"><span class="mis-label mis-non-sm">regle_1_quali_quanti</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_2_surinterpretation_oppchovec</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_3_absence_quali_non_signalee</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_4_extrapolation_sous_groupe</span> <span class="mis-val">non</span></div></div>
+      <div class="mis-col"><span class="mis-col-lbl">NO_TYPING</span> <div class="mis-rule"><span class="mis-label mis-non-sm">regle_1_quali_quanti</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_2_surinterpretation_oppchovec</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_3_absence_quali_non_signalee</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_4_extrapolation_sous_groupe</span> <span class="mis-val">non</span></div></div>
+    </div>
+    <div class="rais-cols">
+      <div class="rais-col"><span class="rais-lbl">Raisonnement TYPAGE :</span> La réponse utilise des données qualitatives pour décrire le ressenti des 18-25 ans en Corse, mais manque de précision sur les perceptions spécifiques à cette tranche d'âge.</div>
+      <div class="rais-col"><span class="rais-lbl">Raisonnement NO_TYPING :</span> La réponse utilise des données générales sur les 18-24 ans en Corse, mais ne cible pas spécifiquement une commune. Les perceptions sont abordées, mais avec des approximations signalées.</div>
+    </div>
+  </td>
+  <td></td>
+</tr>
+<tr class="q-row">
+  <td rowspan="3" class="q-num">Q10</td>
+  <td rowspan="3" class="q-orient orient-perception">Perception — QUALI</td>
+  <td rowspan="3" class="q-text" title="Que pensent les entrepreneurs Ajacciens de la qualité de vie ?">Que pensent les entrepreneurs Ajacciens de la qualité de vie ?<br><small class="subsec">Retrieval par sous-population</small></td>
+  <td style="color:#2980b9;font-weight:600;white-space:nowrap">TYPAGE</td>
+  <td style="text-align:center">5.00</td><td style="text-align:center">5.00</td><td style="text-align:center">4.00</td><td style="text-align:center">5.00</td><td style="text-align:center;font-weight:800;color:#2980b9">4.75</td><td style="text-align:center"></td>
+  <td rowspan="2" style="text-align:center;font-weight:800;color:#dc2626">0.00</td>
+</tr>
+<tr>
+  <td style="color:#8e44ad;font-weight:600;white-space:nowrap">NO_TYPING</td>
+  <td style="text-align:center">5.00</td><td style="text-align:center">5.00</td><td style="text-align:center">4.00</td><td style="text-align:center">5.00</td><td style="text-align:center;font-weight:800;color:#8e44ad">4.75</td><td style="text-align:center"></td>
+</tr>
+<tr class="mis-row-detail">
+  <td colspan="6" class="mis-detail-cell">
+    <div class="mis-cols">
+      <div class="mis-col"><span class="mis-col-lbl">TYPAGE</span> <div class="mis-rule"><span class="mis-label mis-non-sm">regle_1_quali_quanti</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_2_surinterpretation_oppchovec</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_3_absence_quali_non_signalee</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_4_extrapolation_sous_groupe</span> <span class="mis-val">non</span></div></div>
+      <div class="mis-col"><span class="mis-col-lbl">NO_TYPING</span> <div class="mis-rule"><span class="mis-label mis-non-sm">regle_1_quali_quanti</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_2_surinterpretation_oppchovec</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_3_absence_quali_non_signalee</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_4_extrapolation_sous_groupe</span> <span class="mis-val">non</span></div></div>
+    </div>
+    <div class="rais-cols">
+      <div class="rais-col"><span class="rais-lbl">Raisonnement TYPAGE :</span> La réponse utilise des données qualitatives spécifiques aux entrepreneurs ajacciens, avec une bonne intégration des perceptions et des indicateurs objectifs.</div>
+      <div class="rais-col"><span class="rais-lbl">Raisonnement NO_TYPING :</span> La réponse utilise des données qualitatives et quantitatives pour décrire la perception des entrepreneurs ajacciens, en soulignant les tensions entre infrastructures et satisfaction perçue.</div>
+    </div>
+  </td>
+  <td></td>
+</tr>
+<tr class="q-row">
+  <td rowspan="3" class="q-num">Q11</td>
+  <td rowspan="3" class="q-orient orient-perception">Perception — QUALI</td>
+  <td rowspan="3" class="q-text" title="Que pensent les seniors du bien-être à Ajaccio ?">Que pensent les seniors du bien-être à Ajaccio ?<br><small class="subsec">Retrieval par sous-population</small></td>
+  <td style="color:#2980b9;font-weight:600;white-space:nowrap">TYPAGE</td>
+  <td style="text-align:center">5.00</td><td style="text-align:center">5.00</td><td style="text-align:center">5.00</td><td style="text-align:center">5.00</td><td style="text-align:center;font-weight:800;color:#2980b9">5.00</td><td style="text-align:center"></td>
+  <td rowspan="2" style="text-align:center;font-weight:800;color:#dc2626">+1.25</td>
+</tr>
+<tr>
+  <td style="color:#8e44ad;font-weight:600;white-space:nowrap">NO_TYPING</td>
+  <td style="text-align:center">4.00</td><td style="text-align:center">4.00</td><td style="text-align:center">3.00</td><td style="text-align:center">4.00</td><td style="text-align:center;font-weight:800;color:#8e44ad">3.75</td><td style="text-align:center"></td>
+</tr>
+<tr class="mis-row-detail">
+  <td colspan="6" class="mis-detail-cell">
+    <div class="mis-cols">
+      <div class="mis-col"><span class="mis-col-lbl">TYPAGE</span> <div class="mis-rule"><span class="mis-label mis-non-sm">regle_1_quali_quanti</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_2_surinterpretation_oppchovec</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_3_absence_quali_non_signalee</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_4_extrapolation_sous_groupe</span> <span class="mis-val">non</span></div></div>
+      <div class="mis-col"><span class="mis-col-lbl">NO_TYPING</span> <div class="mis-rule"><span class="mis-label mis-non-sm">regle_1_quali_quanti</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_2_surinterpretation_oppchovec</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_3_absence_quali_non_signalee</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_4_extrapolation_sous_groupe</span> <span class="mis-val">non</span></div></div>
+    </div>
+    <div class="rais-cols">
+      <div class="rais-col"><span class="rais-lbl">Raisonnement TYPAGE :</span> La réponse utilise des données qualitatives et quantitatives pour fournir une vue d'ensemble des perceptions des seniors à Ajaccio, tout en signalant les limites de l'échantillon.</div>
+      <div class="rais-col"><span class="rais-lbl">Raisonnement NO_TYPING :</span> La réponse mobilise des données qualitatives et quantitatives pour décrire le bien-être des seniors à Ajaccio, mais elle inclut des éléments non sourcés et des extrapolations non justifiées.</div>
+    </div>
+  </td>
+  <td></td>
+</tr>
+<tr class="q-row">
+  <td rowspan="3" class="q-num">Q14</td>
+  <td rowspan="3" class="q-orient orient-perception">Perception — QUALI</td>
+  <td rowspan="3" class="q-text" title="Que révèlent les verbatims sur la sécurité à Corte ?">Que révèlent les verbatims sur la sécurité à Corte ?<br><small class="subsec">Retrieval source-spécifique</small></td>
+  <td style="color:#2980b9;font-weight:600;white-space:nowrap">TYPAGE</td>
+  <td style="text-align:center">5.00</td><td style="text-align:center">5.00</td><td style="text-align:center">5.00</td><td style="text-align:center">5.00</td><td style="text-align:center;font-weight:800;color:#2980b9">5.00</td><td style="text-align:center"></td>
+  <td rowspan="2" style="text-align:center;font-weight:800;color:#dc2626">+0.25</td>
+</tr>
+<tr>
+  <td style="color:#8e44ad;font-weight:600;white-space:nowrap">NO_TYPING</td>
+  <td style="text-align:center">5.00</td><td style="text-align:center">5.00</td><td style="text-align:center">4.00</td><td style="text-align:center">5.00</td><td style="text-align:center;font-weight:800;color:#8e44ad">4.75</td><td style="text-align:center"></td>
+</tr>
+<tr class="mis-row-detail">
+  <td colspan="6" class="mis-detail-cell">
+    <div class="mis-cols">
+      <div class="mis-col"><span class="mis-col-lbl">TYPAGE</span> <div class="mis-rule"><span class="mis-label mis-non-sm">regle_1_quali_quanti</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_2_surinterpretation_oppchovec</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_3_absence_quali_non_signalee</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_4_extrapolation_sous_groupe</span> <span class="mis-val">non</span></div></div>
+      <div class="mis-col"><span class="mis-col-lbl">NO_TYPING</span> <div class="mis-rule"><span class="mis-label mis-non-sm">regle_1_quali_quanti</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_2_surinterpretation_oppchovec</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_3_absence_quali_non_signalee</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_4_extrapolation_sous_groupe</span> <span class="mis-val">non</span></div></div>
+    </div>
+    <div class="rais-cols">
+      <div class="rais-col"><span class="rais-lbl">Raisonnement TYPAGE :</span> La réponse utilise les verbatims pour fournir une analyse précise de la perception de la sécurité à Corte, en soulignant les thèmes dominants et les limites des données.</div>
+      <div class="rais-col"><span class="rais-lbl">Raisonnement NO_TYPING :</span> La réponse utilise les verbatims pour décrire la perception de la sécurité à Corte, en soulignant les thèmes dominants et les divergences. Elle mentionne aussi les limites méthodologiques et compare a</div>
+    </div>
+  </td>
+  <td></td>
+</tr>
+<tr class="q-row">
+  <td rowspan="3" class="q-num">Q15</td>
+  <td rowspan="3" class="q-orient orient-objective">Objectif — QUANTI</td>
+  <td rowspan="3" class="q-text" title="De combien de services de proximité dispose la ville d'Ajaccio ?">De combien de services de proximité dispose la ville d'Ajaccio ?<br><small class="subsec">Retrieval source-spécifique</small></td>
+  <td style="color:#2980b9;font-weight:600;white-space:nowrap">TYPAGE</td>
+  <td style="text-align:center">5.00</td><td style="text-align:center">5.00</td><td style="text-align:center">4.00</td><td style="text-align:center">5.00</td><td style="text-align:center;font-weight:800;color:#2980b9">4.75</td><td style="text-align:center"></td>
+  <td rowspan="2" style="text-align:center;font-weight:800;color:#dc2626">0.00</td>
+</tr>
+<tr>
+  <td style="color:#8e44ad;font-weight:600;white-space:nowrap">NO_TYPING</td>
+  <td style="text-align:center">4.00</td><td style="text-align:center">5.00</td><td style="text-align:center">5.00</td><td style="text-align:center">5.00</td><td style="text-align:center;font-weight:800;color:#8e44ad">4.75</td><td style="text-align:center"></td>
+</tr>
+<tr class="mis-row-detail">
+  <td colspan="6" class="mis-detail-cell">
+    <div class="mis-cols">
+      <div class="mis-col"><span class="mis-col-lbl">TYPAGE</span> <div class="mis-rule"><span class="mis-label mis-non-sm">regle_1_quali_quanti</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_2_surinterpretation_oppchovec</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_3_absence_quali_non_signalee</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_4_extrapolation_sous_groupe</span> <span class="mis-val">non</span></div></div>
+      <div class="mis-col"><span class="mis-col-lbl">NO_TYPING</span> <div class="mis-rule"><span class="mis-label mis-non-sm">regle_1_quali_quanti</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_2_surinterpretation_oppchovec</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_3_absence_quali_non_signalee</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_4_extrapolation_sous_groupe</span> <span class="mis-val">non</span></div></div>
+    </div>
+    <div class="rais-cols">
+      <div class="rais-col"><span class="rais-lbl">Raisonnement TYPAGE :</span> La réponse fournit des données précises sur les services de proximité à Ajaccio, en utilisant des sources quantitatives pour les équipements et qualitatives pour les perceptions.</div>
+      <div class="rais-col"><span class="rais-lbl">Raisonnement NO_TYPING :</span> La réponse fournit une synthèse qualitative et quantitative sur les services de proximité à Ajaccio, mais ne donne pas de décompte précis, ce qui est signalé comme une limite.</div>
+    </div>
+  </td>
+  <td></td>
+</tr>
+<tr class="q-row">
+  <td rowspan="3" class="q-num">Q25</td>
+  <td rowspan="3" class="q-orient orient-vaste">Vaste — BOTH</td>
+  <td rowspan="3" class="q-text" title="Les indicateurs objectifs et les perceptions qualitatives convergent-ils ?">Les indicateurs objectifs et les perceptions qualitatives convergent-i<br><small class="subsec">Analyse multi-source et cohérence des données</small></td>
+  <td style="color:#2980b9;font-weight:600;white-space:nowrap">TYPAGE</td>
+  <td style="text-align:center">4.00</td><td style="text-align:center">4.00</td><td style="text-align:center">4.00</td><td style="text-align:center">5.00</td><td style="text-align:center;font-weight:800;color:#2980b9">4.25</td><td style="text-align:center"></td>
+  <td rowspan="2" style="text-align:center;font-weight:800;color:#dc2626">0.00</td>
+</tr>
+<tr>
+  <td style="color:#8e44ad;font-weight:600;white-space:nowrap">NO_TYPING</td>
+  <td style="text-align:center">4.00</td><td style="text-align:center">4.00</td><td style="text-align:center">4.00</td><td style="text-align:center">5.00</td><td style="text-align:center;font-weight:800;color:#8e44ad">4.25</td><td style="text-align:center"></td>
+</tr>
+<tr class="mis-row-detail">
+  <td colspan="6" class="mis-detail-cell">
+    <div class="mis-cols">
+      <div class="mis-col"><span class="mis-col-lbl">TYPAGE</span> <div class="mis-rule"><span class="mis-label mis-non-sm">regle_1_quali_quanti</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_2_surinterpretation_oppchovec</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_3_absence_quali_non_signalee</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_4_extrapolation_sous_groupe</span> <span class="mis-val">non</span></div></div>
+      <div class="mis-col"><span class="mis-col-lbl">NO_TYPING</span> <div class="mis-rule"><span class="mis-label mis-non-sm">regle_1_quali_quanti</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_2_surinterpretation_oppchovec</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_3_absence_quali_non_signalee</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_4_extrapolation_sous_groupe</span> <span class="mis-val">non</span></div></div>
+    </div>
+    <div class="rais-cols">
+      <div class="rais-col"><span class="rais-lbl">Raisonnement TYPAGE :</span> La réponse compare les perceptions qualitatives et les indicateurs objectifs, identifiant des convergences et divergences. Les sources sont bien mobilisées, mais la réponse manque de précision sur les</div>
+      <div class="rais-col"><span class="rais-lbl">Raisonnement NO_TYPING :</span> La réponse compare les perceptions qualitatives et les indicateurs objectifs, identifiant des convergences et divergences. Les sources sont bien mobilisées, mais la réponse manque de précision sur cer</div>
+    </div>
+  </td>
+  <td></td>
+</tr>
+<tr class="q-row">
+  <td rowspan="3" class="q-num">Q35</td>
+  <td rowspan="3" class="q-orient orient-vaste">Vaste — BOTH</td>
+  <td rowspan="3" class="q-text" title="Observe-t-on un écart significatif entre indicateurs objectifs et perception à Bastia ?">Observe-t-on un écart significatif entre indicateurs objectifs et perc<br><small class="subsec">Comparaison croisée quanti/quali</small></td>
+  <td style="color:#2980b9;font-weight:600;white-space:nowrap">TYPAGE</td>
+  <td style="text-align:center">5.00</td><td style="text-align:center">5.00</td><td style="text-align:center">4.00</td><td style="text-align:center">5.00</td><td style="text-align:center;font-weight:800;color:#2980b9">4.75</td><td style="text-align:center"></td>
+  <td rowspan="2" style="text-align:center;font-weight:800;color:#dc2626">0.00</td>
+</tr>
+<tr>
+  <td style="color:#8e44ad;font-weight:600;white-space:nowrap">NO_TYPING</td>
+  <td style="text-align:center">5.00</td><td style="text-align:center">5.00</td><td style="text-align:center">4.00</td><td style="text-align:center">5.00</td><td style="text-align:center;font-weight:800;color:#8e44ad">4.75</td><td style="text-align:center"></td>
+</tr>
+<tr class="mis-row-detail">
+  <td colspan="6" class="mis-detail-cell">
+    <div class="mis-cols">
+      <div class="mis-col"><span class="mis-col-lbl">TYPAGE</span> <div class="mis-rule"><span class="mis-label mis-non-sm">regle_1_quali_quanti</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_2_surinterpretation_oppchovec</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_3_absence_quali_non_signalee</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_4_extrapolation_sous_groupe</span> <span class="mis-val">non</span></div></div>
+      <div class="mis-col"><span class="mis-col-lbl">NO_TYPING</span> <div class="mis-rule"><span class="mis-label mis-non-sm">regle_1_quali_quanti</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_2_surinterpretation_oppchovec</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_3_absence_quali_non_signalee</span> <span class="mis-val">non</span></div><div class="mis-rule"><span class="mis-label mis-non-sm">regle_4_extrapolation_sous_groupe</span> <span class="mis-val">non</span></div></div>
+    </div>
+    <div class="rais-cols">
+      <div class="rais-col"><span class="rais-lbl">Raisonnement TYPAGE :</span> La réponse compare les scores OppChoVec avec les perceptions des habitants de Bastia, en utilisant des données qualitatives et quantitatives disponibles, et souligne les écarts entre les deux.</div>
+      <div class="rais-col"><span class="rais-lbl">Raisonnement NO_TYPING :</span> La réponse compare les indicateurs quantitatifs OppChoVec avec les perceptions qualitatives des habitants de Bastia, en soulignant les écarts significatifs.</div>
+    </div>
+  </td>
+  <td></td>
+</tr>
+  </tbody>
+</table>
+
+<p style="color:#94a3b8;font-size:11px;margin-top:16px">
+  Rapport généré le 2026-07-18 18:14 ·
+  Juge : GPT-4o · Grille : V4.3 · Sources brutes incluses dans les JSONs ·
+  Commande de relance : <code>python run_raptor_typing_12q.py</code>
+</p>
+</body>
+</html>

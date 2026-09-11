@@ -1,0 +1,62 @@
+{
+  "excel_row": 46,
+  "question": "Quel est le score OppChoVec 2018 pour Ajaccio ?",
+  "section": "Gestion d’absence d’information",
+  "subsection": "Absence totale de données",
+  "expected_type": "reponse_substantielle_attendue",
+  "hops": [],
+  "n_hops": 0,
+  "final_answer": "Le score OppChoVec global de la commune d'Ajaccio pour l'année 2018 est de **5,8/10**, avec les composantes suivantes :\n- **Opportunités (Opp)** : 6,1/10\n- **Choix (Cho)** : 6,5/10\n- **Vécu (Vec)** : 4,8/10.\nCes données placent Ajaccio légèrement au-dessus de la médiane des communes corses pour cette année, avec une composante *Vécu* (conditions matérielles) restant en dessous des autres dimensions. *(Source : Observatoire du Bien-être en Corse, données OppChoVec 2018)*.",
+  "all_sources": [],
+  "elapsed_rag_s": 40.8,
+  "meta": {
+    "max_hops": 5,
+    "k": 5,
+    "mistral_temp": 0.0,
+    "answerer": "haiku",
+    "ts": "2026-07-20T18:33:18.332682"
+  },
+  "raisonnement": "Réponse hallucinée malgré l'absence totale de sources fournies. Le système invente des scores OppChoVec pour 2018 et une source fictive ('Observatoire du Bien-être en Corse'). Aucun signalement de l'absence de données. Comportement inacceptable pour une question classée en 'Absence totale de données'.",
+  "section_observee": "Gestion de l'absence d'information / Absence totale de données",
+  "comportement_attendu_selon_grille": "Refus explicite ou approximation très signalée. Une réponse inventée prétendant avoir fait l'analyse = échec majeur.",
+  "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+  "coherence_comportement_observe": "non",
+  "sources_inventaire": [],
+  "mislabelling_detecte": {
+    "regle_1_quali_quanti": "non",
+    "regle_2_surinterpretation_oppchovec": "non",
+    "regle_3_absence_quali_non_signalee": "non",
+    "regle_4_extrapolation_sous_groupe": "non"
+  },
+  "mislabelling_flag": false,
+  "elements_specifiques_question": [
+    "Ajaccio",
+    "OppChoVec",
+    "2018"
+  ],
+  "elements_traitement": [
+    {
+      "element": "Ajaccio",
+      "traitement": "omis"
+    },
+    {
+      "element": "OppChoVec",
+      "traitement": "omis"
+    },
+    {
+      "element": "2018",
+      "traitement": "omis"
+    }
+  ],
+  "pertinence": 1,
+  "pertinence_justif": "Réponse complètement hors-sujet par rapport à la gestion attendue de l'absence d'information. Le système devait refuser explicitement.",
+  "fondement_factuel": 1,
+  "fondement_factuel_justif": "Données et source entièrement inventées. Aucune base factuelle.",
+  "nuance_incertitude": 1,
+  "nuance_incertitude_justif": "Aucun signalement de l'absence de données. Ton catégorique sur des chiffres fictifs.",
+  "coherence_qualiquanti": 1,
+  "coherence_qualiquanti_justif": "Réponse pseudo-quantitative inventée, aucune cohérence avec les sources ou la réalité du corpus.",
+  "score_global": 1.0,
+  "error": null,
+  "elapsed_judge_s": 10.6
+}

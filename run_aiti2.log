@@ -1,0 +1,93 @@
+﻿[v12] Patches appliqués — LLM_BACKEND='local'
+[v12] sentence_transformers → service distant http://localhost:8765
+[check_no_think] OK — tokens=2, content='OK'
+RAPTOR Retriever : 493 syntheses + oppchovec (394 docs) + raptor_enquete (125 syntheses) + 9 collections extra (portrait_entretiens, raptor_entretiens_summaries, enquete_responses, enquete_scores_commune, communes_wiki, communes_equipements, communes_geo, zones_epci, communes_profil)
+RAG v10 initialise (493 syntheses RAPTOR disponibles)
+[v12] bge-m3 → service http://localhost:8765
+[v12] scope='locale'  question_type='factuelle'
+
+[v10] Question : Quel est le niveau de bien-être subjectif à Aïti ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+  [call] decompose: p=829 c=156 r≈0 out=607ch eff_max=600 67s
+[v10] Sous-questions :
+  1. Quel est le score OppChoVec de bien-être à Aïti ?
+  2. Quels sont les principaux thèmes de satisfaction ou d'insatisfaction exprimés dans les verbatims citoyens concernant le bien-être à Aïti ?
+  3. Quelle est la perception globale des habitants d'Aïti sur la qualité de vie dans leur commune ?
+  4. Quels aspects spécifiques (ex: environnement, services, sécurité) ressortent le plus fréquemment dans les témoignages des résidents d'Aïti ?
+  5. Comment les habitants d'Aïti décrivent-ils leur sentiment d'appartenance et de fierté liée à vivre dans leur commune ?
+[v10] OppChoVec pré-injecté pour commune : Aiti
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quel est le score OppChoVec de bien-être à Aïti ?...
+  [RAPTOR] Dimensions detectees: {'nom': 'Aiti', 'noms': ['Aiti']}
+  [RAPTOR] Fallback ignoré (vue 'profession*commune' pour 'Étudiant(e)' ≠ 'Aiti')
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [call] answer: p=5654 c=290 r≈0 out=865ch eff_max=800 485s
+  [2/5] Quels sont les principaux thèmes de satisfaction ou d'insatisfaction exprimés da...
+  [RAPTOR] Dimensions detectees: {'nom': 'Aiti', 'noms': ['Aiti']}
+  [RAPTOR] ⚠ Fallback sémantique — données Corse entière (vue 'age_range*profession', N=18) injectées pour 'Aiti' qui n'a pas de vue structurée
+  [RAPTOR] Vue trouvee: age_range*profession (N=18)
+  [RAPTOR][Option A] Contexte étiqueté scope=corse_entiere pour 'Aiti' — synthèse injectée : vue 'age_range*profession'
+  [call] answer: p=6185 c=237 r≈0 out=871ch eff_max=800 348s
+  [3/5] Quelle est la perception globale des habitants d'Aïti sur la qualité de vie dans...
+  [RAPTOR] Dimensions detectees: {'nom': 'Aiti', 'noms': ['Aiti']}
+  [RAPTOR] ⚠ Fallback sémantique — données Corse entière (vue 'dimension*age_range', N=12) injectées pour 'Aiti' qui n'a pas de vue structurée
+  [RAPTOR] Vue trouvee: dimension*age_range (N=12)
+  [RAPTOR][Option A] Contexte étiqueté scope=corse_entiere pour 'Aiti' — synthèse injectée : vue 'dimension*age_range'
+  [call] answer: p=6101 c=230 r≈0 out=784ch eff_max=800 399s
+  [4/5] Quels aspects spécifiques (ex: environnement, services, sécurité) ressortent le ...
+  [RAPTOR] Dimensions detectees: {'nom': 'Aiti', 'noms': ['Aiti'], 'dimension': 'Environnement'}
+  [RAPTOR] Vue trouvee: dimension (N=134)
+  [call] answer: p=6135 c=300 r≈0 out=1166ch eff_max=800 400s
+  [5/5] Comment les habitants d'Aïti décrivent-ils leur sentiment d'appartenance et de f...
+  [RAPTOR] Dimensions detectees: {'nom': 'Aiti', 'noms': ['Aiti']}
+  [RAPTOR] ⚠ Fallback sémantique — données Corse entière (vue 'age_range*profession', N=18) injectées pour 'Aiti' qui n'a pas de vue structurée
+  [RAPTOR] Vue trouvee: age_range*profession (N=18)
+  [RAPTOR][Option A] Contexte étiqueté scope=corse_entiere pour 'Aiti' — synthèse injectée : vue 'age_range*profession'
+  [call] answer: p=6185 c=410 r≈0 out=1446ch eff_max=800 364s
+
+[v10] Etape 3/4 : Synthese finale (Mistral Large)...
+[GUARD][synth] baseline — ctx=5711 chars (~1427 tokens), n_sq=5
+  [call] synthesize: p=3727 c=857 r≈0 out=3388ch eff_max=2500 823s
+
+[v10] Etape 4/4 : Notation de la dimension (Mistral Large)...
+  -> Notation non applicable (Désactivée en v12 (chemin d'inférence)...)
+[v10] Pipeline termine.
+[GUARD] ✓  Aucune violation — réponse fondée
+
+--- RÉPONSE ---
+# Synthèse : Niveau de bien-être subjectif à Aïti
+
+Le niveau de bien-être à Aïti se caractérise par une dichotomie marquée entre une liberté individuelle perçue comme élevée et des conditions matérielles et d'accès aux services jugées insuffisantes. Selon les indicateurs territoriaux objectifs, la commune affiche un score global de bien-être de 3,07/10, la classant au 187e rang sur 360 communes corses [SQ1]. Cette note moyenne cache des disparités structurelles importantes : si la dimension « Choix » (liberté effective) atteint un score exceptionnellement élevé de 8,93/10 [SQ1], les dimensions « Opportunités » (3,65/10) et « Vécu » (3,36/10) restent faibles [SQ1].
+
+Les données objectives révèlent que les freins majeurs au bien-être sont le niveau d'éducation moyen très bas (1,12/10, rang 260e) et une mobilité extrêmement limitée (1,61/10, rang 311e) [SQ1]. En revanche, la diversité sociale est un point fort avec un score de 6,26/10 (rang 11e), et l'accès aux TIC/haut débit est jugé correct (5,00/10) [SQ1]. Selon les indicateurs territoriaux objectifs, cette situation contraste avec la perception des habitants qui, dans l'enquête citoyenne menée en Corse entière, expriment globalement une satisfaction modérée sur la qualité de vie (3,83/5) et un fort sentiment d'appartenance, bien que ces données ne soient pas ventilées spécifiquement pour Aïti [SQ3].
+
+Les témoignages des résidents, recueillis dans le cadre de l'enquête citoyenne pour la Corse entière, mettent en avant des attentes spécifiques concernant l'équilibre vie professionnelle/vie personnelle et la création d'une économie locale de circuit court [SQ2]. Les verbatims disponibles soulignent également le besoin d'investir dans des projets de territoire et de renforcer les liens communautaires [SQ2]. Bien qu'aucun verbatim ne cite explicitement Aïti dans les données fournies, les indicateurs objectifs suggèrent que l'accès aux transports et les opportunités éducatives sont des enjeux structurels majeurs qui influencent probablement le ressenti des habitants [SQ4].
+
+En conclusion, le bien-être à Aïti repose sur une liberté d'action préservée malgré des contraintes matérielles significatives en matière d'éducation et de mobilité. Selon les indicateurs territoriaux objectifs, le territoire offre un cadre où les individus disposent de choix effectifs, mais où les ressources pour améliorer leur quotidien (éducation, déplacements) sont insuffisantes par rapport à la moyenne corse [SQ5]. Les habitants interrogés en Corse entière perçoivent globalement leur environnement comme un lieu d'appartenance forte, une dynamique qui pourrait s'appliquer à Aïti par extrapolation, bien que les données spécifiques à la commune fassent défaut [SQ5].
+--- FIN ---
+
+[DONE] elapsed=2937.9s
+{
+  "decompose": {
+    "elapsed_s": 67.3,
+    "c_tok": 156,
+    "tok_s": 2.32
+  },
+  "answer": {
+    "elapsed_s": 1995.5,
+    "c_tok": 1467,
+    "tok_s": 0.74
+  },
+  "synthesize": {
+    "elapsed_s": 822.8,
+    "c_tok": 857,
+    "tok_s": 1.04
+  },
+  "score_dimension": {
+    "elapsed_s": 0.0,
+    "c_tok": 0,
+    "tok_s": 0.0
+  }
+}
+guard: {"passed": true, "silence_list": [], "silence_map": {}, "n_violations": 0, "violations": [], "available": true}

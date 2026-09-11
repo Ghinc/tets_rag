@@ -1,0 +1,1008 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dumè GPT</title>
+<style>
+  :root {
+    --bg:          #f3f1ea;
+    --panel:       #f7f5ef;
+    --surface:     #fffdf7;
+    --ink:         #26251f;
+    --ink-soft:    #55534a;
+    --ink-faint:   #8a8779;
+    --line:        #ddd8c9;
+    --green:       #2f5241;
+    --green-deep:  #24402f;
+    --green-soft:  #4c7a63;
+    --bad:         #b0442d;
+    --good:        #3f7a4f;
+    --focus:       #4c7a63;
+    --serif:       Georgia, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+    --sans:        system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --radius:      12px;
+    --shadow:      0 1px 2px rgba(36,64,47,.05), 0 10px 30px rgba(36,64,47,.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:        #161813;
+      --panel:     #1c1f19;
+      --surface:   #23261f;
+      --ink:       #e9e7dc;
+      --ink-soft:  #b7b4a6;
+      --ink-faint: #837f70;
+      --line:      #35392e;
+      --green:     #7fae95;
+      --green-deep:#0f1712;
+      --green-soft:#8fbfa5;
+      --bad:       #e0917c;
+      --good:      #8fc79f;
+      --focus:     #7fae95;
+      --shadow:    0 1px 2px rgba(0,0,0,.3), 0 12px 34px rgba(0,0,0,.4);
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 15.5px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--focus); }
+  :focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 6px; }
+  [hidden] { display: none !important; }
+
+  /* ---------------- Top bar ---------------- */
+  .topbar {
+    display: flex; align-items: center; gap: 14px;
+    padding: 12px 22px;
+    border-bottom: 1px solid var(--line);
+    background: var(--bg);
+  }
+  .brand { display: flex; align-items: center; gap: 11px; }
+  .logo-tile {
+    width: 38px; height: 38px; border-radius: 9px;
+    background: var(--green); color: #f4f1e6;
+    display: grid; place-items: center;
+    font-family: var(--serif); font-weight: 700; font-size: 1.2rem;
+  }
+  .wordmark { font-family: var(--serif); font-size: 1.28rem; font-weight: 600; letter-spacing: .01em; }
+  .beta {
+    font-size: .68rem; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--green-soft); border: 1px solid var(--line);
+    border-radius: 999px; padding: 2px 8px;
+  }
+  .topbar .spacer { flex: 1; }
+  .topbar .commune-label {
+    font-size: .9rem; color: var(--ink-soft);
+    max-width: 40vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .status { display: flex; align-items: center; gap: 6px; font-size: .82rem; color: var(--ink-soft); }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ink-faint); }
+  .dot.ready { background: var(--good); }
+  .dot.loading { background: #c9a23a; animation: blink 1s steps(2) infinite; }
+  .dot.offline { background: var(--bad); }
+  @keyframes blink { 50% { opacity: .3; } }
+  .icon-btn {
+    width: 34px; height: 34px; border-radius: 8px;
+    border: 1px solid var(--line); background: var(--surface);
+    color: var(--ink-soft); font-size: 1.1rem; line-height: 1;
+    cursor: pointer;
+  }
+  .icon-btn:hover { border-color: var(--green-soft); color: var(--green); }
+
+  /* ---------------- Shell ---------------- */
+  .shell {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 312px;
+    height: calc(100vh - 63px);
+  }
+  @media (max-width: 900px) {
+    .shell { grid-template-columns: 1fr; height: auto; }
+    .sidebar { border-left: none !important; border-top: 1px solid var(--line); }
+    main.thread { height: auto; }
+  }
+
+  /* ---------------- Thread ---------------- */
+  main.thread { display: flex; flex-direction: column; min-height: 0; }
+  .messages {
+    flex: 1; overflow-y: auto; min-height: 0;
+    padding: 26px clamp(16px, 6vw, 90px) 8px;
+  }
+  .msg { max-width: 720px; margin: 0 auto 26px; }
+  .msg.user { display: flex; flex-direction: column; align-items: flex-end; }
+  .bubble {
+    background: var(--green); color: #f3f0e4;
+    padding: 13px 17px; border-radius: 14px 14px 4px 14px;
+    font-size: 1rem; line-height: 1.5; max-width: 82%;
+  }
+  .msg .time { font-size: .72rem; color: var(--ink-faint); margin-top: 5px; }
+  .msg.bot .who { display: flex; align-items: center; gap: 9px; margin-bottom: 8px; }
+  .avatar {
+    width: 30px; height: 30px; border-radius: 7px;
+    background: var(--green); color: #f4f1e6;
+    display: grid; place-items: center;
+    font-family: var(--serif); font-weight: 700; font-size: .95rem;
+  }
+  .msg.bot .name { font-weight: 600; }
+  .msg.bot .name + .time { margin-top: 0; }
+  .body {
+    font-family: var(--serif); font-size: 1.05rem; line-height: 1.66; color: var(--ink);
+  }
+  .body h1, .body h2, .body h3 { font-family: var(--serif); line-height: 1.3; margin: 1.1em 0 .45em; }
+  .body h1 { font-size: 1.28rem; } .body h2 { font-size: 1.16rem; } .body h3 { font-size: 1.05rem; }
+  .body p { margin: .68em 0; }
+  .body ul, .body ol { margin: .55em 0; padding-left: 1.4em; }
+  .body li { margin: .22em 0; }
+  .body strong { font-weight: 700; }
+  .body code { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: .88em;
+    background: rgba(47,82,65,.08); padding: .06em .35em; border-radius: 4px; }
+  .body blockquote { margin: .7em 0; padding-left: 1em; border-left: 3px solid var(--line); color: var(--ink-soft); }
+
+  /* progress inside a bot message */
+  .steps { list-style: none; margin: 4px 0 0; padding: 0; }
+  .steps li { display: flex; align-items: center; gap: 10px; padding: 5px 0; color: var(--ink-faint); font-size: .92rem; }
+  .steps li .mk {
+    width: 16px; height: 16px; border-radius: 50%; flex: none;
+    border: 2px solid var(--line); display: grid; place-items: center;
+    font-size: .6rem; color: transparent;
+  }
+  .steps li.active { color: var(--ink); }
+  .steps li.active .mk { border-color: var(--green-soft); border-right-color: transparent; animation: spin .8s linear infinite; }
+  .steps li.done { color: var(--ink-soft); }
+  .steps li.done .mk { border-color: var(--green); background: var(--green); color: #f3f0e4; }
+  .steps li.done .mk::after { content: "\2713"; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .elapsed { font-size: .78rem; color: var(--ink-faint); margin-top: 6px; }
+
+  .provenance { margin-top: 12px; font-size: .8rem; font-style: italic; color: var(--ink-faint); font-family: var(--sans); }
+
+  .followups { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .chip {
+    font: inherit; font-family: var(--sans); font-size: .86rem; line-height: 1.3;
+    text-align: left; background: var(--surface); color: var(--ink-soft);
+    border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px; cursor: pointer;
+    transition: background .14s, color .14s, border-color .14s;
+  }
+  .chip:hover { background: var(--green); color: #f3f0e4; border-color: var(--green); }
+
+  details.sources, details.inspector {
+    margin-top: 14px; font-family: var(--sans);
+    border: 1px solid var(--line); border-radius: 9px; background: var(--panel);
+  }
+  details.sources > summary, details.inspector > summary {
+    cursor: pointer; padding: 9px 13px;
+    font-size: .78rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .src-list { padding: 2px 13px 12px; }
+  .src { padding: 11px 0; border-top: 1px solid var(--line); font-size: .88rem; }
+  .src:first-child { border-top: none; }
+  .src-meta { display: flex; flex-wrap: wrap; gap: 5px 8px; margin-bottom: 5px; font-size: .72rem; color: var(--ink-faint); }
+  .tag { background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 1px 7px; }
+  .src-ex { color: var(--ink-soft); }
+
+  .error {
+    max-width: 720px; margin: 0 auto 22px;
+    padding: 11px 14px; border: 1px solid var(--bad); border-radius: 9px;
+    background: rgba(176,68,45,.08); color: var(--bad); font-size: .9rem;
+  }
+
+  /* ---------------- Composer ---------------- */
+  .composer-wrap { border-top: 1px solid var(--line); background: var(--bg); padding: 14px clamp(16px, 6vw, 90px) 10px; }
+  .composer {
+    max-width: 720px; margin: 0 auto;
+    display: flex; align-items: flex-end; gap: 8px;
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 16px; padding: 8px 8px 8px 16px;
+  }
+  .composer:focus-within { border-color: var(--green-soft); }
+  .composer textarea {
+    flex: 1; border: none; background: none; resize: none;
+    font: inherit; color: var(--ink); line-height: 1.5;
+    max-height: 180px; padding: 6px 0;
+  }
+  .composer textarea:focus { outline: none; }
+  .send {
+    width: 34px; height: 34px; flex: none; border-radius: 50%;
+    border: none; background: var(--green); color: #f3f0e4;
+    font-size: 1rem; cursor: pointer; display: grid; place-items: center;
+  }
+  .send:disabled { opacity: .4; cursor: default; }
+  .disclaimer { max-width: 720px; margin: 8px auto 0; text-align: center;
+    font-size: .76rem; color: var(--ink-faint); }
+
+  /* ---------------- Sidebar ---------------- */
+  .sidebar {
+    background: var(--panel); border-left: 1px solid var(--line);
+    padding: 22px 20px; overflow-y: auto;
+  }
+  .side-h {
+    font-size: .74rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase;
+    color: var(--green-soft); margin: 22px 0 12px;
+  }
+  .side-h:first-child { margin-top: 0; }
+  .field { margin-bottom: 14px; }
+  .field .k { font-size: .68rem; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-faint); }
+  .field .v { font-size: .95rem; color: var(--ink); margin-top: 2px; }
+  select.commune {
+    width: 100%; font: inherit; font-size: .95rem; margin-top: 3px;
+    padding: 6px 8px; background: var(--surface); color: var(--ink);
+    border: 1px solid var(--line); border-radius: 7px;
+  }
+  .viewtoggle {
+    display: flex; margin: 10px 0 14px;
+    border: 1px solid var(--line); border-radius: 8px; overflow: hidden;
+  }
+  .viewtoggle button {
+    flex: 1; font: inherit; font-size: .8rem; cursor: pointer;
+    background: var(--surface); color: var(--ink-soft);
+    border: none; padding: 6px 4px;
+  }
+  .viewtoggle button + button { border-left: 1px solid var(--line); }
+  .viewtoggle button.on { background: var(--green); color: #f3f0e4; font-weight: 600; }
+  hr.sep { border: none; border-top: 1px solid var(--line); margin: 20px 0; }
+  .ind { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 7px 0; font-size: .92rem; }
+  .ind .lab { color: var(--ink-soft); }
+  .ind .num { font-variant-numeric: tabular-nums; font-weight: 600; }
+  .ind .num.good { color: var(--good); }
+  .ind .num.bad { color: var(--bad); }
+  .ind .num.flat { color: var(--ink-faint); }
+  .side-note { font-size: .82rem; color: var(--ink-faint); }
+  .recent { display: block; width: 100%; text-align: left; background: none; border: none;
+    font: inherit; font-size: .92rem; color: var(--ink-soft); padding: 7px 0;
+    border-bottom: 1px solid var(--line); cursor: pointer; }
+  .recent:hover { color: var(--green); }
+  .recent:last-child { border-bottom: none; }
+
+  /* ---------------- Dev console ---------------- */
+  #dev {
+    position: fixed; right: 16px; bottom: 16px; z-index: 60;
+    width: min(372px, calc(100vw - 32px)); max-height: min(76vh, 680px); overflow: auto;
+    background: #2f5241; color: #eef0e6;
+    border: 1px solid #23402f; border-radius: 11px;
+    box-shadow: 0 16px 44px rgba(18,30,22,.42);
+    font-family: var(--sans); font-size: .84rem;
+  }
+  #dev header {
+    position: sticky; top: 0;
+    background: #23402f; color: #f2efe3; padding: 9px 12px;
+    border-bottom: 1px solid rgba(255,255,255,.12);
+    font-weight: 700; letter-spacing: .05em; text-transform: uppercase; font-size: .72rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  #dev .dev-body { padding: 13px; display: grid; gap: 11px; }
+  #dev label {
+    display: block; font-weight: 600; margin-bottom: 3px;
+    color: rgba(238,240,230,.72); font-size: .72rem; letter-spacing: .04em; text-transform: uppercase;
+  }
+  #dev select, #dev input {
+    width: 100%; font: inherit; font-size: .85rem; padding: 6px 8px;
+    background: #f4f2e9; color: #23281f;
+    border: 1px solid #23402f; border-radius: 6px;
+  }
+  #dev .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  #dev .applied {
+    font-size: .74rem; color: rgba(238,240,230,.66);
+    border-top: 1px dashed rgba(255,255,255,.2); padding-top: 8px;
+  }
+  #dev table { width: 100%; border-collapse: collapse; font-size: .76rem; color: #eef0e6; }
+  #dev th, #dev td {
+    text-align: left; padding: 3px 6px;
+    border-bottom: 1px solid rgba(255,255,255,.14); vertical-align: top;
+  }
+  #dev details summary { color: rgba(238,240,230,.85); }
+  #dev pre {
+    margin: 0; max-height: 220px; overflow: auto;
+    background: #1b3024; color: #d6e2d8; padding: 10px; border-radius: 6px; font-size: .71rem;
+  }
+  #dev .presets { display: flex; gap: 8px; }
+  #dev .preset {
+    flex: 1; font: inherit; font-size: .78rem; cursor: pointer;
+    background: rgba(255,255,255,.1); color: #f2efe3;
+    border: 1px solid rgba(255,255,255,.32); border-radius: 6px; padding: 6px 8px;
+  }
+  #dev .preset:hover { background: rgba(255,255,255,.2); }
+  #dev .role {
+    border: 1px solid rgba(255,255,255,.16); border-radius: 8px;
+    padding: 9px 10px 10px; background: rgba(255,255,255,.04);
+  }
+  #dev .role-h {
+    font-size: .72rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+    color: rgba(238,240,230,.9); margin-bottom: 7px;
+  }
+  #dev .role-h span {
+    display: block; font-weight: 400; text-transform: none; letter-spacing: 0;
+    font-size: .72rem; color: rgba(238,240,230,.5); margin-top: 1px;
+  }
+  #dev .tiny {
+    font: inherit; font-size: .74rem; background: rgba(255,255,255,.1); color: #f2efe3;
+    border: 1px solid rgba(255,255,255,.45); border-radius: 5px; padding: 1px 8px; cursor: pointer;
+  }
+  #dev.dev-collapsed .dev-body { display: none; }
+  #dev .save {
+    font: inherit; font-weight: 700; font-size: .85rem; cursor: pointer;
+    background: #f2efe3; color: #23402f;
+    border: 1px solid #f2efe3; border-radius: 7px; padding: 8px 10px;
+  }
+  #dev .save:hover { background: #fff; }
+  .icon-btn.on { border-color: var(--green); color: var(--green); background: var(--panel); }
+
+  #toast {
+    position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%) translateY(8px);
+    z-index: 80; padding: 9px 16px; border-radius: 999px;
+    background: #23402f; color: #f2efe3; font-family: var(--sans); font-size: .84rem;
+    box-shadow: 0 10px 30px rgba(18,30,22,.4);
+    opacity: 0; transition: opacity .2s, transform .2s; pointer-events: none;
+  }
+  #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <div class="logo-tile">D</div>
+    <span class="wordmark" id="wordmark">Dumè GPT</span>
+    <span class="beta">Bêta</span>
+  </div>
+  <div class="spacer"></div>
+  <span class="commune-label" id="communeLabel">All of Corsica</span>
+  <span class="status"><span class="dot" id="statusDot"></span><span id="statusText">Connecting…</span></span>
+  <button class="icon-btn" id="devOpen" title="Model console" aria-label="Model console" hidden>⚙</button>
+  <button class="icon-btn" id="newBtn" title="New conversation" aria-label="New conversation">+</button>
+</div>
+
+<div class="shell">
+  <main class="thread">
+    <div class="messages" id="messages" aria-live="polite"></div>
+
+    <div class="composer-wrap">
+      <form class="composer" id="composer">
+        <textarea id="q" rows="1" placeholder="Ask Dumè a question…" autocomplete="off"></textarea>
+        <button class="send" id="send" type="submit" aria-label="Send" title="Send">↑</button>
+      </form>
+      <p class="disclaimer">Dumè GPT can make mistakes. Always verify important information against official sources.</p>
+    </div>
+  </main>
+
+  <aside class="sidebar">
+    <div class="side-h">Context</div>
+    <div class="field">
+      <div class="k">Municipality</div>
+      <select class="commune" id="communeSelect"><option value="">All of Corsica</option></select>
+    </div>
+    <div class="viewtoggle" id="viewToggle" role="tablist" aria-label="Indicator type">
+      <button type="button" data-view="objective">Territorial</button>
+      <button type="button" data-view="subjective">Survey</button>
+    </div>
+    <div id="ctxProfile"></div>
+    <div class="field">
+      <div class="k">Active sources</div>
+      <div class="v" id="ctxSources">Citizen survey · OppChoVec indicators · Resident interviews</div>
+    </div>
+    <div class="field">
+      <div class="k">Corpus</div>
+      <div class="v">2024 citizen survey &amp; interviews</div>
+    </div>
+
+    <hr class="sep" />
+    <div class="side-h" id="indHead">Key indicators</div>
+    <div id="indicators"><p class="side-note">Select a municipality to see its indicators.</p></div>
+
+    <hr class="sep" />
+    <div class="side-h">Recent conversations</div>
+    <div id="recent"><p class="side-note">Your questions from this browser appear here.</p></div>
+  </aside>
+</div>
+
+<aside id="dev" hidden>
+  <header>
+    <span>Model console</span>
+    <button type="button" class="tiny" id="devToggle">hide</button>
+  </header>
+  <div class="dev-body" id="devBody">
+    <div class="presets">
+      <button type="button" class="preset" id="presetDefault">Default (low-cost)</button>
+      <button type="button" class="preset" id="presetRef" title="Restore the exact config used for every thesis evaluation run">Reference pipeline (thesis)</button>
+    </div>
+
+    <div class="role">
+      <div class="role-h">1 · Decomposition <span>question → sub-questions</span></div>
+      <div class="row2"><select id="dec_provider"></select><select id="dec_model"></select></div>
+    </div>
+    <div class="role">
+      <div class="role-h">2 · Answering <span>each sub-question, from retrieved text</span></div>
+      <div class="row2"><select id="ans_provider"></select><select id="ans_model"></select></div>
+    </div>
+    <div class="role">
+      <div class="role-h">3 · Synthesis + scoring <span>final answer</span></div>
+      <div class="row2"><select id="syn_provider"></select><select id="syn_model"></select></div>
+    </div>
+
+    <div class="row2">
+      <div><label for="devVersion">Pipeline</label><select id="devVersion"></select></div>
+      <div><label for="devLang">Output language</label><select id="devLang"></select></div>
+    </div>
+    <div class="row2">
+      <div><label for="devK">k</label><input type="number" id="devK" min="1" max="20" step="1" /></div>
+      <div><label for="devN">sub-questions</label><input type="number" id="devN" min="1" max="8" step="1" /></div>
+    </div>
+    <div>
+      <label for="devTemp">temperature (blank = production)</label>
+      <input type="number" id="devTemp" min="0" max="2" step="0.05" placeholder="production" />
+    </div>
+
+    <div class="applied" id="devApplied"></div>
+    <button type="button" class="save" id="devSave">Save &amp; close</button>
+    <div id="devInspector"></div>
+  </div>
+</aside>
+
+<div id="toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var API = "";
+
+  var state = {
+    ready: false, asking: false,
+    dev: null, devCode: null,
+    communes: [], commune: "", view: "objective",
+    thread: [],           // [{role, text, time, meta?, sub?}]
+    threadId: null,
+    t0: 0, timer: null
+  };
+
+  // ---------------------------------------------------------------- markdown
+  function esc(s){return s.replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+  function inl(s){
+    return s
+      .replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>')
+      .replace(/`([^`]+)`/g,"<code>$1</code>")
+      .replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>")
+      .replace(/(^|[^*])\*([^*\n]+)\*/g,"$1<em>$2</em>");
+  }
+  function md(text){
+    var lines = esc(String(text||"").replace(/\r\n/g,"\n")).split("\n");
+    var out=[], list=null, para=[];
+    function fp(){ if(para.length){ out.push("<p>"+inl(para.join(" "))+"</p>"); para=[]; } }
+    function cl(){ if(list){ out.push("</"+list+">"); list=null; } }
+    for(var i=0;i<lines.length;i++){
+      var t=lines[i].trim();
+      if(!t){ fp(); cl(); continue; }
+      var h=t.match(/^(#{1,3})\s+(.*)$/);
+      if(h){ fp(); cl(); var n=h[1].length; out.push("<h"+n+">"+inl(h[2])+"</h"+n+">"); continue; }
+      if(/^([-*_=]){3,}$/.test(t)){ fp(); cl(); out.push("<hr />"); continue; }
+      if(/^&gt;\s?/.test(t)){ fp(); cl(); out.push("<blockquote>"+inl(t.replace(/^&gt;\s?/,""))+"</blockquote>"); continue; }
+      var ol=t.match(/^\d+[.)]\s+(.*)$/), ul=t.match(/^[-*•]\s+(.*)$/);
+      if(ol){ fp(); if(list!=="ol"){ cl(); list="ol"; out.push("<ol>"); } out.push("<li>"+inl(ol[1])+"</li>"); continue; }
+      if(ul){ fp(); if(list!=="ul"){ cl(); list="ul"; out.push("<ul>"); } out.push("<li>"+inl(ul[1])+"</li>"); continue; }
+      cl(); para.push(t);
+    }
+    fp(); cl();
+    return out.join("\n");
+  }
+  function hhmm(d){ d=d||new Date(); return String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0"); }
+
+  // ---------------------------------------------------------------- boot
+  fetch(API+"/api/examples").then(function(r){return r.json();}).then(function(d){
+    state.examples = d.questions || [];
+    if (!state.thread.length) renderGreeting();
+  }).catch(function(){ renderGreeting(); });
+
+  fetch(API+"/api/communes").then(function(r){return r.json();}).then(function(d){
+    state.communes = d.communes || [];
+    var sel = $("communeSelect");
+    state.communes.forEach(function(name){
+      var o=document.createElement("option"); o.value=name; o.textContent=name; sel.appendChild(o);
+    });
+    var saved = lsGet("obs.commune", "");
+    if (saved && state.communes.indexOf(saved) >= 0) { sel.value = saved; state.commune = saved; }
+    $("communeLabel").textContent = state.commune || "All of Corsica";
+    refreshSidebar();
+  }).catch(function(){});
+
+  $("communeSelect").addEventListener("change", function(){ setCommune(this.value); });
+
+  state.view = lsGet("obs.view", "objective");
+  Array.prototype.forEach.call($("viewToggle").children, function(b){
+    if (b.getAttribute("data-view") === state.view) b.classList.add("on");
+    b.addEventListener("click", function(){ setView(b.getAttribute("data-view")); });
+  });
+
+  function pollHealth(){
+    fetch(API+"/api/health").then(function(r){return r.json();}).then(function(h){
+      state.ready = !!h.ready;
+      if (h.error) setStatus("offline", "Data error");
+      else if (h.ready) setStatus("ready", "Ready");
+      else { setStatus("loading", "Preparing data…"); setTimeout(pollHealth, 2500); }
+    }).catch(function(){ setStatus("offline", "Offline"); setTimeout(pollHealth, 4000); });
+  }
+  function setStatus(cls, txt){ $("statusDot").className = "dot "+cls; $("statusText").textContent = txt; }
+  pollHealth();
+
+  // ---------------------------------------------------------------- commune sidebar
+  function setCommune(name){
+    state.commune = name || "";
+    lsSet("obs.commune", state.commune);
+    $("communeLabel").textContent = state.commune || "All of Corsica";
+    refreshSidebar();
+  }
+  function setView(v){
+    state.view = v;
+    lsSet("obs.view", v);
+    Array.prototype.forEach.call($("viewToggle").children, function(b){
+      b.classList.toggle("on", b.getAttribute("data-view") === v);
+    });
+    $("indHead").textContent = v === "subjective" ? "Resident survey" : "Territorial indicators";
+    refreshSidebar();
+  }
+  function refreshSidebar(){
+    $("indHead").textContent = state.view === "subjective" ? "Resident survey" : "Territorial indicators";
+    if (!state.commune){
+      $("ctxProfile").innerHTML = "";
+      $("indicators").innerHTML = '<p class="side-note">Select a municipality to see its indicators.</p>';
+      return;
+    }
+    fetch(API+"/api/commune?name="+encodeURIComponent(state.commune)+"&view="+state.view)
+      .then(function(r){return r.json();}).then(renderProfile).catch(function(){});
+  }
+  function renderProfile(p){
+    if (!p || !p.name){ $("ctxProfile").innerHTML = ""; $("indicators").innerHTML = ""; return; }
+
+    if (p.available === false){
+      $("ctxProfile").innerHTML = p.view === "subjective"
+        ? field("Data", "No resident-survey responses for this municipality (68 communes covered).")
+        : field("Data", "No territorial score for this municipality.");
+      $("indicators").innerHTML = p.view === "subjective"
+        ? '<p class="side-note">Switch to <strong>Territorial</strong> for OppChoVec scores (all 360 communes).</p>'
+        : '<p class="side-note">—</p>';
+      return;
+    }
+
+    var rows = "";
+    if (p.view === "subjective"){
+      if (p.respondents) rows += field("Survey respondents", p.respondents + " residents");
+      if (p.mean_age) rows += field("Mean age of respondents", p.mean_age + " years");
+      if (p.worst_dimension) rows += field("Most criticised", p.worst_dimension);
+      if (p.best_dimension) rows += field("Best rated", p.best_dimension);
+    } else {
+      if (p.rank_total) rows += field("Overall rank", p.rank_total + " / 360");
+      if (p.note) rows += field("Data", p.note);
+    }
+    $("ctxProfile").innerHTML = rows;
+
+    if (!p.indicators || !p.indicators.length){
+      $("indicators").innerHTML = '<p class="side-note">No indicators for this municipality.</p>';
+      return;
+    }
+    $("indicators").innerHTML = p.indicators.map(function(ind){
+      var sub = "";
+      if (ind.vs_corsica != null) sub = "(" + (ind.vs_corsica > 0 ? "+" : "") + ind.vs_corsica + " vs Corsica)";
+      else if (ind.rank != null) sub = "rank " + ind.rank + " / " + (ind.n || 360);
+      return '<div class="ind"><span class="lab">'+esc(ind.label)+'</span>'
+           + '<span class="num '+ind.tone+'">'+ind.arrow+' '+ind.value+' / '+ind.max
+           + (sub ? ' <span class="side-note">'+esc(sub)+'</span>' : '')
+           + '</span></div>';
+    }).join("");
+  }
+  function field(k, v){ return '<div class="field"><div class="k">'+esc(k)+'</div><div class="v">'+esc(String(v))+'</div></div>'; }
+
+  // ---------------------------------------------------------------- dev console
+  (function(){
+    var code = new URLSearchParams(location.search).get("dev");
+    if (!code) return;
+    fetch(API+"/api/config?code="+encodeURIComponent(code)).then(function(r){return r.json();}).then(function(cfg){
+      if (!cfg.ok) return;
+      state.dev = cfg; state.devCode = code; buildDev(cfg);
+    }).catch(function(){});
+  })();
+
+  var ROLE_UI = { decomposer: "dec", answerer: "ans", synthesizer: "syn" };
+
+  function fillSel(sel, values, cur){
+    sel.innerHTML = "";
+    values.forEach(function(v){ var o=document.createElement("option"); o.value=v; o.textContent=v; if(v===cur)o.selected=true; sel.appendChild(o); });
+  }
+
+  function wireRole(prefix){
+    var cfg = state.dev;
+    var pv = $(prefix+"_provider"), md = $(prefix+"_model");
+    fillSel(pv, Object.keys(cfg.provider_models), pv.value || Object.keys(cfg.provider_models)[0]);
+    function repopModels(keep){
+      var models = cfg.provider_models[pv.value] || [];
+      fillSel(md, models, (keep && models.indexOf(keep) >= 0) ? keep : models[0]);
+    }
+    repopModels(md.value);
+    pv.addEventListener("change", function(){ repopModels(); persistDev(); });
+    md.addEventListener("change", persistDev);
+  }
+
+  function setRole(prefix, roleObj){
+    if (!roleObj) return;
+    $(prefix+"_provider").value = roleObj.provider;
+    var models = state.dev.provider_models[roleObj.provider] || [];
+    fillSel($(prefix+"_model"), models, models.indexOf(roleObj.model) >= 0 ? roleObj.model : models[0]);
+  }
+
+  function applyConfig(c){
+    Object.keys(ROLE_UI).forEach(function(role){ setRole(ROLE_UI[role], c[role]); });
+    if (c.version != null) $("devVersion").value = c.version;
+    if (c.output_language != null) $("devLang").value = c.output_language;
+    if (c.k != null) $("devK").value = c.k;
+    if (c.n_subquestions != null) $("devN").value = c.n_subquestions;
+    $("devTemp").value = (c.temperature != null && c.temperature !== "") ? c.temperature : "";
+    persistDev();
+  }
+
+  function buildDev(cfg){
+    var saved = {}; try { saved = JSON.parse(localStorage.getItem("obs.dev")||"{}"); } catch(e){}
+    var start = Object.assign({}, cfg.defaults, saved);
+
+    fillSel($("devVersion"), cfg.versions, start.version || cfg.defaults.version);
+    fillSel($("devLang"), cfg.output_languages||["en","fr"], start.output_language || "en");
+    Object.keys(ROLE_UI).forEach(function(role){ wireRole(ROLE_UI[role]); });
+    applyConfig(start);   // sets roles/version/lang/k/n/temp from saved-or-default
+
+    ["devVersion","devLang","devK","devN","devTemp"].forEach(function(id){
+      $(id).addEventListener("change", persistDev);
+    });
+    $("presetDefault").addEventListener("click", function(){ applyConfig(cfg.defaults); });
+    $("presetRef").addEventListener("click", function(){
+      applyConfig(Object.assign({ output_language: $("devLang").value }, cfg.reference));
+    });
+    $("devToggle").addEventListener("click", function(){
+      var b=$("dev"); b.classList.toggle("dev-collapsed");
+      $("devToggle").textContent = b.classList.contains("dev-collapsed")?"show":"hide";
+    });
+    $("devSave").addEventListener("click", saveAndClose);
+    $("devOpen").addEventListener("click", toggleConsole);
+    $("devOpen").hidden = false;         // reveal the top-bar toggle
+    $("devOpen").classList.add("on");
+    $("dev").hidden = false;
+    persistDev();
+  }
+
+  function toggleConsole(){
+    var d = $("dev"), open = d.hidden;
+    if (open) { d.hidden = false; d.classList.remove("dev-collapsed"); $("devToggle").textContent = "hide"; }
+    else { d.hidden = true; }
+    $("devOpen").classList.toggle("on", open);
+  }
+
+  function saveAndClose(){
+    persistDev();                       // writes obs.dev to localStorage
+    toast("Console settings saved — applied to the next question");
+    $("dev").hidden = true;
+    $("devOpen").classList.remove("on");
+  }
+
+  var _toastT = null;
+  function toast(msg){
+    var el = $("toast");
+    el.textContent = msg;
+    el.hidden = false;
+    requestAnimationFrame(function(){ el.classList.add("show"); });
+    clearTimeout(_toastT);
+    _toastT = setTimeout(function(){
+      el.classList.remove("show");
+      setTimeout(function(){ el.hidden = true; }, 240);
+    }, 2600);
+  }
+
+  function roleFromUI(prefix){
+    return { provider: $(prefix+"_provider").value, model: $(prefix+"_model").value };
+  }
+
+  function devConfig(){
+    if (!state.dev) return {};
+    var c = {
+      dev_code: state.devCode,
+      version: $("devVersion").value,
+      decomposer: roleFromUI("dec"),
+      answerer: roleFromUI("ans"),
+      synthesizer: roleFromUI("syn"),
+      output_language: $("devLang").value,
+      k: parseInt($("devK").value,10),
+      n_subquestions: parseInt($("devN").value,10)
+    };
+    var t=$("devTemp").value; if (t!=="" && t!=null) c.temperature = parseFloat(t);
+    return c;
+  }
+
+  function persistDev(){
+    if (!state.dev) return;
+    var c = devConfig();
+    try { localStorage.setItem("obs.dev", JSON.stringify(c)); } catch(e){}
+    var r = function(x){ return x.provider+"/"+x.model; };
+    var ref = state.dev.reference;
+    var isRef = c.decomposer.provider==="mistral" && c.decomposer.model===ref.decomposer.model
+      && c.synthesizer.provider==="mistral" && c.synthesizer.model===ref.synthesizer.model
+      && c.answerer.model===ref.answerer.model;
+    $("devApplied").innerHTML =
+      (isRef ? "<strong>Reference pipeline</strong> &mdash; " : "")
+      + "dec " + r(c.decomposer) + " · ans " + r(c.answerer) + " · syn " + r(c.synthesizer)
+      + " · " + c.version + " · " + c.output_language
+      + " · k=" + c.k + " · n=" + c.n_subquestions
+      + (c.temperature!=null ? " · temp="+c.temperature : " · temp=prod");
+  }
+
+  // ---------------------------------------------------------------- rendering
+  function renderGreeting(){
+    $("messages").innerHTML =
+      '<div class="msg bot"><div class="who"><span class="avatar">D</span>'
+      + '<span class="name">Dumè GPT</span></div>'
+      + '<div class="body"><p>Good day. I answer questions about quality of life and '
+      + 'well-being in Corsica&rsquo;s municipalities, drawing on resident interviews, '
+      + 'citizen-survey scores and territorial indicators. Pick a municipality on the '
+      + 'right for context, then ask your question below.</p></div>'
+      + '<div class="followups" id="greetChips"></div></div>';
+    var box = $("greetChips");
+    (state.examples||[]).forEach(function(qt){
+      var b=document.createElement("button"); b.type="button"; b.className="chip"; b.textContent=qt;
+      b.addEventListener("click", function(){ $("q").value=qt; submit(); });
+      box.appendChild(b);
+    });
+  }
+
+  function elMsg(html, cls){
+    var d=document.createElement("div"); d.className="msg "+cls; d.innerHTML=html;
+    $("messages").appendChild(d);
+    $("messages").scrollTop = $("messages").scrollHeight;
+    return d;
+  }
+
+  function renderUser(text, time){
+    elMsg('<div class="bubble">'+esc(text)+'</div><div class="time">'+esc(time)+'</div>', "user");
+  }
+
+  function renderBotAnswer(container, r){
+    var followups = "";
+    var sub = (r.sub_questions||[]).map(function(o){ return o.question||o.sub_question||""; }).filter(Boolean);
+    if (sub.length){
+      followups = '<div class="followups">' + sub.map(function(s){
+        return '<button type="button" class="chip">'+esc(s)+'</button>';
+      }).join("") + '</div>';
+    }
+    var src = "";
+    if (r.sources && r.sources.length){
+      src = '<details class="sources"><summary>Sources ('+r.sources.length+')</summary><div class="src-list">'
+          + r.sources.map(function(s){
+              var tags=[]; var kind=s.type||s.source_type; if(kind)tags.push(kind);
+              var com=s.commune||s.nom||s.dim1_value; if(com)tags.push(com);
+              if(s.sub_question_idx!=null)tags.push("sub-q "+s.sub_question_idx);
+              var ex=s.extrait||s.text||s.content||"";
+              return '<div class="src"><div class="src-meta">'
+                + tags.map(function(t){return '<span class="tag">'+esc(String(t))+'</span>';}).join("")
+                + '</div>'+(ex?'<div class="src-ex">'+esc(ex)+'</div>':'')+'</div>';
+            }).join("")
+          + '</div></details>';
+    }
+    container.innerHTML =
+      '<div class="who"><span class="avatar">D</span><span class="name">Dumè GPT</span>'
+      + '<span class="time">'+hhmm()+'</span></div>'
+      + '<div class="body">'+md(r.answer)+'</div>'
+      + '<p class="provenance">Generated from a bounded research corpus on Corsican municipalities &mdash; may be incomplete or inexact.</p>'
+      + src + followups;
+    container.querySelectorAll(".followups .chip").forEach(function(btn, i){
+      btn.addEventListener("click", function(){ $("q").value = sub[i]; submit(); });
+    });
+    if (state.dev) renderInspector(r);
+    $("messages").scrollTop = $("messages").scrollHeight;
+  }
+
+  function role(o){ return o && o.provider ? esc(o.provider+" / "+o.model) : "?"; }
+
+  function renderInspector(r){
+    var m = r.meta||{}, s = m.steps||{};
+    var rows = Object.keys(s).map(function(k){
+      var x=s[k]; return "<tr><td>"+k+"</td><td>"+(x.n_calls||0)+"</td><td>"+(x.elapsed_s||0)
+        +"</td><td>"+(x.prompt_tokens||0)+"</td><td>"+(x.completion_tokens||0)+"</td></tr>";
+    }).join("");
+    var sc = r.scoring||{};
+    var scHtml = sc && sc.applicable
+      ? "<p><strong>Dimension</strong>: "+esc(String(sc.dimension))+" — "+esc(String(sc.score))+"/5</p>"
+        +"<p class='side-note'>"+esc(String(sc.justification||""))+"</p>"
+      : "<p><strong>Dimension score</strong>: n/a</p>";
+    $("devInspector").innerHTML =
+      "<div class='applied'><strong>Last run</strong></div>"
+      + "<table><tbody>"
+      + "<tr><td>elapsed</td><td colspan='4'>"+(m.elapsed_s)+" s</td></tr>"
+      + "<tr><td>pipeline</td><td colspan='4'>"+esc(String(m.version))+(m.commune?(" · "+esc(m.commune)):"")+"</td></tr>"
+      + "<tr><td>decomposer</td><td colspan='4'>"+role(m.decomposer)+"</td></tr>"
+      + "<tr><td>answerer</td><td colspan='4'>"+role(m.answerer)+"</td></tr>"
+      + "<tr><td>synthesizer</td><td colspan='4'>"+role(m.synthesizer)+"</td></tr>"
+      + "<tr><td>k · n · temp</td><td colspan='4'>"+m.k+" · "+m.n_subquestions+" · "+(m.temperature==null?"prod":m.temperature)+"</td></tr>"
+      + "</tbody></table>"
+      + "<p class='applied'>Per-step cost</p>"
+      + "<table><thead><tr><th>step</th><th>calls</th><th>s</th><th>in</th><th>out</th></tr></thead><tbody>"+rows+"</tbody></table>"
+      + scHtml
+      + "<details><summary style='cursor:pointer'>Sub-questions ("+(r.sub_questions||[]).length+")</summary><pre>"
+      + esc(JSON.stringify(r.sub_questions||[], null, 2))+"</pre></details>"
+      + "<details><summary style='cursor:pointer'>Raw sources</summary><pre>"
+      + esc(JSON.stringify(r.sources||[], null, 2))+"</pre></details>";
+  }
+
+  // ---------------------------------------------------------------- ask
+  $("composer").addEventListener("submit", function(e){ e.preventDefault(); submit(); });
+  $("q").addEventListener("keydown", function(e){
+    if (e.key==="Enter" && !e.shiftKey){ e.preventDefault(); submit(); }
+  });
+  $("q").addEventListener("input", function(){ this.style.height="auto"; this.style.height=Math.min(this.scrollHeight,180)+"px"; });
+  $("newBtn").addEventListener("click", newConversation);
+
+  function newConversation(){
+    saveThread();
+    state.thread = []; state.threadId = null;
+    renderGreeting();
+    $("q").value=""; $("q").style.height="auto"; $("q").focus();
+  }
+
+  function submit(){
+    if (state.asking) return;
+    var text = $("q").value.trim();
+    if (!text) { $("q").focus(); return; }
+    if (!state.ready) { flashError("The assistant is still preparing its data. Please wait a few seconds."); }
+
+    state.asking = true;
+    $("send").disabled = true;
+    if (!state.thread.length) $("messages").innerHTML = "";  // clear greeting
+
+    var now = hhmm();
+    state.thread.push({ role:"user", text:text, time:now });
+    renderUser(text, now);
+    $("q").value=""; $("q").style.height="auto";
+
+    var bot = elMsg(
+      '<div class="who"><span class="avatar">D</span><span class="name">Dumè GPT</span></div>'
+      + '<ul class="steps">'
+      + '<li data-s="decompose"><span class="mk"></span>Understanding your question</li>'
+      + '<li data-s="answer"><span class="mk"></span>Consulting interviews &amp; survey data <span class="sub"></span></li>'
+      + '<li data-s="synthesize"><span class="mk"></span>Drafting the answer</li>'
+      + '</ul><div class="elapsed" data-el>0 s</div>', "bot");
+
+    startTimer(bot);
+
+    var payload = { question:text, config: Object.assign({ commune: state.commune, output_language: "en" }, devConfig()) };
+
+    fetch(API+"/api/ask", {
+      method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(payload)
+    }).then(function(resp){
+      if (!resp.ok || !resp.body) return resp.json().then(function(j){ throw new Error(j.error||("HTTP "+resp.status)); });
+      return readStream(resp.body.getReader(), bot);
+    }).catch(function(err){
+      stopTimer(); finishAsk();
+      bot.querySelector(".steps") && bot.querySelector(".steps").remove();
+      var e=bot.querySelector("[data-el]"); if(e) e.remove();
+      bot.insertAdjacentHTML("beforeend", '<div class="error">'+esc(String(err.message||err))+'</div>');
+    });
+  }
+
+  function step(bot, name, cls){ var li=bot.querySelector('.steps li[data-s="'+name+'"]'); if(li) li.className=cls; }
+  function startTimer(bot){
+    state.t0 = Date.now();
+    state.timer = setInterval(function(){
+      var el = bot.querySelector("[data-el]");
+      if (el) el.textContent = Math.round((Date.now()-state.t0)/1000)+" s";
+    }, 1000);
+  }
+  function stopTimer(){ if (state.timer){ clearInterval(state.timer); state.timer=null; } }
+  function finishAsk(){ state.asking=false; $("send").disabled=false; }
+  function flashError(msg){
+    var e = elMsg('<div class="error">'+esc(msg)+'</div>', "");
+    setTimeout(function(){ e.remove(); }, 6000);
+  }
+
+  function readStream(reader, bot){
+    var dec = new TextDecoder(), buf = "";
+    function pump(){
+      return reader.read().then(function(res){
+        if (res.done) return;
+        buf += dec.decode(res.value, {stream:true});
+        var parts = buf.split("\n\n"); buf = parts.pop();
+        parts.forEach(function(f){ handleFrame(f, bot); });
+        return pump();
+      });
+    }
+    return pump();
+  }
+  function handleFrame(frame, bot){
+    var ev="message", data="";
+    frame.split("\n").forEach(function(l){
+      if (l.indexOf("event:")===0) ev=l.slice(6).trim();
+      else if (l.indexOf("data:")===0) data+=l.slice(5).trim();
+    });
+    if (!data) return;
+    var p; try { p = JSON.parse(data); } catch(e){ return; }
+    if (ev==="progress") onProgress(p, bot);
+    else if (ev==="result") onResult(p, bot);
+    else if (ev==="error") onError(p, bot);
+  }
+  function onProgress(p, bot){
+    switch (p.stage){
+      case "received": case "decompose": step(bot,"decompose","active"); break;
+      case "decomposed":
+        step(bot,"decompose","done");
+        var s=bot.querySelector('.steps li[data-s="answer"] .sub'); if(s&&p.n) s.textContent="(0 / "+p.n+")";
+        break;
+      case "answer":
+        step(bot,"decompose","done"); step(bot,"answer","active");
+        var sb=bot.querySelector('.steps li[data-s="answer"] .sub');
+        if (sb) sb.textContent = p.n ? ("("+p.i+" / "+p.n+")") : ("("+p.i+")");
+        break;
+      case "synthesize":
+        step(bot,"decompose","done"); step(bot,"answer","done"); step(bot,"synthesize","active"); break;
+      case "score":
+        step(bot,"synthesize","done"); break;
+    }
+  }
+  function onError(p, bot){
+    stopTimer(); finishAsk();
+    var s=bot.querySelector(".steps"); if(s) s.remove();
+    var e=bot.querySelector("[data-el]"); if(e) e.remove();
+    var msg = p.loading ? "The assistant is still preparing its data. Please wait and try again."
+            : p.busy ? "The assistant is already answering another question. Please retry in a moment."
+            : (p.message || "Something went wrong while generating the answer.");
+    bot.insertAdjacentHTML("beforeend", '<div class="error">'+esc(msg)+'</div>');
+  }
+  function onResult(r, bot){
+    stopTimer(); finishAsk();
+    renderBotAnswer(bot, r);
+    state.thread.push({ role:"bot", text:r.answer, time:hhmm(), meta:r.meta,
+                        sub:(r.sub_questions||[]), sources:(r.sources||[]) });
+    saveThread(); renderRecent();
+  }
+
+  // ---------------------------------------------------------------- recent (localStorage)
+  function lsGet(k, d){ try { var v=localStorage.getItem(k); return v==null?d:v; } catch(e){ return d; } }
+  function lsSet(k, v){ try { localStorage.setItem(k, v); } catch(e){} }
+  function loadThreads(){ try { return JSON.parse(localStorage.getItem("obs.threads")||"[]"); } catch(e){ return []; } }
+  function storeThreads(a){ try { localStorage.setItem("obs.threads", JSON.stringify(a.slice(0,25))); } catch(e){} }
+
+  function saveThread(){
+    var firstQ = (state.thread.find(function(m){return m.role==="user";})||{}).text;
+    if (!firstQ) return;
+    if (!state.threadId) state.threadId = "t"+Date.now();
+    var all = loadThreads().filter(function(t){ return t.id !== state.threadId; });
+    all.unshift({ id: state.threadId, title: firstQ.slice(0,80), when: Date.now(),
+                  commune: state.commune, turns: state.thread });
+    storeThreads(all);
+  }
+  function renderRecent(){
+    var all = loadThreads();
+    var box = $("recent");
+    if (!all.length){ box.innerHTML = '<p class="side-note">Your questions from this browser appear here.</p>'; return; }
+    box.innerHTML = "";
+    all.forEach(function(t){
+      var b=document.createElement("button"); b.className="recent"; b.textContent=t.title;
+      b.title = t.title + (t.commune ? (" — "+t.commune) : "");
+      b.addEventListener("click", function(){ openThread(t); });
+      box.appendChild(b);
+    });
+  }
+  function openThread(t){
+    saveThread();
+    state.thread = t.turns || []; state.threadId = t.id;
+    if (t.commune && state.communes.indexOf(t.commune)>=0){ $("communeSelect").value=t.commune; setCommune(t.commune); }
+    $("messages").innerHTML = "";
+    state.thread.forEach(function(m){
+      if (m.role==="user") renderUser(m.text, m.time||"");
+      else {
+        var bot = elMsg('', "bot");
+        renderBotAnswer(bot, { answer:m.text, sub_questions:m.sub||[], sources:m.sources||[], meta:m.meta||{} });
+      }
+    });
+  }
+  renderRecent();
+})();
+</script>
+</body>
+</html>

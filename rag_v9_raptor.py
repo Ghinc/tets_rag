@@ -681,14 +681,31 @@ class RaptorRetriever:
 
         context_parts = []
         if summary_text:
-            context_parts.append(
-                f"[Synthèse RAPTOR enquête citoyenne (verbatims/subjectif/quali) - {_scope_label(summary_meta.get('view_name', 'N/A'))}]\n{summary_text}"
-            )
+            # Option A — signaler explicitement les données de scope régional injectées en fallback
+            if summary_meta.get("scope_reel") == "corse_entiere":
+                _req_comm = summary_meta.get("requested_commune", detected.get("nom", "?"))
+                _label = (
+                    f"⚠ DONNÉES CORSE ENTIÈRE — aucune synthèse commune disponible pour {_req_comm} "
+                    f"(vue {summary_meta.get('view_name', 'N/A')} · fallback sémantique)"
+                )
+                print(
+                    f"  [RAPTOR][Option A] Contexte étiqueté scope=corse_entiere pour '{_req_comm}' "
+                    f"— synthèse injectée : vue '{summary_meta.get('view_name')}'"
+                )
+            else:
+                _label = f"Synthèse RAPTOR enquête citoyenne (verbatims/subjectif/quali) - {_scope_label(summary_meta.get('view_name', 'N/A'))}"
+            context_parts.append(f"[{_label}]\n{summary_text}")
 
         if enquete_summary_text:
-            context_parts.append(
-                f"[Synthèse RAPTOR scores enquête citoyenne (subjectif/quanti) - {_scope_label(enquete_meta.get('view_name', 'N/A'))}]\n{enquete_summary_text}"
-            )
+            if enquete_meta.get("scope_reel") == "corse_entiere":
+                _req_comm = enquete_meta.get("requested_commune", detected.get("nom", "?"))
+                _label_e = (
+                    f"⚠ DONNÉES CORSE ENTIÈRE — aucune synthèse scores disponible pour {_req_comm} "
+                    f"(vue {enquete_meta.get('view_name', 'N/A')} · fallback sémantique)"
+                )
+            else:
+                _label_e = f"Synthèse RAPTOR scores enquête citoyenne (subjectif/quanti) - {_scope_label(enquete_meta.get('view_name', 'N/A'))}"
+            context_parts.append(f"[{_label_e}]\n{enquete_summary_text}")
 
         if classement_text:
             context_parts.append(
@@ -1560,7 +1577,7 @@ class RaptorRetriever:
             if results["documents"] and results["documents"][0]:
                 distance = results["distances"][0][0]
                 if distance <= FALLBACK_DISTANCE_THRESHOLD:
-                    _fallback_meta = results["metadatas"][0][0]
+                    _fallback_meta = dict(results["metadatas"][0][0])  # copie — ne pas muter ChromaDB
                     _fallback_view = _fallback_meta.get("view_name", "")
                     # Bloquer les vues commune-spécifiques non pertinentes
                     if not detected and "commune" in _fallback_view:
@@ -1572,6 +1589,17 @@ class RaptorRetriever:
                         else:
                             return results["documents"][0][0], _fallback_meta
                     else:
+                        # ── Annotation scope (Option A) ─────────────────────────────
+                        # La vue retournée n'est pas commune-spécifique : marquer explicitement.
+                        if detected.get("nom"):
+                            _fallback_meta["scope_reel"] = "corse_entiere"
+                            _fallback_meta["matched_commune"] = None
+                            _fallback_meta["requested_commune"] = detected["nom"]
+                            print(
+                                f"  [RAPTOR] ⚠ Fallback sémantique — données Corse entière "
+                                f"(vue '{_fallback_view}', N={_fallback_meta.get('num_chunks','?')}) "
+                                f"injectées pour '{detected['nom']}' qui n'a pas de vue structurée"
+                            )
                         return results["documents"][0][0], _fallback_meta
                 else:
                     print(f"  [RAPTOR] Fallback ignore (distance={distance:.3f} > seuil {FALLBACK_DISTANCE_THRESHOLD})")

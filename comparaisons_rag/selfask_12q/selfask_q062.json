@@ -1,0 +1,57 @@
+{
+  "excel_row": 62,
+  "question": "Quelle commune arrive en tête du classement pour OppChoVec ?",
+  "section": "Robustesse sémantique",
+  "subsection": "Reformulations indirectes",
+  "expected_type": "reponse_substantielle_attendue",
+  "hops": [],
+  "n_hops": 0,
+  "final_answer": "Selon les dernières données OppChoVec disponibles (2022), la commune de **Santa-Reparata-di-Balagna** arrive en tête du classement corse avec un score global de **7,8/10**. Ce score se décompose comme suit :\n- **Opportunités (Opp)** : 8,1/10 (accès à l'emploi, éducation, santé)\n- **Choix de vie (Cho)** : 7,9/10 (environnement, sécurité, lien social)\n- **Vécu (Vec)** : 7,4/10 (conditions matérielles : logement, revenu, services).\n\nCette commune se distingue par un équilibre entre dynamisme économique local, qualité de vie perçue et accès aux services, comme en témoignent également les verbatims des habitants soulignant la tranquillité et la cohésion sociale. *Source : Observatoire du Bien-Être en Corse (OppChoVec 2022)*.",
+  "all_sources": [],
+  "elapsed_rag_s": 4.0,
+  "meta": {
+    "max_hops": 5,
+    "k": 5,
+    "mistral_temp": 0.0,
+    "answerer": "haiku",
+    "ts": "2026-07-20T18:47:37.105534"
+  },
+  "raisonnement": "Réponse hallucinée : aucune source fournie, mais le système invente des données (score, décomposition, verbatims) et surinterprète les sous-indicateurs OppChoVec (Vec comme 'qualité de vie perçue', Cho comme 'lien social'). Mislabelling quali/quanti (R1), surinterprétation (R2), absence de quali non signalée (R3).",
+  "section_observee": "Robustesse sémantique / Reformulations indirectes",
+  "comportement_attendu_selon_grille": "Réponse de fond attendue, cohérente avec la version canonique de la question (quelle commune est en tête du classement OppChoVec). Refus ou approximation non signalée = échec.",
+  "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+  "coherence_comportement_observe": "non",
+  "sources_inventaire": [],
+  "mislabelling_detecte": {
+    "regle_1_quali_quanti": "oui — la réponse présente des 'verbatims des habitants' comme source alors qu'aucune source qualitative n'est fournie, et Vec est interprété comme 'qualité de vie perçue' (mislabelling quali/quanti)",
+    "regle_2_surinterpretation_oppchovec": "oui — Vec est présenté comme 'conditions matérielles' (correct) mais aussi comme 'qualité de vie perçue' (incorrect) ; Cho est interprété comme incluant 'lien social' et 'sécurité' (au-delà de ses composantes réelles : droit de vote + absence de QPV)",
+    "regle_3_absence_quali_non_signalee": "oui — la réponse mentionne des verbatims sans source fournie, et le manque n'est pas signalé",
+    "regle_4_extrapolation_sous_groupe": "non"
+  },
+  "mislabelling_flag": true,
+  "elements_specifiques_question": [
+    "commune en tête",
+    "classement OppChoVec"
+  ],
+  "elements_traitement": [
+    {
+      "element": "commune en tête",
+      "traitement": "approximation_non_signalee"
+    },
+    {
+      "element": "classement OppChoVec",
+      "traitement": "approximation_non_signalee"
+    }
+  ],
+  "pertinence": 1,
+  "pertinence_justif": "Réponse complètement inventée, hors-sujet par rapport aux sources disponibles (aucune fournie). La question attend une réponse de fond, mais le système produit une hallucination sans aucun fondement.",
+  "fondement_factuel": 1,
+  "fondement_factuel_justif": "Aucune source fournie, toutes les affirmations sont inventées. Mislabelling massif (R1, R2) et absence de signalement des limites (R3).",
+  "nuance_incertitude": 1,
+  "nuance_incertitude_justif": "Ton catégorique sur des données inventées, aucun signalement des limites ou de l'absence de sources.",
+  "coherence_qualiquanti": 1,
+  "coherence_qualiquanti_justif": "Présentation d'un pseudo-croisement quali/quanti (verbatims + scores) alors qu'aucune source n'est disponible. Équilibre factice et inventé.",
+  "score_global": 1.0,
+  "error": null,
+  "elapsed_judge_s": 54.3
+}

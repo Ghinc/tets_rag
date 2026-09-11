@@ -1,0 +1,1352 @@
+<title>Smoke test v_decomp_no_typing</title>
+<meta charset="utf-8">
+<style>
+  :root { --bg: #fff; --fg: #222; --border: #ddd; --subq-bg: #f7f7f7;
+           --badge: #8e44ad; --ok: #27ae60; --err: #c0392b; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #1a1a1a; --fg: #e0e0e0; --border: #333; --subq-bg: #252525; }
+  }
+  :root[data-theme="dark"]  { --bg: #1a1a1a; --fg: #e0e0e0; --border: #333; --subq-bg: #252525; }
+  :root[data-theme="light"] { --bg: #fff; --fg: #222; --border: #ddd; --subq-bg: #f7f7f7; }
+  body { background: var(--bg); color: var(--fg); font-family: system-ui, sans-serif;
+          line-height: 1.55; max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem; }
+  h1 { font-size: 1.4rem; border-bottom: 2px solid var(--badge); padding-bottom: .4rem; }
+  .meta { font-size: .85rem; color: #888; margin-bottom: 1.5rem; }
+  .question-block { border: 1px solid var(--border); border-radius: 8px; padding: 1rem;
+                     margin-bottom: 1.4rem; }
+  .question-block.error { border-left: 4px solid var(--err); }
+  .question-block.ok    { border-left: 4px solid var(--ok); }
+  .q-header { display: flex; gap: .6rem; align-items: center; margin-bottom: .3rem; }
+  .q-id    { background: var(--badge); color: #fff; border-radius: 4px;
+               padding: 2px 7px; font-weight: bold; font-size: .85rem; }
+  .q-cat   { background: #eee; color: #555; border-radius: 4px;
+               padding: 2px 7px; font-size: .8rem; }
+  @media (prefers-color-scheme: dark) { .q-cat { background: #333; color: #aaa; } }
+  .q-elapsed { margin-left: auto; font-size: .8rem; color: #888; }
+  .q-meta  { font-size: .8rem; color: #888; margin-bottom: .5rem; }
+  .q-text  { font-weight: 600; margin-bottom: .8rem; }
+  .error-box { background: #fdecea; border: 1px solid var(--err); border-radius: 4px;
+                padding: .5rem .8rem; color: var(--err); font-size: .9rem; margin-bottom: .7rem; }
+  details { margin-top: .5rem; }
+  summary  { cursor: pointer; font-weight: 600; font-size: .95rem; padding: .3rem 0;
+               color: var(--badge); user-select: none; }
+  summary:hover { opacity: .8; }
+  .subq       { background: var(--subq-bg); border-radius: 6px; padding: .7rem .9rem;
+                 margin-top: .6rem; }
+  .subq-header { display: flex; align-items: flex-start; gap: .5rem; flex-wrap: wrap;
+                   margin-bottom: .4rem; }
+  .subq-num   { background: #555; color: #fff; border-radius: 4px;
+                  padding: 1px 6px; font-size: .8rem; flex-shrink: 0; }
+  .subq-text  { font-weight: 500; flex: 1; }
+  .badge      { background: var(--badge); color: #fff; border-radius: 12px;
+                  padding: 1px 8px; font-size: .75rem; white-space: nowrap; }
+  .subq-answer { font-size: .9rem; color: var(--fg); opacity: .85; white-space: pre-wrap; }
+  .answer-block .answer-text { white-space: pre-wrap; font-size: .9rem; margin-top: .5rem; }
+  .empty { color: #888; font-style: italic; }
+</style>
+<h1>Smoke test — <code>v_decomp_no_typing</code></h1>
+<div class="meta">
+  Généré le 2026-07-16 22:51 · 10/10 questions OK ·
+  RAG version : v_decomp_no_typing · k=5
+</div>
+
+<section class="question-block ok">
+  <div class="q-header">
+    <span class="q-id">Q001</span>
+    <span class="q-cat">Qualitative globale</span>
+    <span class="q-elapsed">68.3s</span>
+  </div>
+  <div class="q-meta">Retrieval mono-commune › Retrieval descriptif global</div>
+  <div class="q-text">Comment les habitants d'Ajaccio ressentent-ils le bien-être ?</div>
+
+  
+
+  <details class="subq-block" open>
+    <summary>Sous-questions (5)</summary>
+    
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ1</span>
+    <span class="subq-text">Quel est le score OppChoVec global de bien-être ressenti à l'échelle de la commune d'Ajaccio, tel que mesuré par les indicateurs territoriaux disponibles ?</span>
+    <span class="badge">Score OppChoVec global d'Ajaccio</span><span class="badge">Enquête citoyenne (scores de bonheur et confiance en l'avenir)</span>
+  </div>
+  <div class="subq-answer"># Score OppChoVec global d'Ajaccio
+
+Selon les indicateurs territoriaux objectifs, **Ajaccio affiche un score OppChoVec global de 5.78/10**, ce qui la place au **rang 19e sur 360 communes corses** — un positionnement élevé à l'échelle territoriale.
+
+Ce score global masque cependant des disparités importantes entre ses trois composantes :
+
+- **Opportunités (Opp) : 10.00/10** (très élevé, rang 1er) — Ajaccio excelle particulièrement en accès TIC (9.35/10) et mobilité (8.99/10), ainsi qu'en niveau d'éducation moyen (7.42/10).
+
+- **Choix (Cho) : 1.27/10** (très faible, rang 358e) — c'est le point critique d'Ajaccio, reflétant une faible absence de quartiers prioritaires et une structure démographique/électorale défavorable selon les critères de cet indicateur.
+
+- **Vécu (Vec) : 4.80/10** (moyen, rang 41e) — les réalisations concrètes en revenu, logement, emploi et services restent modérées.
+
+**Contraste avec les perceptions citoyennes** : selon l'enquête citoyenne (47 répondants ajacciens), le score de bonheur moyen est de 3.68/5 et la confiance en l'avenir très basse (2.75/5), révélant un décalage entre les ressources objectives du territoire et le bien-être subjectif ressenti par les habitants.</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ2</span>
+    <span class="subq-text">Quels sont les principaux thèmes émergents des verbatims citoyens d'Ajaccio liés au bien-être (ex : cadre de vie, accès aux services, liens sociaux) ?</span>
+    <span class="badge">Scores moyens de l'enquête citoyenne (dimensions Transports, Santé, Vie associative, Institutions)</span>
+  </div>
+  <div class="subq-answer"># Thèmes émergents des verbatims citoyens d'Ajaccio
+
+Le contexte fourni ne contient **pas de verbatims citoyens** (témoignages directs ou citations des habitants d'Ajaccio). Les données disponibles se limitent à des scores d'enquête quantifiés par dimension et à des indicateurs objectifs territoriaux.
+
+Cependant, selon les **scores moyens de l'enquête citoyenne** pour Ajaccio (51 répondants), les dimensions les plus faibles — qui reflètent les préoccupations prioritaires — sont :
+- **Transports** (0.95/5) et **Vie associative** (0.64/5) — très insatisfaits
+- **Santé** (1.80/5) et **Institutions** (1.85/5) — faiblement satisfaits
+- **Sécurité** (2.73/5) et **Logement** (2.80/5) — satisfaction modérée
+
+Les habitants interrogés ont également **cité comme prioritaires : Environnement et Santé**, selon l'enquête citoyenne.
+
+Pour une analyse détaillée des thèmes émergents (cadre de vie, liens sociaux, accès aux services), des verbatims directs seraient nécessaires — ils ne figurent pas dans le contexte fourni.</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ3</span>
+    <span class="subq-text">Comment les habitants d'Ajaccio évaluent-ils leur satisfaction globale concernant les dimensions clés du bien-être (ex : logement, environnement, santé) dans les enquêtes disponibles ?</span>
+    <span class="badge">Satisfaction globale des habitants d'Ajaccio (enquête citoyenne, N=51)</span>
+  </div>
+  <div class="subq-answer"># Satisfaction globale des habitants d'Ajaccio selon l'enquête citoyenne
+
+Selon l'enquête citoyenne (N=51 répondants à Ajaccio), les habitants évaluent leur satisfaction de manière **contrastée** selon les dimensions :
+
+## Dimensions les plus satisfaisantes
+Les habitants d'Ajaccio expriment une **satisfaction moyen-forte** pour :
+- **Emploi** (3.91/5) — la dimension la mieux évaluée
+- **Logement** (3.84/5) et **Sécurité** (3.81/5)
+- **Revenus** (3.51/5)
+
+## Dimensions critiques
+Les habitants interrogés expriment une **satisfaction faible à moyen** pour :
+- **Transports** (2.21/5) — la dimension la moins satisfaisante, avec un écart de 1.70 point par rapport à l'emploi
+- **Santé** (2.58/5) et **Tourisme** (2.63/5)
+- **Institutions** (2.93/5)
+
+## Priorités déclarées
+Selon l'enquête citoyenne, les habitants d'Ajaccio citent **l'Environnement et la Santé** comme les dimensions prioritaires, bien que la santé ne soit évaluée qu'à 2.58/5 en satisfaction.
+
+**Note** : Ces données couvrent spécifiquement Ajaccio et proviennent d'une enquête en cours (2024-2026). L'écart entre satisfaction déclarée (moyen-faible) et priorités mentionnées suggère des attentes non satisfaites, particulièrement sur les transports et la santé.</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ4</span>
+    <span class="subq-text">Quels écarts éventuels observe-t-on entre le score OppChoVec d'Ajaccio et la moyenne des scores des communes corses de taille comparable (en termes de population) ?</span>
+    
+  </div>
+  <div class="subq-answer">Le contexte fourni ne contient pas de données sur les communes corses de taille comparable à Ajaccio, ni de scores OppChoVec ventilés par classe de population. Je ne peux donc pas répondre à cette sous-question de comparaison.
+
+Ce que je peux affirmer : selon les indicateurs territoriaux objectifs, **Ajaccio affiche un score OppChoVec global de 5.78/10 et se classe 19e sur 360 communes corses**. Cependant, sans données de référence sur les communes de même taille démographique, aucune comparaison pertinente n'est possible.</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ5</span>
+    <span class="subq-text">Quels facteurs contextuels territoriaux (ex : densité urbaine, offre de transports, dynamisme économique) sont associés aux perceptions du bien-être exprimées par les habitants d'Ajaccio dans les verbatims ou enquêtes ?</span>
+    
+  </div>
+  <div class="subq-answer"># Facteurs contextuels territoriaux et perceptions du bien-être à Ajaccio
+
+## Décalage majeur : opportunités objectives vs. liberté effective
+
+Selon les indicateurs territoriaux objectifs, Ajaccio affiche un score Opportunités (Opp) de **10.00/10** — le meilleur rang parmi les 360 communes corses. Cela reflète une offre éducative solide (Opp1 : 7.42/10), une excellente couverture numérique (Opp4 : 9.35/10 avec 93.5% de couverture haut débit) et une très bonne accessibilité à la mobilité (Opp3 : 8.99/10). Pourtant, ce contexte favorable ne se traduit pas dans les perceptions citoyennes : selon l'enquête citoyenne, les transports obtiennent la note la plus faible (2.21/5), révélant une tension entre l'offre objective et l'expérience vécue.
+
+## Dynamisme économique contrasté
+
+Les données d'équipements communaux indiquent un taux d'activité élevé (75.6%) et une part importante de cadres (12.9%), signes d'un dynamisme économique réel. Cependant, selon l'enquête citoyenne, l'emploi — bien que classé premier en satisfaction (3.91/5) — reste noté en « moyen-fort » seulement, suggérant que le dynamisme économique apparent ne garantit pas une satisfaction généralisée face aux conditions concrètes d'emploi.
+
+## Densité urbaine et fragmentation sociale
+
+Le score Diversité sociale (Opp2) est très faible (1.96/10, rang 216e/360), indiquant une faible mixité socio-professionnelle malgré la taille urbaine d'Ajaccio. Cette fragmentation sociale objective peut expliquer pourquoi les dimensions relationnelles (Communauté et relations : 3.54/5) et institutionnelles (Institutions : 2.93/5) restent modérées selon l'enquête citoyenne — la densité urbaine n'assure pas automatiquement le lien social.
+
+## Offre de services et satisfaction mitigée
+
+Selon les données d'équipements communaux, Ajaccio dispose d'une infrastructure dense (80 médecins généralistes, 31 pharmacies, 15 écoles maternelles, 20 écoles élémentaires). Pourtant, la satisfaction à l'égard de la santé (2.58/5) et des services de proximité (3.42/5) reste faible selon l'enquête citoyenne, suggérant que l'accessibilité quantitative ne suffit pas — l'accessibilité perçue (délais, qualité, proximité réelle) diverge de l'offre objective.
+
+**En synthèse** : Ajaccio bénéficie d'un contexte territorial objectivement favorable (éducation, numérique, mobilité théorique), mais ce potentiel ne se convertit pas uniformément en bien-être perçu, révélant des enjeux d'accessibilité réelle, de cohésion sociale et de qualité de service au-delà de</div>
+</div>
+  </details>
+
+  <details class="answer-block">
+    <summary>Réponse finale de synthèse</summary>
+    <div class="answer-text">**Synthèse : Comment les habitants d'Ajaccio ressentent-ils le bien-être ?**
+
+À Ajaccio, le bien-être est perçu de manière contrastée, révélant un décalage marqué entre les ressources objectives du territoire et les expériences vécues par ses habitants.
+
+### **Un territoire objectivement bien doté, mais mal vécu**
+Les indicateurs territoriaux montrent qu’Ajaccio bénéficie d’atouts majeurs : elle se classe **19ᵉ sur 360 communes corses** avec un score global de **5,78/10** [SQ1]. Ses opportunités (éducation, mobilité, accès numérique) sont exceptionnelles (**10/10**, 1ʳᵉ place en Corse), grâce à une couverture haut débit de **93,5 %** et une accessibilité aux transports élevée [SQ1]. Pourtant, ces atouts ne se traduisent pas en bien-être ressenti. Selon l’enquête citoyenne, les habitants interrogés expriment un **bonheur moyen de 3,68/5** et une **confiance en l’avenir très faible (2,75/5)** [SQ1], illustrant un profond malaise malgré les infrastructures disponibles.
+
+### **Des satisfactions inégales selon les dimensions du quotidien**
+Les Ajacciens évaluent leur qualité de vie de manière très variable. Les points les plus satisfaisants concernent **l’emploi (3,91/5)**, le **logement (3,84/5)** et la **sécurité (3,81/5)** [SQ3], reflétant un certain dynamisme économique local (taux d’activité de **75,6 %** selon les données d’équipements communaux). En revanche, les **transports (2,21/5)** et la **santé (2,58/5)** cristallisent les insatisfactions [SQ3], malgré une offre objective de mobilité très bien notée (8,99/10) [SQ1]. Ce paradoxe suggère que l’accès aux services ne suffit pas à garantir leur qualité perçue.
+
+Les habitants placent **l’environnement et la santé** en tête de leurs priorités [SQ3], bien que ces dimensions obtiennent des scores de satisfaction médiocres. La **vie associative (0,64/5)** et les **institutions (1,85/5)** sont également pointées du doigt [SQ2], révélant un sentiment d’isolement ou de défiance envers les structures locales.
+
+### **Une fracture entre opportunités et vécu**
+Le principal clivage réside dans la **faible note de &quot;Choix&quot; (1,27/10)** [SQ1], liée à la présence de quartiers prioritaires et à une structure démographique défavorable. Cette fragmentation sociale (diversité CSP notée **1,96/10** [SQ1]) contraste avec la densité urbaine d’Ajaccio et pourrait expliquer pourquoi les habitants ressentent un manque de cohésion, malgré des ressources économiques et éducatives abondantes.
+
+### **Points clés à retenir**
+- **Atouts objectifs** : Ajaccio dispose d’infrastructures de qualité (éducation, numérique, mobilité), mais celles-ci ne comblent pas les attentes citoyennes.
+- **Faiblesses perçues** : Transports, santé et environnement sont les maillons faibles, malgré des indicateurs territoriaux parfois favorables.
+- **Décalage social** : La faible mixité et la présence de quartiers prioritaires pèsent sur le sentiment de bien-être, même dans un contexte économique dynamique.
+
+En résumé, les Ajacciens vivent dans un territoire aux potentialités élevées, mais leur expérience quotidienne est marquée par des frustrations ciblées (transports, santé) et un sentiment de déconnexion entre les opportunités offertes et leur réalité vécue.
+
+---</div>
+  </details>
+</section>
+<section class="question-block ok">
+  <div class="q-header">
+    <span class="q-id">Q006</span>
+    <span class="q-cat">Factuelle OppChoVec</span>
+    <span class="q-elapsed">55.9s</span>
+  </div>
+  <div class="q-meta">Retrieval mono-commune › Retrieval factuel et interprétation</div>
+  <div class="q-text">Quel est le score OppChoVec d'Ajaccio, par catégorie ?</div>
+
+  
+
+  <details class="subq-block" open>
+    <summary>Sous-questions (5)</summary>
+    
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ1</span>
+    <span class="subq-text">Quel est le score OppChoVec global de la commune d'Ajaccio, tel que disponible à l'échelle communale ?</span>
+    <span class="badge">Indicateurs territoriaux objectifs (scores OppChoVec par catégorie et global)</span>
+  </div>
+  <div class="subq-answer">Selon les indicateurs territoriaux objectifs, **le score OppChoVec global d'Ajaccio est de 5.78/10**, ce qui correspond à un niveau **élevé** et place la commune au **rang 19e sur 360 communes corses**.
+
+Ce score global masque cependant des disparités importantes entre ses trois composantes :
+- **Opportunités (Opp) : 10.00/10** — très élevé, rang 1er (Ajaccio offre les meilleures ressources territoriales de Corse en termes d'éducation, mobilité et accès numérique)
+- **Choix (Cho) : 1.27/10** — très faible, rang 358e (absence quasi-totale de quartiers prioritaires et couverture électorale très limitée)
+- **Vécu (Vec) : 4.80/10** — moyen, rang 41e (réalisations concrètes en revenu, logement et emploi)
+
+Ce profil révèle une commune offrant d'excellentes opportunités objectives, mais avec des réalisations concrètes et des libertés formelles très contrastées.</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ2</span>
+    <span class="subq-text">Quels sont les principaux indicateurs territoriaux (ex : accès aux services, dynamisme économique, environnement) qui composent le score OppChoVec d'Ajaccio, sans ventilation par catégorie ?</span>
+    <span class="badge">Indicateurs territoriaux objectifs (détail des sous-scores OppChoVec)</span><span class="badge">Données d'équipements communaux (écoles, médecins, commerces)</span>
+  </div>
+  <div class="subq-answer"># Indicateurs territoriaux composant le score OppChoVec d'Ajaccio
+
+Selon les indicateurs territoriaux objectifs, le score OppChoVec d'Ajaccio (5.78/10, rang 19e/360) repose sur trois composantes principales présentant des profils très contrastés :
+
+## **Opportunités (Opp) : 10.00/10 — très élevé**
+Ajaccio excelle dans l'accès aux ressources territoriales. Selon les données OppChoVec :
+- **Accès TIC (Opp4)** : 9.35/10 (couverture numérique de 93.5%)
+- **Mobilité (Opp3)** : 8.99/10 (accès voiture et transports en commun)
+- **Éducation (Opp1)** : 7.42/10 (niveau moyen élevé)
+- **Diversité sociale (Opp2)** : 1.96/10 (faible diversité CSP)
+
+Les données d'équipements communaux confirment cette richesse : 15 écoles maternelles, 20 écoles élémentaires, 6 collèges, 6 lycées, 80 médecins généralistes, 31 pharmacies, 204 infirmiers, ainsi qu'une offre commerciale dense (11 hypermarchés, 38 supérettes, 51 boulangeries).
+
+## **Choix (Cho) : 1.27/10 — très faible**
+Selon les indicateurs territoriaux, Ajaccio affiche le score le plus critique (rang 358e/360), reflétant une présence de quartiers prioritaires (QPV) et une proportion électorale limitée.
+
+## **Vécu (Vec) : 4.80/10 — moyen**
+Selon les données objectives, ce score intègre le revenu fiscal moyen, la qualité du logement (prix moyen 3 667 €/m², surface moyenne 71.8 m²), la stabilité de l'emploi (75.6% de taux d'activité, 87.8% d'emplois salariés) et l'accès aux services. Le taux de pauvreté de 14.3% et la vacance résidentielle de 3.3% complètent ce diagnostic.</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ3</span>
+    <span class="subq-text">Existe-t-il des verbatims citoyens recueillis à Ajaccio qui illustrent des perceptions liées aux dimensions du score OppChoVec (ex : qualité de vie, opportunités, choix de vie) ?</span>
+    <span class="badge">Aucune donnée disponible (verbatims absents)</span>
+  </div>
+  <div class="subq-answer">Le contexte fourni ne contient pas de verbatims citoyens spécifiques recueillis à Ajaccio. 
+
+Les données disponibles pour Ajaccio se limitent à des scores quantifiés (scores OppChoVec objectifs et scores de satisfaction moyens de l'enquête citoyenne), mais aucun extrait de paroles ou témoignage direct d'habitants n'est présent dans le contexte fourni. Pour répondre à cette sous-question, il faudrait disposer de verbatims qualitatifs issus des entretiens ou de la phase ouverte de l'enquête citoyenne menée à Ajaccio.</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ4</span>
+    <span class="subq-text">Comment le score OppChoVec d'Ajaccio se compare-t-il à la moyenne des scores des communes corses de taille similaire (en termes de population ou d'urbanisation) ?</span>
+    <span class="badge">Aucune donnée disponible (comparaison par taille de commune)</span>
+  </div>
+  <div class="subq-answer"># Réponse
+
+Le contexte fourni ne contient pas de données comparatives sur les communes corses de taille similaire à Ajaccio (par population ou urbanisation). 
+
+Ce qui est disponible : selon les indicateurs territoriaux objectifs, **Ajaccio affiche un score OppChoVec global de 5.78/10 et se classe 19e sur 360 communes corses**. Cependant, cette information ne permet pas de répondre à votre question, qui demande une comparaison avec des communes de taille similaire — une segmentation qui n'est pas fournie dans le contexte.
+
+Pour répondre précisément à cette sous-question, il faudrait disposer d'une classification des communes corses par taille/urbanisation et des scores OppChoVec ventilés par ces catégories, données qui ne sont pas présentes ici.</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ5</span>
+    <span class="subq-text">Quelles sont les tendances observées dans les enquêtes récentes sur le bien-être à Ajaccio (ex : satisfaction globale, points forts/faibles) en lien avec les dimensions du score OppChoVec, sans distinction par catégorie ?</span>
+    <span class="badge">Enquête citoyenne (scores de satisfaction, Corse entière)</span>
+  </div>
+  <div class="subq-answer"># Tendances du bien-être à Ajaccio : enquête citoyenne et indicateurs territoriaux
+
+## Satisfaction globale et bien-être perçu
+
+Selon l'enquête citoyenne, le score de qualité de vie moyen à Ajaccio est de **3.89/5**, tandis que le bonheur moyen atteint **3.68/5** et la confiance en l'avenir **2.75/5** (N=47-51 répondants). Ces scores reflètent une satisfaction modérée, avec un écart notable entre la perception du présent (qualité de vie) et l'optimisme futur.
+
+## Points forts : adéquation partielle entre perceptions et indicateurs objectifs
+
+**Emploi et revenus** : Les habitants interrogés expriment la plus forte satisfaction sur l'emploi (3.91/5) et les revenus (3.51/5). Cela s'aligne partiellement avec le score **Opp très élevé (10.00/10)** d'Ajaccio selon les indicateurs territoriaux, qui reflète une bonne accessibilité aux ressources. Cependant, le score **Cho très faible (1.27/10)** — mesurant l'absence de quartiers prioritaires et l'accès au droit de vote — suggère des inégalités socio-spatiales importantes non perçues dans les réponses globales.
+
+**Logement et sécurité** : Satisfaction de 3.84/5 et 3.81/5 respectivement, cohérente avec le score **Vec moyen (4.80/10)** qui intègre la qualité du logement.
+
+## Points faibles : divergences claires
+
+**Transports** : C'est la dimension la plus critique, avec une satisfaction de **2.21/5** selon l'enquête citoyenne — bien que le score **Opp3 (mobilité) soit très élevé à 8.99/10**. Cette divergence suggère que l'accessibilité théorique aux transports en commun ne se traduit pas en satisfaction vécue, possiblement en raison de la qualité, de la fréquence ou de l'adéquation aux besoins réels.
+
+**Santé** : Satisfaction faible (2.58/5), non directement mesurée dans OppChoVec mais reflétant un besoin identifié comme prioritaire par les habitants.
+
+**Institutions et confiance** : Satisfaction très faible en institutions (2.93/5) et confiance en l'avenir (2.75/5), révélant un déficit de confiance institutionnelle malgré des opportunités objectives élevées.</div>
+</div>
+  </details>
+
+  <details class="answer-block">
+    <summary>Réponse finale de synthèse</summary>
+    <div class="answer-text">### **Score OppChoVec d'Ajaccio par catégorie**
+
+À Ajaccio, les indicateurs territoriaux montrent un profil contrasté, avec des écarts marqués entre les trois dimensions du score :
+
+- **Opportunités (Opp)** : **10,00/10** [SQ1], le score le plus élevé de Corse. Cette performance s’explique par un accès exceptionnel aux ressources : couverture numérique à 93,5 % [SQ2], une mobilité très développée (transports en commun et routes) [SQ2], et une offre éducative dense (15 écoles maternelles, 20 écoles élémentaires, 6 collèges et 6 lycées) [SQ2]. La diversité sociale reste cependant limitée, avec un score de 1,96/10 sur ce critère [SQ2].
+- **Choix (Cho)** : **1,27/10** [SQ1], l’un des scores les plus faibles de l’île (358ᵉ rang sur 360). Selon les données territoriales, cette faiblesse reflète une faible couverture électorale et la présence de quartiers prioritaires (QPV) [SQ2].
+- **Vécu (Vec)** : **4,80/10** [SQ1], un niveau moyen qui intègre des réalités disparates. Les indicateurs montrent un revenu fiscal moyen, une qualité du logement correcte (prix moyen de 3 667 €/m² et surface moyenne de 71,8 m²) [SQ2], mais aussi un taux de pauvreté de 14,3 % et une vacance résidentielle de 3 % [SQ2]. L’emploi est stable (75,6 % de taux d’activité, 87,8 % d’emplois salariés) [SQ2].
+
+**Synthèse globale** : Ajaccio affiche un score OppChoVec de **5,78/10** [SQ1], la plaçant au 19ᵉ rang des communes corses. Ce résultat masque une forte polarisation : des opportunités parmi les meilleures de l’île, mais des libertés formelles et un vécu quotidien en retrait.
+
+---
+
+### **Perceptions des habitants : entre satisfaction modérée et critiques ciblées**
+Les données d’enquête citoyenne (portant sur la Corse entière, sans spécificité ajaccienne) révèlent des écarts avec les indicateurs objectifs :
+- **Points de convergence** : Les habitants expriment une satisfaction élevée pour l’emploi (3,91/5) et les revenus (3,51/5) [SQ5], cohérente avec le dynamisme économique mesuré par les indicateurs. Le logement (3,84/5) et la sécurité (3,81/5) [SQ5] reflètent aussi une qualité de vie perçue en phase avec le score *Vec* moyen.
+- **Divergences marquées** : Les transports, bien que notés **8,99/10** par les indicateurs [SQ2], obtiennent la pire satisfaction (2,21/5) [SQ5], suggérant un décalage entre l’offre théorique et son usage quotidien. La confiance en l’avenir (2,75/5) [SQ5] contraste avec les opportunités objectives, révélant peut-être des inquiétudes non captées par les données territoriales.
+
+---
+
+### **Limites des données disponibles**
+- Aucune comparaison possible avec des communes de taille similaire, faute de segmentation des scores [SQ4].
+- Pas de verbatims citoyens spécifiques à Ajaccio pour illustrer ces tendances [SQ3].</div>
+  </details>
+</section>
+<section class="question-block ok">
+  <div class="q-header">
+    <span class="q-id">Q011</span>
+    <span class="q-cat">Sous-population seniors</span>
+    <span class="q-elapsed">64.6s</span>
+  </div>
+  <div class="q-meta">Retrieval mono-commune › Retrieval par sous-population</div>
+  <div class="q-text">Que pensent les seniors du bien-être à Ajaccio ?</div>
+
+  
+
+  <details class="subq-block" open>
+    <summary>Sous-questions (5)</summary>
+    
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ1</span>
+    <span class="subq-text">Quel est le score OppChoVec global de bien-être à l'échelle de la commune d'Ajaccio, tel que mesuré par les indicateurs territoriaux disponibles ?</span>
+    <span class="badge">Indicateurs territoriaux OppChoVec (scores globaux et par composante)</span><span class="badge">Rangs communaux</span>
+  </div>
+  <div class="subq-answer">Selon les indicateurs territoriaux objectifs, **le score OppChoVec global d'Ajaccio est de 5.78/10**, ce qui place la commune au **rang 19e sur 360 communes corses** — un positionnement élevé.
+
+Ce score global masque cependant des disparités importantes entre ses trois composantes :
+
+- **Opportunités (Opp) : 10.00/10** (très élevé, rang 1er) — Ajaccio offre les meilleures ressources territoriales de Corse, notamment en accès TIC (9.35/10) et mobilité (8.99/10), ainsi qu'en niveau d'éducation moyen (7.42/10).
+
+- **Choix (Cho) : 1.27/10** (très faible, rang 358e) — cette composante, qui mesure l'absence de quartiers prioritaires et la couverture électorale, révèle une fragilité majeure du bien-être objectif à Ajaccio.
+
+- **Vécu (Vec) : 4.80/10** (moyen, rang 41e) — les réalisations concrètes (revenus, qualité du logement, stabilité de l'emploi, accès aux services) se situent à un niveau intermédiaire.
+
+En résumé, Ajaccio bénéficie d'excellentes opportunités d'accès aux ressources, mais cette richesse territoriale ne se traduit pas en liberté effective ni en bien-être réalisé pour l'ensemble de sa population.</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ2</span>
+    <span class="subq-text">Quels sont les principaux thèmes émergents dans les verbatims des citoyens d'Ajaccio concernant le bien-être, avec une attention particulière aux mentions explicites des seniors (ex : accessibilité, santé, lien social) ?</span>
+    <span class="badge">Données d'équipements communaux (médecins, infirmiers, pharmacies, service d'urgence)</span><span class="badge">Absence de verbatims citoyens</span>
+  </div>
+  <div class="subq-answer"># Thèmes émergents du bien-être à Ajaccio — analyse des verbatims citoyens
+
+Le contexte fourni ne contient **aucun verbatim citoyen** relatif à Ajaccio. Les données disponibles se limitent au profil démographique des 51 répondants (répartition par genre, âge et CSP) et aux indicateurs objectifs territoriaux (scores OppChoVec, équipements communaux).
+
+**Concernant les seniors spécifiquement** : bien que 11,8 % des répondants d'Ajaccio appartiennent à la tranche 60-74 ans (6 personnes), aucun verbatim n'est fourni pour cette sous-population ni pour l'ensemble des répondants. Il est donc impossible d'identifier les thèmes émergents (accessibilité, santé, lien social) à partir des paroles citoyennes.
+
+Pour répondre à cette sous-question, des verbatims d'enquête citoyenne seraient nécessaires. Les données actuelles permettent uniquement de constater que la commune dispose objectivement de ressources sanitaires (80 médecins généralistes, 204 infirmiers, 1 service d'urgence) selon les données d'équipements communaux, mais cela ne renseigne pas sur la perception ou la satisfaction des habitants, notamment des seniors.</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ3</span>
+    <span class="subq-text">Quels indicateurs territoriaux spécifiques à Ajaccio (ex : offre de soins, transports, espaces publics) sont les plus fréquemment associés aux préoccupations des seniors dans les enquêtes locales ?</span>
+    <span class="badge">Données d'équipements communaux (offre de soins, couverture numérique, mobilité)</span><span class="badge">Absence de données d'enquête spécifiques aux seniors</span>
+  </div>
+  <div class="subq-answer">Le contexte fourni ne contient pas de données d'enquête citoyenne ventilées par tranche d'âge ou spécifiquement pour les seniors (60-74 ans). Bien que 6 seniors aient répondu à l'enquête à Ajaccio (11.8% de l'échantillon de 51 répondants), leurs préoccupations spécifiques ne sont pas détaillées dans les verbatims ou analyses disponibles.
+
+En revanche, selon les données d'équipements communaux objectifs, Ajaccio dispose d'une offre de soins importante (80 médecins généralistes, 204 infirmiers, 31 pharmacies, 1 service d'urgence) et d'une couverture numérique très élevée (9.35/10 selon les indicateurs territoriaux OppChoVec), qui sont des facteurs pertinents pour les seniors. Le score de mobilité est également très élevé (8.99/10), reflétant une bonne accessibilité aux transports.
+
+Cependant, aucune analyse spécifique aux préoccupations des seniors concernant ces équipements ou services n'est disponible dans le contexte fourni.</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ4</span>
+    <span class="subq-text">Comment les seniors d'Ajaccio évaluent-ils leur satisfaction globale concernant leur cadre de vie dans les enquêtes disponibles (ex : enquêtes de satisfaction, baromètres locaux) ?</span>
+    <span class="badge">Enquête citoyenne (satisfaction globale et par dimension, N=51)</span><span class="badge">Absence de données spécifiques aux seniors</span>
+  </div>
+  <div class="subq-answer"># Évaluation de la satisfaction des seniors à Ajaccio
+
+Selon l'enquête citoyenne disponible, **les données spécifiques aux seniors (60-74 ans) à Ajaccio sont très limitées** : seuls 6 répondants de cette tranche d'âge ont participé (11,8 % de l'échantillon de 51 personnes), ce qui ne permet pas de dégager des conclusions robustes par sous-groupe.
+
+À titre informatif, **selon l'enquête citoyenne globale pour Ajaccio** (tous âges confondus, N=51), la satisfaction moyenne au cadre de vie s'établit à **3.89/5 pour la qualité de vie globale**. Les dimensions les mieux évaluées sont l'emploi (3.91/5) et le logement (3.84/5), tandis que les transports (2.21/5) et la santé (2.58/5) enregistrent les scores les plus faibles.
+
+**Aucun baromètre ou enquête de satisfaction spécifiquement dédié aux seniors n'est disponible dans le contexte fourni.** Pour une analyse fiable de la satisfaction des seniors ajacciens, il faudrait disposer d'un échantillon plus représentatif de cette population ou d'une enquête ciblée.</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ5</span>
+    <span class="subq-text">Existe-t-il des écarts significatifs entre les perceptions des seniors et celles de la population générale d'Ajaccio sur des dimensions clés du bien-être (ex : sécurité, qualité de l'environnement), d'après les données d'enquêtes comparatives ?</span>
+    <span class="badge">Absence de données d'enquête comparative par tranche d'âge</span>
+  </div>
+  <div class="subq-answer"># Réponse à la sous-question
+
+Le contexte disponible ne contient **pas de données d'enquête comparative par tranche d'âge** pour Ajaccio. Bien que l'enquête citoyenne compte 51 répondants, dont 6 seniors (60-74 ans, soit 11,8%), aucune analyse ventilée par groupe d'âge n'est fournie — les scores de satisfaction par dimension sont présentés uniquement au niveau communal global.
+
+Pour répondre à votre question sur les écarts entre seniors et population générale, il faudrait disposer de scores de satisfaction (sécurité, environnement, etc.) désagrégés par tranche d'âge, ce qui n'est pas disponible dans le contexte fourni.</div>
+</div>
+  </details>
+
+  <details class="answer-block">
+    <summary>Réponse finale de synthèse</summary>
+    <div class="answer-text">### **Synthèse : Que pensent les seniors du bien-être à Ajaccio ?**
+
+À Ajaccio, le bien-être des seniors s’appréhende à travers un mélange de **ressources territoriales favorables** et de **perceptions mitigées**, bien que les données spécifiques à cette population restent limitées.
+
+#### **1. Un cadre territorial globalement favorable, mais inégalement vécu**
+Les indicateurs territoriaux montrent qu’Ajaccio offre des **opportunités exceptionnelles** pour ses habitants, avec un score maximal de **10/10** pour l’accès aux ressources (éducation, mobilité, technologies) [SQ1]. La commune se classe **1ère sur 360 en Corse** sur ce critère, grâce notamment à une **couverture numérique très élevée (9,35/10)** et une **bonne accessibilité aux transports (8,99/10)** [SQ1]. Ces atouts sont particulièrement pertinents pour les seniors, qui bénéficient ainsi d’un **accès facilité aux services et aux soins** : la ville compte **80 médecins généralistes, 204 infirmiers et 31 pharmacies**, ainsi qu’un service d’urgence [SQ2].
+
+Cependant, ces opportunités ne se traduisent pas pleinement en **bien-être réalisé** : le score global de la commune n’est que de **5,78/10** [SQ1], tiré vers le bas par un **vécu moyen (4,80/10)** et une **faible liberté effective (1,27/10)**, liée à la présence de quartiers prioritaires et à des inégalités socio-économiques [SQ1]. Pour les seniors, cela peut se traduire par des **difficultés d’accès concret aux services** malgré leur disponibilité théorique, ou par un **sentiment d’insécurité** dans certains quartiers.
+
+#### **2. Des perceptions globales mitigées, mais peu de données spécifiques aux seniors**
+Selon l’enquête citoyenne menée auprès de 51 habitants d’Ajaccio (tous âges confondus), la **satisfaction moyenne au cadre de vie s’élève à 3,89/5** [SQ4]. Les dimensions les mieux notées sont **l’emploi (3,91/5)** et le **logement (3,84/5)**, tandis que les **transports (2,21/5)** et la **santé (2,58/5)** obtiennent les scores les plus faibles [SQ4]. Ces résultats suggèrent des **frustrations partagées** sur des enjeux cruciaux pour les seniors, comme la mobilité ou l’accès aux soins.
+
+**Problème majeur** : **aucune donnée spécifique aux seniors n’est disponible** dans cette enquête. Bien que 6 répondants (11,8 % de l’échantillon) appartiennent à la tranche 60-74 ans, leurs **perceptions, verbatims ou évaluations** ne sont pas détaillées [SQ2][SQ4]. Impossible, par exemple, de savoir si les seniors sont **plus satisfaits que la moyenne** de l’offre de soins ou **plus critiques** sur l’accessibilité des espaces publics. Les **préoccupations typiques de cette population** (isolement, adaptation des infrastructures, coût de la vie) ne sont pas documentées [SQ3].
+
+#### **3. Des écarts de perception non mesurés entre seniors et population générale**
+Les données disponibles ne permettent **pas de comparer** les perceptions des seniors à celles du reste de la population sur des dimensions clés comme la **sécurité, la qualité de l’environnement ou le lien social** [SQ5]. Les scores de satisfaction sont agrégés pour l’ensemble des répondants, sans désagrégation par âge [SQ4]. Pourtant, des **écarts significatifs** pourraient exister : par exemple, les seniors pourraient être **plus sensibles aux problèmes de mobilité** (transports en commun inadaptés, trottoirs dégradés) ou **moins concernés par les enjeux d’emploi** que les actifs.
+
+---
+
+### **Conclusion : Un bilan en demi-teinte, marqué par un manque de données ciblées**
+À Ajaccio, les seniors évoluent dans un **environnement objectivement riche en ressources** (soins, transports, technologies), mais dont les **bénéfices concrets restent inégaux** [SQ1]. Les **perceptions globales des habitants** révèlent des **insatisfactions sur la santé et les transports**, deux enjeux centraux pour cette population [SQ4]. Cependant, **l’absence de données spécifiques aux seniors** empêche de dresser un portrait précis de leur bien-être :
+- **Leurs priorités** (accessibilité, lien social, sécurité) ne sont pas identifiées [SQ2][SQ3].
+- **Leur satisfaction** par rapport à la population générale n’est pas mesurable [SQ5].
+- **Leurs verbatims** (témoignages, critiques, suggestions) sont absents [SQ2].
+
+Pour affiner cette analyse, il serait nécessaire de **mener une enquête ciblée** auprès des seniors ajacciens, ou d’exploiter des **données désagrégées par âge** dans les prochaines collectes.
+
+---</div>
+  </details>
+</section>
+<section class="question-block ok">
+  <div class="q-header">
+    <span class="q-id">Q028</span>
+    <span class="q-cat">Comparative factuelle</span>
+    <span class="q-elapsed">55.6s</span>
+  </div>
+  <div class="q-meta">Raisonnement comparatif › Comparaisons avec hiérarchisation explicite</div>
+  <div class="q-text">Quelle commune obtient le score objectif global le plus élevé entre Ajaccio et Bastia ?</div>
+
+  
+
+  <details class="subq-block" open>
+    <summary>Sous-questions (5)</summary>
+    
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ1</span>
+    <span class="subq-text">Quel est le score OppChoVec global de la commune d'Ajaccio, tel que mesuré par les indicateurs territoriaux disponibles ?</span>
+    <span class="badge">Score OppChoVec global d'Ajaccio (5.78/10, rang 19e)</span><span class="badge">Détails des composantes (Opp, Cho, Vec)</span>
+  </div>
+  <div class="subq-answer">Selon les indicateurs territoriaux objectifs, **le score OppChoVec global d'Ajaccio est de 5.78/10**, ce qui la place au **rang 19e sur 360 communes corses**.
+
+Ce score global masque cependant des disparités importantes entre ses trois composantes :
+
+- **Opportunités (Opp) : 10.00/10** (très élevé, rang 1er) — Ajaccio excelle particulièrement en accès TIC (9.35/10) et mobilité (8.99/10), ainsi qu'en éducation (7.42/10).
+- **Choix (Cho) : 1.27/10** (très faible, rang 358e) — c'est le point critique d'Ajaccio, reflétant des enjeux liés à la structure démographique et aux quartiers prioritaires.
+- **Vécu (Vec) : 4.80/10** (moyen, rang 41e) — les réalisations concrètes des habitants en termes de revenus, logement et accès aux services restent modérées.
+
+Ajaccio bénéficie donc d'excellentes ressources territoriales (opportunités), mais cette richesse objective ne se traduit pas pleinement en liberté effective (choix) ni en bien-être réalisé (vécu) pour l'ensemble de sa population.</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ2</span>
+    <span class="subq-text">Quel est le score OppChoVec global de la commune de Bastia, tel que mesuré par les indicateurs territoriaux disponibles ?</span>
+    <span class="badge">Score OppChoVec global de Bastia (2.72/10, rang 244e)</span><span class="badge">Détails des composantes (Opp, Cho, Vec)</span>
+  </div>
+  <div class="subq-answer">Selon les indicateurs territoriaux objectifs, **le score OppChoVec global de Bastia est de 2.72/10**, ce qui la classe au **244e rang sur 360 communes corses** — un score faible.
+
+Ce résultat masque des disparités importantes entre ses trois composantes :
+
+- **Opportunités (Opp) : 7.51/10** (très élevé, 7e rang) — Bastia offre des ressources objectives substantielles, notamment grâce à un accès TIC excellent (9.65/10, 13e rang) et une mobilité très bonne (8.65/10, 151e rang). Cependant, l'éducation (1.28/10, 246e rang) et la diversité sociale (2.10/10, 194e rang) sont très faibles.
+
+- **Choix (Cho) : 0.00/10** (très faible, 360e rang — dernier) — Bastia est classée en dernière position sur cette dimension, qui mesure l'absence de quartiers prioritaires et la couverture électorale.
+
+- **Vécu (Vec) : 3.23/10** (moyen, 205e rang) — Les réalisations concrètes des habitants (revenu, qualité du logement, stabilité de l'emploi, accès aux services) restent modérées.
+
+Cette configuration révèle un paradoxe : Bastia dispose d'excellentes infrastructures (TIC, mobilité) mais ne les traduit pas en bien-être réalisé pour ses habitants.</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ3</span>
+    <span class="subq-text">Quels sont les principaux indicateurs objectifs (ex : accès aux services, environnement, sécurité) qui composent le score OppChoVec pour ces deux communes ?</span>
+    
+  </div>
+  <div class="subq-answer"># Analyse des indicateurs objectifs OppChoVec pour Campile et Omessa
+
+## Avertissement préalable
+Le contexte fourni contient des données détaillées pour **Campile** uniquement. Pour **Omessa**, seules des données d'enquête citoyenne (satisfaction) sont disponibles — aucun score OppChoVec ni indicateur objectif territorial n'est présent dans le contexte.
+
+---
+
+## Campile — Indicateurs objectifs OppChoVec
+
+Selon les indicateurs territoriaux objectifs, le score OppChoVec de Campile (2.74/10, rang 239e/360) est composé de trois dimensions principales :
+
+### 1. **Opportunités (Opp : 3.21/10)** — Accès aux ressources du territoire
+Cette dimension agrège quatre sous-indicateurs objectifs :
+- **Éducation (Opp1 : 1.45/10)** — Niveau d'éducation moyen de la population, très faible à Campile (rang 231e/360)
+- **Diversité sociale (Opp2 : 4.44/10)** — Indice de Theil mesurant la diversité des catégories socio-professionnelles (rang 42e/360, point fort relatif)
+- **Mobilité (Opp3 : 1.91/10)** — Accès à la voiture et/ou transports en commun, très limité (rang 267e/360)
+- **Accès TIC (Opp4 : 5.25/10)** — Couverture Internet haut débit et 4G à 52.5% (rang 168e/360)
+
+### 2. **Choix (Cho : 8.65/10)** — Liberté effective
+Selon les indicateurs territoriaux objectifs, ce score reflète l'absence de quartiers prioritaires et la couverture électorale (très élevé, rang 257e/360).
+
+### 3. **Vécu (Vec : 3.42/10)** — Réalisations concrètes
+Selon les indicateurs territoriaux objectifs, cette dimension agrège revenu fiscal moyen, qualité du logement, stabilité de l'emploi et accès aux services en moins de 20 minutes (rang 177e/360).
+
+---
+
+## Omessa
+**Aucun score OppChoVec ni indicateur objectif territorial n'est disponible dans le contexte pour Omessa.** Seules des données d'enquête citoyenne de satisfaction (2 répondants) sont présentes, qui ne constituent pas des indicateurs objectifs au sens OppChoVec.</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ4</span>
+    <span class="subq-text">Parmi les indicateurs objectifs communs aux deux communes, lesquels présentent les écarts les plus significatifs entre Ajaccio et Bastia ?</span>
+    <span class="badge">Écarts significatifs entre Ajaccio et Bastia (taux de pauvreté, activité, prix immobilier, sécurité, offre médicale)</span>
+  </div>
+  <div class="subq-answer"># Écarts significatifs entre Ajaccio et Bastia — Indicateurs objectifs
+
+Selon les données d'équipements communaux, les écarts les plus marquants sont :
+
+1. **Taux de pauvreté** : Bastia affiche 19,3 % contre 14,3 % à Ajaccio — un écart de 5 points de pourcentage révélant une précarité économique plus prononcée à Bastia.
+
+2. **Taux d'activité** : Ajaccio atteint 75,6 % contre 68,3 % à Bastia — une différence de 7,3 points indiquant une insertion professionnelle plus forte à Ajaccio.
+
+3. **Prix immobilier moyen** : Ajaccio culmine à 3 667 €/m² contre 2 781 €/m² à Bastia — un écart de 886 €/m² reflétant une tension immobilière bien supérieure à Ajaccio.
+
+4. **Taux de violences (coups et blessures volontaires)** : Bastia enregistre 6,2 pour 1 000 habitants contre 4,0 à Ajaccio — un écart de 2,2 points signalant une insécurité plus élevée à Bastia.
+
+5. **Offre médicale** : Ajaccio dispose de 80 médecins généralistes contre 50 à Bastia, soit 60 % plus de praticiens rapportés à la population.
+
+Ces écarts reflètent des réalités territoriales contrastées : Ajaccio combine une meilleure dynamique économique et une offre de services plus dense, tandis que Bastia connaît des défis plus aigus en matière de pauvreté et de sécurité.</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ5</span>
+    <span class="subq-text">En se basant uniquement sur le score OppChoVec global, quelle commune, entre Ajaccio et Bastia, obtient le score le plus élevé ?</span>
+    <span class="badge">Comparaison directe des scores OppChoVec globaux</span>
+  </div>
+  <div class="subq-answer">Selon les indicateurs territoriaux objectifs (scores OppChoVec), **Ajaccio obtient le score le plus élevé avec 5.78/10**, contre 2.72/10 pour Bastia. Ajaccio se classe au 19e rang des 360 communes corses, tandis que Bastia se situe au 244e rang.</div>
+</div>
+  </details>
+
+  <details class="answer-block">
+    <summary>Réponse finale de synthèse</summary>
+    <div class="answer-text">Entre Ajaccio et Bastia, **c'est Ajaccio qui obtient le score objectif global le plus élevé**, avec un résultat de **5,78/10** selon les indicateurs territoriaux, contre **2,72/10** pour Bastia [SQ1][SQ2]. Cette différence place Ajaccio au **19ᵉ rang** des communes corses, tandis que Bastia se situe au **244ᵉ rang** [SQ1][SQ2].
+
+### Points clés de comparaison
+- **Opportunités** : Ajaccio se distingue par un score maximal (**10/10**), notamment grâce à un **accès exceptionnel aux technologies de l'information (9,35/10)** et une **mobilité très développée (8,99/10)** [SQ1]. Bastia, bien que performante sur ces aspects (**7,51/10**), accuse un retard marqué en **éducation (1,28/10)** et en **diversité sociale (2,10/10)** [SQ2].
+- **Liberté effective (Choix)** : Les deux communes affichent des résultats très faibles, mais Bastia est en dernière position (**0/10**), en raison de la présence de **quartiers prioritaires** et d'une couverture électorale limitée [SQ2]. Ajaccio, bien que mieux classée (**1,27/10**), reste en bas du classement sur ce critère [SQ1].
+- **Vécu quotidien** : Ajaccio surpasse Bastia (**4,80/10 contre 3,23/10**), avec des **revenus moyens plus élevés**, une **meilleure qualité de logement** et un **accès aux services plus rapide** [SQ1][SQ2]. Les données d'équipements communaux confirment cette tendance, avec un **taux de pauvreté plus faible (14,3 % contre 19,3 %)** et un **taux d'activité supérieur (75,6 % contre 68,3 %)** à Ajaccio [SQ4].
+
+### Écarts les plus marqués
+Les différences les plus significatives entre les deux communes concernent :
+- **L'offre médicale** : Ajaccio compte **60 % de médecins généralistes en plus** que Bastia [SQ4].
+- **La sécurité** : Bastia enregistre un **taux de violences plus élevé (6,2 pour 1 000 habitants contre 4,0)** [SQ4].
+- **Le marché immobilier** : Les prix à Ajaccio (**3 667 €/m²**) dépassent largement ceux de Bastia (**2 781 €/m²**) [SQ4].
+
+### Synthèse
+Ajaccio combine des **opportunités territoriales exceptionnelles** et un **vécu quotidien plus favorable**, malgré des **défis persistants en matière de liberté effective**. Bastia, bien dotée en infrastructures (TIC, mobilité), peine à transformer ces atouts en **bien-être concret** pour ses habitants, en raison de **précarité économique**, **insécurité** et **accès limité aux services** [SQ1][SQ2][SQ4].</div>
+  </details>
+</section>
+<section class="question-block ok">
+  <div class="q-header">
+    <span class="q-id">Q034</span>
+    <span class="q-cat">Crossing quali/quanti</span>
+    <span class="q-elapsed">79.8s</span>
+  </div>
+  <div class="q-meta">Raisonnement comparatif › Comparaison croisée quanti/quali</div>
+  <div class="q-text">Les indicateurs objectifs et le bien-être perçu convergent-ils à Ajaccio ?</div>
+
+  
+
+  <details class="subq-block" open>
+    <summary>Sous-questions (5)</summary>
+    
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ1</span>
+    <span class="subq-text">Quel est le score OppChoVec global de la commune d'Ajaccio, reflétant le bien-être objectif mesuré par les indicateurs territoriaux disponibles ?</span>
+    <span class="badge">Indicateurs territoriaux OppChoVec (scores globaux et par composante)</span><span class="badge">Classement des 360 communes corses</span>
+  </div>
+  <div class="subq-answer">Selon les indicateurs territoriaux objectifs, **le score OppChoVec global d'Ajaccio est de 5.78/10, classant la commune au 19e rang sur les 360 communes corses**.
+
+Ce score global masque cependant des disparités importantes entre ses trois composantes :
+
+- **Opportunités (Opp) : 10.00/10** — très élevé, 1er rang — reflétant un accès excellent à l'éducation (7.42/10), à la mobilité (8.99/10) et aux TIC (9.35/10), bien que la diversité sociale soit faible (1.96/10).
+- **Choix (Cho) : 1.27/10** — très faible, 358e rang — indiquant une absence quasi-totale de quartiers prioritaires et une couverture électorale très limitée.
+- **Vécu (Vec) : 4.80/10** — moyen, 41e rang — reflétant des réalisations concrètes (revenu fiscal, qualité du logement, stabilité de l'emploi, accès aux services) en retrait par rapport aux opportunités offertes.
+
+Ajaccio bénéficie donc d'infrastructures et de ressources territoriales fortes, mais cette richesse objective ne se traduit que partiellement en bien-être réalisé pour ses habitants.</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ2</span>
+    <span class="subq-text">Quels sont les principaux indicateurs territoriaux objectifs (ex : accès aux services, emploi, environnement) disponibles pour la commune d'Ajaccio, et comment se situent-ils par rapport à la moyenne corse ?</span>
+    <span class="badge">Indicateurs territoriaux OppChoVec (détail des sous-dimensions)</span><span class="badge">Données d'équipements communaux (médecins, écoles, services)</span>
+  </div>
+  <div class="subq-answer"># Indicateurs territoriaux objectifs d'Ajaccio
+
+## Score OppChoVec global et positionnement
+
+Selon les indicateurs territoriaux objectifs, **Ajaccio affiche un score OppChoVec de 5.78/10 et se classe 19e sur 360 communes corses** — un positionnement élevé. Cependant, ce score global masque des disparités importantes entre ses trois composantes :
+
+- **Opportunités (Opp) : 10.00/10 — rang 1er** : Ajaccio offre les meilleures conditions d'accès aux ressources du territoire en Corse.
+- **Choix (Cho) : 1.27/10 — rang 358e** : La commune affiche une très faible performance sur la liberté effective (absence de quartiers prioritaires et droits politiques).
+- **Vécu (Vec) : 4.80/10 — rang 41e** : Les réalisations concrètes (revenus, logement, emploi, services) sont moyennes.
+
+## Détail des opportunités (Opp)
+
+Les quatre sous-dimensions des opportunités révèlent :
+
+- **Éducation (Opp1) : 7.42/10 — rang 24e** : niveau d'éducation moyen élevé.
+- **Diversité sociale (Opp2) : 1.96/10 — rang 216e** : faible diversité des catégories socio-professionnelles (indice Theil : 0.2787).
+- **Mobilité (Opp3) : 8.99/10 — rang 128e** : très bon accès à la voiture et/ou transports en commun.
+- **TIC/numérique (Opp4) : 9.35/10 — rang 24e** : couverture haut débit et 4G de 93.5%.
+
+## Équipements et services communaux
+
+Selon les données d'équipements communaux, Ajaccio dispose d'une offre importante : **80 médecins généralistes, 204 infirmiers, 31 pharmacies, 1 service d'urgence** ; **15 écoles maternelles, 20 écoles élémentaires, 6 collèges, 6 lycées** ; **11 hypermarchés/supermarchés, 38 supérettes, 51 boulangeries**. Le **taux d'activité est de 75.6%** (élevé), avec **87.8% d'emplois salariés**. Le **taux de pauvreté s'élève à 14.3%**, la **part de logements vacants à 3.3%**, et le **prix moyen au m² à 3 667 €** pour une surface moyenne de 71.8 m².
+
+## Synthèse
+
+Ajaccio combine une **excellente accessibilité aux ressources** (éducation, mobilité, numérique) avec une **faible diversité socio-professionnelle** et des **conditions de vie concrètes moyennes** — un profil de capitale régionale bien équipée mais peu mixte socialement.</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ3</span>
+    <span class="subq-text">Quels sont les résultats des enquêtes ou verbatims citoyens disponibles sur le bien-être perçu à Ajaccio, notamment en termes de satisfaction globale et de dimensions clés (ex : qualité de vie, sentiment de sécurité, lien social) ?</span>
+    <span class="badge">Enquête citoyenne (satisfaction globale, dimensions clés, verbatims)</span>
+  </div>
+  <div class="subq-answer"># Bien-être perçu à Ajaccio : résultats d'enquête citoyenne
+
+Selon l'enquête citoyenne (N=51 répondants à Ajaccio), la satisfaction globale révèle un profil contrasté :
+
+**Satisfaction générale :**
+Les habitants interrogés affichent une satisfaction **moyen-forte** sur la plupart des dimensions, avec un score de bonheur moyen de **3.68/5** et une qualité de vie perçue de **3.89/5**. La confiance envers l'avenir est cependant plus faible, à **2.75/5**.
+
+**Dimensions les plus satisfaisantes :**
+Selon l'enquête citoyenne, les trois domaines où la satisfaction est la plus élevée sont l'**emploi (3.91/5)**, le **logement (3.84/5)** et la **sécurité (3.81/5)**. Le **soutien social** et les **relations communautaires** obtiennent également des scores moyen-forts (respectivement 3.11/5 et 3.54/5).
+
+**Dimensions critiques :**
+Les **transports** constituent le point faible majeur avec un score de **2.21/5** selon l'enquête citoyenne — soit un écart de 1.70 points par rapport à la dimension la plus satisfaisante. La **santé (2.58/5)** et le **tourisme (2.63/5)** sont également perçus comme insatisfaisants.
+
+**Priorités citoyennes :**
+Selon l'enquête citoyenne, les habitants identifient l'**environnement** et la **santé** comme les enjeux prioritaires à adresser.</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ4</span>
+    <span class="subq-text">Observe-t-on des écarts significatifs entre le score OppChoVec d'Ajaccio et les tendances du bien-être perçu par ses habitants, d'après les données d'enquêtes ou verbatims ?</span>
+    <span class="badge">Écarts entre scores OppChoVec et bien-être perçu (analyse comparative)</span>
+  </div>
+  <div class="subq-answer"># Écarts significatifs entre bien-être objectif et perçu à Ajaccio
+
+Oui, des écarts importants et révélateurs apparaissent entre les indicateurs territoriaux objectifs et les perceptions citoyennes.
+
+## Paradoxe majeur : Opportunités très élevées vs. Choix très faible
+
+Selon les indicateurs OppChoVec, Ajaccio affiche un score d'Opportunités de **10.00/10 (rang 1er/360 communes corses)**, notamment grâce à un accès TIC de 9.35/10 et une mobilité de 8.99/10. Cependant, le score de Choix (liberté effective) s'effondre à **1.27/10 (rang 358e/360)**, révélant une profonde tension : les ressources objectives existent, mais les habitants ne perçoivent pas disposer de libertés réelles pour en bénéficier.
+
+## Décalage sur les transports : perception très négative malgré mobilité objective élevée
+
+Selon l'enquête citoyenne, la satisfaction envers les **Transports est la plus faible (2.21/5)**, avec un score encore plus critique dans la seconde vague (0.95/5). Ce contraste frappant suggère que l'indicateur objectif de mobilité (8.99/10) mesure surtout la possession de voitures individuelles, tandis que les habitants expriment une insatisfaction majeure envers les transports en commun — un besoin non couvert par l'offre objective mesurée.
+
+## Bien-être global modéré malgré ressources élevées
+
+Le score OppChoVec global d'Ajaccio (5.78/10, rang 19e) reste moyen, tiré vers le bas par le Vécu (4.80/10) et surtout le Choix défaillant. Parallèlement, selon l'enquête citoyenne, le score de bonheur moyen est de **3.68/5** et la confiance en l'avenir très basse (**2.75/5**), confirmant que les opportunités objectives ne se traduisent pas en bien-être subjectif.
+
+**En résumé** : Ajaccio dispose d'infrastructures et de ressources objectives fortes, mais ses habitants perçoivent des blocages majeurs (manque de libertés effectives, transports inadéquats, faible confiance institutionnelle à 2.93/5) qui empêchent la conversion de ces ressources en satisfaction réelle.</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ5</span>
+    <span class="subq-text">Quels facteurs spécifiques à Ajaccio (ex : urbanisation, dynamiques économiques, politiques locales) pourraient expliquer une éventuelle convergence ou divergence entre les indicateurs objectifs et le bien-être perçu ?</span>
+    <span class="badge">Facteurs explicatifs (urbanisation, dynamiques économiques, politiques locales)</span>
+  </div>
+  <div class="subq-answer"># Analyse des facteurs expliquant la divergence Ajaccio : indicateurs objectifs vs bien-être perçu
+
+## Diagnostic : une divergence majeure
+
+Selon les indicateurs territoriaux objectifs, Ajaccio affiche un score OppChoVec global de 5.78/10 (rang 19e/360), porté par des **Opportunités exceptionnelles (10.00/10, rang 1er)** : niveau d'éducation élevé (7.42/10), accès aux TIC très performant (9.35/10, couverture 93.5%), et mobilité excellente (8.99/10). Cependant, selon l'enquête citoyenne (N=51 répondants), la satisfaction moyenne reste modérée : bonheur 3.68/5, qualité de vie 3.89/5, confiance en l'avenir seulement 2.75/5.
+
+## Facteurs explicatifs de cette divergence
+
+**1. Déconnexion entre ressources disponibles et réalisations concrètes**
+
+Le score Vec (Vécu) de 4.80/10 (rang 41e) révèle que malgré des opportunités exceptionnelles, les habitants ne convertissent pas ces ressources en bien-être réalisé. Selon les données d'équipements communaux, Ajaccio dispose d'une infrastructure dense (80 médecins généralistes, 204 infirmiers, 15 écoles maternelles, 20 écoles élémentaires, 6 collèges, 6 lycées), mais selon l'enquête citoyenne, la satisfaction en Santé (2.58/5) et Éducation (3.44/5) reste faible — suggérant un problème d'**accessibilité effective ou de qualité perçue** plutôt que d'absence d'équipements.
+
+**2. Crise majeure du Choix (1.27/10, rang 358e/360)**
+
+Ce score extrêmement faible indique l'absence quasi-totale de quartiers prioritaires (QPV) n'est pas le facteur limitant ; il reflète plutôt une **fragmentation sociale et une absence de diversité CSP**. Selon les données d'équipements, la part de cadres (12.9%) est faible pour une capitale régionale, tandis que les ouvriers représentent 16.6% — structure peu diversifiée. L'indice de Theil (0.2787) confirme une **homogénéité sociale faible (Opp2 : 1.96/10, rang 216e)**, limitant les interactions inter-CSP et les opportunités de mobilité sociale perçue.
+
+**3. Transports : le maillon faible systématique**
+
+Selon l'enquête citoyenne, les Transports obtiennent la note la plus basse (2.21/5), alors que l'indicateur objectif Opp3 (Mobilité) affiche 8.99/10. Cette contradiction suggère que **l'accès théorique à la voiture et aux transports en commun ne se traduit pas en satisfaction** : congestion urbaine, qualité perçue des transports en commun insuffisante, ou coûts d'accès élevés</div>
+</div>
+  </details>
+
+  <details class="answer-block">
+    <summary>Réponse finale de synthèse</summary>
+    <div class="answer-text">**Synthèse : Convergence ou divergence entre indicateurs objectifs et bien-être perçu à Ajaccio ?**
+
+À Ajaccio, les indicateurs territoriaux objectifs et le bien-être perçu par les habitants présentent des **écarts marqués**, révélant une situation paradoxale où des ressources territoriales exceptionnelles ne se traduisent pas pleinement en satisfaction vécue.
+
+### **1. Un territoire objectivement bien doté, mais inégalement performant**
+Les données territoriales montrent qu’Ajaccio bénéficie d’un **score global de 5,78/10** [SQ1], la classant au **19ᵉ rang des communes corses** [SQ1]. Ce résultat masque cependant des disparités fortes entre ses trois dimensions clés :
+- **Opportunités exceptionnelles (10/10, 1ʳᵉ place)** : l’accès à l’éducation (7,42/10), à la mobilité (8,99/10) et aux technologies (9,35/10 pour le haut débit) est parmi les meilleurs de Corse [SQ1][SQ2]. Les équipements communaux confirment cette richesse : 80 médecins généralistes, 15 écoles maternelles, 6 collèges et lycées, ou encore 31 pharmacies [SQ2].
+- **Choix très limité (1,27/10, 358ᵉ place)** : l’absence de quartiers prioritaires (QPV) et une couverture électorale restreinte expliquent ce score alarmant, suggérant un déficit de libertés effectives malgré les ressources disponibles [SQ1][SQ2].
+- **Vécu moyen (4,80/10, 41ᵉ place)** : les revenus, la qualité du logement et l’accès aux services (moins de 20 minutes) restent en deçà des opportunités offertes, avec un revenu fiscal moyen et une stabilité de l’emploi qui ne reflètent pas le potentiel du territoire [SQ1][SQ2].
+
+### **2. Un bien-être perçu modéré, en décalage avec les atouts objectifs**
+Selon l’enquête citoyenne menée auprès de 51 habitants d’Ajaccio, la satisfaction globale est **moyenne-forte (3,68/5 pour le bonheur, 3,89/5 pour la qualité de vie)**, mais cache des **points de tension majeurs** [SQ3] :
+- **Satisfaction élevée** pour l’emploi (3,91/5), le logement (3,84/5) et la sécurité (3,81/5), en phase avec les indicateurs objectifs de stabilité et d’équipements [SQ3].
+- **Insatisfaction critique** sur les **transports (2,21/5)**, la santé (2,58/5) et le tourisme (2,63/5), malgré des scores objectifs élevés en mobilité (8,99/10) et en offre médicale [SQ3][SQ2]. Ce décalage suggère que les habitants perçoivent des **lacunes qualitatives** (ex. : transports en commun inefficaces, saturation des services de santé) non captées par les indicateurs quantitatifs.
+- **Confiance en l’avenir faible (2,75/5)** : ce score, le plus bas de l’enquête, contraste avec les opportunités territoriales (10/10), révélant un **découragement face à la concrétisation des ressources** [SQ3][SQ4].
+
+### **3. Facteurs explicatifs des divergences**
+Plusieurs dynamiques spécifiques à Ajaccio éclairent ces écarts :
+- **Urbanisation et saturation des services** : malgré une offre d’équipements dense (écoles, médecins, commerces), les habitants interrogés pointent une **accessibilité dégradée** (ex. : files d’attente, transports bondés), non mesurée par les indicateurs objectifs [SQ5][SQ3].
+- **Déséquilibre entre opportunités et libertés** : le score de **Choix (1,27/10)** reflète une **concentration des ressources sans redistribution**, où les habitants ne perçoivent pas de marges de manœuvre pour en bénéficier (ex. : logement inaccessible malgré des revenus moyens) [SQ5][SQ1].
+- **Effets pervers du tourisme** : bien que moteur économique, le tourisme est perçu comme un **facteur de pression** (2,63/5 de satisfaction), exacerbant les tensions sur les services et l’environnement, priorité citoyenne identifiée [SQ3][SQ5].
+
+### **4. Conclusion : une convergence partielle, des divergences structurelles**
+À Ajaccio, **les indicateurs objectifs et le bien-être perçu convergent sur certains points** (emploi, logement, sécurité), mais **divergent fortement sur d’autres** (transports, santé, confiance en l’avenir). Les données territoriales soulignent un **potentiel exceptionnel**, tandis que les perceptions révèlent des **freins concrets à son exploitation** :
+- **Convergence** : les scores élevés en opportunités (éducation, TIC, mobilité) correspondent à une satisfaction correcte sur l’emploi et le logement [SQ1][SQ3].
+- **Divergence** : les faiblesses en **Choix (libertés effectives)** et en **Vécu (réalisation concrète)** expliquent l’insatisfaction sur les transports, la santé et l’avenir, malgré des infrastructures objectivement solides [SQ4][SQ5].
+
+**En résumé**, Ajaccio illustre le paradoxe d’un territoire **riche en ressources mais inégalement vécu**, où les indicateurs objectifs peinent à capturer les **obstacles qualitatifs** (accessibilité, saturation, inégalités) qui pèsent sur le quotidien des habitants.
+
+---</div>
+  </details>
+</section>
+<section class="question-block ok">
+  <div class="q-header">
+    <span class="q-id">Q041</span>
+    <span class="q-cat">Contre-intuitive</span>
+    <span class="q-elapsed">65.4s</span>
+  </div>
+  <div class="q-meta">Raisonnement comparatif › Comparaison contre-intuitive</div>
+  <div class="q-text">Ajaccio peut-elle présenter un score objectif élevé tout en étant mal évaluée par ses habitants ?</div>
+
+  
+
+  <details class="subq-block" open>
+    <summary>Sous-questions (5)</summary>
+    
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ1</span>
+    <span class="subq-text">Quel est le score OppChoVec global de la commune d'Ajaccio, reflétant ses indicateurs objectifs de bien-être territorial (ex : accès aux services, environnement, économie) ?</span>
+    <span class="badge">Indicateurs territoriaux OppChoVec (score global, sous-scores Opp/Cho/Vec, rangs)</span><span class="badge">Données objectives sur éducation, mobilité, TIC</span>
+  </div>
+  <div class="subq-answer">Selon les indicateurs territoriaux objectifs, **le score OppChoVec global d'Ajaccio est de 5.78/10, classant la commune au 19e rang sur 360 communes corses**.
+
+Ce score reflète une situation contrastée :
+
+- **Opportunités (Opp) : 10.00/10** — Ajaccio excelle en accès aux ressources territoriales, notamment grâce à un très bon accès aux TIC (9.35/10, couverture 93.5%) et à la mobilité (8.99/10). Le niveau d'éducation moyen y est également élevé (7.42/10, rang 24e).
+
+- **Choix (Cho) : 1.27/10** — C'est le point faible majeur d'Ajaccio (rang 358e/360), indiquant une très faible absence de quartiers prioritaires et/ou une couverture limitée du droit de vote effectif selon les critères de cet indicateur.
+
+- **Vécu (Vec) : 4.80/10** — Les réalisations concrètes (revenu fiscal moyen, qualité du logement, stabilité de l'emploi, accès aux services en moins de 20 minutes) sont moyennes, plaçant Ajaccio au 41e rang.
+
+En résumé, Ajaccio offre des opportunités d'accès aux ressources très élevées, mais cette richesse en équipements et services ne se traduit pas en liberté effective (Choix) ni en bien-être réalisé (Vécu) pour l'ensemble de sa population.</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ2</span>
+    <span class="subq-text">Quels sont les résultats des enquêtes locales (verbatims citoyens) concernant la satisfaction des habitants d'Ajaccio vis-à-vis de leur qualité de vie, et quels thèmes récurrents émergent (ex : insatisfaction, points positifs) ?</span>
+    <span class="badge">Enquête citoyenne (scores de satisfaction, dimensions prioritaires, verbatims quantitatifs)</span>
+  </div>
+  <div class="subq-answer"># Satisfaction et qualité de vie à Ajaccio : résultats d'enquête citoyenne
+
+## Scores globaux de satisfaction
+
+Selon l'enquête citoyenne (51 répondants à Ajaccio), le **score de bonheur moyen est de 3.68/5**, le **score de qualité de vie moyen de 3.89/5**, et le **score de confiance en l'avenir de 2.75/5** — indiquant une satisfaction modérée mais une confiance future fragile.
+
+## Classement des dimensions : points forts et faibles
+
+**Dimensions les plus satisfaisantes** (selon l'enquête citoyenne) :
+- **Emploi** : 3.91/5 (moyen-fort)
+- **Logement** : 3.84/5 (moyen-fort)
+- **Sécurité** : 3.81/5 (moyen-fort)
+
+**Dimension la moins satisfaisante** (selon l'enquête citoyenne) :
+- **Transports** : 2.21/5 (faible) — écart de 1.70 points avec le score maximal
+
+## Thèmes prioritaires émergents
+
+Selon l'enquête citoyenne, les habitants d'Ajaccio identifient **l'Environnement et la Santé** comme dimensions prioritaires, bien que la satisfaction en santé soit modérée (2.58/5). Les services de proximité (3.42/5) et le ratio vie professionnelle/personnelle (3.19/5) suscitent également des préoccupations.
+
+**Aucun verbatim qualitatif détaillé n'est fourni dans le contexte** — seuls les scores quantitatifs d'enquête sont disponibles pour Ajaccio.</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ3</span>
+    <span class="subq-text">Existe-t-il un écart significatif entre le score OppChoVec d'Ajaccio et la perception moyenne des habitants, tel que mesuré par les enquêtes de satisfaction ou les retours qualitatifs ?</span>
+    <span class="badge">Analyse de l’écart entre indicateurs objectifs et perceptions citoyennes</span>
+  </div>
+  <div class="subq-answer"># Écart entre indicateurs objectifs et perceptions à Ajaccio
+
+**Oui, un écart significatif existe entre les indicateurs objectifs et les perceptions des habitants.**
+
+Selon les indicateurs territoriaux objectifs, Ajaccio affiche un score OppChoVec global de 5.78/10 (rang 19e/360), porté notamment par un score Opportunités très élevé de 10.00/10 (rang 1er/360) — reflétant une excellente couverture TIC (9.35/10), une mobilité très accessible (8.99/10) et un niveau d'éducation élevé (7.42/10). Cependant, selon l'enquête citoyenne menée auprès de 47 habitants d'Ajaccio, le score de qualité de vie moyen n'atteint que 3.89/5 et le score de confiance en l'avenir est particulièrement bas à 2.75/5.
+
+Cette divergence s'explique par deux facteurs majeurs :
+
+1. **Ressources objectives vs. réalisations concrètes** : bien qu'Ajaccio dispose d'excellentes opportunités (TIC, mobilité, éducation), le score Vécu (réalisations effectives) reste moyen à 4.80/10, et surtout le score Choix s'effondre à 1.27/10 (rang 358e/360) — indiquant une très faible liberté effective malgré les ressources disponibles.
+
+2. **Priorités citoyennes décalées** : selon l'enquête citoyenne, les habitants d'Ajaccio jugent critiques l'Environnement et la Santé, dimensions peu captées par les scores OppChoVec. Les dimensions mesurées révèlent des insatisfactions particulières : Transports (0.95/5), Institutions (1.85/5), Santé (1.80/5) et Sécurité (2.73/5).
+
+**Conclusion** : Ajaccio dispose d'infrastructures et de ressources objectives fortes, mais les habitants ne les convertissent pas en bien-être perçu, révélant un problème d'accès effectif ou d'adéquation entre l'offre territoriale et les besoins réels.</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ4</span>
+    <span class="subq-text">Quels indicateurs objectifs spécifiques (ex : offre de soins, transports, sécurité) contribuent le plus au score OppChoVec d'Ajaccio, et sont-ils alignés avec les critiques ou éloges exprimés par les habitants ?</span>
+    <span class="badge">Indicateurs territoriaux spécifiques (mobilité, TIC, diversité sociale)</span><span class="badge">Alignement avec les perceptions citoyennes</span>
+  </div>
+  <div class="subq-answer">## Analyse des indicateurs objectifs et alignement avec les perceptions à Ajaccio
+
+### Indicateurs objectifs contribuant au score OppChoVec d'Ajaccio
+
+Selon les indicateurs territoriaux objectifs, Ajaccio affiche un profil très contrasté :
+
+**Points forts objectifs :**
+- **Mobilité (Opp3 : 8.99/10)** — selon les données territoriales objectives, Ajaccio dispose d'une accessibilité très élevée aux transports et à l'automobile (indicateur : 186.1/200), classée 128e/360 communes corses.
+- **Accès TIC (Opp4 : 9.35/10)** — selon les indicateurs territoriaux, la couverture numérique atteint 93.5%, plaçant Ajaccio au 24e rang régional.
+- **Éducation (Opp1 : 7.42/10)** — selon les données objectives, le niveau d'éducation moyen est élevé (24e/360).
+
+**Points faibles objectifs :**
+- **Diversité sociale (Opp2 : 1.96/10)** — selon les indicateurs territoriaux, l'indice de Theil (0.2787) révèle une très faible diversité des catégories socio-professionnelles, classant Ajaccio au 216e rang régional.
+- **Choix (Cho : 1.27/10)** — selon les données objectives, ce score très faible (358e/360) indique l'absence de droits de vote effectifs ou la présence de quartiers prioritaires.
+
+### Alignement avec les perceptions citoyennes
+
+**Désalignement majeur sur les transports :**
+Alors que les indicateurs territoriaux objectifs montrent une mobilité très élevée (8.99/10), selon l'enquête citoyenne, les habitants d'Ajaccio expriment une satisfaction très faible sur les transports (2.21/5 — la note la plus basse de toutes les dimensions). Ce décalage suggère que l'offre objective de mobilité ne répond pas aux besoins réels perçus (qualité, fréquence, accessibilité tarifaire ou géographique).
+
+**Alignement partiel sur l'éducation :**
+L'éducation objective est élevée (7.42/10), mais selon l'enquête citoyenne, la satisfaction des habitants reste modérée (3.44/5), indiquant un écart entre le niveau moyen de diplôme et la qualité perçue des services éducatifs locaux.
+
+**Absence d'indicateurs objectifs spécifiques pour santé et sécurité :**
+Le contexte ne fournit pas de données d'équipements communaux (nombre de médecins, lits d'hôpital, commissariats) pour Ajaccio. Selon l'enquête citoyenne, la santé (2.58/5) et la sécurité (3.81/5) sont des dimensions critiques pour les habitants, mais aucun indicateur objectif détaillé n'est disponible pour évaluer l'offre réelle.</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ5</span>
+    <span class="subq-text">Comment le score OppChoVec d'Ajaccio se compare-t-il à celui d'autres communes corses de taille ou de profil similaire, et cette comparaison permet-elle d'expliquer un éventuel décalage entre performance objective et perception citoyenne ?</span>
+    <span class="badge">Comparaison OppChoVec avec communes similaires</span><span class="badge">Explication du décalage perception/performance</span>
+  </div>
+  <div class="subq-answer"># Comparaison du score OppChoVec d'Ajaccio avec d'autres communes corses
+
+## Position objective d'Ajaccio
+
+Selon les indicateurs territoriaux objectifs, **Ajaccio affiche un score OppChoVec global de 5.78/10 et se classe 19e sur 360 communes corses** — une position bien au-dessus de la moyenne corse (3.35/10). Cependant, ce score global masque une **asymétrie structurelle majeure** : Ajaccio obtient un score Opportunités (Opp) de 10.00/10 (rang 1er), mais un score Choix (Cho) de seulement 1.27/10 (rang 358e).
+
+## Comparaison avec communes de profil similaire
+
+Les communes de taille comparable et de proximité géographique (Afa, Bastelicaccia, Appietto, Alata — toutes dans l'aire urbaine ajaccienne) affichent des profils très différents :
+- **Afa** (rang 1er, 10.00/10) combine Opp=8.15, Cho=9.27, Vec=10.00 — un équilibre harmonieux.
+- **Bastelicaccia** (rang 2e, 9.81/10) et **Appietto** (rang 3e, 9.61/10) présentent des scores Cho élevés (8.94 et 9.50).
+
+**Ajaccio se distingue par un profil inverse** : excellentes opportunités (éducation 7.42/10, mobilité 8.99/10, TIC 9.35/10) mais très faible score Choix, qui mesure l'absence de quartiers prioritaires et la couverture électorale — révélant probablement des inégalités socio-spatiales internes et une fragmentation territoriale.
+
+## Décalage entre performance objective et perception citoyenne
+
+Ce contraste explique partiellement le **décalage perception-réalité** observé à Ajaccio :
+- Les habitants interrogés (47 répondants) expriment une **satisfaction modérée** (bonheur 3.68/5, qualité de vie 3.89/5) et une **confiance très faible en l'avenir** (2.75/5).
+- Les dimensions les plus critiquées sont **Transports (0.95/5)**, **Institutions (1.85/5)**, **Santé (1.80/5)** — alors qu'objectivement, la mobilité et l'accès TIC sont excellents.
+
+Cette contradiction suggère que **les opportunités objectives (ressources disponibles) ne se traduisent pas en réalisations concrètes (Vec=4.80/10, rang 41e) ni en sentiment d'équité et de liberté effective (Cho très faible)**. Les habitants perçoivent probablement une **inégale distribution de ces ressources** au sein de la commune, confirmée par le très faible score de diversité sociale (Opp2=1.96/10, rang 216e).</div>
+</div>
+  </details>
+
+  <details class="answer-block">
+    <summary>Réponse finale de synthèse</summary>
+    <div class="answer-text">**Synthèse : Ajaccio peut-elle présenter un score objectif élevé tout en étant mal évaluée par ses habitants ?**
+
+Oui, Ajaccio illustre parfaitement ce paradoxe : la commune affiche un **score territorial objectif global de 5,78/10**, la classant **19ᵉ sur 360 communes corses** selon les indicateurs territoriaux [SQ1]. Pourtant, ses habitants expriment une **satisfaction modérée**, avec un score de qualité de vie de seulement **3,89/5** et une confiance en l’avenir particulièrement faible (**2,75/5**) selon l’enquête citoyenne [SQ2].
+
+### **Un territoire riche en opportunités, mais inégalement vécu**
+Les indicateurs territoriaux montrent qu’Ajaccio excelle dans les **opportunités d’accès aux ressources** :
+- **Mobilité très élevée (8,99/10)** et **couverture numérique quasi totale (93,5 %)** [SQ4].
+- **Niveau d’éducation moyen supérieur à la moyenne corse (7,42/10)** [SQ1].
+Ces atouts devraient théoriquement favoriser la qualité de vie, mais ils ne se traduisent pas dans le **vécu quotidien** des habitants :
+- Le **score &quot;Vécu&quot; (4,80/10)** reste moyen, reflétant des **inégalités dans l’accès aux services ou à l’emploi stable** [SQ1].
+- Le **score &quot;Choix&quot; (1,27/10, 358ᵉ/360)** est alarmant, suggérant des **fractures territoriales** (quartiers prioritaires, droits de vote limités) [SQ1].
+
+### **Un décalage flagrant entre ressources et perceptions**
+Les habitants interrogés **ne perçoivent pas ces atouts** :
+- **Transports** : malgré un score objectif excellent (8,99/10), la satisfaction citoyenne est **très faible (2,21/5)** [SQ4].
+- **Santé et environnement** : ces dimensions, jugées **prioritaires par les habitants** (score santé : 2,58/5), ne sont pas reflétées dans les indicateurs territoriaux [SQ2].
+- **Sécurité** : bien que notée **3,81/5** par les citoyens, elle n’apparaît pas comme un point fort dans les données objectives [SQ2].
+
+### **Comparaison avec des communes similaires : un modèle déséquilibré**
+Contrairement à des communes voisines comme **Afa (1ʳᵉ/360) ou Bastelicaccia (2ᵉ/360)**, qui combinent **opportunités et équité territoriale**, Ajaccio souffre d’un **déséquilibre structurel** :
+- **Opportunités maximales (10/10)** vs. **Choix quasi nuls (1,27/10)** [SQ5].
+Ce contraste explique pourquoi les habitants, malgré des infrastructures de qualité, **ne ressentent pas une amélioration de leur quotidien** [SQ3].
+
+### **Conclusion : un territoire performant sur le papier, mais inégal et mal perçu**
+Ajaccio cumule des **atouts objectifs majeurs** (mobilité, éducation, TIC), mais ceux-ci sont **neutralisés par des inégalités socio-spatiales** et un **décalage entre les ressources disponibles et leur accessibilité réelle**. Les habitants, confrontés à des **problèmes concrets** (transports saturés, santé, environnement), **ne bénéficient pas pleinement de ces opportunités**, ce qui explique leur **mécontentement malgré un score territorial &quot;élevé&quot;** [SQ1, SQ2, SQ5].
+
+---</div>
+  </details>
+</section>
+<section class="question-block ok">
+  <div class="q-header">
+    <span class="q-id">Q044</span>
+    <span class="q-cat">Absence totale données</span>
+    <span class="q-elapsed">35.4s</span>
+  </div>
+  <div class="q-meta">Gestion d’absence d’information › Absence totale de données</div>
+  <div class="q-text">Quel est le score OppChoVec de la commune de Nice ?</div>
+
+  
+
+  <details class="subq-block" open>
+    <summary>Sous-questions (5)</summary>
+    
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ1</span>
+    <span class="subq-text">Quel est le score OppChoVec global de la commune de Nice, tel que mesuré à l'échelle communale ?</span>
+    <span class="badge">Aucune donnée OppChoVec disponible pour Nice (hors périmètre corse)</span>
+  </div>
+  <div class="subq-answer">Je ne peux pas répondre à cette sous-question. Le contexte fourni ne contient aucune donnée sur la commune de Nice. Les données OppChoVec disponibles portent exclusivement sur des communes corses (Novale et données globales Corse), et Nice n'est pas une commune corse.
+
+Si vous souhaitez connaître le score OppChoVec d'une commune corse spécifique, veuillez préciser son nom.</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ2</span>
+    <span class="subq-text">Comment le score OppChoVec de Nice se situe-t-il par rapport à la moyenne des scores OppChoVec des communes corses ?</span>
+    <span class="badge">Aucune donnée OppChoVec disponible pour Nice (hors périmètre corse)</span>
+  </div>
+  <div class="subq-answer">Je ne peux pas répondre à cette sous-question : **Nice n'est pas une commune corse** et ne figure pas dans le contexte fourni, qui porte exclusivement sur les 360 communes corses. Le contexte ne contient aucune donnée sur Nice.
+
+Si vous souhaitez connaître le positionnement d'une commune corse spécifique par rapport à la moyenne régionale, veuillez préciser le nom de cette commune corse.</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ3</span>
+    <span class="subq-text">Quels sont les principaux indicateurs territoriaux (ex : accès aux services, environnement, sécurité) qui influencent le score OppChoVec de Nice, selon les données disponibles à l'échelle communale ?</span>
+    <span class="badge">Aucune donnée territoriale disponible pour Nice</span>
+  </div>
+  <div class="subq-answer">Je ne dispose pas de données spécifiques pour la commune de Nice dans le contexte fourni. 
+
+Le contexte contient des indicateurs territoriaux détaillés (équipements, services, sécurité, logement) uniquement pour **Casevecchie** et **Cervione**, ainsi que des scores OppChoVec pour **Novale** et la **Corse entière**. Aucune information n'est disponible pour Nice.
+
+Pour répondre à votre question sur Nice, il faudrait disposer de ses données d'équipements communaux (médecins, écoles, commerces, taux d'activité, pauvreté, sécurité) et de son score OppChoVec détaillé.</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ4</span>
+    <span class="subq-text">Existe-t-il des verbatims citoyens recueillis dans la commune de Nice qui illustrent ou expliquent les forces ou faiblesses identifiées par le score OppChoVec ?</span>
+    <span class="badge">Aucune donnée d'enquête citoyenne disponible pour Nice</span>
+  </div>
+  <div class="subq-answer">**Réponse :** Le contexte fourni ne contient aucune donnée relative à la commune de Nice. Les données d'enquête citoyenne disponibles concernent exclusivement les communes de Noceta et Casevecchie (1 répondant chacune). Par ailleurs, Nice est une commune française métropolitaine et ne figure pas dans le périmètre de l'analyse, qui porte sur les 360 communes corses.
+
+Je ne peux donc pas répondre à cette sous-question faute de données pertinentes.</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ5</span>
+    <span class="subq-text">Peut-on comparer le score OppChoVec de Nice avec celui d'autres communes de taille ou de profil similaire en Corse (ex : Ajaccio, Bastia), si ces données sont disponibles ?</span>
+    <span class="badge">Données OppChoVec disponibles pour Ajaccio et Bastia (communes corses)</span>
+  </div>
+  <div class="subq-answer">**Réponse :**
+
+Le contexte fourni ne contient aucune donnée sur Nice. Nice est une commune française située en Provence-Alpes-Côte d'Azur, en dehors de la Corse. Les indicateurs OppChoVec disponibles couvrent exclusivement les 360 communes corses.
+
+En revanche, selon les indicateurs territoriaux objectifs, je peux comparer les deux principales villes corses :
+
+- **Ajaccio** : score OppChoVec de 5.78/10 (rang 19e/360), avec des opportunités très élevées (Opp = 10.00/10) mais un score de choix très faible (Cho = 1.27/10).
+- **Bastia** : score OppChoVec de 2.72/10 (rang 244e/360), avec également des opportunités élevées (Opp = 7.51/10) mais un score de choix nul (Cho = 0.00/10).
+
+Ajaccio bénéficie d'un bien-être territorial objectif significativement supérieur à Bastia, notamment en raison d'un score de vécu (Vec = 4.80/10) plus favorable. Cependant, aucune comparaison avec Nice n'est possible dans ce cadre d'analyse.</div>
+</div>
+  </details>
+
+  <details class="answer-block">
+    <summary>Réponse finale de synthèse</summary>
+    <div class="answer-text">La commune de Nice ne dispose d'aucun score OppChoVec dans les données disponibles, car ces indicateurs territoriaux objectifs sont calculés uniquement pour les 360 communes corses [SQ1][SQ2]. Aucune mesure de ce type n'existe donc pour Nice, qui se situe en dehors du périmètre géographique couvert par cette analyse [SQ1].
+
+Par ailleurs, les données d'enquête citoyenne ou les indicateurs détaillés (accès aux services, environnement, sécurité, etc.) ne sont pas non plus disponibles pour Nice dans ce contexte [SQ3][SQ4]. Les comparaisons avec des communes corses comme Ajaccio ou Bastia ne sont pas pertinentes, car ces villes relèvent d'un cadre territorial et méthodologique distinct [SQ5].</div>
+  </details>
+</section>
+<section class="question-block ok">
+  <div class="q-header">
+    <span class="q-id">Q048</span>
+    <span class="q-cat">Données partielles</span>
+    <span class="q-elapsed">53.3s</span>
+  </div>
+  <div class="q-meta">Gestion d’absence d’information › Données partielles ou insuffisantes</div>
+  <div class="q-text">Le nombre de répondants à Bastia permet-il une analyse fiable par tranche d’âge ?</div>
+
+  
+
+  <details class="subq-block" open>
+    <summary>Sous-questions (5)</summary>
+    
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ1</span>
+    <span class="subq-text">Quel est le nombre total de répondants à l'enquête bien-être pour la commune de Bastia ?</span>
+    <span class="badge">Enquête citoyenne de qualité de vie en Corse (nombre de répondants à Bastia)</span>
+  </div>
+  <div class="subq-answer">Selon l'enquête citoyenne de qualité de vie en Corse, **23 répondants** ont participé à l'enquête bien-être pour la commune de Bastia.</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ2</span>
+    <span class="subq-text">Quelle est la répartition des répondants à Bastia par tranche d’âge (nombre et pourcentage) selon les données disponibles ?</span>
+    <span class="badge">Enquête citoyenne (répartition par tranche d’âge à Bastia)</span>
+  </div>
+  <div class="subq-answer">Selon l'enquête citoyenne — données pour Bastia (23 répondants) :
+
+- **45-59 ans** : 12 répondants (52,2%)
+- **30-44 ans** : 7 répondants (30,4%)
+- **15-29 ans** : 3 répondants (13,0%)
+- **60-74 ans** : 1 répondant (4,3%)
+
+La majorité des répondants bastiais appartient à la tranche 45-59 ans, représentant plus de la moitié de l'échantillon.</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ3</span>
+    <span class="subq-text">Quel est le seuil minimal de répondants par tranche d’âge généralement considéré comme nécessaire pour une analyse statistique fiable dans les enquêtes sur le bien-être ?</span>
+    
+  </div>
+  <div class="subq-answer">Cette sous-question porte sur une norme méthodologique générale d'enquête, qui **n'est pas couverte par le contexte fourni**. Le contexte contient uniquement des données spécifiques à Ghisonaccia, Borgo et Calvi (profils de répondants, scores territoriaux), mais aucune information sur les seuils méthodologiques standards en statistique d'enquête.
+
+Je ne peux donc pas répondre à cette question en me basant uniquement sur le contexte disponible, comme l'exige ma directive. Pour une réponse fiable sur les standards statistiques d'enquête, il faudrait consulter une littérature méthodologique externe (guides de l'INSEE, normes ISO, ou manuels de statistique appliquée).</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ4</span>
+    <span class="subq-text">Les effectifs de répondants par tranche d’âge à Bastia atteignent-ils ou dépassent-ils ce seuil minimal pour permettre une analyse fiable ?</span>
+    <span class="badge">Enquête citoyenne (évaluation de la fiabilité statistique par tranche d’âge)</span>
+  </div>
+  <div class="subq-answer">Selon l'enquête citoyenne, le nombre total de répondants à Bastia est de 23 personnes. En ventilant par tranche d'âge, les effectifs sont les suivants : 45-59 ans (12 répondants), 30-44 ans (7 répondants), 15-29 ans (3 répondants) et 60-74 ans (1 répondant).
+
+**Ces effectifs ne permettent pas une analyse fiable par tranche d'âge.** Aucun seuil minimal conventionnel n'est précisé dans le contexte, mais les groupes 15-29 ans (3 personnes) et surtout 60-74 ans (1 personne) présentent des tailles d'échantillon trop réduites pour produire des résultats statistiquement robustes. Même les groupes 45-59 et 30-44 ans, bien que plus représentés, restent limités pour des analyses désagrégées fiables. Une analyse globale à l'échelle de Bastia (N=23) est possible, mais toute ventilation par âge doit être présentée avec prudence et sans prétention à la représentativité.</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ5</span>
+    <span class="subq-text">Existe-t-il des indicateurs territoriaux (ex : scores OppChoVec) disponibles pour Bastia qui pourraient compléter l'analyse par tranche d’âge, même si ces scores ne sont pas ventilés démographiquement ?</span>
+    <span class="badge">Indicateurs OppChoVec (scores territoriaux objectifs pour Bastia)</span>
+  </div>
+  <div class="subq-answer"># Réponse
+
+Oui, des indicateurs territoriaux objectifs sont disponibles pour Bastia, mais ils ne sont **pas ventilés par tranche d'âge**.
+
+Selon les indicateurs OppChoVec, Bastia affiche un score global de **2.72/10** (faible, rang 244e/360 communes corses). Ce score masque des disparités importantes : les **Opportunités (Opp) atteignent 7.51/10** (très élevé, rang 7e), portées notamment par un accès excellent aux TIC (9.65/10, rang 13e) et à la mobilité (8.65/10, rang 151e) ; en revanche, le **Choix (Cho) est à 0.00/10** (très faible, dernier rang 360e), et le **Vécu (Vec) à 3.23/10** (moyen, rang 205e).
+
+Ces scores territoriaux communaux ne peuvent pas être désagrégés par âge : ils décrivent les conditions objectives offertes à **l'ensemble de la population bastaise**, indépendamment de l'âge des répondants. Pour une analyse complémentaire, on pourrait croiser ces conditions territoriales (ex : accès aux services, mobilité, éducation) avec les perceptions déclarées par les différentes tranches d'âge interrogées (45-59 ans : 52.2% des 23 répondants ; 30-44 ans : 30.4%), mais cette analyse requiert les données d'enquête citoyenne spécifiques à Bastia, qui ne sont pas fournies ici.</div>
+</div>
+  </details>
+
+  <details class="answer-block">
+    <summary>Réponse finale de synthèse</summary>
+    <div class="answer-text">**Synthèse : Fiabilité de l'analyse par tranche d'âge à Bastia**
+
+À Bastia, le nombre total de répondants à l’enquête citoyenne sur le bien-être s’élève à **23 personnes** [SQ1], mais cette taille d’échantillon ne permet pas une analyse fiable par tranche d’âge. Les effectifs par groupe sont très déséquilibrés : la tranche **45-59 ans** domine largement avec **12 répondants (52,2 %)** [SQ2], suivie des **30-44 ans (7 répondants, 30,4 %)** [SQ2]. Les **15-29 ans (3 répondants, 13 %)** et surtout les **60-74 ans (1 répondant, 4,3 %)** [SQ2] sont sous-représentés, rendant toute interprétation statistique par âge peu robuste [SQ4]. Les habitants interrogés estiment ainsi que les résultats ventilés par âge doivent être interprétés avec prudence, voire évités pour les groupes les plus petits [SQ4].
+
+Pour compléter cette analyse, des **indicateurs territoriaux objectifs** sont disponibles pour Bastia, mais ils ne sont pas ventilés par âge. Selon les données territoriales, la commune affiche un **score global de 2,72/10**, reflétant des disparités marquées : les **opportunités** (accès à l’éducation, mobilité, technologies) sont très élevées (**7,51/10**) [SQ5], tandis que les **conditions de vie quotidienne** (revenu, logement, emploi) restent moyennes (**3,23/10**) [SQ5]. Le score lié aux **choix et libertés locales** est quant à lui très faible (**0,00/10**) [SQ5]. Ces indicateurs décrivent les conditions offertes à l’ensemble de la population bastaise, sans distinction d’âge, et pourraient être croisés avec les perceptions des répondants – à condition de disposer de données d’enquête plus détaillées [SQ5].
+
+**Conclusion** : Les effectifs actuels ne permettent pas une analyse fiable par tranche d’âge à Bastia [SQ4]. Une approche globale (tous âges confondus) reste possible, mais toute ventilation nécessiterait un échantillon plus large et mieux réparti.</div>
+  </details>
+</section>
+<section class="question-block ok">
+  <div class="q-header">
+    <span class="q-id">Q068</span>
+    <span class="q-cat">Raisonnement causal</span>
+    <span class="q-elapsed">67.1s</span>
+  </div>
+  <div class="q-meta">Raisonnement causal et contre-intuitif › Raisonnement causal explicite</div>
+  <div class="q-text">Le score élevé de la dimension Vec à Ajaccio peut-il expliquer le niveau global de bien-être observé ?</div>
+
+  
+
+  <details class="subq-block" open>
+    <summary>Sous-questions (5)</summary>
+    
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ1</span>
+    <span class="subq-text">Quel est le score global de la dimension Vec (Vecteurs de bien-être) à Ajaccio selon les données OppChoVec disponibles à l'échelle communale ?</span>
+    <span class="badge">Indicateurs territoriaux objectifs OppChoVec (score Vec et rang communal)</span>
+  </div>
+  <div class="subq-answer">Selon les indicateurs territoriaux objectifs OppChoVec, le score Vec (Vecteurs de bien-être) à Ajaccio est de **4.80/10**, ce qui le place au **41e rang sur 360 communes corses**.
+
+Ce score Vec reflète les réalisations concrètes des habitants en matière de revenu fiscal moyen, qualité du logement, stabilité de l'emploi et accès aux services en moins de 20 minutes. Bien que moyen, ce score contraste fortement avec le score Opp (Opportunités) d'Ajaccio, qui atteint 10.00/10 — la commune offre donc des ressources objectives très élevées, mais les habitants ne les convertissent que partiellement en bien-être réalisé. Cette tension est accentuée par un score Cho (Choix) extrêmement faible (1.27/10, 358e rang), qui mesure l'absence de quartiers prioritaires et l'accès au droit de vote.</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ2</span>
+    <span class="subq-text">Quel est le niveau global de bien-être observé à Ajaccio, tel que mesuré par les indicateurs territoriaux ou enquêtes disponibles ?</span>
+    <span class="badge">Indicateurs territoriaux OppChoVec (score global, composantes Opp/Cho/Vec)</span><span class="badge">Enquête citoyenne (satisfaction, scores par dimension)</span><span class="badge">Données d'équipements communaux (médecins, écoles, commerces)</span>
+  </div>
+  <div class="subq-answer">## Niveau global de bien-être à Ajaccio
+
+Selon les indicateurs territoriaux objectifs, Ajaccio affiche un profil contrasté :
+
+**Score OppChoVec global : 5.78/10 (rang 19e/360 communes corses)**, ce qui indique un bien-être territorial **élevé en moyenne**. Cependant, cette moyenne masque des disparités importantes entre ses trois composantes :
+
+- **Opportunités (Opp) : 10.00/10 (rang 1er/360)** — Ajaccio offre un accès exceptionnel aux ressources : niveau d'éducation élevé (7.42/10), couverture numérique très forte (9.35/10 avec 93.5% de couverture), et mobilité excellente (8.99/10). Selon les données d'équipements communaux, la commune dispose de 80 médecins généralistes, 15 écoles maternelles, 20 écoles élémentaires, 6 collèges et 6 lycées.
+
+- **Choix (Cho) : 1.27/10 (rang 358e/360)** — Score critique, reflétant l'absence de quartiers prioritaires mais aussi une structure socio-professionnelle peu diversifiée (indice Theil : 0.2787, rang 216e/360).
+
+- **Vécu (Vec) : 4.80/10 (rang 41e/360)** — Réalisations concrètes moyennes, avec un taux de pauvreté de 14.3% et un prix du logement élevé (3 667 €/m²).
+
+**Selon l'enquête citoyenne (N=51 répondants)**, la satisfaction globale est **modérée** : score de bonheur moyen de 3.68/5 et qualité de vie de 3.89/5. Les habitants sont les plus satisfaits de l'emploi (3.91/5) et du logement (3.84/5), mais expriment une insatisfaction marquée sur les **transports (2.21/5)** — la dimension la plus faible — et la **santé (2.58/5)**. L'écart entre la meilleure et la pire dimension est de 1.70 points, révélant des inégalités de satisfaction.
+
+**En synthèse** : Ajaccio offre des opportunités objectives fortes, mais cette richesse en ressources ne se traduit pas pleinement en bien-être vécu, particulièrement sur la mobilité et l'accès aux services de santé.</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ3</span>
+    <span class="subq-text">Existe-t-il une corrélation statistique entre le score Vec et le niveau global de bien-être à Ajaccio, basée sur les données disponibles ?</span>
+    <span class="badge">Indicateurs territoriaux OppChoVec (scores Vec et bien-être global)</span><span class="badge">Enquête citoyenne (bonheur et qualité de vie déclarés)</span>
+  </div>
+  <div class="subq-answer"># Analyse de la corrélation entre Vec et bien-être global à Ajaccio
+
+Sur la base des données disponibles, **une corrélation statistique formelle ne peut pas être établie** — le contexte ne fournit ni données de corrélation calculée, ni série temporelle, ni ventilation permettant un test statistique.
+
+Cependant, une **observation descriptive** est possible :
+
+**Selon les indicateurs territoriaux objectifs**, Ajaccio affiche un score Vec (Vécu) de **4.80/10** (rang 41e/360), caractérisé par un revenu fiscal moyen, une qualité de logement, une stabilité d'emploi et un accès aux services en moins de 20 minutes. Ce score Vec moyen contraste fortement avec le score Opp (Opportunités) très élevé de 10.00/10, mais s'aligne partiellement avec le score Cho (Choix) très faible de 1.27/10.
+
+**Selon l'enquête citoyenne** (51 répondants à Ajaccio), le score de bonheur moyen est de **3.68/5** et la qualité de vie de **3.89/5** — des niveaux modérés. Les dimensions les plus faibles (Transports 2.21/5, Santé 2.58/5, Tourisme 2.63/5) suggèrent que les réalisations concrètes (Vec) ne suffisent pas à générer un bien-être élevé, notamment en raison de déficits en mobilité et services.
+
+**En synthèse** : les données descriptives suggèrent une relation partielle — un Vec moyen s'accompagne d'un bien-être déclaré modéré — mais aucun coefficient de corrélation n'est calculable à partir du contexte fourni.</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ4</span>
+    <span class="subq-text">Quels sont les principaux indicateurs ou verbatims citoyens associés à la dimension Vec à Ajaccio qui pourraient influencer le bien-être global ?</span>
+    <span class="badge">Indicateurs territoriaux OppChoVec (score Vec)</span><span class="badge">Données d'équipements communaux (services, pauvreté, logement)</span>
+  </div>
+  <div class="subq-answer"># Analyse de la dimension Vec (Vécu) à Ajaccio
+
+## Score territorial objectif
+
+Selon les indicateurs territoriaux objectifs, **le score Vec de Ajaccio est de 4.80/10 (moyen), plaçant la commune au 41e rang sur 360 communes corses**. Cette dimension mesure les réalisations concrètes des habitants : revenu fiscal moyen, qualité du logement, stabilité de l'emploi et accès aux services en moins de 20 minutes.
+
+## Facteurs objectifs influençant le Vec
+
+Les données d'équipements communaux indiquent une **offre de services relativement dense** : 80 médecins généralistes, 204 infirmiers, 31 pharmacies, 1 service d'urgence, ainsi qu'une couverture commerciale importante (11 hypermarchés, 38 supérettes, 51 boulangeries). Cependant, **le taux de pauvreté atteint 14.3%** et **le prix moyen au m² (3 667 €) reste élevé**, ce qui peut limiter l'accès au logement pour une part significative de la population. Le **taux d'activité de 75.6%** est correct, mais le **taux de coups et blessures volontaires (4.0 pour 1 000 habitants)** suggère des enjeux de sécurité.
+
+## Absence de données citoyennes spécifiques au Vec
+
+**Aucun verbatim ou donnée d'enquête citoyenne spécifique à la dimension Vec n'est disponible dans le contexte fourni.** Les 51 répondants ajacciens interrogés n'ont pas été analysés selon leur perception du revenu, du logement, de l'emploi ou de l'accès aux services — seul leur profil démographique est documenté.
+
+Le score moyen du Vec (4.80/10) suggère que **les réalisations concrètes constituent un point faible relatif du bien-être à Ajaccio**, contrastant fortement avec les excellentes opportunités objectives (Opp : 10.00/10).</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ5</span>
+    <span class="subq-text">Comment le score Vec d'Ajaccio se compare-t-il à celui d'autres communes corses de taille ou de profil similaire, et cette comparaison éclaire-t-elle son impact sur le bien-être global ?</span>
+    <span class="badge">Indicateurs territoriaux OppChoVec (score Vec, rang et moyenne régionale)</span><span class="badge">Enquête citoyenne (confiance en l'avenir)</span>
+  </div>
+  <div class="subq-answer"># Comparaison du score Vec d'Ajaccio avec d'autres communes corses
+
+## Position d'Ajaccio sur le score Vec
+
+Selon les indicateurs territoriaux objectifs, **Ajaccio affiche un score Vec de 4.80/10, la plaçant au 41e rang sur 360 communes corses**. Ce score Vec moyen reflète des conditions concrètes de revenu fiscal, qualité du logement, stabilité de l'emploi et accès aux services en moins de 20 minutes.
+
+## Comparaison avec communes de profil similaire
+
+Le contexte fourni ne contient pas de données détaillées permettant une comparaison directe avec d'autres communes de taille ou profil similaire à Ajaccio. Cependant, on peut noter que **le score Vec moyen en Corse est de 3.46/10** (données territoriales objectives), ce qui signifie qu'Ajaccio dépasse la médiane régionale de +1.34 points — une position relativement favorable sur cette dimension.
+
+## Impact sur le bien-être global
+
+Cette position intermédiaire sur le Vec contraste fortement avec la **très faible performance d'Ajaccio sur le Cho (1.27/10, rang 358e/360)**, qui mesure l'absence de quartiers prioritaires et l'accès au droit de vote. Cette asymétrie révèle un paradoxe : **malgré des conditions matérielles (Vec) au-dessus de la moyenne régionale, Ajaccio souffre d'une fragmentation sociale majeure qui limite le bien-être global** (score OppChoVec global : 5.78/10, rang 19e). Les habitants interrogés confirment cette tension : selon l'enquête citoyenne, le score de confiance en l'avenir n'est que de 2.75/5, et les dimensions Sécurité (2.73/5) et Institutions (1.85/5) révèlent des préoccupations qui dépassent les seuls indicateurs matériels.</div>
+</div>
+  </details>
+
+  <details class="answer-block">
+    <summary>Réponse finale de synthèse</summary>
+    <div class="answer-text">**Synthèse : Le score Vec à Ajaccio peut-il expliquer le niveau global de bien-être observé ?**
+
+À Ajaccio, le score moyen de la dimension *Vécu* (Vec), qui mesure les réalisations concrètes des habitants en matière de revenu, logement, emploi et accès aux services, s’élève à **4,80/10** [SQ1]. Bien que ce résultat place la commune au **41ᵉ rang des 360 communes corses** [SQ1], il ne suffit pas à expliquer à lui seul le niveau global de bien-être, qui reste contrasté.
+
+**Un bien-être global modéré malgré des opportunités exceptionnelles**
+Les indicateurs territoriaux montrent qu’Ajaccio affiche un **score global de bien-être de 5,78/10** (19ᵉ rang corse) [SQ2], porté par des **opportunités exceptionnelles** (score Opp de 10/10, 1ᵉʳ rang) [SQ2]. Cependant, ce score masque des disparités majeures : le *Vécu* (Vec) moyen et un *Choix* (Cho) très faible (1,27/10, 358ᵉ rang) [SQ1] révèlent une fracture entre les ressources disponibles et leur conversion en qualité de vie réelle. Selon les données d’équipements communaux, la ville dispose d’une offre de services dense (80 médecins, 31 pharmacies, 20 écoles élémentaires) [SQ2], mais des freins structurels persistent, comme un **taux de pauvreté de 14,3 %** et un **prix moyen du logement élevé (3 667 €/m²)** [SQ4].
+
+**Un décalage entre réalisations objectives et perceptions citoyennes**
+Les habitants interrogés expriment une **satisfaction globale modérée**, avec un score de bonheur moyen de **3,68/5** et une qualité de vie perçue à **3,89/5** [SQ2]. Si l’emploi (3,91/5) et le logement (3,84/5) sont relativement bien notés, les **transports (2,21/5)** et la **santé (2,58/5)** cristallisent les insatisfactions [SQ2]. Ces résultats suggèrent que le score Vec, bien que supérieur à la moyenne corse (+1,34 point) [SQ5], ne se traduit pas pleinement en bien-être ressenti, en raison de **défauts d’accessibilité et de services** perçus comme insuffisants.
+
+**Une corrélation partielle, mais pas déterminante**
+Aucune corrélation statistique formelle ne peut être établie avec les données disponibles [SQ3]. Cependant, l’analyse descriptive révèle que le Vec moyen d’Ajaccio s’accompagne d’un **bien-être déclaré modéré**, sans lien mécanique. Le paradoxe ajaccien réside dans l’écart entre des **opportunités maximales** (Opp = 10/10) et des **réalisations concrètes limitées** (Vec = 4,80/10), aggravé par un **Choix socialement restrictif** (1,27/10) [SQ1]. Les entretiens citoyens confirment cette tension : la **confiance en l’avenir** n’atteint que **2,75/5** [SQ5], reflétant un sentiment d’inégalité malgré les atouts objectifs.
+
+**Conclusion : Le Vec contribue, mais ne suffit pas**
+Le score Vec d’Ajaccio, bien que supérieur à la moyenne corse, **ne peut expliquer à lui seul le niveau global de bien-être**. Il agit comme un **facteur nécessaire mais non suffisant**, dont l’impact est atténué par des **déséquilibres structurels** (logement cher, transports défaillants, fragmentation sociale). Les données montrent que le bien-être à Ajaccio dépend davantage de l’**articulation entre opportunités, réalisations et choix sociaux** que d’une seule dimension, fût-elle matérielle.
+
+---</div>
+  </details>
+</section>
+<section class="question-block ok">
+  <div class="q-header">
+    <span class="q-id">Q083</span>
+    <span class="q-cat">Limite inférence causale</span>
+    <span class="q-elapsed">67.9s</span>
+  </div>
+  <div class="q-meta">Raisonnement causal et contre-intuitif › Limites de l’inférence causale</div>
+  <div class="q-text">Peut-on inférer qu’une amélioration d’une dimension spécifique entraînera mécaniquement une hausse du score global ?</div>
+
+  
+
+  <details class="subq-block" open>
+    <summary>Sous-questions (5)</summary>
+    
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ1</span>
+    <span class="subq-text">Quelle est la corrélation statistique, à l'échelle globale de la Corse, entre l'évolution des scores OppChoVec par dimension spécifique (ex : santé, environnement, lien social) et l'évolution du score OppChoVec global communal sur les dernières années disponibles ?</span>
+    <span class="badge">Aucune donnée disponible (pas de série temporelle)</span>
+  </div>
+  <div class="subq-answer">Je ne dispose pas des données nécessaires pour répondre à cette sous-question.
+
+Le contexte fourni contient des scores OppChoVec calculés sur un **millésime unique (2020-2022, score calculé en 2025)** et précise explicitement : *« Aucune donnée disponible pour d'autres années (pas de série temporelle) »*. 
+
+Une analyse de corrélation entre l'évolution des dimensions spécifiques et l'évolution du score global nécessiterait des données sur **au moins deux périodes distinctes**, ce qui n'existe pas ici.
+
+De plus, les dimensions OppChoVec disponibles (Opp, Cho, Vec) ne couvrent pas directement « santé » ou « environnement » au sens où vous les mentionnez — elles mesurent opportunités, choix et réalisations socio-économiques selon les composantes définies (éducation, diversité CSP, mobilité, TIC, revenus, logement, emploi, services).
+
+**Conclusion** : aucune corrélation temporelle ne peut être établie faute de série chronologique.</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ2</span>
+    <span class="subq-text">Existe-t-il des communes corses où une amélioration significative d'une dimension spécifique (ex : accès aux services, qualité de l'air) a été observée sans impact mesurable sur le score OppChoVec global, et inversement ?</span>
+    <span class="badge">Aucune donnée disponible (pas de série temporelle)</span>
+  </div>
+  <div class="subq-answer">Le contexte fourni ne contient pas de données de série temporelle permettant de comparer l'évolution des dimensions spécifiques (accès aux services, qualité de l'air) ou du score OppChoVec global entre deux périodes. Les indicateurs OppChoVec disponibles sont calculés sur le millésime 2020-2022 uniquement, sans données antérieures ou postérieures.
+
+Par conséquent, il est impossible de répondre à cette sous-question sur la base du contexte fourni : **aucune observation d'amélioration ou de stagnation paradoxale ne peut être établie faute de données longitudinales**.</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ3</span>
+    <span class="subq-text">Quels sont les coefficients de pondération appliqués aux différentes dimensions dans le calcul du score OppChoVec global, et comment ces pondérations influencent-elles théoriquement l'impact d'une amélioration d'une dimension spécifique ?</span>
+    <span class="badge">Données territoriales objectives (pondérations OppChoVec et impact théorique des améliorations)</span>
+  </div>
+  <div class="subq-answer"># Réponse : Coefficients de pondération OppChoVec et impact théorique des améliorations
+
+## Coefficients de pondération des sous-dimensions d'Opportunités (Opp)
+
+Selon les données territoriales objectives, **chacune des 4 sous-dimensions du score Opportunités (Opp1, Opp2, Opp3, Opp4) est pondérée à poids égal de 0,25** :
+
+- **Opp1 — Éducation** : poids 0,25
+- **Opp2 — Diversité sociale** : poids 0,25
+- **Opp3 — Mobilité** : poids 0,25
+- **Opp4 — Accès TIC** : poids 0,25
+
+Cela signifie que le score Opp global est une **moyenne arithmétique équipondérée** des quatre composantes.
+
+## Impact théorique d'une amélioration d'une dimension spécifique
+
+Avec une pondération égale à 0,25, **une amélioration d'une seule dimension a un impact proportionnel et limité sur le score Opp global** :
+
+- Une augmentation de **1 point sur 10 dans une dimension** entraîne une augmentation de **0,25 point sur 10 du score Opp** (soit 2,5 % du score global Opp).
+- Par exemple, si Opp1 (Éducation) passe de 2,35/10 à 3,35/10 en Corse (+1 point), le score Opp global augmenterait de +0,25 point seulement, passant de 3,87/10 à 4,12/10.
+
+**Corollaire** : pour obtenir une amélioration significative du bien-être territorial (score Opp), une stratégie d'amélioration doit être **multi-dimensionnelle** plutôt que concentrée sur une seule composante.
+
+---
+
+*Note : Le contexte ne précise pas les pondérations respectives entre Opp, Cho et Vec au niveau du score OppChoVec global (3 composantes principales). Cette information n'est pas disponible dans les données fournies.*</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ4</span>
+    <span class="subq-text">Peut-on identifier, à partir des verbatims citoyens collectés en Corse, des cas où une amélioration perçue dans une dimension (ex : sécurité, transports) n'a pas été associée à une hausse de la satisfaction globale, et quels facteurs contextuels (ex : autres dimensions dégradées) pourraient expliquer ce décalage ?</span>
+    <span class="badge">Aucune donnée disponible (pas de verbatims citoyens)</span>
+  </div>
+  <div class="subq-answer">Le contexte fourni ne contient **aucun verbatim citoyen** permettant d'analyser les perceptions d'amélioration ou de satisfaction globale en Corse. Les données disponibles se limitent à des scores OppChoVec territoriaux objectifs (Pianello, moyennes corses) et à des équipements/services communaux factuels (Castello-di-Rostino, Corscia), mais pas à des témoignages ou enquêtes citoyennes sur les évolutions perçues ou les décalages satisfaction/amélioration.
+
+Pour répondre à cette sous-question, il faudrait disposer de :
+- Verbatims ou données d'enquête citoyenne décrivant des améliorations perçues dans des domaines spécifiques (sécurité, transports, etc.)
+- Des mesures de satisfaction globale associées à ces perceptions
+- Une analyse qualitative des facteurs contextuels expliquant les écarts
+
+**Je ne peux donc pas traiter cette sous-question avec les données du contexte.**</div>
+</div>
+<div class="subq">
+  <div class="subq-header">
+    <span class="subq-num">SQ5</span>
+    <span class="subq-text">Sur la base des enquêtes territoriales disponibles, quelles dimensions spécifiques présentent les écarts les plus marqués entre leur score OppChoVec communal et le score global, et ces écarts sont-ils systématiquement corrélés à une stagnation ou une baisse du score global ?</span>
+    <span class="badge">Indicateurs territoriaux objectifs (scores OppChoVec détaillés pour Campo)</span>
+  </div>
+  <div class="subq-answer"># Analyse des écarts OppChoVec : Campo
+
+**Données disponibles et portée :**
+Le contexte fournit des scores OppChoVec détaillés pour **Campo uniquement** (score global 4.94/10, rang 40e/360). Aucune donnée d'enquête citoyenne spécifique à Campo n'est disponible — seul 1 répondant est enregistré pour Albitreccia, commune différente. Les analyses qui suivent reposent exclusivement sur les indicateurs territoriaux objectifs.
+
+**Écarts les plus marqués à Campo :**
+
+Selon les indicateurs territoriaux objectifs, Campo présente une **disparité extrême entre ses trois composantes principales** :
+- **Choix (Cho) : 9.95/10** (très élevé, rang 49e) — écart de +5.01 points par rapport au score global
+- **Opportunités (Opp) : 5.96/10** (élevé, rang 39e) — écart de +1.02 point
+- **Vécu (Vec) : 2.99/10** (faible, rang 240e) — écart de **−1.95 point**, plaçant Campo au 240e rang sur 360
+
+Au sein du score Opportunités, les écarts internes sont également marqués : **Opp1 (Éducation) atteint 9.78/10** (rang 3e, très exceptionnel), tandis que **Opp3 (Mobilité) chute à 2.22/10** (rang 213e, très faible).
+
+**Corrélation avec stagnation/baisse du score global :**
+
+Le score global de Campo (4.94/10) reste **moyen**, mais cette moyenne **masque une tension structurelle** : l'excellence en Choix et Éducation ne compense pas l'effondrement du Vécu (rang 240e). Cette configuration suggère que les ressources objectives et les libertés formelles ne se traduisent pas en réalisations concrètes (revenus, qualité du logement, stabilité de l'emploi, accès aux services). Il n'existe pas de série temporelle pour établir une corrélation causale avec une baisse, mais le profil actuel indique une **stagnation potentielle** : les atouts territoriaux (éducation, droits) ne génèrent pas d'amélioration du bien-être vécu.</div>
+</div>
+  </details>
+
+  <details class="answer-block">
+    <summary>Réponse finale de synthèse</summary>
+    <div class="answer-text">**Synthèse : Une amélioration d’une dimension spécifique entraîne-t-elle mécaniquement une hausse du score global ?**
+
+Non, une amélioration d’une dimension spécifique ne garantit pas une hausse mécanique du score global de qualité de vie à Campo, comme le montrent les indicateurs territoriaux. Plusieurs éléments clés expliquent cette absence de lien automatique :
+
+- **Impact limité par la pondération** : Les dimensions du score global (opportunités, choix, vécu) sont pondérées de manière égale [SQ3]. Une amélioration d’une seule sous-dimension, comme l’éducation (qui pèse 25 % du score *Opportunités*), n’aurait qu’un effet marginal sur le score global. Par exemple, une hausse de 1 point sur 10 dans l’éducation n’élèverait le score *Opportunités* que de 0,25 point [SQ3]. À Campo, malgré un score exceptionnel en éducation (9,78/10), le score global reste moyen (4,94/10), car d’autres dimensions, comme le *Vécu* (2,99/10), tirent la moyenne vers le bas [SQ5].
+
+- **Déséquilibres structurels** : Les indicateurs territoriaux révèlent des écarts extrêmes à Campo. Le score *Choix* (9,95/10) est très élevé, mais il ne compense pas les faiblesses du *Vécu* (2,99/10), notamment en mobilité (2,22/10) et en accès aux services [SQ5]. Ces déséquilibres montrent qu’une amélioration isolée (ex. : éducation) ne suffit pas à rehausser le score global si d’autres dimensions restent dégradées.
+
+- **Absence de corrélation temporelle** : Aucune donnée ne permet d’observer si une amélioration passée d’une dimension a effectivement entraîné une hausse du score global, faute de séries chronologiques [SQ1][SQ2]. Les scores disponibles sont statiques (2020-2022) et ne captent pas les dynamiques d’évolution.
+
+- **Perceptions citoyennes non disponibles** : Les enquêtes citoyennes ne fournissent pas d’éléments spécifiques à Campo pour confirmer ou infirmer un lien entre améliorations perçues et satisfaction globale [SQ4]. Les données subjectives couvrent la Corse entière, sans focus sur la commune.
+
+**Conclusion** : À Campo, une amélioration d’une dimension spécifique (ex. : éducation ou mobilité) aurait un impact proportionnel à son poids dans le score global, mais ne suffirait pas à elle seule à rehausser significativement ce dernier. Une stratégie efficace devrait cibler simultanément plusieurs dimensions, en priorisant celles où les écarts sont les plus marqués (comme le *Vécu*), pour espérer une progression globale durable.
+
+---</div>
+  </details>
+</section>

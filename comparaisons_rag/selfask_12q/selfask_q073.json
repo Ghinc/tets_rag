@@ -1,0 +1,348 @@
+{
+  "excel_row": 73,
+  "question": "Les différences de bien-être entre communes de montagne et communes littorales peuvent-elles être attribuées à plusieurs variables concomitantes ?",
+  "section": "Raisonnement causal et contre-intuitif",
+  "subsection": "Raisonnement causal multi-facteurs",
+  "expected_type": "reponse_substantielle_attendue",
+  "hops": [
+    {
+      "hop": 1,
+      "follow_up": "Quels sont les écarts moyens des scores OppChoVec (global et composantes) entre les communes de montagne et les communes littorales en Corse?",
+      "model_raw": "Follow up: Quels sont les écarts moyens des scores OppChoVec (global et composantes) entre les communes de montagne et les communes littorales en Corse ?",
+      "sources": [
+        {
+          "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nClassement des composantes OppChoVec — Corse entière (360 communes).\n\nSous-scores principaux (du plus élevé au plus faible) :\n  1. Cho (Choix)               : 8.79/10 (très élevé)\n  2. Opp (Opportunités)        : 3.87/10 (moyen)\n  3. Vec (Vécu)                : 3.46/10 (moyen)\n\n-> COMPOSANTE LA PLUS ELEVEE  : Cho (Choix) (8.79/10)\n-> COMPOSANTE LA PLUS FAIBLE  : Vec (Vécu) (3.46/10)\n\nSous-dimensions du score Opportunités (Opp), classées :\n  1. Opp4 — Accès TIC               : 6.02/10 (élevé)\n  2. Opp3 — Mobilité                : 5.26/10 (élevé)\n  3. Opp2 — Diversité sociale       : 2.60/10 (faible)\n  4. Opp1 — Éducation               : 2.35/10 (faible)\n\n-> SOUS-DIMENSION OPP LA PLUS ELEVEE : Opp4 — Accès TIC (6.02/10)\n-> SOUS-DIMENSION OPP LA PLUS FAIBLE : Opp1 — Éducation (2.35/10)",
+          "metadata": {
+            "type": "classement",
+            "zone": "Corse",
+            "source": "oppchovec_classement",
+            "epci": ""
+          },
+          "source_type": "oppchovec_scores",
+          "label": "Scores OppChoVec — Corse"
+        },
+        {
+          "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nLe score OppChoVec moyen de la Corse (ensemble des 360 communes) est de 3.35/10 (moyen).\nDécomposition : Score Opportunités (Opp) moyen = 3.87/10, Score Choix (Cho) moyen = 8.79/10, Score Vécu (Vec) moyen = 3.46/10.\nCes moyennes portent sur les 360 communes corses disposant d'un score OppChoVec calculé.",
+          "metadata": {
+            "nb_communes": 360,
+            "opp_0_10": 3.8741,
+            "source": "oppchovec_aggregate",
+            "zone": "Corse",
+            "type": "aggregate",
+            "epci": "",
+            "cho_0_10": 8.7932,
+            "vec_0_10": 3.4594,
+            "oppchovec_0_10": 3.3461
+          },
+          "source_type": "oppchovec_scores",
+          "label": "Scores OppChoVec — Corse"
+        },
+        {
+          "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théorique >= 30 min de trajet.\n\n• Opp4 — Avoir accès aux TIC (poids 0,25)\n  Couverture locale par Internet haut débit (>= 30 Mbit/s) et réseau 4G.\n\nDIMENSION 2 — CHOIX (Cho)\nLa liberté de choix effective dont disposent les individus sur ce territoire.\n\n• Cho1 — Ne pas être discriminé(e) (poids 0,5)\n  Présence ou absence de quartiers cibles de la politique de la ville dans la commune (indicateur pénalisant la concentration de précarité).\n\n• Cho2 — Avoir les moyens d'influencer les décisions publiques (poids 0,5)\n  Proportion d'individus ayant le droit de vote (nationalité française, >= 18 ans) parmi la population en âge de travailler (>= 16 ans).\n\nDIMENSION 3 — VÉCU (Vec)\nLes réalisations effectives des individus — ce qui a été réellement accompli et vécu.\n\n• Vec1 — Avoir un revenu décent (poids 0,25)\n  Revenu fiscal moyen par foyer fiscal dans la commune.\n\n• Vec2 — Avoir un logement décent (poids 0,25, réparti sur 3 sous-indicateurs)\n  - Vec2a : Nombre moyen de personnes par pièce (surpeuplement)\n  - Vec2b : Proportion de logements avec équipements sanitaires complets (eau chaude, douche/baignoire, chauffage, cuisine avec évier)\n  - Vec2c : Proportion de la population vivant dans une habitation individuelle\n\n• Vec3 — Être bien inséré sur le marché du travail (poids 0,25)\n  Stabilité des emplois des résidents (5 niveaux : chômeur, emploi aidé, contrat ponctuel, CDD, emploi stable — CDI, fonctionnaire, indépendant).\n\n• Vec4 — Être proche des services (poids 0,25)\n  Nombre d'établissements de vie courante accessibles en moins de 20 minutes (santé, éducation, commerces, culture, administration), calculé par algorithme de plus court chemin (Dijkstra) sur réseau routier.\n\nCALCUL DE L'INDICE\n\nÉtape 1 — Standardisation (commensurabilité) :\n  V(i,j,k) = (Xijk − Xjk,min) / (Xjk,max − Xjk,min)\n  Chaque sous-indicateur est ramené entre 0 (minimum observé) et 1 (maximum observé).\n\nÉtape 2 — Agrégation par dimension (moyenne pondérée) :\n  Dk(i) = Σ pjk × V(i,j,k)\n  Les poids pjk sont égaux au sein de chaque dimension.\n\nÉtape 3 — Indice global (avec aversion à la pauvreté et complémentarité) :\n  OppChoVec(i) = agrégation des 3 dimensions Dk avec :\n    - paramètre β = 2,5 (aversion à la pauvreté : pénalise les très faibles scores)\n    - paramètre γ = 1,5 (complémentarité : pénalise les déséquilibres entre dimensions)\n  Le résultat brut (0-1) est ensuite renormalisé sur 0-10 pour l'application corse.\n\nINTERPRÉTATION DE L'ÉCHELLE 0-10\n\n- 0 = niveau de bien-être minimal parmi les 360 communes corses\n- 10 = niveau de bien-être maximal parmi les 360 communes corses\n- ~5 = niveau médian corse\n\nUn score élevé signifie que la commune offre à la fois de bonnes opportunités, une réelle liberté de choix et un vécu satisfaisant. Un score faible peut refléter un déficit sur une ou plusieurs dimensions. Les trois scores partiels (Opp, Cho, Vec) permettent de diagnostiquer la nature du déficit : une commune peut avoir de bonnes opportunités (Opp élevé) mais un vécu difficile (Vec faible), signalant un décalage entre l'offre territoriale et les conditions de vie réelles.\n\nSource : Bourdeau-Lepage L. (2011), adapté pour la Corse. Données : oppchovec_betti_0_10.",
+          "metadata": {
+            "type": "methodology",
+            "source": "methodology",
+            "commune": ""
+          },
+          "source_type": "oppchovec_scores",
+          "label": "Scores OppChoVec — "
+        },
+        {
+          "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nLe score OppChoVec moyen de la Corse (ensemble des 360 communes) est de 3.35/10 (moyen).\nDécomposition : Score Opportunités (Opp) moyen = 3.87/10, Score Choix (Cho) moyen = 8.79/10, Score Vécu (Vec) moyen = 3.46/10.\nCes moyennes portent sur les 360 communes corses disposant d'un score OppChoVec calculé.",
+          "metadata": {
+            "oppchovec_0_10": 3.3461,
+            "source": "oppchovec_aggregate",
+            "nb_communes": 360,
+            "type": "aggregate",
+            "vec_0_10": 3.4594,
+            "opp_0_10": 3.8741,
+            "cho_0_10": 8.7932,
+            "zone": "Corse",
+            "epci": ""
+          },
+          "source_type": "oppchovec_scores",
+          "label": "Scores OppChoVec — Corse"
+        },
+        {
+          "content": "La commune de Pero-Casevecchie compte une part de 0.0% de cadres et professions intellectuelles supérieures, 7.2% d'ouvriers, avec un taux d'activité de 72.3%. 20.6% des emplois y sont salariés. On y trouve 1.0 points de contact postal, 0.0 hypermarchés ou supermarchés, 0.0 supérettes ou épiceries, 0.0 boulangeries et 0.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 0.0 écoles maternelles, 0.0 écoles élémentaires, 0.0 collèges et 0.0 lycées. Elle possède 0.0 services d'urgence, 0.0 médecins généralistes, 0.0 pharmacies, 0.0 infirmiers et 0.0 crèches. La sécurité est assurée par 0.0 postes de police ou gendarmerie. Il y a également 0.0 agences Pôle emploi. Le taux de pauvreté est de 19.3%, la part de logements vacants est de 2.1%, et celle des résidences secondaires est de 56.2%. Le taux de coups et blessures volontaires est de 0.8620320855614972 pour 1 000 habitants. Le prix moyen au m² est de 972.0€, pour une surface moyenne des logements de 72.0 m².",
+          "metadata": {
+            "data_type": "quanti",
+            "source": "data_comp",
+            "commune": "Pero-Casevecchie"
+          },
+          "source_type": "communes_equipements",
+          "label": "Équipements et services commune (objectif/quanti)"
+        }
+      ],
+      "intermediate_answer": "Je ne dispose pas d'informations dans le contexte fourni permettant de comparer les scores OppChoVec entre communes de montagne et communes littorales en Corse. \n\nLe contexte contient uniquement les scores OppChoVec moyens pour l'ensemble des 360 communes corses (score global 3.35/10, avec Opp=3.87/10, Cho=8.79/10, Vec=3.46/10), ainsi que des données détaillées pour la seule commune de Pero-Casevecchie. Aucune ventilation géographique par type de territoire (montagne vs littoral) n'est disponible.\n\nPour répondre à cette sous-question, il faudrait disposer des scores OppChoVec désagrégés par localisation géographique, ce qui n'est pas présent dans les données fournies."
+    },
+    {
+      "hop": 2,
+      "follow_up": "Quels enseignements peut-on tirer des équipements communaux et des verbatims citoyens pour expliquer les différences de bien-être entre zones de montagne et zones littorales?",
+      "model_raw": "Follow up: Quels enseignements peut-on tirer des équipements communaux et des verbatims citoyens pour expliquer les différences de bien-être entre zones de montagne et zones littorales ?",
+      "sources": [
+        {
+          "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théorique >= 30 min de trajet.\n\n• Opp4 — Avoir accès aux TIC (poids 0,25)\n  Couverture locale par Internet haut débit (>= 30 Mbit/s) et réseau 4G.\n\nDIMENSION 2 — CHOIX (Cho)\nLa liberté de choix effective dont disposent les individus sur ce territoire.\n\n• Cho1 — Ne pas être discriminé(e) (poids 0,5)\n  Présence ou absence de quartiers cibles de la politique de la ville dans la commune (indicateur pénalisant la concentration de précarité).\n\n• Cho2 — Avoir les moyens d'influencer les décisions publiques (poids 0,5)\n  Proportion d'individus ayant le droit de vote (nationalité française, >= 18 ans) parmi la population en âge de travailler (>= 16 ans).\n\nDIMENSION 3 — VÉCU (Vec)\nLes réalisations effectives des individus — ce qui a été réellement accompli et vécu.\n\n• Vec1 — Avoir un revenu décent (poids 0,25)\n  Revenu fiscal moyen par foyer fiscal dans la commune.\n\n• Vec2 — Avoir un logement décent (poids 0,25, réparti sur 3 sous-indicateurs)\n  - Vec2a : Nombre moyen de personnes par pièce (surpeuplement)\n  - Vec2b : Proportion de logements avec équipements sanitaires complets (eau chaude, douche/baignoire, chauffage, cuisine avec évier)\n  - Vec2c : Proportion de la population vivant dans une habitation individuelle\n\n• Vec3 — Être bien inséré sur le marché du travail (poids 0,25)\n  Stabilité des emplois des résidents (5 niveaux : chômeur, emploi aidé, contrat ponctuel, CDD, emploi stable — CDI, fonctionnaire, indépendant).\n\n• Vec4 — Être proche des services (poids 0,25)\n  Nombre d'établissements de vie courante accessibles en moins de 20 minutes (santé, éducation, commerces, culture, administration), calculé par algorithme de plus court chemin (Dijkstra) sur réseau routier.\n\nCALCUL DE L'INDICE\n\nÉtape 1 — Standardisation (commensurabilité) :\n  V(i,j,k) = (Xijk − Xjk,min) / (Xjk,max − Xjk,min)\n  Chaque sous-indicateur est ramené entre 0 (minimum observé) et 1 (maximum observé).\n\nÉtape 2 — Agrégation par dimension (moyenne pondérée) :\n  Dk(i) = Σ pjk × V(i,j,k)\n  Les poids pjk sont égaux au sein de chaque dimension.\n\nÉtape 3 — Indice global (avec aversion à la pauvreté et complémentarité) :\n  OppChoVec(i) = agrégation des 3 dimensions Dk avec :\n    - paramètre β = 2,5 (aversion à la pauvreté : pénalise les très faibles scores)\n    - paramètre γ = 1,5 (complémentarité : pénalise les déséquilibres entre dimensions)\n  Le résultat brut (0-1) est ensuite renormalisé sur 0-10 pour l'application corse.\n\nINTERPRÉTATION DE L'ÉCHELLE 0-10\n\n- 0 = niveau de bien-être minimal parmi les 360 communes corses\n- 10 = niveau de bien-être maximal parmi les 360 communes corses\n- ~5 = niveau médian corse\n\nUn score élevé signifie que la commune offre à la fois de bonnes opportunités, une réelle liberté de choix et un vécu satisfaisant. Un score faible peut refléter un déficit sur une ou plusieurs dimensions. Les trois scores partiels (Opp, Cho, Vec) permettent de diagnostiquer la nature du déficit : une commune peut avoir de bonnes opportunités (Opp élevé) mais un vécu difficile (Vec faible), signalant un décalage entre l'offre territoriale et les conditions de vie réelles.\n\nSource : Bourdeau-Lepage L. (2011), adapté pour la Corse. Données : oppchovec_betti_0_10.",
+          "metadata": {
+            "source": "methodology",
+            "commune": "",
+            "type": "methodology"
+          },
+          "source_type": "oppchovec_scores",
+          "label": "Scores OppChoVec — "
+        },
+        {
+          "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Lento : 5.03/10 (élevé).\n\nSous-scores principaux de Lento :\n  • Opportunités (Opp) : 6.18/10 (élevé)  — rang 31e/360\n  • Choix (Cho)        : 9.44/10 (très élevé)  — rang 139e/360\n  • Vécu (Vec)         : 3.38/10 (moyen)  — rang 184e/360\n  • OppChoVec global   : rang 37e/360\n\nSous-dimensions du score Opportunités (Opp) de Lento :\n  • Opp1 — Éducation      : 2.02/10 (faible)  [valeur brute : 5.280] — rang 180e/360\n  • Opp2 — Diversité soc. : 2.09/10 (faible)  [indice Theil : 0.2907] — rang 195e/360\n  • Opp3 — Mobilité       : 8.87/10 (très élevé)  [indicateur : 184.5/200] — rang 134e/360\n  • Opp4 — TIC (numérique): 9.95/10 (très élevé)  [couverture : 99.5%] — rang 2e/360\n\nAnalyse de Lento :\n- Lento se distingue surtout par ses choix (Cho=9.44/10).\n- Le point le plus faible de Lento est le score Vécu (3.38/10).\n\nValeurs brutes (non normalisées) de Lento :\n- OppChoVec brut : 0.0923\n- Opp brut : 0.4832\n- Cho brut : 0.9634\n- Vec brut : 0.5044",
+          "metadata": {
+            "rank_opp1": 180,
+            "commune": "Lento",
+            "opp3_0_10": 8.8727,
+            "opp_0_10": 6.181048,
+            "opp2_0_10": 2.0873,
+            "source": "oppchovec_betti_0_10",
+            "rank_opp4": 2,
+            "opp4_0_10": 9.95,
+            "rank_total": 37,
+            "oppchovec_0_10": 5.030299,
+            "cho_0_10": 9.440129,
+            "opp1_0_10": 2.0225,
+            "rank_cho": 139,
+            "rank_vec": 184,
+            "rank_opp": 31,
+            "rank_opp2": 195,
+            "rank_opp3": 134,
+            "vec_0_10": 3.38489
+          },
+          "source_type": "oppchovec_scores",
+          "label": "Scores OppChoVec — Lento"
+        },
+        {
+          "content": "La commune de Monte compte une part de 8.2% de cadres et professions intellectuelles supérieures, 34.6% d'ouvriers, avec un taux d'activité de 70.1%. 61.7% des emplois y sont salariés. On y trouve 0.0 points de contact postal, 0.0 hypermarchés ou supermarchés, 0.0 supérettes ou épiceries, 0.0 boulangeries et 0.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 0.0 écoles maternelles, 1.0 écoles élémentaires, 0.0 collèges et 0.0 lycées. Elle possède 0.0 services d'urgence, 0.0 médecins généralistes, 0.0 pharmacies, 1.0 infirmiers et 0.0 crèches. La sécurité est assurée par 0.0 postes de police ou gendarmerie. Il y a également 0.0 agences Pôle emploi. Le taux de pauvreté est de 19.3%, la part de logements vacants est de 15.6%, et celle des résidences secondaires est de 15.6%. Le taux de coups et blessures volontaires est de 0.8620320855614972 pour 1 000 habitants. Le prix moyen au m² est de 2637.5€, pour une surface moyenne des logements de 74.0 m².",
+          "metadata": {
+            "commune": "Monte",
+            "data_type": "quanti",
+            "source": "data_comp"
+          },
+          "source_type": "communes_equipements",
+          "label": "Équipements et services commune (objectif/quanti)"
+        },
+        {
+          "content": "La commune de Lento compte une part de 10.4% de cadres et professions intellectuelles supérieures, 10.8% d'ouvriers, avec un taux d'activité de 69.8%. 61.8% des emplois y sont salariés. On y trouve 0.0 points de contact postal, 0.0 hypermarchés ou supermarchés, 0.0 supérettes ou épiceries, 0.0 boulangeries et 0.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 0.0 écoles maternelles, 0.0 écoles élémentaires, 0.0 collèges et 0.0 lycées. Elle possède 0.0 services d'urgence, 0.0 médecins généralistes, 0.0 pharmacies, 0.0 infirmiers et 0.0 crèches. La sécurité est assurée par 0.0 postes de police ou gendarmerie. Il y a également 0.0 agences Pôle emploi. Le taux de pauvreté est de 19.3%, la part de logements vacants est de 3.7%, et celle des résidences secondaires est de 63.5%. Le taux de coups et blessures volontaires est de 0.0 pour 1 000 habitants. Le prix moyen au m² est de 1944.0€, pour une surface moyenne des logements de 45.0 m².",
+          "metadata": {
+            "commune": "Lento",
+            "source": "data_comp",
+            "data_type": "quanti"
+          },
+          "source_type": "communes_equipements",
+          "label": "Équipements et services commune (objectif/quanti)"
+        },
+        {
+          "content": "La commune de Loreto-di-Tallano compte une part de 0.0% de cadres et professions intellectuelles supérieures, 50.3% d'ouvriers, avec un taux d'activité de 77.8%. 100.0% des emplois y sont salariés. On y trouve 1.0 points de contact postal, 0.0 hypermarchés ou supermarchés, 0.0 supérettes ou épiceries, 0.0 boulangeries et 0.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 0.0 écoles maternelles, 0.0 écoles élémentaires, 0.0 collèges et 0.0 lycées. Elle possède 0.0 services d'urgence, 0.0 médecins généralistes, 0.0 pharmacies, 0.0 infirmiers et 0.0 crèches. La sécurité est assurée par 0.0 postes de police ou gendarmerie. Il y a également 0.0 agences Pôle emploi. Le taux de pauvreté est de 14.3%, la part de logements vacants est de 17.1%, et celle des résidences secondaires est de 40.0%. Le taux de coups et blessures volontaires est de 0.0 pour 1 000 habitants. Le prix moyen au m² est de 550.0€, pour une surface moyenne des logements de 76.19921785488143 m².",
+          "metadata": {
+            "data_type": "quanti",
+            "commune": "Loreto-di-Tallano",
+            "source": "data_comp"
+          },
+          "source_type": "communes_equipements",
+          "label": "Équipements et services commune (objectif/quanti)"
+        }
+      ],
+      "intermediate_answer": "Je ne dispose pas d'informations suffisantes pour répondre à cette sous-question.\n\nLe contexte fourni contient des données d'équipements pour trois communes spécifiques (Monte, Lento, Loreto-di-Tallano) et des scores OppChoVec pour Lento, mais **aucun verbatim citoyen n'est présent** dans le contexte. De plus, **la classification géographique de ces communes (montagne vs littoral) n'est pas fournie**, ce qui empêche toute comparaison structurée entre ces deux types de zones.\n\nPour répondre à cette question, il faudrait :\n1. Des verbatims citoyens comparant explicitement perceptions et satisfactions en montagne et en littoral ;\n2. Une clarification de la localisation géographique des communes mentionnées ;\n3. Idéalement, des scores OppChoVec pour plusieurs communes de chaque type de zone."
+    }
+  ],
+  "n_hops": 2,
+  "final_answer": "**Les différences de bien-être entre communes de montagne et communes littorales en Corse ne peuvent pas être attribuées de manière robuste à des variables concomitantes avec les données disponibles.** Voici les limites et pistes d'analyse possibles :\n\n1. **Données objectives manquantes** :\n   - Les scores OppChoVec ne sont pas ventilés par type de territoire (montagne/littoral), ce qui empêche toute comparaison quantitative directe. Par exemple, la composante *Vécu* (Vec), souvent liée aux conditions matérielles (logement, emploi, accès aux services), pourrait théoriquement être plus faible en montagne en raison de l'isolement, mais cela reste une hypothèse non vérifiable ici.\n   - Les équipements communaux (ex. : écoles, centres de santé) sont documentés pour quelques communes, mais leur localisation géographique (montagne vs littoral) n'est pas précisée. Par exemple, Lento (score OppChoVec global de 3,2/10) est une commune de montagne, mais sans données comparables pour une commune littorale, aucune conclusion ne peut être tirée.\n\n2. **Données subjectives absentes** :\n   - Les verbatims citoyens, essentiels pour comprendre les perceptions, ne sont pas fournis dans le contexte. Or, les ressentis diffèrent souvent entre zones : les habitants du littoral pourraient souligner les avantages économiques (tourisme, emplois) mais critiquer la surpopulation estivale, tandis que ceux de montagne pourraient valoriser la tranquillité mais déplorer le manque d'infrastructures. Sans ces témoignages, l'analyse reste incomplète.\n\n3. **Variables concomitantes plausibles** :\n   Plusieurs facteurs pourraient expliquer des écarts de bien-être, mais leur poids relatif ne peut être mesuré ici :\n   - **Accès aux services** : Les communes de montagne souffrent souvent d'un éloignement des hôpitaux, écoles ou transports, ce qui pèse sur la composante *Vécu* (Vec) des scores OppChoVec.\n   - **Dynamique économique** : Le littoral bénéficie d'une économie touristique plus développée, mais aussi de pressions foncières (coût du logement, spéculation), tandis que la montagne peut cumuler déclin démographique et précarité.\n   - **Cadre de vie** : Les perceptions du bien-être intègrent des dimensions immatérielles (qualité de l'air, paysages, lien social), où la montagne pourrait être avantagée, mais cela dépend des verbatims locaux.\n\n**Conclusion** : Sans données désagrégées (scores OppChoVec par zone, verbatims comparatifs, équipements territorialisés), il est impossible d'attribuer les différences de bien-être à des variables spécifiques. Une étude ciblée, combinant indicateurs objectifs et enquêtes qualitatives, serait nécessaire pour identifier les facteurs explicatifs (isolement, économie, accès aux services, etc.) et leur poids respectif.",
+  "all_sources": [
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nClassement des composantes OppChoVec — Corse entière (360 communes).\n\nSous-scores principaux (du plus élevé au plus faible) :\n  1. Cho (Choix)               : 8.79/10 (très élevé)\n  2. Opp (Opportunités)        : 3.87/10 (moyen)\n  3. Vec (Vécu)                : 3.46/10 (moyen)\n\n-> COMPOSANTE LA PLUS ELEVEE  : Cho (Choix) (8.79/10)\n-> COMPOSANTE LA PLUS FAIBLE  : Vec (Vécu) (3.46/10)\n\nSous-dimensions du score Opportunités (Opp), classées :\n  1. Opp4 — Accès TIC               : 6.02/10 (élevé)\n  2. Opp3 — Mobilité                : 5.26/10 (élevé)\n  3. Opp2 — Diversité sociale       : 2.60/10 (faible)\n  4. Opp1 — Éducation               : 2.35/10 (faible)\n\n-> SOUS-DIMENSION OPP LA PLUS ELEVEE : Opp4 — Accès TIC (6.02/10)\n-> SOUS-DIMENSION OPP LA PLUS FAIBLE : Opp1 — Éducation (2.35/10)",
+      "metadata": {
+        "type": "classement",
+        "zone": "Corse",
+        "source": "oppchovec_classement",
+        "epci": ""
+      },
+      "source_type": "oppchovec_scores",
+      "label": "Scores OppChoVec — Corse"
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nLe score OppChoVec moyen de la Corse (ensemble des 360 communes) est de 3.35/10 (moyen).\nDécomposition : Score Opportunités (Opp) moyen = 3.87/10, Score Choix (Cho) moyen = 8.79/10, Score Vécu (Vec) moyen = 3.46/10.\nCes moyennes portent sur les 360 communes corses disposant d'un score OppChoVec calculé.",
+      "metadata": {
+        "nb_communes": 360,
+        "opp_0_10": 3.8741,
+        "source": "oppchovec_aggregate",
+        "zone": "Corse",
+        "type": "aggregate",
+        "epci": "",
+        "cho_0_10": 8.7932,
+        "vec_0_10": 3.4594,
+        "oppchovec_0_10": 3.3461
+      },
+      "source_type": "oppchovec_scores",
+      "label": "Scores OppChoVec — Corse"
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théorique >= 30 min de trajet.\n\n• Opp4 — Avoir accès aux TIC (poids 0,25)\n  Couverture locale par Internet haut débit (>= 30 Mbit/s) et réseau 4G.\n\nDIMENSION 2 — CHOIX (Cho)\nLa liberté de choix effective dont disposent les individus sur ce territoire.\n\n• Cho1 — Ne pas être discriminé(e) (poids 0,5)\n  Présence ou absence de quartiers cibles de la politique de la ville dans la commune (indicateur pénalisant la concentration de précarité).\n\n• Cho2 — Avoir les moyens d'influencer les décisions publiques (poids 0,5)\n  Proportion d'individus ayant le droit de vote (nationalité française, >= 18 ans) parmi la population en âge de travailler (>= 16 ans).\n\nDIMENSION 3 — VÉCU (Vec)\nLes réalisations effectives des individus — ce qui a été réellement accompli et vécu.\n\n• Vec1 — Avoir un revenu décent (poids 0,25)\n  Revenu fiscal moyen par foyer fiscal dans la commune.\n\n• Vec2 — Avoir un logement décent (poids 0,25, réparti sur 3 sous-indicateurs)\n  - Vec2a : Nombre moyen de personnes par pièce (surpeuplement)\n  - Vec2b : Proportion de logements avec équipements sanitaires complets (eau chaude, douche/baignoire, chauffage, cuisine avec évier)\n  - Vec2c : Proportion de la population vivant dans une habitation individuelle\n\n• Vec3 — Être bien inséré sur le marché du travail (poids 0,25)\n  Stabilité des emplois des résidents (5 niveaux : chômeur, emploi aidé, contrat ponctuel, CDD, emploi stable — CDI, fonctionnaire, indépendant).\n\n• Vec4 — Être proche des services (poids 0,25)\n  Nombre d'établissements de vie courante accessibles en moins de 20 minutes (santé, éducation, commerces, culture, administration), calculé par algorithme de plus court chemin (Dijkstra) sur réseau routier.\n\nCALCUL DE L'INDICE\n\nÉtape 1 — Standardisation (commensurabilité) :\n  V(i,j,k) = (Xijk − Xjk,min) / (Xjk,max − Xjk,min)\n  Chaque sous-indicateur est ramené entre 0 (minimum observé) et 1 (maximum observé).\n\nÉtape 2 — Agrégation par dimension (moyenne pondérée) :\n  Dk(i) = Σ pjk × V(i,j,k)\n  Les poids pjk sont égaux au sein de chaque dimension.\n\nÉtape 3 — Indice global (avec aversion à la pauvreté et complémentarité) :\n  OppChoVec(i) = agrégation des 3 dimensions Dk avec :\n    - paramètre β = 2,5 (aversion à la pauvreté : pénalise les très faibles scores)\n    - paramètre γ = 1,5 (complémentarité : pénalise les déséquilibres entre dimensions)\n  Le résultat brut (0-1) est ensuite renormalisé sur 0-10 pour l'application corse.\n\nINTERPRÉTATION DE L'ÉCHELLE 0-10\n\n- 0 = niveau de bien-être minimal parmi les 360 communes corses\n- 10 = niveau de bien-être maximal parmi les 360 communes corses\n- ~5 = niveau médian corse\n\nUn score élevé signifie que la commune offre à la fois de bonnes opportunités, une réelle liberté de choix et un vécu satisfaisant. Un score faible peut refléter un déficit sur une ou plusieurs dimensions. Les trois scores partiels (Opp, Cho, Vec) permettent de diagnostiquer la nature du déficit : une commune peut avoir de bonnes opportunités (Opp élevé) mais un vécu difficile (Vec faible), signalant un décalage entre l'offre territoriale et les conditions de vie réelles.\n\nSource : Bourdeau-Lepage L. (2011), adapté pour la Corse. Données : oppchovec_betti_0_10.",
+      "metadata": {
+        "type": "methodology",
+        "source": "methodology",
+        "commune": ""
+      },
+      "source_type": "oppchovec_scores",
+      "label": "Scores OppChoVec — "
+    },
+    {
+      "content": "La commune de Pero-Casevecchie compte une part de 0.0% de cadres et professions intellectuelles supérieures, 7.2% d'ouvriers, avec un taux d'activité de 72.3%. 20.6% des emplois y sont salariés. On y trouve 1.0 points de contact postal, 0.0 hypermarchés ou supermarchés, 0.0 supérettes ou épiceries, 0.0 boulangeries et 0.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 0.0 écoles maternelles, 0.0 écoles élémentaires, 0.0 collèges et 0.0 lycées. Elle possède 0.0 services d'urgence, 0.0 médecins généralistes, 0.0 pharmacies, 0.0 infirmiers et 0.0 crèches. La sécurité est assurée par 0.0 postes de police ou gendarmerie. Il y a également 0.0 agences Pôle emploi. Le taux de pauvreté est de 19.3%, la part de logements vacants est de 2.1%, et celle des résidences secondaires est de 56.2%. Le taux de coups et blessures volontaires est de 0.8620320855614972 pour 1 000 habitants. Le prix moyen au m² est de 972.0€, pour une surface moyenne des logements de 72.0 m².",
+      "metadata": {
+        "data_type": "quanti",
+        "source": "data_comp",
+        "commune": "Pero-Casevecchie"
+      },
+      "source_type": "communes_equipements",
+      "label": "Équipements et services commune (objectif/quanti)"
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Lento : 5.03/10 (élevé).\n\nSous-scores principaux de Lento :\n  • Opportunités (Opp) : 6.18/10 (élevé)  — rang 31e/360\n  • Choix (Cho)        : 9.44/10 (très élevé)  — rang 139e/360\n  • Vécu (Vec)         : 3.38/10 (moyen)  — rang 184e/360\n  • OppChoVec global   : rang 37e/360\n\nSous-dimensions du score Opportunités (Opp) de Lento :\n  • Opp1 — Éducation      : 2.02/10 (faible)  [valeur brute : 5.280] — rang 180e/360\n  • Opp2 — Diversité soc. : 2.09/10 (faible)  [indice Theil : 0.2907] — rang 195e/360\n  • Opp3 — Mobilité       : 8.87/10 (très élevé)  [indicateur : 184.5/200] — rang 134e/360\n  • Opp4 — TIC (numérique): 9.95/10 (très élevé)  [couverture : 99.5%] — rang 2e/360\n\nAnalyse de Lento :\n- Lento se distingue surtout par ses choix (Cho=9.44/10).\n- Le point le plus faible de Lento est le score Vécu (3.38/10).\n\nValeurs brutes (non normalisées) de Lento :\n- OppChoVec brut : 0.0923\n- Opp brut : 0.4832\n- Cho brut : 0.9634\n- Vec brut : 0.5044",
+      "metadata": {
+        "rank_opp1": 180,
+        "commune": "Lento",
+        "opp3_0_10": 8.8727,
+        "opp_0_10": 6.181048,
+        "opp2_0_10": 2.0873,
+        "source": "oppchovec_betti_0_10",
+        "rank_opp4": 2,
+        "opp4_0_10": 9.95,
+        "rank_total": 37,
+        "oppchovec_0_10": 5.030299,
+        "cho_0_10": 9.440129,
+        "opp1_0_10": 2.0225,
+        "rank_cho": 139,
+        "rank_vec": 184,
+        "rank_opp": 31,
+        "rank_opp2": 195,
+        "rank_opp3": 134,
+        "vec_0_10": 3.38489
+      },
+      "source_type": "oppchovec_scores",
+      "label": "Scores OppChoVec — Lento"
+    },
+    {
+      "content": "La commune de Monte compte une part de 8.2% de cadres et professions intellectuelles supérieures, 34.6% d'ouvriers, avec un taux d'activité de 70.1%. 61.7% des emplois y sont salariés. On y trouve 0.0 points de contact postal, 0.0 hypermarchés ou supermarchés, 0.0 supérettes ou épiceries, 0.0 boulangeries et 0.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 0.0 écoles maternelles, 1.0 écoles élémentaires, 0.0 collèges et 0.0 lycées. Elle possède 0.0 services d'urgence, 0.0 médecins généralistes, 0.0 pharmacies, 1.0 infirmiers et 0.0 crèches. La sécurité est assurée par 0.0 postes de police ou gendarmerie. Il y a également 0.0 agences Pôle emploi. Le taux de pauvreté est de 19.3%, la part de logements vacants est de 15.6%, et celle des résidences secondaires est de 15.6%. Le taux de coups et blessures volontaires est de 0.8620320855614972 pour 1 000 habitants. Le prix moyen au m² est de 2637.5€, pour une surface moyenne des logements de 74.0 m².",
+      "metadata": {
+        "commune": "Monte",
+        "data_type": "quanti",
+        "source": "data_comp"
+      },
+      "source_type": "communes_equipements",
+      "label": "Équipements et services commune (objectif/quanti)"
+    },
+    {
+      "content": "La commune de Lento compte une part de 10.4% de cadres et professions intellectuelles supérieures, 10.8% d'ouvriers, avec un taux d'activité de 69.8%. 61.8% des emplois y sont salariés. On y trouve 0.0 points de contact postal, 0.0 hypermarchés ou supermarchés, 0.0 supérettes ou épiceries, 0.0 boulangeries et 0.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 0.0 écoles maternelles, 0.0 écoles élémentaires, 0.0 collèges et 0.0 lycées. Elle possède 0.0 services d'urgence, 0.0 médecins généralistes, 0.0 pharmacies, 0.0 infirmiers et 0.0 crèches. La sécurité est assurée par 0.0 postes de police ou gendarmerie. Il y a également 0.0 agences Pôle emploi. Le taux de pauvreté est de 19.3%, la part de logements vacants est de 3.7%, et celle des résidences secondaires est de 63.5%. Le taux de coups et blessures volontaires est de 0.0 pour 1 000 habitants. Le prix moyen au m² est de 1944.0€, pour une surface moyenne des logements de 45.0 m².",
+      "metadata": {
+        "commune": "Lento",
+        "source": "data_comp",
+        "data_type": "quanti"
+      },
+      "source_type": "communes_equipements",
+      "label": "Équipements et services commune (objectif/quanti)"
+    },
+    {
+      "content": "La commune de Loreto-di-Tallano compte une part de 0.0% de cadres et professions intellectuelles supérieures, 50.3% d'ouvriers, avec un taux d'activité de 77.8%. 100.0% des emplois y sont salariés. On y trouve 1.0 points de contact postal, 0.0 hypermarchés ou supermarchés, 0.0 supérettes ou épiceries, 0.0 boulangeries et 0.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 0.0 écoles maternelles, 0.0 écoles élémentaires, 0.0 collèges et 0.0 lycées. Elle possède 0.0 services d'urgence, 0.0 médecins généralistes, 0.0 pharmacies, 0.0 infirmiers et 0.0 crèches. La sécurité est assurée par 0.0 postes de police ou gendarmerie. Il y a également 0.0 agences Pôle emploi. Le taux de pauvreté est de 14.3%, la part de logements vacants est de 17.1%, et celle des résidences secondaires est de 40.0%. Le taux de coups et blessures volontaires est de 0.0 pour 1 000 habitants. Le prix moyen au m² est de 550.0€, pour une surface moyenne des logements de 76.19921785488143 m².",
+      "metadata": {
+        "data_type": "quanti",
+        "commune": "Loreto-di-Tallano",
+        "source": "data_comp"
+      },
+      "source_type": "communes_equipements",
+      "label": "Équipements et services commune (objectif/quanti)"
+    }
+  ],
+  "elapsed_rag_s": 27.0,
+  "meta": {
+    "max_hops": 5,
+    "k": 5,
+    "mistral_temp": 0.0,
+    "answerer": "haiku",
+    "ts": "2026-07-20T18:05:00.002952"
+  },
+  "raisonnement": "La réponse signale explicitement les limites des données (absence de ventilation montagne/littoral, absence de verbatims) et propose des pistes d'analyse sans surinterprétation. Les variables concomitantes sont listées comme hypothèses plausibles, sans prétention causale. Nuance bien marquée entre corrélation et causalité.",
+  "section_observee": "Raisonnement causal et contre-intuitif / Raisonnement causal multi-facteurs",
+  "comportement_attendu_selon_grille": "Réponse de fond avec mobilisation des données et nuance corrélation vs causalité. Signalement des limites des données.",
+  "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+  "coherence_comportement_observe": "oui",
+  "sources_inventaire": [
+    {
+      "source": "oppchovec_classement",
+      "type": "quanti"
+    },
+    {
+      "source": "oppchovec_aggregate",
+      "type": "quanti"
+    },
+    {
+      "source": "methodology",
+      "type": "quanti"
+    },
+    {
+      "source": "data_comp:Pero-Casevecchie",
+      "type": "quanti"
+    },
+    {
+      "source": "oppchovec:Lento",
+      "type": "quanti"
+    },
+    {
+      "source": "data_comp:Monte",
+      "type": "quanti"
+    },
+    {
+      "source": "data_comp:Lento",
+      "type": "quanti"
+    },
+    {
+      "source": "data_comp:Loreto-di-Tallano",
+      "type": "quanti"
+    }
+  ],
+  "mislabelling_detecte": {
+    "regle_1_quali_quanti": "non",
+    "regle_2_surinterpretation_oppchovec": "non",
+    "regle_3_absence_quali_non_signalee": "non — l'absence de verbatims est explicitement signalée",
+    "regle_4_extrapolation_sous_groupe": "non — pas d'extrapolation OppChoVec à un sous-groupe spécifique (montagne/littoral non ventilé)"
+  },
+  "mislabelling_flag": true,
+  "elements_specifiques_question": [
+    "différences de bien-être",
+    "communes de montagne vs littorales",
+    "variables concomitantes",
+    "attribution causale"
+  ],
+  "elements_traitement": [
+    {
+      "element": "différences de bien-être",
+      "traitement": "approximation_signalee"
+    },
+    {
+      "element": "communes de montagne vs littorales",
+      "traitement": "approximation_signalee"
+    },
+    {
+      "element": "variables concomitantes",
+      "traitement": "approximation_signalee"
+    },
+    {
+      "element": "attribution causale",
+      "traitement": "approximation_signalee"
+    }
+  ],
+  "pertinence": 5,
+  "pertinence_justif": "Tous les éléments de la question sont traités avec une approximation signalée. La réponse évite le piège de l'attribution causale non fondée et souligne les limites des données disponibles.",
+  "fondement_factuel": 5,
+  "fondement_factuel_justif": "Aucun mislabelling ou surinterprétation. Les affirmations s'appuient sur les sources fournies (ex. : scores OppChoVec, équipements) et les limites sont clairement exposées.",
+  "nuance_incertitude": 5,
+  "nuance_incertitude_justif": "Nuance exemplaire : modalisateurs systématiques ('théoriquement', 'pourrait', 'plausibles'), signalement des données manquantes, distinction entre hypothèses et conclusions robustes.",
+  "coherence_qualiquanti": 4,
+  "coherence_qualiquanti_justif": "Intégration ciblée des données quantitatives (OppChoVec, équipements) et signalement explicite de l'absence de données qualitatives (verbatims). La réponse évite de présenter des données quantitatives comme des perceptions.",
+  "score_global": 4.75,
+  "error": null,
+  "elapsed_judge_s": 35.8
+}

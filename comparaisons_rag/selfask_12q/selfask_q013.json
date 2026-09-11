@@ -1,0 +1,241 @@
+{
+  "excel_row": 13,
+  "question": "Que révèlent les entretiens qualitatifs sur l'emploi à Lozzi ?",
+  "section": "Retrieval mono-commune",
+  "subsection": "Retrieval source-spécifique",
+  "expected_type": "reponse_substantielle_attendue",
+  "hops": [
+    {
+      "hop": 1,
+      "follow_up": "Quels sont les thèmes récurrents liés à l'emploi dans les entretiens semi-directifs menés auprès des habitants de Lozzi?",
+      "model_raw": "Follow up: Quels sont les thèmes récurrents liés à l'emploi dans les entretiens semi-directifs menés auprès des habitants de Lozzi ?",
+      "sources": [
+        {
+          "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théorique >= 30 min de trajet.\n\n• Opp4 — Avoir accès aux TIC (poids 0,25)\n  Couverture locale par Internet haut débit (>= 30 Mbit/s) et réseau 4G.\n\nDIMENSION 2 — CHOIX (Cho)\nLa liberté de choix effective dont disposent les individus sur ce territoire.\n\n• Cho1 — Ne pas être discriminé(e) (poids 0,5)\n  Présence ou absence de quartiers cibles de la politique de la ville dans la commune (indicateur pénalisant la concentration de précarité).\n\n• Cho2 — Avoir les moyens d'influencer les décisions publiques (poids 0,5)\n  Proportion d'individus ayant le droit de vote (nationalité française, >= 18 ans) parmi la population en âge de travailler (>= 16 ans).\n\nDIMENSION 3 — VÉCU (Vec)\nLes réalisations effectives des individus — ce qui a été réellement accompli et vécu.\n\n• Vec1 — Avoir un revenu décent (poids 0,25)\n  Revenu fiscal moyen par foyer fiscal dans la commune.\n\n• Vec2 — Avoir un logement décent (poids 0,25, réparti sur 3 sous-indicateurs)\n  - Vec2a : Nombre moyen de personnes par pièce (surpeuplement)\n  - Vec2b : Proportion de logements avec équipements sanitaires complets (eau chaude, douche/baignoire, chauffage, cuisine avec évier)\n  - Vec2c : Proportion de la population vivant dans une habitation individuelle\n\n• Vec3 — Être bien inséré sur le marché du travail (poids 0,25)\n  Stabilité des emplois des résidents (5 niveaux : chômeur, emploi aidé, contrat ponctuel, CDD, emploi stable — CDI, fonctionnaire, indépendant).\n\n• Vec4 — Être proche des services (poids 0,25)\n  Nombre d'établissements de vie courante accessibles en moins de 20 minutes (santé, éducation, commerces, culture, administration), calculé par algorithme de plus court chemin (Dijkstra) sur réseau routier.\n\nCALCUL DE L'INDICE\n\nÉtape 1 — Standardisation (commensurabilité) :\n  V(i,j,k) = (Xijk − Xjk,min) / (Xjk,max − Xjk,min)\n  Chaque sous-indicateur est ramené entre 0 (minimum observé) et 1 (maximum observé).\n\nÉtape 2 — Agrégation par dimension (moyenne pondérée) :\n  Dk(i) = Σ pjk × V(i,j,k)\n  Les poids pjk sont égaux au sein de chaque dimension.\n\nÉtape 3 — Indice global (avec aversion à la pauvreté et complémentarité) :\n  OppChoVec(i) = agrégation des 3 dimensions Dk avec :\n    - paramètre β = 2,5 (aversion à la pauvreté : pénalise les très faibles scores)\n    - paramètre γ = 1,5 (complémentarité : pénalise les déséquilibres entre dimensions)\n  Le résultat brut (0-1) est ensuite renormalisé sur 0-10 pour l'application corse.\n\nINTERPRÉTATION DE L'ÉCHELLE 0-10\n\n- 0 = niveau de bien-être minimal parmi les 360 communes corses\n- 10 = niveau de bien-être maximal parmi les 360 communes corses\n- ~5 = niveau médian corse\n\nUn score élevé signifie que la commune offre à la fois de bonnes opportunités, une réelle liberté de choix et un vécu satisfaisant. Un score faible peut refléter un déficit sur une ou plusieurs dimensions. Les trois scores partiels (Opp, Cho, Vec) permettent de diagnostiquer la nature du déficit : une commune peut avoir de bonnes opportunités (Opp élevé) mais un vécu difficile (Vec faible), signalant un décalage entre l'offre territoriale et les conditions de vie réelles.\n\nSource : Bourdeau-Lepage L. (2011), adapté pour la Corse. Données : oppchovec_betti_0_10.",
+          "metadata": {
+            "commune": "",
+            "type": "methodology",
+            "source": "methodology"
+          },
+          "source_type": "oppchovec_scores",
+          "label": "Scores OppChoVec — "
+        },
+        {
+          "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Lozzi : 2.35/10 (faible).\n\nSous-scores principaux de Lozzi :\n  • Opportunités (Opp) : 2.27/10 (faible)  — rang 302e/360\n  • Choix (Cho)        : 9.20/10 (très élevé)  — rang 181e/360\n  • Vécu (Vec)         : 3.04/10 (moyen)  — rang 235e/360\n  • OppChoVec global   : rang 291e/360\n\nSous-dimensions du score Opportunités (Opp) de Lozzi :\n  • Opp1 — Éducation      : 2.06/10 (faible)  [valeur brute : 5.283] — rang 177e/360\n  • Opp2 — Diversité soc. : 2.52/10 (faible)  [indice Theil : 0.3308] — rang 151e/360\n  • Opp3 — Mobilité       : 1.64/10 (faible)  [indicateur : 85.0/200] — rang 307e/360\n  • Opp4 — TIC (numérique): 4.50/10 (moyen)  [couverture : 45.0%] — rang 327e/360\n\nAnalyse de Lozzi :\n- Lozzi se distingue surtout par ses choix (Cho=9.20/10).\n- Le point le plus faible de Lozzi est le score Opportunités (2.27/10).\n\nValeurs brutes (non normalisées) de Lozzi :\n- OppChoVec brut : 0.0554\n- Opp brut : 0.2513\n- Cho brut : 0.9475\n- Vec brut : 0.4858",
+          "metadata": {
+            "opp1_0_10": 2.0562,
+            "rank_opp1": 177,
+            "opp3_0_10": 1.6364,
+            "rank_opp3": 307,
+            "opp4_0_10": 4.5,
+            "rank_opp": 302,
+            "rank_opp2": 151,
+            "oppchovec_0_10": 2.353016,
+            "vec_0_10": 3.037185,
+            "commune": "Lozzi",
+            "opp_0_10": 2.266512,
+            "rank_opp4": 327,
+            "source": "oppchovec_betti_0_10",
+            "rank_cho": 181,
+            "cho_0_10": 9.196357,
+            "opp2_0_10": 2.5248,
+            "rank_vec": 235,
+            "rank_total": 291
+          },
+          "source_type": "oppchovec_scores",
+          "label": "Scores OppChoVec — Lozzi"
+        },
+        {
+          "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nQ : Oui, c'est vrai que bah là des entretiens que j'ai pu faire, effectivement le la santé et l'emploi c'est les deux choses qui sont ressorties sur pourquoi les gens s'installent pas quoi. Et quand même, bah cette identité qui poussent certains à se dire bah je m’en fous, la qualité de vie, c’est ce que je recherche. D'autres gens originaires de Lozzi, de votre âge, ils ont un peu le même discours que vous en général ? \n\n \nA : Oui, complètement et par contre je peux vous dire une chose aussi parce qu'on en discute souvent entre nous : on est tous très attachés au village, c'est un lien presque viscéral, dès qu'on peut y monter, on monte, c'est un point de chute. En fait, quand on se retrouve en haut, c'est notre nid. Là je vois, tous mes amis qui ont mon âge ont des enfants, ben dès qu'on peut, on monte. Pour nous, pour les enfants, parce que les enfants sont lâchés entre guillemets dans le village, c'est pas comme en ville. Alors certes, on est derrière parce qu'ils sont encore petits, mais il y a encore cette notion de groupe, qui rassure et qui fait que, où on s’y sent bien quoi.",
+          "metadata": {
+            "commune": "Lozzi",
+            "source_type": "entretien",
+            "chunk_idx": 7,
+            "data_type": "quali",
+            "num_entretien": 6,
+            "nom": "Lozzi"
+          },
+          "source_type": "portrait_entretiens",
+          "label": "Entretien semi-directif (subjectif/quali)"
+        },
+        {
+          "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nQ : Donc c'est intéressant. Et vous ? Comment vous ressentez, la vie à Lozzi quels sont un peu les points positifs, les points négatifs ? Si vous vous sentez bien ...  \n\n \nA : Pour nous, on s'y sent très bien. Après point positif, le cadre, le fait de de vivre dans un cadre ... enfin auprès de la nature, nous, c'est ce qu'on recherchait. Après, on n'est pas nombreux mais en fait bon, on n'est pas nombreux mais on se connaît tous. On est quand même, on a encore un peu, un esprit de de communauté. Voilà, pour moi, c'est l'essentiel. Après, si on veut voir autre chose, on a les moyens de partir aujourd'hui, enfin, de partir, de voyager ou même d'aller à la ville, enfin voilà. Donc, pour nous, c'est pas du tout un poids. Après oui, moi je suis contente que mes enfants puissent le week-end sortir après 12h00 dans le village avec leurs copains sans crainte, qu'ils soient pas toujours à la maison sur des écrans. Enfin, ce genre de choses quoi.",
+          "metadata": {
+            "data_type": "quali",
+            "nom": "Lozzi",
+            "num_entretien": 5,
+            "chunk_idx": 10,
+            "source_type": "entretien",
+            "commune": "Lozzi"
+          },
+          "source_type": "portrait_entretiens",
+          "label": "Entretien semi-directif (subjectif/quali)"
+        },
+        {
+          "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nQ : Et vous pensez que Lozzi ça peut être un village attractif pour des gens qui viennent pas du tout du Niolu ou même de Corse ? Qu’il y auraient des gens qui auraient envie de s'y installer ?  \n\n \nA : Alors après c'est toujours pareil, c'est toujours le problème de l'emploi, je pense. Bien sûr qu'il sera attractif parce que c’est une réelle qualité de vie, puis on a tout mis à part l'hôpital, on a tout : il y a une supérette, il y a une pharmacie, c'est pas le cas de tout le monde. Moi je vois, je suis originaire de Rosazia, donc à côté de Vico de par ma mère, c'est dans l'intérieur, mais du du Sud, et encore que, pas tellement du Sud, mais juste là derrière. C’est pas comparable hein. Rosazia pour aller acheter un paquet de cigarettes, je prends le cas parce que je suis fumeuse, c'est une demi-heure, pour aller à la pharmacie c'est une demi-heure, transport scolaire aussi, c'est une demi-heure. Tout est loin. Donc oui certes, le Niolu c'est une région rurale excentrée et tout ça, mais qui est quand même relativement bien desservi en termes de commodités je trouve.",
+          "metadata": {
+            "num_entretien": 6,
+            "source_type": "entretien",
+            "commune": "Lozzi",
+            "data_type": "quali",
+            "nom": "Lozzi",
+            "chunk_idx": 14
+          },
+          "source_type": "portrait_entretiens",
+          "label": "Entretien semi-directif (subjectif/quali)"
+        }
+      ],
+      "intermediate_answer": "Selon les entretiens qualitatifs menés en 2022, **l'emploi est identifié comme le principal obstacle à l'installation et à l'attractivité de Lozzi**. \n\nLes habitants interrogés soulignent que « l'emploi, c'est les deux choses qui sont ressorties sur pourquoi les gens s'installent pas » — aux côtés de la santé. Un résident affirme explicitement : « c'est toujours le problème de l'emploi, je pense », en précisant que malgré une qualité de vie réelle et une bonne couverture en services de base (supérette, pharmacie), **l'absence de perspectives professionnelles reste le frein majeur à l'installation de nouveaux habitants**, y compris pour ceux attirés par le cadre de vie.\n\nParadoxalement, les entretiens révèlent que les habitants actuels — notamment les jeunes originaires du village — maintiennent un attachement viscéral à Lozzi et y reviennent régulièrement en famille, mais cette dynamique ne compense pas le manque structurel d'opportunités d'emploi local pour favoriser des installations durables de populations extérieures."
+    }
+  ],
+  "n_hops": 1,
+  "final_answer": "Les entretiens qualitatifs réalisés à Lozzi révèlent que **l'emploi constitue le principal frein au bien-être et à l'attractivité du village**, malgré une qualité de vie reconnue. Les habitants interrogés expriment unanimement que l'absence d'opportunités professionnelles locales décourage l'installation de nouveaux résidents, y compris parmi les jeunes originaires du village qui, bien qu'attachés à leur territoire, ne peuvent y trouver de débouchés durables. Ce constat est résumé par un verbatim marquant : *« c'est toujours le problème de l'emploi, je pense »*, soulignant que ce défi structurel persiste malgré la présence d'équipements de base (supérette, pharmacie) et un cadre de vie valorisé. Ainsi, l'emploi apparaît comme un déterminant clé du bien-être perçu, limitant la vitalité démographique et économique de la commune.",
+  "all_sources": [
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théorique >= 30 min de trajet.\n\n• Opp4 — Avoir accès aux TIC (poids 0,25)\n  Couverture locale par Internet haut débit (>= 30 Mbit/s) et réseau 4G.\n\nDIMENSION 2 — CHOIX (Cho)\nLa liberté de choix effective dont disposent les individus sur ce territoire.\n\n• Cho1 — Ne pas être discriminé(e) (poids 0,5)\n  Présence ou absence de quartiers cibles de la politique de la ville dans la commune (indicateur pénalisant la concentration de précarité).\n\n• Cho2 — Avoir les moyens d'influencer les décisions publiques (poids 0,5)\n  Proportion d'individus ayant le droit de vote (nationalité française, >= 18 ans) parmi la population en âge de travailler (>= 16 ans).\n\nDIMENSION 3 — VÉCU (Vec)\nLes réalisations effectives des individus — ce qui a été réellement accompli et vécu.\n\n• Vec1 — Avoir un revenu décent (poids 0,25)\n  Revenu fiscal moyen par foyer fiscal dans la commune.\n\n• Vec2 — Avoir un logement décent (poids 0,25, réparti sur 3 sous-indicateurs)\n  - Vec2a : Nombre moyen de personnes par pièce (surpeuplement)\n  - Vec2b : Proportion de logements avec équipements sanitaires complets (eau chaude, douche/baignoire, chauffage, cuisine avec évier)\n  - Vec2c : Proportion de la population vivant dans une habitation individuelle\n\n• Vec3 — Être bien inséré sur le marché du travail (poids 0,25)\n  Stabilité des emplois des résidents (5 niveaux : chômeur, emploi aidé, contrat ponctuel, CDD, emploi stable — CDI, fonctionnaire, indépendant).\n\n• Vec4 — Être proche des services (poids 0,25)\n  Nombre d'établissements de vie courante accessibles en moins de 20 minutes (santé, éducation, commerces, culture, administration), calculé par algorithme de plus court chemin (Dijkstra) sur réseau routier.\n\nCALCUL DE L'INDICE\n\nÉtape 1 — Standardisation (commensurabilité) :\n  V(i,j,k) = (Xijk − Xjk,min) / (Xjk,max − Xjk,min)\n  Chaque sous-indicateur est ramené entre 0 (minimum observé) et 1 (maximum observé).\n\nÉtape 2 — Agrégation par dimension (moyenne pondérée) :\n  Dk(i) = Σ pjk × V(i,j,k)\n  Les poids pjk sont égaux au sein de chaque dimension.\n\nÉtape 3 — Indice global (avec aversion à la pauvreté et complémentarité) :\n  OppChoVec(i) = agrégation des 3 dimensions Dk avec :\n    - paramètre β = 2,5 (aversion à la pauvreté : pénalise les très faibles scores)\n    - paramètre γ = 1,5 (complémentarité : pénalise les déséquilibres entre dimensions)\n  Le résultat brut (0-1) est ensuite renormalisé sur 0-10 pour l'application corse.\n\nINTERPRÉTATION DE L'ÉCHELLE 0-10\n\n- 0 = niveau de bien-être minimal parmi les 360 communes corses\n- 10 = niveau de bien-être maximal parmi les 360 communes corses\n- ~5 = niveau médian corse\n\nUn score élevé signifie que la commune offre à la fois de bonnes opportunités, une réelle liberté de choix et un vécu satisfaisant. Un score faible peut refléter un déficit sur une ou plusieurs dimensions. Les trois scores partiels (Opp, Cho, Vec) permettent de diagnostiquer la nature du déficit : une commune peut avoir de bonnes opportunités (Opp élevé) mais un vécu difficile (Vec faible), signalant un décalage entre l'offre territoriale et les conditions de vie réelles.\n\nSource : Bourdeau-Lepage L. (2011), adapté pour la Corse. Données : oppchovec_betti_0_10.",
+      "metadata": {
+        "commune": "",
+        "type": "methodology",
+        "source": "methodology"
+      },
+      "source_type": "oppchovec_scores",
+      "label": "Scores OppChoVec — "
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Lozzi : 2.35/10 (faible).\n\nSous-scores principaux de Lozzi :\n  • Opportunités (Opp) : 2.27/10 (faible)  — rang 302e/360\n  • Choix (Cho)        : 9.20/10 (très élevé)  — rang 181e/360\n  • Vécu (Vec)         : 3.04/10 (moyen)  — rang 235e/360\n  • OppChoVec global   : rang 291e/360\n\nSous-dimensions du score Opportunités (Opp) de Lozzi :\n  • Opp1 — Éducation      : 2.06/10 (faible)  [valeur brute : 5.283] — rang 177e/360\n  • Opp2 — Diversité soc. : 2.52/10 (faible)  [indice Theil : 0.3308] — rang 151e/360\n  • Opp3 — Mobilité       : 1.64/10 (faible)  [indicateur : 85.0/200] — rang 307e/360\n  • Opp4 — TIC (numérique): 4.50/10 (moyen)  [couverture : 45.0%] — rang 327e/360\n\nAnalyse de Lozzi :\n- Lozzi se distingue surtout par ses choix (Cho=9.20/10).\n- Le point le plus faible de Lozzi est le score Opportunités (2.27/10).\n\nValeurs brutes (non normalisées) de Lozzi :\n- OppChoVec brut : 0.0554\n- Opp brut : 0.2513\n- Cho brut : 0.9475\n- Vec brut : 0.4858",
+      "metadata": {
+        "opp1_0_10": 2.0562,
+        "rank_opp1": 177,
+        "opp3_0_10": 1.6364,
+        "rank_opp3": 307,
+        "opp4_0_10": 4.5,
+        "rank_opp": 302,
+        "rank_opp2": 151,
+        "oppchovec_0_10": 2.353016,
+        "vec_0_10": 3.037185,
+        "commune": "Lozzi",
+        "opp_0_10": 2.266512,
+        "rank_opp4": 327,
+        "source": "oppchovec_betti_0_10",
+        "rank_cho": 181,
+        "cho_0_10": 9.196357,
+        "opp2_0_10": 2.5248,
+        "rank_vec": 235,
+        "rank_total": 291
+      },
+      "source_type": "oppchovec_scores",
+      "label": "Scores OppChoVec — Lozzi"
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nQ : Oui, c'est vrai que bah là des entretiens que j'ai pu faire, effectivement le la santé et l'emploi c'est les deux choses qui sont ressorties sur pourquoi les gens s'installent pas quoi. Et quand même, bah cette identité qui poussent certains à se dire bah je m’en fous, la qualité de vie, c’est ce que je recherche. D'autres gens originaires de Lozzi, de votre âge, ils ont un peu le même discours que vous en général ? \n\n \nA : Oui, complètement et par contre je peux vous dire une chose aussi parce qu'on en discute souvent entre nous : on est tous très attachés au village, c'est un lien presque viscéral, dès qu'on peut y monter, on monte, c'est un point de chute. En fait, quand on se retrouve en haut, c'est notre nid. Là je vois, tous mes amis qui ont mon âge ont des enfants, ben dès qu'on peut, on monte. Pour nous, pour les enfants, parce que les enfants sont lâchés entre guillemets dans le village, c'est pas comme en ville. Alors certes, on est derrière parce qu'ils sont encore petits, mais il y a encore cette notion de groupe, qui rassure et qui fait que, où on s’y sent bien quoi.",
+      "metadata": {
+        "commune": "Lozzi",
+        "source_type": "entretien",
+        "chunk_idx": 7,
+        "data_type": "quali",
+        "num_entretien": 6,
+        "nom": "Lozzi"
+      },
+      "source_type": "portrait_entretiens",
+      "label": "Entretien semi-directif (subjectif/quali)"
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nQ : Donc c'est intéressant. Et vous ? Comment vous ressentez, la vie à Lozzi quels sont un peu les points positifs, les points négatifs ? Si vous vous sentez bien ...  \n\n \nA : Pour nous, on s'y sent très bien. Après point positif, le cadre, le fait de de vivre dans un cadre ... enfin auprès de la nature, nous, c'est ce qu'on recherchait. Après, on n'est pas nombreux mais en fait bon, on n'est pas nombreux mais on se connaît tous. On est quand même, on a encore un peu, un esprit de de communauté. Voilà, pour moi, c'est l'essentiel. Après, si on veut voir autre chose, on a les moyens de partir aujourd'hui, enfin, de partir, de voyager ou même d'aller à la ville, enfin voilà. Donc, pour nous, c'est pas du tout un poids. Après oui, moi je suis contente que mes enfants puissent le week-end sortir après 12h00 dans le village avec leurs copains sans crainte, qu'ils soient pas toujours à la maison sur des écrans. Enfin, ce genre de choses quoi.",
+      "metadata": {
+        "data_type": "quali",
+        "nom": "Lozzi",
+        "num_entretien": 5,
+        "chunk_idx": 10,
+        "source_type": "entretien",
+        "commune": "Lozzi"
+      },
+      "source_type": "portrait_entretiens",
+      "label": "Entretien semi-directif (subjectif/quali)"
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nQ : Et vous pensez que Lozzi ça peut être un village attractif pour des gens qui viennent pas du tout du Niolu ou même de Corse ? Qu’il y auraient des gens qui auraient envie de s'y installer ?  \n\n \nA : Alors après c'est toujours pareil, c'est toujours le problème de l'emploi, je pense. Bien sûr qu'il sera attractif parce que c’est une réelle qualité de vie, puis on a tout mis à part l'hôpital, on a tout : il y a une supérette, il y a une pharmacie, c'est pas le cas de tout le monde. Moi je vois, je suis originaire de Rosazia, donc à côté de Vico de par ma mère, c'est dans l'intérieur, mais du du Sud, et encore que, pas tellement du Sud, mais juste là derrière. C’est pas comparable hein. Rosazia pour aller acheter un paquet de cigarettes, je prends le cas parce que je suis fumeuse, c'est une demi-heure, pour aller à la pharmacie c'est une demi-heure, transport scolaire aussi, c'est une demi-heure. Tout est loin. Donc oui certes, le Niolu c'est une région rurale excentrée et tout ça, mais qui est quand même relativement bien desservi en termes de commodités je trouve.",
+      "metadata": {
+        "num_entretien": 6,
+        "source_type": "entretien",
+        "commune": "Lozzi",
+        "data_type": "quali",
+        "nom": "Lozzi",
+        "chunk_idx": 14
+      },
+      "source_type": "portrait_entretiens",
+      "label": "Entretien semi-directif (subjectif/quali)"
+    }
+  ],
+  "elapsed_rag_s": 23.8,
+  "meta": {
+    "max_hops": 5,
+    "k": 5,
+    "mistral_temp": 0.0,
+    "answerer": "haiku",
+    "ts": "2026-07-20T17:31:23.824319"
+  },
+  "raisonnement": "La réponse cible explicitement les entretiens qualitatifs fournis et extrait des verbatims pertinents sur l'emploi. Aucun mislabelling ou surinterprétation détecté. Les éléments spécifiques sont traités avec précision.",
+  "section_observee": "Retrieval mono-commune / Retrieval source-spécifique",
+  "comportement_attendu_selon_grille": "Réponse précise et ciblée sur les entretiens qualitatifs. Refus injustifié ou détournement non signalé = échec.",
+  "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+  "coherence_comportement_observe": "oui",
+  "sources_inventaire": [
+    {
+      "source": "methodology",
+      "type": "quanti"
+    },
+    {
+      "source": "oppchovec:Lozzi",
+      "type": "quanti"
+    },
+    {
+      "source": "entretien:Lozzi:chunk7",
+      "type": "quali"
+    },
+    {
+      "source": "entretien:Lozzi:chunk10",
+      "type": "quali"
+    },
+    {
+      "source": "entretien:Lozzi:num6",
+      "type": "quali"
+    }
+  ],
+  "mislabelling_detecte": {
+    "regle_1_quali_quanti": "non",
+    "regle_2_surinterpretation_oppchovec": "non",
+    "regle_3_absence_quali_non_signalee": "non",
+    "regle_4_extrapolation_sous_groupe": "non"
+  },
+  "mislabelling_flag": false,
+  "elements_specifiques_question": [
+    "entretiens qualitatifs",
+    "emploi",
+    "Lozzi"
+  ],
+  "elements_traitement": [
+    {
+      "element": "entretiens qualitatifs",
+      "traitement": "precis"
+    },
+    {
+      "element": "emploi",
+      "traitement": "precis"
+    },
+    {
+      "element": "Lozzi",
+      "traitement": "precis"
+    }
+  ],
+  "pertinence": 5,
+  "pertinence_justif": "Tous les éléments de la question sont traités précisément. La réponse se concentre sur les entretiens qualitatifs et en extrait des insights pertinents sur l'emploi à Lozzi.",
+  "fondement_factuel": 5,
+  "fondement_factuel_justif": "Les affirmations s'appuient strictement sur les verbatims fournis (sources quali). Aucun indicateur quantitatif n'est mobilisé ou mal interprété.",
+  "nuance_incertitude": 4,
+  "nuance_incertitude_justif": "La réponse utilise des modalisateurs ('unanimement', 'déterminant clé') qui pourraient être nuancés par des précisions sur la taille de l'échantillon (6 entretiens). Cependant, elle reste bien calibrée sur les données disponibles.",
+  "coherence_qualiquanti": 5,
+  "coherence_qualiquanti_justif": "La réponse mobilise exclusivement des sources qualitatives pour répondre à une question qualitative, sans mélange inapproprié avec des données quantitatives.",
+  "score_global": 4.75,
+  "error": null,
+  "elapsed_judge_s": 13.4
+}

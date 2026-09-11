@@ -1,0 +1,491 @@
+{
+  "excel_row": 90,
+  "section": "Gestion de l’incertitude et des biais",
+  "subsection": "Incertitude liée à la taille d’échantillon",
+  "question": "Une sous-représentation de certaines tranches d’âge peut-elle biaiser l’interprétation globale du bien-être ?",
+  "rag_status": "ok",
+  "answer": "### **Synthèse : Une sous-représentation des tranches d’âge peut-elle biaiser l’interprétation du bien-être en Corse ?**\n\nLa question d’un biais lié à la sous-représentation de certaines tranches d’âge dans l’évaluation du bien-être en Corse se pose avec acuité, mais les données disponibles permettent d’éclairer partiellement ce risque sans pour autant le quantifier précisément.\n\n#### **1. Une répartition inégale des répondants par âge dans les enquêtes citoyennes**\nLes enquêtes citoyennes menées dans plusieurs communes corses révèlent une **sur-représentation des 15-29 ans et des 45-59 ans**, tandis que les **60 ans et plus sont systématiquement sous-représentés** [SQ2]. Par exemple :\n- À **Corte**, les 15-29 ans (34,7 %) et les 30-44 ans (32,7 %) dominent largement, alors que les 60-74 ans ne représentent que 4,1 % des répondants [SQ2].\n- À **Ajaccio**, les 45-59 ans (39,2 %) sont les plus nombreux, suivis des 15-29 ans (27,5 %), tandis que les 60-74 ans ne pèsent que 11,8 % [SQ2].\n- À **Linguizzetta**, l’échantillon très réduit (3 répondants) ne permet pas de tirer de conclusion fiable, mais les 60-74 ans y sont proportionnellement plus présents (33,3 %) [SQ2].\n\nCette **distorsion démographique** suggère que les résultats des enquêtes citoyennes pourraient **surreprésenter les préoccupations des actifs et des jeunes adultes**, au détriment des seniors, dont les perceptions du bien-être pourraient différer.\n\n#### **2. Des indicateurs territoriaux objectifs non ventilés par âge**\nLes **scores OppChoVec**, qui mesurent le bien-être communal de manière objective, **ne sont pas déclinés par tranche d’âge** [SQ3]. Par exemple, le score moyen de la Corse (3,35/10) [SQ1] ou celui de **Campana (3,58/10)** [SQ3] reflètent une moyenne globale, sans possibilité de distinguer si certaines générations bénéficient de meilleures conditions que d’autres. Ainsi :\n- Les **opportunités** (éducation, mobilité, accès au numérique) pourraient être perçues ou vécues différemment selon l’âge, mais les données territoriales ne permettent pas de le vérifier [SQ3].\n- Le **vécu** (revenu, logement, emploi, accès aux services) est également agrégé, masquant d’éventuels écarts entre jeunes en insertion professionnelle et retraités [SQ3].\n\nCette **absence de ventilation** limite la détection de biais potentiels dans l’interprétation du bien-être communal.\n\n#### **3. Peu d’éléments sur des perceptions différenciées selon l’âge**\nAucun **verbatim ou retour qualitatif** ne permet d’illustrer des divergences de perception du bien-être entre jeunes et seniors [SQ4]. Le seul entretien disponible (à **Lozzi**) évoque une **absence de barrières intergénérationnelles** (« pas de barrière entre les gens de 70 ans, les gens de 50 ans, les gens de 20 ans ») [SQ4], mais sans préciser si les attentes en matière de qualité de vie varient selon l’âge. Les données d’enquête ne fournissent donc **aucune preuve d’un clivage générationnel** dans les ressentis, mais elles ne permettent pas non plus de l’exclure.\n\n#### **4. Aucune correction méthodologique identifiée pour compenser les biais démographiques**\nLes enquêtes citoyennes **ne semblent pas appliquer de pondération ou d’ajustement** pour corriger la sous-représentation des seniors [SQ5]. Les profils des répondants sont présentés bruts, sans indication de redressement statistique [SQ2]. Cela signifie que :\n- Les résultats globaux pourraient **minimiser l’importance des enjeux spécifiques aux personnes âgées** (accès aux soins, isolement, précarité des retraités).\n- À l’inverse, les préoccupations des jeunes (emploi, logement, mobilité) pourraient être **surpondérées** dans les conclusions.\n\n#### **5. Un risque de biais réel, mais difficile à mesurer**\nEn l’état des données :\n- **Oui, la sous-représentation des 60 ans et plus** dans les enquêtes citoyennes **peut biaiser l’interprétation du bien-être**, en donnant une vision partielle des réalités locales [SQ2].\n- **Cependant, l’ampleur de ce biais reste inconnue** : les indicateurs territoriaux ne permettent pas de comparer les conditions de vie par âge [SQ3], et les enquêtes qualitatives ne révèlent pas de divergences flagrantes [SQ4].\n- **Aucun mécanisme correctif n’est documenté** pour atténuer ce risque [SQ5].\n\n#### **Conclusion : une prudence nécessaire dans l’analyse**\nLes données disponibles confirment que **la structure démographique des répondants aux enquêtes citoyennes n’est pas représentative de la population corse**, avec une **sous-représentation marquée des seniors** [SQ2]. Cette distorsion peut influencer les résultats, notamment si les attentes en matière de bien-être diffèrent selon l’âge. Toutefois, **aucun élément ne permet de quantifier ce biais** :\n- Les **indicateurs territoriaux** (OppChoVec) ne sont pas ventilés par tranche d’âge [SQ3].\n- Les **retours qualitatifs** ne montrent pas de clivage générationnel, mais leur portée est limitée [SQ4].\n- **Aucune pondération méthodologique** n’est appliquée pour corriger ces déséquilibres [SQ5].\n\n**Recommandation** : Pour affiner l’analyse, il serait utile de :\n1. **Ventiler les scores OppChoVec par tranche d’âge** (si les données sources le permettent).\n2. **Recueillir des verbatims ciblés** auprès des seniors pour identifier d’éventuelles perceptions différenciées.\n3. **Appliquer des pondérations** dans les enquêtes citoyennes pour refléter la structure démographique réelle des communes.\n\n---",
+  "sub_questions": [
+    {
+      "idx": 1,
+      "question": "Quel est le score OppChoVec global de bien-être communal moyen en Corse, et comment ce score est-il calculé en termes de représentativité des tranches d’âge dans les enquêtes ?",
+      "answer": "## Réponse\n\n**Score OppChoVec global moyen en Corse :**\nSelon les indicateurs territoriaux objectifs, le score OppChoVec moyen de la Corse (ensemble des 360 communes) est de **3.35/10**, qualifié de moyen. Ce score agrège trois composantes : Opportunités (Opp) = 3.87/10, Choix (Cho) = 8.79/10, et Vécu (Vec) = 3.46/10.\n\n**Calcul et représentativité :**\nLe score OppChoVec est un indicateur de bien-être objectif territorial calculé à partir de données INSEE/statistiques 2020-2022 (millésime 2025). Il mesure les inégalités socio-spatiales en opérationnalisant l'approche des capabilités d'Amartya Sen. Cependant, **le contexte fourni ne contient aucune information sur la représentativité des tranches d'âge dans les enquêtes citoyennes** — seul est précisé que l'éducation (Opp1) est « corrigée de la structure par âge » dans le calcul du score territorial lui-même, mais sans détail sur la composition démographique des répondants aux enquêtes."
+    },
+    {
+      "idx": 2,
+      "question": "Quelle est la répartition par tranche d’âge des répondants aux enquêtes de bien-être en Corse (ex : % de 18-29 ans, 30-44 ans, 45-59 ans, 60 ans et plus) ?",
+      "answer": "# Répartition par tranche d'âge des répondants — enquête citoyenne Corse\n\nSelon l'enquête citoyenne, la répartition par tranche d'âge varie selon les communes interrogées :\n\n**Corte** (49 répondants) :\n- 15-29 ans : 34,7 %\n- 30-44 ans : 32,7 %\n- 45-59 ans : 28,6 %\n- 60-74 ans : 4,1 %\n\n**Ajaccio** (51 répondants) :\n- 45-59 ans : 39,2 %\n- 15-29 ans : 27,5 %\n- 30-44 ans : 21,6 %\n- 60-74 ans : 11,8 %\n\n**Linguizzetta** (3 répondants) :\n- 30-44 ans : 33,3 %\n- 45-59 ans : 33,3 %\n- 60-74 ans : 33,3 %\n\n**Tendance générale** : les tranches 15-29 et 45-59 ans sont les plus représentées dans l'enquête. Les 60 ans et plus restent peu représentés, sauf à Linguizzetta où l'effectif très réduit (n=3) limite la généralisation."
+    },
+    {
+      "idx": 3,
+      "question": "Existe-t-il des écarts significatifs dans les scores de bien-être (indicateurs objectifs comme OppChoVec) entre les différentes tranches d’âge au niveau communal en Corse, malgré l’absence de ventilation détaillée par sous-population ?",
+      "answer": "# Réponse\n\n**Non, il n'existe pas de données disponibles sur les écarts de bien-être par tranche d'âge au niveau communal.** \n\nLes scores OppChoVec sont calculés et présentés à l'échelle de la commune entière — ils ne sont pas ventilés par tranche d'âge, CSP, genre ou toute autre sous-population. Selon les indicateurs territoriaux objectifs, seul le score communal global est disponible (par exemple, Campana affiche un score OppChoVec de 3.58/10, sans décomposition par âge).\n\nLe contexte fourni ne contient aucune donnée d'enquête citoyenne permettant de comparer les perceptions de bien-être entre générations ou tranches d'âge. **Il est donc impossible de répondre à cette sous-question avec les informations disponibles.**"
+    },
+    {
+      "idx": 4,
+      "question": "Quels verbatims citoyens ou retours qualitatifs illustrent des perceptions différenciées du bien-être selon les tranches d’âge en Corse (ex : jeunes vs seniors) ?",
+      "answer": "Le contexte fourni ne contient **aucun verbatim ou retour qualitatif différencié selon les tranches d'âge** permettant de répondre à cette sous-question.\n\nL'unique entretien semi-directif présent (réalisé en 2022 à Lozzi) mentionne bien un **lien intergénérationnel** — « pas de barrière entre les gens de 70 ans, les gens de 50 ans, les gens de 20 ans » — mais il décrit une **absence de différenciation perçue** plutôt qu'une différenciation des perceptions du bien-être selon l'âge. Les profils démographiques des répondants (Bastelicaccia : 5 répondants ; Villanova : 1 répondant) indiquent les tranches d'âge représentées, mais aucun verbatim n'est associé à ces profils pour illustrer des perceptions contrastées par âge.\n\nPour répondre à cette sous-question, il faudrait disposer de verbatims ou d'analyses qualitatives explicitement comparant les perceptions du bien-être entre jeunes et seniors."
+    },
+    {
+      "idx": 5,
+      "question": "Comment les méthodologies des enquêtes de bien-être en Corse intègrent-elles des pondérations ou ajustements pour corriger d’éventuels biais liés à la sous-représentation de certaines tranches d’âge dans les résultats globaux ?",
+      "answer": "Le contexte fourni ne contient pas d'information sur les méthodologies de pondération ou d'ajustement appliquées aux enquêtes de bien-être en Corse pour corriger les biais de représentation par tranche d'âge.\n\nLes données disponibles montrent uniquement les profils bruts des répondants par commune (genre, âge, CSP) et les scores OppChoVec territoriaux, mais aucune documentation méthodologique sur les techniques de redressement, les poids d'échantillonnage ou les procédures de correction de sous-représentation n'est fournie dans ce contexte.\n\nPour répondre à cette question, il faudrait accéder à la documentation méthodologique complète de l'enquête citoyenne (protocole, plan de sondage, procédures de pondération)."
+    }
+  ],
+  "n_subquestions": 5,
+  "n_sources": 25,
+  "rag_elapsed_s": 60.3,
+  "sources": [
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nClassement des composantes OppChoVec — Corse entière (360 communes).\n\nSous-scores principaux (du plus élevé au plus faible) :\n  1. Cho (Choix)               : 8.79/10 (très élevé)\n  2. Opp (Opportunités)        : 3.87/10 (moyen)\n  3. Vec (Vécu)                : 3.46/10 (moyen)\n\n-> COMPOSANTE LA PLUS ELEVEE  : Cho (Choix) (8.79/10)\n-> COMPOSANTE LA PLUS FAIBLE  : Vec (Vécu) (3.46/10)\n\nSous-dimensions du score Opportunités (Opp), classées :\n  1. Opp4 — Accès TIC               : 6.02/10 (élevé)\n  2. Opp3 — Mobilité                : 5.26/10 (élevé)\n  3. Opp2 — Diversité sociale       : 2.60/10 (faible)\n  4. Opp1 — Éducation               : 2.35/10 (faible)\n\n-> SOUS-DIMENSION OPP LA PLUS ELEVEE : Opp4 — Accès TIC (6.02/10)\n-> SOUS-DIMENSION OPP LA PLUS FAIBLE : Opp1 — Éducation (2.35/10)",
+      "metadata": {
+        "zone": "Corse",
+        "type": "classement",
+        "source": "oppchovec_classement",
+        "epci": "",
+        "source_type": "oppchovec_scores",
+        "label": "Scores OppChoVec — Corse"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nLe score OppChoVec moyen de la Corse (ensemble des 360 communes) est de 3.35/10 (moyen).\nDécomposition : Score Opportunités (Opp) moyen = 3.87/10, Score Choix (Cho) moyen = 8.79/10, Score Vécu (Vec) moyen = 3.46/10.\nCes moyennes portent sur les 360 communes corses disposant d'un score OppChoVec calculé.",
+      "metadata": {
+        "nb_communes": 360,
+        "oppchovec_0_10": 3.3461,
+        "opp_0_10": 3.8741,
+        "vec_0_10": 3.4594,
+        "source": "oppchovec_aggregate",
+        "epci": "",
+        "type": "aggregate",
+        "cho_0_10": 8.7932,
+        "zone": "Corse",
+        "source_type": "oppchovec_scores",
+        "label": "Scores OppChoVec — Corse"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théorique >= 30 min de trajet.\n\n• Opp4 — Avoir accès aux TIC (poids 0,25)\n  Couverture locale par Internet haut débit (>= 30 Mbit/s) et réseau 4G.\n\nDIMENSION 2 — CHOIX (Cho)\nLa liberté de choix effective dont disposent les individus sur ce territoire.\n\n• Cho1 — Ne pas être discriminé(e) (poids 0,5)\n  Présence ou absence de quartiers cibles de la politique de la ville dans la commune (indicateur pénalisant la concentration de précarité).\n\n• Cho2 — Avoir les moyens d'influencer les décisions publiques (poids 0,5)\n  Proportion d'individus ayant le droit de vote (nationalité française, >= 18 ans) parmi la population en âge de travailler (>= 16 ans).\n\nDIMENSION 3 — VÉCU (Vec)\nLes réalisations effectives des individus — ce qui a été réellement accompli et vécu.\n\n• Vec1 — Avoir un revenu décent (poids 0,25)\n  Revenu fiscal moyen par foyer fiscal dans la commune.\n\n• Vec2 — Avoir un logement décent (poids 0,25, réparti sur 3 sous-indicateurs)\n  - Vec2a : Nombre moyen de personnes par pièce (surpeuplement)\n  - Vec2b : Proportion de logements avec équipements sanitaires complets (eau chaude, douche/baignoire, chauffage, cuisine avec évier)\n  - Vec2c : Proportion de la population vivant dans une habitation individuelle\n\n• Vec3 — Être bien inséré sur le marché du travail (poids 0,25)\n  Stabilité des emplois des résidents (5 niveaux : chômeur, emploi aidé, contrat ponctuel, CDD, emploi stable — CDI, fonctionnaire, indépendant).\n\n• Vec4 — Être proche des services (poids 0,25)\n  Nombre d'établissements de vie courante accessibles en moins de 20 minutes (santé, éducation, commerces, culture, administration), calculé par algorithme de plus court chemin (Dijkstra) sur réseau routier.\n\nCALCUL DE L'INDICE\n\nÉtape 1 — Standardisation (commensurabilité) :\n  V(i,j,k) = (Xijk − Xjk,min) / (Xjk,max − Xjk,min)\n  Chaque sous-indicateur est ramené entre 0 (minimum observé) et 1 (maximum observé).\n\nÉtape 2 — Agrégation par dimension (moyenne pondérée) :\n  Dk(i) = Σ pjk × V(i,j,k)\n  Les poids pjk sont égaux au sein de chaque dimension.\n\nÉtape 3 — Indice global (avec aversion à la pauvreté et complémentarité) :\n  OppChoVec(i) = agrégation des 3 dimensions Dk avec :\n    - paramètre β = 2,5 (aversion à la pauvreté : pénalise les très faibles scores)\n    - paramètre γ = 1,5 (complémentarité : pénalise les déséquilibres entre dimensions)\n  Le résultat brut (0-1) est ensuite renormalisé sur 0-10 pour l'application corse.\n\nINTERPRÉTATION DE L'ÉCHELLE 0-10\n\n- 0 = niveau de bien-être minimal parmi les 360 communes corses\n- 10 = niveau de bien-être maximal parmi les 360 communes corses\n- ~5 = niveau médian corse\n\nUn score élevé signifie que la commune offre à la fois de bonnes opportunités, une réelle liberté de choix et un vécu satisfaisant. Un score faible peut refléter un déficit sur une ou plusieurs dimensions. Les trois scores partiels (Opp, Cho, Vec) permettent de diagnostiquer la nature du déficit : une commune peut avoir de bonnes opportunités (Opp élevé) mais un vécu difficile (Vec faible), signalant un décalage entre l'offre territoriale et les conditions de vie réelles.\n\nSource : Bourdeau-Lepage L. (2011), adapté pour la Corse. Données : oppchovec_betti_0_10.",
+      "metadata": {
+        "source": "methodology",
+        "type": "methodology",
+        "commune": "",
+        "source_type": "oppchovec_scores",
+        "label": "Scores OppChoVec — "
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nLe score OppChoVec moyen de la Corse (ensemble des 360 communes) est de 3.35/10 (moyen).\nDécomposition : Score Opportunités (Opp) moyen = 3.87/10, Score Choix (Cho) moyen = 8.79/10, Score Vécu (Vec) moyen = 3.46/10.\nCes moyennes portent sur les 360 communes corses disposant d'un score OppChoVec calculé.",
+      "metadata": {
+        "epci": "",
+        "opp_0_10": 3.8741,
+        "cho_0_10": 8.7932,
+        "oppchovec_0_10": 3.3461,
+        "zone": "Corse",
+        "vec_0_10": 3.4594,
+        "nb_communes": 360,
+        "type": "aggregate",
+        "source": "oppchovec_aggregate",
+        "source_type": "oppchovec_scores",
+        "label": "Scores OppChoVec — Corse"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nScores moyens de l'enquête QdV pour la commune de Poggio-d’Oletta (1 répondants). Score bonheur moyen : 4.00/5. Score qualité de vie moyen : 4.00/5. Score confiance avenir moyen : 2.00/5. Scores moyens par dimension (1-5) : Transports=0.00, Éducation=3.00, Réseaux téléphoniques=3.00, Institutions=0.00, Tourisme=2.00, Sécurité=4.00, Santé=3.00, Situation pro=3.00, Revenus=1.00, Temps travail/perso=3.00, Logement=3.00, Services locaux=0.00, Culture=3.00, Soutien social=4.00, Vie associative=0.00. Dimensions les plus citées comme prioritaires : Communauté et relations, Environnement.",
+      "metadata": {
+        "source_type": "enquete_scores_commune",
+        "commune": "Poggio-d’Oletta",
+        "data_type": "quanti",
+        "nom": "Poggio-d’Oletta",
+        "n_repondants": 1,
+        "label": "Scores satisfaction commune (subjectif/quanti)"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théorique >= 30 min de trajet.\n\n• Opp4 — Avoir accès aux TIC (poids 0,25)\n  Couverture locale par Internet haut débit (>= 30 Mbit/s) et réseau 4G.\n\nDIMENSION 2 — CHOIX (Cho)\nLa liberté de choix effective dont disposent les individus sur ce territoire.\n\n• Cho1 — Ne pas être discriminé(e) (poids 0,5)\n  Présence ou absence de quartiers cibles de la politique de la ville dans la commune (indicateur pénalisant la concentration de précarité).\n\n• Cho2 — Avoir les moyens d'influencer les décisions publiques (poids 0,5)\n  Proportion d'individus ayant le droit de vote (nationalité française, >= 18 ans) parmi la population en âge de travailler (>= 16 ans).\n\nDIMENSION 3 — VÉCU (Vec)\nLes réalisations effectives des individus — ce qui a été réellement accompli et vécu.\n\n• Vec1 — Avoir un revenu décent (poids 0,25)\n  Revenu fiscal moyen par foyer fiscal dans la commune.\n\n• Vec2 — Avoir un logement décent (poids 0,25, réparti sur 3 sous-indicateurs)\n  - Vec2a : Nombre moyen de personnes par pièce (surpeuplement)\n  - Vec2b : Proportion de logements avec équipements sanitaires complets (eau chaude, douche/baignoire, chauffage, cuisine avec évier)\n  - Vec2c : Proportion de la population vivant dans une habitation individuelle\n\n• Vec3 — Être bien inséré sur le marché du travail (poids 0,25)\n  Stabilité des emplois des résidents (5 niveaux : chômeur, emploi aidé, contrat ponctuel, CDD, emploi stable — CDI, fonctionnaire, indépendant).\n\n• Vec4 — Être proche des services (poids 0,25)\n  Nombre d'établissements de vie courante accessibles en moins de 20 minutes (santé, éducation, commerces, culture, administration), calculé par algorithme de plus court chemin (Dijkstra) sur réseau routier.\n\nCALCUL DE L'INDICE\n\nÉtape 1 — Standardisation (commensurabilité) :\n  V(i,j,k) = (Xijk − Xjk,min) / (Xjk,max − Xjk,min)\n  Chaque sous-indicateur est ramené entre 0 (minimum observé) et 1 (maximum observé).\n\nÉtape 2 — Agrégation par dimension (moyenne pondérée) :\n  Dk(i) = Σ pjk × V(i,j,k)\n  Les poids pjk sont égaux au sein de chaque dimension.\n\nÉtape 3 — Indice global (avec aversion à la pauvreté et complémentarité) :\n  OppChoVec(i) = agrégation des 3 dimensions Dk avec :\n    - paramètre β = 2,5 (aversion à la pauvreté : pénalise les très faibles scores)\n    - paramètre γ = 1,5 (complémentarité : pénalise les déséquilibres entre dimensions)\n  Le résultat brut (0-1) est ensuite renormalisé sur 0-10 pour l'application corse.\n\nINTERPRÉTATION DE L'ÉCHELLE 0-10\n\n- 0 = niveau de bien-être minimal parmi les 360 communes corses\n- 10 = niveau de bien-être maximal parmi les 360 communes corses\n- ~5 = niveau médian corse\n\nUn score élevé signifie que la commune offre à la fois de bonnes opportunités, une réelle liberté de choix et un vécu satisfaisant. Un score faible peut refléter un déficit sur une ou plusieurs dimensions. Les trois scores partiels (Opp, Cho, Vec) permettent de diagnostiquer la nature du déficit : une commune peut avoir de bonnes opportunités (Opp élevé) mais un vécu difficile (Vec faible), signalant un décalage entre l'offre territoriale et les conditions de vie réelles.\n\nSource : Bourdeau-Lepage L. (2011), adapté pour la Corse. Données : oppchovec_betti_0_10.",
+      "metadata": {
+        "commune": "",
+        "type": "methodology",
+        "source": "methodology",
+        "source_type": "oppchovec_scores",
+        "label": "Scores OppChoVec — "
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Corscia : 2.38/10 (faible).\n\nSous-scores principaux de Corscia :\n  • Opportunités (Opp) : 2.85/10 (faible)  — rang 266e/360\n  • Choix (Cho)        : 9.07/10 (très élevé)  — rang 197e/360\n  • Vécu (Vec)         : 2.32/10 (faible)  — rang 295e/360\n  • OppChoVec global   : rang 283e/360\n\nSous-dimensions du score Opportunités (Opp) de Corscia :\n  • Opp1 — Éducation      : 1.73/10 (faible)  [valeur brute : 5.254] — rang 206e/360\n  • Opp2 — Diversité soc. : 4.07/10 (moyen)  [indice Theil : 0.4721] — rang 54e/360\n  • Opp3 — Mobilité       : 1.17/10 (très faible)  [indicateur : 78.6/200] — rang 341e/360\n  • Opp4 — TIC (numérique): 4.95/10 (moyen)  [couverture : 49.5%] — rang 281e/360\n\nAnalyse de Corscia :\n- Corscia se distingue surtout par ses choix (Cho=9.07/10).\n- Le point le plus faible de Corscia est le score Vécu (2.32/10).\n\nValeurs brutes (non normalisées) de Corscia :\n- OppChoVec brut : 0.0558\n- Opp brut : 0.2861\n- Cho brut : 0.9394\n- Vec brut : 0.4472",
+      "metadata": {
+        "rank_opp4": 281,
+        "cho_0_10": 9.073132,
+        "opp1_0_10": 1.7303,
+        "rank_vec": 295,
+        "rank_opp": 266,
+        "source": "oppchovec_betti_0_10",
+        "opp3_0_10": 1.1709,
+        "rank_opp1": 206,
+        "opp4_0_10": 4.95,
+        "rank_total": 283,
+        "rank_opp2": 54,
+        "opp2_0_10": 4.0664,
+        "vec_0_10": 2.317018,
+        "commune": "Corscia",
+        "opp_0_10": 2.852765,
+        "oppchovec_0_10": 2.382514,
+        "rank_cho": 197,
+        "rank_opp3": 341,
+        "source_type": "oppchovec_scores",
+        "label": "Scores OppChoVec — Corscia"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nProfil des répondants de la commune de Corte — enquête qualité de vie en Corse\n\nNombre de répondants : 49\n\nRépartition par genre :\n  - Femme : 35 (71.4%)\n  - Homme : 14 (28.6%)\n\nRépartition par tranche d'âge :\n  - 15-29 : 17 (34.7%)\n  - 30-44 : 16 (32.7%)\n  - 45-59 : 14 (28.6%)\n  - 60-74 : 2 (4.1%)\n\nRépartition par catégorie socioprofessionnelle :\n  - Ãtudiant(e) : 16 (32.7%)\n  - Fonctionnaire : 16 (32.7%)\n  - SalariÃ©(e) â Cadre ou profession intermÃ©diaire : 9 (18.4%)\n  - SalariÃ©(e) â EmployÃ©(e) : 8 (16.3%)",
+      "metadata": {
+        "n_repondants": 49,
+        "source_type": "communes_profil",
+        "commune": "Corte",
+        "data_type": "quanti",
+        "label": "Profil démographique des répondants (contextuel/quanti)"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nProfil des répondants de la commune de Ajaccio — enquête qualité de vie en Corse\n\nNombre de répondants : 51\n\nRépartition par genre :\n  - Femme : 31 (60.8%)\n  - Homme : 20 (39.2%)\n\nRépartition par tranche d'âge :\n  - 45-59 : 20 (39.2%)\n  - 15-29 : 14 (27.5%)\n  - 30-44 : 11 (21.6%)\n  - 60-74 : 6 (11.8%)\n\nRépartition par catégorie socioprofessionnelle :\n  - SalariÃ©(e) â Cadre ou profession intermÃ©diaire : 17 (33.3%)\n  - Ãtudiant(e) : 12 (23.5%)\n  - Fonctionnaire : 9 (17.6%)\n  - SalariÃ©(e) â EmployÃ©(e) : 8 (15.7%)\n  - Travailleur(se) indÃ©pendant(e) / Entrepreneur(e) : 2 (3.9%)\n  - Autre : 2 (3.9%)\n  - RetraitÃ©(e) : 1 (2.0%)",
+      "metadata": {
+        "n_repondants": 51,
+        "commune": "Ajaccio",
+        "data_type": "quanti",
+        "source_type": "communes_profil",
+        "label": "Profil démographique des répondants (contextuel/quanti)"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nProfil des répondants de la commune de Linguizzetta — enquête qualité de vie en Corse\n\nNombre de répondants : 3\n\nRépartition par genre :\n  - Homme : 2 (66.7%)\n  - Femme : 1 (33.3%)\n\nRépartition par tranche d'âge :\n  - 30-44 : 1 (33.3%)\n  - 45-59 : 1 (33.3%)\n  - 60-74 : 1 (33.3%)\n\nRépartition par catégorie socioprofessionnelle :\n  - Agriculteur(trice), artisan(e) ou commerÃ§ant(e) : 3 (100.0%)",
+      "metadata": {
+        "data_type": "quanti",
+        "commune": "Linguizzetta",
+        "n_repondants": 3,
+        "source_type": "communes_profil",
+        "label": "Profil démographique des répondants (contextuel/quanti)"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nLe score OppChoVec moyen de la Corse (ensemble des 360 communes) est de 3.35/10 (moyen).\nDécomposition : Score Opportunités (Opp) moyen = 3.87/10, Score Choix (Cho) moyen = 8.79/10, Score Vécu (Vec) moyen = 3.46/10.\nCes moyennes portent sur les 360 communes corses disposant d'un score OppChoVec calculé.",
+      "metadata": {
+        "epci": "",
+        "opp_0_10": 3.8741,
+        "nb_communes": 360,
+        "vec_0_10": 3.4594,
+        "zone": "Corse",
+        "source": "oppchovec_aggregate",
+        "type": "aggregate",
+        "oppchovec_0_10": 3.3461,
+        "cho_0_10": 8.7932,
+        "source_type": "oppchovec_scores",
+        "label": "Scores OppChoVec — Corse"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théorique >= 30 min de trajet.\n\n• Opp4 — Avoir accès aux TIC (poids 0,25)\n  Couverture locale par Internet haut débit (>= 30 Mbit/s) et réseau 4G.\n\nDIMENSION 2 — CHOIX (Cho)\nLa liberté de choix effective dont disposent les individus sur ce territoire.\n\n• Cho1 — Ne pas être discriminé(e) (poids 0,5)\n  Présence ou absence de quartiers cibles de la politique de la ville dans la commune (indicateur pénalisant la concentration de précarité).\n\n• Cho2 — Avoir les moyens d'influencer les décisions publiques (poids 0,5)\n  Proportion d'individus ayant le droit de vote (nationalité française, >= 18 ans) parmi la population en âge de travailler (>= 16 ans).\n\nDIMENSION 3 — VÉCU (Vec)\nLes réalisations effectives des individus — ce qui a été réellement accompli et vécu.\n\n• Vec1 — Avoir un revenu décent (poids 0,25)\n  Revenu fiscal moyen par foyer fiscal dans la commune.\n\n• Vec2 — Avoir un logement décent (poids 0,25, réparti sur 3 sous-indicateurs)\n  - Vec2a : Nombre moyen de personnes par pièce (surpeuplement)\n  - Vec2b : Proportion de logements avec équipements sanitaires complets (eau chaude, douche/baignoire, chauffage, cuisine avec évier)\n  - Vec2c : Proportion de la population vivant dans une habitation individuelle\n\n• Vec3 — Être bien inséré sur le marché du travail (poids 0,25)\n  Stabilité des emplois des résidents (5 niveaux : chômeur, emploi aidé, contrat ponctuel, CDD, emploi stable — CDI, fonctionnaire, indépendant).\n\n• Vec4 — Être proche des services (poids 0,25)\n  Nombre d'établissements de vie courante accessibles en moins de 20 minutes (santé, éducation, commerces, culture, administration), calculé par algorithme de plus court chemin (Dijkstra) sur réseau routier.\n\nCALCUL DE L'INDICE\n\nÉtape 1 — Standardisation (commensurabilité) :\n  V(i,j,k) = (Xijk − Xjk,min) / (Xjk,max − Xjk,min)\n  Chaque sous-indicateur est ramené entre 0 (minimum observé) et 1 (maximum observé).\n\nÉtape 2 — Agrégation par dimension (moyenne pondérée) :\n  Dk(i) = Σ pjk × V(i,j,k)\n  Les poids pjk sont égaux au sein de chaque dimension.\n\nÉtape 3 — Indice global (avec aversion à la pauvreté et complémentarité) :\n  OppChoVec(i) = agrégation des 3 dimensions Dk avec :\n    - paramètre β = 2,5 (aversion à la pauvreté : pénalise les très faibles scores)\n    - paramètre γ = 1,5 (complémentarité : pénalise les déséquilibres entre dimensions)\n  Le résultat brut (0-1) est ensuite renormalisé sur 0-10 pour l'application corse.\n\nINTERPRÉTATION DE L'ÉCHELLE 0-10\n\n- 0 = niveau de bien-être minimal parmi les 360 communes corses\n- 10 = niveau de bien-être maximal parmi les 360 communes corses\n- ~5 = niveau médian corse\n\nUn score élevé signifie que la commune offre à la fois de bonnes opportunités, une réelle liberté de choix et un vécu satisfaisant. Un score faible peut refléter un déficit sur une ou plusieurs dimensions. Les trois scores partiels (Opp, Cho, Vec) permettent de diagnostiquer la nature du déficit : une commune peut avoir de bonnes opportunités (Opp élevé) mais un vécu difficile (Vec faible), signalant un décalage entre l'offre territoriale et les conditions de vie réelles.\n\nSource : Bourdeau-Lepage L. (2011), adapté pour la Corse. Données : oppchovec_betti_0_10.",
+      "metadata": {
+        "commune": "",
+        "source": "methodology",
+        "type": "methodology",
+        "source_type": "oppchovec_scores",
+        "label": "Scores OppChoVec — "
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Campana : 3.58/10 (moyen).\n\nSous-scores principaux de Campana :\n  • Opportunités (Opp) : 3.64/10 (moyen)  — rang 193e/360\n  • Choix (Cho)        : 10.00/10 (très élevé)  — rang 1e/360\n  • Vécu (Vec)         : 3.59/10 (moyen)  — rang 155e/360\n  • OppChoVec global   : rang 126e/360\n\nSous-dimensions du score Opportunités (Opp) de Campana :\n  • Opp1 — Éducation      : 1.43/10 (très faible)  [valeur brute : 5.227] — rang 233e/360\n  • Opp2 — Diversité soc. : 6.43/10 (élevé)  [indice Theil : 0.6888] — rang 9e/360\n  • Opp3 — Mobilité       : 0.74/10 (très faible)  [indicateur : 72.7/200] — rang 355e/360\n  • Opp4 — TIC (numérique): 5.00/10 (élevé)  [couverture : 50.0%] — rang 189e/360\n\nAnalyse de Campana :\n- Campana se distingue surtout par ses choix (Cho=10.00/10).\n- Le point le plus faible de Campana est le score Vécu (3.59/10).\n\nValeurs brutes (non normalisées) de Campana :\n- OppChoVec brut : 0.0723\n- Opp brut : 0.3325\n- Cho brut : 1.0000\n- Vec brut : 0.5152",
+      "metadata": {
+        "rank_opp3": 355,
+        "rank_opp4": 189,
+        "opp_0_10": 3.636263,
+        "oppchovec_0_10": 3.576951,
+        "rank_cho": 1,
+        "vec_0_10": 3.585904,
+        "cho_0_10": 10.0,
+        "rank_opp2": 9,
+        "opp4_0_10": 5.0,
+        "opp2_0_10": 6.4314,
+        "rank_vec": 155,
+        "rank_opp1": 233,
+        "source": "oppchovec_betti_0_10",
+        "commune": "Campana",
+        "opp3_0_10": 0.7418,
+        "opp1_0_10": 1.427,
+        "rank_opp": 193,
+        "rank_total": 126,
+        "source_type": "oppchovec_scores",
+        "label": "Scores OppChoVec — Campana"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "La commune de Corscia compte une part de 0.0% de cadres et professions intellectuelles supérieures, 0.0% d'ouvriers, avec un taux d'activité de 67.7%. 56.8% des emplois y sont salariés. On y trouve 0.0 points de contact postal, 0.0 hypermarchés ou supermarchés, 0.0 supérettes ou épiceries, 0.0 boulangeries et 0.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 0.0 écoles maternelles, 0.0 écoles élémentaires, 0.0 collèges et 0.0 lycées. Elle possède 0.0 services d'urgence, 0.0 médecins généralistes, 0.0 pharmacies, 0.0 infirmiers et 0.0 crèches. La sécurité est assurée par 0.0 postes de police ou gendarmerie. Il y a également 0.0 agences Pôle emploi. Le taux de pauvreté est de 18.403112840466928%, la part de logements vacants est de 1.8%, et celle des résidences secondaires est de 65.9%. Le taux de coups et blessures volontaires est de 0.0 pour 1 000 habitants. Le prix moyen au m² est de 1000.0€, pour une surface moyenne des logements de 62.0 m².",
+      "metadata": {
+        "source": "data_comp",
+        "commune": "Corscia",
+        "data_type": "quanti",
+        "source_type": "communes_equipements",
+        "label": "Équipements et services commune (objectif/quanti)"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "La commune de Pero-Casevecchie compte une part de 0.0% de cadres et professions intellectuelles supérieures, 7.2% d'ouvriers, avec un taux d'activité de 72.3%. 20.6% des emplois y sont salariés. On y trouve 1.0 points de contact postal, 0.0 hypermarchés ou supermarchés, 0.0 supérettes ou épiceries, 0.0 boulangeries et 0.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 0.0 écoles maternelles, 0.0 écoles élémentaires, 0.0 collèges et 0.0 lycées. Elle possède 0.0 services d'urgence, 0.0 médecins généralistes, 0.0 pharmacies, 0.0 infirmiers et 0.0 crèches. La sécurité est assurée par 0.0 postes de police ou gendarmerie. Il y a également 0.0 agences Pôle emploi. Le taux de pauvreté est de 19.3%, la part de logements vacants est de 2.1%, et celle des résidences secondaires est de 56.2%. Le taux de coups et blessures volontaires est de 0.8620320855614972 pour 1 000 habitants. Le prix moyen au m² est de 972.0€, pour une surface moyenne des logements de 72.0 m².",
+      "metadata": {
+        "commune": "Pero-Casevecchie",
+        "source": "data_comp",
+        "data_type": "quanti",
+        "source_type": "communes_equipements",
+        "label": "Équipements et services commune (objectif/quanti)"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théorique >= 30 min de trajet.\n\n• Opp4 — Avoir accès aux TIC (poids 0,25)\n  Couverture locale par Internet haut débit (>= 30 Mbit/s) et réseau 4G.\n\nDIMENSION 2 — CHOIX (Cho)\nLa liberté de choix effective dont disposent les individus sur ce territoire.\n\n• Cho1 — Ne pas être discriminé(e) (poids 0,5)\n  Présence ou absence de quartiers cibles de la politique de la ville dans la commune (indicateur pénalisant la concentration de précarité).\n\n• Cho2 — Avoir les moyens d'influencer les décisions publiques (poids 0,5)\n  Proportion d'individus ayant le droit de vote (nationalité française, >= 18 ans) parmi la population en âge de travailler (>= 16 ans).\n\nDIMENSION 3 — VÉCU (Vec)\nLes réalisations effectives des individus — ce qui a été réellement accompli et vécu.\n\n• Vec1 — Avoir un revenu décent (poids 0,25)\n  Revenu fiscal moyen par foyer fiscal dans la commune.\n\n• Vec2 — Avoir un logement décent (poids 0,25, réparti sur 3 sous-indicateurs)\n  - Vec2a : Nombre moyen de personnes par pièce (surpeuplement)\n  - Vec2b : Proportion de logements avec équipements sanitaires complets (eau chaude, douche/baignoire, chauffage, cuisine avec évier)\n  - Vec2c : Proportion de la population vivant dans une habitation individuelle\n\n• Vec3 — Être bien inséré sur le marché du travail (poids 0,25)\n  Stabilité des emplois des résidents (5 niveaux : chômeur, emploi aidé, contrat ponctuel, CDD, emploi stable — CDI, fonctionnaire, indépendant).\n\n• Vec4 — Être proche des services (poids 0,25)\n  Nombre d'établissements de vie courante accessibles en moins de 20 minutes (santé, éducation, commerces, culture, administration), calculé par algorithme de plus court chemin (Dijkstra) sur réseau routier.\n\nCALCUL DE L'INDICE\n\nÉtape 1 — Standardisation (commensurabilité) :\n  V(i,j,k) = (Xijk − Xjk,min) / (Xjk,max − Xjk,min)\n  Chaque sous-indicateur est ramené entre 0 (minimum observé) et 1 (maximum observé).\n\nÉtape 2 — Agrégation par dimension (moyenne pondérée) :\n  Dk(i) = Σ pjk × V(i,j,k)\n  Les poids pjk sont égaux au sein de chaque dimension.\n\nÉtape 3 — Indice global (avec aversion à la pauvreté et complémentarité) :\n  OppChoVec(i) = agrégation des 3 dimensions Dk avec :\n    - paramètre β = 2,5 (aversion à la pauvreté : pénalise les très faibles scores)\n    - paramètre γ = 1,5 (complémentarité : pénalise les déséquilibres entre dimensions)\n  Le résultat brut (0-1) est ensuite renormalisé sur 0-10 pour l'application corse.\n\nINTERPRÉTATION DE L'ÉCHELLE 0-10\n\n- 0 = niveau de bien-être minimal parmi les 360 communes corses\n- 10 = niveau de bien-être maximal parmi les 360 communes corses\n- ~5 = niveau médian corse\n\nUn score élevé signifie que la commune offre à la fois de bonnes opportunités, une réelle liberté de choix et un vécu satisfaisant. Un score faible peut refléter un déficit sur une ou plusieurs dimensions. Les trois scores partiels (Opp, Cho, Vec) permettent de diagnostiquer la nature du déficit : une commune peut avoir de bonnes opportunités (Opp élevé) mais un vécu difficile (Vec faible), signalant un décalage entre l'offre territoriale et les conditions de vie réelles.\n\nSource : Bourdeau-Lepage L. (2011), adapté pour la Corse. Données : oppchovec_betti_0_10.",
+      "metadata": {
+        "type": "methodology",
+        "commune": "",
+        "source": "methodology",
+        "source_type": "oppchovec_scores",
+        "label": "Scores OppChoVec — "
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Pianello : 3.62/10 (moyen).\n\nSous-scores principaux de Pianello :\n  • Opportunités (Opp) : 4.57/10 (moyen)  — rang 113e/360\n  • Choix (Cho)        : 9.73/10 (très élevé)  — rang 75e/360\n  • Vécu (Vec)         : 2.27/10 (faible)  — rang 300e/360\n  • OppChoVec global   : rang 124e/360\n\nSous-dimensions du score Opportunités (Opp) de Pianello :\n  • Opp1 — Éducation      : 2.58/10 (faible)  [valeur brute : 5.330] — rang 130e/360\n  • Opp2 — Diversité soc. : 2.60/10 (faible)  [indice Theil : 0.3378] — rang 143e/360\n  • Opp3 — Mobilité       : 1.23/10 (très faible)  [indicateur : 79.4/200] — rang 337e/360\n  • Opp4 — TIC (numérique): 9.60/10 (très élevé)  [couverture : 96.0%] — rang 19e/360\n\nAnalyse de Pianello :\n- Pianello se distingue surtout par ses choix (Cho=9.73/10).\n- Le point le plus faible de Pianello est le score Vécu (2.27/10).\n\nValeurs brutes (non normalisées) de Pianello :\n- OppChoVec brut : 0.0728\n- Opp brut : 0.3879\n- Cho brut : 0.9821\n- Vec brut : 0.4450",
+      "metadata": {
+        "opp2_0_10": 2.6007,
+        "source": "oppchovec_betti_0_10",
+        "opp3_0_10": 1.2291,
+        "rank_opp2": 143,
+        "rank_vec": 300,
+        "opp_0_10": 4.571333,
+        "rank_opp1": 130,
+        "cho_0_10": 9.726761,
+        "rank_opp3": 337,
+        "opp1_0_10": 2.5843,
+        "rank_total": 124,
+        "rank_cho": 75,
+        "opp4_0_10": 9.6,
+        "oppchovec_0_10": 3.615635,
+        "vec_0_10": 2.274291,
+        "commune": "Pianello",
+        "rank_opp": 113,
+        "rank_opp4": 19,
+        "source_type": "oppchovec_scores",
+        "label": "Scores OppChoVec — Pianello"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nQ : Oui donc en fait pour résumer, le plus important, c'est ce qui est beaucoup ressorti avec les habitants de Lozzi, c'est vraiment l'esprit communautaire, la proximité entre les gens du village, ça, c'est un critère de bien être important.  \n\n \nA : Tout à fait. Pour rajouter, un lien intergénérationnel, en fait, qui fait que il y a pas de barrière entre les gens de 70 ans, les gens de 50 ans, les gens de 20 ans et encore plus petits. Voilà, une espèce de communauté villageoise, qui transcendent l’histoire de la barrière des âges ou des générations.",
+      "metadata": {
+        "nom": "Lozzi",
+        "chunk_idx": 38,
+        "commune": "Lozzi",
+        "num_entretien": 5,
+        "source_type": "portrait_entretiens",
+        "data_type": "quali",
+        "label": "Entretien semi-directif (subjectif/quali)"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nProfil des répondants de la commune de Bastelicaccia — enquête qualité de vie en Corse\n\nNombre de répondants : 5\n\nRépartition par genre :\n  - Femme : 3 (60.0%)\n  - Homme : 2 (40.0%)\n\nRépartition par tranche d'âge :\n  - 30-44 : 2 (40.0%)\n  - 15-29 : 1 (20.0%)\n  - 45-59 : 1 (20.0%)\n\nRépartition par catégorie socioprofessionnelle :\n  - Fonctionnaire : 1 (20.0%)\n  - SalariÃ©(e) â EmployÃ©(e) : 1 (20.0%)\n  - Travailleur(se) indÃ©pendant(e) / Entrepreneur(e) : 1 (20.0%)\n  - SalariÃ©(e) â Cadre ou profession intermÃ©diaire : 1 (20.0%)\n  - RetraitÃ©(e) : 1 (20.0%)",
+      "metadata": {
+        "commune": "Bastelicaccia",
+        "n_repondants": 5,
+        "data_type": "quanti",
+        "source_type": "communes_profil",
+        "label": "Profil démographique des répondants (contextuel/quanti)"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nProfil des répondants de la commune de Villanova — enquête qualité de vie en Corse\n\nNombre de répondants : 1\n\nRépartition par genre :\n  - Femme : 1 (100.0%)\n\nRépartition par tranche d'âge :\n  - 45-59 : 1 (100.0%)\n\nRépartition par catégorie socioprofessionnelle :\n  - Fonctionnaire : 1 (100.0%)",
+      "metadata": {
+        "data_type": "quanti",
+        "commune": "Villanova",
+        "n_repondants": 1,
+        "source_type": "communes_profil",
+        "label": "Profil démographique des répondants (contextuel/quanti)"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théorique >= 30 min de trajet.\n\n• Opp4 — Avoir accès aux TIC (poids 0,25)\n  Couverture locale par Internet haut débit (>= 30 Mbit/s) et réseau 4G.\n\nDIMENSION 2 — CHOIX (Cho)\nLa liberté de choix effective dont disposent les individus sur ce territoire.\n\n• Cho1 — Ne pas être discriminé(e) (poids 0,5)\n  Présence ou absence de quartiers cibles de la politique de la ville dans la commune (indicateur pénalisant la concentration de précarité).\n\n• Cho2 — Avoir les moyens d'influencer les décisions publiques (poids 0,5)\n  Proportion d'individus ayant le droit de vote (nationalité française, >= 18 ans) parmi la population en âge de travailler (>= 16 ans).\n\nDIMENSION 3 — VÉCU (Vec)\nLes réalisations effectives des individus — ce qui a été réellement accompli et vécu.\n\n• Vec1 — Avoir un revenu décent (poids 0,25)\n  Revenu fiscal moyen par foyer fiscal dans la commune.\n\n• Vec2 — Avoir un logement décent (poids 0,25, réparti sur 3 sous-indicateurs)\n  - Vec2a : Nombre moyen de personnes par pièce (surpeuplement)\n  - Vec2b : Proportion de logements avec équipements sanitaires complets (eau chaude, douche/baignoire, chauffage, cuisine avec évier)\n  - Vec2c : Proportion de la population vivant dans une habitation individuelle\n\n• Vec3 — Être bien inséré sur le marché du travail (poids 0,25)\n  Stabilité des emplois des résidents (5 niveaux : chômeur, emploi aidé, contrat ponctuel, CDD, emploi stable — CDI, fonctionnaire, indépendant).\n\n• Vec4 — Être proche des services (poids 0,25)\n  Nombre d'établissements de vie courante accessibles en moins de 20 minutes (santé, éducation, commerces, culture, administration), calculé par algorithme de plus court chemin (Dijkstra) sur réseau routier.\n\nCALCUL DE L'INDICE\n\nÉtape 1 — Standardisation (commensurabilité) :\n  V(i,j,k) = (Xijk − Xjk,min) / (Xjk,max − Xjk,min)\n  Chaque sous-indicateur est ramené entre 0 (minimum observé) et 1 (maximum observé).\n\nÉtape 2 — Agrégation par dimension (moyenne pondérée) :\n  Dk(i) = Σ pjk × V(i,j,k)\n  Les poids pjk sont égaux au sein de chaque dimension.\n\nÉtape 3 — Indice global (avec aversion à la pauvreté et complémentarité) :\n  OppChoVec(i) = agrégation des 3 dimensions Dk avec :\n    - paramètre β = 2,5 (aversion à la pauvreté : pénalise les très faibles scores)\n    - paramètre γ = 1,5 (complémentarité : pénalise les déséquilibres entre dimensions)\n  Le résultat brut (0-1) est ensuite renormalisé sur 0-10 pour l'application corse.\n\nINTERPRÉTATION DE L'ÉCHELLE 0-10\n\n- 0 = niveau de bien-être minimal parmi les 360 communes corses\n- 10 = niveau de bien-être maximal parmi les 360 communes corses\n- ~5 = niveau médian corse\n\nUn score élevé signifie que la commune offre à la fois de bonnes opportunités, une réelle liberté de choix et un vécu satisfaisant. Un score faible peut refléter un déficit sur une ou plusieurs dimensions. Les trois scores partiels (Opp, Cho, Vec) permettent de diagnostiquer la nature du déficit : une commune peut avoir de bonnes opportunités (Opp élevé) mais un vécu difficile (Vec faible), signalant un décalage entre l'offre territoriale et les conditions de vie réelles.\n\nSource : Bourdeau-Lepage L. (2011), adapté pour la Corse. Données : oppchovec_betti_0_10.",
+      "metadata": {
+        "source": "methodology",
+        "commune": "",
+        "type": "methodology",
+        "source_type": "oppchovec_scores",
+        "label": "Scores OppChoVec — "
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Ghisonaccia : 0.83/10 (très faible).\n\nSous-scores principaux de Ghisonaccia :\n  • Opportunités (Opp) : 2.51/10 (faible)  — rang 289e/360\n  • Choix (Cho)        : 4.78/10 (moyen)  — rang 349e/360\n  • Vécu (Vec)         : 2.11/10 (faible)  — rang 311e/360\n  • OppChoVec global   : rang 356e/360\n\nSous-dimensions du score Opportunités (Opp) de Ghisonaccia :\n  • Opp1 — Éducation      : 1.92/10 (faible)  [valeur brute : 5.271] — rang 189e/360\n  • Opp2 — Diversité soc. : 1.36/10 (très faible)  [indice Theil : 0.2241] — rang 294e/360\n  • Opp3 — Mobilité       : 9.09/10 (très élevé)  [indicateur : 187.5/200] — rang 117e/360\n  • Opp4 — TIC (numérique): 3.45/10 (moyen)  [couverture : 34.5%] — rang 345e/360\n\nAnalyse de Ghisonaccia :\n- Ghisonaccia se distingue surtout par ses choix (Cho=4.78/10).\n- Le point le plus faible de Ghisonaccia est le score Vécu (2.11/10).\n\nValeurs brutes (non normalisées) de Ghisonaccia :\n- OppChoVec brut : 0.0345\n- Opp brut : 0.2658\n- Cho brut : 0.6591\n- Vec brut : 0.4363",
+      "metadata": {
+        "opp2_0_10": 1.3601,
+        "commune": "Ghisonaccia",
+        "rank_cho": 349,
+        "oppchovec_0_10": 0.832671,
+        "opp1_0_10": 1.9213,
+        "source": "oppchovec_betti_0_10",
+        "rank_opp2": 294,
+        "rank_opp": 289,
+        "rank_total": 356,
+        "rank_opp4": 345,
+        "cho_0_10": 4.781677,
+        "rank_vec": 311,
+        "opp3_0_10": 9.0909,
+        "vec_0_10": 2.112601,
+        "rank_opp3": 117,
+        "opp4_0_10": 3.45,
+        "opp_0_10": 2.510493,
+        "rank_opp1": 189,
+        "source_type": "oppchovec_scores",
+        "label": "Scores OppChoVec — Ghisonaccia"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nProfil des répondants de la commune de Albitreccia — enquête qualité de vie en Corse\n\nNombre de répondants : 1\n\nRépartition par genre :\n  - Femme : 1 (100.0%)\n\nRépartition par tranche d'âge :\n  - 45-59 : 1 (100.0%)\n\nRépartition par catégorie socioprofessionnelle :\n  - SalariÃ©(e) â Cadre ou profession intermÃ©diaire : 1 (100.0%)",
+      "metadata": {
+        "data_type": "quanti",
+        "commune": "Albitreccia",
+        "n_repondants": 1,
+        "source_type": "communes_profil",
+        "label": "Profil démographique des répondants (contextuel/quanti)"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nProfil des répondants de la commune de Giuncaggio — enquête qualité de vie en Corse\n\nNombre de répondants : 1\n\nRépartition par genre :\n  - Femme : 1 (100.0%)\n\nRépartition par tranche d'âge :\n  - 15-29 : 1 (100.0%)\n\nRépartition par catégorie socioprofessionnelle :\n  - Agriculteur(trice), artisan(e) ou commerÃ§ant(e) : 1 (100.0%)",
+      "metadata": {
+        "commune": "Giuncaggio",
+        "data_type": "quanti",
+        "source_type": "communes_profil",
+        "n_repondants": 1,
+        "label": "Profil démographique des répondants (contextuel/quanti)"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nProfil des répondants de la commune de Alando — enquête qualité de vie en Corse\n\nNombre de répondants : 1\n\nRépartition par genre :\n  - Femme : 1 (100.0%)\n\nRépartition par tranche d'âge :\n  - 45-59 : 1 (100.0%)\n\nRépartition par catégorie socioprofessionnelle :\n  - Fonctionnaire : 1 (100.0%)",
+      "metadata": {
+        "data_type": "quanti",
+        "commune": "Alando",
+        "n_repondants": 1,
+        "source_type": "communes_profil",
+        "label": "Profil démographique des répondants (contextuel/quanti)"
+      },
+      "source_type": "",
+      "label": ""
+    }
+  ],
+  "raisonnement": "La réponse aborde la sous-représentation des tranches d'âge et son impact potentiel sur l'interprétation du bien-être, en utilisant des données quantitatives et qualitatives disponibles, tout en signalant les limites et biais potentiels.",
+  "section_observee": "Gestion de l’incertitude et des biais / Incertitude liée à la taille d’échantillon",
+  "comportement_attendu_selon_grille": "Réponse de fond avec modalisateurs explicites ET signalement des biais éventuels (taille échantillon, biais indicateurs).",
+  "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+  "coherence_comportement_observe": "oui",
+  "sources_inventaire": [
+    {
+      "source": "oppchovec_classement",
+      "type": "quanti"
+    },
+    {
+      "source": "methodology",
+      "type": "quanti"
+    },
+    {
+      "source": "communes_profil",
+      "type": "quanti"
+    },
+    {
+      "source": "entretiens",
+      "type": "quali"
+    }
+  ],
+  "mislabelling_detecte": {
+    "regle_1_quali_quanti": "non",
+    "regle_2_surinterpretation_oppchovec": "non",
+    "regle_3_absence_quali_non_signalee": "non",
+    "regle_4_extrapolation_sous_groupe": "non"
+  },
+  "mislabelling_flag": false,
+  "elements_specifiques_question": [
+    "sous-représentation",
+    "tranches d’âge",
+    "biais",
+    "interprétation globale",
+    "bien-être"
+  ],
+  "elements_traitement": [
+    {
+      "element": "sous-représentation",
+      "traitement": "precis"
+    },
+    {
+      "element": "tranches d’âge",
+      "traitement": "precis"
+    },
+    {
+      "element": "biais",
+      "traitement": "precis"
+    },
+    {
+      "element": "interprétation globale",
+      "traitement": "precis"
+    },
+    {
+      "element": "bien-être",
+      "traitement": "precis"
+    }
+  ],
+  "pertinence": 5,
+  "pertinence_justif": "Tous les éléments spécifiques de la question sont traités de manière précise et ciblée.",
+  "fondement_factuel": 5,
+  "fondement_factuel_justif": "Les affirmations sont bien fondées sur les sources fournies, avec une bonne utilisation des données quantitatives et qualitatives.",
+  "nuance_incertitude": 5,
+  "nuance_incertitude_justif": "La réponse est bien nuancée, avec des modalisateurs explicites et un bon signalement des biais potentiels.",
+  "coherence_qualiquanti": 5,
+  "coherence_qualiquanti_justif": "Intégration exemplaire des données quantitatives et qualitatives, avec un bon équilibre et ciblage.",
+  "score_global": 5.0,
+  "judge_error": null
+}

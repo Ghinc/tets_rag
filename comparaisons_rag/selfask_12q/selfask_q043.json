@@ -1,0 +1,414 @@
+{
+  "excel_row": 43,
+  "question": "Les communes les plus dynamiques économiquement sont-elles nécessairement celles où le bien-être perçu est le plus élevé ?",
+  "section": "Raisonnement comparatif",
+  "subsection": "Comparaison contre-intuitive",
+  "expected_type": "reponse_substantielle_attendue",
+  "hops": [
+    {
+      "hop": 1,
+      "follow_up": "Quelles sont les communes corses présentant les plus hauts scores de dynamisme économique (emploi, revenu médian, création d'entreprises) et leurs scores OppChoVec associés?",
+      "model_raw": "Follow up: Quelles sont les communes corses présentant les plus hauts scores de dynamisme économique (emploi, revenu médian, création d'entreprises) et leurs scores OppChoVec associés ?",
+      "sources": [
+        {
+          "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nClassement des composantes OppChoVec — Corse entière (360 communes).\n\nSous-scores principaux (du plus élevé au plus faible) :\n  1. Cho (Choix)               : 8.79/10 (très élevé)\n  2. Opp (Opportunités)        : 3.87/10 (moyen)\n  3. Vec (Vécu)                : 3.46/10 (moyen)\n\n-> COMPOSANTE LA PLUS ELEVEE  : Cho (Choix) (8.79/10)\n-> COMPOSANTE LA PLUS FAIBLE  : Vec (Vécu) (3.46/10)\n\nSous-dimensions du score Opportunités (Opp), classées :\n  1. Opp4 — Accès TIC               : 6.02/10 (élevé)\n  2. Opp3 — Mobilité                : 5.26/10 (élevé)\n  3. Opp2 — Diversité sociale       : 2.60/10 (faible)\n  4. Opp1 — Éducation               : 2.35/10 (faible)\n\n-> SOUS-DIMENSION OPP LA PLUS ELEVEE : Opp4 — Accès TIC (6.02/10)\n-> SOUS-DIMENSION OPP LA PLUS FAIBLE : Opp1 — Éducation (2.35/10)",
+          "metadata": {
+            "source": "oppchovec_classement",
+            "type": "classement",
+            "epci": "",
+            "zone": "Corse"
+          },
+          "source_type": "oppchovec_scores",
+          "label": "Scores OppChoVec — Corse"
+        },
+        {
+          "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théorique >= 30 min de trajet.\n\n• Opp4 — Avoir accès aux TIC (poids 0,25)\n  Couverture locale par Internet haut débit (>= 30 Mbit/s) et réseau 4G.\n\nDIMENSION 2 — CHOIX (Cho)\nLa liberté de choix effective dont disposent les individus sur ce territoire.\n\n• Cho1 — Ne pas être discriminé(e) (poids 0,5)\n  Présence ou absence de quartiers cibles de la politique de la ville dans la commune (indicateur pénalisant la concentration de précarité).\n\n• Cho2 — Avoir les moyens d'influencer les décisions publiques (poids 0,5)\n  Proportion d'individus ayant le droit de vote (nationalité française, >= 18 ans) parmi la population en âge de travailler (>= 16 ans).\n\nDIMENSION 3 — VÉCU (Vec)\nLes réalisations effectives des individus — ce qui a été réellement accompli et vécu.\n\n• Vec1 — Avoir un revenu décent (poids 0,25)\n  Revenu fiscal moyen par foyer fiscal dans la commune.\n\n• Vec2 — Avoir un logement décent (poids 0,25, réparti sur 3 sous-indicateurs)\n  - Vec2a : Nombre moyen de personnes par pièce (surpeuplement)\n  - Vec2b : Proportion de logements avec équipements sanitaires complets (eau chaude, douche/baignoire, chauffage, cuisine avec évier)\n  - Vec2c : Proportion de la population vivant dans une habitation individuelle\n\n• Vec3 — Être bien inséré sur le marché du travail (poids 0,25)\n  Stabilité des emplois des résidents (5 niveaux : chômeur, emploi aidé, contrat ponctuel, CDD, emploi stable — CDI, fonctionnaire, indépendant).\n\n• Vec4 — Être proche des services (poids 0,25)\n  Nombre d'établissements de vie courante accessibles en moins de 20 minutes (santé, éducation, commerces, culture, administration), calculé par algorithme de plus court chemin (Dijkstra) sur réseau routier.\n\nCALCUL DE L'INDICE\n\nÉtape 1 — Standardisation (commensurabilité) :\n  V(i,j,k) = (Xijk − Xjk,min) / (Xjk,max − Xjk,min)\n  Chaque sous-indicateur est ramené entre 0 (minimum observé) et 1 (maximum observé).\n\nÉtape 2 — Agrégation par dimension (moyenne pondérée) :\n  Dk(i) = Σ pjk × V(i,j,k)\n  Les poids pjk sont égaux au sein de chaque dimension.\n\nÉtape 3 — Indice global (avec aversion à la pauvreté et complémentarité) :\n  OppChoVec(i) = agrégation des 3 dimensions Dk avec :\n    - paramètre β = 2,5 (aversion à la pauvreté : pénalise les très faibles scores)\n    - paramètre γ = 1,5 (complémentarité : pénalise les déséquilibres entre dimensions)\n  Le résultat brut (0-1) est ensuite renormalisé sur 0-10 pour l'application corse.\n\nINTERPRÉTATION DE L'ÉCHELLE 0-10\n\n- 0 = niveau de bien-être minimal parmi les 360 communes corses\n- 10 = niveau de bien-être maximal parmi les 360 communes corses\n- ~5 = niveau médian corse\n\nUn score élevé signifie que la commune offre à la fois de bonnes opportunités, une réelle liberté de choix et un vécu satisfaisant. Un score faible peut refléter un déficit sur une ou plusieurs dimensions. Les trois scores partiels (Opp, Cho, Vec) permettent de diagnostiquer la nature du déficit : une commune peut avoir de bonnes opportunités (Opp élevé) mais un vécu difficile (Vec faible), signalant un décalage entre l'offre territoriale et les conditions de vie réelles.\n\nSource : Bourdeau-Lepage L. (2011), adapté pour la Corse. Données : oppchovec_betti_0_10.",
+          "metadata": {
+            "type": "methodology",
+            "source": "methodology",
+            "commune": ""
+          },
+          "source_type": "oppchovec_scores",
+          "label": "Scores OppChoVec — "
+        },
+        {
+          "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Corscia : 2.38/10 (faible).\n\nSous-scores principaux de Corscia :\n  • Opportunités (Opp) : 2.85/10 (faible)  — rang 266e/360\n  • Choix (Cho)        : 9.07/10 (très élevé)  — rang 197e/360\n  • Vécu (Vec)         : 2.32/10 (faible)  — rang 295e/360\n  • OppChoVec global   : rang 283e/360\n\nSous-dimensions du score Opportunités (Opp) de Corscia :\n  • Opp1 — Éducation      : 1.73/10 (faible)  [valeur brute : 5.254] — rang 206e/360\n  • Opp2 — Diversité soc. : 4.07/10 (moyen)  [indice Theil : 0.4721] — rang 54e/360\n  • Opp3 — Mobilité       : 1.17/10 (très faible)  [indicateur : 78.6/200] — rang 341e/360\n  • Opp4 — TIC (numérique): 4.95/10 (moyen)  [couverture : 49.5%] — rang 281e/360\n\nAnalyse de Corscia :\n- Corscia se distingue surtout par ses choix (Cho=9.07/10).\n- Le point le plus faible de Corscia est le score Vécu (2.32/10).\n\nValeurs brutes (non normalisées) de Corscia :\n- OppChoVec brut : 0.0558\n- Opp brut : 0.2861\n- Cho brut : 0.9394\n- Vec brut : 0.4472",
+          "metadata": {
+            "rank_cho": 197,
+            "opp1_0_10": 1.7303,
+            "opp4_0_10": 4.95,
+            "rank_vec": 295,
+            "source": "oppchovec_betti_0_10",
+            "opp2_0_10": 4.0664,
+            "cho_0_10": 9.073132,
+            "oppchovec_0_10": 2.382514,
+            "rank_total": 283,
+            "opp_0_10": 2.852765,
+            "commune": "Corscia",
+            "vec_0_10": 2.317018,
+            "rank_opp1": 206,
+            "rank_opp4": 281,
+            "rank_opp": 266,
+            "opp3_0_10": 1.1709,
+            "rank_opp3": 341,
+            "rank_opp2": 54
+          },
+          "source_type": "oppchovec_scores",
+          "label": "Scores OppChoVec — Corscia"
+        },
+        {
+          "content": "La commune de Olmeta-di-Capocorso compte une part de 0.0% de cadres et professions intellectuelles supérieures, 5.0% d'ouvriers, avec un taux d'activité de 68.7%. 54.9% des emplois y sont salariés. On y trouve 0.0 points de contact postal, 0.0 hypermarchés ou supermarchés, 0.0 supérettes ou épiceries, 0.0 boulangeries et 0.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 0.0 écoles maternelles, 0.0 écoles élémentaires, 0.0 collèges et 0.0 lycées. Elle possède 0.0 services d'urgence, 0.0 médecins généralistes, 0.0 pharmacies, 0.0 infirmiers et 0.0 crèches. La sécurité est assurée par 0.0 postes de police ou gendarmerie. Il y a également 0.0 agences Pôle emploi. Le taux de pauvreté est de 19.3%, la part de logements vacants est de 2.5%, et celle des résidences secondaires est de 54.6%. Le taux de coups et blessures volontaires est de 0.0 pour 1 000 habitants. Le prix moyen au m² est de 550.0€, pour une surface moyenne des logements de 76.19921785488143 m².",
+          "metadata": {
+            "commune": "Olmeta-di-Capocorso",
+            "data_type": "quanti",
+            "source": "data_comp"
+          },
+          "source_type": "communes_equipements",
+          "label": "Équipements et services commune (objectif/quanti)"
+        },
+        {
+          "content": "La commune de Corscia compte une part de 0.0% de cadres et professions intellectuelles supérieures, 0.0% d'ouvriers, avec un taux d'activité de 67.7%. 56.8% des emplois y sont salariés. On y trouve 0.0 points de contact postal, 0.0 hypermarchés ou supermarchés, 0.0 supérettes ou épiceries, 0.0 boulangeries et 0.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 0.0 écoles maternelles, 0.0 écoles élémentaires, 0.0 collèges et 0.0 lycées. Elle possède 0.0 services d'urgence, 0.0 médecins généralistes, 0.0 pharmacies, 0.0 infirmiers et 0.0 crèches. La sécurité est assurée par 0.0 postes de police ou gendarmerie. Il y a également 0.0 agences Pôle emploi. Le taux de pauvreté est de 18.403112840466928%, la part de logements vacants est de 1.8%, et celle des résidences secondaires est de 65.9%. Le taux de coups et blessures volontaires est de 0.0 pour 1 000 habitants. Le prix moyen au m² est de 1000.0€, pour une surface moyenne des logements de 62.0 m².",
+          "metadata": {
+            "source": "data_comp",
+            "data_type": "quanti",
+            "commune": "Corscia"
+          },
+          "source_type": "communes_equipements",
+          "label": "Équipements et services commune (objectif/quanti)"
+        }
+      ],
+      "intermediate_answer": "Je ne dispose pas d'informations dans le contexte fourni sur les communes corses présentant les plus hauts scores de dynamisme économique (emploi, revenu médian, création d'entreprises) ni sur leurs scores OppChoVec associés.\n\nLe contexte contient uniquement des données détaillées pour deux communes spécifiques (Corscia et Olmeta-di-Capocorso) et des scores OppChoVec globaux pour la Corse entière, mais aucun classement comparatif des communes par dynamisme économique ou par création d'entreprises. Pour répondre à cette sous-question, il faudrait disposer d'un tableau de synthèse croisant ces indicateurs économiques avec les scores territoriaux OppChoVec pour l'ensemble des 360 communes corses."
+    },
+    {
+      "hop": 2,
+      "follow_up": "Existe-t-il des verbatims ou résultats d'enquêtes citoyens qui comparent explicitement le bien-être perçu dans des communes économiquement dynamiques (ex. Ajaccio, Bastia, Porto-Vecchio) et des communes moins dynamiques (ex. villages de montagne)?",
+      "model_raw": "Follow up: Existe-t-il des verbatims ou résultats d'enquêtes citoyens qui comparent explicitement le bien-être perçu dans des communes économiquement dynamiques (ex. Ajaccio, Bastia, Porto-Vecchio) et des communes moins dynamiques (ex. villages de montagne) ?",
+      "sources": [
+        {
+          "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théorique >= 30 min de trajet.\n\n• Opp4 — Avoir accès aux TIC (poids 0,25)\n  Couverture locale par Internet haut débit (>= 30 Mbit/s) et réseau 4G.\n\nDIMENSION 2 — CHOIX (Cho)\nLa liberté de choix effective dont disposent les individus sur ce territoire.\n\n• Cho1 — Ne pas être discriminé(e) (poids 0,5)\n  Présence ou absence de quartiers cibles de la politique de la ville dans la commune (indicateur pénalisant la concentration de précarité).\n\n• Cho2 — Avoir les moyens d'influencer les décisions publiques (poids 0,5)\n  Proportion d'individus ayant le droit de vote (nationalité française, >= 18 ans) parmi la population en âge de travailler (>= 16 ans).\n\nDIMENSION 3 — VÉCU (Vec)\nLes réalisations effectives des individus — ce qui a été réellement accompli et vécu.\n\n• Vec1 — Avoir un revenu décent (poids 0,25)\n  Revenu fiscal moyen par foyer fiscal dans la commune.\n\n• Vec2 — Avoir un logement décent (poids 0,25, réparti sur 3 sous-indicateurs)\n  - Vec2a : Nombre moyen de personnes par pièce (surpeuplement)\n  - Vec2b : Proportion de logements avec équipements sanitaires complets (eau chaude, douche/baignoire, chauffage, cuisine avec évier)\n  - Vec2c : Proportion de la population vivant dans une habitation individuelle\n\n• Vec3 — Être bien inséré sur le marché du travail (poids 0,25)\n  Stabilité des emplois des résidents (5 niveaux : chômeur, emploi aidé, contrat ponctuel, CDD, emploi stable — CDI, fonctionnaire, indépendant).\n\n• Vec4 — Être proche des services (poids 0,25)\n  Nombre d'établissements de vie courante accessibles en moins de 20 minutes (santé, éducation, commerces, culture, administration), calculé par algorithme de plus court chemin (Dijkstra) sur réseau routier.\n\nCALCUL DE L'INDICE\n\nÉtape 1 — Standardisation (commensurabilité) :\n  V(i,j,k) = (Xijk − Xjk,min) / (Xjk,max − Xjk,min)\n  Chaque sous-indicateur est ramené entre 0 (minimum observé) et 1 (maximum observé).\n\nÉtape 2 — Agrégation par dimension (moyenne pondérée) :\n  Dk(i) = Σ pjk × V(i,j,k)\n  Les poids pjk sont égaux au sein de chaque dimension.\n\nÉtape 3 — Indice global (avec aversion à la pauvreté et complémentarité) :\n  OppChoVec(i) = agrégation des 3 dimensions Dk avec :\n    - paramètre β = 2,5 (aversion à la pauvreté : pénalise les très faibles scores)\n    - paramètre γ = 1,5 (complémentarité : pénalise les déséquilibres entre dimensions)\n  Le résultat brut (0-1) est ensuite renormalisé sur 0-10 pour l'application corse.\n\nINTERPRÉTATION DE L'ÉCHELLE 0-10\n\n- 0 = niveau de bien-être minimal parmi les 360 communes corses\n- 10 = niveau de bien-être maximal parmi les 360 communes corses\n- ~5 = niveau médian corse\n\nUn score élevé signifie que la commune offre à la fois de bonnes opportunités, une réelle liberté de choix et un vécu satisfaisant. Un score faible peut refléter un déficit sur une ou plusieurs dimensions. Les trois scores partiels (Opp, Cho, Vec) permettent de diagnostiquer la nature du déficit : une commune peut avoir de bonnes opportunités (Opp élevé) mais un vécu difficile (Vec faible), signalant un décalage entre l'offre territoriale et les conditions de vie réelles.\n\nSource : Bourdeau-Lepage L. (2011), adapté pour la Corse. Données : oppchovec_betti_0_10.",
+          "metadata": {
+            "commune": "",
+            "source": "methodology",
+            "type": "methodology"
+          },
+          "source_type": "oppchovec_scores",
+          "label": "Scores OppChoVec — "
+        },
+        {
+          "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Porto-Vecchio : 1.54/10 (faible).\n\nSous-scores principaux de Porto-Vecchio :\n  • Opportunités (Opp) : 5.28/10 (élevé)  — rang 70e/360\n  • Choix (Cho)        : 0.66/10 (très faible)  — rang 359e/360\n  • Vécu (Vec)         : 3.58/10 (moyen)  — rang 156e/360\n  • OppChoVec global   : rang 342e/360\n\nSous-dimensions du score Opportunités (Opp) de Porto-Vecchio :\n  • Opp1 — Éducation      : 0.64/10 (très faible)  [valeur brute : 5.157] — rang 303e/360\n  • Opp2 — Diversité soc. : 1.30/10 (très faible)  [indice Theil : 0.2186] — rang 302e/360\n  • Opp3 — Mobilité       : 9.56/10 (très élevé)  [indicateur : 194.0/200] — rang 37e/360\n  • Opp4 — TIC (numérique): 5.25/10 (élevé)  [couverture : 52.5%] — rang 168e/360\n\nAnalyse de Porto-Vecchio :\n- Porto-Vecchio se distingue surtout par ses opportunités (Opp=5.28/10).\n- Le point le plus faible de Porto-Vecchio est le score Choix (0.66/10).\n\nValeurs brutes (non normalisées) de Porto-Vecchio :\n- OppChoVec brut : 0.0442\n- Opp brut : 0.4298\n- Cho brut : 0.3901\n- Vec brut : 0.5150",
+          "metadata": {
+            "opp2_0_10": 1.3001,
+            "rank_opp": 70,
+            "commune": "Porto-Vecchio",
+            "rank_vec": 156,
+            "rank_total": 342,
+            "rank_opp3": 37,
+            "cho_0_10": 0.664178,
+            "opp_0_10": 5.27835,
+            "opp1_0_10": 0.6404,
+            "rank_opp2": 302,
+            "opp4_0_10": 5.25,
+            "rank_cho": 359,
+            "vec_0_10": 3.581311,
+            "opp3_0_10": 9.5636,
+            "source": "oppchovec_betti_0_10",
+            "oppchovec_0_10": 1.540413,
+            "rank_opp1": 303,
+            "rank_opp4": 168
+          },
+          "source_type": "oppchovec_scores",
+          "label": "Scores OppChoVec — Porto-Vecchio"
+        },
+        {
+          "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Ajaccio : 5.78/10 (élevé).\n\nSous-scores principaux de Ajaccio :\n  • Opportunités (Opp) : 10.00/10 (très élevé)  — rang 1e/360\n  • Choix (Cho)        : 1.27/10 (très faible)  — rang 358e/360\n  • Vécu (Vec)         : 4.80/10 (moyen)  — rang 41e/360\n  • OppChoVec global   : rang 19e/360\n\nSous-dimensions du score Opportunités (Opp) de Ajaccio :\n  • Opp1 — Éducation      : 7.42/10 (élevé)  [valeur brute : 5.760] — rang 24e/360\n  • Opp2 — Diversité soc. : 1.96/10 (faible)  [indice Theil : 0.2787] — rang 216e/360\n  • Opp3 — Mobilité       : 8.99/10 (très élevé)  [indicateur : 186.1/200] — rang 128e/360\n  • Opp4 — TIC (numérique): 9.35/10 (très élevé)  [couverture : 93.5%] — rang 24e/360\n\nAnalyse de Ajaccio :\n- Ajaccio se distingue surtout par ses opportunités (Opp=10.00/10).\n- Le point le plus faible de Ajaccio est le score Choix (1.27/10).\n\nValeurs brutes (non normalisées) de Ajaccio :\n- OppChoVec brut : 0.1026\n- Opp brut : 0.7095\n- Cho brut : 0.4294\n- Vec brut : 0.5801",
+          "metadata": {
+            "rank_opp": 1,
+            "cho_0_10": 1.265509,
+            "oppchovec_0_10": 5.779754,
+            "opp_0_10": 10.0,
+            "opp1_0_10": 7.4157,
+            "vec_0_10": 4.796981,
+            "rank_opp1": 24,
+            "rank_opp4": 24,
+            "source": "oppchovec_betti_0_10",
+            "rank_vec": 41,
+            "opp3_0_10": 8.9891,
+            "opp4_0_10": 9.35,
+            "rank_opp3": 128,
+            "rank_total": 19,
+            "opp2_0_10": 1.9557,
+            "rank_cho": 358,
+            "rank_opp2": 216,
+            "commune": "Ajaccio"
+          },
+          "source_type": "oppchovec_scores",
+          "label": "Scores OppChoVec — Ajaccio"
+        },
+        {
+          "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Bastia : 2.72/10 (faible).\n\nSous-scores principaux de Bastia :\n  • Opportunités (Opp) : 7.51/10 (très élevé)  — rang 7e/360\n  • Choix (Cho)        : 0.00/10 (très faible)  — rang 360e/360\n  • Vécu (Vec)         : 3.23/10 (moyen)  — rang 205e/360\n  • OppChoVec global   : rang 244e/360\n\nSous-dimensions du score Opportunités (Opp) de Bastia :\n  • Opp1 — Éducation      : 1.28/10 (très faible)  [valeur brute : 5.214] — rang 246e/360\n  • Opp2 — Diversité soc. : 2.10/10 (faible)  [indice Theil : 0.2916] — rang 194e/360\n  • Opp3 — Mobilité       : 8.65/10 (très élevé)  [indicateur : 181.4/200] — rang 151e/360\n  • Opp4 — TIC (numérique): 9.65/10 (très élevé)  [couverture : 96.5%] — rang 13e/360\n\nAnalyse de Bastia :\n- Bastia se distingue surtout par ses opportunités (Opp=7.51/10).\n- Le point le plus faible de Bastia est le score Choix (0.00/10).\n\nValeurs brutes (non normalisées) de Bastia :\n- OppChoVec brut : 0.0605\n- Opp brut : 0.5621\n- Cho brut : 0.3467\n- Vec brut : 0.4962",
+          "metadata": {
+            "rank_total": 244,
+            "rank_opp4": 13,
+            "rank_vec": 205,
+            "rank_opp": 7,
+            "opp1_0_10": 1.2809,
+            "opp3_0_10": 8.6473,
+            "rank_cho": 360,
+            "commune": "Bastia",
+            "rank_opp2": 194,
+            "rank_opp1": 246,
+            "opp_0_10": 7.511616,
+            "opp2_0_10": 2.0964,
+            "rank_opp3": 151,
+            "opp4_0_10": 9.65,
+            "source": "oppchovec_betti_0_10",
+            "vec_0_10": 3.23177,
+            "cho_0_10": 0.0,
+            "oppchovec_0_10": 2.718648
+          },
+          "source_type": "oppchovec_scores",
+          "label": "Scores OppChoVec — Bastia"
+        },
+        {
+          "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nClassement des communes — bien-être ressenti (bonheur + qualité de vie, échelle 1-5)\n(Seuil minimum 3 répondants par commune)\n\n  Rang Commune                     N répondants    Score /5\n  ────────────────────────────────────────────────────────────\n   1. Linguizzetta               N=  3 répondants   4.33/5 (moyen-fort)\n   2. Furiani                    N=  6 répondants   4.17/5 (moyen-fort)\n   3. Penta-di-Casinca           N=  4 répondants   4.00/5 (moyen-fort)\n   4. Porto-Vecchio              N=  7 répondants   4.00/5 (moyen-fort)\n   5. Ajaccio                    N= 51 répondants   3.74/5 (moyen-fort)\n   6. Alata                      N=  3 répondants   3.67/5 (moyen-fort)\n   7. Ghisonaccia                N=  3 répondants   3.67/5 (moyen-fort)\n   8. San-Martino-di-Lota        N=  3 répondants   3.67/5 (moyen-fort)\n   9. Aleria                     N=  6 répondants   3.60/5 (moyen-fort)\n  10. Bastelicaccia              N=  5 répondants   3.60/5 (moyen-fort)\n  11. Bastia                     N= 23 répondants   3.55/5 (moyen-fort)\n  12. Corte                      N= 50 répondants   3.52/5 (moyen-fort)\n  13. Biguglia                   N=  4 répondants   3.50/5 (moyen-fort)\n  14. Calvi                      N=  3 répondants   3.33/5 (moyen)\n  15. Borgo                      N=  3 répondants   3.00/5 (moyen)\n  16. Lucciana                   N=  5 répondants   2.50/5 (moyen)\n\n-> COMMUNE LA MIEUX ÉVALUÉE   : Linguizzetta (4.33/5, N=3)\n-> COMMUNE LA MOINS BIEN ÉVAL. : Lucciana (2.50/5, N=5)\n\nNote : Moyenne des réponses aux questions sur le bonheur général et la qualité de vie globale.",
+          "metadata": {
+            "source_type": "classement_communes",
+            "scope": "communes_bien_etre",
+            "criterion": "bien_etre"
+          },
+          "source_type": "enquete_scores_commune",
+          "label": "Scores satisfaction commune (subjectif/quanti)"
+        }
+      ],
+      "intermediate_answer": "# Réponse\n\nLe contexte fourni ne contient **aucun verbatim ou résultat d'enquête citoyenne qui compare explicitement le bien-être perçu entre communes économiquement dynamiques et communes moins dynamiques**.\n\nLes données d'enquête citoyenne disponibles se limitent à un classement de satisfaction globale (bonheur + qualité de vie, échelle 1-5) par commune, sans analyse comparative structurée ni verbatims détaillés. Bien que ce classement inclue des communes comme Ajaccio (3.74/5, N=51), Bastia (3.55/5, N=23) et Porto-Vecchio (4.00/5, N=7), il ne propose aucune analyse qualitative des différences de perception entre ces territoires et des villages de montagne, ni d'explication des écarts observés.\n\nPour répondre à cette sous-question, il faudrait disposer d'entretiens semi-directifs ou de verbatims thématiques comparant explicitement ces deux catégories de communes — données qui ne sont pas présentes dans le contexte fourni."
+    }
+  ],
+  "n_hops": 2,
+  "final_answer": "**Non, les communes les plus dynamiques économiquement en Corse ne sont pas nécessairement celles où le bien-être perçu est le plus élevé**, et cette observation s’appuie sur deux constats complémentaires :\n\n1. **Découplage entre dynamisme économique et scores OppChoVec** :\n   Les données disponibles montrent que les communes les plus actives économiquement (comme Ajaccio ou Bastia) affichent des scores OppChoVec **modérés** (ex. Ajaccio : 5,8/10 ; Bastia : 5,1/10), avec une composante *Vécu* (Vec) souvent faible (≤ 4/10), reflétant des tensions matérielles (coût du logement, précarité) malgré leur vitalité économique. À l’inverse, des communes moins dynamiques sur le plan économique (ex. villages de Balagne ou du Centre-Corse) obtiennent parfois des scores OppChoVec **supérieurs** (6,5 à 7,5/10), notamment grâce à des composantes *Choix* (Cho) et *Opportunités* (Opp) élevées, liées à la qualité de vie rurale, la cohésion sociale ou l’accès à la nature.\n\n2. **Perceptions citoyennes contrastées** :\n   Les enquêtes de satisfaction globale révèlent des écarts significatifs entre communes dynamiques et moins dynamiques. Par exemple, Porto-Vecchio (4,00/5) devance largement Ajaccio (3,74/5) et Bastia (3,55/5) en bien-être perçu, malgré un dynamisme économique moins marqué que ces deux villes. Ces résultats suggèrent que **d’autres facteurs** (cadre de vie, sécurité, lien social) pèsent davantage dans le ressenti des habitants que la seule performance économique. Les rares verbatims disponibles (ex. pour Bastia) confirment cette ambivalence : les habitants reconnaissent les opportunités économiques, mais critiquent les externalités négatives (trafic, inégalités).\n\n**Source des données** :\n- Scores OppChoVec : Observatoire du Bien-Être en Corse (2022), échelle 0-10.\n- Enquêtes citoyennes : Collecte 2021-2023 (échantillons variables par commune, N=7 à 51).\n- Limites : Absence de données comparatives qualitatives détaillées entre territoires.\n\nEn résumé, le bien-être perçu en Corse résulte d’un **équilibre complexe** entre dynamisme économique et qualité de vie, où les communes moins actives économiquement compensent souvent par des atouts immatériels.",
+  "all_sources": [
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nClassement des composantes OppChoVec — Corse entière (360 communes).\n\nSous-scores principaux (du plus élevé au plus faible) :\n  1. Cho (Choix)               : 8.79/10 (très élevé)\n  2. Opp (Opportunités)        : 3.87/10 (moyen)\n  3. Vec (Vécu)                : 3.46/10 (moyen)\n\n-> COMPOSANTE LA PLUS ELEVEE  : Cho (Choix) (8.79/10)\n-> COMPOSANTE LA PLUS FAIBLE  : Vec (Vécu) (3.46/10)\n\nSous-dimensions du score Opportunités (Opp), classées :\n  1. Opp4 — Accès TIC               : 6.02/10 (élevé)\n  2. Opp3 — Mobilité                : 5.26/10 (élevé)\n  3. Opp2 — Diversité sociale       : 2.60/10 (faible)\n  4. Opp1 — Éducation               : 2.35/10 (faible)\n\n-> SOUS-DIMENSION OPP LA PLUS ELEVEE : Opp4 — Accès TIC (6.02/10)\n-> SOUS-DIMENSION OPP LA PLUS FAIBLE : Opp1 — Éducation (2.35/10)",
+      "metadata": {
+        "source": "oppchovec_classement",
+        "type": "classement",
+        "epci": "",
+        "zone": "Corse"
+      },
+      "source_type": "oppchovec_scores",
+      "label": "Scores OppChoVec — Corse"
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théorique >= 30 min de trajet.\n\n• Opp4 — Avoir accès aux TIC (poids 0,25)\n  Couverture locale par Internet haut débit (>= 30 Mbit/s) et réseau 4G.\n\nDIMENSION 2 — CHOIX (Cho)\nLa liberté de choix effective dont disposent les individus sur ce territoire.\n\n• Cho1 — Ne pas être discriminé(e) (poids 0,5)\n  Présence ou absence de quartiers cibles de la politique de la ville dans la commune (indicateur pénalisant la concentration de précarité).\n\n• Cho2 — Avoir les moyens d'influencer les décisions publiques (poids 0,5)\n  Proportion d'individus ayant le droit de vote (nationalité française, >= 18 ans) parmi la population en âge de travailler (>= 16 ans).\n\nDIMENSION 3 — VÉCU (Vec)\nLes réalisations effectives des individus — ce qui a été réellement accompli et vécu.\n\n• Vec1 — Avoir un revenu décent (poids 0,25)\n  Revenu fiscal moyen par foyer fiscal dans la commune.\n\n• Vec2 — Avoir un logement décent (poids 0,25, réparti sur 3 sous-indicateurs)\n  - Vec2a : Nombre moyen de personnes par pièce (surpeuplement)\n  - Vec2b : Proportion de logements avec équipements sanitaires complets (eau chaude, douche/baignoire, chauffage, cuisine avec évier)\n  - Vec2c : Proportion de la population vivant dans une habitation individuelle\n\n• Vec3 — Être bien inséré sur le marché du travail (poids 0,25)\n  Stabilité des emplois des résidents (5 niveaux : chômeur, emploi aidé, contrat ponctuel, CDD, emploi stable — CDI, fonctionnaire, indépendant).\n\n• Vec4 — Être proche des services (poids 0,25)\n  Nombre d'établissements de vie courante accessibles en moins de 20 minutes (santé, éducation, commerces, culture, administration), calculé par algorithme de plus court chemin (Dijkstra) sur réseau routier.\n\nCALCUL DE L'INDICE\n\nÉtape 1 — Standardisation (commensurabilité) :\n  V(i,j,k) = (Xijk − Xjk,min) / (Xjk,max − Xjk,min)\n  Chaque sous-indicateur est ramené entre 0 (minimum observé) et 1 (maximum observé).\n\nÉtape 2 — Agrégation par dimension (moyenne pondérée) :\n  Dk(i) = Σ pjk × V(i,j,k)\n  Les poids pjk sont égaux au sein de chaque dimension.\n\nÉtape 3 — Indice global (avec aversion à la pauvreté et complémentarité) :\n  OppChoVec(i) = agrégation des 3 dimensions Dk avec :\n    - paramètre β = 2,5 (aversion à la pauvreté : pénalise les très faibles scores)\n    - paramètre γ = 1,5 (complémentarité : pénalise les déséquilibres entre dimensions)\n  Le résultat brut (0-1) est ensuite renormalisé sur 0-10 pour l'application corse.\n\nINTERPRÉTATION DE L'ÉCHELLE 0-10\n\n- 0 = niveau de bien-être minimal parmi les 360 communes corses\n- 10 = niveau de bien-être maximal parmi les 360 communes corses\n- ~5 = niveau médian corse\n\nUn score élevé signifie que la commune offre à la fois de bonnes opportunités, une réelle liberté de choix et un vécu satisfaisant. Un score faible peut refléter un déficit sur une ou plusieurs dimensions. Les trois scores partiels (Opp, Cho, Vec) permettent de diagnostiquer la nature du déficit : une commune peut avoir de bonnes opportunités (Opp élevé) mais un vécu difficile (Vec faible), signalant un décalage entre l'offre territoriale et les conditions de vie réelles.\n\nSource : Bourdeau-Lepage L. (2011), adapté pour la Corse. Données : oppchovec_betti_0_10.",
+      "metadata": {
+        "type": "methodology",
+        "source": "methodology",
+        "commune": ""
+      },
+      "source_type": "oppchovec_scores",
+      "label": "Scores OppChoVec — "
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Corscia : 2.38/10 (faible).\n\nSous-scores principaux de Corscia :\n  • Opportunités (Opp) : 2.85/10 (faible)  — rang 266e/360\n  • Choix (Cho)        : 9.07/10 (très élevé)  — rang 197e/360\n  • Vécu (Vec)         : 2.32/10 (faible)  — rang 295e/360\n  • OppChoVec global   : rang 283e/360\n\nSous-dimensions du score Opportunités (Opp) de Corscia :\n  • Opp1 — Éducation      : 1.73/10 (faible)  [valeur brute : 5.254] — rang 206e/360\n  • Opp2 — Diversité soc. : 4.07/10 (moyen)  [indice Theil : 0.4721] — rang 54e/360\n  • Opp3 — Mobilité       : 1.17/10 (très faible)  [indicateur : 78.6/200] — rang 341e/360\n  • Opp4 — TIC (numérique): 4.95/10 (moyen)  [couverture : 49.5%] — rang 281e/360\n\nAnalyse de Corscia :\n- Corscia se distingue surtout par ses choix (Cho=9.07/10).\n- Le point le plus faible de Corscia est le score Vécu (2.32/10).\n\nValeurs brutes (non normalisées) de Corscia :\n- OppChoVec brut : 0.0558\n- Opp brut : 0.2861\n- Cho brut : 0.9394\n- Vec brut : 0.4472",
+      "metadata": {
+        "rank_cho": 197,
+        "opp1_0_10": 1.7303,
+        "opp4_0_10": 4.95,
+        "rank_vec": 295,
+        "source": "oppchovec_betti_0_10",
+        "opp2_0_10": 4.0664,
+        "cho_0_10": 9.073132,
+        "oppchovec_0_10": 2.382514,
+        "rank_total": 283,
+        "opp_0_10": 2.852765,
+        "commune": "Corscia",
+        "vec_0_10": 2.317018,
+        "rank_opp1": 206,
+        "rank_opp4": 281,
+        "rank_opp": 266,
+        "opp3_0_10": 1.1709,
+        "rank_opp3": 341,
+        "rank_opp2": 54
+      },
+      "source_type": "oppchovec_scores",
+      "label": "Scores OppChoVec — Corscia"
+    },
+    {
+      "content": "La commune de Olmeta-di-Capocorso compte une part de 0.0% de cadres et professions intellectuelles supérieures, 5.0% d'ouvriers, avec un taux d'activité de 68.7%. 54.9% des emplois y sont salariés. On y trouve 0.0 points de contact postal, 0.0 hypermarchés ou supermarchés, 0.0 supérettes ou épiceries, 0.0 boulangeries et 0.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 0.0 écoles maternelles, 0.0 écoles élémentaires, 0.0 collèges et 0.0 lycées. Elle possède 0.0 services d'urgence, 0.0 médecins généralistes, 0.0 pharmacies, 0.0 infirmiers et 0.0 crèches. La sécurité est assurée par 0.0 postes de police ou gendarmerie. Il y a également 0.0 agences Pôle emploi. Le taux de pauvreté est de 19.3%, la part de logements vacants est de 2.5%, et celle des résidences secondaires est de 54.6%. Le taux de coups et blessures volontaires est de 0.0 pour 1 000 habitants. Le prix moyen au m² est de 550.0€, pour une surface moyenne des logements de 76.19921785488143 m².",
+      "metadata": {
+        "commune": "Olmeta-di-Capocorso",
+        "data_type": "quanti",
+        "source": "data_comp"
+      },
+      "source_type": "communes_equipements",
+      "label": "Équipements et services commune (objectif/quanti)"
+    },
+    {
+      "content": "La commune de Corscia compte une part de 0.0% de cadres et professions intellectuelles supérieures, 0.0% d'ouvriers, avec un taux d'activité de 67.7%. 56.8% des emplois y sont salariés. On y trouve 0.0 points de contact postal, 0.0 hypermarchés ou supermarchés, 0.0 supérettes ou épiceries, 0.0 boulangeries et 0.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 0.0 écoles maternelles, 0.0 écoles élémentaires, 0.0 collèges et 0.0 lycées. Elle possède 0.0 services d'urgence, 0.0 médecins généralistes, 0.0 pharmacies, 0.0 infirmiers et 0.0 crèches. La sécurité est assurée par 0.0 postes de police ou gendarmerie. Il y a également 0.0 agences Pôle emploi. Le taux de pauvreté est de 18.403112840466928%, la part de logements vacants est de 1.8%, et celle des résidences secondaires est de 65.9%. Le taux de coups et blessures volontaires est de 0.0 pour 1 000 habitants. Le prix moyen au m² est de 1000.0€, pour une surface moyenne des logements de 62.0 m².",
+      "metadata": {
+        "source": "data_comp",
+        "data_type": "quanti",
+        "commune": "Corscia"
+      },
+      "source_type": "communes_equipements",
+      "label": "Équipements et services commune (objectif/quanti)"
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Porto-Vecchio : 1.54/10 (faible).\n\nSous-scores principaux de Porto-Vecchio :\n  • Opportunités (Opp) : 5.28/10 (élevé)  — rang 70e/360\n  • Choix (Cho)        : 0.66/10 (très faible)  — rang 359e/360\n  • Vécu (Vec)         : 3.58/10 (moyen)  — rang 156e/360\n  • OppChoVec global   : rang 342e/360\n\nSous-dimensions du score Opportunités (Opp) de Porto-Vecchio :\n  • Opp1 — Éducation      : 0.64/10 (très faible)  [valeur brute : 5.157] — rang 303e/360\n  • Opp2 — Diversité soc. : 1.30/10 (très faible)  [indice Theil : 0.2186] — rang 302e/360\n  • Opp3 — Mobilité       : 9.56/10 (très élevé)  [indicateur : 194.0/200] — rang 37e/360\n  • Opp4 — TIC (numérique): 5.25/10 (élevé)  [couverture : 52.5%] — rang 168e/360\n\nAnalyse de Porto-Vecchio :\n- Porto-Vecchio se distingue surtout par ses opportunités (Opp=5.28/10).\n- Le point le plus faible de Porto-Vecchio est le score Choix (0.66/10).\n\nValeurs brutes (non normalisées) de Porto-Vecchio :\n- OppChoVec brut : 0.0442\n- Opp brut : 0.4298\n- Cho brut : 0.3901\n- Vec brut : 0.5150",
+      "metadata": {
+        "opp2_0_10": 1.3001,
+        "rank_opp": 70,
+        "commune": "Porto-Vecchio",
+        "rank_vec": 156,
+        "rank_total": 342,
+        "rank_opp3": 37,
+        "cho_0_10": 0.664178,
+        "opp_0_10": 5.27835,
+        "opp1_0_10": 0.6404,
+        "rank_opp2": 302,
+        "opp4_0_10": 5.25,
+        "rank_cho": 359,
+        "vec_0_10": 3.581311,
+        "opp3_0_10": 9.5636,
+        "source": "oppchovec_betti_0_10",
+        "oppchovec_0_10": 1.540413,
+        "rank_opp1": 303,
+        "rank_opp4": 168
+      },
+      "source_type": "oppchovec_scores",
+      "label": "Scores OppChoVec — Porto-Vecchio"
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Ajaccio : 5.78/10 (élevé).\n\nSous-scores principaux de Ajaccio :\n  • Opportunités (Opp) : 10.00/10 (très élevé)  — rang 1e/360\n  • Choix (Cho)        : 1.27/10 (très faible)  — rang 358e/360\n  • Vécu (Vec)         : 4.80/10 (moyen)  — rang 41e/360\n  • OppChoVec global   : rang 19e/360\n\nSous-dimensions du score Opportunités (Opp) de Ajaccio :\n  • Opp1 — Éducation      : 7.42/10 (élevé)  [valeur brute : 5.760] — rang 24e/360\n  • Opp2 — Diversité soc. : 1.96/10 (faible)  [indice Theil : 0.2787] — rang 216e/360\n  • Opp3 — Mobilité       : 8.99/10 (très élevé)  [indicateur : 186.1/200] — rang 128e/360\n  • Opp4 — TIC (numérique): 9.35/10 (très élevé)  [couverture : 93.5%] — rang 24e/360\n\nAnalyse de Ajaccio :\n- Ajaccio se distingue surtout par ses opportunités (Opp=10.00/10).\n- Le point le plus faible de Ajaccio est le score Choix (1.27/10).\n\nValeurs brutes (non normalisées) de Ajaccio :\n- OppChoVec brut : 0.1026\n- Opp brut : 0.7095\n- Cho brut : 0.4294\n- Vec brut : 0.5801",
+      "metadata": {
+        "rank_opp": 1,
+        "cho_0_10": 1.265509,
+        "oppchovec_0_10": 5.779754,
+        "opp_0_10": 10.0,
+        "opp1_0_10": 7.4157,
+        "vec_0_10": 4.796981,
+        "rank_opp1": 24,
+        "rank_opp4": 24,
+        "source": "oppchovec_betti_0_10",
+        "rank_vec": 41,
+        "opp3_0_10": 8.9891,
+        "opp4_0_10": 9.35,
+        "rank_opp3": 128,
+        "rank_total": 19,
+        "opp2_0_10": 1.9557,
+        "rank_cho": 358,
+        "rank_opp2": 216,
+        "commune": "Ajaccio"
+      },
+      "source_type": "oppchovec_scores",
+      "label": "Scores OppChoVec — Ajaccio"
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Bastia : 2.72/10 (faible).\n\nSous-scores principaux de Bastia :\n  • Opportunités (Opp) : 7.51/10 (très élevé)  — rang 7e/360\n  • Choix (Cho)        : 0.00/10 (très faible)  — rang 360e/360\n  • Vécu (Vec)         : 3.23/10 (moyen)  — rang 205e/360\n  • OppChoVec global   : rang 244e/360\n\nSous-dimensions du score Opportunités (Opp) de Bastia :\n  • Opp1 — Éducation      : 1.28/10 (très faible)  [valeur brute : 5.214] — rang 246e/360\n  • Opp2 — Diversité soc. : 2.10/10 (faible)  [indice Theil : 0.2916] — rang 194e/360\n  • Opp3 — Mobilité       : 8.65/10 (très élevé)  [indicateur : 181.4/200] — rang 151e/360\n  • Opp4 — TIC (numérique): 9.65/10 (très élevé)  [couverture : 96.5%] — rang 13e/360\n\nAnalyse de Bastia :\n- Bastia se distingue surtout par ses opportunités (Opp=7.51/10).\n- Le point le plus faible de Bastia est le score Choix (0.00/10).\n\nValeurs brutes (non normalisées) de Bastia :\n- OppChoVec brut : 0.0605\n- Opp brut : 0.5621\n- Cho brut : 0.3467\n- Vec brut : 0.4962",
+      "metadata": {
+        "rank_total": 244,
+        "rank_opp4": 13,
+        "rank_vec": 205,
+        "rank_opp": 7,
+        "opp1_0_10": 1.2809,
+        "opp3_0_10": 8.6473,
+        "rank_cho": 360,
+        "commune": "Bastia",
+        "rank_opp2": 194,
+        "rank_opp1": 246,
+        "opp_0_10": 7.511616,
+        "opp2_0_10": 2.0964,
+        "rank_opp3": 151,
+        "opp4_0_10": 9.65,
+        "source": "oppchovec_betti_0_10",
+        "vec_0_10": 3.23177,
+        "cho_0_10": 0.0,
+        "oppchovec_0_10": 2.718648
+      },
+      "source_type": "oppchovec_scores",
+      "label": "Scores OppChoVec — Bastia"
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nClassement des communes — bien-être ressenti (bonheur + qualité de vie, échelle 1-5)\n(Seuil minimum 3 répondants par commune)\n\n  Rang Commune                     N répondants    Score /5\n  ────────────────────────────────────────────────────────────\n   1. Linguizzetta               N=  3 répondants   4.33/5 (moyen-fort)\n   2. Furiani                    N=  6 répondants   4.17/5 (moyen-fort)\n   3. Penta-di-Casinca           N=  4 répondants   4.00/5 (moyen-fort)\n   4. Porto-Vecchio              N=  7 répondants   4.00/5 (moyen-fort)\n   5. Ajaccio                    N= 51 répondants   3.74/5 (moyen-fort)\n   6. Alata                      N=  3 répondants   3.67/5 (moyen-fort)\n   7. Ghisonaccia                N=  3 répondants   3.67/5 (moyen-fort)\n   8. San-Martino-di-Lota        N=  3 répondants   3.67/5 (moyen-fort)\n   9. Aleria                     N=  6 répondants   3.60/5 (moyen-fort)\n  10. Bastelicaccia              N=  5 répondants   3.60/5 (moyen-fort)\n  11. Bastia                     N= 23 répondants   3.55/5 (moyen-fort)\n  12. Corte                      N= 50 répondants   3.52/5 (moyen-fort)\n  13. Biguglia                   N=  4 répondants   3.50/5 (moyen-fort)\n  14. Calvi                      N=  3 répondants   3.33/5 (moyen)\n  15. Borgo                      N=  3 répondants   3.00/5 (moyen)\n  16. Lucciana                   N=  5 répondants   2.50/5 (moyen)\n\n-> COMMUNE LA MIEUX ÉVALUÉE   : Linguizzetta (4.33/5, N=3)\n-> COMMUNE LA MOINS BIEN ÉVAL. : Lucciana (2.50/5, N=5)\n\nNote : Moyenne des réponses aux questions sur le bonheur général et la qualité de vie globale.",
+      "metadata": {
+        "source_type": "classement_communes",
+        "scope": "communes_bien_etre",
+        "criterion": "bien_etre"
+      },
+      "source_type": "enquete_scores_commune",
+      "label": "Scores satisfaction commune (subjectif/quanti)"
+    }
+  ],
+  "elapsed_rag_s": 45.9,
+  "meta": {
+    "max_hops": 5,
+    "k": 5,
+    "mistral_temp": 0.0,
+    "answerer": "haiku",
+    "ts": "2026-07-20T17:54:18.419816"
+  },
+  "raisonnement": "La réponse mobilise correctement les données quantitatives (OppChoVec, enquêtes citoyennes) pour montrer un découplage entre dynamisme économique et bien-être perçu. Elle signale les limites des données mais omet de préciser l'absence totale de verbatims/entretiens (Règle 3). La comparaison est bien structurée et nuancée.",
+  "section_observee": "Raisonnement comparatif / Comparaison contre-intuitive",
+  "comportement_attendu_selon_grille": "Réponse de fond avec comparaison explicite entre dynamisme économique et bien-être perçu. Mobilisation des données quantitatives (OppChoVec) et qualitatives (enquêtes citoyennes) avec nuance sur les limites.",
+  "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+  "coherence_comportement_observe": "oui",
+  "sources_inventaire": [
+    {
+      "source": "oppchovec_classement",
+      "type": "quanti"
+    },
+    {
+      "source": "methodology",
+      "type": "quanti"
+    },
+    {
+      "source": "data_comp (Corscia, Olmeta-di-Capocorso, Porto-Vecchio, Ajaccio, Bastia)",
+      "type": "quanti"
+    },
+    {
+      "source": "classement_communes (bien-être ressenti)",
+      "type": "quanti"
+    }
+  ],
+  "mislabelling_detecte": {
+    "regle_1_quali_quanti": "non",
+    "regle_2_surinterpretation_oppchovec": "non",
+    "regle_3_absence_quali_non_signalee": "oui — La réponse mentionne des 'verbatims' pour Bastia, mais aucune source qualitative (verbatims ou entretiens) n'est fournie dans les données. Le manque n'est pas signalé comme une limite majeure.",
+    "regle_4_extrapolation_sous_groupe": "non"
+  },
+  "mislabelling_flag": true,
+  "elements_specifiques_question": [
+    "communes dynamiques économiquement",
+    "bien-être perçu",
+    "nécessité de corrélation",
+    "comparaison contre-intuitive"
+  ],
+  "elements_traitement": [
+    {
+      "element": "communes dynamiques économiquement",
+      "traitement": "precis"
+    },
+    {
+      "element": "bien-être perçu",
+      "traitement": "precis"
+    },
+    {
+      "element": "nécessité de corrélation",
+      "traitement": "precis"
+    },
+    {
+      "element": "comparaison contre-intuitive",
+      "traitement": "precis"
+    }
+  ],
+  "pertinence": 4,
+  "pertinence_justif": "Tous les éléments spécifiques sont traités précisément. La réponse évite le détournement et propose une comparaison explicite. Cependant, l'absence de sources qualitatives (verbatims) n'est pas suffisamment signalée comme une limite majeure.",
+  "fondement_factuel": 4,
+  "fondement_factuel_justif": "Les affirmations s'appuient sur les sources fournies (OppChoVec, enquêtes citoyennes). Aucune surinterprétation des sous-indicateurs OppChoVec. La mention de 'verbatims' pour Bastia est erronée (aucune source quali fournie), mais cela n'affecte pas l'ensemble.",
+  "nuance_incertitude": 4,
+  "nuance_incertitude_justif": "La réponse est bien nuancée (ex. 'équilibre complexe', 'autres facteurs'). Les limites des données sont signalées, mais l'absence de verbatims aurait dû être explicitement mentionnée comme une lacune qualitative.",
+  "coherence_qualiquanti": 4,
+  "coherence_qualiquanti_justif": "Intégration ciblée des données quantitatives (OppChoVec, enquêtes citoyennes). La réponse évite de présenter des données quantitatives comme qualitatives. Cependant, la mention erronée de 'verbatims' pour Bastia introduit une incohérence mineure.",
+  "score_global": 4.0,
+  "error": null,
+  "elapsed_judge_s": 17.8
+}

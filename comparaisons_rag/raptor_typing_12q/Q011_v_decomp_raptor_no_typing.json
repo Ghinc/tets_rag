@@ -1,0 +1,1173 @@
+{
+  "excel_row": 11,
+  "config": "v_decomp_raptor_no_typing",
+  "orientation": "perception",
+  "question": "Que pensent les seniors du bien-être à Ajaccio ?",
+  "section": "Retrieval mono-commune",
+  "subsection": "Retrieval par sous-population",
+  "expected_type": "reponse_substantielle_attendue",
+  "rag_status": "ok",
+  "rag_elapsed_s": 80.3,
+  "n_sources": 65,
+  "n_subquestions": 5,
+  "answer": "### **Synthèse : Que pensent les seniors du bien-être à Ajaccio ?**\n\nLes seniors d’Ajaccio expriment une perception **contrastée** de leur bien-être, marquée par des satisfactions fortes sur certains aspects (sécurité, logement) et des insatisfactions profondes sur d’autres (santé, transports). Leur ressenti révèle des **écarts significatifs** avec la population générale, notamment sur des dimensions critiques pour leur qualité de vie quotidienne.\n\n---\n\n#### **1. Un cadre de vie globalement apprécié, mais des tensions majeures**\nLes seniors interrogés à Ajaccio **se sentent en sécurité** dans leur environnement (4,67/5 selon l’enquête citoyenne [SQ4]) et sont **satisfaits de leur logement** (4,00/5 [SQ4]). Ces points positifs contrastent avec des **préoccupations environnementales** (qualité de l’air, préservation de la nature), mentionnées dans les verbatims comme un déterminant clé de leur bien-être [SQ2].\n\nCependant, deux **défis majeurs** émergent :\n- **La santé** : les seniors évaluent ce domaine à **1,92/5** [SQ2], avec une insatisfaction extrême sur **l’attente pour les rendez-vous médicaux** (1,00/5) et **l’accès aux spécialistes** (1,33/5) [SQ2]. Pourtant, selon les données d’équipements communaux, Ajaccio dispose d’une offre médicale **quantitativement élevée** (80 médecins généralistes, 31 pharmacies [SQ3]), suggérant un **décalage entre l’offre et son accessibilité réelle** pour les seniors.\n- **Les transports** : notés **1,67/5** [SQ2], avec une critique récurrente des **transports en commun** (1,33/5) et de **l’encombrement routier** (1,67/5) [SQ4]. Bien que les indicateurs territoriaux montrent une **mobilité théorique élevée** (score OppChoVec de 8,99/10 [SQ1]), cette mesure ne reflète pas la **qualité perçue** des déplacements, cruciale pour les seniors.\n\n---\n\n#### **2. Des écarts marqués avec la population générale**\nLes seniors d’Ajaccio perçoivent leur bien-être **différemment** des autres habitants sur plusieurs dimensions clés [SQ5] :\n- **Santé** : leur insatisfaction (1,92/5) est **nettement plus forte** que celle de l’ensemble des Ajacciens (2,58/5) [SQ5], révélant des **besoins spécifiques non couverts** (délais d’attente, spécialistes).\n- **Transports** : leur score (1,67/5) est **inférieur à la moyenne communale** (2,21/5) [SQ5], confirmant une **vulnérabilité accrue** à la mobilité.\n- **Sécurité** : à l’inverse, les seniors se sentent **plus en sécurité** (4,67/5) que la population générale (3,81/5) [SQ5], suggérant une **adaptation différente** aux enjeux urbains.\n\nCes écarts soulignent que les **indicateurs territoriaux globaux** (comme le score OppChoVec de 5,78/10 [SQ1]) **masquent des disparités internes**, notamment liées à l’âge.\n\n---\n\n#### **3. Un bien-être influencé par des facteurs sociaux et culturels**\nLes verbatims des seniors mettent en avant deux **leviers d’épanouissement** :\n- **Les liens sociaux** : cités comme essentiels pour **éviter l’isolement** [SQ2], un enjeu critique pour cette tranche d’âge.\n- **La culture** : perçue comme un **moyen d’émancipation** et de bien-être personnel [SQ2].\n\nCependant, selon les indicateurs territoriaux, Ajaccio affiche une **faible diversité socio-professionnelle** (score OppChoVec de 1,96/10 [SQ3]), ce qui pourrait **limiter les opportunités de mixité** et renforcer les risques d’isolement pour les seniors.\n\n---\n\n#### **4. Un score territorial global élevé, mais peu représentatif des seniors**\nAjaccio obtient un **score OppChoVec global de 5,78/10** [SQ1], porté par :\n- Des **opportunités exceptionnelles** (10,00/10, 1er rang corse [SQ1]) : éducation, mobilité, couverture numérique.\n- Un **vécu modéré** (4,80/10 [SQ1]), reflétant un écart entre les ressources disponibles et leur concrétisation en bien-être quotidien.\n\n**Mais ce score ne reflète pas les réalités des seniors** :\n- La composante **\"Choix\"** (liberté effective) est **très faible** (1,27/10 [SQ1]), en partie due à une structure démographique peu favorable.\n- Les **données territoriales ne sont pas ventilées par âge** [SQ1], ce qui empêche d’isoler les spécificités des seniors.\n\n---\n\n### **Conclusion : un bien-être à deux vitesses pour les seniors ajacciens**\nLes seniors d’Ajaccio **bénéficient d’un cadre de vie sûr et d’un logement de qualité**, mais leur bien-être est **fortement entravé par des difficultés d’accès aux soins et aux transports**, des enjeux **sous-estimés par les indicateurs territoriaux globaux**. Leurs perceptions révèlent des **écarts importants** avec la population générale, notamment sur la santé et la mobilité, soulignant la nécessité d’une **approche ciblée** pour répondre à leurs besoins spécifiques.\n\n**Limites** :\n- L’échantillon de seniors interrogés est **très réduit** (N=3 [SQ2]), ce qui limite la généralisation des résultats.\n- Les **données territoriales objectives** (OppChoVec) ne permettent pas d’isoler les spécificités des seniors [SQ1].\n\n---",
+  "sub_questions": [
+    {
+      "idx": 1,
+      "question": "Quel est le score OppChoVec global de bien-être à Ajaccio (échelle communale), sachant que la ventilation par tranche d'âge, dont les seniors, n'est pas disponible ?",
+      "answer": "# Score OppChoVec global de bien-être à Ajaccio\n\nSelon les indicateurs territoriaux objectifs, **Ajaccio affiche un score OppChoVec global de 5,78/10**, ce qui la classe au **rang 19e sur 360 communes corses** — un positionnement élevé.\n\nCe score global masque cependant des disparités très marquées entre ses trois composantes :\n\n- **Opportunités (Opp) : 10,00/10** (rang 1er/360) — Ajaccio offre un accès exceptionnel aux ressources territoriales, notamment grâce à une excellente couverture numérique (9,35/10), une mobilité très élevée (8,99/10) et un niveau d'éducation bon (7,42/10).\n\n- **Choix (Cho) : 1,27/10** (rang 358e/360) — Cette composante s'effondre, reflétant une très faible liberté effective des individus, notamment en raison de l'absence quasi-totale de quartiers prioritaires et d'une structure démographique/électorale peu favorable.\n\n- **Vécu (Vec) : 4,80/10** (rang 41e/360) — Les réalisations concrètes des habitants restent modérées, traduisant des écarts entre les opportunités offertes et leur concrétisation en bien-être quotidien.\n\n**Important :** Ce score OppChoVec est calculé à l'échelle communale entière. Aucune ventilation par tranche d'âge (dont les seniors) n'est disponible dans les données territoriales objectives."
+    },
+    {
+      "idx": 2,
+      "question": "Quels sont les principaux thèmes émergents dans les verbatims des citoyens d'Ajaccio concernant le bien-être, avec une attention particulière aux mentions liées aux seniors (ex : accessibilité, santé, lien social) ?",
+      "answer": "# Thèmes émergents dans les verbatims des seniors d'Ajaccio\n\nSelon l'enquête citoyenne, les trois thèmes dominants exprimés par les seniors interrogés à Ajaccio (N=3, âge 65+) sont :\n\n## **1. Environnement et qualité de vie**\nDeux verbatims soulignent l'importance de la qualité de l'air, de l'eau, de la préservation de la nature et de l'aménagement du territoire comme déterminants du bien-être quotidien.\n\n## **2. Culture comme levier d'émancipation**\nDeux verbatims mettent en avant l'accès aux lieux culturels comme condition d'émancipation individuelle et de bien-être personnel.\n\n## **3. Relations sociales et communauté**\nDeux verbatims insistent sur l'importance des liens familiaux et sociaux pour éviter l'isolement et favoriser les échanges — un enjeu particulièrement critique pour les seniors.\n\n---\n\n## **Tensions majeures spécifiques aux seniors**\n\nLes scores de satisfaction révèlent deux domaines critiques pour cette population :\n\n- **Santé (1,92/5)** : selon l'enquête citoyenne, les seniors expriment une insatisfaction marquée concernant l'**attente pour les rendez-vous médicaux** (1,00/5) et l'accès aux **médecins spécialistes** (1,33/5).\n- **Transports (1,67/5)** : selon l'enquête citoyenne, les transports en commun (1,33/5) et l'encombrement routier (1,67/5) sont jugés très insatisfaisants par les trois répondants.\n\n**Confiance en l'avenir (2,33/5)** : selon l'enquête citoyenne, ce score particulièrement bas suggère une inquiétude partagée quant aux perspectives futures, alimentée par la perception d'un déclin des services essentiels (santé, transports, institutions).\n\n---\n\n**Limite importante** : cet échantillon est très réduit (N=3) et plusieurs verbatims ne sont pas exploitables, rendant impossible toute généralisation au-delà de ces trois répondants."
+    },
+    {
+      "idx": 3,
+      "question": "Quels indicateurs territoriaux objectifs (ex : offre de soins, transports, équipements publics) à Ajaccio sont susceptibles d'impacter le bien-être des seniors, selon les données disponibles ?",
+      "answer": "# Indicateurs territoriaux objectifs impactant le bien-être des seniors à Ajaccio\n\n## Offre de soins : un point critique\n\nSelon les données d'équipements communaux, Ajaccio dispose de **80 médecins généralistes, 31 pharmacies et 204 infirmiers**, mais seulement **1 service d'urgence**. Cependant, selon l'enquête citoyenne, les seniors d'Ajaccio expriment une **insatisfaction majeure sur la santé (1,92/5)**, particulièrement sur l'**attente pour les rendez-vous médicaux (1,00/5)** et l'**accès aux médecins spécialistes (1,33/5)**. Cette tension entre l'offre quantitative et la satisfaction perçue suggère des problèmes d'accessibilité ou de délais d'attente.\n\n## Transports : un obstacle majeur\n\nLes **transports en commun sont jugés très insatisfaisants (1,33/5)** selon l'enquête citoyenne, avec une critique récurrente de l'**encombrement routier (1,67/5)**. Bien que les indicateurs OppChoVec montrent un score de mobilité très élevé (Opp3 : 8,99/10), cette mesure capture l'accès théorique à la voiture et aux transports, non leur qualité réelle ou leur adéquation aux besoins des seniors. Cette divergence révèle un décalage entre les capacités théoriques et l'expérience vécue.\n\n## Diversité sociale et isolement potentiel\n\nSelon les indicateurs OppChoVec, Ajaccio affiche une **diversité socio-professionnelle très faible (Opp2 : 1,96/10, rang 216e/360)**. Cette homogénéité sociale peut limiter les opportunités de mixité et d'échanges pour les seniors, d'autant que les verbatims qualitatifs soulignent l'importance des **relations sociales pour éviter l'isolement**.\n\n## Environnement et qualité de vie\n\nSelon les entretiens qualitatifs, l'**environnement** (qualité de l'air, de l'eau, biodiversité) est un thème dominant pour les seniors interrogés, mais aucun indicateur territorial objectif spécifique à cet aspect n'est fourni dans les données disponibles."
+    },
+    {
+      "idx": 4,
+      "question": "Comment les seniors d'Ajaccio perçoivent-ils leur cadre de vie (environnement, sécurité, tranquillité) d'après les verbatims ou enquêtes spécifiques disponibles ?",
+      "answer": "# Perception du cadre de vie par les seniors d'Ajaccio\n\nSelon l'enquête citoyenne, les seniors d'Ajaccio (N=3 pour le groupe 65+) expriment une **satisfaction contrastée** de leur cadre de vie :\n\n## Points positifs\n**La sécurité est très bien perçue** (4,67/5), avec une majorité de réponses maximales, reflétant un sentiment de tranquillité dans leur environnement quotidien selon l'enquête citoyenne. Le **logement** est également très satisfaisant (4,00/5), avec une quasi-unanimité de réponses positives (3 réponses ★4).\n\n## Préoccupations majeures\nSelon les verbatims qualitatifs, l'**environnement** (qualité de l'air, de l'eau, biodiversité, aménagement du territoire) et les **transports** constituent des enjeux importants pour ce groupe. En effet, selon l'enquête citoyenne, les **transports** affichent le score le plus critique (1,67/5), avec une insatisfaction marquée concernant les transports en commun (1,33/5) et l'encombrement routier (1,67/5).\n\n## Contexte plus large\nÀ l'échelle communale, selon les données d'enquête citoyenne pour Ajaccio (47 répondants), l'**environnement** et la **santé** sont identifiés comme les dimensions prioritaires, ce qui converge avec les préoccupations exprimées par les seniors interrogés.\n\n**Limite importante** : l'échantillon de seniors (N=3) est très réduit et ne permet pas de généraliser les résultats à l'ensemble des seniors ajacciens."
+    },
+    {
+      "idx": 5,
+      "question": "Existe-t-il des écarts significatifs entre les perceptions des seniors et celles de l'ensemble de la population ajaccienne sur des dimensions clés du bien-être (ex : qualité des services, dynamisme social), selon les données d'enquêtes comparatives ?",
+      "answer": "# Écarts de perception entre seniors et ensemble de la population à Ajaccio\n\n## Données disponibles et limites\n\nLes données d'enquête citoyenne disponibles pour Ajaccio permettent une comparaison partielle : selon l'enquête citoyenne, le groupe des seniors (65+, N=3) peut être confronté aux scores globaux de la commune (N=51 répondants). **Attention : l'échantillon seniors est très réduit (N=3), ce qui limite fortement la robustesse des conclusions.**\n\n## Écarts significatifs identifiés\n\n**Santé — divergence majeure :**\nSelon l'enquête citoyenne, les seniors évaluent la santé à **1,92/5**, tandis que l'ensemble de la population la note à **2,58/5**. Les seniors expriment une insatisfaction particulièrement aiguë sur l'**attente pour les rendez-vous médicaux** (1,00/5) et les **médecins spécialistes** (1,33/5), révélant des besoins spécifiques liés à l'âge non satisfaits.\n\n**Transports — critique partagée mais plus intense chez les seniors :**\nSelon l'enquête citoyenne, les seniors notent les transports à **1,67/5** contre **2,21/5** pour l'ensemble. Les seniors dénoncent particulièrement les **transports en commun** (1,33/5) et l'**encombrement routier** (1,67/5), suggérant une vulnérabilité accrue à la mobilité.\n\n**Sécurité — perception inverse :**\nSelon l'enquête citoyenne, les seniors sont **plus satisfaits** (4,67/5) que la population générale (3,81/5), indiquant un sentiment de tranquillité spécifique à ce groupe.\n\n**Logement et emploi — convergence :**\nSelon l'enquête citoyenne, les deux groupes convergent sur le logement (seniors : 4,00/5 ; ensemble : 3,84/5) et l'emploi (seniors : 4,00/5 ; ensemble : 3,91/5).\n\n## Synthèse\n\nLes écarts les plus nets portent sur **santé** et **transports**, où les seniors expriment une insatisfaction structurellement plus forte, reflétant des besoins d'accessibilité et de services médicaux insuffisamment couverts à Ajaccio."
+    }
+  ],
+  "sources": [
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : age_range=65+, nom=Ajaccio (N=3 personnes)**\n\n**Themes dominants** :\n- **Environnement** (2 verbatims) : Qualité de l'air, de l'eau, préservation de la nature, biodiversité et aménagement du territoire.\n- **Culture** (2 verbatims) : Accès aux lieux culturels comme condition d'émancipation et de bien-être.\n- **Relations sociales et communauté** (2 verbatims) : Importance des liens familiaux et sociaux pour éviter l'isolement.\n\n**Points de convergence** :\n- **Environnement et qualité de vie** : Une même personne souligne l'importance de l'environnement dans la détermination de la qualité de vie, incluant des aspects comme la qualité de l'air, de l'eau, la biodiversité et l'aménagement du territoire.\n- **Culture comme levier d'émancipation** : Deux verbatims (dont un de la même personne) mettent en avant le rôle de la culture dans l'émancipation individuelle et le bien-être.\n- **Rôle des relations sociales** : Une personne insiste sur l'importance des relations sociales pour éviter l'isolement et favoriser les échanges.\n\n**Points de divergence** :\n- Aucun point de divergence flagrant n'est identifiable dans cet échantillon réduit. Les thèmes abordés sont complémentaires et ne présentent pas de contradiction apparente.\n\n**Signaux faibles** :\n- **Harmonisation vie publique/vie privée** : Une mention isolée sur l'importance d'harmoniser ces deux sphères, sans développement supplémentaire.\n- **Revenus** : Un verbatim sur les revenus, mais sans contenu exploitable (\"hyhyh\").\n\n**Limites de l'echantillon** :\n- **Taille très réduite (N=3)** : Impossible de généraliser ou d'identifier des tendances robustes.\n- **Diversité des profils** : Les trois répondants ont des statuts différents (fonctionnaire, autre, retraité), ce qui peut introduire des biais dans les comparaisons.\n- **Contenu partiellement illisible** : Certains verbatims (\"dedede\", \"sdsds\", \"hyhyh\") ne sont pas exploitables, réduisant encore la masse d'informations analysables.\n- **Thèmes non couverts** : Absence de verbatims sur des sujets comme le logement, la santé ou les transports (malgré un thème \"Transports\" mentionné sans contenu).",
+      "metadata": {
+        "rank": 0,
+        "type": "raptor_summary",
+        "view": "age_range*commune",
+        "num_chunks": 9,
+        "sub_question_idx": 1,
+        "sub_question": "Quel est le score OppChoVec global de bien-être à Ajaccio (échelle communale), sachant que la ventilation par tranche d'âge, dont les seniors, n'est pas disponible ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : cat_age=65+, commune=Ajaccio (N=3)**\n\n---\n\n### **Satisfaction globale**\nLes scores globaux de ce groupe de seniors à Ajaccio révèlent une satisfaction modérée à mitigée, avec des écarts notables entre les différentes dimensions évaluées.\n- **Bonheur** (3,67/5) et **Qualité de vie** (3,67/5) affichent des moyennes identiques, suggérant une perception globalement équilibrée de leur bien-être quotidien, sans enthousiasme marqué ni insatisfaction profonde.\n- **Confiance en l’avenir** (2,33/5) se détache significativement comme la dimension la plus faible, indiquant une inquiétude partagée quant aux perspectives futures (retraite, santé, services publics, etc.).\n\n---\n\n### **Toutes les dimensions — tableau complet (classées du score le plus élevé au plus faible)**\n\n| **Dimension**               | **Score moyen /5** | **Distribution des réponses**                                                                 |\n|-----------------------------|-------------------|---------------------------------------------------------------------------------------------|\n| **Sécurité**                | 4,67              | ★5 : 2  | ★4 : 1  | ★3 : 0  | ★2 : 0  | ★1 : 0  |\n| **Emploi**                  | 4,00              | ★5 : 1  | ★4 : 1  | ★3 : 1  | ★2 : 0  | ★1 : 0  |\n| **Logement**                | 4,00              | ★5 : 0  | ★4 : 3  | ★3 : 0  | ★2 : 0  | ★1 : 0  |\n| **Ratio vie pro/vie perso** | 4,33              | ★5 : 1  | ★4 : 2  | ★3 : 0  | ★2 : 0  | ★1 : 0  |\n| **Communauté et relations** | 3,83              | ★5 : 1  | ★4 : 2  | ★3 : 1  | ★2 : 0  | ★1 : 0  |\n| **Revenus**                 | 3,67              | ★5 : 0  | ★4 : 2  | ★3 : 1  | ★2 : 0  | ★1 : 0  |\n| **Culture**                 | 3,67              | ★5 : 0  | ★4 : 2  | ★3 : 1  | ★2 : 0  | ★1 : 0  |\n| **Services de proximité**    | 3,33              | ★5 : 0  | ★4 : 2  | ★3 : 0  | ★2 : 1  | ★1 : 0  |\n| **Réseau**                  | 3,33              | ★5 : 0  | ★4 : 2  | ★3 : 0  | ★2 : 1  | ★1 : 0  |\n| **Éducation**               | 3,00              | ★5 : 0  | ★4 : 1  | ★3 : 1  | ★2 : 1  | ★1 : 0  |\n| **Institutions**            | 2,67              | ★5 : 0  | ★4 : 0  | ★3 : 2  | ★2 : 1  | ★1 : 0  |\n| **Santé**                   | 1,92              | ★5 : 0  | ★4 : 1  | ★3 : 0  | ★2 : 2  | ★1 : 0  |\n| **Tourisme**                | 2,00              | ★5 : 0  | ★4 : 0  | ★3 : 1  | ★2 : 1  | ★1 : 1  |\n| **Transports**              | 1,67              | ★5 : 0  | ★4 : 0  | ★3 : 0  | ★2 : 1  | ★1 : 2  |\n\n---\n\n### **Patterns notables**\n1. **Sécurité et logement : points forts**\n   - La **sécurité** (4,67/5) est la dimension la mieux notée, avec une majorité de réponses maximales (★5), reflétant un sentiment de tranquillité dans leur environnement quotidien.\n   - Le **logement** (4,00/5) est également très bien perçu, avec une satisfaction quasi unanime (3 réponses ★4), suggérant un accès à des conditions de vie décentes.\n\n2. **Santé et transports : points de tension majeurs**\n   - La **santé** (1,92/5) est la dimension la plus critique, tirée vers le bas par des attentes très insatisfaites en matière d’**attente pour les rendez-vous médicaux** (1,00/5) et de **médecins spécialistes** (1,33/5). Les trois répondants expriment une insatisfaction marquée (★1 ou ★2) sur au moins un aspect de la santé.\n   - Les **transports** (1,67/5) sont globalement jugés très insatisfaisants, avec une critique récurrente des **transports en commun** (1,33/5) et de l’**encombrement routier** (1,67/5). Les trois répondants expriment une insatisfaction (★1 ou ★2).\n\n3. **Confiance en l’avenir : un enjeu transversal**\n   - Le score de **confiance en l’avenir** (2,33/5) est le plus bas, en cohérence avec les critiques sur les **institutions** (2,67/5) et les **services publics** (santé, transports). Les répondants semblent percevoir un déclin des services essentiels, susceptible d’alimenter une inquiétude pour leur qualité de vie future.\n\n4. **Divergences internes**\n   - **Éducation** : Le score moyen (3,00/5) masque des avis contrastés : un répondant est **peu satisfait** (★2), un autre **satisfait** (★4), et le troisième **neutre** (★3). Cette dimension ne fait pas consensus.\n   - **Services de proximité** : Deux répondants sont **satisfaits** (★4), un est **peu satisfait** (★2), reflétant des expériences locales inégales.\n\n5. **Équilibre vie professionnelle/vie personnelle**\n   - Malgré la retraite, le **ratio vie pro/vie perso** (4,33/5) est très bien",
+      "metadata": {
+        "rank": 1,
+        "type": "raptor_enquete_summary",
+        "view": "enquete_age_range*commune",
+        "num_chunks": 3,
+        "sub_question_idx": 1,
+        "sub_question": "Quel est le score OppChoVec global de bien-être à Ajaccio (échelle communale), sachant que la ventilation par tranche d'âge, dont les seniors, n'est pas disponible ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 68 ans (Seniors), Fonctionnaire, à Ajaccio, sur le thème 'Transports': dedede",
+      "metadata": {
+        "rank": 2,
+        "commune": "Ajaccio",
+        "genre": "Homme",
+        "age": 68,
+        "profession": "Fonctionnaire",
+        "dimension": "Transports",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 1,
+        "sub_question": "Quel est le score OppChoVec global de bien-être à Ajaccio (échelle communale), sachant que la ventilation par tranche d'âge, dont les seniors, n'est pas disponible ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 68 ans (Seniors), Fonctionnaire, à Ajaccio, sur le thème 'Environnement': sdsds",
+      "metadata": {
+        "rank": 3,
+        "commune": "Ajaccio",
+        "genre": "Homme",
+        "age": 68,
+        "profession": "Fonctionnaire",
+        "dimension": "Environnement",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 1,
+        "sub_question": "Quel est le score OppChoVec global de bien-être à Ajaccio (échelle communale), sachant que la ventilation par tranche d'âge, dont les seniors, n'est pas disponible ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 68 ans (Seniors), Fonctionnaire, à Ajaccio, sur le thème 'Revenus': hyhyh",
+      "metadata": {
+        "rank": 4,
+        "commune": "Ajaccio",
+        "genre": "Homme",
+        "age": 68,
+        "profession": "Fonctionnaire",
+        "dimension": "Revenus",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 1,
+        "sub_question": "Quel est le score OppChoVec global de bien-être à Ajaccio (échelle communale), sachant que la ventilation par tranche d'âge, dont les seniors, n'est pas disponible ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 69 ans (Seniors), Autre, à Ajaccio, sur le thème 'Ratio vie pro/ vie perso': Importance d harmoniser la vie publique et privée.",
+      "metadata": {
+        "rank": 5,
+        "commune": "Ajaccio",
+        "genre": "Femme",
+        "age": 69,
+        "profession": "Autre",
+        "dimension": "Ratio vie pro/ vie perso",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 1,
+        "sub_question": "Quel est le score OppChoVec global de bien-être à Ajaccio (échelle communale), sachant que la ventilation par tranche d'âge, dont les seniors, n'est pas disponible ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 69 ans (Seniors), Autre, à Ajaccio, sur le thème 'Culture': Importance d avoir l accès à la culture source d émancipation.",
+      "metadata": {
+        "rank": 6,
+        "commune": "Ajaccio",
+        "genre": "Femme",
+        "age": 69,
+        "profession": "Autre",
+        "dimension": "Culture",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 1,
+        "sub_question": "Quel est le score OppChoVec global de bien-être à Ajaccio (échelle communale), sachant que la ventilation par tranche d'âge, dont les seniors, n'est pas disponible ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nScores moyens de l'enquête QdV pour la commune de Ajaccio (47 répondants). Score bonheur moyen : 3.68/5. Score qualité de vie moyen : 3.89/5. Score confiance avenir moyen : 2.75/5. Scores moyens par dimension (1-5) : Transports=0.95, Éducation=2.35, Réseaux téléphoniques=2.38, Institutions=1.85, Tourisme=1.57, Sécurité=2.73, Santé=1.80, Situation pro=2.90, Revenus=2.50, Temps travail/perso=2.23, Logement=2.80, Services locaux=2.40, Culture=2.40, Soutien social=3.11, Vie associative=0.64. Dimensions les plus citées comme prioritaires : Environnement, Santé.",
+      "metadata": {
+        "rank": 7,
+        "source_type": "enquete_scores_commune",
+        "data_type": "quanti",
+        "commune": "Ajaccio",
+        "num_chunks": null,
+        "view_name": null,
+        "distance": 0.695,
+        "sub_question_idx": 1,
+        "sub_question": "Quel est le score OppChoVec global de bien-être à Ajaccio (échelle communale), sachant que la ventilation par tranche d'âge, dont les seniors, n'est pas disponible ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nProfil des répondants de la commune de Ajaccio — enquête qualité de vie en Corse\n\nNombre de répondants : 51\n\nRépartition par genre :\n  - Femme : 31 (60.8%)\n  - Homme : 20 (39.2%)\n\nRépartition par tranche d'âge :\n  - 45-59 : 20 (39.2%)\n  - 15-29 : 14 (27.5%)\n  - 30-44 : 11 (21.6%)\n  - 60-74 : 6 (11.8%)\n\nRépartition par catégorie socioprofessionnelle :\n  - SalariÃ©(e) â Cadre ou profession intermÃ©diaire : 17 (33.3%)\n  - Ãtudiant(e) : 12 (23.5%)\n  - Fonctionnaire : 9 (17.6%)\n  - SalariÃ©(e) â EmployÃ©(e) : 8 (15.7%)\n  - Travailleur(se) indÃ©pendant(e) / Entrepreneur(e) : 2 (3.9%)\n  - Autre : 2 (3.9%)\n  - RetraitÃ©(e) : 1 (2.0%)",
+      "metadata": {
+        "rank": 8,
+        "source_type": "communes_profil",
+        "data_type": "quanti",
+        "commune": "Ajaccio",
+        "num_chunks": null,
+        "view_name": null,
+        "distance": 0.403,
+        "sub_question_idx": 1,
+        "sub_question": "Quel est le score OppChoVec global de bien-être à Ajaccio (échelle communale), sachant que la ventilation par tranche d'âge, dont les seniors, n'est pas disponible ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nClassement des composantes OppChoVec — Corse entière (360 communes).\n\nSous-scores principaux (du plus élevé au plus faible) :\n  1. Cho (Choix)               : 8.79/10 (très élevé)\n  2. Opp (Opportunités)        : 3.87/10 (moyen)\n  3. Vec (Vécu)                : 3.46/10 (moyen)\n\n-> COMPOSANTE LA PLUS ELEVEE  : Cho (Choix) (8.79/10)\n-> COMPOSANTE LA PLUS FAIBLE  : Vec (Vécu) (3.46/10)\n\nSous-dimensions du score Opportunités (Opp), classées :\n  1. Opp4 — Accès TIC               : 6.02/10 (élevé)\n  2. Opp3 — Mobilité                : 5.26/10 (élevé)\n  3. Opp2 — Diversité sociale       : 2.60/10 (faible)\n  4. Opp1 — Éducation               : 2.35/10 (faible)\n\n-> SOUS-DIMENSION OPP LA PLUS ELEVEE : Opp4 — Accès TIC (6.02/10)\n-> SOUS-DIMENSION OPP LA PLUS FAIBLE : Opp1 — Éducation (2.35/10)",
+      "metadata": {
+        "rank": 9,
+        "type": "oppchovec_score",
+        "source_type": "oppchovec_scores",
+        "commune": null,
+        "oppchovec_0_10": null,
+        "opp_0_10": null,
+        "cho_0_10": null,
+        "vec_0_10": null,
+        "distance": 0.0,
+        "sub_question_idx": 1,
+        "sub_question": "Quel est le score OppChoVec global de bien-être à Ajaccio (échelle communale), sachant que la ventilation par tranche d'âge, dont les seniors, n'est pas disponible ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théoriqu",
+      "metadata": {
+        "rank": 10,
+        "type": "oppchovec_score",
+        "source_type": "oppchovec_scores",
+        "commune": "",
+        "oppchovec_0_10": null,
+        "opp_0_10": null,
+        "cho_0_10": null,
+        "vec_0_10": null,
+        "distance": 0.0,
+        "sub_question_idx": 1,
+        "sub_question": "Quel est le score OppChoVec global de bien-être à Ajaccio (échelle communale), sachant que la ventilation par tranche d'âge, dont les seniors, n'est pas disponible ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Ajaccio : 5.78/10 (élevé).\n\nSous-scores principaux de Ajaccio :\n  • Opportunités (Opp) : 10.00/10 (très élevé)  — rang 1e/360\n  • Choix (Cho)        : 1.27/10 (très faible)  — rang 358e/360\n  • Vécu (Vec)         : 4.80/10 (moyen)  — rang 41e/360\n  • OppChoVec global   : rang 19e/360\n\nSous-dimensions du score Opportunités (Opp) de Ajaccio :\n  • Opp1 — Éducation      : 7.42/10 (élevé)  [valeur brute : 5.760] — rang 24e/360\n  • Opp2 — Diversité soc. : 1.96/10 (faible)  [indice Theil : 0.2787] — rang 216e/360\n  • Opp3 — Mobilité       : 8.99/10 (très élevé)  [indicateur : 186.1/200] — rang 128e/360\n  • Opp4 — TIC (numérique): 9.35/10 (très élevé)  [couverture : 93.5%] — rang 24e/360\n\nAnalyse de Ajaccio :\n- Ajaccio se",
+      "metadata": {
+        "rank": 11,
+        "type": "oppchovec_score",
+        "source_type": "oppchovec_scores",
+        "commune": "Ajaccio",
+        "oppchovec_0_10": 5.779754,
+        "opp_0_10": 10.0,
+        "cho_0_10": 1.265509,
+        "vec_0_10": 4.796981,
+        "distance": 0.325,
+        "sub_question_idx": 1,
+        "sub_question": "Quel est le score OppChoVec global de bien-être à Ajaccio (échelle communale), sachant que la ventilation par tranche d'âge, dont les seniors, n'est pas disponible ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nEnquête Qualité de Vie en Corse — Description méthodologique\n\nPRÉSENTATION GÉNÉRALE\nEnquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.\nObjectif : recueillir les perceptions subjectives de la qualité de vie (QdV) et du bien-être,\nen complément des indicateurs o",
+      "metadata": {
+        "rank": 12,
+        "type": "methodology",
+        "source_type": "methodology",
+        "view_name": "enquete_methodology",
+        "sub_question_idx": 1,
+        "sub_question": "Quel est le score OppChoVec global de bien-être à Ajaccio (échelle communale), sachant que la ventilation par tranche d'âge, dont les seniors, n'est pas disponible ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : age_range=65+, nom=Ajaccio (N=3 personnes)**\n\n**Themes dominants** :\n- **Environnement** (2 verbatims) : Qualité de l'air, de l'eau, préservation de la nature, biodiversité et aménagement du territoire.\n- **Culture** (2 verbatims) : Accès aux lieux culturels comme condition d'émancipation et de bien-être.\n- **Relations sociales et communauté** (2 verbatims) : Importance des liens familiaux et sociaux pour éviter l'isolement.\n\n**Points de convergence** :\n- **Environnement et qualité de vie** : Une même personne souligne l'importance de l'environnement dans la détermination de la qualité de vie, incluant des aspects comme la qualité de l'air, de l'eau, la biodiversité et l'aménagement du territoire.\n- **Culture comme levier d'émancipation** : Deux verbatims (dont un de la même personne) mettent en avant le rôle de la culture dans l'émancipation individuelle et le bien-être.\n- **Rôle des relations sociales** : Une personne insiste sur l'importance des relations sociales pour éviter l'isolement et favoriser les échanges.\n\n**Points de divergence** :\n- Aucun point de divergence flagrant n'est identifiable dans cet échantillon réduit. Les thèmes abordés sont complémentaires et ne présentent pas de contradiction apparente.\n\n**Signaux faibles** :\n- **Harmonisation vie publique/vie privée** : Une mention isolée sur l'importance d'harmoniser ces deux sphères, sans développement supplémentaire.\n- **Revenus** : Un verbatim sur les revenus, mais sans contenu exploitable (\"hyhyh\").\n\n**Limites de l'echantillon** :\n- **Taille très réduite (N=3)** : Impossible de généraliser ou d'identifier des tendances robustes.\n- **Diversité des profils** : Les trois répondants ont des statuts différents (fonctionnaire, autre, retraité), ce qui peut introduire des biais dans les comparaisons.\n- **Contenu partiellement illisible** : Certains verbatims (\"dedede\", \"sdsds\", \"hyhyh\") ne sont pas exploitables, réduisant encore la masse d'informations analysables.\n- **Thèmes non couverts** : Absence de verbatims sur des sujets comme le logement, la santé ou les transports (malgré un thème \"Transports\" mentionné sans contenu).",
+      "metadata": {
+        "rank": 0,
+        "type": "raptor_summary",
+        "view": "age_range*commune",
+        "num_chunks": 9,
+        "sub_question_idx": 2,
+        "sub_question": "Quels sont les principaux thèmes émergents dans les verbatims des citoyens d'Ajaccio concernant le bien-être, avec une attention particulière aux mentions liées aux seniors (ex : accessibilité, santé, lien social) ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : cat_age=65+, commune=Ajaccio (N=3)**\n\n---\n\n### **Satisfaction globale**\nLes scores globaux de ce groupe de seniors à Ajaccio révèlent une satisfaction modérée à mitigée, avec des écarts notables entre les différentes dimensions évaluées.\n- **Bonheur** (3,67/5) et **Qualité de vie** (3,67/5) affichent des moyennes identiques, suggérant une perception globalement équilibrée de leur bien-être quotidien, sans enthousiasme marqué ni insatisfaction profonde.\n- **Confiance en l’avenir** (2,33/5) se détache significativement comme la dimension la plus faible, indiquant une inquiétude partagée quant aux perspectives futures (retraite, santé, services publics, etc.).\n\n---\n\n### **Toutes les dimensions — tableau complet (classées du score le plus élevé au plus faible)**\n\n| **Dimension**               | **Score moyen /5** | **Distribution des réponses**                                                                 |\n|-----------------------------|-------------------|---------------------------------------------------------------------------------------------|\n| **Sécurité**                | 4,67              | ★5 : 2  | ★4 : 1  | ★3 : 0  | ★2 : 0  | ★1 : 0  |\n| **Emploi**                  | 4,00              | ★5 : 1  | ★4 : 1  | ★3 : 1  | ★2 : 0  | ★1 : 0  |\n| **Logement**                | 4,00              | ★5 : 0  | ★4 : 3  | ★3 : 0  | ★2 : 0  | ★1 : 0  |\n| **Ratio vie pro/vie perso** | 4,33              | ★5 : 1  | ★4 : 2  | ★3 : 0  | ★2 : 0  | ★1 : 0  |\n| **Communauté et relations** | 3,83              | ★5 : 1  | ★4 : 2  | ★3 : 1  | ★2 : 0  | ★1 : 0  |\n| **Revenus**                 | 3,67              | ★5 : 0  | ★4 : 2  | ★3 : 1  | ★2 : 0  | ★1 : 0  |\n| **Culture**                 | 3,67              | ★5 : 0  | ★4 : 2  | ★3 : 1  | ★2 : 0  | ★1 : 0  |\n| **Services de proximité**    | 3,33              | ★5 : 0  | ★4 : 2  | ★3 : 0  | ★2 : 1  | ★1 : 0  |\n| **Réseau**                  | 3,33              | ★5 : 0  | ★4 : 2  | ★3 : 0  | ★2 : 1  | ★1 : 0  |\n| **Éducation**               | 3,00              | ★5 : 0  | ★4 : 1  | ★3 : 1  | ★2 : 1  | ★1 : 0  |\n| **Institutions**            | 2,67              | ★5 : 0  | ★4 : 0  | ★3 : 2  | ★2 : 1  | ★1 : 0  |\n| **Santé**                   | 1,92              | ★5 : 0  | ★4 : 1  | ★3 : 0  | ★2 : 2  | ★1 : 0  |\n| **Tourisme**                | 2,00              | ★5 : 0  | ★4 : 0  | ★3 : 1  | ★2 : 1  | ★1 : 1  |\n| **Transports**              | 1,67              | ★5 : 0  | ★4 : 0  | ★3 : 0  | ★2 : 1  | ★1 : 2  |\n\n---\n\n### **Patterns notables**\n1. **Sécurité et logement : points forts**\n   - La **sécurité** (4,67/5) est la dimension la mieux notée, avec une majorité de réponses maximales (★5), reflétant un sentiment de tranquillité dans leur environnement quotidien.\n   - Le **logement** (4,00/5) est également très bien perçu, avec une satisfaction quasi unanime (3 réponses ★4), suggérant un accès à des conditions de vie décentes.\n\n2. **Santé et transports : points de tension majeurs**\n   - La **santé** (1,92/5) est la dimension la plus critique, tirée vers le bas par des attentes très insatisfaites en matière d’**attente pour les rendez-vous médicaux** (1,00/5) et de **médecins spécialistes** (1,33/5). Les trois répondants expriment une insatisfaction marquée (★1 ou ★2) sur au moins un aspect de la santé.\n   - Les **transports** (1,67/5) sont globalement jugés très insatisfaisants, avec une critique récurrente des **transports en commun** (1,33/5) et de l’**encombrement routier** (1,67/5). Les trois répondants expriment une insatisfaction (★1 ou ★2).\n\n3. **Confiance en l’avenir : un enjeu transversal**\n   - Le score de **confiance en l’avenir** (2,33/5) est le plus bas, en cohérence avec les critiques sur les **institutions** (2,67/5) et les **services publics** (santé, transports). Les répondants semblent percevoir un déclin des services essentiels, susceptible d’alimenter une inquiétude pour leur qualité de vie future.\n\n4. **Divergences internes**\n   - **Éducation** : Le score moyen (3,00/5) masque des avis contrastés : un répondant est **peu satisfait** (★2), un autre **satisfait** (★4), et le troisième **neutre** (★3). Cette dimension ne fait pas consensus.\n   - **Services de proximité** : Deux répondants sont **satisfaits** (★4), un est **peu satisfait** (★2), reflétant des expériences locales inégales.\n\n5. **Équilibre vie professionnelle/vie personnelle**\n   - Malgré la retraite, le **ratio vie pro/vie perso** (4,33/5) est très bien",
+      "metadata": {
+        "rank": 1,
+        "type": "raptor_enquete_summary",
+        "view": "enquete_age_range*commune",
+        "num_chunks": 3,
+        "sub_question_idx": 2,
+        "sub_question": "Quels sont les principaux thèmes émergents dans les verbatims des citoyens d'Ajaccio concernant le bien-être, avec une attention particulière aux mentions liées aux seniors (ex : accessibilité, santé, lien social) ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 68 ans (Seniors), Fonctionnaire, à Ajaccio, sur le thème 'Transports': dedede",
+      "metadata": {
+        "rank": 2,
+        "commune": "Ajaccio",
+        "genre": "Homme",
+        "age": 68,
+        "profession": "Fonctionnaire",
+        "dimension": "Transports",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 2,
+        "sub_question": "Quels sont les principaux thèmes émergents dans les verbatims des citoyens d'Ajaccio concernant le bien-être, avec une attention particulière aux mentions liées aux seniors (ex : accessibilité, santé, lien social) ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 68 ans (Seniors), Fonctionnaire, à Ajaccio, sur le thème 'Environnement': sdsds",
+      "metadata": {
+        "rank": 3,
+        "commune": "Ajaccio",
+        "genre": "Homme",
+        "age": 68,
+        "profession": "Fonctionnaire",
+        "dimension": "Environnement",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 2,
+        "sub_question": "Quels sont les principaux thèmes émergents dans les verbatims des citoyens d'Ajaccio concernant le bien-être, avec une attention particulière aux mentions liées aux seniors (ex : accessibilité, santé, lien social) ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 68 ans (Seniors), Fonctionnaire, à Ajaccio, sur le thème 'Revenus': hyhyh",
+      "metadata": {
+        "rank": 4,
+        "commune": "Ajaccio",
+        "genre": "Homme",
+        "age": 68,
+        "profession": "Fonctionnaire",
+        "dimension": "Revenus",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 2,
+        "sub_question": "Quels sont les principaux thèmes émergents dans les verbatims des citoyens d'Ajaccio concernant le bien-être, avec une attention particulière aux mentions liées aux seniors (ex : accessibilité, santé, lien social) ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 69 ans (Seniors), Autre, à Ajaccio, sur le thème 'Ratio vie pro/ vie perso': Importance d harmoniser la vie publique et privée.",
+      "metadata": {
+        "rank": 5,
+        "commune": "Ajaccio",
+        "genre": "Femme",
+        "age": 69,
+        "profession": "Autre",
+        "dimension": "Ratio vie pro/ vie perso",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 2,
+        "sub_question": "Quels sont les principaux thèmes émergents dans les verbatims des citoyens d'Ajaccio concernant le bien-être, avec une attention particulière aux mentions liées aux seniors (ex : accessibilité, santé, lien social) ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 69 ans (Seniors), Autre, à Ajaccio, sur le thème 'Culture': Importance d avoir l accès à la culture source d émancipation.",
+      "metadata": {
+        "rank": 6,
+        "commune": "Ajaccio",
+        "genre": "Femme",
+        "age": 69,
+        "profession": "Autre",
+        "dimension": "Culture",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 2,
+        "sub_question": "Quels sont les principaux thèmes émergents dans les verbatims des citoyens d'Ajaccio concernant le bien-être, avec une attention particulière aux mentions liées aux seniors (ex : accessibilité, santé, lien social) ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "La commune de Ajaccio compte une part de 12.9% de cadres et professions intellectuelles supérieures, 16.6% d'ouvriers, avec un taux d'activité de 75.6%. 87.8% des emplois y sont salariés. On y trouve 5.0 points de contact postal, 11.0 hypermarchés ou supermarchés, 38.0 supérettes ou épiceries, 51.0 boulangeries et 21.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 15.0 écoles maternelles, 20.0 écoles élémentaires, 6.0 collèges et 6.0 lycées. Elle possède 1.0 services d'urgence, 80.0 médecins généralistes, 31.0 pharmacies, 204.0 infirmiers et 15.0 crèches. La sécurité est assurée par 1.0 postes de police ou gendarmerie. Il y a également 2.0 agences Pôle emploi. Le taux de pauvreté est de 14.3%, la part de logements vacants est de 3.3%, et celle des résidences secondaires est de 9.2%. Le taux de coups et blessures volontaires est de 4.0 pour 1 000 habitants. Le prix moyen au m² est de 3666.90984455959€, pour une surface moyenne des logements de 71.7937823834197 m².",
+      "metadata": {
+        "rank": 7,
+        "source_type": "communes_equipements",
+        "data_type": "quanti",
+        "commune": "Ajaccio",
+        "num_chunks": null,
+        "view_name": null,
+        "distance": 0.924,
+        "sub_question_idx": 2,
+        "sub_question": "Quels sont les principaux thèmes émergents dans les verbatims des citoyens d'Ajaccio concernant le bien-être, avec une attention particulière aux mentions liées aux seniors (ex : accessibilité, santé, lien social) ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nProfil des répondants de la commune de Ajaccio — enquête qualité de vie en Corse\n\nNombre de répondants : 51\n\nRépartition par genre :\n  - Femme : 31 (60.8%)\n  - Homme : 20 (39.2%)\n\nRépartition par tranche d'âge :\n  - 45-59 : 20 (39.2%)\n  - 15-29 : 14 (27.5%)\n  - 30-44 : 11 (21.6%)\n  - 60-74 : 6 (11.8%)\n\nRépartition par catégorie socioprofessionnelle :\n  - SalariÃ©(e) â Cadre ou profession intermÃ©diaire : 17 (33.3%)\n  - Ãtudiant(e) : 12 (23.5%)\n  - Fonctionnaire : 9 (17.6%)\n  - SalariÃ©(e) â EmployÃ©(e) : 8 (15.7%)\n  - Travailleur(se) indÃ©pendant(e) / Entrepreneur(e) : 2 (3.9%)\n  - Autre : 2 (3.9%)\n  - RetraitÃ©(e) : 1 (2.0%)",
+      "metadata": {
+        "rank": 8,
+        "source_type": "communes_profil",
+        "data_type": "quanti",
+        "commune": "Ajaccio",
+        "num_chunks": null,
+        "view_name": null,
+        "distance": 0.449,
+        "sub_question_idx": 2,
+        "sub_question": "Quels sont les principaux thèmes émergents dans les verbatims des citoyens d'Ajaccio concernant le bien-être, avec une attention particulière aux mentions liées aux seniors (ex : accessibilité, santé, lien social) ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nClassement des composantes OppChoVec — Corse entière (360 communes).\n\nSous-scores principaux (du plus élevé au plus faible) :\n  1. Cho (Choix)               : 8.79/10 (très élevé)\n  2. Opp (Opportunités)        : 3.87/10 (moyen)\n  3. Vec (Vécu)                : 3.46/10 (moyen)\n\n-> COMPOSANTE LA PLUS ELEVEE  : Cho (Choix) (8.79/10)\n-> COMPOSANTE LA PLUS FAIBLE  : Vec (Vécu) (3.46/10)\n\nSous-dimensions du score Opportunités (Opp), classées :\n  1. Opp4 — Accès TIC               : 6.02/10 (élevé)\n  2. Opp3 — Mobilité                : 5.26/10 (élevé)\n  3. Opp2 — Diversité sociale       : 2.60/10 (faible)\n  4. Opp1 — Éducation               : 2.35/10 (faible)\n\n-> SOUS-DIMENSION OPP LA PLUS ELEVEE : Opp4 — Accès TIC (6.02/10)\n-> SOUS-DIMENSION OPP LA PLUS FAIBLE : Opp1 — Éducation (2.35/10)",
+      "metadata": {
+        "rank": 9,
+        "type": "oppchovec_score",
+        "source_type": "oppchovec_scores",
+        "commune": null,
+        "oppchovec_0_10": null,
+        "opp_0_10": null,
+        "cho_0_10": null,
+        "vec_0_10": null,
+        "distance": 0.0,
+        "sub_question_idx": 2,
+        "sub_question": "Quels sont les principaux thèmes émergents dans les verbatims des citoyens d'Ajaccio concernant le bien-être, avec une attention particulière aux mentions liées aux seniors (ex : accessibilité, santé, lien social) ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théoriqu",
+      "metadata": {
+        "rank": 10,
+        "type": "oppchovec_score",
+        "source_type": "oppchovec_scores",
+        "commune": "",
+        "oppchovec_0_10": null,
+        "opp_0_10": null,
+        "cho_0_10": null,
+        "vec_0_10": null,
+        "distance": 0.0,
+        "sub_question_idx": 2,
+        "sub_question": "Quels sont les principaux thèmes émergents dans les verbatims des citoyens d'Ajaccio concernant le bien-être, avec une attention particulière aux mentions liées aux seniors (ex : accessibilité, santé, lien social) ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Ajaccio : 5.78/10 (élevé).\n\nSous-scores principaux de Ajaccio :\n  • Opportunités (Opp) : 10.00/10 (très élevé)  — rang 1e/360\n  • Choix (Cho)        : 1.27/10 (très faible)  — rang 358e/360\n  • Vécu (Vec)         : 4.80/10 (moyen)  — rang 41e/360\n  • OppChoVec global   : rang 19e/360\n\nSous-dimensions du score Opportunités (Opp) de Ajaccio :\n  • Opp1 — Éducation      : 7.42/10 (élevé)  [valeur brute : 5.760] — rang 24e/360\n  • Opp2 — Diversité soc. : 1.96/10 (faible)  [indice Theil : 0.2787] — rang 216e/360\n  • Opp3 — Mobilité       : 8.99/10 (très élevé)  [indicateur : 186.1/200] — rang 128e/360\n  • Opp4 — TIC (numérique): 9.35/10 (très élevé)  [couverture : 93.5%] — rang 24e/360\n\nAnalyse de Ajaccio :\n- Ajaccio se",
+      "metadata": {
+        "rank": 11,
+        "type": "oppchovec_score",
+        "source_type": "oppchovec_scores",
+        "commune": "Ajaccio",
+        "oppchovec_0_10": 5.779754,
+        "opp_0_10": 10.0,
+        "cho_0_10": 1.265509,
+        "vec_0_10": 4.796981,
+        "distance": 0.457,
+        "sub_question_idx": 2,
+        "sub_question": "Quels sont les principaux thèmes émergents dans les verbatims des citoyens d'Ajaccio concernant le bien-être, avec une attention particulière aux mentions liées aux seniors (ex : accessibilité, santé, lien social) ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nEnquête Qualité de Vie en Corse — Description méthodologique\n\nPRÉSENTATION GÉNÉRALE\nEnquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.\nObjectif : recueillir les perceptions subjectives de la qualité de vie (QdV) et du bien-être,\nen complément des indicateurs o",
+      "metadata": {
+        "rank": 12,
+        "type": "methodology",
+        "source_type": "methodology",
+        "view_name": "enquete_methodology",
+        "sub_question_idx": 2,
+        "sub_question": "Quels sont les principaux thèmes émergents dans les verbatims des citoyens d'Ajaccio concernant le bien-être, avec une attention particulière aux mentions liées aux seniors (ex : accessibilité, santé, lien social) ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : age_range=65+, nom=Ajaccio (N=3 personnes)**\n\n**Themes dominants** :\n- **Environnement** (2 verbatims) : Qualité de l'air, de l'eau, préservation de la nature, biodiversité et aménagement du territoire.\n- **Culture** (2 verbatims) : Accès aux lieux culturels comme condition d'émancipation et de bien-être.\n- **Relations sociales et communauté** (2 verbatims) : Importance des liens familiaux et sociaux pour éviter l'isolement.\n\n**Points de convergence** :\n- **Environnement et qualité de vie** : Une même personne souligne l'importance de l'environnement dans la détermination de la qualité de vie, incluant des aspects comme la qualité de l'air, de l'eau, la biodiversité et l'aménagement du territoire.\n- **Culture comme levier d'émancipation** : Deux verbatims (dont un de la même personne) mettent en avant le rôle de la culture dans l'émancipation individuelle et le bien-être.\n- **Rôle des relations sociales** : Une personne insiste sur l'importance des relations sociales pour éviter l'isolement et favoriser les échanges.\n\n**Points de divergence** :\n- Aucun point de divergence flagrant n'est identifiable dans cet échantillon réduit. Les thèmes abordés sont complémentaires et ne présentent pas de contradiction apparente.\n\n**Signaux faibles** :\n- **Harmonisation vie publique/vie privée** : Une mention isolée sur l'importance d'harmoniser ces deux sphères, sans développement supplémentaire.\n- **Revenus** : Un verbatim sur les revenus, mais sans contenu exploitable (\"hyhyh\").\n\n**Limites de l'echantillon** :\n- **Taille très réduite (N=3)** : Impossible de généraliser ou d'identifier des tendances robustes.\n- **Diversité des profils** : Les trois répondants ont des statuts différents (fonctionnaire, autre, retraité), ce qui peut introduire des biais dans les comparaisons.\n- **Contenu partiellement illisible** : Certains verbatims (\"dedede\", \"sdsds\", \"hyhyh\") ne sont pas exploitables, réduisant encore la masse d'informations analysables.\n- **Thèmes non couverts** : Absence de verbatims sur des sujets comme le logement, la santé ou les transports (malgré un thème \"Transports\" mentionné sans contenu).",
+      "metadata": {
+        "rank": 0,
+        "type": "raptor_summary",
+        "view": "age_range*commune",
+        "num_chunks": 9,
+        "sub_question_idx": 3,
+        "sub_question": "Quels indicateurs territoriaux objectifs (ex : offre de soins, transports, équipements publics) à Ajaccio sont susceptibles d'impacter le bien-être des seniors, selon les données disponibles ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : cat_age=65+, commune=Ajaccio (N=3)**\n\n---\n\n### **Satisfaction globale**\nLes scores globaux de ce groupe de seniors à Ajaccio révèlent une satisfaction modérée à mitigée, avec des écarts notables entre les différentes dimensions évaluées.\n- **Bonheur** (3,67/5) et **Qualité de vie** (3,67/5) affichent des moyennes identiques, suggérant une perception globalement équilibrée de leur bien-être quotidien, sans enthousiasme marqué ni insatisfaction profonde.\n- **Confiance en l’avenir** (2,33/5) se détache significativement comme la dimension la plus faible, indiquant une inquiétude partagée quant aux perspectives futures (retraite, santé, services publics, etc.).\n\n---\n\n### **Toutes les dimensions — tableau complet (classées du score le plus élevé au plus faible)**\n\n| **Dimension**               | **Score moyen /5** | **Distribution des réponses**                                                                 |\n|-----------------------------|-------------------|---------------------------------------------------------------------------------------------|\n| **Sécurité**                | 4,67              | ★5 : 2  | ★4 : 1  | ★3 : 0  | ★2 : 0  | ★1 : 0  |\n| **Emploi**                  | 4,00              | ★5 : 1  | ★4 : 1  | ★3 : 1  | ★2 : 0  | ★1 : 0  |\n| **Logement**                | 4,00              | ★5 : 0  | ★4 : 3  | ★3 : 0  | ★2 : 0  | ★1 : 0  |\n| **Ratio vie pro/vie perso** | 4,33              | ★5 : 1  | ★4 : 2  | ★3 : 0  | ★2 : 0  | ★1 : 0  |\n| **Communauté et relations** | 3,83              | ★5 : 1  | ★4 : 2  | ★3 : 1  | ★2 : 0  | ★1 : 0  |\n| **Revenus**                 | 3,67              | ★5 : 0  | ★4 : 2  | ★3 : 1  | ★2 : 0  | ★1 : 0  |\n| **Culture**                 | 3,67              | ★5 : 0  | ★4 : 2  | ★3 : 1  | ★2 : 0  | ★1 : 0  |\n| **Services de proximité**    | 3,33              | ★5 : 0  | ★4 : 2  | ★3 : 0  | ★2 : 1  | ★1 : 0  |\n| **Réseau**                  | 3,33              | ★5 : 0  | ★4 : 2  | ★3 : 0  | ★2 : 1  | ★1 : 0  |\n| **Éducation**               | 3,00              | ★5 : 0  | ★4 : 1  | ★3 : 1  | ★2 : 1  | ★1 : 0  |\n| **Institutions**            | 2,67              | ★5 : 0  | ★4 : 0  | ★3 : 2  | ★2 : 1  | ★1 : 0  |\n| **Santé**                   | 1,92              | ★5 : 0  | ★4 : 1  | ★3 : 0  | ★2 : 2  | ★1 : 0  |\n| **Tourisme**                | 2,00              | ★5 : 0  | ★4 : 0  | ★3 : 1  | ★2 : 1  | ★1 : 1  |\n| **Transports**              | 1,67              | ★5 : 0  | ★4 : 0  | ★3 : 0  | ★2 : 1  | ★1 : 2  |\n\n---\n\n### **Patterns notables**\n1. **Sécurité et logement : points forts**\n   - La **sécurité** (4,67/5) est la dimension la mieux notée, avec une majorité de réponses maximales (★5), reflétant un sentiment de tranquillité dans leur environnement quotidien.\n   - Le **logement** (4,00/5) est également très bien perçu, avec une satisfaction quasi unanime (3 réponses ★4), suggérant un accès à des conditions de vie décentes.\n\n2. **Santé et transports : points de tension majeurs**\n   - La **santé** (1,92/5) est la dimension la plus critique, tirée vers le bas par des attentes très insatisfaites en matière d’**attente pour les rendez-vous médicaux** (1,00/5) et de **médecins spécialistes** (1,33/5). Les trois répondants expriment une insatisfaction marquée (★1 ou ★2) sur au moins un aspect de la santé.\n   - Les **transports** (1,67/5) sont globalement jugés très insatisfaisants, avec une critique récurrente des **transports en commun** (1,33/5) et de l’**encombrement routier** (1,67/5). Les trois répondants expriment une insatisfaction (★1 ou ★2).\n\n3. **Confiance en l’avenir : un enjeu transversal**\n   - Le score de **confiance en l’avenir** (2,33/5) est le plus bas, en cohérence avec les critiques sur les **institutions** (2,67/5) et les **services publics** (santé, transports). Les répondants semblent percevoir un déclin des services essentiels, susceptible d’alimenter une inquiétude pour leur qualité de vie future.\n\n4. **Divergences internes**\n   - **Éducation** : Le score moyen (3,00/5) masque des avis contrastés : un répondant est **peu satisfait** (★2), un autre **satisfait** (★4), et le troisième **neutre** (★3). Cette dimension ne fait pas consensus.\n   - **Services de proximité** : Deux répondants sont **satisfaits** (★4), un est **peu satisfait** (★2), reflétant des expériences locales inégales.\n\n5. **Équilibre vie professionnelle/vie personnelle**\n   - Malgré la retraite, le **ratio vie pro/vie perso** (4,33/5) est très bien",
+      "metadata": {
+        "rank": 1,
+        "type": "raptor_enquete_summary",
+        "view": "enquete_age_range*commune",
+        "num_chunks": 3,
+        "sub_question_idx": 3,
+        "sub_question": "Quels indicateurs territoriaux objectifs (ex : offre de soins, transports, équipements publics) à Ajaccio sont susceptibles d'impacter le bien-être des seniors, selon les données disponibles ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 68 ans (Seniors), Fonctionnaire, à Ajaccio, sur le thème 'Transports': dedede",
+      "metadata": {
+        "rank": 2,
+        "commune": "Ajaccio",
+        "genre": "Homme",
+        "age": 68,
+        "profession": "Fonctionnaire",
+        "dimension": "Transports",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 3,
+        "sub_question": "Quels indicateurs territoriaux objectifs (ex : offre de soins, transports, équipements publics) à Ajaccio sont susceptibles d'impacter le bien-être des seniors, selon les données disponibles ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 68 ans (Seniors), Fonctionnaire, à Ajaccio, sur le thème 'Environnement': sdsds",
+      "metadata": {
+        "rank": 3,
+        "commune": "Ajaccio",
+        "genre": "Homme",
+        "age": 68,
+        "profession": "Fonctionnaire",
+        "dimension": "Environnement",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 3,
+        "sub_question": "Quels indicateurs territoriaux objectifs (ex : offre de soins, transports, équipements publics) à Ajaccio sont susceptibles d'impacter le bien-être des seniors, selon les données disponibles ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 68 ans (Seniors), Fonctionnaire, à Ajaccio, sur le thème 'Revenus': hyhyh",
+      "metadata": {
+        "rank": 4,
+        "commune": "Ajaccio",
+        "genre": "Homme",
+        "age": 68,
+        "profession": "Fonctionnaire",
+        "dimension": "Revenus",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 3,
+        "sub_question": "Quels indicateurs territoriaux objectifs (ex : offre de soins, transports, équipements publics) à Ajaccio sont susceptibles d'impacter le bien-être des seniors, selon les données disponibles ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 69 ans (Seniors), Autre, à Ajaccio, sur le thème 'Ratio vie pro/ vie perso': Importance d harmoniser la vie publique et privée.",
+      "metadata": {
+        "rank": 5,
+        "commune": "Ajaccio",
+        "genre": "Femme",
+        "age": 69,
+        "profession": "Autre",
+        "dimension": "Ratio vie pro/ vie perso",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 3,
+        "sub_question": "Quels indicateurs territoriaux objectifs (ex : offre de soins, transports, équipements publics) à Ajaccio sont susceptibles d'impacter le bien-être des seniors, selon les données disponibles ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 69 ans (Seniors), Autre, à Ajaccio, sur le thème 'Culture': Importance d avoir l accès à la culture source d émancipation.",
+      "metadata": {
+        "rank": 6,
+        "commune": "Ajaccio",
+        "genre": "Femme",
+        "age": 69,
+        "profession": "Autre",
+        "dimension": "Culture",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 3,
+        "sub_question": "Quels indicateurs territoriaux objectifs (ex : offre de soins, transports, équipements publics) à Ajaccio sont susceptibles d'impacter le bien-être des seniors, selon les données disponibles ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nScores moyens de l'enquête QdV pour la commune de Ajaccio (47 répondants). Score bonheur moyen : 3.68/5. Score qualité de vie moyen : 3.89/5. Score confiance avenir moyen : 2.75/5. Scores moyens par dimension (1-5) : Transports=0.95, Éducation=2.35, Réseaux téléphoniques=2.38, Institutions=1.85, Tourisme=1.57, Sécurité=2.73, Santé=1.80, Situation pro=2.90, Revenus=2.50, Temps travail/perso=2.23, Logement=2.80, Services locaux=2.40, Culture=2.40, Soutien social=3.11, Vie associative=0.64. Dimensions les plus citées comme prioritaires : Environnement, Santé.",
+      "metadata": {
+        "rank": 7,
+        "source_type": "enquete_scores_commune",
+        "data_type": "quanti",
+        "commune": "Ajaccio",
+        "num_chunks": null,
+        "view_name": null,
+        "distance": 0.729,
+        "sub_question_idx": 3,
+        "sub_question": "Quels indicateurs territoriaux objectifs (ex : offre de soins, transports, équipements publics) à Ajaccio sont susceptibles d'impacter le bien-être des seniors, selon les données disponibles ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "La commune de Ajaccio compte une part de 12.9% de cadres et professions intellectuelles supérieures, 16.6% d'ouvriers, avec un taux d'activité de 75.6%. 87.8% des emplois y sont salariés. On y trouve 5.0 points de contact postal, 11.0 hypermarchés ou supermarchés, 38.0 supérettes ou épiceries, 51.0 boulangeries et 21.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 15.0 écoles maternelles, 20.0 écoles élémentaires, 6.0 collèges et 6.0 lycées. Elle possède 1.0 services d'urgence, 80.0 médecins généralistes, 31.0 pharmacies, 204.0 infirmiers et 15.0 crèches. La sécurité est assurée par 1.0 postes de police ou gendarmerie. Il y a également 2.0 agences Pôle emploi. Le taux de pauvreté est de 14.3%, la part de logements vacants est de 3.3%, et celle des résidences secondaires est de 9.2%. Le taux de coups et blessures volontaires est de 4.0 pour 1 000 habitants. Le prix moyen au m² est de 3666.90984455959€, pour une surface moyenne des logements de 71.7937823834197 m².",
+      "metadata": {
+        "rank": 8,
+        "source_type": "communes_equipements",
+        "data_type": "quanti",
+        "commune": "Ajaccio",
+        "num_chunks": null,
+        "view_name": null,
+        "distance": 0.821,
+        "sub_question_idx": 3,
+        "sub_question": "Quels indicateurs territoriaux objectifs (ex : offre de soins, transports, équipements publics) à Ajaccio sont susceptibles d'impacter le bien-être des seniors, selon les données disponibles ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nProfil des répondants de la commune de Ajaccio — enquête qualité de vie en Corse\n\nNombre de répondants : 51\n\nRépartition par genre :\n  - Femme : 31 (60.8%)\n  - Homme : 20 (39.2%)\n\nRépartition par tranche d'âge :\n  - 45-59 : 20 (39.2%)\n  - 15-29 : 14 (27.5%)\n  - 30-44 : 11 (21.6%)\n  - 60-74 : 6 (11.8%)\n\nRépartition par catégorie socioprofessionnelle :\n  - SalariÃ©(e) â Cadre ou profession intermÃ©diaire : 17 (33.3%)\n  - Ãtudiant(e) : 12 (23.5%)\n  - Fonctionnaire : 9 (17.6%)\n  - SalariÃ©(e) â EmployÃ©(e) : 8 (15.7%)\n  - Travailleur(se) indÃ©pendant(e) / Entrepreneur(e) : 2 (3.9%)\n  - Autre : 2 (3.9%)\n  - RetraitÃ©(e) : 1 (2.0%)",
+      "metadata": {
+        "rank": 9,
+        "source_type": "communes_profil",
+        "data_type": "quanti",
+        "commune": "Ajaccio",
+        "num_chunks": null,
+        "view_name": null,
+        "distance": 0.422,
+        "sub_question_idx": 3,
+        "sub_question": "Quels indicateurs territoriaux objectifs (ex : offre de soins, transports, équipements publics) à Ajaccio sont susceptibles d'impacter le bien-être des seniors, selon les données disponibles ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théoriqu",
+      "metadata": {
+        "rank": 10,
+        "type": "oppchovec_score",
+        "source_type": "oppchovec_scores",
+        "commune": "",
+        "oppchovec_0_10": null,
+        "opp_0_10": null,
+        "cho_0_10": null,
+        "vec_0_10": null,
+        "distance": 0.0,
+        "sub_question_idx": 3,
+        "sub_question": "Quels indicateurs territoriaux objectifs (ex : offre de soins, transports, équipements publics) à Ajaccio sont susceptibles d'impacter le bien-être des seniors, selon les données disponibles ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Ajaccio : 5.78/10 (élevé).\n\nSous-scores principaux de Ajaccio :\n  • Opportunités (Opp) : 10.00/10 (très élevé)  — rang 1e/360\n  • Choix (Cho)        : 1.27/10 (très faible)  — rang 358e/360\n  • Vécu (Vec)         : 4.80/10 (moyen)  — rang 41e/360\n  • OppChoVec global   : rang 19e/360\n\nSous-dimensions du score Opportunités (Opp) de Ajaccio :\n  • Opp1 — Éducation      : 7.42/10 (élevé)  [valeur brute : 5.760] — rang 24e/360\n  • Opp2 — Diversité soc. : 1.96/10 (faible)  [indice Theil : 0.2787] — rang 216e/360\n  • Opp3 — Mobilité       : 8.99/10 (très élevé)  [indicateur : 186.1/200] — rang 128e/360\n  • Opp4 — TIC (numérique): 9.35/10 (très élevé)  [couverture : 93.5%] — rang 24e/360\n\nAnalyse de Ajaccio :\n- Ajaccio se",
+      "metadata": {
+        "rank": 11,
+        "type": "oppchovec_score",
+        "source_type": "oppchovec_scores",
+        "commune": "Ajaccio",
+        "oppchovec_0_10": 5.779754,
+        "opp_0_10": 10.0,
+        "cho_0_10": 1.265509,
+        "vec_0_10": 4.796981,
+        "distance": 0.392,
+        "sub_question_idx": 3,
+        "sub_question": "Quels indicateurs territoriaux objectifs (ex : offre de soins, transports, équipements publics) à Ajaccio sont susceptibles d'impacter le bien-être des seniors, selon les données disponibles ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nEnquête Qualité de Vie en Corse — Description méthodologique\n\nPRÉSENTATION GÉNÉRALE\nEnquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.\nObjectif : recueillir les perceptions subjectives de la qualité de vie (QdV) et du bien-être,\nen complément des indicateurs o",
+      "metadata": {
+        "rank": 12,
+        "type": "methodology",
+        "source_type": "methodology",
+        "view_name": "enquete_methodology",
+        "sub_question_idx": 3,
+        "sub_question": "Quels indicateurs territoriaux objectifs (ex : offre de soins, transports, équipements publics) à Ajaccio sont susceptibles d'impacter le bien-être des seniors, selon les données disponibles ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : age_range=65+, nom=Ajaccio (N=3 personnes)**\n\n**Themes dominants** :\n- **Environnement** (2 verbatims) : Qualité de l'air, de l'eau, préservation de la nature, biodiversité et aménagement du territoire.\n- **Culture** (2 verbatims) : Accès aux lieux culturels comme condition d'émancipation et de bien-être.\n- **Relations sociales et communauté** (2 verbatims) : Importance des liens familiaux et sociaux pour éviter l'isolement.\n\n**Points de convergence** :\n- **Environnement et qualité de vie** : Une même personne souligne l'importance de l'environnement dans la détermination de la qualité de vie, incluant des aspects comme la qualité de l'air, de l'eau, la biodiversité et l'aménagement du territoire.\n- **Culture comme levier d'émancipation** : Deux verbatims (dont un de la même personne) mettent en avant le rôle de la culture dans l'émancipation individuelle et le bien-être.\n- **Rôle des relations sociales** : Une personne insiste sur l'importance des relations sociales pour éviter l'isolement et favoriser les échanges.\n\n**Points de divergence** :\n- Aucun point de divergence flagrant n'est identifiable dans cet échantillon réduit. Les thèmes abordés sont complémentaires et ne présentent pas de contradiction apparente.\n\n**Signaux faibles** :\n- **Harmonisation vie publique/vie privée** : Une mention isolée sur l'importance d'harmoniser ces deux sphères, sans développement supplémentaire.\n- **Revenus** : Un verbatim sur les revenus, mais sans contenu exploitable (\"hyhyh\").\n\n**Limites de l'echantillon** :\n- **Taille très réduite (N=3)** : Impossible de généraliser ou d'identifier des tendances robustes.\n- **Diversité des profils** : Les trois répondants ont des statuts différents (fonctionnaire, autre, retraité), ce qui peut introduire des biais dans les comparaisons.\n- **Contenu partiellement illisible** : Certains verbatims (\"dedede\", \"sdsds\", \"hyhyh\") ne sont pas exploitables, réduisant encore la masse d'informations analysables.\n- **Thèmes non couverts** : Absence de verbatims sur des sujets comme le logement, la santé ou les transports (malgré un thème \"Transports\" mentionné sans contenu).",
+      "metadata": {
+        "rank": 0,
+        "type": "raptor_summary",
+        "view": "age_range*commune",
+        "num_chunks": 9,
+        "sub_question_idx": 4,
+        "sub_question": "Comment les seniors d'Ajaccio perçoivent-ils leur cadre de vie (environnement, sécurité, tranquillité) d'après les verbatims ou enquêtes spécifiques disponibles ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : cat_age=65+, commune=Ajaccio (N=3)**\n\n---\n\n### **Satisfaction globale**\nLes scores globaux de ce groupe de seniors à Ajaccio révèlent une satisfaction modérée à mitigée, avec des écarts notables entre les différentes dimensions évaluées.\n- **Bonheur** (3,67/5) et **Qualité de vie** (3,67/5) affichent des moyennes identiques, suggérant une perception globalement équilibrée de leur bien-être quotidien, sans enthousiasme marqué ni insatisfaction profonde.\n- **Confiance en l’avenir** (2,33/5) se détache significativement comme la dimension la plus faible, indiquant une inquiétude partagée quant aux perspectives futures (retraite, santé, services publics, etc.).\n\n---\n\n### **Toutes les dimensions — tableau complet (classées du score le plus élevé au plus faible)**\n\n| **Dimension**               | **Score moyen /5** | **Distribution des réponses**                                                                 |\n|-----------------------------|-------------------|---------------------------------------------------------------------------------------------|\n| **Sécurité**                | 4,67              | ★5 : 2  | ★4 : 1  | ★3 : 0  | ★2 : 0  | ★1 : 0  |\n| **Emploi**                  | 4,00              | ★5 : 1  | ★4 : 1  | ★3 : 1  | ★2 : 0  | ★1 : 0  |\n| **Logement**                | 4,00              | ★5 : 0  | ★4 : 3  | ★3 : 0  | ★2 : 0  | ★1 : 0  |\n| **Ratio vie pro/vie perso** | 4,33              | ★5 : 1  | ★4 : 2  | ★3 : 0  | ★2 : 0  | ★1 : 0  |\n| **Communauté et relations** | 3,83              | ★5 : 1  | ★4 : 2  | ★3 : 1  | ★2 : 0  | ★1 : 0  |\n| **Revenus**                 | 3,67              | ★5 : 0  | ★4 : 2  | ★3 : 1  | ★2 : 0  | ★1 : 0  |\n| **Culture**                 | 3,67              | ★5 : 0  | ★4 : 2  | ★3 : 1  | ★2 : 0  | ★1 : 0  |\n| **Services de proximité**    | 3,33              | ★5 : 0  | ★4 : 2  | ★3 : 0  | ★2 : 1  | ★1 : 0  |\n| **Réseau**                  | 3,33              | ★5 : 0  | ★4 : 2  | ★3 : 0  | ★2 : 1  | ★1 : 0  |\n| **Éducation**               | 3,00              | ★5 : 0  | ★4 : 1  | ★3 : 1  | ★2 : 1  | ★1 : 0  |\n| **Institutions**            | 2,67              | ★5 : 0  | ★4 : 0  | ★3 : 2  | ★2 : 1  | ★1 : 0  |\n| **Santé**                   | 1,92              | ★5 : 0  | ★4 : 1  | ★3 : 0  | ★2 : 2  | ★1 : 0  |\n| **Tourisme**                | 2,00              | ★5 : 0  | ★4 : 0  | ★3 : 1  | ★2 : 1  | ★1 : 1  |\n| **Transports**              | 1,67              | ★5 : 0  | ★4 : 0  | ★3 : 0  | ★2 : 1  | ★1 : 2  |\n\n---\n\n### **Patterns notables**\n1. **Sécurité et logement : points forts**\n   - La **sécurité** (4,67/5) est la dimension la mieux notée, avec une majorité de réponses maximales (★5), reflétant un sentiment de tranquillité dans leur environnement quotidien.\n   - Le **logement** (4,00/5) est également très bien perçu, avec une satisfaction quasi unanime (3 réponses ★4), suggérant un accès à des conditions de vie décentes.\n\n2. **Santé et transports : points de tension majeurs**\n   - La **santé** (1,92/5) est la dimension la plus critique, tirée vers le bas par des attentes très insatisfaites en matière d’**attente pour les rendez-vous médicaux** (1,00/5) et de **médecins spécialistes** (1,33/5). Les trois répondants expriment une insatisfaction marquée (★1 ou ★2) sur au moins un aspect de la santé.\n   - Les **transports** (1,67/5) sont globalement jugés très insatisfaisants, avec une critique récurrente des **transports en commun** (1,33/5) et de l’**encombrement routier** (1,67/5). Les trois répondants expriment une insatisfaction (★1 ou ★2).\n\n3. **Confiance en l’avenir : un enjeu transversal**\n   - Le score de **confiance en l’avenir** (2,33/5) est le plus bas, en cohérence avec les critiques sur les **institutions** (2,67/5) et les **services publics** (santé, transports). Les répondants semblent percevoir un déclin des services essentiels, susceptible d’alimenter une inquiétude pour leur qualité de vie future.\n\n4. **Divergences internes**\n   - **Éducation** : Le score moyen (3,00/5) masque des avis contrastés : un répondant est **peu satisfait** (★2), un autre **satisfait** (★4), et le troisième **neutre** (★3). Cette dimension ne fait pas consensus.\n   - **Services de proximité** : Deux répondants sont **satisfaits** (★4), un est **peu satisfait** (★2), reflétant des expériences locales inégales.\n\n5. **Équilibre vie professionnelle/vie personnelle**\n   - Malgré la retraite, le **ratio vie pro/vie perso** (4,33/5) est très bien",
+      "metadata": {
+        "rank": 1,
+        "type": "raptor_enquete_summary",
+        "view": "enquete_age_range*commune",
+        "num_chunks": 3,
+        "sub_question_idx": 4,
+        "sub_question": "Comment les seniors d'Ajaccio perçoivent-ils leur cadre de vie (environnement, sécurité, tranquillité) d'après les verbatims ou enquêtes spécifiques disponibles ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 68 ans (Seniors), Fonctionnaire, à Ajaccio, sur le thème 'Transports': dedede",
+      "metadata": {
+        "rank": 2,
+        "commune": "Ajaccio",
+        "genre": "Homme",
+        "age": 68,
+        "profession": "Fonctionnaire",
+        "dimension": "Transports",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 4,
+        "sub_question": "Comment les seniors d'Ajaccio perçoivent-ils leur cadre de vie (environnement, sécurité, tranquillité) d'après les verbatims ou enquêtes spécifiques disponibles ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 68 ans (Seniors), Fonctionnaire, à Ajaccio, sur le thème 'Environnement': sdsds",
+      "metadata": {
+        "rank": 3,
+        "commune": "Ajaccio",
+        "genre": "Homme",
+        "age": 68,
+        "profession": "Fonctionnaire",
+        "dimension": "Environnement",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 4,
+        "sub_question": "Comment les seniors d'Ajaccio perçoivent-ils leur cadre de vie (environnement, sécurité, tranquillité) d'après les verbatims ou enquêtes spécifiques disponibles ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 68 ans (Seniors), Fonctionnaire, à Ajaccio, sur le thème 'Revenus': hyhyh",
+      "metadata": {
+        "rank": 4,
+        "commune": "Ajaccio",
+        "genre": "Homme",
+        "age": 68,
+        "profession": "Fonctionnaire",
+        "dimension": "Revenus",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 4,
+        "sub_question": "Comment les seniors d'Ajaccio perçoivent-ils leur cadre de vie (environnement, sécurité, tranquillité) d'après les verbatims ou enquêtes spécifiques disponibles ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 69 ans (Seniors), Autre, à Ajaccio, sur le thème 'Ratio vie pro/ vie perso': Importance d harmoniser la vie publique et privée.",
+      "metadata": {
+        "rank": 5,
+        "commune": "Ajaccio",
+        "genre": "Femme",
+        "age": 69,
+        "profession": "Autre",
+        "dimension": "Ratio vie pro/ vie perso",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 4,
+        "sub_question": "Comment les seniors d'Ajaccio perçoivent-ils leur cadre de vie (environnement, sécurité, tranquillité) d'après les verbatims ou enquêtes spécifiques disponibles ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 69 ans (Seniors), Autre, à Ajaccio, sur le thème 'Culture': Importance d avoir l accès à la culture source d émancipation.",
+      "metadata": {
+        "rank": 6,
+        "commune": "Ajaccio",
+        "genre": "Femme",
+        "age": 69,
+        "profession": "Autre",
+        "dimension": "Culture",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 4,
+        "sub_question": "Comment les seniors d'Ajaccio perçoivent-ils leur cadre de vie (environnement, sécurité, tranquillité) d'après les verbatims ou enquêtes spécifiques disponibles ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nScores moyens de l'enquête QdV pour la commune de Ajaccio (47 répondants). Score bonheur moyen : 3.68/5. Score qualité de vie moyen : 3.89/5. Score confiance avenir moyen : 2.75/5. Scores moyens par dimension (1-5) : Transports=0.95, Éducation=2.35, Réseaux téléphoniques=2.38, Institutions=1.85, Tourisme=1.57, Sécurité=2.73, Santé=1.80, Situation pro=2.90, Revenus=2.50, Temps travail/perso=2.23, Logement=2.80, Services locaux=2.40, Culture=2.40, Soutien social=3.11, Vie associative=0.64. Dimensions les plus citées comme prioritaires : Environnement, Santé.",
+      "metadata": {
+        "rank": 7,
+        "source_type": "enquete_scores_commune",
+        "data_type": "quanti",
+        "commune": "Ajaccio",
+        "num_chunks": null,
+        "view_name": null,
+        "distance": 0.696,
+        "sub_question_idx": 4,
+        "sub_question": "Comment les seniors d'Ajaccio perçoivent-ils leur cadre de vie (environnement, sécurité, tranquillité) d'après les verbatims ou enquêtes spécifiques disponibles ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nProfil des répondants de la commune de Ajaccio — enquête qualité de vie en Corse\n\nNombre de répondants : 51\n\nRépartition par genre :\n  - Femme : 31 (60.8%)\n  - Homme : 20 (39.2%)\n\nRépartition par tranche d'âge :\n  - 45-59 : 20 (39.2%)\n  - 15-29 : 14 (27.5%)\n  - 30-44 : 11 (21.6%)\n  - 60-74 : 6 (11.8%)\n\nRépartition par catégorie socioprofessionnelle :\n  - SalariÃ©(e) â Cadre ou profession intermÃ©diaire : 17 (33.3%)\n  - Ãtudiant(e) : 12 (23.5%)\n  - Fonctionnaire : 9 (17.6%)\n  - SalariÃ©(e) â EmployÃ©(e) : 8 (15.7%)\n  - Travailleur(se) indÃ©pendant(e) / Entrepreneur(e) : 2 (3.9%)\n  - Autre : 2 (3.9%)\n  - RetraitÃ©(e) : 1 (2.0%)",
+      "metadata": {
+        "rank": 8,
+        "source_type": "communes_profil",
+        "data_type": "quanti",
+        "commune": "Ajaccio",
+        "num_chunks": null,
+        "view_name": null,
+        "distance": 0.392,
+        "sub_question_idx": 4,
+        "sub_question": "Comment les seniors d'Ajaccio perçoivent-ils leur cadre de vie (environnement, sécurité, tranquillité) d'après les verbatims ou enquêtes spécifiques disponibles ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théoriqu",
+      "metadata": {
+        "rank": 9,
+        "type": "oppchovec_score",
+        "source_type": "oppchovec_scores",
+        "commune": "",
+        "oppchovec_0_10": null,
+        "opp_0_10": null,
+        "cho_0_10": null,
+        "vec_0_10": null,
+        "distance": 0.0,
+        "sub_question_idx": 4,
+        "sub_question": "Comment les seniors d'Ajaccio perçoivent-ils leur cadre de vie (environnement, sécurité, tranquillité) d'après les verbatims ou enquêtes spécifiques disponibles ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Ajaccio : 5.78/10 (élevé).\n\nSous-scores principaux de Ajaccio :\n  • Opportunités (Opp) : 10.00/10 (très élevé)  — rang 1e/360\n  • Choix (Cho)        : 1.27/10 (très faible)  — rang 358e/360\n  • Vécu (Vec)         : 4.80/10 (moyen)  — rang 41e/360\n  • OppChoVec global   : rang 19e/360\n\nSous-dimensions du score Opportunités (Opp) de Ajaccio :\n  • Opp1 — Éducation      : 7.42/10 (élevé)  [valeur brute : 5.760] — rang 24e/360\n  • Opp2 — Diversité soc. : 1.96/10 (faible)  [indice Theil : 0.2787] — rang 216e/360\n  • Opp3 — Mobilité       : 8.99/10 (très élevé)  [indicateur : 186.1/200] — rang 128e/360\n  • Opp4 — TIC (numérique): 9.35/10 (très élevé)  [couverture : 93.5%] — rang 24e/360\n\nAnalyse de Ajaccio :\n- Ajaccio se",
+      "metadata": {
+        "rank": 10,
+        "type": "oppchovec_score",
+        "source_type": "oppchovec_scores",
+        "commune": "Ajaccio",
+        "oppchovec_0_10": 5.779754,
+        "opp_0_10": 10.0,
+        "cho_0_10": 1.265509,
+        "vec_0_10": 4.796981,
+        "distance": 0.455,
+        "sub_question_idx": 4,
+        "sub_question": "Comment les seniors d'Ajaccio perçoivent-ils leur cadre de vie (environnement, sécurité, tranquillité) d'après les verbatims ou enquêtes spécifiques disponibles ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nEnquête Qualité de Vie en Corse — Description méthodologique\n\nPRÉSENTATION GÉNÉRALE\nEnquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.\nObjectif : recueillir les perceptions subjectives de la qualité de vie (QdV) et du bien-être,\nen complément des indicateurs o",
+      "metadata": {
+        "rank": 11,
+        "type": "methodology",
+        "source_type": "methodology",
+        "view_name": "enquete_methodology",
+        "sub_question_idx": 4,
+        "sub_question": "Comment les seniors d'Ajaccio perçoivent-ils leur cadre de vie (environnement, sécurité, tranquillité) d'après les verbatims ou enquêtes spécifiques disponibles ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : age_range=65+, nom=Ajaccio (N=3 personnes)**\n\n**Themes dominants** :\n- **Environnement** (2 verbatims) : Qualité de l'air, de l'eau, préservation de la nature, biodiversité et aménagement du territoire.\n- **Culture** (2 verbatims) : Accès aux lieux culturels comme condition d'émancipation et de bien-être.\n- **Relations sociales et communauté** (2 verbatims) : Importance des liens familiaux et sociaux pour éviter l'isolement.\n\n**Points de convergence** :\n- **Environnement et qualité de vie** : Une même personne souligne l'importance de l'environnement dans la détermination de la qualité de vie, incluant des aspects comme la qualité de l'air, de l'eau, la biodiversité et l'aménagement du territoire.\n- **Culture comme levier d'émancipation** : Deux verbatims (dont un de la même personne) mettent en avant le rôle de la culture dans l'émancipation individuelle et le bien-être.\n- **Rôle des relations sociales** : Une personne insiste sur l'importance des relations sociales pour éviter l'isolement et favoriser les échanges.\n\n**Points de divergence** :\n- Aucun point de divergence flagrant n'est identifiable dans cet échantillon réduit. Les thèmes abordés sont complémentaires et ne présentent pas de contradiction apparente.\n\n**Signaux faibles** :\n- **Harmonisation vie publique/vie privée** : Une mention isolée sur l'importance d'harmoniser ces deux sphères, sans développement supplémentaire.\n- **Revenus** : Un verbatim sur les revenus, mais sans contenu exploitable (\"hyhyh\").\n\n**Limites de l'echantillon** :\n- **Taille très réduite (N=3)** : Impossible de généraliser ou d'identifier des tendances robustes.\n- **Diversité des profils** : Les trois répondants ont des statuts différents (fonctionnaire, autre, retraité), ce qui peut introduire des biais dans les comparaisons.\n- **Contenu partiellement illisible** : Certains verbatims (\"dedede\", \"sdsds\", \"hyhyh\") ne sont pas exploitables, réduisant encore la masse d'informations analysables.\n- **Thèmes non couverts** : Absence de verbatims sur des sujets comme le logement, la santé ou les transports (malgré un thème \"Transports\" mentionné sans contenu).",
+      "metadata": {
+        "rank": 0,
+        "type": "raptor_summary",
+        "view": "age_range*commune",
+        "num_chunks": 9,
+        "sub_question_idx": 5,
+        "sub_question": "Existe-t-il des écarts significatifs entre les perceptions des seniors et celles de l'ensemble de la population ajaccienne sur des dimensions clés du bien-être (ex : qualité des services, dynamisme social), selon les données d'enquêtes comparatives ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : cat_age=65+, commune=Ajaccio (N=3)**\n\n---\n\n### **Satisfaction globale**\nLes scores globaux de ce groupe de seniors à Ajaccio révèlent une satisfaction modérée à mitigée, avec des écarts notables entre les différentes dimensions évaluées.\n- **Bonheur** (3,67/5) et **Qualité de vie** (3,67/5) affichent des moyennes identiques, suggérant une perception globalement équilibrée de leur bien-être quotidien, sans enthousiasme marqué ni insatisfaction profonde.\n- **Confiance en l’avenir** (2,33/5) se détache significativement comme la dimension la plus faible, indiquant une inquiétude partagée quant aux perspectives futures (retraite, santé, services publics, etc.).\n\n---\n\n### **Toutes les dimensions — tableau complet (classées du score le plus élevé au plus faible)**\n\n| **Dimension**               | **Score moyen /5** | **Distribution des réponses**                                                                 |\n|-----------------------------|-------------------|---------------------------------------------------------------------------------------------|\n| **Sécurité**                | 4,67              | ★5 : 2  | ★4 : 1  | ★3 : 0  | ★2 : 0  | ★1 : 0  |\n| **Emploi**                  | 4,00              | ★5 : 1  | ★4 : 1  | ★3 : 1  | ★2 : 0  | ★1 : 0  |\n| **Logement**                | 4,00              | ★5 : 0  | ★4 : 3  | ★3 : 0  | ★2 : 0  | ★1 : 0  |\n| **Ratio vie pro/vie perso** | 4,33              | ★5 : 1  | ★4 : 2  | ★3 : 0  | ★2 : 0  | ★1 : 0  |\n| **Communauté et relations** | 3,83              | ★5 : 1  | ★4 : 2  | ★3 : 1  | ★2 : 0  | ★1 : 0  |\n| **Revenus**                 | 3,67              | ★5 : 0  | ★4 : 2  | ★3 : 1  | ★2 : 0  | ★1 : 0  |\n| **Culture**                 | 3,67              | ★5 : 0  | ★4 : 2  | ★3 : 1  | ★2 : 0  | ★1 : 0  |\n| **Services de proximité**    | 3,33              | ★5 : 0  | ★4 : 2  | ★3 : 0  | ★2 : 1  | ★1 : 0  |\n| **Réseau**                  | 3,33              | ★5 : 0  | ★4 : 2  | ★3 : 0  | ★2 : 1  | ★1 : 0  |\n| **Éducation**               | 3,00              | ★5 : 0  | ★4 : 1  | ★3 : 1  | ★2 : 1  | ★1 : 0  |\n| **Institutions**            | 2,67              | ★5 : 0  | ★4 : 0  | ★3 : 2  | ★2 : 1  | ★1 : 0  |\n| **Santé**                   | 1,92              | ★5 : 0  | ★4 : 1  | ★3 : 0  | ★2 : 2  | ★1 : 0  |\n| **Tourisme**                | 2,00              | ★5 : 0  | ★4 : 0  | ★3 : 1  | ★2 : 1  | ★1 : 1  |\n| **Transports**              | 1,67              | ★5 : 0  | ★4 : 0  | ★3 : 0  | ★2 : 1  | ★1 : 2  |\n\n---\n\n### **Patterns notables**\n1. **Sécurité et logement : points forts**\n   - La **sécurité** (4,67/5) est la dimension la mieux notée, avec une majorité de réponses maximales (★5), reflétant un sentiment de tranquillité dans leur environnement quotidien.\n   - Le **logement** (4,00/5) est également très bien perçu, avec une satisfaction quasi unanime (3 réponses ★4), suggérant un accès à des conditions de vie décentes.\n\n2. **Santé et transports : points de tension majeurs**\n   - La **santé** (1,92/5) est la dimension la plus critique, tirée vers le bas par des attentes très insatisfaites en matière d’**attente pour les rendez-vous médicaux** (1,00/5) et de **médecins spécialistes** (1,33/5). Les trois répondants expriment une insatisfaction marquée (★1 ou ★2) sur au moins un aspect de la santé.\n   - Les **transports** (1,67/5) sont globalement jugés très insatisfaisants, avec une critique récurrente des **transports en commun** (1,33/5) et de l’**encombrement routier** (1,67/5). Les trois répondants expriment une insatisfaction (★1 ou ★2).\n\n3. **Confiance en l’avenir : un enjeu transversal**\n   - Le score de **confiance en l’avenir** (2,33/5) est le plus bas, en cohérence avec les critiques sur les **institutions** (2,67/5) et les **services publics** (santé, transports). Les répondants semblent percevoir un déclin des services essentiels, susceptible d’alimenter une inquiétude pour leur qualité de vie future.\n\n4. **Divergences internes**\n   - **Éducation** : Le score moyen (3,00/5) masque des avis contrastés : un répondant est **peu satisfait** (★2), un autre **satisfait** (★4), et le troisième **neutre** (★3). Cette dimension ne fait pas consensus.\n   - **Services de proximité** : Deux répondants sont **satisfaits** (★4), un est **peu satisfait** (★2), reflétant des expériences locales inégales.\n\n5. **Équilibre vie professionnelle/vie personnelle**\n   - Malgré la retraite, le **ratio vie pro/vie perso** (4,33/5) est très bien",
+      "metadata": {
+        "rank": 1,
+        "type": "raptor_enquete_summary",
+        "view": "enquete_age_range*commune",
+        "num_chunks": 3,
+        "sub_question_idx": 5,
+        "sub_question": "Existe-t-il des écarts significatifs entre les perceptions des seniors et celles de l'ensemble de la population ajaccienne sur des dimensions clés du bien-être (ex : qualité des services, dynamisme social), selon les données d'enquêtes comparatives ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 68 ans (Seniors), Fonctionnaire, à Ajaccio, sur le thème 'Transports': dedede",
+      "metadata": {
+        "rank": 2,
+        "commune": "Ajaccio",
+        "genre": "Homme",
+        "age": 68,
+        "profession": "Fonctionnaire",
+        "dimension": "Transports",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 5,
+        "sub_question": "Existe-t-il des écarts significatifs entre les perceptions des seniors et celles de l'ensemble de la population ajaccienne sur des dimensions clés du bien-être (ex : qualité des services, dynamisme social), selon les données d'enquêtes comparatives ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 68 ans (Seniors), Fonctionnaire, à Ajaccio, sur le thème 'Environnement': sdsds",
+      "metadata": {
+        "rank": 3,
+        "commune": "Ajaccio",
+        "genre": "Homme",
+        "age": 68,
+        "profession": "Fonctionnaire",
+        "dimension": "Environnement",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 5,
+        "sub_question": "Existe-t-il des écarts significatifs entre les perceptions des seniors et celles de l'ensemble de la population ajaccienne sur des dimensions clés du bien-être (ex : qualité des services, dynamisme social), selon les données d'enquêtes comparatives ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 68 ans (Seniors), Fonctionnaire, à Ajaccio, sur le thème 'Revenus': hyhyh",
+      "metadata": {
+        "rank": 4,
+        "commune": "Ajaccio",
+        "genre": "Homme",
+        "age": 68,
+        "profession": "Fonctionnaire",
+        "dimension": "Revenus",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 5,
+        "sub_question": "Existe-t-il des écarts significatifs entre les perceptions des seniors et celles de l'ensemble de la population ajaccienne sur des dimensions clés du bien-être (ex : qualité des services, dynamisme social), selon les données d'enquêtes comparatives ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 69 ans (Seniors), Autre, à Ajaccio, sur le thème 'Ratio vie pro/ vie perso': Importance d harmoniser la vie publique et privée.",
+      "metadata": {
+        "rank": 5,
+        "commune": "Ajaccio",
+        "genre": "Femme",
+        "age": 69,
+        "profession": "Autre",
+        "dimension": "Ratio vie pro/ vie perso",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 5,
+        "sub_question": "Existe-t-il des écarts significatifs entre les perceptions des seniors et celles de l'ensemble de la population ajaccienne sur des dimensions clés du bien-être (ex : qualité des services, dynamisme social), selon les données d'enquêtes comparatives ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 69 ans (Seniors), Autre, à Ajaccio, sur le thème 'Culture': Importance d avoir l accès à la culture source d émancipation.",
+      "metadata": {
+        "rank": 6,
+        "commune": "Ajaccio",
+        "genre": "Femme",
+        "age": 69,
+        "profession": "Autre",
+        "dimension": "Culture",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 5,
+        "sub_question": "Existe-t-il des écarts significatifs entre les perceptions des seniors et celles de l'ensemble de la population ajaccienne sur des dimensions clés du bien-être (ex : qualité des services, dynamisme social), selon les données d'enquêtes comparatives ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nScores moyens de l'enquête QdV pour la commune de Ajaccio (47 répondants). Score bonheur moyen : 3.68/5. Score qualité de vie moyen : 3.89/5. Score confiance avenir moyen : 2.75/5. Scores moyens par dimension (1-5) : Transports=0.95, Éducation=2.35, Réseaux téléphoniques=2.38, Institutions=1.85, Tourisme=1.57, Sécurité=2.73, Santé=1.80, Situation pro=2.90, Revenus=2.50, Temps travail/perso=2.23, Logement=2.80, Services locaux=2.40, Culture=2.40, Soutien social=3.11, Vie associative=0.64. Dimensions les plus citées comme prioritaires : Environnement, Santé.",
+      "metadata": {
+        "rank": 7,
+        "source_type": "enquete_scores_commune",
+        "data_type": "quanti",
+        "commune": "Ajaccio",
+        "num_chunks": null,
+        "view_name": null,
+        "distance": 0.671,
+        "sub_question_idx": 5,
+        "sub_question": "Existe-t-il des écarts significatifs entre les perceptions des seniors et celles de l'ensemble de la population ajaccienne sur des dimensions clés du bien-être (ex : qualité des services, dynamisme social), selon les données d'enquêtes comparatives ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nClassement des 14 dimensions de satisfaction — commune de Ajaccio (N=51 répondants).\n\nDu plus satisfaisant au moins satisfaisant :\n   1. Emploi                         : 3.91/5 (moyen-fort)\n   2. Logement                       : 3.84/5 (moyen-fort)\n   3. Sécurité                       : 3.81/5 (moyen-fort)\n   4. Communauté et relations        : 3.54/5 (moyen-fort)\n   5. Revenus                        : 3.51/5 (moyen-fort)\n   6. Culture                        : 3.49/5 (moyen)\n   7. Réseau                         : 3.49/5 (moyen)\n   8. Éducation                      : 3.44/5 (moyen)\n   9. Services de proximité          : 3.42/5 (moyen)\n  10. Ratio vie pro/vie perso        : 3.19/5 (moyen)\n  11. Institutions                   : 2.93/5 (moyen)\n  12. Tourisme                       : 2.63/5 (moyen)\n  13. Santé                          : 2.58/5 (moyen)\n  14. Transports                     : 2.21/5 (faible)\n\n-> NOTE LA PLUS FAIBLE   : Transports (2.21/5)\n-> NOTE LA PLUS ELEVEE   : Emploi (3.91/5)\n-> ECART min/max         : 1.70 points",
+      "metadata": {
+        "rank": 8,
+        "source_type": "enquete_scores_commune",
+        "data_type": "quanti",
+        "commune": "Ajaccio",
+        "num_chunks": null,
+        "view_name": null,
+        "distance": 0.707,
+        "sub_question_idx": 5,
+        "sub_question": "Existe-t-il des écarts significatifs entre les perceptions des seniors et celles de l'ensemble de la population ajaccienne sur des dimensions clés du bien-être (ex : qualité des services, dynamisme social), selon les données d'enquêtes comparatives ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "La commune de Ajaccio compte une part de 12.9% de cadres et professions intellectuelles supérieures, 16.6% d'ouvriers, avec un taux d'activité de 75.6%. 87.8% des emplois y sont salariés. On y trouve 5.0 points de contact postal, 11.0 hypermarchés ou supermarchés, 38.0 supérettes ou épiceries, 51.0 boulangeries et 21.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 15.0 écoles maternelles, 20.0 écoles élémentaires, 6.0 collèges et 6.0 lycées. Elle possède 1.0 services d'urgence, 80.0 médecins généralistes, 31.0 pharmacies, 204.0 infirmiers et 15.0 crèches. La sécurité est assurée par 1.0 postes de police ou gendarmerie. Il y a également 2.0 agences Pôle emploi. Le taux de pauvreté est de 14.3%, la part de logements vacants est de 3.3%, et celle des résidences secondaires est de 9.2%. Le taux de coups et blessures volontaires est de 4.0 pour 1 000 habitants. Le prix moyen au m² est de 3666.90984455959€, pour une surface moyenne des logements de 71.7937823834197 m².",
+      "metadata": {
+        "rank": 9,
+        "source_type": "communes_equipements",
+        "data_type": "quanti",
+        "commune": "Ajaccio",
+        "num_chunks": null,
+        "view_name": null,
+        "distance": 0.9,
+        "sub_question_idx": 5,
+        "sub_question": "Existe-t-il des écarts significatifs entre les perceptions des seniors et celles de l'ensemble de la population ajaccienne sur des dimensions clés du bien-être (ex : qualité des services, dynamisme social), selon les données d'enquêtes comparatives ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nProfil des répondants de la commune de Ajaccio — enquête qualité de vie en Corse\n\nNombre de répondants : 51\n\nRépartition par genre :\n  - Femme : 31 (60.8%)\n  - Homme : 20 (39.2%)\n\nRépartition par tranche d'âge :\n  - 45-59 : 20 (39.2%)\n  - 15-29 : 14 (27.5%)\n  - 30-44 : 11 (21.6%)\n  - 60-74 : 6 (11.8%)\n\nRépartition par catégorie socioprofessionnelle :\n  - SalariÃ©(e) â Cadre ou profession intermÃ©diaire : 17 (33.3%)\n  - Ãtudiant(e) : 12 (23.5%)\n  - Fonctionnaire : 9 (17.6%)\n  - SalariÃ©(e) â EmployÃ©(e) : 8 (15.7%)\n  - Travailleur(se) indÃ©pendant(e) / Entrepreneur(e) : 2 (3.9%)\n  - Autre : 2 (3.9%)\n  - RetraitÃ©(e) : 1 (2.0%)",
+      "metadata": {
+        "rank": 10,
+        "source_type": "communes_profil",
+        "data_type": "quanti",
+        "commune": "Ajaccio",
+        "num_chunks": null,
+        "view_name": null,
+        "distance": 0.392,
+        "sub_question_idx": 5,
+        "sub_question": "Existe-t-il des écarts significatifs entre les perceptions des seniors et celles de l'ensemble de la population ajaccienne sur des dimensions clés du bien-être (ex : qualité des services, dynamisme social), selon les données d'enquêtes comparatives ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théoriqu",
+      "metadata": {
+        "rank": 11,
+        "type": "oppchovec_score",
+        "source_type": "oppchovec_scores",
+        "commune": "",
+        "oppchovec_0_10": null,
+        "opp_0_10": null,
+        "cho_0_10": null,
+        "vec_0_10": null,
+        "distance": 0.0,
+        "sub_question_idx": 5,
+        "sub_question": "Existe-t-il des écarts significatifs entre les perceptions des seniors et celles de l'ensemble de la population ajaccienne sur des dimensions clés du bien-être (ex : qualité des services, dynamisme social), selon les données d'enquêtes comparatives ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Ajaccio : 5.78/10 (élevé).\n\nSous-scores principaux de Ajaccio :\n  • Opportunités (Opp) : 10.00/10 (très élevé)  — rang 1e/360\n  • Choix (Cho)        : 1.27/10 (très faible)  — rang 358e/360\n  • Vécu (Vec)         : 4.80/10 (moyen)  — rang 41e/360\n  • OppChoVec global   : rang 19e/360\n\nSous-dimensions du score Opportunités (Opp) de Ajaccio :\n  • Opp1 — Éducation      : 7.42/10 (élevé)  [valeur brute : 5.760] — rang 24e/360\n  • Opp2 — Diversité soc. : 1.96/10 (faible)  [indice Theil : 0.2787] — rang 216e/360\n  • Opp3 — Mobilité       : 8.99/10 (très élevé)  [indicateur : 186.1/200] — rang 128e/360\n  • Opp4 — TIC (numérique): 9.35/10 (très élevé)  [couverture : 93.5%] — rang 24e/360\n\nAnalyse de Ajaccio :\n- Ajaccio se",
+      "metadata": {
+        "rank": 12,
+        "type": "oppchovec_score",
+        "source_type": "oppchovec_scores",
+        "commune": "Ajaccio",
+        "oppchovec_0_10": 5.779754,
+        "opp_0_10": 10.0,
+        "cho_0_10": 1.265509,
+        "vec_0_10": 4.796981,
+        "distance": 0.444,
+        "sub_question_idx": 5,
+        "sub_question": "Existe-t-il des écarts significatifs entre les perceptions des seniors et celles de l'ensemble de la population ajaccienne sur des dimensions clés du bien-être (ex : qualité des services, dynamisme social), selon les données d'enquêtes comparatives ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nEnquête Qualité de Vie en Corse — Description méthodologique\n\nPRÉSENTATION GÉNÉRALE\nEnquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.\nObjectif : recueillir les perceptions subjectives de la qualité de vie (QdV) et du bien-être,\nen complément des indicateurs o",
+      "metadata": {
+        "rank": 13,
+        "type": "methodology",
+        "source_type": "methodology",
+        "view_name": "enquete_methodology",
+        "sub_question_idx": 5,
+        "sub_question": "Existe-t-il des écarts significatifs entre les perceptions des seniors et celles de l'ensemble de la population ajaccienne sur des dimensions clés du bien-être (ex : qualité des services, dynamisme social), selon les données d'enquêtes comparatives ?"
+      },
+      "source_type": "",
+      "label": ""
+    }
+  ],
+  "sources_mobilisees": [
+    {
+      "sq": 1,
+      "types": [
+        "Indicateurs OppChoVec — Ajaccio",
+        "Données enquête citoyenne — Ajaccio"
+      ]
+    },
+    {
+      "sq": 2,
+      "types": [
+        "Synthèse verbatims enquête citoyenne — vue : age_range*commune — 9 répondants",
+        "Verbatims bruts enquête citoyenne — Ajaccio",
+        "Synthèse scores enquête citoyenne — vue : enquete_age_range*commune — 3 répondants"
+      ]
+    },
+    {
+      "sq": 3,
+      "types": [
+        "Équipements et services communaux — Ajaccio",
+        "Indicateurs OppChoVec — Ajaccio"
+      ]
+    },
+    {
+      "sq": 4,
+      "types": [
+        "Synthèse scores enquête citoyenne — vue : enquete_age_range*commune — 3 répondants",
+        "Verbatims bruts enquête citoyenne — Ajaccio"
+      ]
+    },
+    {
+      "sq": 5,
+      "types": [
+        "Synthèse scores enquête citoyenne — vue : enquete_age_range*commune — 3 répondants",
+        "Données enquête citoyenne — Ajaccio"
+      ]
+    }
+  ],
+  "raisonnement": "La réponse mobilise des données qualitatives et quantitatives pour décrire le bien-être des seniors à Ajaccio, mais elle inclut des éléments non sourcés et des extrapolations non justifiées.",
+  "section_observee": "Retrieval mono-commune / Retrieval par sous-population",
+  "comportement_attendu_selon_grille": "Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.",
+  "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+  "coherence_comportement_observe": "partiel",
+  "sources_inventaire": [
+    {
+      "source": "raptor_summary:Ajaccio:65+",
+      "type": "quali"
+    },
+    {
+      "source": "raptor_enquete_summary:Ajaccio:65+",
+      "type": "quanti"
+    },
+    {
+      "source": "entretiens:Ajaccio:65+",
+      "type": "quali"
+    },
+    {
+      "source": "oppchovec_score:Ajaccio",
+      "type": "quanti"
+    },
+    {
+      "source": "communes_equipements:Ajaccio",
+      "type": "quanti"
+    }
+  ],
+  "mislabelling_detecte": {
+    "regle_1_quali_quanti": "non",
+    "regle_2_surinterpretation_oppchovec": "non",
+    "regle_3_absence_quali_non_signalee": "non",
+    "regle_4_extrapolation_sous_groupe": "non"
+  },
+  "mislabelling_flag": false,
+  "elements_specifiques_question": [
+    "seniors",
+    "Ajaccio",
+    "bien-être",
+    "perceptions"
+  ],
+  "elements_traitement": [
+    {
+      "element": "seniors",
+      "traitement": "precis"
+    },
+    {
+      "element": "Ajaccio",
+      "traitement": "precis"
+    },
+    {
+      "element": "bien-être",
+      "traitement": "precis"
+    },
+    {
+      "element": "perceptions",
+      "traitement": "precis"
+    }
+  ],
+  "pertinence": 4,
+  "pertinence_justif": "La réponse est globalement pertinente et traite des perceptions des seniors à Ajaccio, mais elle inclut des extrapolations non justifiées.",
+  "fondement_factuel": 4,
+  "fondement_factuel_justif": "Les affirmations sont majoritairement fondées sur les sources fournies, mais certaines extrapolations ne sont pas justifiées par les données.",
+  "nuance_incertitude": 3,
+  "nuance_incertitude_justif": "La réponse manque de nuance dans certaines affirmations, notamment concernant les écarts avec la population générale.",
+  "coherence_qualiquanti": 4,
+  "coherence_qualiquanti_justif": "Bonne intégration des données qualitatives et quantitatives, mais certaines conclusions pourraient être mieux nuancées.",
+  "score_global": 3.75,
+  "judge_error": null,
+  "judge_elapsed_s": 20.7,
+  "k": 5,
+  "judge_model": "gpt-4o",
+  "judge_version": "V4.3",
+  "timestamp": "2026-07-18T17:36:35.085285"
+}

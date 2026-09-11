@@ -1,0 +1,639 @@
+{
+  "excel_row": 107,
+  "section": "Limites architecturales",
+  "subsection": "",
+  "question": "Existe-t-il une corrélation entre la qualité du logement et la satisfaction des habitants à l'échelle des communes corses ?",
+  "rag_status": "ok",
+  "answer": "### **Synthèse : Corrélation entre qualité du logement et satisfaction des habitants en Corse**\n\n#### **1. La qualité du logement influence la satisfaction, mais son impact est modulé par d’autres facteurs territoriaux**\nSelon l’enquête citoyenne, le logement est un élément clé du bien-être : **75 % des cadres et professions intermédiaires interrogés** (échantillon de 56 personnes) lui attribuent une note de satisfaction de **3,88/5**, avec une majorité de réponses positives (4 ou 5 étoiles). Cependant, cette satisfaction n’est pas uniforme et dépend fortement du contexte local.\n\nLes **indicateurs territoriaux objectifs** (scores Vec) confirment que la qualité du logement est intégrée dans une mesure plus large du **vécu quotidien** (revenu, emploi, accès aux services). Avec un **score Vec moyen de 3,46/10 en Corse**, les données montrent que les conditions matérielles de vie – dont le logement – restent globalement en dessous des attentes, ce qui peut limiter la satisfaction globale malgré des appréciations ponctuellement positives.\n\n**Exemple concret** :\n- À **Aleria**, les 25-34 ans (échantillon très limité, N=2) déclarent une **satisfaction élevée pour leur logement (4,50/5)**, mais leur insatisfaction sur les **transports (2,50/5) et les revenus (2,50/5)** montre que la qualité du logement ne suffit pas à garantir un bien-être global.\n- À **Corscia**, le **score Vec très faible (2,32/10)** reflète des difficultés structurelles (accès aux services, emploi), ce qui suggère que même un logement correct pourrait être perçu moins favorablement en raison d’un environnement territorial défavorable.\n\n---\n\n#### **2. L’accès aux services et la mobilité jouent un rôle clé dans la perception du logement**\nLes données territoriales révèlent que **l’accessibilité aux services (commerces, santé, éducation) et la mobilité** sont des facteurs déterminants pour moduler l’impact de la qualité du logement sur la satisfaction.\n\n- **À Corscia**, le **score de mobilité est très faible (1,17/10)**, ce qui signifie que même un logement de qualité peut être perçu comme moins satisfaisant si les habitants sont isolés et dépendants de la voiture pour accéder aux services essentiels.\n- Les **verbatims de l’enquête citoyenne** soulignent cette préoccupation : *\"L’accès au logement est crucial, mais il faut aussi pouvoir se déplacer et accéder aux services\"* (Verbatim 28).\n\n**→ Conclusion partielle** :\nUn logement de qualité améliore la satisfaction, mais son effet est **atténué** si les habitants sont confrontés à des difficultés d’accès aux services, à un manque de dynamisme économique ou à une mobilité restreinte.\n\n---\n\n#### **3. Le dynamisme économique et la stabilité de l’emploi renforcent (ou affaiblissent) le lien entre logement et satisfaction**\nLes indicateurs territoriaux montrent que **la stabilité de l’emploi et les revenus** sont intégrés dans le score Vec, aux côtés de la qualité du logement.\n\n- **À Aleria**, les jeunes actifs (25-34 ans) notent leur **emploi à 4,50/5**, mais leurs **revenus à seulement 2,50/5**, ce qui suggère que la qualité du logement (4,50/5) ne compense pas totalement les difficultés financières.\n- **À Corscia**, le **score Vec très bas (2,32/10)** reflète à la fois des logements potentiellement moins confortables et un marché du travail peu dynamique, ce qui peut expliquer une satisfaction globale plus faible.\n\n**→ Conclusion partielle** :\nUn logement de qualité a un impact plus fort sur la satisfaction **lorsqu’il s’accompagne d’un emploi stable et de revenus décents**. À l’inverse, dans les communes où l’économie locale est fragile, la satisfaction liée au logement peut être **neutralisée** par des préoccupations financières.\n\n---\n\n#### **4. Limites des données et nuances à apporter**\n- **Les données d’enquête citoyenne couvrent la Corse entière** (ou des échantillons très limités comme à Aleria, N=2), ce qui empêche une analyse fine par commune.\n- **Les scores Vec intègrent la qualité du logement, mais ne la distinguent pas des autres facteurs** (revenu, emploi, services), ce qui rend difficile une corrélation directe entre **uniquement** la qualité du logement et la satisfaction.\n- **Aucune analyse statistique formelle (corrélation, régression) n’a pu être réalisée** en raison de l’absence de données appariées par commune.\n\n---\n\n### **Réponse finale à la question initiale**\n**Oui, il existe une corrélation entre la qualité du logement et la satisfaction des habitants en Corse, mais cette relation est fortement modulée par d’autres facteurs territoriaux.**\n\n- **Un logement de qualité améliore la satisfaction** (comme le montrent les notes de 3,88/5 dans l’enquête citoyenne et les 4,50/5 à Aleria), mais son impact est **renforcé** lorsque les habitants bénéficient aussi :\n  - d’un **accès facile aux services** (commerces, santé, éducation),\n  - d’une **bonne mobilité** (transports, proximité des pôles d’emploi),\n  - d’un **emploi stable et de revenus suffisants**.\n\n- **À l’inverse, dans les communes où ces conditions ne sont pas remplies** (comme Corscia, avec un score Vec de 2,32/10 et une mobilité très faible), la qualité du logement ne suffit pas à garantir une satisfaction élevée, car les difficultés quotidiennes (isolement, précarité économique) prennent le pas.\n\n**En résumé** :\nLa qualité du logement est un **levier important** de satisfaction, mais son effet est **contextuel** : il dépend du dynamisme économique, de l’accessibilité aux services et de la mobilité dans chaque commune. Une politique visant à améliorer la qualité de vie en Corse devrait donc **combiner** des efforts sur le logement **avec** des actions sur l’emploi, les transports et les services de proximité.",
+  "sub_questions": [
+    {
+      "idx": 1,
+      "question": "Quel est le score OppChoVec moyen relatif à la qualité du logement (ex : état des bâtiments, confort, salubrité) à l'échelle des communes corses, et comment se distribue-t-il géographiquement ?",
+      "answer": "# Réponse à la sous-question sur le score OppChoVec et la qualité du logement\n\n## Limitation importante\n\nLe contexte fourni **ne contient pas de score OppChoVec spécifiquement dédié à la qualité du logement** (état des bâtiments, confort, salubrité). \n\nLes scores OppChoVec disponibles couvrent trois dimensions agrégées : **Opportunités (Opp)**, **Choix (Cho)** et **Vécu (Vec)**. La qualité du logement n'est **pas une sous-dimension isolée** de ces scores. Elle est intégrée partiellement dans la composante **Vec (Vécu)**, qui mesure le revenu fiscal moyen, la qualité du logement, la stabilité de l'emploi et l'accès aux services en moins de 20 minutes — mais sans ventilation spécifique à la seule qualité du logement.\n\n## Ce que les données montrent\n\nSelon les indicateurs territoriaux objectifs, le **score Vec (Vécu) moyen en Corse est de 3,46/10** (moyen), ce qui suggère que les conditions objectives de vie — dont la qualité du logement — présentent des déficits importants à l'échelle territoriale. Cependant, **aucune distribution géographique communale détaillée** n'est fournie dans le contexte.\n\n## Données complémentaires disponibles\n\nL'enquête citoyenne montre que selon les habitants, la **qualité et la salubrité du logement** sont des préoccupations majeures : *\"Un logement sain et de bonne qualité (chauffage, isolation)\"* et *\"Logement spacieux, bien entretenu\"* sont cités comme essentiels (selon l'enquête citoyenne). À Aleria, les 25-34 ans déclarent une satisfaction élevée sur le logement (4,50/5), mais cet échantillon est très réduit (N=2)."
+    },
+    {
+      "idx": 2,
+      "question": "Quel est le niveau de satisfaction globale des habitants concernant leur cadre de vie (logement inclus) dans les communes corses, tel que mesuré par les enquêtes disponibles (ex : enquêtes citoyennes ou baromètres territoriaux) ?",
+      "answer": "# Satisfaction globale concernant le cadre de vie en Corse\n\n## Données d'enquête citoyenne\n\nSelon l'enquête citoyenne — données pour les cadres et professions intermédiaires (N=56) — le cadre de vie obtient des scores modérés mais contrastés :\n\n- **Logement** : 3,88/5 — Une majorité de répondants (75 %) expriment une satisfaction positive (notes 4★ et 5★), indiquant une accessibilité et un confort globalement satisfaisants pour cette catégorie socioprofessionnelle.\n- **Services de proximité** : 3,53/5 — Les habitants perçoivent les services locaux de manière mitigée, avec une concentration de notes 4★ mais aussi des insatisfactions notables (19 % de notes 2★ et 1★).\n- **Sécurité** : 3,69/5 — Un score intermédiaire reflétant une perception inégale selon les territoires, avec des préoccupations ponctuelles mentionnées dans les verbatims (drogues, armes dans certaines zones).\n\n## Indicateurs territoriaux objectifs\n\nSelon les indicateurs OppChoVec (données territoriales objectives, 2020-2022) — Corse entière — le bien-être objectif lié au cadre de vie montre des faiblesses structurelles :\n\n- **Score Vécu (Vec) moyen : 3,46/10** — Cet indicateur, qui agrège revenu fiscal moyen, qualité du logement, stabilité de l'emploi et accès aux services en moins de 20 minutes, révèle des conditions matérielles de vie **en dessous de la moyenne** à l'échelle des 360 communes corses.\n- **Score Opportunités (Opp) moyen : 3,87/10** — Les opportunités d'accès à l'éducation, à la diversité sociale et à la mobilité restent limitées sur le territoire.\n\n## Synthèse\n\nLa satisfaction globale concernant le cadre de vie en Corse est **modérée** : les habitants de cette CSP expriment une satisfaction relative au logement et à la sécurité, mais les indicateurs territoriaux objectifs révèlent des contraintes structurelles (accès aux services, mobilité, revenus) qui limitent le bien-être matériel réel, particulièrement en dehors des agglomérations."
+    },
+    {
+      "idx": 3,
+      "question": "Existe-t-il une corrélation statistique entre le score OppChoVec communal sur la qualité du logement et les indicateurs de satisfaction des habitants (ex : sentiment de bien-être, attachement au territoire) à l'échelle de la Corse ?",
+      "answer": "# Réponse à la sous-question\n\nJe ne peux pas répondre à cette sous-question car **le contexte fourni ne contient pas les données nécessaires pour établir une corrélation statistique**.\n\nVoici pourquoi :\n\n1. **Le score OppChoVec ne ventile pas la qualité du logement isolément** : selon les indicateurs territoriaux objectifs, le score Vec (Vécu) — qui intègre la qualité du logement parmi d'autres composantes (revenu fiscal, stabilité de l'emploi, accès aux services) — est un agrégat à l'échelle communale (0-10). Il n'existe pas de sous-score OppChoVec dédié exclusivement au logement.\n\n2. **Les données d'enquête citoyenne ne permettent pas une analyse corrélationnelle à l'échelle de la Corse** : l'enquête citoyenne fournit des perceptions qualitatives (verbatims) et des scores de satisfaction par dimension (ex : logement 4,50/5 pour Aleria, 25-34 ans, N=2), mais ces données sont fragmentées par commune et groupe d'âge, sans agrégation statistique permettant une corrélation robuste avec les scores OppChoVec.\n\n3. **Absence de données appariées** : le contexte ne propose pas de tableau croisant, pour chaque commune corse, le score Vec (ou une composante logement) avec un indicateur de satisfaction ou d'attachement territorial mesurable.\n\n**Conclusion** : une telle corrélation nécessiterait une analyse statistique multivariée (régression, coefficient de Pearson) sur un dataset complet appairant scores OppChoVec et satisfaction citoyenne par commune — données non disponibles dans le contexte fourni."
+    },
+    {
+      "idx": 4,
+      "question": "Quels écarts observe-t-on entre les communes corses présentant les scores OppChoVec les plus élevés en matière de qualité du logement et celles présentant les niveaux de satisfaction des habitants les plus hauts ?",
+      "answer": "# Réponse\n\nJe ne peux pas répondre à cette sous-question avec les données disponibles dans le contexte fourni.\n\n**Raison :** Le contexte contient des scores OppChoVec territoriaux (Opportunités, Choix, Vécu) et des données d'enquête citoyenne sur la satisfaction résidentielle, mais **aucun des deux ne ventile spécifiquement la \"qualité du logement\"** comme indicateur isolé permettant un classement des communes.\n\n- Les scores OppChoVec de Corscia et de la Corse entière ne décomposent pas la qualité du logement en tant que sous-dimension distincte — le score Vec (Vécu) agrège revenu fiscal moyen, qualité du logement, stabilité de l'emploi et accès aux services, sans isoler le logement.\n- L'enquête citoyenne sur le Logement (N=56) mesure les **perceptions et attentes** des habitants (accessibilité financière, confort, sécurité), mais ne fournit pas de scores de satisfaction par commune permettant une comparaison territoriale.\n\nPour répondre, il faudrait disposer soit d'un classement des communes par score de qualité du logement objectif, soit d'une ventilation des scores de satisfaction d'enquête par commune — données absentes du contexte."
+    },
+    {
+      "idx": 5,
+      "question": "Peut-on identifier des facteurs territoriaux complémentaires (ex : accessibilité aux services, dynamisme économique) qui pourraient moduler la relation entre qualité du logement et satisfaction des habitants dans les communes corses, malgré l'absence de ventilation démographique des scores ?",
+      "answer": "# Analyse des facteurs territoriaux modulant la relation logement-satisfaction\n\n## Données disponibles et limites de granularité\n\nLe contexte fourni ne contient **pas de ventilation démographique des scores OppChoVec** (pas de scores par CSP, âge ou genre). Cependant, les indicateurs territoriaux objectifs et les données d'enquête permettent d'identifier des **facteurs territoriaux complémentaires** qui modulent effectivement la relation entre qualité du logement et satisfaction globale.\n\n---\n\n## Facteurs territoriaux identifiés\n\n### 1. **Accessibilité aux services de proximité et dynamisme économique**\n\nSelon les données territoriales objectives, **Corscia affiche un score Vec (réalisations concrètes) de 2,32/10**, reflétant un accès limité aux services en moins de 20 minutes et une stabilité d'emploi faible. Ce contexte territorial contraste avec la **satisfaction modérée au logement (4,50/5) déclarée par les 25-34 ans d'Aleria** : même si le logement est jugé satisfaisant, l'absence de services proximaux et d'opportunités économiques locales peut réduire l'impact positif de cette satisfaction sur le bien-être global.\n\nLes verbatims d'enquête citoyenne soulignent cette complémentarité : *\"Accessibilité des logements, prix et salubrité\"* (Verbatim 16) et *\"L'accès au logement est un point crucial dans nos cités touristiques\"* (Verbatim 28) montrent que les habitants évaluent le logement non isolément, mais en relation avec l'accessibilité territoriale globale.\n\n### 2. **Mobilité et accès aux ressources**\n\nSelon les indicateurs OppChoVec, **Corscia obtient un score Opp3 (mobilité) de 1,17/10**, le classant 341e/360 — une mobilité extrêmement faible. Ce facteur territorial est critique : même un logement de qualité devient moins satisfaisant si l'accès à l'emploi, aux services de santé ou aux équipements culturels est entravé. \n\nLes données d'Aleria (25-34 ans) confirment ce lien : **les transports sont notés 2,50/5**, la dimension la plus critique après les revenus (2,50/5). La qualité du logement (4,50/5) ne compense pas l'insatisfaction face aux transports, révélant que **la mobilité territoriale module directement la satisfaction résidentielle**.\n\n### 3. **Diversité socio-économique et insertion professionnelle**\n\nSelon les indicateurs OppChoVec, **Corscia affiche un score Opp2 (diversité CSP) de 4,07/10**, moyen mais insuffisant pour offrir des opportunités d'insertion variées. Ce facteur territorial explique pourquoi, dans l'enquête Aleria, l'**emploi est noté 4,50/5** (satisfaisant) mais les **revenus seulement 2,50/5** : la présence d'emplois ne garantit pas des revenus décents.\n\nLes verbatims illustrent cette tension : *\"Le log"
+    }
+  ],
+  "n_subquestions": 5,
+  "n_sources": 92,
+  "rag_elapsed_s": 95.3,
+  "sources": [
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "raptor_entretiens_summaries",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "raptor_entretiens_summaries",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "enquete_scores_commune",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "enquete_scores_commune",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_equipements",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_equipements",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_profil",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_profil",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "methodology",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "raptor_entretiens_summaries",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "raptor_entretiens_summaries",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "enquete_scores_commune",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "enquete_scores_commune",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_equipements",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_equipements",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_profil",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_profil",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "methodology",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "raptor_entretiens_summaries",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "raptor_entretiens_summaries",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_equipements",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_equipements",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_profil",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_profil",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "methodology",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "raptor_entretiens_summaries",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "raptor_entretiens_summaries",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "enquete_scores_commune",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "enquete_scores_commune",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_equipements",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_equipements",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_profil",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_profil",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "methodology",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "raptor_entretiens_summaries",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "raptor_entretiens_summaries",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_equipements",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_equipements",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_profil",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_profil",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "methodology",
+      "label": ""
+    }
+  ],
+  "raisonnement": "La réponse tente de discuter de la corrélation sans signaler les limites architecturales. Surinterprétation de Vec comme vécu quotidien.",
+  "section_observee": "Limites architecturales",
+  "comportement_attendu_selon_grille": "Refus explicite OU approximation très signalée.",
+  "type_reponse_attendue_specifie": "limite_architecturale",
+  "coherence_comportement_observe": "non",
+  "sources_inventaire": [],
+  "mislabelling_detecte": {
+    "regle_1_quali_quanti": "non",
+    "regle_2_surinterpretation_oppchovec": "oui — Vec interprété comme 'vécu quotidien' alors que c'est un proxy quanti",
+    "regle_3_absence_quali_non_signalee": "non",
+    "regle_4_extrapolation_sous_groupe": "non"
+  },
+  "mislabelling_flag": true,
+  "elements_specifiques_question": [
+    "corrélation",
+    "qualité du logement",
+    "satisfaction des habitants",
+    "communes corses"
+  ],
+  "elements_traitement": [
+    {
+      "element": "corrélation",
+      "traitement": "approximation_non_signalee"
+    },
+    {
+      "element": "qualité du logement",
+      "traitement": "approximation_non_signalee"
+    },
+    {
+      "element": "satisfaction des habitants",
+      "traitement": "approximation_non_signalee"
+    },
+    {
+      "element": "communes corses",
+      "traitement": "approximation_non_signalee"
+    }
+  ],
+  "pertinence": 2,
+  "pertinence_justif": "La réponse ne respecte pas la limite architecturale attendue et tente de fournir une analyse non fondée.",
+  "fondement_factuel": 2,
+  "fondement_factuel_justif": "Surinterprétation de Vec et absence de données spécifiques pour établir une corrélation.",
+  "nuance_incertitude": 2,
+  "nuance_incertitude_justif": "Absence de signalement des limites architecturales et des approximations.",
+  "coherence_qualiquanti": 2,
+  "coherence_qualiquanti_justif": "Tentative de croisement sans données appropriées, surinterprétation des indicateurs quantitatifs.",
+  "score_global": 2.0,
+  "judge_error": null
+}

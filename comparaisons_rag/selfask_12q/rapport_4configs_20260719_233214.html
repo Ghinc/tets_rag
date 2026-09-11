@@ -1,0 +1,974 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>4 configs RAG — 12 questions pilote</title>
+<style>
+:root {
+  --bg:#f4f5f8;--bg2:#fff;--bg3:#ecedf2;--border:#d0d3de;
+  --text:#1a1d2e;--text2:#4a4e6b;--text3:#8891b2;
+  --hi:#1e7e44;--hi-bg:#d4edda;--mid:#856404;--mid-bg:#fff3cd;
+  --lo:#842029;--lo-bg:#f8d7da;
+  --pos:#1e7e44;--pos-bg:#d4edda;--neg:#842029;--neg-bg:#f8d7da;--neu:#4a4e6b;
+  --sa:#3a7bd5;--dr:#e07b39;--vk10:#2e7d62;--vk25:#7b52ab;
+  --r:6px;
+}
+@media(prefers-color-scheme:dark){
+  :root{--bg:#0d1117;--bg2:#161b22;--bg3:#1f2430;--border:#30363d;
+  --text:#c9d1d9;--text2:#8b949e;--text3:#484f58;
+  --hi:#3fb950;--hi-bg:#0d2818;--mid:#d29922;--mid-bg:#271e00;
+  --lo:#f85149;--lo-bg:#2d0d0c;
+  --pos:#3fb950;--pos-bg:#0d2818;--neg:#f85149;--neg-bg:#2d0d0c;--neu:#8b949e;
+  --sa:#6ea8fe;--dr:#f4a261;--vk10:#4ade80;--vk25:#c084fc;}
+}
+:root[data-theme="dark"]{--bg:#0d1117;--bg2:#161b22;--bg3:#1f2430;--border:#30363d;--text:#c9d1d9;--text2:#8b949e;--text3:#484f58;--hi:#3fb950;--hi-bg:#0d2818;--mid:#d29922;--mid-bg:#271e00;--lo:#f85149;--lo-bg:#2d0d0c;--pos:#3fb950;--pos-bg:#0d2818;--neg:#f85149;--neg-bg:#2d0d0c;--neu:#8b949e;--sa:#6ea8fe;--dr:#f4a261;--vk10:#4ade80;--vk25:#c084fc;}
+:root[data-theme="light"]{--bg:#f4f5f8;--bg2:#fff;--bg3:#ecedf2;--border:#d0d3de;--text:#1a1d2e;--text2:#4a4e6b;--text3:#8891b2;--hi:#1e7e44;--hi-bg:#d4edda;--mid:#856404;--mid-bg:#fff3cd;--lo:#842029;--lo-bg:#f8d7da;--pos:#1e7e44;--pos-bg:#d4edda;--neg:#842029;--neg-bg:#f8d7da;--neu:#4a4e6b;--sa:#3a7bd5;--dr:#e07b39;--vk10:#2e7d62;--vk25:#7b52ab;}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;font-size:14px;background:var(--bg);color:var(--text);line-height:1.55}
+.wrap{max-width:1300px;margin:0 auto;padding:1.5rem 1rem}
+.ph{margin-bottom:2rem}
+.ph h1{font-size:1.4rem;font-weight:700;margin-bottom:.3rem}
+.ph .meta{font-size:.8rem;color:var(--text2)}
+section{margin-bottom:2.5rem}
+h2{font-size:.9rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text2);margin-bottom:.9rem;padding-bottom:.4rem;border-bottom:1px solid var(--border)}
+.tscroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.83rem}
+th{background:var(--bg3);color:var(--text2);font-weight:600;text-align:left;padding:.4rem .65rem;font-size:.75rem;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+td{padding:.38rem .65rem;border-bottom:1px solid var(--border);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+.num{text-align:right;font-variant-numeric:tabular-nums;font-family:ui-monospace,monospace;white-space:nowrap}
+.bold{font-weight:700}
+.small{font-size:.78em}
+
+/* Config colors */
+.cfg-name{font-weight:600;white-space:nowrap}
+.cfg-sa,.bold.cfg-sa{color:var(--sa)}
+.cfg-dr,.bold.cfg-dr{color:var(--dr)}
+.cfg-vk10,.bold.cfg-vk10{color:var(--vk10)}
+.cfg-vk25,.bold.cfg-vk25{color:var(--vk25)}
+
+/* Score cells */
+.sc-hi{color:var(--hi);background:var(--hi-bg);border-radius:3px}
+.sc-mid{color:var(--mid);background:var(--mid-bg);border-radius:3px}
+.sc-lo{color:var(--lo);background:var(--lo-bg);border-radius:3px}
+.sc-na{color:var(--text3)}
+.delta-pos{color:var(--pos);font-weight:600}
+.delta-neg{color:var(--neg);font-weight:600}
+.delta-neu{color:var(--neu)}
+.delta-na{color:var(--text3)}
+.delta-row td{background:var(--bg3)}
+
+/* Badges */
+.badge{display:inline-block;padding:.12em .45em;border-radius:3px;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.badge-objectif{background:#dbeafe;color:#1d4ed8}
+.badge-perception{background:#fce7f3;color:#9d174d}
+.badge-vaste{background:#d1fae5;color:#065f46}
+@media(prefers-color-scheme:dark){
+  .badge-objectif{background:#1e3a5f;color:#93c5fd}
+  .badge-perception{background:#4a1942;color:#f9a8d4}
+  .badge-vaste{background:#064e3b;color:#6ee7b7}
+}
+:root[data-theme="dark"] .badge-objectif{background:#1e3a5f;color:#93c5fd}
+:root[data-theme="dark"] .badge-perception{background:#4a1942;color:#f9a8d4}
+:root[data-theme="dark"] .badge-vaste{background:#064e3b;color:#6ee7b7}
+:root[data-theme="light"] .badge-objectif{background:#dbeafe;color:#1d4ed8}
+:root[data-theme="light"] .badge-perception{background:#fce7f3;color:#9d174d}
+:root[data-theme="light"] .badge-vaste{background:#d1fae5;color:#065f46}
+
+/* Summary table */
+.sum-th-cfg{width:200px}
+
+/* Big question table */
+.q-num-cell{font-family:ui-monospace,monospace;font-size:.8rem;color:var(--text2);white-space:nowrap}
+.q-text-cell{max-width:320px}
+.qlist{font-family:ui-monospace,monospace;font-size:.75rem;color:var(--text3)}
+
+/* Detail sections */
+.q-detail{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin-bottom:.5rem;overflow:hidden}
+.q-summary{display:flex;align-items:center;gap:.6rem;padding:.65rem .9rem;cursor:pointer;user-select:none;flex-wrap:wrap}
+.q-summary::-webkit-details-marker{display:none}
+.q-summary::before{content:"▸";color:var(--text3);flex-shrink:0;transition:transform .15s}
+details[open] .q-summary::before{transform:rotate(90deg)}
+.q-num{font-family:ui-monospace,monospace;font-size:.8rem;color:var(--text2);flex-shrink:0}
+.q-text{flex:1;font-weight:500;font-size:.85rem;min-width:0}
+.q-chips{display:flex;gap:.25rem;flex-shrink:0;flex-wrap:wrap}
+.chip{font-family:ui-monospace,monospace;font-size:.73rem;padding:.1em .42em;border-radius:3px;background:var(--bg3);font-weight:700}
+.chip.cfg-sa{color:var(--sa)}
+.chip.cfg-dr{color:var(--dr)}
+.chip.cfg-vk10{color:var(--vk10)}
+.chip.cfg-vk25{color:var(--vk25)}
+.q-body{padding:.9rem;border-top:1px solid var(--border)}
+
+/* Dim grid */
+.dim-grid{width:auto;margin-bottom:.8rem;font-size:.82rem}
+.dim-grid th{font-size:.72rem}
+.dim-lbl{color:var(--text2);white-space:nowrap;padding-right:.8rem}
+.global-row td{border-top:2px solid var(--border)}
+
+/* Inner details */
+.inner-det{margin-bottom:.5rem;border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.inner-det>summary{padding:.4rem .7rem;cursor:pointer;font-size:.8rem;color:var(--text2);font-weight:600;background:var(--bg3);user-select:none}
+.inner-det>summary::-webkit-details-marker{display:none}
+.inner-det[open]>summary{border-bottom:1px solid var(--border)}
+
+/* Hop chain */
+.hops-wrap{padding:.7rem}
+.hop{margin-bottom:.7rem;border-left:3px solid var(--sa);padding-left:.75rem}
+.hop-hdr{font-weight:600;font-size:.82rem;margin-bottom:.2rem}
+.hop-hdr em{font-weight:400;color:var(--text2)}
+.hop-src{font-size:.73rem;color:var(--text3);font-family:ui-monospace,monospace;margin-bottom:.2rem}
+.hop-ia{font-size:.79rem;color:var(--text2);background:var(--bg2);border-radius:3px;padding:.35rem .55rem}
+
+/* Answer boxes */
+.ans-box{font-size:.8rem;line-height:1.6;white-space:pre-wrap;word-break:break-word;padding:.65rem;border-radius:0 var(--r) var(--r) 0;border-left:3px solid var(--border);margin:.5rem 0;background:var(--bg2)}
+.ans-sa{border-left-color:var(--sa)}
+.ans-dr{border-left-color:var(--dr)}
+.ans-vk10{border-left-color:var(--vk10)}
+.ans-vk25{border-left-color:var(--vk25)}
+
+.note{font-size:.78rem;color:var(--text3);padding:.3rem .6rem;font-style:italic}
+.theme-btn{position:fixed;top:.8rem;right:.8rem;background:var(--bg2);border:1px solid var(--border);color:var(--text);border-radius:20px;padding:.3rem .8rem;cursor:pointer;font-size:.8rem;z-index:100}
+</style>
+</head>
+<body>
+<button class="theme-btn" onclick="const r=document.documentElement,c=r.getAttribute('data-theme');r.setAttribute('data-theme',c==='dark'?'light':'dark')">◑ Thème</button>
+
+<div class="wrap">
+
+<div class="ph">
+  <h1>4 configurations RAG — Pilote 12 questions · Juge V4.3</h1>
+  <div class="meta">
+    <span class="cfg-sa bold">Self-Ask</span> · <span class="cfg-dr bold">Decomp+Raptor</span> · <span class="cfg-vk10 bold">Vanilla k=10</span> · <span class="cfg-vk25 bold">Vanilla k=25</span> ·
+    Δ = config − Decomp+Raptor ·
+    Généré le 2026-07-19 23:32
+  </div>
+</div>
+
+<!-- ── RÉCAP GLOBAL ────────────────────────────────────────────── -->
+<section>
+  <h2>Moyennes globales — 12 questions</h2>
+  <div class="tscroll">
+  <table>
+    <thead>
+      <tr>
+        <th class="sum-th-cfg">Config</th>
+        <th>Pertinence</th><th>Factuel</th><th>Nuance</th><th>Quali/Quanti</th>
+        <th>Global</th>
+        <th>Mislabelling</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="cfg-name cfg-sa">Self-Ask</td><td class="num sc-mid">3.75</td><td class="num sc-lo">3.42</td><td class="num sc-mid">3.50</td><td class="num sc-mid">3.58</td><td class="num bold sc-mid">3.56</td><td class="num">8/12</td></tr>
+<tr><td class="cfg-name cfg-dr">Decomp+Raptor</td><td class="num sc-hi">4.50</td><td class="num sc-hi">4.67</td><td class="num sc-mid">4.17</td><td class="num sc-hi">4.75</td><td class="num bold sc-hi">4.52</td><td class="num">1/12</td></tr>
+<tr><td class="cfg-name cfg-vk10">Vanilla k=10</td><td class="num sc-mid">4.42</td><td class="num sc-hi">4.50</td><td class="num sc-mid">4.42</td><td class="num sc-mid">4.25</td><td class="num bold sc-mid">4.40</td><td class="num">2/12</td></tr>
+<tr><td class="cfg-name cfg-vk25">Vanilla k=25</td><td class="num sc-mid">4.42</td><td class="num sc-hi">4.50</td><td class="num sc-mid">4.42</td><td class="num sc-mid">4.25</td><td class="num bold sc-mid">4.40</td><td class="num">3/12</td></tr>
+      <tr class="delta-row"><td class="cfg-name cfg-sa">Δ Self-Ask − Raptor</td><td class="num delta-neg">-0.75</td><td class="num delta-neg">-1.25</td><td class="num delta-neg">-0.67</td><td class="num delta-neg">-1.17</td><td class="num bold delta-neg">-0.96</td><td class="num">+7</td></tr><tr class="delta-row"><td class="cfg-name cfg-vk10">Δ Vanilla k=10 − Raptor</td><td class="num delta-neu">-0.08</td><td class="num delta-neu">-0.17</td><td class="num delta-neu">+0.25</td><td class="num delta-neg">-0.50</td><td class="num bold delta-neu">-0.12</td><td class="num">+1</td></tr><tr class="delta-row"><td class="cfg-name cfg-vk25">Δ Vanilla k=25 − Raptor</td><td class="num delta-neu">-0.08</td><td class="num delta-neu">-0.17</td><td class="num delta-neu">+0.25</td><td class="num delta-neg">-0.50</td><td class="num bold delta-neu">-0.12</td><td class="num">+2</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ── PAR ORIENTATION ─────────────────────────────────────────── -->
+<section>
+  <h2>Score global moyen par orientation</h2>
+  <p style="font-size:.78rem;color:var(--text2);margin-bottom:.6rem">Δ en indice = écart vs Decomp+Raptor</p>
+  <div class="tscroll">
+  <table>
+    <thead>
+      <tr>
+        <th>Orientation</th>
+        <th>Questions</th>
+        <th class="cfg-sa">Self-Ask</th><th class="cfg-dr">Decomp+Raptor</th><th class="cfg-vk10">Vanilla k=10</th><th class="cfg-vk25">Vanilla k=25</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><span class="badge badge-objectif">Objectif</span></td><td class="qlist">Q004, Q005, Q006, Q008, Q015</td><td class="num sc-lo">2.95 <span class='small delta-neg'>-1.40</span></td><td class="num sc-mid">4.35</td><td class="num sc-hi">5.00 <span class='small delta-pos'>+0.65</span></td><td class="num sc-hi">5.00 <span class='small delta-pos'>+0.65</span></td></tr><tr><td><span class="badge badge-perception">Perception</span></td><td class="qlist">Q009, Q010, Q011, Q014</td><td class="num sc-mid">3.62 <span class='small delta-neg'>-1.07</span></td><td class="num sc-hi">4.69</td><td class="num sc-hi">4.62 <span class='small delta-neu'>-0.07</span></td><td class="num sc-hi">4.56 <span class='small delta-neu'>-0.13</span></td></tr><tr><td><span class="badge badge-vaste">Vaste</span></td><td class="qlist">Q002, Q025, Q035</td><td class="num sc-hi">4.50 <span class='small delta-neu'>-0.08</span></td><td class="num sc-hi">4.58</td><td class="num sc-lo">3.08 <span class='small delta-neg'>-1.50</span></td><td class="num sc-lo">3.17 <span class='small delta-neg'>-1.41</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ── TABLE SYNTHÉTIQUE ──────────────────────────────────────── -->
+<section>
+  <h2>Scores par question</h2>
+  <div class="tscroll">
+  <table>
+    <thead>
+      <tr>
+        <th>Q</th>
+        <th>Orient.</th>
+        <th>Question</th>
+        <th class="cfg-sa">Self-Ask</th><th class="cfg-dr">Decomp+Raptor</th><th class="cfg-vk10">Vanilla k=10</th><th class="cfg-vk25">Vanilla k=25</th>
+        <th>Δ Se-DR</th><th>Δ Va-DR</th><th>Δ Va-DR</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="q-num-cell">Q004</td><td><span class="badge badge-objectif">Objectif</span></td><td class="q-text-cell">Quel est le score moyen de bien-être à Ajaccio ?</td><td class="num sc-lo">3.25</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num delta-neg">-1.75</td><td></td><td class="num delta-neu">0.00</td><td class="num delta-neu">0.00</td></tr><tr><td class="q-num-cell">Q005</td><td><span class="badge badge-objectif">Objectif</span></td><td class="q-text-cell">Quelle dimension OppChoVec obtient la note la plus faible à Ajaccio ?</td><td class="num sc-mid">3.50</td><td class="num sc-lo">3.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num delta-pos">+0.50</td><td></td><td class="num delta-pos">+2.00</td><td class="num delta-pos">+2.00</td></tr><tr><td class="q-num-cell">Q006</td><td><span class="badge badge-objectif">Objectif</span></td><td class="q-text-cell">Quel est le score OppChoVec d'Ajaccio, par catégorie ?</td><td class="num sc-mid">3.50</td><td class="num sc-mid">4.25</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num delta-neg">-0.75</td><td></td><td class="num delta-pos">+0.75</td><td class="num delta-pos">+0.75</td></tr><tr><td class="q-num-cell">Q008</td><td><span class="badge badge-objectif">Objectif</span></td><td class="q-text-cell">Combien d'habitants ont répondu à l'enquête à Ajaccio ?</td><td class="num sc-lo">1.00</td><td class="num sc-hi">4.75</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num delta-neg">-3.75</td><td></td><td class="num delta-neu">+0.25</td><td class="num delta-neu">+0.25</td></tr><tr><td class="q-num-cell">Q015</td><td><span class="badge badge-objectif">Objectif</span></td><td class="q-text-cell">De combien de services de proximité dispose la ville d'Ajaccio ?</td><td class="num sc-mid">3.50</td><td class="num sc-hi">4.75</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num delta-neg">-1.25</td><td></td><td class="num delta-neu">+0.25</td><td class="num delta-neu">+0.25</td></tr><tr><td class="q-num-cell">Q009</td><td><span class="badge badge-perception">Perception</span></td><td class="q-text-cell">Comment les 18-25 ans ressentent-ils le bien-être ?</td><td class="num sc-hi">5.00</td><td class="num sc-hi">4.50</td><td class="num sc-hi">4.50</td><td class="num sc-mid">4.25</td><td class="num delta-pos">+0.50</td><td></td><td class="num delta-neu">0.00</td><td class="num delta-neu">-0.25</td></tr><tr><td class="q-num-cell">Q010</td><td><span class="badge badge-perception">Perception</span></td><td class="q-text-cell">Que pensent les entrepreneurs Ajacciens de la qualité de vie ?</td><td class="num sc-lo">2.25</td><td class="num sc-hi">4.75</td><td class="num sc-hi">4.50</td><td class="num sc-hi">4.50</td><td class="num delta-neg">-2.50</td><td></td><td class="num delta-neu">-0.25</td><td class="num delta-neu">-0.25</td></tr><tr><td class="q-num-cell">Q011</td><td><span class="badge badge-perception">Perception</span></td><td class="q-text-cell">Que pensent les seniors du bien-être à Ajaccio ?</td><td class="num sc-hi">5.00</td><td class="num sc-hi">4.75</td><td class="num sc-hi">4.50</td><td class="num sc-hi">4.50</td><td class="num delta-neu">+0.25</td><td></td><td class="num delta-neu">-0.25</td><td class="num delta-neu">-0.25</td></tr><tr><td class="q-num-cell">Q014</td><td><span class="badge badge-perception">Perception</span></td><td class="q-text-cell">Que révèlent les verbatims sur la sécurité à Corte ?</td><td class="num sc-lo">2.25</td><td class="num sc-hi">4.75</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num delta-neg">-2.50</td><td></td><td class="num delta-neu">+0.25</td><td class="num delta-neu">+0.25</td></tr><tr><td class="q-num-cell">Q002</td><td><span class="badge badge-vaste">Vaste</span></td><td class="q-text-cell">Peut-on considérer Ajaccio comme un territoire favorable au bien-être ?</td><td class="num sc-hi">4.50</td><td class="num sc-hi">5.00</td><td class="num sc-hi">4.75</td><td class="num sc-hi">4.75</td><td class="num delta-neg">-0.50</td><td></td><td class="num delta-neu">-0.25</td><td class="num delta-neu">-0.25</td></tr><tr><td class="q-num-cell">Q025</td><td><span class="badge badge-vaste">Vaste</span></td><td class="q-text-cell">Les indicateurs objectifs et les perceptions qualitatives convergent-ils ?</td><td class="num sc-hi">5.00</td><td class="num sc-mid">4.00</td><td class="num sc-lo">2.25</td><td class="num sc-lo">2.25</td><td class="num delta-pos">+1.00</td><td></td><td class="num delta-neg">-1.75</td><td class="num delta-neg">-1.75</td></tr><tr><td class="q-num-cell">Q035</td><td><span class="badge badge-vaste">Vaste</span></td><td class="q-text-cell">Observe-t-on un écart significatif entre indicateurs objectifs et perception à Bastia ?</td><td class="num sc-mid">4.00</td><td class="num sc-hi">4.75</td><td class="num sc-lo">2.25</td><td class="num sc-lo">2.50</td><td class="num delta-neg">-0.75</td><td></td><td class="num delta-neg">-2.50</td><td class="num delta-neg">-2.25</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ── DÉTAIL PAR QUESTION ────────────────────────────────────── -->
+<section>
+  <h2>Détail par question</h2>
+  <p style="font-size:.78rem;color:var(--text2);margin-bottom:.7rem">
+    Chips dans le résumé : <span class="chip cfg-sa">SA</span>
+    <span class="chip cfg-dr">DR</span>
+    <span class="chip cfg-vk10">Vk10</span>
+    <span class="chip cfg-vk25">Vk25</span> — cliquer pour déplier.
+  </p>
+  
+<details class="q-detail">
+  <summary class="q-summary">
+    <span class="q-num">Q004</span>
+    <span class="badge badge-objectif">Objectif</span>
+    <span class="q-text">Quel est le score moyen de bien-être à Ajaccio ?</span>
+    <span class="q-chips">
+      <span class="chip cfg-sa">3.25</span>
+      <span class="chip cfg-dr">5.00</span>
+      <span class="chip cfg-vk10">5.00</span>
+      <span class="chip cfg-vk25">5.00</span>
+    </span>
+  </summary>
+  <div class="q-body">
+    <table class="dim-grid"><thead><tr><th>Dim</th><th>Self-Ask</th><th>Decomp+Raptor</th><th>Vanilla k=10</th><th>Vanilla k=25</th></tr></thead><tbody><tr><td class="dim-lbl">Pertinence</td><td class="num sc-lo">3.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td></tr><tr><td class="dim-lbl">Factuel</td><td class="num sc-mid">4.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td></tr><tr><td class="dim-lbl">Nuance</td><td class="num sc-lo">3.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td></tr><tr><td class="dim-lbl">Quali/Quanti</td><td class="num sc-lo">3.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td></tr><tr class="global-row"><td class="dim-lbl"><strong>Global</strong></td><td class="num bold sc-lo">3.25</td><td class="num bold sc-hi">5.00</td><td class="num bold sc-hi">5.00</td><td class="num bold sc-hi">5.00</td></tr><tr><td class="dim-lbl">Mislabelling</td><td class="num sc-lo">✗</td><td class="num sc-hi">✓</td><td class="num sc-hi">✓</td><td class="num sc-hi">✓</td></tr></tbody></table>
+    <details class="inner-det">
+      <summary>▸ Self-Ask — 1 hop(s)</summary>
+      <div class="hops-wrap"><div class="hop"><div class="hop-hdr">Hop 1 — <em>Quel est le score OppChoVec global de la commune d'Ajaccio et ses composantes?</em></div><div class="hop-src">Sources : oppchovec_scores, oppchovec_scores, oppchovec_scores, enquete_scores_commune, communes_equipements</div><div class="hop-ia"># Score OppChoVec global d'Ajaccio et ses composantes
+
+Selon les indicateurs territoriaux objectifs, **Ajaccio obtient un score OppChoVec global de 5.78/10**, ce qui la place au **rang 19e sur 360 communes corses** — une position élevée.
+
+Ce score global masque cependant des disparités très marquées entre ses trois composantes :
+
+1. **Opportunités …</div></div></div>
+      <div class="ans-box ans-sa">Le score moyen de bien-être objectif à Ajaccio, mesuré par l'indicateur OppChoVec, s'élève à **5,78/10**, plaçant la commune au **19ᵉ rang des 360 communes corses**. Ce score global cache cependant des écarts importants entre ses trois dimensions : Ajaccio se distingue par un niveau exceptionnel d'**Opportunités (10/10, 1ʳᵉ place)**, mais affiche un score très faible en **Choix (1,27/10, 358ᵉ place)** et un **Vécu moyen (4,80/10, 41ᵉ place)**. Ces résultats révèlent une ville aux atouts économiques et éducatifs majeurs, mais confrontée à des défis structurels en matière de représentation citoyenne et de conditions matérielles de vie pour une partie de sa population. *(Source : Indicateurs Op…</div>
+    </details>
+    <details class="inner-det">
+      <summary>▸ Decomp+Raptor — 5 sous-questions</summary>
+      <div class="ans-box ans-dr">### **Synthèse : Le bien-être à Ajaccio**
+
+Le bien-être à Ajaccio présente un tableau contrasté, marqué par un **écart important entre les ressources disponibles et leur traduction concrète dans le quotidien des habitants**. Selon les indicateurs territoriaux objectifs, la commune affiche un **score moyen de bien-être de 5,78/10**, la plaçant au **19ᵉ rang des 360 communes corses**. Ce résultat reflète une situation paradoxale : Ajaccio dispose d’atouts exceptionnels, mais ceux-ci peinent à se traduire par une qualité de vie à la hauteur de son potentiel.
+
+#### **1. Un potentiel remarquable, mais des limites structurelles**
+Ajaccio se distingue par des **opportunités parmi les meilleures de …</div>
+    </details>
+    <details class="inner-det">
+      <summary>▸ Vanilla k=10</summary>
+      <div class="ans-box ans-vk10">D'après les documents fournis, le score moyen de bien-être à Ajaccio peut être appréhendé de deux manières :
+
+1. **Score de bien-être objectif territorial (OppChoVec)** :
+   - Le score global OppChoVec pour Ajaccio est de **5.78/10** (source : indicateurs territoriaux, Betti).
+   - Ce score est composé de trois sous-scores :
+     - Opportunités (Opp) : **10.00/10** (très élevé).
+     - Choix (Cho) : **1.27/10** (très faible).
+     - Vécu (Vec) : **4.80/10** (moyen).
+
+2. **Score de bien-être subjectif (enquête QdV)** :
+   - Le score moyen de **bonheur** est de **3.68/5** (source : enquête qualité de vie, 47 répondants).
+   - Le score moyen de **qualité de vie** est de **3.89/5** (source : enq…</div>
+    </details>
+    <details class="inner-det">
+      <summary>▸ Vanilla k=25</summary>
+      <div class="ans-box ans-vk25">D'après les documents fournis, le score moyen de bien-être à Ajaccio peut être appréhendé de deux manières :
+
+1. **Bien-être objectif territorial (OppChoVec)** :
+   Le score global OppChoVec pour Ajaccio est de **5.78/10** (source : indicateurs territoriaux OppChoVec, Betti).
+
+2. **Bien-être subjectif (enquête QdV)** :
+   Le score moyen de bien-être ressenti, combinant bonheur et qualité de vie, est de **3.74/5** (soit **7.48/10** si on ramène sur 10 pour comparaison), calculé à partir des réponses de 51 habitants (source : enquête qualité de vie, QdV).
+   - *Score bonheur moyen* : 3.68/5.
+   - *Score qualité de vie moyen* : 3.89/5.
+
+**Précision** : Ces deux scores mesurent des dimensions di…</div>
+    </details>
+  </div>
+</details>
+
+<details class="q-detail">
+  <summary class="q-summary">
+    <span class="q-num">Q005</span>
+    <span class="badge badge-objectif">Objectif</span>
+    <span class="q-text">Quelle dimension OppChoVec obtient la note la plus faible à Ajaccio ?</span>
+    <span class="q-chips">
+      <span class="chip cfg-sa">3.50</span>
+      <span class="chip cfg-dr">3.00</span>
+      <span class="chip cfg-vk10">5.00</span>
+      <span class="chip cfg-vk25">5.00</span>
+    </span>
+  </summary>
+  <div class="q-body">
+    <table class="dim-grid"><thead><tr><th>Dim</th><th>Self-Ask</th><th>Decomp+Raptor</th><th>Vanilla k=10</th><th>Vanilla k=25</th></tr></thead><tbody><tr><td class="dim-lbl">Pertinence</td><td class="num sc-mid">4.00</td><td class="num sc-lo">3.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td></tr><tr><td class="dim-lbl">Factuel</td><td class="num sc-lo">3.00</td><td class="num sc-lo">2.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td></tr><tr><td class="dim-lbl">Nuance</td><td class="num sc-lo">3.00</td><td class="num sc-lo">3.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td></tr><tr><td class="dim-lbl">Quali/Quanti</td><td class="num sc-mid">4.00</td><td class="num sc-mid">4.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td></tr><tr class="global-row"><td class="dim-lbl"><strong>Global</strong></td><td class="num bold sc-mid">3.50</td><td class="num bold sc-lo">3.00</td><td class="num bold sc-hi">5.00</td><td class="num bold sc-hi">5.00</td></tr><tr><td class="dim-lbl">Mislabelling</td><td class="num sc-lo">✗</td><td class="num sc-lo">✗</td><td class="num sc-hi">✓</td><td class="num sc-hi">✓</td></tr></tbody></table>
+    <details class="inner-det">
+      <summary>▸ Self-Ask — 1 hop(s)</summary>
+      <div class="hops-wrap"><div class="hop"><div class="hop-hdr">Hop 1 — <em>Quel est le score OppChoVec global de la commune d'Ajaccio et ses composantes détaillées?</em></div><div class="hop-src">Sources : oppchovec_scores, oppchovec_scores, oppchovec_scores, enquete_scores_commune, communes_equipements</div><div class="hop-ia"># Score OppChoVec global et composantes détaillées d'Ajaccio
+
+Selon les indicateurs territoriaux objectifs, **Ajaccio affiche un score OppChoVec global de 5.78/10**, la plaçant au **rang 19e sur 360 communes corses**.
+
+## Composantes principales
+
+Le profil d'Ajaccio révèle des disparités marquées entre ses trois sous-scores :
+
+- **Opportunités (Opp…</div></div></div>
+      <div class="ans-box ans-sa">À Ajaccio, la dimension **Choix (Cho)** de l'indicateur OppChoVec obtient la note la plus faible, avec un score de **1,27/10**, classant la commune au **358ᵉ rang sur 360** en Corse. Cette composante reflète les libertés individuelles et l'accès aux choix de vie (logement, travail, loisirs), et son niveau très bas contraste fortement avec les opportunités territoriales élevées (Opp : 10/10) offertes par la ville. Cette faiblesse s'explique notamment par des contraintes structurelles (prix de l'immobilier, saturation des services) et une diversité sociale limitée (sous-score Opp2 à 1,96/10).</div>
+    </details>
+    <details class="inner-det">
+      <summary>▸ Decomp+Raptor — 5 sous-questions</summary>
+      <div class="ans-box ans-dr">### **Synthèse : Quelle dimension obtient la note la plus faible à Ajaccio selon les indicateurs territoriaux ?**
+
+À Ajaccio, les **données territoriales objectives** (scores OppChoVec) révèlent des écarts marqués entre les trois dimensions clés de la qualité de vie :
+
+1. **Opportunités (Opp) : 10,00/10** (rang 1er/360 en Corse)
+   Selon les indicateurs, Ajaccio se distingue par un accès exceptionnel à l’éducation, une diversité sociale élevée, une mobilité facilitée et une couverture numérique performante. Cette dimension est de loin la mieux notée.
+
+2. **Choix (Cho) : 7,54/10** (rang 12e/360)
+   Ce score reflète une population largement dotée de droits politiques (droit de vote) et l’absen…</div>
+    </details>
+    <details class="inner-det">
+      <summary>▸ Vanilla k=10</summary>
+      <div class="ans-box ans-vk10">À Ajaccio, la dimension **Choix (Cho)** obtient la note la plus faible, avec un score de **1,27/10** (très faible, rang 358e/360).
+*(Source : Scores OppChoVec — Ajaccio, indicateurs territoriaux)*</div>
+    </details>
+    <details class="inner-det">
+      <summary>▸ Vanilla k=25</summary>
+      <div class="ans-box ans-vk25">À Ajaccio, la dimension **Choix (Cho)** obtient la note la plus faible, avec un score de **1,27/10** (très faible, rang 358e/360), selon les **indicateurs territoriaux OppChoVec** fournis.</div>
+    </details>
+  </div>
+</details>
+
+<details class="q-detail">
+  <summary class="q-summary">
+    <span class="q-num">Q006</span>
+    <span class="badge badge-objectif">Objectif</span>
+    <span class="q-text">Quel est le score OppChoVec d'Ajaccio, par catégorie ?</span>
+    <span class="q-chips">
+      <span class="chip cfg-sa">3.50</span>
+      <span class="chip cfg-dr">4.25</span>
+      <span class="chip cfg-vk10">5.00</span>
+      <span class="chip cfg-vk25">5.00</span>
+    </span>
+  </summary>
+  <div class="q-body">
+    <table class="dim-grid"><thead><tr><th>Dim</th><th>Self-Ask</th><th>Decomp+Raptor</th><th>Vanilla k=10</th><th>Vanilla k=25</th></tr></thead><tbody><tr><td class="dim-lbl">Pertinence</td><td class="num sc-mid">4.00</td><td class="num sc-mid">4.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td></tr><tr><td class="dim-lbl">Factuel</td><td class="num sc-lo">3.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td></tr><tr><td class="dim-lbl">Nuance</td><td class="num sc-lo">3.00</td><td class="num sc-mid">4.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td></tr><tr><td class="dim-lbl">Quali/Quanti</td><td class="num sc-mid">4.00</td><td class="num sc-mid">4.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td></tr><tr class="global-row"><td class="dim-lbl"><strong>Global</strong></td><td class="num bold sc-mid">3.50</td><td class="num bold sc-mid">4.25</td><td class="num bold sc-hi">5.00</td><td class="num bold sc-hi">5.00</td></tr><tr><td class="dim-lbl">Mislabelling</td><td class="num sc-lo">✗</td><td class="num sc-hi">✓</td><td class="num sc-hi">✓</td><td class="num sc-hi">✓</td></tr></tbody></table>
+    <details class="inner-det">
+      <summary>▸ Self-Ask — 1 hop(s)</summary>
+      <div class="hops-wrap"><div class="hop"><div class="hop-hdr">Hop 1 — <em>Quel est le score OppChoVec global de la commune d'Ajaccio et ses composantes détaillées (Opportunités, Choix, Vécu)?</em></div><div class="hop-src">Sources : oppchovec_scores, oppchovec_scores, oppchovec_scores, enquete_scores_commune, communes_equipements</div><div class="hop-ia"># Score OppChoVec global et composantes détaillées d'Ajaccio
+
+Selon les indicateurs territoriaux objectifs, **Ajaccio affiche un score OppChoVec global de 5.78/10**, la plaçant au **rang 19e sur 360 communes corses**.
+
+## Composantes principales :
+
+**Opportunités (Opp) : 10.00/10 — très élevé (rang 1er/360)**
+Ajaccio excelle en ressources territori…</div></div></div>
+      <div class="ans-box ans-sa">**Le score OppChoVec d'Ajaccio se décompose comme suit** :
+
+- **Score global** : **5,78/10** (19ᵉ rang sur 360 communes corses), reflétant un profil de bien-être territorial **contrasté mais globalement moyen**.
+
+- **Opportunités (Opp)** : **10,00/10** (1ʳᵉ/360) – **Très élevé**, porté par une **excellente couverture numérique (93,5 %)** et une **mobilité performante (8,99/10)**. En revanche, la **diversité sociale reste faible (1,96/10, 216ᵉ rang)**, limitant la mixité.
+
+- **Choix (Cho)** : **1,27/10** (358ᵉ/360) – **Très faible**, en raison de l’**absence de quartiers prioritaires** et d’une **couverture électorale limitée**, ce qui restreint les marges de manœuvre citoyennes.
+
+- **Vécu (V…</div>
+    </details>
+    <details class="inner-det">
+      <summary>▸ Decomp+Raptor — 5 sous-questions</summary>
+      <div class="ans-box ans-dr">### **Scores d'Ajaccio par catégorie selon les indicateurs territoriaux**
+
+À Ajaccio, les indicateurs territoriaux objectifs révèlent une situation contrastée, marquée par des **opportunités exceptionnelles**, mais des **faiblesses majeures en matière de libertés effectives et de vécu quotidien**. Voici les scores disponibles pour la commune, structurés selon les dimensions mesurées :
+
+#### **1. Score global et dimensions principales**
+- **Score global** : **5,78/10** (selon les indicateurs OppChoVec), plaçant Ajaccio au **19ᵉ rang sur 360 communes corses**.
+  Ce résultat reflète un **déséquilibre marqué** entre trois dimensions clés :
+  - **Opportunités (Opp)** : **10,00/10** (1ʳᵉ place en …</div>
+    </details>
+    <details class="inner-det">
+      <summary>▸ Vanilla k=10</summary>
+      <div class="ans-box ans-vk10">D'après les documents fournis, voici le score **OppChoVec global d'Ajaccio** et ses composantes **par catégorie** (sous-scores principaux et sous-dimensions) :
+
+### **Score OppChoVec global d'Ajaccio** :
+**5.78/10** (élevé, rang 19e/360 parmi les communes corses)
+*Source : Indicateurs territoriaux (Betti, 2023).*
+
+---
+
+### **Par catégorie (sous-scores principaux)** :
+1. **Opportunités (Opp)** :
+   **10.00/10** (très élevé, rang 1er/360)
+   *Source : Indicateurs territoriaux (Betti).*
+   - **Détail des sous-dimensions** :
+     - **Opp1 – Éducation** : 7.42/10 (élevé, rang 24e/360).
+       *Valeur brute : 5.760 (niveau d'éducation moyen corrigé par âge).*
+     - **Opp2 – Diversité sociale** : …</div>
+    </details>
+    <details class="inner-det">
+      <summary>▸ Vanilla k=25</summary>
+      <div class="ans-box ans-vk25">D'après les documents fournis, voici le score **OppChoVec d'Ajaccio par catégorie** (sous-scores principaux et sous-dimensions des Opportunités) :
+
+### **Scores principaux (sur 10) :**
+- **Opportunités (Opp)** : **10.00/10** (très élevé, rang 1/360)
+  *Source : Indicateurs territoriaux (Betti, 2023).*
+- **Choix (Cho)** : **1.27/10** (très faible, rang 358/360)
+  *Source : Indicateurs territoriaux (Betti, 2023).*
+- **Vécu (Vec)** : **4.80/10** (moyen, rang 41/360)
+  *Source : Indicateurs territoriaux (Betti, 2023).*
+- **OppChoVec global** : **5.78/10** (élevé, rang 19/360)
+  *Source : Indicateurs territoriaux (Betti, 2023).*
+
+---
+
+### **Sous-dimensions des Opportunités (Opp) :**
+1. **Opp1 – É…</div>
+    </details>
+  </div>
+</details>
+
+<details class="q-detail">
+  <summary class="q-summary">
+    <span class="q-num">Q008</span>
+    <span class="badge badge-objectif">Objectif</span>
+    <span class="q-text">Combien d'habitants ont répondu à l'enquête à Ajaccio ?</span>
+    <span class="q-chips">
+      <span class="chip cfg-sa">1.00</span>
+      <span class="chip cfg-dr">4.75</span>
+      <span class="chip cfg-vk10">5.00</span>
+      <span class="chip cfg-vk25">5.00</span>
+    </span>
+  </summary>
+  <div class="q-body">
+    <table class="dim-grid"><thead><tr><th>Dim</th><th>Self-Ask</th><th>Decomp+Raptor</th><th>Vanilla k=10</th><th>Vanilla k=25</th></tr></thead><tbody><tr><td class="dim-lbl">Pertinence</td><td class="num sc-lo">1.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td></tr><tr><td class="dim-lbl">Factuel</td><td class="num sc-lo">1.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td></tr><tr><td class="dim-lbl">Nuance</td><td class="num sc-lo">1.00</td><td class="num sc-mid">4.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td></tr><tr><td class="dim-lbl">Quali/Quanti</td><td class="num sc-lo">1.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td></tr><tr class="global-row"><td class="dim-lbl"><strong>Global</strong></td><td class="num bold sc-lo">1.00</td><td class="num bold sc-hi">4.75</td><td class="num bold sc-hi">5.00</td><td class="num bold sc-hi">5.00</td></tr><tr><td class="dim-lbl">Mislabelling</td><td class="num sc-hi">✓</td><td class="num sc-hi">✓</td><td class="num sc-hi">✓</td><td class="num sc-hi">✓</td></tr></tbody></table>
+    <details class="inner-det">
+      <summary>▸ Self-Ask — 0 hop(s)</summary>
+      <div class="hops-wrap"><p class="note">0 hop — réponse directe (aucune retrieval)</p></div>
+      <div class="ans-box ans-sa">Selon les données disponibles, l'enquête citoyenne sur le bien-être à Ajaccio a recueilli **1 247 réponses** (source : rapport d'enquête OppChoVec 2022, échantillon représentatif de la population ajaccienne).</div>
+    </details>
+    <details class="inner-det">
+      <summary>▸ Decomp+Raptor — 5 sous-questions</summary>
+      <div class="ans-box ans-dr">**Synthèse : Nombre de répondants à l’enquête à Ajaccio**
+
+À Ajaccio, **51 habitants ont répondu à l’enquête citoyenne**, selon les données recueillies. Ce chiffre correspond au nombre total de questionnaires valides collectés auprès des résidents de la commune.
+
+Parmi ces répondants, **39 personnes** ont également partagé des commentaires détaillés (verbatims), permettant une analyse qualitative des perceptions locales. La répartition par âge révèle une **surreprésentation des jeunes adultes (18–30 ans)**, qui représentent près d’un tiers des répondants (11 sur 39), tandis que les seniors (60 ans et plus) sont sous-représentés (4 sur 39). Cette distribution suggère un biais dans la représen…</div>
+    </details>
+    <details class="inner-det">
+      <summary>▸ Vanilla k=10</summary>
+      <div class="ans-box ans-vk10">D'après le document fourni, **51 habitants ont répondu à l'enquête qualité de vie à Ajaccio** (source : *Profil démographique des répondants — enquête qualité de vie en Corse*).</div>
+    </details>
+    <details class="inner-det">
+      <summary>▸ Vanilla k=25</summary>
+      <div class="ans-box ans-vk25">D'après le document fourni, **51 habitants ont répondu à l'enquête qualité de vie à Ajaccio** (source : *Profil démographique des répondants — enquête qualité de vie en Corse*).</div>
+    </details>
+  </div>
+</details>
+
+<details class="q-detail">
+  <summary class="q-summary">
+    <span class="q-num">Q015</span>
+    <span class="badge badge-objectif">Objectif</span>
+    <span class="q-text">De combien de services de proximité dispose la ville d'Ajaccio ?</span>
+    <span class="q-chips">
+      <span class="chip cfg-sa">3.50</span>
+      <span class="chip cfg-dr">4.75</span>
+      <span class="chip cfg-vk10">5.00</span>
+      <span class="chip cfg-vk25">5.00</span>
+    </span>
+  </summary>
+  <div class="q-body">
+    <table class="dim-grid"><thead><tr><th>Dim</th><th>Self-Ask</th><th>Decomp+Raptor</th><th>Vanilla k=10</th><th>Vanilla k=25</th></tr></thead><tbody><tr><td class="dim-lbl">Pertinence</td><td class="num sc-mid">4.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td></tr><tr><td class="dim-lbl">Factuel</td><td class="num sc-lo">3.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td></tr><tr><td class="dim-lbl">Nuance</td><td class="num sc-lo">3.00</td><td class="num sc-mid">4.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td></tr><tr><td class="dim-lbl">Quali/Quanti</td><td class="num sc-mid">4.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td></tr><tr class="global-row"><td class="dim-lbl"><strong>Global</strong></td><td class="num bold sc-mid">3.50</td><td class="num bold sc-hi">4.75</td><td class="num bold sc-hi">5.00</td><td class="num bold sc-hi">5.00</td></tr><tr><td class="dim-lbl">Mislabelling</td><td class="num sc-lo">✗</td><td class="num sc-hi">✓</td><td class="num sc-hi">✓</td><td class="num sc-hi">✓</td></tr></tbody></table>
+    <details class="inner-det">
+      <summary>▸ Self-Ask — 1 hop(s)</summary>
+      <div class="hops-wrap"><div class="hop"><div class="hop-hdr">Hop 1 — <em>Quels sont les équipements communaux de proximité répertoriés pour la commune d'Ajaccio dans la base OppChoVec?</em></div><div class="hop-src">Sources : oppchovec_scores, oppchovec_scores, communes_equipements, communes_profil</div><div class="hop-ia">Selon les données d'équipements communaux, Ajaccio dispose d'une offre de services et d'équipements de proximité substantielle :
+
+**Commerces et services** : 5 points de contact postal, 11 hypermarchés ou supermarchés, 38 supérettes ou épiceries, 51 boulangeries et 21 boucheries-charcuteries.
+
+**Éducation** : 15 écoles maternelles, 20 écoles élémen…</div></div></div>
+      <div class="ans-box ans-sa">La ville d'Ajaccio dispose d'un réseau dense de **250 services et équipements de proximité** répertoriés dans la base OppChoVec, couvrant les domaines clés du quotidien. Parmi les principaux :
+- **Commerces et services** : 125 points (dont 11 grandes surfaces, 51 boulangeries et 21 boucheries),
+- **Éducation** : 56 établissements (35 écoles, 6 collèges, 6 lycées et 15 crèches),
+- **Santé** : 316 professionnels et structures (80 médecins, 31 pharmacies, 204 infirmiers, 1 service d'urgences),
+- **Emploi et sécurité** : 3 structures (2 agences Pôle emploi, 1 poste de police/gendarmerie).
+
+Cette offre, bien supérieure à la moyenne corse, explique en partie le score élevé d'Ajaccio en accessibili…</div>
+    </details>
+    <details class="inner-det">
+      <summary>▸ Decomp+Raptor — 5 sous-questions</summary>
+      <div class="ans-box ans-dr">**Synthèse : Les services de proximité à Ajaccio**
+
+La ville d’Ajaccio dispose d’un **réseau dense de services de proximité**, bien que leur perception par les habitants varie selon les domaines. Voici une analyse détaillée des principaux secteurs, fondée sur les données disponibles.
+
+---
+
+### **1. Santé : une offre quantitative importante, mais des difficultés d’accès perçues**
+Ajaccio compte une **offre de santé de proximité significative** selon les indicateurs territoriaux :
+- **80 médecins généralistes**,
+- **31 pharmacies**,
+- **204 infirmiers**,
+- **1 service d’urgence**.
+
+Cependant, cette disponibilité ne se traduit pas par une satisfaction élevée chez les habitants. **Selon l’enquêt…</div>
+    </details>
+    <details class="inner-det">
+      <summary>▸ Vanilla k=10</summary>
+      <div class="ans-box ans-vk10">D'après les **indicateurs territoriaux** fournis pour la commune d'Ajaccio, voici les services de proximité disponibles (liste exhaustive issue du document) :
+
+- **Points de contact postal** : 5,0
+- **Hypermarchés ou supermarchés** : 11,0
+- **Supérettes ou épiceries** : 38,0
+- **Boulangeries** : 51,0
+- **Boucheries-charcuteries** : 21,0
+- **Pharmacies** : 31,0
+- **Crèches** : 15,0
+
+*(Source : Équipements et services commune, données quantitatives objectives)*
+
+**Remarque** : Les écoles, collèges, lycées, services d'urgence, médecins, infirmiers, postes de police/gendarmerie et agences Pôle emploi ne sont pas comptabilisés ici comme des *services de proximité* au sens strict (ils relèvent plu…</div>
+    </details>
+    <details class="inner-det">
+      <summary>▸ Vanilla k=25</summary>
+      <div class="ans-box ans-vk25">D'après les **indicateurs territoriaux** fournis dans le contexte, la ville d'Ajaccio dispose des services de proximité suivants (liste non exhaustive, basée sur les données disponibles) :
+
+- **Points de contact postal** : 5,0
+- **Hypermarchés ou supermarchés** : 11,0
+- **Supérettes ou épiceries** : 38,0
+- **Boulangeries** : 51,0
+- **Boucheries-charcuteries** : 21,0
+- **Pharmacies** : 31,0
+- **Crèches** : 15,0
+
+*(Source : Équipements et services de la commune – données quantitatives objectives)*</div>
+    </details>
+  </div>
+</details>
+
+<details class="q-detail">
+  <summary class="q-summary">
+    <span class="q-num">Q009</span>
+    <span class="badge badge-perception">Perception</span>
+    <span class="q-text">Comment les 18-25 ans ressentent-ils le bien-être ?</span>
+    <span class="q-chips">
+      <span class="chip cfg-sa">5.00</span>
+      <span class="chip cfg-dr">4.50</span>
+      <span class="chip cfg-vk10">4.50</span>
+      <span class="chip cfg-vk25">4.25</span>
+    </span>
+  </summary>
+  <div class="q-body">
+    <table class="dim-grid"><thead><tr><th>Dim</th><th>Self-Ask</th><th>Decomp+Raptor</th><th>Vanilla k=10</th><th>Vanilla k=25</th></tr></thead><tbody><tr><td class="dim-lbl">Pertinence</td><td class="num sc-hi">5.00</td><td class="num sc-mid">4.00</td><td class="num sc-mid">4.00</td><td class="num sc-mid">4.00</td></tr><tr><td class="dim-lbl">Factuel</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num sc-mid">4.00</td></tr><tr><td class="dim-lbl">Nuance</td><td class="num sc-hi">5.00</td><td class="num sc-mid">4.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td></tr><tr><td class="dim-lbl">Quali/Quanti</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num sc-mid">4.00</td><td class="num sc-mid">4.00</td></tr><tr class="global-row"><td class="dim-lbl"><strong>Global</strong></td><td class="num bold sc-hi">5.00</td><td class="num bold sc-hi">4.50</td><td class="num bold sc-hi">4.50</td><td class="num bold sc-mid">4.25</td></tr><tr><td class="dim-lbl">Mislabelling</td><td class="num sc-hi">✓</td><td class="num sc-hi">✓</td><td class="num sc-hi">✓</td><td class="num sc-lo">✗</td></tr></tbody></table>
+    <details class="inner-det">
+      <summary>▸ Self-Ask — 1 hop(s)</summary>
+      <div class="hops-wrap"><div class="hop"><div class="hop-hdr">Hop 1 — <em>Existe-t-il des verbatims ou des résultats d’enquêtes spécifiques aux 18-25 ans en Corse sur leur perception du bien-être?</em></div><div class="hop-src">Sources : oppchovec_scores, oppchovec_scores, communes_profil, communes_profil, communes_profil</div><div class="hop-ia">Le contexte fourni ne contient pas de verbatims ou de résultats d'enquête spécifiques aux 18-25 ans en Corse. 
+
+Les données d'enquête citoyenne disponibles sont organisées par tranches d'âge plus larges (15-29 ans, 30-44 ans, etc.) pour les communes de Corte, Ajaccio et Bastelicaccia, sans ventilation détaillée des perceptions de bien-être par sous…</div></div></div>
+      <div class="ans-box ans-sa">Les données disponibles ne permettent pas d’analyser spécifiquement le ressenti des 18-25 ans en Corse concernant leur bien-être. Les enquêtes et verbatims existants sont agrégés par tranches d’âge plus larges (par exemple, 15-29 ans) et ne distinguent pas cette sous-population. Ainsi, il n’est pas possible de fournir une réponse précise sur leurs perceptions, leurs satisfactions ou leurs frustrations en matière de bien-être, que ce soit à l’échelle territoriale ou communale. Pour obtenir une analyse ciblée, une enquête dédiée ou des entretiens semi-directifs avec cette tranche d’âge seraient nécessaires.</div>
+    </details>
+    <details class="inner-det">
+      <summary>▸ Decomp+Raptor — 5 sous-questions</summary>
+      <div class="ans-box ans-dr">### **Synthèse : Comment les 18-25 ans ressentent-ils le bien-être en Corse ?**
+
+Les jeunes adultes de 18 à 25 ans en Corse expriment un **bien-être contrasté**, marqué par une satisfaction modérée dans leur vie quotidienne, mais une **forte inquiétude pour l’avenir**. Les données disponibles, qui couvrent principalement la tranche des **18-24 ans** (Corse entière), révèlent des forces et des fragilités structurelles dans leur perception de la qualité de vie.
+
+---
+
+#### **1. Une satisfaction présente, mais fragile**
+Selon l’enquête citoyenne, les jeunes Corses de 18-24 ans évaluent leur **bonheur à 3,61/5** et leur **qualité de vie à 3,77/5**, des scores qui témoignent d’un **équilibre relat…</div>
+    </details>
+    <details class="inner-det">
+      <summary>▸ Vanilla k=10</summary>
+      <div class="ans-box ans-vk10">D'après les documents fournis, **aucune donnée spécifique sur le ressenti des 18-25 ans concernant leur bien-être n'est disponible pour la commune de Brando** (ou toute autre commune mentionnée dans la question).
+
+### Observations limitées :
+1. **Données quantitatives (indicateurs OppChoVec)** :
+   - Les indicateurs territoriaux (OppChoVec) pour Brando ne ciblent pas le ressenti subjectif par tranche d'âge, mais des conditions objectives (éducation, mobilité, etc.). Par exemple, le score **Opp1 (éducation) est très faible (1.35/10)** pour Brando (source : indicateurs territoriaux), ce qui pourrait impacter les jeunes, mais sans lien direct avec leur perception.
+
+2. **Enquêtes qualitatives (v…</div>
+    </details>
+    <details class="inner-det">
+      <summary>▸ Vanilla k=25</summary>
+      <div class="ans-box ans-vk25">D'après les documents fournis, **aucune donnée spécifique sur le ressenti des 18-25 ans concernant leur bien-être n'est disponible pour la commune de Brando** (ou toute autre commune mentionnée dans la question).
+
+### Observations possibles (mais non spécifiques aux 18-25 ans) :
+1. **Indicateurs territoriaux (OppChoVec)** :
+   - Le score global de bien-être objectif de Brando est **moyen (4.10/10)**, avec un **score "Vécu" (Vec) élevé (5.44/10, rang 19e/360)**. Ce sous-score reflète les réalisations concrètes des habitants (ex. : santé, logement), mais ne cible pas spécifiquement les jeunes adultes.
+   - **Faiblesses** : Le niveau d'éducation (Opp1 = 1.35/10) et la diversité sociale (Opp2 = …</div>
+    </details>
+  </div>
+</details>
+
+<details class="q-detail">
+  <summary class="q-summary">
+    <span class="q-num">Q010</span>
+    <span class="badge badge-perception">Perception</span>
+    <span class="q-text">Que pensent les entrepreneurs Ajacciens de la qualité de vie ?</span>
+    <span class="q-chips">
+      <span class="chip cfg-sa">2.25</span>
+      <span class="chip cfg-dr">4.75</span>
+      <span class="chip cfg-vk10">4.50</span>
+      <span class="chip cfg-vk25">4.50</span>
+    </span>
+  </summary>
+  <div class="q-body">
+    <table class="dim-grid"><thead><tr><th>Dim</th><th>Self-Ask</th><th>Decomp+Raptor</th><th>Vanilla k=10</th><th>Vanilla k=25</th></tr></thead><tbody><tr><td class="dim-lbl">Pertinence</td><td class="num sc-lo">3.00</td><td class="num sc-hi">5.00</td><td class="num sc-mid">4.00</td><td class="num sc-mid">4.00</td></tr><tr><td class="dim-lbl">Factuel</td><td class="num sc-lo">2.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td></tr><tr><td class="dim-lbl">Nuance</td><td class="num sc-lo">2.00</td><td class="num sc-mid">4.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td></tr><tr><td class="dim-lbl">Quali/Quanti</td><td class="num sc-lo">2.00</td><td class="num sc-hi">5.00</td><td class="num sc-mid">4.00</td><td class="num sc-mid">4.00</td></tr><tr class="global-row"><td class="dim-lbl"><strong>Global</strong></td><td class="num bold sc-lo">2.25</td><td class="num bold sc-hi">4.75</td><td class="num bold sc-hi">4.50</td><td class="num bold sc-hi">4.50</td></tr><tr><td class="dim-lbl">Mislabelling</td><td class="num sc-lo">✗</td><td class="num sc-hi">✓</td><td class="num sc-hi">✓</td><td class="num sc-hi">✓</td></tr></tbody></table>
+    <details class="inner-det">
+      <summary>▸ Self-Ask — 2 hop(s)</summary>
+      <div class="hops-wrap"><div class="hop"><div class="hop-hdr">Hop 1 — <em>Existe-t-il des verbatims ou entretiens semi-directifs spécifiques aux entrepreneurs ajacciens sur leur perception de la qualité de vie?</em></div><div class="hop-src">Sources : oppchovec_scores, oppchovec_scores, communes_profil</div><div class="hop-ia">Non, le contexte fourni ne contient pas de verbatims ou d'entretiens semi-directifs spécifiques aux entrepreneurs ajacciens. L'enquête citoyenne menée à Ajaccio (51 répondants) inclut seulement 2 travailleurs indépendants/entrepreneurs (3,9% de l'échantillon), et aucun verbatim ou entretien qualitatif détaillé n'est disponible pour cette sous-popul…</div></div><div class="hop"><div class="hop-hdr">Hop 2 — <em>Que révèlent les indicateurs OppChoVec et les données d'équipements communaux d'Ajaccio sur les conditions objectives favorables ou défavorables à l'activité entrepreneuriale et à la qualité de vie associée?</em></div><div class="hop-src">Sources : oppchovec_scores, oppchovec_scores, oppchovec_scores, communes_equipements, communes_profil</div><div class="hop-ia"># Analyse des conditions objectives pour l'entrepreneuriat à Ajaccio
+
+## Indicateurs OppChoVec : un profil contrasté
+
+Selon les indicateurs OppChoVec, Ajaccio présente un score global de 5.78/10 (rang 19e/360 communes corses), masquant de fortes disparités :
+
+**Points forts pour l'entrepreneuriat :**
+- **Opportunités (Opp) : 10.00/10 (très élevé, r…</div></div></div>
+      <div class="ans-box ans-sa">Les entrepreneurs ajacciens évoluent dans un environnement objectif contrasté, marqué par des atouts structurels mais aussi des freins significatifs à leur qualité de vie professionnelle.
+
+**Atouts objectifs** :
+Ajaccio se distingue par un score d'**Opportunités (Opp) exceptionnel de 10/10**, porté par une connectivité numérique (9,35/10) et une mobilité (8,99/10) parmi les meilleures de Corse. La densité des équipements (11 hypermarchés, 80 médecins, 31 pharmacies) et des services publics crée un écosystème logistique favorable à l'activité entrepreneuriale. Ces conditions matérielles devraient théoriquement faciliter le quotidien des entrepreneurs.
+
+**Freins objectifs majeurs** :
+Cependant…</div>
+    </details>
+    <details class="inner-det">
+      <summary>▸ Decomp+Raptor — 5 sous-questions</summary>
+      <div class="ans-box ans-dr">### **Synthèse : La qualité de vie des entrepreneurs à Ajaccio, entre opportunités et tensions**
+
+Les entrepreneurs ajacciens interrogés expriment une **insatisfaction globale marquée** concernant leur qualité de vie, malgré un environnement territorial objectivement favorable. Leurs retours révèlent des tensions économiques et personnelles, tandis que les données territoriales soulignent des atouts structurels sous-exploités ou mal perçus.
+
+---
+
+#### **1. Une insatisfaction économique et personnelle dominante**
+Selon l’enquête citoyenne, les deux entrepreneurs ajacciens interrogés (âgés de 44 et 46 ans) décrivent une **précarité financière alarmante**, au cœur de leur insatisfaction. Leurs …</div>
+    </details>
+    <details class="inner-det">
+      <summary>▸ Vanilla k=10</summary>
+      <div class="ans-box ans-vk10">D'après les documents fournis, **aucune donnée spécifique aux entrepreneurs ajacciens** n'est disponible dans les verbatims citoyens ou les enquêtes qualité de vie.
+
+### Constats possibles (limités aux données existantes) :
+1. **Représentation faible** : Dans l'enquête qualité de vie, seulement **2 répondants sur 51** (soit 3,9 %) se déclarent "travailleurs indépendants/entrepreneurs" (source : profil démographique des répondants). Leurs avis ne sont pas détaillés individuellement.
+2. **Contexte territorial** : Ajaccio offre des **opportunités objectives élevées** (score Opp=10/10), notamment en accès aux TIC (93,5 % de couverture haut débit/4G) et à la mobilité (source : indicateurs OppChoV…</div>
+    </details>
+    <details class="inner-det">
+      <summary>▸ Vanilla k=25</summary>
+      <div class="ans-box ans-vk25">D'après les documents fournis, **aucune donnée spécifique aux entrepreneurs ajacciens** n'est disponible concernant leur perception de la qualité de vie.
+
+### Ce que l'on peut dire :
+1. **Profil des répondants** (enquête qualité de vie en Corse) :
+   - Seulement **2 répondants sur 51** (soit 3,9 %) se déclarent comme *"travailleur(se) indépendant(e) / entrepreneur(e)"* (source : enquête citoyenne).
+   - Aucun verbatim ou réponse détaillée ne leur est attribué dans les extraits fournis.
+
+2. **Indicateurs territoriaux** :
+   - Le score **OppChoVec** d'Ajaccio (5,78/10) révèle des **opportunités élevées** (accès à l'éducation, mobilité, numérique), mais un **score "Choix" très faible** (1,27/10…</div>
+    </details>
+  </div>
+</details>
+
+<details class="q-detail">
+  <summary class="q-summary">
+    <span class="q-num">Q011</span>
+    <span class="badge badge-perception">Perception</span>
+    <span class="q-text">Que pensent les seniors du bien-être à Ajaccio ?</span>
+    <span class="q-chips">
+      <span class="chip cfg-sa">5.00</span>
+      <span class="chip cfg-dr">4.75</span>
+      <span class="chip cfg-vk10">4.50</span>
+      <span class="chip cfg-vk25">4.50</span>
+    </span>
+  </summary>
+  <div class="q-body">
+    <table class="dim-grid"><thead><tr><th>Dim</th><th>Self-Ask</th><th>Decomp+Raptor</th><th>Vanilla k=10</th><th>Vanilla k=25</th></tr></thead><tbody><tr><td class="dim-lbl">Pertinence</td><td class="num sc-hi">5.00</td><td class="num sc-mid">4.00</td><td class="num sc-mid">4.00</td><td class="num sc-mid">4.00</td></tr><tr><td class="dim-lbl">Factuel</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td></tr><tr><td class="dim-lbl">Nuance</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td></tr><tr><td class="dim-lbl">Quali/Quanti</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num sc-mid">4.00</td><td class="num sc-mid">4.00</td></tr><tr class="global-row"><td class="dim-lbl"><strong>Global</strong></td><td class="num bold sc-hi">5.00</td><td class="num bold sc-hi">4.75</td><td class="num bold sc-hi">4.50</td><td class="num bold sc-hi">4.50</td></tr><tr><td class="dim-lbl">Mislabelling</td><td class="num sc-hi">✓</td><td class="num sc-hi">✓</td><td class="num sc-hi">✓</td><td class="num sc-hi">✓</td></tr></tbody></table>
+    <details class="inner-det">
+      <summary>▸ Self-Ask — 1 hop(s)</summary>
+      <div class="hops-wrap"><div class="hop"><div class="hop-hdr">Hop 1 — <em>Existe-t-il des verbatims ou des résultats d'enquêtes spécifiques aux seniors (65 ans et plus) concernant leur perception du bien-être à Ajaccio?</em></div><div class="hop-src">Sources : oppchovec_scores, oppchovec_scores, enquete_scores_commune, communes_profil</div><div class="hop-ia">Non, le contexte ne contient pas de données d'enquête spécifiques aux seniors (65 ans et plus) à Ajaccio. 
+
+L'enquête citoyenne disponible pour Ajaccio compte 51 répondants au total, dont seulement 6 personnes (11,8 %) dans la tranche 60-74 ans — effectif trop réduit pour permettre une analyse fiable des perceptions des seniors. Aucun verbatim, auc…</div></div></div>
+      <div class="ans-box ans-sa">À ce jour, il n'existe pas de données subjectives suffisamment représentatives pour décrire spécifiquement le ressenti des seniors (65 ans et plus) concernant leur bien-être à Ajaccio. Les enquêtes disponibles ne comportent qu'un échantillon très limité de répondants âgés (6 personnes sur 51, soit 11,8 % dans la tranche 60-74 ans), ce qui ne permet pas d'extraire des tendances fiables ou des verbatims significatifs pour cette population. En l'absence de données qualitatives ou quantitatives ciblées, il n'est pas possible de répondre précisément à la question de leur perception du bien-être dans la commune.</div>
+    </details>
+    <details class="inner-det">
+      <summary>▸ Decomp+Raptor — 5 sous-questions</summary>
+      <div class="ans-box ans-dr">### **Synthèse : Le bien-être des seniors à Ajaccio**
+
+#### **1. Une perception contrastée, marquée par des satisfactions et des tensions fortes**
+Les retours des seniors ajacciens révèlent une **qualité de vie quotidienne inégale**, où certains aspects sont très bien perçus tandis que d’autres génèrent des frustrations majeures. Selon l’enquête citoyenne (basée sur un échantillon très limité de 3 seniors), deux réalités coexistent :
+
+- **Des points forts rassurants** :
+  La **sécurité** (4,67/5) et le **logement** (4,00/5) sont les dimensions les plus positives, avec une satisfaction quasi unanime. Les seniors soulignent aussi un **bon équilibre entre vie personnelle et engagements** (4,33/…</div>
+    </details>
+    <details class="inner-det">
+      <summary>▸ Vanilla k=10</summary>
+      <div class="ans-box ans-vk10">D'après les documents fournis, **aucune donnée spécifique aux seniors (60 ans et plus) n'est disponible** concernant leur perception du bien-être à Ajaccio.
+
+### Ce que l'on peut dire :
+1. **Profil démographique des répondants** (enquête qualité de vie en Corse) :
+   - Seuls **6 répondants sur 51** (11,8 %) ont entre 60 et 74 ans, ce qui est insuffisant pour dégager une tendance représentative.
+   - Aucune citation ou verbatim n'est associé à cette tranche d'âge dans les extraits fournis.
+
+2. **Indicateurs territoriaux (OppChoVec)** :
+   - Le score global de bien-être objectif (5,78/10) ne distingue pas les perceptions par âge.
+   - Le sous-score *"Vécu"* (Vec = 4,80/10, moyen) reflète une s…</div>
+    </details>
+    <details class="inner-det">
+      <summary>▸ Vanilla k=25</summary>
+      <div class="ans-box ans-vk25">D'après les documents fournis, **aucune donnée spécifique aux seniors (60 ans et plus) n'est disponible** concernant leur perception du bien-être à Ajaccio.
+
+### Constats possibles (limités) :
+1. **Profil démographique des répondants** (enquête qualité de vie) :
+   - Seuls **6 répondants sur 51** (11,8 %) ont entre 60 et 74 ans, ce qui est insuffisant pour en tirer des conclusions représentatives.
+   - Aucune citation ou verbatim de cette tranche d'âge n'est mentionné dans les extraits.
+
+2. **Indicateurs territoriaux (OppChoVec)** :
+   - Le score *Vécu (Vec)* (4,80/10) reflète une moyenne globale des réalisations concrètes des habitants, mais ne distingue pas les seniors.
+   - Le faible scor…</div>
+    </details>
+  </div>
+</details>
+
+<details class="q-detail">
+  <summary class="q-summary">
+    <span class="q-num">Q014</span>
+    <span class="badge badge-perception">Perception</span>
+    <span class="q-text">Que révèlent les verbatims sur la sécurité à Corte ?</span>
+    <span class="q-chips">
+      <span class="chip cfg-sa">2.25</span>
+      <span class="chip cfg-dr">4.75</span>
+      <span class="chip cfg-vk10">5.00</span>
+      <span class="chip cfg-vk25">5.00</span>
+    </span>
+  </summary>
+  <div class="q-body">
+    <table class="dim-grid"><thead><tr><th>Dim</th><th>Self-Ask</th><th>Decomp+Raptor</th><th>Vanilla k=10</th><th>Vanilla k=25</th></tr></thead><tbody><tr><td class="dim-lbl">Pertinence</td><td class="num sc-lo">2.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td></tr><tr><td class="dim-lbl">Factuel</td><td class="num sc-lo">2.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td></tr><tr><td class="dim-lbl">Nuance</td><td class="num sc-lo">3.00</td><td class="num sc-mid">4.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td></tr><tr><td class="dim-lbl">Quali/Quanti</td><td class="num sc-lo">2.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td></tr><tr class="global-row"><td class="dim-lbl"><strong>Global</strong></td><td class="num bold sc-lo">2.25</td><td class="num bold sc-hi">4.75</td><td class="num bold sc-hi">5.00</td><td class="num bold sc-hi">5.00</td></tr><tr><td class="dim-lbl">Mislabelling</td><td class="num sc-lo">✗</td><td class="num sc-hi">✓</td><td class="num sc-hi">✓</td><td class="num sc-hi">✓</td></tr></tbody></table>
+    <details class="inner-det">
+      <summary>▸ Self-Ask — 1 hop(s)</summary>
+      <div class="hops-wrap"><div class="hop"><div class="hop-hdr">Hop 1 — <em>Quels sont les thèmes récurrents liés à la sécurité dans les verbatims et entretiens semi-directifs collectés à Corte?</em></div><div class="hop-src">Sources : oppchovec_scores, oppchovec_scores, communes_profil</div><div class="hop-ia">Le contexte fourni ne contient pas de verbatims ou d'entretiens semi-directifs spécifiques à Corte portant sur la sécurité. Les données disponibles se limitent au profil démographique des 49 répondants de l'enquête citoyenne et aux scores OppChoVec territoriaux, qui ne couvrent pas cette thématique.
+
+Pour répondre à votre question sur les thèmes ré…</div></div></div>
+      <div class="ans-box ans-sa">Les données disponibles ne permettent pas d'analyser les perceptions citoyennes sur la sécurité à Corte à partir des verbatims ou entretiens semi-directifs. Les indicateurs objectifs comme le score OppChoVec (5,8/10 pour Corte, avec une composante *Vécu* à 4,2/10) n'incluent pas de dimension sécuritaire spécifique, et les enquêtes quantitatives locales ne couvrent pas ce sujet de manière détaillée. Pour une réponse précise, il serait nécessaire de consulter des sources complémentaires, telles que les rapports de la gendarmerie nationale, les comptes-rendus de conseils municipaux ou des études qualitatives ciblées sur la sécurité dans cette commune.</div>
+    </details>
+    <details class="inner-det">
+      <summary>▸ Decomp+Raptor — 5 sous-questions</summary>
+      <div class="ans-box ans-dr">### **Synthèse : Que révèlent les verbatims sur la sécurité à Corte ?**
+
+Les témoignages des habitants de Corte sur la sécurité, bien que limités en nombre, dessinent une **perception globalement rassurante**, marquée par une absence de problèmes concrets et une valorisation de la tranquillité locale. Voici les points clés qui émergent :
+
+---
+
+#### **1. Une sécurité perçue comme un atout majeur, sans problèmes identifiés**
+Selon l’enquête citoyenne (6 verbatims recueillis à Corte), **aucun vol, agression ou incivilité n’est mentionné** comme une préoccupation locale. Au contraire, les habitants soulignent :
+- **L’absence de délinquance** (*"pas de délinquance"*), présentée comme une caractér…</div>
+    </details>
+    <details class="inner-det">
+      <summary>▸ Vanilla k=10</summary>
+      <div class="ans-box ans-vk10">Les documents fournis ne contiennent **aucun verbatim citoyen** sur la sécurité à Corte. Les données disponibles se limitent aux indicateurs territoriaux (OppChoVec) et au profil démographique des répondants de l'enquête qualité de vie, sans mention de retours qualitatifs sur ce thème.
+
+**Réponse :** Les données sont insuffisantes pour répondre à la question sur la sécurité à Corte. Aucune source (enquête citoyenne, entretiens qualitatifs) ne fournit d'éléments sur ce sujet.</div>
+    </details>
+    <details class="inner-det">
+      <summary>▸ Vanilla k=25</summary>
+      <div class="ans-box ans-vk25">Les documents fournis ne contiennent **aucun verbatim citoyen** sur la sécurité à Corte. Les seules données disponibles concernent des indicateurs objectifs (OppChoVec) et un profil démographique des répondants à une enquête qualité de vie, mais **aucune mention qualitative ou quantitative sur la sécurité** n'est présente.
+
+*Réponse : Les données sont insuffisantes pour répondre à la question.*</div>
+    </details>
+  </div>
+</details>
+
+<details class="q-detail">
+  <summary class="q-summary">
+    <span class="q-num">Q002</span>
+    <span class="badge badge-vaste">Vaste</span>
+    <span class="q-text">Peut-on considérer Ajaccio comme un territoire favorable au bien-être ?</span>
+    <span class="q-chips">
+      <span class="chip cfg-sa">4.50</span>
+      <span class="chip cfg-dr">5.00</span>
+      <span class="chip cfg-vk10">4.75</span>
+      <span class="chip cfg-vk25">4.75</span>
+    </span>
+  </summary>
+  <div class="q-body">
+    <table class="dim-grid"><thead><tr><th>Dim</th><th>Self-Ask</th><th>Decomp+Raptor</th><th>Vanilla k=10</th><th>Vanilla k=25</th></tr></thead><tbody><tr><td class="dim-lbl">Pertinence</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td></tr><tr><td class="dim-lbl">Factuel</td><td class="num sc-mid">4.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td></tr><tr><td class="dim-lbl">Nuance</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num sc-mid">4.00</td><td class="num sc-mid">4.00</td></tr><tr><td class="dim-lbl">Quali/Quanti</td><td class="num sc-mid">4.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td></tr><tr class="global-row"><td class="dim-lbl"><strong>Global</strong></td><td class="num bold sc-hi">4.50</td><td class="num bold sc-hi">5.00</td><td class="num bold sc-hi">4.75</td><td class="num bold sc-hi">4.75</td></tr><tr><td class="dim-lbl">Mislabelling</td><td class="num sc-lo">✗</td><td class="num sc-hi">✓</td><td class="num sc-hi">✓</td><td class="num sc-hi">✓</td></tr></tbody></table>
+    <details class="inner-det">
+      <summary>▸ Self-Ask — 2 hop(s)</summary>
+      <div class="hops-wrap"><div class="hop"><div class="hop-hdr">Hop 1 — <em>Quel est le score OppChoVec global de la commune d'Ajaccio et ses composantes?</em></div><div class="hop-src">Sources : oppchovec_scores, oppchovec_scores, oppchovec_scores, enquete_scores_commune, communes_equipements</div><div class="hop-ia"># Score OppChoVec global d'Ajaccio et ses composantes
+
+Selon les indicateurs territoriaux objectifs, **Ajaccio affiche un score OppChoVec global de 5.78/10**, ce qui la place au **rang 19e sur 360 communes corses** — une position élevée.
+
+Ses trois composantes principales présentent un profil très contrasté :
+
+1. **Opportunités (Opp) : 10.00/10 (tr…</div></div><div class="hop"><div class="hop-hdr">Hop 2 — <em>Que révèlent les verbatims citoyens et les enquêtes sur le bien-être perçu à Ajaccio?</em></div><div class="hop-src">Sources : oppchovec_scores, oppchovec_scores, enquete_scores_commune, enquete_scores_commune, communes_profil</div><div class="hop-ia"># Bien-être perçu à Ajaccio : verbatims et enquête citoyenne
+
+## Satisfaction globale contrastée
+
+Selon l'enquête citoyenne (51 répondants à Ajaccio), le bien-être perçu affiche des résultats mitigés : le score de bonheur moyen atteint 3.68/5 et la qualité de vie 3.89/5, tandis que la confiance en l'avenir reste faible à 2.75/5. Cette dernière dime…</div></div></div>
+      <div class="ans-box ans-sa">**Ajaccio présente un profil de bien-être territorial ambivalent, marqué par un fort contraste entre opportunités objectives et vécu subjectif.**
+
+Sur le plan **objectif**, la commune se distingue par un **score OppChoVec global de 5,78/10**, la classant **19ᵉ sur 360 communes corses**. Ce résultat cache cependant des disparités majeures : si les **opportunités** (Opp) atteignent un score exceptionnel de **10/10** (1ʳᵉ place nationale), grâce à un accès privilégié aux TIC (93,5 % de couverture), à la mobilité et à l'éducation, les **libertés effectives** (Cho) s'effondrent à **1,27/10** (358ᵉ rang), en raison de la présence de quartiers prioritaires et d'une faible couverture électorale. Le …</div>
+    </details>
+    <details class="inner-det">
+      <summary>▸ Decomp+Raptor — 5 sous-questions</summary>
+      <div class="ans-box ans-dr">### **Ajaccio : un territoire favorable au bien-être, mais marqué par des contrastes profonds**
+
+Peut-on considérer Ajaccio comme un territoire favorable au bien-être ? La réponse est **nuancée** : la ville offre des atouts majeurs, mais ceux-ci coexistent avec des fragilités structurelles qui limitent son potentiel. Les données objectives et les perceptions des habitants révèlent une **ville à deux vitesses**, où les ressources disponibles ne se traduisent pas toujours par une qualité de vie équitable pour tous.
+
+---
+
+### **1. Des atouts objectifs indéniables, parmi les meilleurs de Corse**
+Selon les indicateurs territoriaux, Ajaccio se distingue comme **l’une des communes les plus favorisé…</div>
+    </details>
+    <details class="inner-det">
+      <summary>▸ Vanilla k=10</summary>
+      <div class="ans-box ans-vk10">D'après les documents fournis, voici une analyse du bien-être à Ajaccio, structurée selon les dimensions disponibles :
+
+### **1. Bien-être objectif (indicateurs OppChoVec)**
+Ajaccio obtient un **score global OppChoVec de 5,78/10** (rang 19e/360 en Corse), ce qui la place dans une position **relativement favorable** par rapport aux autres communes corses. Cependant, cette note masque des **disparités fortes** entre ses sous-scores :
+- **Opportunités (Opp) : 10,00/10 (très élevé, rang 1er/360)**
+  - **Points forts** :
+    - **Accès aux TIC** (9,35/10, couverture haut débit/4G à 93,5%) et **mobilité** (8,99/10, accès voiture/transports en commun) sont excellents (source : *indicateurs territori…</div>
+    </details>
+    <details class="inner-det">
+      <summary>▸ Vanilla k=25</summary>
+      <div class="ans-box ans-vk25">D'après les documents fournis, voici une analyse du bien-être à Ajaccio, en distinguant les dimensions **objectives** (indicateurs territoriaux) et **subjectives** (enquêtes citoyennes) :
+
+---
+
+### **1. Bien-être objectif (OppChoVec)**
+Ajaccio obtient un **score global de 5,78/10** (rang 19e/360 en Corse), ce qui la place dans une position **élevée** à l'échelle régionale. Ce score repose sur trois sous-dimensions :
+- **Opportunités (Opp) : 10/10** (rang 1er/360)
+  *Ajaccio offre des ressources territoriales exceptionnelles* :
+  - **Éducation (Opp1)** : Score élevé (7,42/10), reflétant un niveau de diplôme moyen supérieur à la moyenne corse (source : *indicateurs territoriaux*).
+  - **Mobili…</div>
+    </details>
+  </div>
+</details>
+
+<details class="q-detail">
+  <summary class="q-summary">
+    <span class="q-num">Q025</span>
+    <span class="badge badge-vaste">Vaste</span>
+    <span class="q-text">Les indicateurs objectifs et les perceptions qualitatives convergent-ils ?</span>
+    <span class="q-chips">
+      <span class="chip cfg-sa">5.00</span>
+      <span class="chip cfg-dr">4.00</span>
+      <span class="chip cfg-vk10">2.25</span>
+      <span class="chip cfg-vk25">2.25</span>
+    </span>
+  </summary>
+  <div class="q-body">
+    <table class="dim-grid"><thead><tr><th>Dim</th><th>Self-Ask</th><th>Decomp+Raptor</th><th>Vanilla k=10</th><th>Vanilla k=25</th></tr></thead><tbody><tr><td class="dim-lbl">Pertinence</td><td class="num sc-hi">5.00</td><td class="num sc-mid">4.00</td><td class="num sc-lo">3.00</td><td class="num sc-lo">3.00</td></tr><tr><td class="dim-lbl">Factuel</td><td class="num sc-hi">5.00</td><td class="num sc-mid">4.00</td><td class="num sc-lo">2.00</td><td class="num sc-lo">2.00</td></tr><tr><td class="dim-lbl">Nuance</td><td class="num sc-hi">5.00</td><td class="num sc-mid">4.00</td><td class="num sc-lo">2.00</td><td class="num sc-lo">2.00</td></tr><tr><td class="dim-lbl">Quali/Quanti</td><td class="num sc-hi">5.00</td><td class="num sc-mid">4.00</td><td class="num sc-lo">2.00</td><td class="num sc-lo">2.00</td></tr><tr class="global-row"><td class="dim-lbl"><strong>Global</strong></td><td class="num bold sc-hi">5.00</td><td class="num bold sc-mid">4.00</td><td class="num bold sc-lo">2.25</td><td class="num bold sc-lo">2.25</td></tr><tr><td class="dim-lbl">Mislabelling</td><td class="num sc-hi">✓</td><td class="num sc-hi">✓</td><td class="num sc-lo">✗</td><td class="num sc-lo">✗</td></tr></tbody></table>
+    <details class="inner-det">
+      <summary>▸ Self-Ask — 1 hop(s)</summary>
+      <div class="hops-wrap"><div class="hop"><div class="hop-hdr">Hop 1 — <em>Quels sont les scores OppChoVec globaux et par composante des communes corses, et comment se comparent-ils aux scores de satisfaction issus des enquêtes citoyennes?</em></div><div class="hop-src">Sources : oppchovec_scores, oppchovec_scores, oppchovec_scores, communes_equipements, communes_equipements</div><div class="hop-ia">## Scores OppChoVec et comparaison avec la satisfaction citoyenne
+
+### Scores territoriaux objectifs (OppChoVec) — Corse entière
+
+Selon les indicateurs territoriaux objectifs, le score OppChoVec moyen de la Corse est de **3.35/10**, révélant un bien-être territorial moyen. La décomposition par composante montre des disparités marquées :
+
+- **Cho (C…</div></div></div>
+      <div class="ans-box ans-sa">**Non, les indicateurs objectifs et les perceptions qualitatives ne peuvent pas être comparés en Corse faute de données subjectives disponibles.**
+
+Les scores OppChoVec révèlent un bien-être territorial moyen en Corse (3,35/10), marqué par un fort score de *Choix* (8,79/10) mais des faiblesses structurelles en *Opportunités* (3,87/10) et *Vécu* (3,46/10). Cependant, **aucune donnée qualitative** (enquêtes citoyennes, verbatims, entretiens) n’a été recueillie ou transmise pour évaluer la perception des habitants. Sans ces éléments subjectifs, il est impossible d’analyser une éventuelle convergence ou divergence entre le diagnostic territorial objectif et le ressenti des Corses. La comparaison…</div>
+    </details>
+    <details class="inner-det">
+      <summary>▸ Decomp+Raptor — 5 sous-questions</summary>
+      <div class="ans-box ans-dr">### **Synthèse : Convergence ou divergence entre indicateurs objectifs et perceptions des habitants en Corse ?**
+
+La question de la convergence entre les **conditions de vie objectives** et les **perceptions des habitants** en Corse révèle des **alignements partiels**, mais aussi des **décalages significatifs**, notamment sur les enjeux structurels comme la santé, les transports ou l’emploi. Voici les points clés qui émergent des données disponibles, en distinguant les constats territoriaux des ressentis citoyens.
+
+---
+
+#### **1. Une liberté de choix élevée, mais des opportunités et un vécu quotidien limités**
+Selon les **indicateurs territoriaux objectifs** (scores OppChoVec pour l’ensemble…</div>
+    </details>
+    <details class="inner-det">
+      <summary>▸ Vanilla k=10</summary>
+      <div class="ans-box ans-vk10">D'après les documents fournis, voici l'analyse de la convergence entre **indicateurs objectifs** et **perceptions qualitatives** pour la commune de **Canari** :
+
+---
+
+### **1. Convergence sur les opportunités (Opp) :**
+- **Éducation (Opp1 : 1.48/10, très faible)**
+  *Indicateurs objectifs* : Canari dispose d’**1 école élémentaire** mais **aucune école maternelle, collège ou lycée** (source : équipements et services quantitatifs). Le niveau d’éducation moyen est structurellement bas (valeur brute : 5.232), reflétant un accès limité à la formation.
+  *Perception qualitative* : Les données qualitatives (verbatims citoyens) ne sont pas fournies, mais le score Opp1 suggère un **décalage probable*…</div>
+    </details>
+    <details class="inner-det">
+      <summary>▸ Vanilla k=25</summary>
+      <div class="ans-box ans-vk25">D'après les documents fournis, voici l'analyse de la convergence entre **indicateurs objectifs** et **perceptions qualitatives** pour la commune de **Canari** uniquement :
+
+### **1. Convergence sur les points faibles**
+- **Éducation (Opp1 = 1.48/10, très faible)**
+  *Indicateurs objectifs* : Canari ne dispose que d’**1 école élémentaire** (pas de maternelle, collège ou lycée), ce qui confirme un accès limité à l’éducation (source : équipements et services quantitatifs).
+  *Perceptions qualitatives* : Aucune donnée disponible dans les verbatims fournis, mais le score Opp1 reflète une réalité objective de carence éducative.
+
+- **Accès aux TIC (Opp4 = 4.90/10, moyen)**
+  *Indicateurs objectifs*…</div>
+    </details>
+  </div>
+</details>
+
+<details class="q-detail">
+  <summary class="q-summary">
+    <span class="q-num">Q035</span>
+    <span class="badge badge-vaste">Vaste</span>
+    <span class="q-text">Observe-t-on un écart significatif entre indicateurs objectifs et perception à Bastia ?</span>
+    <span class="q-chips">
+      <span class="chip cfg-sa">4.00</span>
+      <span class="chip cfg-dr">4.75</span>
+      <span class="chip cfg-vk10">2.25</span>
+      <span class="chip cfg-vk25">2.50</span>
+    </span>
+  </summary>
+  <div class="q-body">
+    <table class="dim-grid"><thead><tr><th>Dim</th><th>Self-Ask</th><th>Decomp+Raptor</th><th>Vanilla k=10</th><th>Vanilla k=25</th></tr></thead><tbody><tr><td class="dim-lbl">Pertinence</td><td class="num sc-mid">4.00</td><td class="num sc-hi">5.00</td><td class="num sc-lo">3.00</td><td class="num sc-lo">3.00</td></tr><tr><td class="dim-lbl">Factuel</td><td class="num sc-mid">4.00</td><td class="num sc-hi">5.00</td><td class="num sc-lo">2.00</td><td class="num sc-lo">3.00</td></tr><tr><td class="dim-lbl">Nuance</td><td class="num sc-mid">4.00</td><td class="num sc-mid">4.00</td><td class="num sc-lo">2.00</td><td class="num sc-lo">2.00</td></tr><tr><td class="dim-lbl">Quali/Quanti</td><td class="num sc-mid">4.00</td><td class="num sc-hi">5.00</td><td class="num sc-lo">2.00</td><td class="num sc-lo">2.00</td></tr><tr class="global-row"><td class="dim-lbl"><strong>Global</strong></td><td class="num bold sc-mid">4.00</td><td class="num bold sc-hi">4.75</td><td class="num bold sc-lo">2.25</td><td class="num bold sc-lo">2.50</td></tr><tr><td class="dim-lbl">Mislabelling</td><td class="num sc-lo">✗</td><td class="num sc-hi">✓</td><td class="num sc-lo">✗</td><td class="num sc-lo">✗</td></tr></tbody></table>
+    <details class="inner-det">
+      <summary>▸ Self-Ask — 2 hop(s)</summary>
+      <div class="hops-wrap"><div class="hop"><div class="hop-hdr">Hop 1 — <em>Quels sont les scores précis des composantes OppChoVec et du score de satisfaction citoyenne à Bastia, et comment se comparent-ils aux moyennes régionales?</em></div><div class="hop-src">Sources : oppchovec_scores, oppchovec_scores, oppchovec_scores, enquete_scores_commune, communes_equipements</div><div class="hop-ia"># Scores OppChoVec et satisfaction citoyenne à Bastia : analyse comparative
+
+## Scores OppChoVec de Bastia vs. moyennes régionales corses
+
+**Score global OppChoVec :**
+Selon les indicateurs territoriaux objectifs, Bastia affiche un score OppChoVec de **2.72/10** (rang 244e/360 communes corses), significativement inférieur à la moyenne régionale cor…</div></div><div class="hop"><div class="hop-hdr">Hop 2 — <em>Quels verbatims citoyens illustrent l'écart entre les opportunités objectives et la perception du bien-être à Bastia?</em></div><div class="hop-src">Sources : oppchovec_scores, oppchovec_scores, communes_profil</div><div class="hop-ia"># Écart entre opportunités objectives et perception du bien-être à Bastia
+
+Selon les indicateurs territoriaux objectifs, Bastia affiche un score d'Opportunités (Opp) très élevé de 7.51/10 (rang 7e/360 communes corses), porté notamment par un accès excellent aux TIC (9.65/10, couverture 96.5%) et à la mobilité (8.65/10). Cependant, ce score global m…</div></div></div>
+      <div class="ans-box ans-sa">À Bastia, on observe un **écart significatif et paradoxal** entre les indicateurs objectifs de bien-être et les perceptions citoyennes, mais cet écart ne peut être pleinement illustré par des verbatims en l'état actuel des données.
+
+**Sur le plan objectif**, Bastia se distingue par un score d'**Opportunités (Opp) très élevé (7,51/10)**, porté par un accès exceptionnel aux technologies de l'information (9,65/10) et une mobilité performante (8,65/10). Ces atouts devraient théoriquement favoriser le bien-être. Pourtant, le **score global OppChoVec de la commune (2,72/10)** est bien en dessous de la moyenne corse (5,37/10), en raison d'un **score de Choix (Cho) nul (0,00/10)** – lié à la présenc…</div>
+    </details>
+    <details class="inner-det">
+      <summary>▸ Decomp+Raptor — 5 sous-questions</summary>
+      <div class="ans-box ans-dr">### **Synthèse : Un écart marqué entre réalité objective et perception à Bastia**
+
+À Bastia, les indicateurs territoriaux et les perceptions des habitants révèlent une **situation contrastée, voire paradoxale**, où les atouts objectifs ne se traduisent pas toujours par une satisfaction correspondante. Un écart significatif existe entre les données mesurées et le ressenti des Bastiais, avec des nuances importantes selon les dimensions de la qualité de vie.
+
+---
+
+#### **1. Une ville aux opportunités élevées, mais aux réalisations concrètes limitées**
+Selon les données territoriales objectives, Bastia se distingue par des **opportunités exceptionnelles** :
+- **Accès aux technologies et mobilité…</div>
+    </details>
+    <details class="inner-det">
+      <summary>▸ Vanilla k=10</summary>
+      <div class="ans-box ans-vk10">Oui, on observe un écart significatif entre les indicateurs objectifs et la perception des habitants à Bastia, notamment sur deux dimensions clés :
+
+### 1. **Opportunités objectives élevées vs. perception du choix (liberté effective)**
+- **Indicateurs objectifs** :
+  Bastia obtient un score **Opportunités (Opp) très élevé (7,51/10, rang 7e/360)**, porté par :
+  - Un **accès aux TIC excellent (9,65/10, couverture 96,5%)** et une **mobilité élevée (8,65/10)** (source : *indicateurs territoriaux OppChoVec*).
+  - Une **offre abondante de services** (50 médecins généralistes, 220 infirmiers, 11 crèches, 7 lycées, etc.) et d’équipements commerciaux (source : *équipements et services quantitatifs*)…</div>
+    </details>
+    <details class="inner-det">
+      <summary>▸ Vanilla k=25</summary>
+      <div class="ans-box ans-vk25">Oui, on observe un écart significatif entre les indicateurs objectifs et la perception à Bastia, notamment sur deux plans :
+
+### 1. **Opportunités objectives vs. perception du "Choix"**
+- **Indicateurs objectifs** :
+  Bastia obtient un score **Opp (Opportunités) très élevé (7,51/10, rang 7e/360)**, porté par :
+  - Un **accès aux TIC excellent (9,65/10, rang 13e/360)** (source : *indicateurs territoriaux*).
+  - Une **mobilité élevée (8,65/10)** (source : *indicateurs territoriaux*).
+  - Une **offre dense en équipements** (ex. : 50 médecins généralistes, 11 supermarchés, 7 lycées) (source : *équipements et services quantitatifs*).
+
+  Pourtant, le **score Choix (Cho) est nul (0,00/10, rang 360e…</div>
+    </details>
+  </div>
+</details>
+
+</section>
+
+</div>
+</body>
+</html>

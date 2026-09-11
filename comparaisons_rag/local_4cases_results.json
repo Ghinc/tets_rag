@@ -1,0 +1,272 @@
+[
+  {
+    "label": "Aiti — bien-etre",
+    "question": "Quel est le niveau de bien-être subjectif à Aïti ?",
+    "elapsed": 50.5,
+    "scope": "locale",
+    "question_type": "factuelle",
+    "guard": {
+      "passed": true,
+      "silence_list": [],
+      "silence_map": {},
+      "n_violations": 0,
+      "violations": [],
+      "available": true
+    },
+    "answer": "",
+    "metrics_steps": {
+      "decompose": {
+        "elapsed_s": 50.49036455154419,
+        "prompt_tokens": 905,
+        "completion_tokens": 900,
+        "n_calls": 2
+      },
+      "answer": {
+        "elapsed_s": 0.0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "n_calls": 0
+      },
+      "synthesize": {
+        "elapsed_s": 0.0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "n_calls": 0
+      },
+      "score_dimension": {
+        "elapsed_s": 0.0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "n_calls": 0
+      }
+    },
+    "sub_qa": [],
+    "api_ref": {
+      "answer": "### **Niveau de bien-être subjectif à Aiti**\n\n**Aucune donnée disponible** ne permet d’évaluer directement le bien-être subjectif des habitants d’Aiti à partir des sources mobilisées. Les indicateurs et enquêtes cités dans le bilan des sources ne fournissent **ni score moyen spécifique à la commune [SQ1], ni rang comparatif en Corse [SQ2], ni verbatims qualitatifs locaux [SQ3], ni proportion de satisfaction élevée [SQ4], ni thèmes récurrents locaux [SQ5]**.\n\nLes seules données objectives disponibles pour Aiti concernent des **indicateurs territoriaux OppChoVec** (basés sur des données INSEE 2020-2022), qui ne mesurent pas le bien-être subjectif mais des critères socio-économiques et d’accès aux services. Ces indicateurs ne sont pas conçus pour refléter les perceptions individuelles des habitants [SQ1, SQ2].\n\nLes données d’enquête citoyenne disponibles couvrent **uniquement des agrégats à l’échelle de la Corse entière** (N=246 répondants) et ne permettent pas d’isoler les réponses des habitants d’Aiti. Aucune synthèse ou verbatim ne mentionne spécifiquement cette commune [SQ3, SQ4, SQ5].\n\n---",
+      "elapsed": 24.1,
+      "guard": {
+        "passed": false,
+        "silence_list": [
+          "Aiti"
+        ],
+        "silence_map": {
+          "Aiti": {
+            "quali": false,
+            "quanti": true
+          }
+        },
+        "n_violations": 1,
+        "violations": [
+          {
+            "rule": "silence",
+            "detail": "Entité silencée 'Aiti' citée sans marqueur d'absence",
+            "evidence": "Les seules données objectives disponibles pour Aiti concernent des **indicateurs territoriaux OppChoVec** (basés sur des données INSEE 2020-2022), qui ne mesurent pas le bien-être subjectif mais des c",
+            "context": "Attendu : absence de tout énoncé factuel sur 'Aiti'"
+          }
+        ],
+        "available": true
+      }
+    }
+  },
+  {
+    "label": "Piedicorte — qualite de vie",
+    "question": "Comment les habitants de Piedicorte-di-Gaggio perçoivent-ils leur qualité de vie ?",
+    "elapsed": 61.0,
+    "scope": "locale",
+    "question_type": "factuelle",
+    "guard": {
+      "passed": true,
+      "silence_list": [],
+      "silence_map": {},
+      "n_violations": 0,
+      "violations": [],
+      "available": true
+    },
+    "answer": "",
+    "metrics_steps": {
+      "decompose": {
+        "elapsed_s": 61.00971603393555,
+        "prompt_tokens": 917,
+        "completion_tokens": 900,
+        "n_calls": 2
+      },
+      "answer": {
+        "elapsed_s": 0.0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "n_calls": 0
+      },
+      "synthesize": {
+        "elapsed_s": 0.0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "n_calls": 0
+      },
+      "score_dimension": {
+        "elapsed_s": 0.0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "n_calls": 0
+      }
+    },
+    "sub_qa": [],
+    "api_ref": {
+      "answer": "**Synthèse finale : Qualité de vie à Piedicorte-di-Gaggio**\n\nÀ Piedicorte-di-Gaggio, la qualité de vie mesurée par les indicateurs objectifs et les perceptions habitantes présente des contrastes marqués entre les opportunités disponibles, la liberté d’action et les réalisations concrètes.\n\n**1. Indicateurs objectifs de qualité de vie**\nLes données territoriales montrent que Piedicorte-di-Gaggio obtient un score global de **3,12/10** [SQ1], se classant **180e sur 360 communes corses** [SQ1]. Cette note reflète une situation contrastée selon les dimensions :\n- **Opportunités territoriales (Opp)** : **5,29/10** [SQ2], plaçant la commune au **67e rang** en Corse. Ce score intègre des critères comme l’éducation moyenne, la diversité des catégories socioprofessionnelles, l’accessibilité des transports et la couverture en technologies numériques.\n- **Liberté effective (Cho)** : **8,00/10** [SQ2], un score très élevé (295e rang), reflétant notamment un faible taux de quartiers prioritaires et une participation électorale élevée.\n- **Réalisations concrètes (Vec)** : **1,40/10** [SQ2], l’un des plus bas de Corse (339e rang), révélant des difficultés dans les domaines du revenu moyen, de la qualité du logement, de la stabilité de l’emploi et de l’accès aux services de base en moins de 20 minutes.\n\n**2. Perceptions habitantes**\nAucune donnée d’enquête citoyenne spécifique à Piedicorte-di-Gaggio n’est disponible pour évaluer les perceptions subjectives des habitants sur leur qualité de vie générale [SQ3], leur satisfaction concernant l’accès aux services [SQ4] ou leur appréciation de l’environnement et des paysages [SQ5]. Les verbatims et synthèses disponibles proviennent d’autres communes (Corte, Ajaccio, Bastia, etc.) et ne peuvent être extrapolés à Piedicorte-di-Gaggio.\n\n**3. Synthèse des enjeux**\nLes indicateurs objectifs soulignent un **décalage entre des opportunités et une liberté d’action relativement favorables** et des **réalisations concrètes très limitées**, notamment en matière de revenus, de qualité du logement et d’accès aux services. Ce contraste suggère des défis structurels pour transformer les potentialités locales en améliorations tangibles pour les habitants.\n\n---",
+      "elapsed": 24.9,
+      "guard": {
+        "passed": false,
+        "silence_list": [],
+        "silence_map": {
+          "Piedicorte-di-Gaggio": {
+            "quali": false,
+            "quanti": true
+          }
+        },
+        "n_violations": 2,
+        "violations": [
+          {
+            "rule": "silence",
+            "detail": "Entité 'Piedicorte-di-Gaggio' : énoncé qualitatif sans verbatims disponibles",
+            "evidence": "À Piedicorte-di-Gaggio, la qualité de vie mesurée par les indicateurs objectifs et les perceptions habitantes présente des contrastes marqués entre les opportunités disponibles, la liberté d’action et",
+            "context": "Attendu : scores quantitatifs uniquement, ou constat explicite d'absence de verbatims"
+          },
+          {
+            "rule": "silence",
+            "detail": "Entité 'Piedicorte-di-Gaggio' : énoncé qualitatif sans verbatims disponibles",
+            "evidence": "Les verbatims et synthèses disponibles proviennent d’autres communes (Corte, Ajaccio, Bastia, etc.) et ne peuvent être extrapolés à Piedicorte-di-Gaggio.",
+            "context": "Attendu : scores quantitatifs uniquement, ou constat explicite d'absence de verbatims"
+          }
+        ],
+        "available": true
+      }
+    }
+  },
+  {
+    "label": "Ajaccio — bien-etre",
+    "question": "Quel est le niveau de bien-être subjectif à Ajaccio ?",
+    "elapsed": 155.8,
+    "scope": "locale",
+    "question_type": "factuelle",
+    "guard": {
+      "passed": true,
+      "silence_list": [],
+      "silence_map": {},
+      "n_violations": 0,
+      "violations": [],
+      "available": true
+    },
+    "answer": "",
+    "metrics_steps": {
+      "decompose": {
+        "elapsed_s": 155.79731154441833,
+        "prompt_tokens": 903,
+        "completion_tokens": 900,
+        "n_calls": 2
+      },
+      "answer": {
+        "elapsed_s": 0.0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "n_calls": 0
+      },
+      "synthesize": {
+        "elapsed_s": 0.0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "n_calls": 0
+      },
+      "score_dimension": {
+        "elapsed_s": 0.0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "n_calls": 0
+      }
+    },
+    "sub_qa": [],
+    "api_ref": {
+      "answer": "### **Synthèse : Niveau de bien-être subjectif à Ajaccio**\n\nLe bien-être des habitants d’Ajaccio se caractérise par une **satisfaction modérée à bonne dans leur quotidien**, mais marquée par une **inquiétude marquée quant aux perspectives futures**. Les données combinent perceptions subjectives des habitants et indicateurs objectifs, offrant une vision nuancée de la qualité de vie dans la commune.\n\n---\n\n#### **1. Satisfaction globale et confiance en l’avenir**\nLes habitants d’Ajaccio rapportent une **satisfaction modérée à bonne** dans leur quotidien, avec un **score moyen de 3,74/5 pour le bonheur** et **3,85/5 pour la qualité de vie** [SQ1]. Cependant, la **confiance en l’avenir** est significativement plus faible, avec un score de **2,79/5**, révélant une préoccupation majeure pour l’avenir [SQ1]. Ces données proviennent de l’enquête citoyenne RAPTOR (collecte 2024-2026, n=47 pour le bonheur et la qualité de vie, n=43 pour la confiance en l’avenir).\n\n---\n#### **2. Comparaison avec les autres communes corses**\nAucune donnée d’enquête citoyenne ne permet de classer Ajaccio parmi les communes corses en termes de bien-être subjectif [SQ2]. En revanche, les **indicateurs territoriaux objectifs** (scores OppChoVec, 2020-2022) placent Ajaccio au **19ᵉ rang sur 360 communes corses**, avec un **score global de 5,78/10** [SQ2]. Ce classement reflète une position plutôt favorable en Corse, mais ne reflète pas directement les perceptions subjectives des habitants.\n\n---\n#### **3. Dimensions clés du bien-être selon les habitants**\nLes **thèmes les plus cités** par les habitants comme contributeurs à leur bien-être sont :\n- **Santé** : Perçue comme une condition essentielle au bien-être et à l’autonomie, avec des scores particulièrement bas (2,59/5 pour la santé globale, 1,98/5 pour l’accès aux médecins spécialistes et 2,53/5 pour les délais d’attente) [SQ3]. Les verbatims soulignent son importance vitale : *« La santé : si on a pas la santé, on a rien dans la vie »* [SQ5].\n- **Relations sociales et entourage** : Évalué à **4,14/5**, ce thème est un pilier du bien-être à Ajaccio [SQ3].\n- **Emploi** : Avec un score de **3,91/5**, l’emploi est un facteur clé de satisfaction, bien que des tensions persistent [SQ3].\n- **Logement et sécurité** : Mentionnés comme des enjeux critiques dans les verbatims, bien que moins quantifiés dans les scores [SQ3].\n\n---\n#### **4. Satisfaction quant à la qualité de vie globale**\nLa **satisfaction moyenne pour la qualité de vie globale** est de **3,85/5**, ce qui correspond à une **satisfaction modérée à bonne** [SQ4]. Cette donnée provient de l’enquête citoyenne Qualité de vie en Corse (collecte 2024-2026, n=47 répondants à Ajaccio). Elle reflète une perception globalement positive, mais nuancée par les inquiétudes exprimées sur la santé et l’avenir.\n\n---\n#### **5. Points de satisfaction et d’insatisfaction illustrés par les verbatims**\nLes **verbatims des habitants** révèlent des **satisfactions** comme :\n- La **cohésion sociale** et les **relations de voisinage**, souvent décrites comme fortes et soutenantes [SQ5].\n- L’**accès aux services de base** (écoles, commerces), perçu comme globalement satisfaisant [SQ5].\n\nMais aussi des **insatisfactions majeures** :\n- **L’accès aux soins**, avec des délais d’attente et un manque de spécialistes pointés du doigt [SQ5].\n- **Le coût de la vie** et les **difficultés économiques**, évoqués comme des freins au bien-être [SQ5].\n- **Les perspectives d’avenir**, perçues comme incertaines par une partie des habitants [SQ1].\n\n---\n### **Points clés à retenir**\n- **Un bien-être quotidien globalement satisfaisant**, mais fragilisé par des inquiétudes sur l’avenir et l’accès aux soins.\n- **Une position favorable en Corse** selon les indicateurs objectifs, mais des **tensions locales** sur des dimensions critiques (santé, emploi, logement).\n- **Des relations sociales solides**, qui constituent un atout majeur pour le bien-être des Ajacciens.\n\n---",
+      "elapsed": 32.0,
+      "guard": {
+        "passed": true,
+        "silence_list": [],
+        "silence_map": {},
+        "n_violations": 0,
+        "violations": [],
+        "available": true
+      }
+    }
+  },
+  {
+    "label": "Aiti — verbatims scope_reel",
+    "question": "Quels sont les verbatims citoyens les plus représentatifs à Aïti ?",
+    "elapsed": 321.3,
+    "scope": "locale",
+    "question_type": "factuelle",
+    "guard": {
+      "passed": true,
+      "silence_list": [],
+      "silence_map": {},
+      "n_violations": 0,
+      "violations": [],
+      "available": true
+    },
+    "answer": "",
+    "metrics_steps": {
+      "decompose": {
+        "elapsed_s": 321.28039264678955,
+        "prompt_tokens": 909,
+        "completion_tokens": 900,
+        "n_calls": 2
+      },
+      "answer": {
+        "elapsed_s": 0.0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "n_calls": 0
+      },
+      "synthesize": {
+        "elapsed_s": 0.0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "n_calls": 0
+      },
+      "score_dimension": {
+        "elapsed_s": 0.0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "n_calls": 0
+      }
+    },
+    "sub_qa": [],
+    "api_ref": {
+      "answer": "**Synthèse finale : Verbatims citoyens les plus représentatifs à Aiti**\n\nAucun verbatim citoyen spécifique à Aiti n’est disponible dans les sources mobilisées.\nLes données d’enquête citoyenne disponibles couvrent la Corse entière ; aucune donnée d’enquête spécifique à Aiti n’est disponible [SQ2, SQ3, SQ4, SQ5].\n\nLes indicateurs territoriaux objectifs (scores OppChoVec) pour Aiti indiquent une situation défavorable sur plusieurs dimensions, mais ils ne fournissent pas de verbatims ou de perceptions citoyennes [SQ2, SQ3, SQ4, SQ5].",
+      "elapsed": 22.9,
+      "guard": {
+        "passed": false,
+        "silence_list": [],
+        "silence_map": {
+          "Aiti": {
+            "quali": false,
+            "quanti": true
+          }
+        },
+        "n_violations": 2,
+        "violations": [
+          {
+            "rule": "silence",
+            "detail": "Entité 'Aiti' : énoncé qualitatif sans verbatims disponibles",
+            "evidence": "Aucun verbatim citoyen spécifique à Aiti n’est disponible dans les sources mobilisées.",
+            "context": "Attendu : scores quantitatifs uniquement, ou constat explicite d'absence de verbatims"
+          },
+          {
+            "rule": "silence",
+            "detail": "Entité 'Aiti' : énoncé qualitatif sans verbatims disponibles",
+            "evidence": "Les indicateurs territoriaux objectifs (scores OppChoVec) pour Aiti indiquent une situation défavorable sur plusieurs dimensions, mais ils ne fournissent pas de verbatims ou de perceptions citoyennes ",
+            "context": "Attendu : scores quantitatifs uniquement, ou constat explicite d'absence de verbatims"
+          }
+        ],
+        "available": true
+      }
+    }
+  }
+]

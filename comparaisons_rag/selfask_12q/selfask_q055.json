@@ -1,0 +1,233 @@
+{
+  "excel_row": 55,
+  "question": "Les données sur les transports en commun à Bonifacio permettent-elles de l'évaluer de manière fiable ?",
+  "section": "Gestion d’absence d’information",
+  "subsection": "Données non documentées dans les sources",
+  "expected_type": "reponse_substantielle_attendue",
+  "hops": [
+    {
+      "hop": 1,
+      "follow_up": "Quels sont les équipements communaux de transport en commun répertoriés pour la commune de Bonifacio?",
+      "model_raw": "Follow up: Quels sont les équipements communaux de transport en commun répertoriés pour la commune de Bonifacio ?",
+      "sources": [
+        {
+          "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théorique >= 30 min de trajet.\n\n• Opp4 — Avoir accès aux TIC (poids 0,25)\n  Couverture locale par Internet haut débit (>= 30 Mbit/s) et réseau 4G.\n\nDIMENSION 2 — CHOIX (Cho)\nLa liberté de choix effective dont disposent les individus sur ce territoire.\n\n• Cho1 — Ne pas être discriminé(e) (poids 0,5)\n  Présence ou absence de quartiers cibles de la politique de la ville dans la commune (indicateur pénalisant la concentration de précarité).\n\n• Cho2 — Avoir les moyens d'influencer les décisions publiques (poids 0,5)\n  Proportion d'individus ayant le droit de vote (nationalité française, >= 18 ans) parmi la population en âge de travailler (>= 16 ans).\n\nDIMENSION 3 — VÉCU (Vec)\nLes réalisations effectives des individus — ce qui a été réellement accompli et vécu.\n\n• Vec1 — Avoir un revenu décent (poids 0,25)\n  Revenu fiscal moyen par foyer fiscal dans la commune.\n\n• Vec2 — Avoir un logement décent (poids 0,25, réparti sur 3 sous-indicateurs)\n  - Vec2a : Nombre moyen de personnes par pièce (surpeuplement)\n  - Vec2b : Proportion de logements avec équipements sanitaires complets (eau chaude, douche/baignoire, chauffage, cuisine avec évier)\n  - Vec2c : Proportion de la population vivant dans une habitation individuelle\n\n• Vec3 — Être bien inséré sur le marché du travail (poids 0,25)\n  Stabilité des emplois des résidents (5 niveaux : chômeur, emploi aidé, contrat ponctuel, CDD, emploi stable — CDI, fonctionnaire, indépendant).\n\n• Vec4 — Être proche des services (poids 0,25)\n  Nombre d'établissements de vie courante accessibles en moins de 20 minutes (santé, éducation, commerces, culture, administration), calculé par algorithme de plus court chemin (Dijkstra) sur réseau routier.\n\nCALCUL DE L'INDICE\n\nÉtape 1 — Standardisation (commensurabilité) :\n  V(i,j,k) = (Xijk − Xjk,min) / (Xjk,max − Xjk,min)\n  Chaque sous-indicateur est ramené entre 0 (minimum observé) et 1 (maximum observé).\n\nÉtape 2 — Agrégation par dimension (moyenne pondérée) :\n  Dk(i) = Σ pjk × V(i,j,k)\n  Les poids pjk sont égaux au sein de chaque dimension.\n\nÉtape 3 — Indice global (avec aversion à la pauvreté et complémentarité) :\n  OppChoVec(i) = agrégation des 3 dimensions Dk avec :\n    - paramètre β = 2,5 (aversion à la pauvreté : pénalise les très faibles scores)\n    - paramètre γ = 1,5 (complémentarité : pénalise les déséquilibres entre dimensions)\n  Le résultat brut (0-1) est ensuite renormalisé sur 0-10 pour l'application corse.\n\nINTERPRÉTATION DE L'ÉCHELLE 0-10\n\n- 0 = niveau de bien-être minimal parmi les 360 communes corses\n- 10 = niveau de bien-être maximal parmi les 360 communes corses\n- ~5 = niveau médian corse\n\nUn score élevé signifie que la commune offre à la fois de bonnes opportunités, une réelle liberté de choix et un vécu satisfaisant. Un score faible peut refléter un déficit sur une ou plusieurs dimensions. Les trois scores partiels (Opp, Cho, Vec) permettent de diagnostiquer la nature du déficit : une commune peut avoir de bonnes opportunités (Opp élevé) mais un vécu difficile (Vec faible), signalant un décalage entre l'offre territoriale et les conditions de vie réelles.\n\nSource : Bourdeau-Lepage L. (2011), adapté pour la Corse. Données : oppchovec_betti_0_10.",
+          "metadata": {
+            "source": "methodology",
+            "commune": "",
+            "type": "methodology"
+          },
+          "source_type": "oppchovec_scores",
+          "label": "Scores OppChoVec — "
+        },
+        {
+          "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Bonifacio : 4.50/10 (moyen).\n\nSous-scores principaux de Bonifacio :\n  • Opportunités (Opp) : 7.17/10 (élevé)  — rang 10e/360\n  • Choix (Cho)        : 7.17/10 (élevé)  — rang 330e/360\n  • Vécu (Vec)         : 2.42/10 (faible)  — rang 290e/360\n  • OppChoVec global   : rang 58e/360\n\nSous-dimensions du score Opportunités (Opp) de Bonifacio :\n  • Opp1 — Éducation      : 9.55/10 (très élevé)  [valeur brute : 5.950] — rang 5e/360\n  • Opp2 — Diversité soc. : 1.41/10 (très faible)  [indice Theil : 0.2285] — rang 289e/360\n  • Opp3 — Mobilité       : 9.29/10 (très élevé)  [indicateur : 190.2/200] — rang 94e/360\n  • Opp4 — TIC (numérique): 5.20/10 (élevé)  [couverture : 52.0%] — rang 170e/360\n\nAnalyse de Bonifacio :\n- Bonifacio se distingue surtout par ses opportunités (Opp=7.17/10).\n- Le point le plus faible de Bonifacio est le score Vécu (2.42/10).\n\nValeurs brutes (non normalisées) de Bonifacio :\n- OppChoVec brut : 0.0850\n- Opp brut : 0.5419\n- Cho brut : 0.8150\n- Vec brut : 0.4529",
+          "metadata": {
+            "rank_opp2": 289,
+            "rank_total": 58,
+            "rank_opp": 10,
+            "opp3_0_10": 9.2873,
+            "rank_opp3": 94,
+            "cho_0_10": 7.168497,
+            "rank_vec": 290,
+            "rank_opp4": 170,
+            "opp4_0_10": 5.2,
+            "rank_cho": 330,
+            "commune": "Bonifacio",
+            "opp2_0_10": 1.4081,
+            "source": "oppchovec_betti_0_10",
+            "rank_opp1": 5,
+            "opp_0_10": 7.170603,
+            "vec_0_10": 2.423096,
+            "oppchovec_0_10": 4.49998,
+            "opp1_0_10": 9.5506
+          },
+          "source_type": "oppchovec_scores",
+          "label": "Scores OppChoVec — Bonifacio"
+        },
+        {
+          "content": "La commune de Bonifacio compte une part de 7.4% de cadres et professions intellectuelles supérieures, 18.8% d'ouvriers, avec un taux d'activité de 69.8%. 70.7% des emplois y sont salariés. On y trouve 1.0 points de contact postal, 2.0 hypermarchés ou supermarchés, 8.0 supérettes ou épiceries, 8.0 boulangeries et 3.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 1.0 écoles maternelles, 1.0 écoles élémentaires, 1.0 collèges et 0.0 lycées. Elle possède 1.0 services d'urgence, 2.0 médecins généralistes, 1.0 pharmacies, 10.0 infirmiers et 1.0 crèches. La sécurité est assurée par 1.0 postes de police ou gendarmerie. Il y a également 1.0 agences Pôle emploi. Le taux de pauvreté est de 18.403112840466928%, la part de logements vacants est de 2.2%, et celle des résidences secondaires est de 54.0%. Le taux de coups et blessures volontaires est de 7.8 pour 1 000 habitants. Le prix moyen au m² est de 5248.14583333333€, pour une surface moyenne des logements de 95.9791666666667 m².",
+          "metadata": {
+            "source": "data_comp",
+            "data_type": "quanti",
+            "commune": "Bonifacio"
+          },
+          "source_type": "communes_equipements",
+          "label": "Équipements et services commune (objectif/quanti)"
+        }
+      ],
+      "intermediate_answer": "Selon les données d'équipements communaux disponibles dans le contexte fourni, **aucun équipement de transport en commun n'est explicitement répertorié** pour Bonifacio.\n\nCependant, il est important de noter que selon les indicateurs territoriaux objectifs, Bonifacio affiche un score très élevé en mobilité (Opp3 : 9.29/10, rang 94e/360 sur 360 communes corses), ce qui suggère que l'accès à la mobilité minimale y est assuré — probablement via une forte proportion de population disposant d'une voiture et/ou un accès à des réseaux de transport en commun. Les données détaillées sur la nature précise de ces équipements de transport (bus, car, train, tram) ne sont pas ventilées dans le contexte disponible."
+    },
+    {
+      "hop": 2,
+      "follow_up": "Que révèlent les verbatims citoyens et les entretiens sur l'expérience des transports en commun à Bonifacio?",
+      "model_raw": "Follow up: Que révèlent les verbatims citoyens et les entretiens sur l'expérience des transports en commun à Bonifacio ?",
+      "sources": [
+        {
+          "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théorique >= 30 min de trajet.\n\n• Opp4 — Avoir accès aux TIC (poids 0,25)\n  Couverture locale par Internet haut débit (>= 30 Mbit/s) et réseau 4G.\n\nDIMENSION 2 — CHOIX (Cho)\nLa liberté de choix effective dont disposent les individus sur ce territoire.\n\n• Cho1 — Ne pas être discriminé(e) (poids 0,5)\n  Présence ou absence de quartiers cibles de la politique de la ville dans la commune (indicateur pénalisant la concentration de précarité).\n\n• Cho2 — Avoir les moyens d'influencer les décisions publiques (poids 0,5)\n  Proportion d'individus ayant le droit de vote (nationalité française, >= 18 ans) parmi la population en âge de travailler (>= 16 ans).\n\nDIMENSION 3 — VÉCU (Vec)\nLes réalisations effectives des individus — ce qui a été réellement accompli et vécu.\n\n• Vec1 — Avoir un revenu décent (poids 0,25)\n  Revenu fiscal moyen par foyer fiscal dans la commune.\n\n• Vec2 — Avoir un logement décent (poids 0,25, réparti sur 3 sous-indicateurs)\n  - Vec2a : Nombre moyen de personnes par pièce (surpeuplement)\n  - Vec2b : Proportion de logements avec équipements sanitaires complets (eau chaude, douche/baignoire, chauffage, cuisine avec évier)\n  - Vec2c : Proportion de la population vivant dans une habitation individuelle\n\n• Vec3 — Être bien inséré sur le marché du travail (poids 0,25)\n  Stabilité des emplois des résidents (5 niveaux : chômeur, emploi aidé, contrat ponctuel, CDD, emploi stable — CDI, fonctionnaire, indépendant).\n\n• Vec4 — Être proche des services (poids 0,25)\n  Nombre d'établissements de vie courante accessibles en moins de 20 minutes (santé, éducation, commerces, culture, administration), calculé par algorithme de plus court chemin (Dijkstra) sur réseau routier.\n\nCALCUL DE L'INDICE\n\nÉtape 1 — Standardisation (commensurabilité) :\n  V(i,j,k) = (Xijk − Xjk,min) / (Xjk,max − Xjk,min)\n  Chaque sous-indicateur est ramené entre 0 (minimum observé) et 1 (maximum observé).\n\nÉtape 2 — Agrégation par dimension (moyenne pondérée) :\n  Dk(i) = Σ pjk × V(i,j,k)\n  Les poids pjk sont égaux au sein de chaque dimension.\n\nÉtape 3 — Indice global (avec aversion à la pauvreté et complémentarité) :\n  OppChoVec(i) = agrégation des 3 dimensions Dk avec :\n    - paramètre β = 2,5 (aversion à la pauvreté : pénalise les très faibles scores)\n    - paramètre γ = 1,5 (complémentarité : pénalise les déséquilibres entre dimensions)\n  Le résultat brut (0-1) est ensuite renormalisé sur 0-10 pour l'application corse.\n\nINTERPRÉTATION DE L'ÉCHELLE 0-10\n\n- 0 = niveau de bien-être minimal parmi les 360 communes corses\n- 10 = niveau de bien-être maximal parmi les 360 communes corses\n- ~5 = niveau médian corse\n\nUn score élevé signifie que la commune offre à la fois de bonnes opportunités, une réelle liberté de choix et un vécu satisfaisant. Un score faible peut refléter un déficit sur une ou plusieurs dimensions. Les trois scores partiels (Opp, Cho, Vec) permettent de diagnostiquer la nature du déficit : une commune peut avoir de bonnes opportunités (Opp élevé) mais un vécu difficile (Vec faible), signalant un décalage entre l'offre territoriale et les conditions de vie réelles.\n\nSource : Bourdeau-Lepage L. (2011), adapté pour la Corse. Données : oppchovec_betti_0_10.",
+          "metadata": {
+            "type": "methodology",
+            "source": "methodology",
+            "commune": ""
+          },
+          "source_type": "oppchovec_scores",
+          "label": "Scores OppChoVec — "
+        },
+        {
+          "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Bonifacio : 4.50/10 (moyen).\n\nSous-scores principaux de Bonifacio :\n  • Opportunités (Opp) : 7.17/10 (élevé)  — rang 10e/360\n  • Choix (Cho)        : 7.17/10 (élevé)  — rang 330e/360\n  • Vécu (Vec)         : 2.42/10 (faible)  — rang 290e/360\n  • OppChoVec global   : rang 58e/360\n\nSous-dimensions du score Opportunités (Opp) de Bonifacio :\n  • Opp1 — Éducation      : 9.55/10 (très élevé)  [valeur brute : 5.950] — rang 5e/360\n  • Opp2 — Diversité soc. : 1.41/10 (très faible)  [indice Theil : 0.2285] — rang 289e/360\n  • Opp3 — Mobilité       : 9.29/10 (très élevé)  [indicateur : 190.2/200] — rang 94e/360\n  • Opp4 — TIC (numérique): 5.20/10 (élevé)  [couverture : 52.0%] — rang 170e/360\n\nAnalyse de Bonifacio :\n- Bonifacio se distingue surtout par ses opportunités (Opp=7.17/10).\n- Le point le plus faible de Bonifacio est le score Vécu (2.42/10).\n\nValeurs brutes (non normalisées) de Bonifacio :\n- OppChoVec brut : 0.0850\n- Opp brut : 0.5419\n- Cho brut : 0.8150\n- Vec brut : 0.4529",
+          "metadata": {
+            "opp2_0_10": 1.4081,
+            "source": "oppchovec_betti_0_10",
+            "rank_total": 58,
+            "opp4_0_10": 5.2,
+            "rank_opp2": 289,
+            "oppchovec_0_10": 4.49998,
+            "rank_opp3": 94,
+            "vec_0_10": 2.423096,
+            "opp3_0_10": 9.2873,
+            "rank_vec": 290,
+            "rank_opp1": 5,
+            "cho_0_10": 7.168497,
+            "opp1_0_10": 9.5506,
+            "commune": "Bonifacio",
+            "rank_cho": 330,
+            "opp_0_10": 7.170603,
+            "rank_opp": 10,
+            "rank_opp4": 170
+          },
+          "source_type": "oppchovec_scores",
+          "label": "Scores OppChoVec — Bonifacio"
+        },
+        {
+          "content": "La commune de Bonifacio compte une part de 7.4% de cadres et professions intellectuelles supérieures, 18.8% d'ouvriers, avec un taux d'activité de 69.8%. 70.7% des emplois y sont salariés. On y trouve 1.0 points de contact postal, 2.0 hypermarchés ou supermarchés, 8.0 supérettes ou épiceries, 8.0 boulangeries et 3.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 1.0 écoles maternelles, 1.0 écoles élémentaires, 1.0 collèges et 0.0 lycées. Elle possède 1.0 services d'urgence, 2.0 médecins généralistes, 1.0 pharmacies, 10.0 infirmiers et 1.0 crèches. La sécurité est assurée par 1.0 postes de police ou gendarmerie. Il y a également 1.0 agences Pôle emploi. Le taux de pauvreté est de 18.403112840466928%, la part de logements vacants est de 2.2%, et celle des résidences secondaires est de 54.0%. Le taux de coups et blessures volontaires est de 7.8 pour 1 000 habitants. Le prix moyen au m² est de 5248.14583333333€, pour une surface moyenne des logements de 95.9791666666667 m².",
+          "metadata": {
+            "data_type": "quanti",
+            "source": "data_comp",
+            "commune": "Bonifacio"
+          },
+          "source_type": "communes_equipements",
+          "label": "Équipements et services commune (objectif/quanti)"
+        }
+      ],
+      "intermediate_answer": "Le contexte fourni ne contient pas de verbatims citoyens ni d'entretiens qualitatifs spécifiques à l'expérience des transports en commun à Bonifacio. \n\nJe peux uniquement signaler que, selon les indicateurs territoriaux objectifs, Bonifacio affiche un score de mobilité (Opp3) très élevé de 9.29/10 (rang 94e/360 communes corses), reflétant une bonne accessibilité théorique aux moyens de transport. Cependant, cette donnée objective ne renseigne pas sur la satisfaction réelle des habitants ni sur leur vécu des transports en commun.\n\nPour répondre à votre question, il faudrait disposer de données d'enquête citoyenne ou d'entretiens qualitatifs portant spécifiquement sur ce sujet à Bonifacio."
+    }
+  ],
+  "n_hops": 2,
+  "final_answer": "Les données disponibles ne permettent pas d'évaluer de manière fiable les transports en commun à Bonifacio sous l'angle du bien-être perçu.\n\nSur le plan **objectif**, la commune affiche un score de mobilité (Opp3) très élevé de **9,29/10** (rang 94ᵉ sur 360 communes corses), ce qui indique une accessibilité théorique satisfaisante aux moyens de transport. Cependant, **aucun équipement communal de transport en commun n'est explicitement répertorié** dans les données d'équipements, ce qui suggère une offre limitée ou absente, compensée probablement par une forte dépendance à la voiture individuelle.\n\nSur le plan **subjectif**, **aucune donnée qualitative** (verbatims, enquêtes ou entretiens) ne documente l'expérience des habitants en matière de transports en commun. L'absence de retours citoyens empêche donc toute évaluation fiable de la satisfaction, des difficultés rencontrées ou des attentes locales.\n\nEn conclusion, si les indicateurs objectifs laissent supposer une mobilité globalement assurée, **l'évaluation du bien-être lié aux transports en commun à Bonifacio reste incomplète** en l'absence de données subjectives et d'une caractérisation précise de l'offre existante. Une enquête complémentaire serait nécessaire pour combler ces lacunes.",
+  "all_sources": [
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théorique >= 30 min de trajet.\n\n• Opp4 — Avoir accès aux TIC (poids 0,25)\n  Couverture locale par Internet haut débit (>= 30 Mbit/s) et réseau 4G.\n\nDIMENSION 2 — CHOIX (Cho)\nLa liberté de choix effective dont disposent les individus sur ce territoire.\n\n• Cho1 — Ne pas être discriminé(e) (poids 0,5)\n  Présence ou absence de quartiers cibles de la politique de la ville dans la commune (indicateur pénalisant la concentration de précarité).\n\n• Cho2 — Avoir les moyens d'influencer les décisions publiques (poids 0,5)\n  Proportion d'individus ayant le droit de vote (nationalité française, >= 18 ans) parmi la population en âge de travailler (>= 16 ans).\n\nDIMENSION 3 — VÉCU (Vec)\nLes réalisations effectives des individus — ce qui a été réellement accompli et vécu.\n\n• Vec1 — Avoir un revenu décent (poids 0,25)\n  Revenu fiscal moyen par foyer fiscal dans la commune.\n\n• Vec2 — Avoir un logement décent (poids 0,25, réparti sur 3 sous-indicateurs)\n  - Vec2a : Nombre moyen de personnes par pièce (surpeuplement)\n  - Vec2b : Proportion de logements avec équipements sanitaires complets (eau chaude, douche/baignoire, chauffage, cuisine avec évier)\n  - Vec2c : Proportion de la population vivant dans une habitation individuelle\n\n• Vec3 — Être bien inséré sur le marché du travail (poids 0,25)\n  Stabilité des emplois des résidents (5 niveaux : chômeur, emploi aidé, contrat ponctuel, CDD, emploi stable — CDI, fonctionnaire, indépendant).\n\n• Vec4 — Être proche des services (poids 0,25)\n  Nombre d'établissements de vie courante accessibles en moins de 20 minutes (santé, éducation, commerces, culture, administration), calculé par algorithme de plus court chemin (Dijkstra) sur réseau routier.\n\nCALCUL DE L'INDICE\n\nÉtape 1 — Standardisation (commensurabilité) :\n  V(i,j,k) = (Xijk − Xjk,min) / (Xjk,max − Xjk,min)\n  Chaque sous-indicateur est ramené entre 0 (minimum observé) et 1 (maximum observé).\n\nÉtape 2 — Agrégation par dimension (moyenne pondérée) :\n  Dk(i) = Σ pjk × V(i,j,k)\n  Les poids pjk sont égaux au sein de chaque dimension.\n\nÉtape 3 — Indice global (avec aversion à la pauvreté et complémentarité) :\n  OppChoVec(i) = agrégation des 3 dimensions Dk avec :\n    - paramètre β = 2,5 (aversion à la pauvreté : pénalise les très faibles scores)\n    - paramètre γ = 1,5 (complémentarité : pénalise les déséquilibres entre dimensions)\n  Le résultat brut (0-1) est ensuite renormalisé sur 0-10 pour l'application corse.\n\nINTERPRÉTATION DE L'ÉCHELLE 0-10\n\n- 0 = niveau de bien-être minimal parmi les 360 communes corses\n- 10 = niveau de bien-être maximal parmi les 360 communes corses\n- ~5 = niveau médian corse\n\nUn score élevé signifie que la commune offre à la fois de bonnes opportunités, une réelle liberté de choix et un vécu satisfaisant. Un score faible peut refléter un déficit sur une ou plusieurs dimensions. Les trois scores partiels (Opp, Cho, Vec) permettent de diagnostiquer la nature du déficit : une commune peut avoir de bonnes opportunités (Opp élevé) mais un vécu difficile (Vec faible), signalant un décalage entre l'offre territoriale et les conditions de vie réelles.\n\nSource : Bourdeau-Lepage L. (2011), adapté pour la Corse. Données : oppchovec_betti_0_10.",
+      "metadata": {
+        "source": "methodology",
+        "commune": "",
+        "type": "methodology"
+      },
+      "source_type": "oppchovec_scores",
+      "label": "Scores OppChoVec — "
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Bonifacio : 4.50/10 (moyen).\n\nSous-scores principaux de Bonifacio :\n  • Opportunités (Opp) : 7.17/10 (élevé)  — rang 10e/360\n  • Choix (Cho)        : 7.17/10 (élevé)  — rang 330e/360\n  • Vécu (Vec)         : 2.42/10 (faible)  — rang 290e/360\n  • OppChoVec global   : rang 58e/360\n\nSous-dimensions du score Opportunités (Opp) de Bonifacio :\n  • Opp1 — Éducation      : 9.55/10 (très élevé)  [valeur brute : 5.950] — rang 5e/360\n  • Opp2 — Diversité soc. : 1.41/10 (très faible)  [indice Theil : 0.2285] — rang 289e/360\n  • Opp3 — Mobilité       : 9.29/10 (très élevé)  [indicateur : 190.2/200] — rang 94e/360\n  • Opp4 — TIC (numérique): 5.20/10 (élevé)  [couverture : 52.0%] — rang 170e/360\n\nAnalyse de Bonifacio :\n- Bonifacio se distingue surtout par ses opportunités (Opp=7.17/10).\n- Le point le plus faible de Bonifacio est le score Vécu (2.42/10).\n\nValeurs brutes (non normalisées) de Bonifacio :\n- OppChoVec brut : 0.0850\n- Opp brut : 0.5419\n- Cho brut : 0.8150\n- Vec brut : 0.4529",
+      "metadata": {
+        "rank_opp2": 289,
+        "rank_total": 58,
+        "rank_opp": 10,
+        "opp3_0_10": 9.2873,
+        "rank_opp3": 94,
+        "cho_0_10": 7.168497,
+        "rank_vec": 290,
+        "rank_opp4": 170,
+        "opp4_0_10": 5.2,
+        "rank_cho": 330,
+        "commune": "Bonifacio",
+        "opp2_0_10": 1.4081,
+        "source": "oppchovec_betti_0_10",
+        "rank_opp1": 5,
+        "opp_0_10": 7.170603,
+        "vec_0_10": 2.423096,
+        "oppchovec_0_10": 4.49998,
+        "opp1_0_10": 9.5506
+      },
+      "source_type": "oppchovec_scores",
+      "label": "Scores OppChoVec — Bonifacio"
+    },
+    {
+      "content": "La commune de Bonifacio compte une part de 7.4% de cadres et professions intellectuelles supérieures, 18.8% d'ouvriers, avec un taux d'activité de 69.8%. 70.7% des emplois y sont salariés. On y trouve 1.0 points de contact postal, 2.0 hypermarchés ou supermarchés, 8.0 supérettes ou épiceries, 8.0 boulangeries et 3.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 1.0 écoles maternelles, 1.0 écoles élémentaires, 1.0 collèges et 0.0 lycées. Elle possède 1.0 services d'urgence, 2.0 médecins généralistes, 1.0 pharmacies, 10.0 infirmiers et 1.0 crèches. La sécurité est assurée par 1.0 postes de police ou gendarmerie. Il y a également 1.0 agences Pôle emploi. Le taux de pauvreté est de 18.403112840466928%, la part de logements vacants est de 2.2%, et celle des résidences secondaires est de 54.0%. Le taux de coups et blessures volontaires est de 7.8 pour 1 000 habitants. Le prix moyen au m² est de 5248.14583333333€, pour une surface moyenne des logements de 95.9791666666667 m².",
+      "metadata": {
+        "source": "data_comp",
+        "data_type": "quanti",
+        "commune": "Bonifacio"
+      },
+      "source_type": "communes_equipements",
+      "label": "Équipements et services commune (objectif/quanti)"
+    }
+  ],
+  "elapsed_rag_s": 37.1,
+  "meta": {
+    "max_hops": 5,
+    "k": 5,
+    "mistral_temp": 0.0,
+    "answerer": "haiku",
+    "ts": "2026-07-20T18:41:16.693022"
+  },
+  "raisonnement": "La réponse signale clairement l'absence de données qualitatives et l'insuffisance des données quantitatives pour évaluer les transports en commun. Elle mobilise correctement les sources disponibles (Opp3 pour la mobilité objective) et souligne les limites (pas d'équipements de transport répertoriés, pas de verbatims). La conclusion est nuancée et propose une enquête complémentaire.",
+  "section_observee": "Gestion de l'absence d'information / Données non documentées dans les sources",
+  "comportement_attendu_selon_grille": "Réponse de fond avec signalement explicite des limites et des biais éventuels. Refus ou approximation très signalée acceptable si données manquantes.",
+  "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+  "coherence_comportement_observe": "oui",
+  "sources_inventaire": [
+    {
+      "source": "methodology",
+      "type": "quanti"
+    },
+    {
+      "source": "rank_opp2",
+      "type": "quanti"
+    },
+    {
+      "source": "data_comp",
+      "type": "quanti"
+    }
+  ],
+  "mislabelling_detecte": {
+    "regle_1_quali_quanti": "non",
+    "regle_2_surinterpretation_oppchovec": "non",
+    "regle_3_absence_quali_non_signalee": "non — l'absence de données qualitatives est explicitement signalée",
+    "regle_4_extrapolation_sous_groupe": "non"
+  },
+  "mislabelling_flag": true,
+  "elements_specifiques_question": [
+    "transports en commun",
+    "Bonifacio",
+    "évaluation fiable",
+    "bien-être perçu"
+  ],
+  "elements_traitement": [
+    {
+      "element": "transports en commun",
+      "traitement": "approximation_signalee"
+    },
+    {
+      "element": "Bonifacio",
+      "traitement": "precis"
+    },
+    {
+      "element": "évaluation fiable",
+      "traitement": "approximation_signalee"
+    },
+    {
+      "element": "bien-être perçu",
+      "traitement": "approximation_signalee"
+    }
+  ],
+  "pertinence": 5,
+  "pertinence_justif": "Tous les éléments de la question sont traités avec précision. L'absence de données est signalée explicitement, et la réponse propose une analyse honnête des limites.",
+  "fondement_factuel": 5,
+  "fondement_factuel_justif": "Les affirmations s'appuient sur les sources fournies (Opp3, équipements) et respectent leur signification opérationnelle. Aucune surinterprétation ou mislabelling.",
+  "nuance_incertitude": 5,
+  "nuance_incertitude_justif": "La réponse est parfaitement nuancée : signalement clair des limites, distinction entre données objectives et subjectives manquantes, proposition d'enquête complémentaire.",
+  "coherence_qualiquanti": 5,
+  "coherence_qualiquanti_justif": "Intégration exemplaire : les données quantitatives (Opp3, équipements) sont mobilisées pour ce qu'elles sont, et l'absence de données qualitatives est explicitement mentionnée comme une limite majeure.",
+  "score_global": 5.0,
+  "error": null,
+  "elapsed_judge_s": 14.4
+}

@@ -1,0 +1,29 @@
+INFO:     Started server process [10092]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8600 (Press CTRL+C to quit)
+================================================================
+  Dumè GPT — Corsica well-being observation assistant
+  UI         : http://127.0.0.1:8600/
+  Dev switch : http://127.0.0.1:8600/?dev=corse2026
+  (the RAPTOR pipeline loads in the background — the first
+   question waits until /api/health reports ready)
+================================================================
+[obs] commune profiles loaded: 68
+INFO:     127.0.0.1:62215 - "GET /api/health HTTP/1.1" 200 OK
+[obs] initialising RAPTOR v10 …
+RAPTOR Retriever : 493 syntheses + oppchovec (394 docs) + raptor_enquete (125 syntheses) + 9 collections extra (portrait_entretiens, raptor_entretiens_summaries, enquete_responses, enquete_scores_commune, communes_wiki, communes_equipements, communes_geo, zones_epci, communes_profil)
+RAG v10 initialise (493 syntheses RAPTOR disponibles)
+[obs] v10 ready
+[obs] objective (OppChoVec) profiles loaded: 360
+  [v11] Chargement RaptorRetriever...
+INFO:     127.0.0.1:62220 - "GET /api/health HTTP/1.1" 200 OK
+RAPTOR Retriever : 493 syntheses + oppchovec (394 docs) + raptor_enquete (125 syntheses) + 9 collections extra (portrait_entretiens, raptor_entretiens_summaries, enquete_responses, enquete_scores_commune, communes_wiki, communes_equipements, communes_geo, zones_epci, communes_profil)
+  [v11] AgenticRAGPipeline pret.
+[obs] v11 ready
+[obs] pipeline loaded — accepting queries
+INFO:     127.0.0.1:62221 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62222 - "GET /api/communes HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62223 - "GET /api/commune?name=Aiti&view=objective HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62224 - "GET /api/commune?name=Aiti&view=subjective HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62225 - "GET /api/commune?name=Ajaccio&view=subjective HTTP/1.1" 200 OK

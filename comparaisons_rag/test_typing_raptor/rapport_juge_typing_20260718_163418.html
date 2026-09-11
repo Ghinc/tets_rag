@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Juge V4.3 — test typing raptor</title>
+<style>
+:root{
+  --bg:#f8fafc;--surface:#fff;--surface-2:#f1f5f9;--border:#e2e8f0;
+  --text:#1e293b;--muted:#64748b;--accent:#3b82f6;
+  --pos:#16a34a;--neg:#dc2626;--warn:#ca8a04;
+  --h-font:"Georgia",serif;
+}
+@media(prefers-color-scheme:dark){
+  :root{--bg:#0f172a;--surface:#1e293b;--surface-2:#334155;--border:#475569;
+    --text:#f1f5f9;--muted:#94a3b8}
+}
+:root[data-theme="light"]{--bg:#f8fafc;--surface:#fff;--surface-2:#f1f5f9;--border:#e2e8f0;--text:#1e293b;--muted:#64748b}
+:root[data-theme="dark"]{--bg:#0f172a;--surface:#1e293b;--surface-2:#334155;--border:#475569;--text:#f1f5f9;--muted:#94a3b8}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;padding:24px}
+h1{font-family:var(--h-font);font-size:1.5rem;margin-bottom:4px}
+.subtitle{color:var(--muted);font-size:0.85rem;margin-bottom:20px}
+.warning-box{background:color-mix(in srgb,var(--warn) 10%,var(--surface));border:1px solid var(--warn);
+  border-radius:6px;padding:10px 14px;margin-bottom:20px;font-size:13px;color:var(--text)}
+/* Synthèse */
+.synth-table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:32px}
+.synth-table th{background:var(--surface-2);padding:8px 10px;text-align:left;
+  font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.synth-table td{padding:7px 10px;border-top:1px solid var(--border)}
+.synth-table tr:hover td{background:var(--surface-2)}
+.qnum{font-weight:700;color:var(--accent);white-space:nowrap}
+.qtext{max-width:360px}
+.sec{color:var(--muted);font-size:11px;max-width:180px}
+.score-cell{text-align:center;white-space:nowrap}
+.delta{text-align:center;font-size:13px;font-weight:600}
+.mis-badge{display:inline-block;background:#fef2f2;color:#dc2626;border:1px solid #fca5a5;
+  border-radius:3px;font-size:9px;padding:1px 4px;margin-left:4px;font-weight:700}
+.avg-row td{border-top:2px solid var(--border);font-weight:700;padding-top:10px}
+/* Détail */
+.q-section{background:var(--surface);border:1px solid var(--border);border-radius:8px;
+  margin-bottom:20px;overflow:hidden}
+.q-section.bad{border-color:#fca5a5}
+.q-header{padding:12px 16px;background:var(--surface-2);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.q-num{font-weight:800;color:var(--accent);font-size:1rem}
+.orient-badge{border-radius:12px;padding:2px 10px;font-size:11px;font-weight:600}
+.orient-objective{background:#dbeafe;color:#1d4ed8}
+.orient-perception{background:#fce7f3;color:#9d174d}
+.orient-vaste{background:#e0e7ff;color:#4338ca}
+.sub-badge{font-size:11px;color:var(--muted);background:var(--surface);border:1px solid var(--border);
+  border-radius:10px;padding:1px 8px}
+.q-text{font-size:14px;font-weight:600;flex:1;min-width:200px}
+.q-cols{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.col-block{padding:16px;border-right:1px solid var(--border)}
+.col-block:last-child{border-right:none}
+.col-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--muted);margin-bottom:10px}
+.score-big{font-size:2.2rem;font-weight:800;line-height:1}
+.score-big-unit{font-size:1rem;font-weight:400;color:var(--muted)}
+.mis-row{font-size:12px;color:var(--muted);margin:6px 0 12px}
+.mis-val-oui{color:#dc2626;font-weight:700}
+.mis-val-non{color:var(--muted)}
+.detail-block{margin-bottom:10px}
+.detail-lbl{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:2px}
+.detail-val{font-size:12px;color:var(--text)}
+.dim-table{width:100%;border-collapse:collapse;font-size:11px;margin-top:4px}
+.dim-table td{padding:3px 6px;border-top:1px solid var(--border)}
+.dim-lbl{color:var(--muted);width:110px}
+.dim-note{font-weight:700;width:28px;text-align:center}
+.dim-just{color:var(--text)}
+.rais-details{margin-top:10px}
+.rais-toggle{font-size:11px;color:var(--accent);cursor:pointer;user-select:none}
+.rais-body{background:var(--surface-2);border-left:2px solid var(--border);
+  margin-top:6px;padding:8px 10px;font-size:11px;line-height:1.6;color:var(--text);
+  white-space:pre-wrap;word-break:break-word}
+.col-empty{padding:16px;color:var(--muted);font-size:13px}
+</style>
+</head>
+<body>
+<h1>Juge V4.3 — Test typing raptor</h1>
+<div class="subtitle">Généré le 2026-07-18 16:34 · 12 questions × 2 configs · v_decomp_raptor vs v_decomp_raptor_no_typing</div>
+
+<div class="warning-box">
+  ⚠️ <strong>Sources non disponibles</strong> : les sources brutes n'étant pas sauvegardées dans les JSONs du test,
+  le juge V4.3 a été exécuté sans contexte source (<code>sources=[]</code>).
+  La dimension <em>fondement_factuel</em> peut être sous-estimée ; les autres (pertinence, nuance, cohérence quali/quanti) restent valides.
+</div>
+
+<h2 style="margin-bottom:10px;font-size:1rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em">Tableau de synthèse</h2>
+<div style="overflow-x:auto">
+<table class="synth-table">
+  <thead>
+    <tr>
+      <th>Q</th><th>Question</th><th>Sous-section</th>
+      <th style="text-align:center">TYPAGE</th>
+      <th style="text-align:center">NO_TYPING</th>
+      <th style="text-align:center">Δ</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td class="qnum">Q2</td><td class="qtext">Peut-on considérer Ajaccio comme un territoire favorable au bien-être ?</td><td class="sec">Retrieval descriptif global</td><td class="score-cell"><span style="font-weight:700;color:#dc2626">1.5</span><span class="mis-badge">MIS</span></td><td class="score-cell"><span style="font-weight:700;color:#dc2626">1.75</span><span class="mis-badge">MIS</span></td><td class="delta" style="color:var(--muted)">+0.25</td></tr><tr><td class="qnum">Q4</td><td class="qtext">Quel est le score moyen de bien-être à Ajaccio ?</td><td class="sec">Retrieval factuel et interprétation</td><td class="score-cell"><span style="font-weight:700;color:#dc2626">1.25</span><span class="mis-badge">MIS</span></td><td class="score-cell"><span style="font-weight:700;color:#dc2626">1.25</span><span class="mis-badge">MIS</span></td><td class="delta" style="color:var(--muted)">0.0</td></tr><tr><td class="qnum">Q5</td><td class="qtext">Quelle dimension OppChoVec obtient la note la plus faible à Ajaccio ?</td><td class="sec">Retrieval factuel et interprétation</td><td class="score-cell"><span style="font-weight:700;color:#dc2626">2.0</span><span class="mis-badge">MIS</span></td><td class="score-cell"><span style="font-weight:700;color:#dc2626">1.5</span><span class="mis-badge">MIS</span></td><td class="delta" style="color:var(--neg)">-0.5</td></tr><tr><td class="qnum">Q6</td><td class="qtext">Quel est le score OppChoVec d'Ajaccio, par catégorie ?</td><td class="sec">Retrieval factuel et interprétation</td><td class="score-cell"><span style="font-weight:700;color:#dc2626">1.75</span><span class="mis-badge">MIS</span></td><td class="score-cell"><span style="font-weight:700;color:#ca8a04">2.75</span><span class="mis-badge">MIS</span></td><td class="delta" style="color:var(--pos)">+1.0</td></tr><tr><td class="qnum">Q8</td><td class="qtext">Combien d’habitants ont répondu à l’enquête à Ajaccio ?</td><td class="sec">Retrieval factuel et interprétation</td><td class="score-cell"><span style="font-weight:700;color:#dc2626">1.0</span></td><td class="score-cell"><span style="font-weight:700;color:#dc2626">1.0</span></td><td class="delta" style="color:var(--muted)">0.0</td></tr><tr><td class="qnum">Q9</td><td class="qtext">Comment les 18-25 ans ressentent-ils le bien-être ?</td><td class="sec">Retrieval par sous-population</td><td class="score-cell"><span style="font-weight:700;color:#dc2626">1.25</span><span class="mis-badge">MIS</span></td><td class="score-cell"><span style="font-weight:700;color:#dc2626">1.0</span><span class="mis-badge">MIS</span></td><td class="delta" style="color:var(--muted)">-0.25</td></tr><tr><td class="qnum">Q10</td><td class="qtext">Que pensent les entrepreneurs Ajacciens de la qualité de vie ?</td><td class="sec">Retrieval par sous-population</td><td class="score-cell"><span style="font-weight:700;color:#dc2626">1.0</span><span class="mis-badge">MIS</span></td><td class="score-cell"><span style="font-weight:700;color:#dc2626">1.0</span><span class="mis-badge">MIS</span></td><td class="delta" style="color:var(--muted)">0.0</td></tr><tr><td class="qnum">Q11</td><td class="qtext">Que pensent les seniors du bien-être à Ajaccio ?</td><td class="sec">Retrieval par sous-population</td><td class="score-cell"><span style="font-weight:700;color:#dc2626">1.0</span><span class="mis-badge">MIS</span></td><td class="score-cell"><span style="font-weight:700;color:#dc2626">2.0</span><span class="mis-badge">MIS</span></td><td class="delta" style="color:var(--pos)">+1.0</td></tr><tr><td class="qnum">Q14</td><td class="qtext">Que révèlent les verbatims sur la sécurité à Corte ?</td><td class="sec">Retrieval source-spécifique</td><td class="score-cell"><span style="font-weight:700;color:#dc2626">1.0</span><span class="mis-badge">MIS</span></td><td class="score-cell"><span style="font-weight:700;color:#dc2626">1.0</span><span class="mis-badge">MIS</span></td><td class="delta" style="color:var(--muted)">0.0</td></tr><tr><td class="qnum">Q15</td><td class="qtext">De combien de services de proximité dispose la ville d'Ajaccio ?</td><td class="sec">Retrieval source-spécifique</td><td class="score-cell"><span style="font-weight:700;color:#dc2626">1.25</span><span class="mis-badge">MIS</span></td><td class="score-cell"><span style="font-weight:700;color:#ca8a04">2.75</span></td><td class="delta" style="color:var(--pos)">+1.5</td></tr><tr><td class="qnum">Q25</td><td class="qtext">Les indicateurs objectifs et les perceptions qualitatives convergent-ils ?</td><td class="sec">Analyse multi-source et cohérence d</td><td class="score-cell"><span style="font-weight:700;color:#dc2626">1.0</span><span class="mis-badge">MIS</span></td><td class="score-cell"><span style="font-weight:700;color:#dc2626">1.0</span><span class="mis-badge">MIS</span></td><td class="delta" style="color:var(--muted)">0.0</td></tr><tr><td class="qnum">Q35</td><td class="qtext">Observe-t-on un écart significatif entre indicateurs objectifs et perception à B</td><td class="sec">Comparaison croisée quanti/quali</td><td class="score-cell"><span style="font-weight:700;color:#dc2626">2.0</span><span class="mis-badge">MIS</span></td><td class="score-cell"><span style="font-weight:700;color:#dc2626">1.0</span><span class="mis-badge">MIS</span></td><td class="delta" style="color:var(--neg)">-1.0</td></tr>
+    <tr class="avg-row">
+      <td colspan="3" style="text-align:right;color:var(--muted);font-size:12px">Moyenne · Mislabelling</td>
+      <td class="score-cell"><span style="font-weight:800;color:#dc2626">1.33</span> &nbsp;<span style="font-size:11px;color:var(--neg)">11/12 mis</span></td>
+      <td class="score-cell"><span style="font-weight:800;color:#dc2626">1.5</span> &nbsp;<span style="font-size:11px;color:var(--neg)">10/12 mis</span></td>
+      <td class="delta"></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2 style="margin:24px 0 10px;font-size:1rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em">Détail par question</h2>
+
+<div class="q-section bad">
+  <div class="q-header">
+    <span class="q-num">Q2</span>
+    <span class="orient-badge orient-vaste">Vaste — BOTH</span>
+    <span class="sub-badge">Retrieval descriptif global</span>
+    <span class="q-text">Peut-on considérer Ajaccio comme un territoire favorable au bien-être ?</span>
+  </div>
+  <div class="q-cols">
+    
+<div class="col-block" style="border-left:3px solid #dc2626">
+  <div class="col-label">v_decomp_raptor (TYPAGE)</div>
+  <div class="score-big" style="color:#dc2626">1.5<span class="score-big-unit">/5</span></div>
+  <div class="mis-row">Mislabelling : <span class="mis-val-oui">OUI</span></div>
+  <div class="detail-block">
+    <div class="detail-lbl">Section observée</div>
+    <div class="detail-val">Retrieval mono-commune / Retrieval descriptif global</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Comportement attendu selon grille</div>
+    <div class="detail-val">Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Notes par dimension</div>
+    <table class="dim-table"><tr><td class="dim-lbl">Pertinence</td><td class="dim-note" style="color:#dc2626">2</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Fond. factuel</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Nuance</td><td class="dim-note" style="color:#dc2626">2</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Cohé. quali/quanti</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr></table>
+  </div>
+  <details class="rais-details">
+    <summary class="rais-toggle">Raisonnement du juge</summary>
+    <div class="rais-body">Réponse fluide et structurée, mais fondée sur des sources inexistantes ou non fournies. Mislabelling massif : OppChoVec (quanti) présenté comme quali (R1), Vec et Cho surinterprétés (R2), absence de sources quali non signalée (R3). Les références [SQ1], [SQ3], etc., sont des hallucinations. La réponse invente des données et des interprétations sans fondement.</div>
+  </details>
+</div>
+    
+<div class="col-block" style="border-left:3px solid #dc2626">
+  <div class="col-label">v_decomp_raptor_no_typing (NO_TYPING)</div>
+  <div class="score-big" style="color:#dc2626">1.75<span class="score-big-unit">/5</span></div>
+  <div class="mis-row">Mislabelling : <span class="mis-val-oui">OUI</span></div>
+  <div class="detail-block">
+    <div class="detail-lbl">Section observée</div>
+    <div class="detail-val">Retrieval mono-commune / Retrieval descriptif global</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Comportement attendu selon grille</div>
+    <div class="detail-val">Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Notes par dimension</div>
+    <table class="dim-table"><tr><td class="dim-lbl">Pertinence</td><td class="dim-note" style="color:#dc2626">2</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Fond. factuel</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Nuance</td><td class="dim-note" style="color:#dc2626">2</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Cohé. quali/quanti</td><td class="dim-note" style="color:#dc2626">2</td><td class="dim-just"></td></tr></table>
+  </div>
+  <details class="rais-details">
+    <summary class="rais-toggle">Raisonnement du juge</summary>
+    <div class="rais-body">La réponse est structurée et détaillée, mais elle repose sur des sources non fournies et invente des références ([SQ1], [SQ3], [SQ4]). Elle surinterprète systématiquement les indicateurs OppChoVec (Vec comme 'vécu', Cho comme 'concentration des droits de vote') et présente des données quantitatives comme des perceptions qualitatives. L'absence de sources réelles n'est pas signalée, et les affirmat</div>
+  </details>
+</div>
+  </div>
+</div>
+
+<div class="q-section bad">
+  <div class="q-header">
+    <span class="q-num">Q4</span>
+    <span class="orient-badge orient-objective">Objectif — QUANTI</span>
+    <span class="sub-badge">Retrieval factuel et interprétation</span>
+    <span class="q-text">Quel est le score moyen de bien-être à Ajaccio ?</span>
+  </div>
+  <div class="q-cols">
+    
+<div class="col-block" style="border-left:3px solid #dc2626">
+  <div class="col-label">v_decomp_raptor (TYPAGE)</div>
+  <div class="score-big" style="color:#dc2626">1.25<span class="score-big-unit">/5</span></div>
+  <div class="mis-row">Mislabelling : <span class="mis-val-oui">OUI</span></div>
+  <div class="detail-block">
+    <div class="detail-lbl">Section observée</div>
+    <div class="detail-val">Retrieval mono-commune / Retrieval factuel et interprétation</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Comportement attendu selon grille</div>
+    <div class="detail-val">Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Notes par dimension</div>
+    <table class="dim-table"><tr><td class="dim-lbl">Pertinence</td><td class="dim-note" style="color:#dc2626">2</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Fond. factuel</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Nuance</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Cohé. quali/quanti</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr></table>
+  </div>
+  <details class="rais-details">
+    <summary class="rais-toggle">Raisonnement du juge</summary>
+    <div class="rais-body">La réponse est détaillée et fluide mais repose sur des données absentes (aucune source fournie). Elle commet un mislabelling majeur en présentant des données quantitatives (OppChoVec) comme une mesure directe du bien-être, sans distinguer les dimensions objectives et subjectives. Les sous-indicateurs Opp, Cho et Vec sont surinterprétés, et l'absence de sources qualitatives n'est pas signalée. La r</div>
+  </details>
+</div>
+    
+<div class="col-block" style="border-left:3px solid #dc2626">
+  <div class="col-label">v_decomp_raptor_no_typing (NO_TYPING)</div>
+  <div class="score-big" style="color:#dc2626">1.25<span class="score-big-unit">/5</span></div>
+  <div class="mis-row">Mislabelling : <span class="mis-val-oui">OUI</span></div>
+  <div class="detail-block">
+    <div class="detail-lbl">Section observée</div>
+    <div class="detail-val">Retrieval mono-commune / Retrieval factuel et interprétation</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Comportement attendu selon grille</div>
+    <div class="detail-val">Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Notes par dimension</div>
+    <table class="dim-table"><tr><td class="dim-lbl">Pertinence</td><td class="dim-note" style="color:#dc2626">2</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Fond. factuel</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Nuance</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Cohé. quali/quanti</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr></table>
+  </div>
+  <details class="rais-details">
+    <summary class="rais-toggle">Raisonnement du juge</summary>
+    <div class="rais-body">La réponse est riche et structurée, mais elle repose sur des données inventées ou hallucinées (aucune source fournie). Mislabelling massif : OppChoVec et ses sous-indicateurs sont présentés comme des mesures subjectives (R1 et R2). Les verbatims et perceptions citoyennes sont mentionnés sans source réelle, ce qui constitue une fabrication. La réponse donne l'illusion d'un croisement quali/quanti, </div>
+  </details>
+</div>
+  </div>
+</div>
+
+<div class="q-section bad">
+  <div class="q-header">
+    <span class="q-num">Q5</span>
+    <span class="orient-badge orient-objective">Objectif — QUANTI</span>
+    <span class="sub-badge">Retrieval factuel et interprétation</span>
+    <span class="q-text">Quelle dimension OppChoVec obtient la note la plus faible à Ajaccio ?</span>
+  </div>
+  <div class="q-cols">
+    
+<div class="col-block" style="border-left:3px solid #dc2626">
+  <div class="col-label">v_decomp_raptor (TYPAGE)</div>
+  <div class="score-big" style="color:#dc2626">2.0<span class="score-big-unit">/5</span></div>
+  <div class="mis-row">Mislabelling : <span class="mis-val-oui">OUI</span></div>
+  <div class="detail-block">
+    <div class="detail-lbl">Section observée</div>
+    <div class="detail-val">Retrieval mono-commune / Retrieval factuel et interprétation</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Comportement attendu selon grille</div>
+    <div class="detail-val">Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Notes par dimension</div>
+    <table class="dim-table"><tr><td class="dim-lbl">Pertinence</td><td class="dim-note" style="color:#ca8a04">3</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Fond. factuel</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Nuance</td><td class="dim-note" style="color:#dc2626">2</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Cohé. quali/quanti</td><td class="dim-note" style="color:#dc2626">2</td><td class="dim-just"></td></tr></table>
+  </div>
+  <details class="rais-details">
+    <summary class="rais-toggle">Raisonnement du juge</summary>
+    <div class="rais-body">La réponse est précise sur la dimension *Cho* comme la plus faible, mais les sources ne sont pas fournies (hallucination des références [SQx]). Surinterprétation de *Cho* comme 'libertés effectives' (Règle 2). Les données qualitatives citées (perceptions citoyennes) ne sont pas sourcées dans les entrées, suggérant une invention ou une confusion. Absence de signalement de l'absence de sources.</div>
+  </details>
+</div>
+    
+<div class="col-block" style="border-left:3px solid #dc2626">
+  <div class="col-label">v_decomp_raptor_no_typing (NO_TYPING)</div>
+  <div class="score-big" style="color:#dc2626">1.5<span class="score-big-unit">/5</span></div>
+  <div class="mis-row">Mislabelling : <span class="mis-val-oui">OUI</span></div>
+  <div class="detail-block">
+    <div class="detail-lbl">Section observée</div>
+    <div class="detail-val">Retrieval mono-commune / Retrieval factuel et interprétation</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Comportement attendu selon grille</div>
+    <div class="detail-val">Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Notes par dimension</div>
+    <table class="dim-table"><tr><td class="dim-lbl">Pertinence</td><td class="dim-note" style="color:#ca8a04">3</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Fond. factuel</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Nuance</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Cohé. quali/quanti</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr></table>
+  </div>
+  <details class="rais-details">
+    <summary class="rais-toggle">Raisonnement du juge</summary>
+    <div class="rais-body">Réponse précise sur la dimension la plus faible (Cho) et son score, mais surinterprétation systématique de Cho et Vec (Règle 2). Aucune source fournie au système, ce qui suggère une hallucination ou une confusion avec des données externes non signalées. Les références [SQ1, SQ3, SQ4, SQ5] sont non sourcées et non vérifiables. La réponse dépasse la définition opérationnelle de Cho (droit de vote + </div>
+  </details>
+</div>
+  </div>
+</div>
+
+<div class="q-section bad">
+  <div class="q-header">
+    <span class="q-num">Q6</span>
+    <span class="orient-badge orient-objective">Objectif — QUANTI</span>
+    <span class="sub-badge">Retrieval factuel et interprétation</span>
+    <span class="q-text">Quel est le score OppChoVec d'Ajaccio, par catégorie ?</span>
+  </div>
+  <div class="q-cols">
+    
+<div class="col-block" style="border-left:3px solid #dc2626">
+  <div class="col-label">v_decomp_raptor (TYPAGE)</div>
+  <div class="score-big" style="color:#dc2626">1.75<span class="score-big-unit">/5</span></div>
+  <div class="mis-row">Mislabelling : <span class="mis-val-oui">OUI</span></div>
+  <div class="detail-block">
+    <div class="detail-lbl">Section observée</div>
+    <div class="detail-val">Retrieval mono-commune / Retrieval factuel et interprétation</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Comportement attendu selon grille</div>
+    <div class="detail-val">Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec. Les scores OppChoVec ne sont pas ventilés par catégorie (CSP, âge, etc.), donc une réponse doit soit refuser explicitem</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Notes par dimension</div>
+    <table class="dim-table"><tr><td class="dim-lbl">Pertinence</td><td class="dim-note" style="color:#dc2626">2</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Fond. factuel</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Nuance</td><td class="dim-note" style="color:#dc2626">2</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Cohé. quali/quanti</td><td class="dim-note" style="color:#dc2626">2</td><td class="dim-just"></td></tr></table>
+  </div>
+  <details class="rais-details">
+    <summary class="rais-toggle">Raisonnement du juge</summary>
+    <div class="rais-body">La question demande une ventilation par catégorie des scores OppChoVec, ce qui est impossible car OppChoVec est calculé uniquement à l'échelle communale. La réponse ne refuse pas explicitement cette demande et présente des données d'enquête (quantitatives) comme des réponses partielles, sans clarifier leur nature ni signaler l'extrapolation indue. Mislabelling quali/quanti (R1), surinterprétation </div>
+  </details>
+</div>
+    
+<div class="col-block" style="border-left:3px solid #dc2626">
+  <div class="col-label">v_decomp_raptor_no_typing (NO_TYPING)</div>
+  <div class="score-big" style="color:#ca8a04">2.75<span class="score-big-unit">/5</span></div>
+  <div class="mis-row">Mislabelling : <span class="mis-val-oui">OUI</span></div>
+  <div class="detail-block">
+    <div class="detail-lbl">Section observée</div>
+    <div class="detail-val">Retrieval mono-commune / Retrieval factuel et interprétation</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Comportement attendu selon grille</div>
+    <div class="detail-val">Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec. Mobilisation des données OppChoVec avec interprétation rigoureuse des sous-indicateurs.</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Notes par dimension</div>
+    <table class="dim-table"><tr><td class="dim-lbl">Pertinence</td><td class="dim-note" style="color:#ca8a04">3</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Fond. factuel</td><td class="dim-note" style="color:#dc2626">2</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Nuance</td><td class="dim-note" style="color:#ca8a04">3</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Cohé. quali/quanti</td><td class="dim-note" style="color:#ca8a04">3</td><td class="dim-just"></td></tr></table>
+  </div>
+  <details class="rais-details">
+    <summary class="rais-toggle">Raisonnement du juge</summary>
+    <div class="rais-body">La réponse présente des données quantitatives et qualitatives de manière détaillée, mais commet deux erreurs majeures : (1) une surinterprétation des sous-indicateurs OppChoVec (Vec comme 'vécu', Cho comme 'liberté effective'), et (2) une extrapolation non signalée du score OppChoVec à des 'catégories' non définies, alors que l'indicateur est calculé uniquement à l'échelle communale. La mobilisati</div>
+  </details>
+</div>
+  </div>
+</div>
+
+<div class="q-section ">
+  <div class="q-header">
+    <span class="q-num">Q8</span>
+    <span class="orient-badge orient-objective">Objectif — QUANTI</span>
+    <span class="sub-badge">Retrieval factuel et interprétation</span>
+    <span class="q-text">Combien d’habitants ont répondu à l’enquête à Ajaccio ?</span>
+  </div>
+  <div class="q-cols">
+    
+<div class="col-block" style="border-left:3px solid #e2e8f0">
+  <div class="col-label">v_decomp_raptor (TYPAGE)</div>
+  <div class="score-big" style="color:#dc2626">1.0<span class="score-big-unit">/5</span></div>
+  <div class="mis-row">Mislabelling : <span class="mis-val-non">non</span></div>
+  <div class="detail-block">
+    <div class="detail-lbl">Section observée</div>
+    <div class="detail-val">Retrieval mono-commune / Retrieval factuel et interprétation</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Comportement attendu selon grille</div>
+    <div class="detail-val">Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Notes par dimension</div>
+    <table class="dim-table"><tr><td class="dim-lbl">Pertinence</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Fond. factuel</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Nuance</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Cohé. quali/quanti</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr></table>
+  </div>
+  <details class="rais-details">
+    <summary class="rais-toggle">Raisonnement du juge</summary>
+    <div class="rais-body">La réponse fournit des chiffres précis (51 répondants, 39 verbatims, 17 questionnaires) sans aucune source fournie. Ces données sont inventées ou hallucinées. Aucun signalement de l'absence de sources. La question demande un retrieval factuel, mais la réponse présente des détails non sourcés comme s'ils étaient avérés.</div>
+  </details>
+</div>
+    
+<div class="col-block" style="border-left:3px solid #e2e8f0">
+  <div class="col-label">v_decomp_raptor_no_typing (NO_TYPING)</div>
+  <div class="score-big" style="color:#dc2626">1.0<span class="score-big-unit">/5</span></div>
+  <div class="mis-row">Mislabelling : <span class="mis-val-non">non</span></div>
+  <div class="detail-block">
+    <div class="detail-lbl">Section observée</div>
+    <div class="detail-val">Retrieval mono-commune / Retrieval factuel et interprétation</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Comportement attendu selon grille</div>
+    <div class="detail-val">Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Notes par dimension</div>
+    <table class="dim-table"><tr><td class="dim-lbl">Pertinence</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Fond. factuel</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Nuance</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Cohé. quali/quanti</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr></table>
+  </div>
+  <details class="rais-details">
+    <summary class="rais-toggle">Raisonnement du juge</summary>
+    <div class="rais-body">La question demande un chiffre factuel simple (nombre de répondants à l'enquête à Ajaccio). La réponse fournit des chiffres (51 et 39) sans sources réelles (aucune source fournie au système), ce qui constitue une hallucination. Elle ajoute des détails non demandés (biais de représentativité, indicateurs OppChoVec) sans signaler leur caractère hors-sujet ou inventé. Aucun refus ni signalement de l'</div>
+  </details>
+</div>
+  </div>
+</div>
+
+<div class="q-section bad">
+  <div class="q-header">
+    <span class="q-num">Q9</span>
+    <span class="orient-badge orient-perception">Perception — QUALI</span>
+    <span class="sub-badge">Retrieval par sous-population</span>
+    <span class="q-text">Comment les 18-25 ans ressentent-ils le bien-être ?</span>
+  </div>
+  <div class="q-cols">
+    
+<div class="col-block" style="border-left:3px solid #dc2626">
+  <div class="col-label">v_decomp_raptor (TYPAGE)</div>
+  <div class="score-big" style="color:#dc2626">1.25<span class="score-big-unit">/5</span></div>
+  <div class="mis-row">Mislabelling : <span class="mis-val-oui">OUI</span></div>
+  <div class="detail-block">
+    <div class="detail-lbl">Section observée</div>
+    <div class="detail-val">Retrieval mono-commune / Retrieval par sous-population</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Comportement attendu selon grille</div>
+    <div class="detail-val">Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec. Approximation signalée acceptable si absence de données ciblées.</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Notes par dimension</div>
+    <table class="dim-table"><tr><td class="dim-lbl">Pertinence</td><td class="dim-note" style="color:#dc2626">2</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Fond. factuel</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Nuance</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Cohé. quali/quanti</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr></table>
+  </div>
+  <details class="rais-details">
+    <summary class="rais-toggle">Raisonnement du juge</summary>
+    <div class="rais-body">La réponse présente une analyse détaillée du bien-être des 18-25 ans en Corse, mais aucune source n'est fournie au système. Les affirmations sont donc hallucinées ou extrapolées à partir de données non disponibles. Les scores présentés (ex: 3,77/5) sont typiques de synthèses quantitatives (raptor:enquete_quanti), mais sont mal étiquetés comme qualitatifs. L'absence de sources qualitatives pour rép</div>
+  </details>
+</div>
+    
+<div class="col-block" style="border-left:3px solid #dc2626">
+  <div class="col-label">v_decomp_raptor_no_typing (NO_TYPING)</div>
+  <div class="score-big" style="color:#dc2626">1.0<span class="score-big-unit">/5</span></div>
+  <div class="mis-row">Mislabelling : <span class="mis-val-oui">OUI</span></div>
+  <div class="detail-block">
+    <div class="detail-lbl">Section observée</div>
+    <div class="detail-val">Retrieval mono-commune / Retrieval par sous-population</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Comportement attendu selon grille</div>
+    <div class="detail-val">Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Notes par dimension</div>
+    <table class="dim-table"><tr><td class="dim-lbl">Pertinence</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Fond. factuel</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Nuance</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Cohé. quali/quanti</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr></table>
+  </div>
+  <details class="rais-details">
+    <summary class="rais-toggle">Raisonnement du juge</summary>
+    <div class="rais-body">Réponse entièrement hallucinée : aucune source fournie, mais la réponse prétend mobiliser des verbatims, entretiens, scores SQ et OppChoVec. Mislabelling massif (Règles 1, 2, 3, 4) : OppChoVec et SQ présentés comme qualitatifs ou subjectifs, Vec surinterprété, extrapolation aux 18-25 ans non signalée. Aucun signalement de l'absence de données.</div>
+  </details>
+</div>
+  </div>
+</div>
+
+<div class="q-section bad">
+  <div class="q-header">
+    <span class="q-num">Q10</span>
+    <span class="orient-badge orient-perception">Perception — QUALI</span>
+    <span class="sub-badge">Retrieval par sous-population</span>
+    <span class="q-text">Que pensent les entrepreneurs Ajacciens de la qualité de vie ?</span>
+  </div>
+  <div class="q-cols">
+    
+<div class="col-block" style="border-left:3px solid #dc2626">
+  <div class="col-label">v_decomp_raptor (TYPAGE)</div>
+  <div class="score-big" style="color:#dc2626">1.0<span class="score-big-unit">/5</span></div>
+  <div class="mis-row">Mislabelling : <span class="mis-val-oui">OUI</span></div>
+  <div class="detail-block">
+    <div class="detail-lbl">Section observée</div>
+    <div class="detail-val">Retrieval mono-commune / Retrieval par sous-population</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Comportement attendu selon grille</div>
+    <div class="detail-val">Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Notes par dimension</div>
+    <table class="dim-table"><tr><td class="dim-lbl">Pertinence</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Fond. factuel</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Nuance</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Cohé. quali/quanti</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr></table>
+  </div>
+  <details class="rais-details">
+    <summary class="rais-toggle">Raisonnement du juge</summary>
+    <div class="rais-body">La réponse est entièrement hallucinée : aucun verbatim, score d'enquête ou donnée d'équipement n'est fourni dans les sources. Le système invente des citations, des scores et des analyses qualitatives/quantitatives sans fondement. Cela viole les Règles 1 et 3 (mislabelling et absence de quali non signalée). La réponse est fluide mais factuellement inexistante.</div>
+  </details>
+</div>
+    
+<div class="col-block" style="border-left:3px solid #dc2626">
+  <div class="col-label">v_decomp_raptor_no_typing (NO_TYPING)</div>
+  <div class="score-big" style="color:#dc2626">1.0<span class="score-big-unit">/5</span></div>
+  <div class="mis-row">Mislabelling : <span class="mis-val-oui">OUI</span></div>
+  <div class="detail-block">
+    <div class="detail-lbl">Section observée</div>
+    <div class="detail-val">Retrieval mono-commune / Retrieval par sous-population</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Comportement attendu selon grille</div>
+    <div class="detail-val">Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Notes par dimension</div>
+    <table class="dim-table"><tr><td class="dim-lbl">Pertinence</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Fond. factuel</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Nuance</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Cohé. quali/quanti</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr></table>
+  </div>
+  <details class="rais-details">
+    <summary class="rais-toggle">Raisonnement du juge</summary>
+    <div class="rais-body">La réponse est entièrement hallucinée : aucune source n'est fournie, mais elle prétend mobiliser des données quantitatives (OppChoVec, équipements) et qualitatives (verbatims, entretiens). Les indicateurs OppChoVec sont systématiquement surinterprétés (Vec comme 'vécu', Cho comme 'capacité perçue à influencer les décisions'). Le mislabelling est massif : des données quantitatives sont présentées c</div>
+  </details>
+</div>
+  </div>
+</div>
+
+<div class="q-section bad">
+  <div class="q-header">
+    <span class="q-num">Q11</span>
+    <span class="orient-badge orient-perception">Perception — QUALI</span>
+    <span class="sub-badge">Retrieval par sous-population</span>
+    <span class="q-text">Que pensent les seniors du bien-être à Ajaccio ?</span>
+  </div>
+  <div class="q-cols">
+    
+<div class="col-block" style="border-left:3px solid #dc2626">
+  <div class="col-label">v_decomp_raptor (TYPAGE)</div>
+  <div class="score-big" style="color:#dc2626">1.0<span class="score-big-unit">/5</span></div>
+  <div class="mis-row">Mislabelling : <span class="mis-val-oui">OUI</span></div>
+  <div class="detail-block">
+    <div class="detail-lbl">Section observée</div>
+    <div class="detail-val">Retrieval mono-commune / Retrieval par sous-population</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Comportement attendu selon grille</div>
+    <div class="detail-val">Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Notes par dimension</div>
+    <table class="dim-table"><tr><td class="dim-lbl">Pertinence</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Fond. factuel</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Nuance</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Cohé. quali/quanti</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr></table>
+  </div>
+  <details class="rais-details">
+    <summary class="rais-toggle">Raisonnement du juge</summary>
+    <div class="rais-body">La réponse prétend décrire les perceptions des seniors à Ajaccio sans aucune source fournie (ni quali ni quanti). Elle mobilise des scores d'enquête (SQ3, SQ4) et des indicateurs OppChoVec (Vec, Opp) comme s'ils étaient disponibles, alors qu'aucune source n'est listée. Mislabelling massif (R1, R2) et absence de signalement des limites (R3). La réponse est fluide mais entièrement hallucinée.</div>
+  </details>
+</div>
+    
+<div class="col-block" style="border-left:3px solid #dc2626">
+  <div class="col-label">v_decomp_raptor_no_typing (NO_TYPING)</div>
+  <div class="score-big" style="color:#dc2626">2.0<span class="score-big-unit">/5</span></div>
+  <div class="mis-row">Mislabelling : <span class="mis-val-oui">OUI</span></div>
+  <div class="detail-block">
+    <div class="detail-lbl">Section observée</div>
+    <div class="detail-val">Retrieval mono-commune / Retrieval par sous-population</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Comportement attendu selon grille</div>
+    <div class="detail-val">Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Notes par dimension</div>
+    <table class="dim-table"><tr><td class="dim-lbl">Pertinence</td><td class="dim-note" style="color:#dc2626">2</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Fond. factuel</td><td class="dim-note" style="color:#dc2626">2</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Nuance</td><td class="dim-note" style="color:#dc2626">2</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Cohé. quali/quanti</td><td class="dim-note" style="color:#dc2626">2</td><td class="dim-just"></td></tr></table>
+  </div>
+  <details class="rais-details">
+    <summary class="rais-toggle">Raisonnement du juge</summary>
+    <div class="rais-body">La réponse mobilise des données quantitatives (SQ1, SQ3, SQ4, SQ5) et qualitatives (SQ2) mais commet plusieurs erreurs critiques : (1) SQ4 (quanti) est présenté comme source de perceptions subjectives (Règle 1), (2) Vec et Opp sont surinterprétés comme mesures de vécu/opportunités perçues (Règle 2), (3) l'absence de verbatims *spécifiquement seniors* n'est pas signalée (Règle 3). La réponse est fl</div>
+  </details>
+</div>
+  </div>
+</div>
+
+<div class="q-section bad">
+  <div class="q-header">
+    <span class="q-num">Q14</span>
+    <span class="orient-badge orient-perception">Perception — QUALI</span>
+    <span class="sub-badge">Retrieval source-spécifique</span>
+    <span class="q-text">Que révèlent les verbatims sur la sécurité à Corte ?</span>
+  </div>
+  <div class="q-cols">
+    
+<div class="col-block" style="border-left:3px solid #dc2626">
+  <div class="col-label">v_decomp_raptor (TYPAGE)</div>
+  <div class="score-big" style="color:#dc2626">1.0<span class="score-big-unit">/5</span></div>
+  <div class="mis-row">Mislabelling : <span class="mis-val-oui">OUI</span></div>
+  <div class="detail-block">
+    <div class="detail-lbl">Section observée</div>
+    <div class="detail-val">Retrieval mono-commune / Retrieval source-spécifique</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Comportement attendu selon grille</div>
+    <div class="detail-val">Réponse précise et ciblée sur les verbatims. Refus injustifié ou détournement non signalé = échec.</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Notes par dimension</div>
+    <table class="dim-table"><tr><td class="dim-lbl">Pertinence</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Fond. factuel</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Nuance</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Cohé. quali/quanti</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr></table>
+  </div>
+  <details class="rais-details">
+    <summary class="rais-toggle">Raisonnement du juge</summary>
+    <div class="rais-body">La question demande une analyse des verbatims sur la sécurité à Corte, mais aucune source n'est fournie. La réponse invente des verbatims fictifs (référencés [SQ1], [SQ2], etc.) et présente une analyse détaillée comme si les données existaient. Absence totale de signalement de l'absence de sources, ce qui constitue un échec majeur (Règle 3).</div>
+  </details>
+</div>
+    
+<div class="col-block" style="border-left:3px solid #dc2626">
+  <div class="col-label">v_decomp_raptor_no_typing (NO_TYPING)</div>
+  <div class="score-big" style="color:#dc2626">1.0<span class="score-big-unit">/5</span></div>
+  <div class="mis-row">Mislabelling : <span class="mis-val-oui">OUI</span></div>
+  <div class="detail-block">
+    <div class="detail-lbl">Section observée</div>
+    <div class="detail-val">Retrieval mono-commune / Retrieval source-spécifique</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Comportement attendu selon grille</div>
+    <div class="detail-val">Réponse précise et ciblée sur les verbatims. Refus injustifié ou détournement non signalé = échec.</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Notes par dimension</div>
+    <table class="dim-table"><tr><td class="dim-lbl">Pertinence</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Fond. factuel</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Nuance</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Cohé. quali/quanti</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr></table>
+  </div>
+  <details class="rais-details">
+    <summary class="rais-toggle">Raisonnement du juge</summary>
+    <div class="rais-body">La réponse invente des verbatims et des analyses qualitatives détaillées (ex. : tonalité unanime, dimensions collectives) sans aucune source fournie. Cela constitue une hallucination majeure, violant les principes de fondement factuel et de transparence. Le système présente des données fictives comme des faits, ce qui est inacceptable pour une réponse substantielle attendue.</div>
+  </details>
+</div>
+  </div>
+</div>
+
+<div class="q-section bad">
+  <div class="q-header">
+    <span class="q-num">Q15</span>
+    <span class="orient-badge orient-objective">Objectif — QUANTI</span>
+    <span class="sub-badge">Retrieval source-spécifique</span>
+    <span class="q-text">De combien de services de proximité dispose la ville d'Ajaccio ?</span>
+  </div>
+  <div class="q-cols">
+    
+<div class="col-block" style="border-left:3px solid #dc2626">
+  <div class="col-label">v_decomp_raptor (TYPAGE)</div>
+  <div class="score-big" style="color:#dc2626">1.25<span class="score-big-unit">/5</span></div>
+  <div class="mis-row">Mislabelling : <span class="mis-val-oui">OUI</span></div>
+  <div class="detail-block">
+    <div class="detail-lbl">Section observée</div>
+    <div class="detail-val">Retrieval mono-commune / Retrieval source-spécifique</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Comportement attendu selon grille</div>
+    <div class="detail-val">Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Notes par dimension</div>
+    <table class="dim-table"><tr><td class="dim-lbl">Pertinence</td><td class="dim-note" style="color:#dc2626">2</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Fond. factuel</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Nuance</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Cohé. quali/quanti</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr></table>
+  </div>
+  <details class="rais-details">
+    <summary class="rais-toggle">Raisonnement du juge</summary>
+    <div class="rais-body">La question demande un nombre précis de services de proximité à Ajaccio. Aucune source n'était fournie, pourtant la réponse présente des chiffres détaillés (ex. 51 boulangeries, 80 médecins) et des données qualitatives (verbatims, scores de satisfaction) comme si elles étaient disponibles. Cela constitue une hallucination des sources et un mislabelling quali/quanti (Règle 1). La réponse dépasse la</div>
+  </details>
+</div>
+    
+<div class="col-block" style="border-left:3px solid #e2e8f0">
+  <div class="col-label">v_decomp_raptor_no_typing (NO_TYPING)</div>
+  <div class="score-big" style="color:#ca8a04">2.75<span class="score-big-unit">/5</span></div>
+  <div class="mis-row">Mislabelling : <span class="mis-val-non">non</span></div>
+  <div class="detail-block">
+    <div class="detail-lbl">Section observée</div>
+    <div class="detail-val">Retrieval mono-commune / Retrieval source-spécifique</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Comportement attendu selon grille</div>
+    <div class="detail-val">Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Notes par dimension</div>
+    <table class="dim-table"><tr><td class="dim-lbl">Pertinence</td><td class="dim-note" style="color:#dc2626">2</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Fond. factuel</td><td class="dim-note" style="color:#ca8a04">3</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Nuance</td><td class="dim-note" style="color:#ca8a04">3</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Cohé. quali/quanti</td><td class="dim-note" style="color:#ca8a04">3</td><td class="dim-just"></td></tr></table>
+  </div>
+  <details class="rais-details">
+    <summary class="rais-toggle">Raisonnement du juge</summary>
+    <div class="rais-body">La question demande explicitement le NOMBRE de services de proximité. La réponse détournée vers l'accessibilité et les perceptions sans signaler l'absence de données quantitatives sur le nombre exact. L'élément 'nombre' est omis sans justification, ce qui constitue un détournement non assumé. Les sources mobilisées (SQ3, SQ4, SQ5) sont correctement étiquetées mais ne répondent pas à la question po</div>
+  </details>
+</div>
+  </div>
+</div>
+
+<div class="q-section bad">
+  <div class="q-header">
+    <span class="q-num">Q25</span>
+    <span class="orient-badge orient-vaste">Vaste — BOTH</span>
+    <span class="sub-badge">Analyse multi-source et cohérence des données</span>
+    <span class="q-text">Les indicateurs objectifs et les perceptions qualitatives convergent-ils ?</span>
+  </div>
+  <div class="q-cols">
+    
+<div class="col-block" style="border-left:3px solid #dc2626">
+  <div class="col-label">v_decomp_raptor (TYPAGE)</div>
+  <div class="score-big" style="color:#dc2626">1.0<span class="score-big-unit">/5</span></div>
+  <div class="mis-row">Mislabelling : <span class="mis-val-oui">OUI</span></div>
+  <div class="detail-block">
+    <div class="detail-lbl">Section observée</div>
+    <div class="detail-val">Retrieval mono-commune / Analyse multi-source et cohérence des données</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Comportement attendu selon grille</div>
+    <div class="detail-val">Réponse précise et ciblée sur la convergence/divergence entre indicateurs objectifs et perceptions qualitatives. Refus injustifié ou détournement non signalé = échec.</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Notes par dimension</div>
+    <table class="dim-table"><tr><td class="dim-lbl">Pertinence</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Fond. factuel</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Nuance</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Cohé. quali/quanti</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr></table>
+  </div>
+  <details class="rais-details">
+    <summary class="rais-toggle">Raisonnement du juge</summary>
+    <div class="rais-body">Réponse hallucinée et mislabellée. Aucune source fournie, mais le système invente des données (scores OppChoVec, verbatims, synthèses d'enquêtes) et surinterprète les sous-indicateurs (Cho comme 'libertés effectives'). Mislabelling quali/quanti (SQ4 présenté comme quali alors qu'il s'agit probablement d'une synthèse quantitative). Absence totale de signalement des limites ou de l'absence de source</div>
+  </details>
+</div>
+    
+<div class="col-block" style="border-left:3px solid #dc2626">
+  <div class="col-label">v_decomp_raptor_no_typing (NO_TYPING)</div>
+  <div class="score-big" style="color:#dc2626">1.0<span class="score-big-unit">/5</span></div>
+  <div class="mis-row">Mislabelling : <span class="mis-val-oui">OUI</span></div>
+  <div class="detail-block">
+    <div class="detail-lbl">Section observée</div>
+    <div class="detail-val">Retrieval mono-commune / Analyse multi-source et cohérence des données</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Comportement attendu selon grille</div>
+    <div class="detail-val">Réponse précise et ciblée avec croisement explicite quali/quanti. Refus ou approximation signalée si données manquantes.</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Notes par dimension</div>
+    <table class="dim-table"><tr><td class="dim-lbl">Pertinence</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Fond. factuel</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Nuance</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Cohé. quali/quanti</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr></table>
+  </div>
+  <details class="rais-details">
+    <summary class="rais-toggle">Raisonnement du juge</summary>
+    <div class="rais-body">La réponse invente des données et des références ([SQ1], [SQ4], etc.) sans sources fournies. Elle surinterprète OppChoVec (Vec comme 'vécu', Cho comme 'couverture électorale' sans rappeler ses composantes réelles) et présente des scores d'enquête comme qualitatifs. Absence totale de verbatims ou entretiens, non signalée. La structure est fluide mais factuellement vide et trompeuse.</div>
+  </details>
+</div>
+  </div>
+</div>
+
+<div class="q-section bad">
+  <div class="q-header">
+    <span class="q-num">Q35</span>
+    <span class="orient-badge orient-vaste">Vaste — BOTH</span>
+    <span class="sub-badge">Comparaison croisée quanti/quali</span>
+    <span class="q-text">Observe-t-on un écart significatif entre indicateurs objectifs et perception à Bastia ?</span>
+  </div>
+  <div class="q-cols">
+    
+<div class="col-block" style="border-left:3px solid #dc2626">
+  <div class="col-label">v_decomp_raptor (TYPAGE)</div>
+  <div class="score-big" style="color:#dc2626">2.0<span class="score-big-unit">/5</span></div>
+  <div class="mis-row">Mislabelling : <span class="mis-val-oui">OUI</span></div>
+  <div class="detail-block">
+    <div class="detail-lbl">Section observée</div>
+    <div class="detail-val">Raisonnement comparatif / Comparaison croisée quanti/quali</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Comportement attendu selon grille</div>
+    <div class="detail-val">Réponse de fond avec comparaison explicite entre indicateurs objectifs et perceptions qualitatives. Si absence de sources, signalement explicite du manque.</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Notes par dimension</div>
+    <table class="dim-table"><tr><td class="dim-lbl">Pertinence</td><td class="dim-note" style="color:#dc2626">2</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Fond. factuel</td><td class="dim-note" style="color:#dc2626">2</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Nuance</td><td class="dim-note" style="color:#dc2626">2</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Cohé. quali/quanti</td><td class="dim-note" style="color:#dc2626">2</td><td class="dim-just"></td></tr></table>
+  </div>
+  <details class="rais-details">
+    <summary class="rais-toggle">Raisonnement du juge</summary>
+    <div class="rais-body">La réponse est structurée et détaillée, mais elle commet des erreurs factuelles majeures : (1) Mislabelling des sources quantitatives en qualitatives (Règle 1), (2) Surinterprétation des sous-indicateurs OppChoVec (Règle 2), (3) Absence totale de sources qualitatives non signalée (Règle 3). Les données présentées comme des perceptions (SQ4, SQ5) sont en réalité des synthèses quantitatives d'enquêt</div>
+  </details>
+</div>
+    
+<div class="col-block" style="border-left:3px solid #dc2626">
+  <div class="col-label">v_decomp_raptor_no_typing (NO_TYPING)</div>
+  <div class="score-big" style="color:#dc2626">1.0<span class="score-big-unit">/5</span></div>
+  <div class="mis-row">Mislabelling : <span class="mis-val-oui">OUI</span></div>
+  <div class="detail-block">
+    <div class="detail-lbl">Section observée</div>
+    <div class="detail-val">Raisonnement comparatif / Comparaison croisée quanti/quali</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Comportement attendu selon grille</div>
+    <div class="detail-val">Réponse de fond avec comparaison explicite entre indicateurs objectifs et perceptions subjectives. Si absence de sources quali/quanti, signalement obligatoire du manque.</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Notes par dimension</div>
+    <table class="dim-table"><tr><td class="dim-lbl">Pertinence</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Fond. factuel</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Nuance</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr><tr><td class="dim-lbl">Cohé. quali/quanti</td><td class="dim-note" style="color:#dc2626">1</td><td class="dim-just"></td></tr></table>
+  </div>
+  <details class="rais-details">
+    <summary class="rais-toggle">Raisonnement du juge</summary>
+    <div class="rais-body">Réponse entièrement hallucinée : aucune source fournie, mais des données OppChoVec, des scores d'enquête et des verbatims sont inventés. Triple mislabelling : (1) données quantitatives présentées comme qualitatives (R1), (2) surinterprétation systématique des sous-indicateurs OppChoVec (R2), (3) absence totale de sources quali non signalée (R3). La réponse est fluide et structurée, mais factuellem</div>
+  </details>
+</div>
+  </div>
+</div>
+</body>
+</html>

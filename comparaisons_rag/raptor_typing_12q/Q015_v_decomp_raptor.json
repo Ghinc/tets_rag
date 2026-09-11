@@ -1,0 +1,1119 @@
+{
+  "excel_row": 15,
+  "config": "v_decomp_raptor",
+  "orientation": "objective",
+  "question": "De combien de services de proximité dispose la ville d'Ajaccio ?",
+  "section": "Retrieval mono-commune",
+  "subsection": "Retrieval source-spécifique",
+  "expected_type": "reponse_substantielle_attendue",
+  "rag_status": "ok",
+  "rag_elapsed_s": 43.0,
+  "n_sources": 64,
+  "n_subquestions": 5,
+  "answer": "La ville d'Ajaccio dispose d'un large éventail de services de proximité, couvrant les commerces, la santé et l'éducation, bien que certaines catégories comme les services publics manquent de données précises.\n\n**Commerces de proximité**\nAjaccio compte **157 commerces de proximité** (alimentation, boulangeries, boucheries et pharmacies confondus), selon les données d'équipements communaux [SQ2]. Cette offre dense est perçue positivement par les habitants interrogés, qui soulignent la facilité d'accès aux commerces et la proximité piétonne [SQ2].\n\n**Santé**\nLa ville dispose de **80 médecins généralistes** et **31 pharmacies**, ainsi que d'un service d'urgence [SQ4]. Cependant, malgré cette présence, les habitants expriment une satisfaction limitée concernant l'accès aux soins, notamment pour les spécialistes (score de 1,98/5) et les délais d'attente (2,53/5) [SQ4].\n\n**Éducation et petite enfance**\nAjaccio offre **15 écoles maternelles, 20 écoles élémentaires et 15 crèches**, ainsi que 6 collèges et 6 lycées, selon les données d'équipements communaux [SQ5]. Cette infrastructure reflète une couverture importante pour les besoins éducatifs et de garde d'enfants.\n\n**Services publics**\nAucune donnée précise n'est disponible sur le nombre de mairies annexes, bureaux de poste ou maisons de services au public à Ajaccio [SQ3].\n\n**Synthèse globale**\nLes indicateurs montrent une ville bien équipée en commerces, santé et éducation, mais les perceptions citoyennes révèlent des tensions sur l'accès aux soins spécialisés [SQ4]. Les services publics restent un point non documenté dans les données disponibles.",
+  "sub_questions": [
+    {
+      "idx": 1,
+      "question": "Quel est le nombre total d'établissements classés comme services de proximité (commerces, santé, services publics, etc.) dans la ville d'Ajaccio selon les données OppChoVec ?",
+      "answer": "Le contexte fourni ne contient pas d'information sur le nombre total d'établissements classés comme services de proximité à Ajaccio. Les scores OppChoVec disponibles mesurent des dimensions agrégées (accès à l'éducation, mobilité, TIC, revenus, qualité du logement, stabilité de l'emploi, accès aux services en moins de 20 minutes), mais ne détaillent pas un inventaire quantifié des commerces, cabinets de santé ou services publics.\n\nPour cette information précise, il faudrait consulter des données d'équipements communaux ou des bases de données commerciales spécialisées, qui ne figurent pas dans le contexte disponible."
+    },
+    {
+      "idx": 2,
+      "question": "Combien de commerces de proximité (alimentation, boulangeries, pharmacies, etc.) sont recensés à Ajaccio ?",
+      "answer": "Selon les données d'équipements communaux, Ajaccio dispose d'une offre commerciale de proximité substantielle :\n\n- **11 hypermarchés ou supermarchés**\n- **38 supérettes ou épiceries**\n- **51 boulangeries**\n- **21 boucheries-charcuteries**\n- **31 pharmacies**\n- **5 points de contact postal**\n\nAu total, cela représente **157 commerces et services de proximité** (alimentation, boulangeries, boucheries et pharmacies confondus).\n\nCette offre commerciale dense est cohérente avec la perception positive des habitants interrogés selon l'enquête citoyenne, qui soulignent l'*\"accès aux commerces facilement\"* et la *\"proximité piéton facilité\"* pour accéder aux services de proximité."
+    },
+    {
+      "idx": 3,
+      "question": "Quel est le nombre de services publics de proximité (mairies annexes, bureaux de poste, maisons de services au public) disponibles à Ajaccio ?",
+      "answer": "Le contexte fourni ne contient pas d'information spécifique sur le nombre de services publics de proximité (mairies annexes, bureaux de poste, maisons de services au public) disponibles à Ajaccio. Les données d'équipements communaux présentes dans le contexte sont partielles et ne couvrent pas cet aspect.\n\nPour répondre précisément à cette sous-question, il faudrait disposer d'un inventaire détaillé des équipements administratifs et postaux de la commune."
+    },
+    {
+      "idx": 4,
+      "question": "Combien de structures de santé de proximité (médecins généralistes, infirmiers, kinésithérapeutes, etc.) sont implantées à Ajaccio ?",
+      "answer": "# Structures de santé de proximité à Ajaccio\n\nSelon les données d'équipements communaux, Ajaccio dispose de **80 médecins généralistes** et **31 pharmacies**. La commune possède également **1 service d'urgence**.\n\nCependant, le contexte fourni ne contient pas d'informations détaillées sur le nombre d'infirmiers, de kinésithérapeutes ou d'autres professionnels paramédicaux implantés à Ajaccio. Seules les données relatives aux médecins généralistes et pharmacies sont disponibles.\n\nIl est à noter que, selon l'enquête citoyenne, malgré cette présence de médecins généralistes, les habitants d'Ajaccio expriment une **satisfaction limitée concernant l'accès aux soins** : les médecins spécialistes obtiennent un score de seulement **1,98/5**, et l'attente pour les rendez-vous est évaluée à **2,53/5**, suggérant des difficultés d'accès malgré l'offre existante."
+    },
+    {
+      "idx": 5,
+      "question": "Quel est le nombre de services de proximité liés à l'éducation et à la petite enfance (écoles maternelles, crèches, centres de loisirs) dans la ville d'Ajaccio ?",
+      "answer": "Selon les données d'équipements communaux, Ajaccio dispose de **15 écoles maternelles, 20 écoles élémentaires et 15 crèches**. La commune possède également 6 collèges et 6 lycées pour l'enseignement secondaire.\n\nCes équipements reflètent une offre substantielle de services de proximité liés à l'éducation et à la petite enfance, cohérente avec le statut de capitale régionale et le poids démographique d'Ajaccio. Cependant, le contexte fourni ne contient pas de données spécifiques sur les centres de loisirs."
+    }
+  ],
+  "sources": [
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : dimension=Santé, nom=Ajaccio (N=16 personnes)**\n\n**Thèmes dominants** :\n1. **Importance centrale de la santé** : La santé est perçue comme une condition essentielle à la qualité de vie, à l’autonomie et au bien-être.\n   - Exemples : *\"La santé : si on a pas la santé, on a rien dans la vie\"* (Verbatim 1), *\"La santé est primordial\"* (Verbatim 10), *\"La santé avec l’accès aux soins est primordiale, c’est une évidence\"* (Verbatim 18).\n2. **Accès aux soins et qualité des services** : Plusieurs verbatims soulignent les enjeux d’accès aux soins, de qualité des professionnels et de l’attractivité du territoire pour les soignants.\n   - Exemples : *\"Les centres hospitaliers manquent de personnel\"* (Verbatim 3), *\"l’accès à la santé et à des professionnels de qualité est primordial\"* (Verbatim 12), *\"Accès à des consultations/soins de qualité, attractivité du territoire pour les personnels soignants\"* (Verbatim 11).\n3. **Équilibre physique et mental** : La santé est associée à un équilibre global, incluant le bien-être mental et la prévention.\n   - Exemples : *\"Pour garder une bonne humeur\"* (Verbatim 4), *\"Prévention, Accès aux soins, Nutrition, Activité physique, Bien-être mental\"* (Verbatim 15), *\"Équilibre physique et mental\"* (Verbatim 16).\n\n**Points de convergence** :\n- **Primordialité de la santé** : Tous les groupes d’âge et de statut professionnel s’accordent sur le caractère essentiel de la santé pour la qualité de vie.\n- **Critique de l’accès aux soins** : Plusieurs verbatims (notamment des jeunes adultes et des adultes) pointent un manque de personnel dans les centres hospitaliers et une difficulté à accéder à des soins de qualité sur l’île.\n  - Exemple : *\"Le meilleur médecin est malheureusement l’avion\"* (Verbatim 12).\n- **Stress lié à l’accès aux soins** : L’état de santé et l’accès aux soins sont perçus comme une source de stress pour certains habitants.\n  - Exemple : *\"L’état de santé et l’accès aux soins peuvent être source de stress\"* (Verbatim 14).\n\n**Points de divergence** :\n- **Variabilité des priorités** : Certains verbatims se limitent à une mention minimale (*\"Santé\"* ou *\"Emploi\"* dans le Verbatim 9), sans développement, ce qui peut refléter un manque d’intérêt ou une difficulté à exprimer une opinion structurée.\n- **Diversité des attentes** : Les attentes en matière de santé varient selon l’âge et le statut :\n  - Les jeunes (18-26 ans) insistent davantage sur l’accès aux soins et l’autonomie (*\"si notre santé est fragile on a une qualité de vie réduite\"* – Verbatim 2).\n  - Les adultes et seniors évoquent plus souvent l’équilibre global (physique, mental) et la prévention (*\"Équilibre physique et mental\"* – Verbatim 16).\n\n**Signaux faibles** :\n- **Mention isolée de l’emploi** : Un seul verbatim (Verbatim 9) associe la santé à l’emploi, sans explication supplémentaire. Cela pourrait indiquer une perception marginale de ce lien dans ce groupe.\n- **Absence de mentions spécifiques** : Aucun verbatim ne mentionne des maladies ou des problèmes de santé particuliers (chroniques, mentaux, etc.), ce qui peut refléter soit une absence de préoccupations spécifiques, soit un biais de réponse.\n\n**Limites de l’échantillon** :\n- **Taille réduite** : Avec seulement 16 personnes, l’échantillon est trop petit pour représenter l’ensemble des habitants d’Ajaccio. Les résultats ne peuvent pas être généralisés.\n- **Surreprésentation des jeunes et des actifs** : La majorité des verbatims proviennent de jeunes (18-26 ans) et d’adultes actifs (salariés, fonctionnaires), ce qui peut biaiser les résultats vers des préoccupations liées à l’accès aux soins et à l’autonomie.\n- **Manque de diversité sociale** : Peu de verbatims proviennent de personnes âgées ou de retraités, ce qui limite la représentativité des enjeux de santé liés au vieillissement.\n- **Verbatims incomplets** : Certains sont très courts (*\"test\"* – Verbatim 6, *\"Santé\"* – Verbatim 8) ou hors-sujet (*\"Emploi\"* dans le Verbatim 9), ce qui peut indiquer un manque d’engagement ou une difficulté à répondre à la question.",
+      "metadata": {
+        "rank": 0,
+        "type": "raptor_summary",
+        "view": "dimension*commune",
+        "num_chunks": 19,
+        "sub_question_idx": 1,
+        "sub_question": "Quel est le nombre total d'établissements classés comme services de proximité (commerces, santé, services publics, etc.) dans la ville d'Ajaccio selon les données OppChoVec ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : commune=Ajaccio (N=51)**\n\n---\n\n### **Satisfaction globale**\nLes scores globaux révèlent une satisfaction modérée à bonne pour le bonheur et la qualité de vie, mais une confiance limitée dans l’avenir. Le **bonheur** obtient une moyenne de **3,74/5** (n=47), tandis que la **qualité de vie** est légèrement supérieure à **3,85/5** (n=47). En revanche, la **confiance en l’avenir** est significativement plus basse, avec un score de **2,79/5** (n=43), suggérant une inquiétude marquée quant aux perspectives futures. Ces écarts indiquent que les habitants d’Ajaccio perçoivent globalement leur quotidien de manière positive, mais expriment des réserves sur les évolutions à long terme.\n\n---\n\n### **Toutes les dimensions — tableau complet (classées du score le plus élevé au plus faible)**\n\n| **Dimension**               | **Moyenne /5** | **Distribution des évaluations**                                                                                     |\n|-----------------------------|----------------|----------------------------------------------------------------------------------------------------------------------|\n| **Emploi**                  | 3,91           | ★5:13 | ★4:18 | ★3:8 | ★2:3 | ★1:1 |\n| **Sécurité**                | 3,81           | ★5:13 | ★4:17 | ★3:5 | ★2:8 | ★1:0 |\n| **Logement**                | 3,84           | ★5:10 | ★4:24 | ★3:2 | ★2:6 | ★1:1 |\n| **Revenus**                 | 3,51           | ★5:5  | ★4:22 | ★3:8 | ★2:6 | ★1:2 |\n| **Réseau**                  | 3,49           | ★5:7  | ★4:20 | ★3:5 | ★2:9 | ★1:2 |\n| **Culture**                 | 3,49           | ★5:3  | ★4:23 | ★3:11| ★2:4 | ★1:2 |\n| **Éducation**               | 3,44           | ★5:3  | ★4:20 | ★3:13| ★2:7 | ★1:0 |\n| **Services de proximité**   | 3,42           | ★5:3  | ★4:25 | ★3:4 | ★2:9 | ★1:2 |\n| **Communauté et relations** | 3,54           | Entourage=4,14 (★5:20 | ★4:21 | ★3:8 | ★2:1 | ★1:1) / ImplicationLocale=2,94 (★5:3 | ★4:17 | ★3:12 | ★2:12 | ★1:7) |\n| **Ratio vie pro/vie perso** | 3,19           | ★5:4  | ★4:16 | ★3:9 | ★2:12| ★1:2 |\n| **Institutions**            | 2,93           | ★5:4  | ★4:8  | ★3:16| ★2:11| ★1:4 |\n| **Santé**                   | 2,59           | Sante=2,86 (★5:3 | ★4:11 | ★3:9 | ★2:17| ★1:3) / MedecinsGeneralistes=2,98 (★5:3 | ★4:17 | ★3:14 | ★2:10| ★1:7) / AttenteRDV=2,53 (★5:3 | ★4:12 | ★3:7 | ★2:16| ★1:13) / MedecinsSpecialistes=1,98 (★5:1 | ★4:6 | ★3:5 | ★2:18| ★1:21) |\n| **Tourisme**                | 2,63           | ★5:0  | ★4:8  | ★3:16| ★2:14| ★1:5 |\n| **Transports**              | 2,20           | Transports=2,02 (★5:0 | ★4:4 | ★3:5 | ★2:22| ★1:12) / TransportsCommun=1,98 (★5:1 | ★4:7 | ★3:2 | ★2:21| ★1:20) / ReseauRoutier=2,78 (★5:3 | ★4:14 | ★3:11| ★2:15| ★1:8) / Encombrement=2,02 (★5:1 | ★4:5 | ★3:6 | ★2:21| ★1:18) |\n\n---\n### **Patterns notables**\n1. **Forte satisfaction dans les dimensions \"stables\" et personnelles** :\n   - Les dimensions liées à l’**emploi** (3,91/5), à la **sécurité** (3,81/5) et au **logement** (3,84/5) obtiennent les meilleurs scores. Cela suggère que les habitants perçoivent leur cadre de vie matériel et professionnel comme globalement satisfaisant.\n   - La **communauté et les relations** (3,54/5) sont également bien notées, avec un **entourage** très bien évalué (4,14/5), indiquant un fort ancrage social local.\n\n2. **Insatisfaction marquée dans les dimensions \"collectives\" et \"futuristes\"** :\n   - Les **transports** (2,20/5) et le **tourisme** (2,63/5) sont les dimensions les moins bien notées, reflétant des problèmes récurrents (encombrement, réseau routier, attractivité touristique).\n   - Les **institutions** (2,93/5) et la **santé** (2,59/5) — notamment les **médecins spécialistes** (1,98/5) et les **attentes de rendez-vous** (2,53/5) — révèlent des dysfonctionnements perçus dans les services publics et l’accès aux soins.\n\n3. **Contradictions internes** :\n   - Bien que la **qualité de vie** soit globalement bien notée (3,85/5), la **confiance en l’avenir** est très faible (2,79",
+      "metadata": {
+        "rank": 1,
+        "type": "raptor_enquete_summary",
+        "view": "enquete_commune",
+        "num_chunks": 51,
+        "sub_question_idx": 1,
+        "sub_question": "Quel est le nombre total d'établissements classés comme services de proximité (commerces, santé, services publics, etc.) dans la ville d'Ajaccio selon les données OppChoVec ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Santé': La santé : si on a pas la santé, on a rien dans la vie",
+      "metadata": {
+        "rank": 2,
+        "commune": "Ajaccio",
+        "genre": "Femme",
+        "age": 18,
+        "profession": "Étudiant(e)",
+        "dimension": "Santé",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 1,
+        "sub_question": "Quel est le nombre total d'établissements classés comme services de proximité (commerces, santé, services publics, etc.) dans la ville d'Ajaccio selon les données OppChoVec ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 20 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Santé': La santé car si notre santé est fragile on a une qualité de vie réduite",
+      "metadata": {
+        "rank": 3,
+        "commune": "Ajaccio",
+        "genre": "Homme",
+        "age": 20,
+        "profession": "Étudiant(e)",
+        "dimension": "Santé",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 1,
+        "sub_question": "Quel est le nombre total d'établissements classés comme services de proximité (commerces, santé, services publics, etc.) dans la ville d'Ajaccio selon les données OppChoVec ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Santé': Les centres hospitaliers manquent de personnel alors que tout le monde doit y avoir accès",
+      "metadata": {
+        "rank": 4,
+        "commune": "Ajaccio",
+        "genre": "Femme",
+        "age": 18,
+        "profession": "Étudiant(e)",
+        "dimension": "Santé",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 1,
+        "sub_question": "Quel est le nombre total d'établissements classés comme services de proximité (commerces, santé, services publics, etc.) dans la ville d'Ajaccio selon les données OppChoVec ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 21 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Santé': Pour garder une bonne humeur",
+      "metadata": {
+        "rank": 5,
+        "commune": "Ajaccio",
+        "genre": "Homme",
+        "age": 21,
+        "profession": "Étudiant(e)",
+        "dimension": "Santé",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 1,
+        "sub_question": "Quel est le nombre total d'établissements classés comme services de proximité (commerces, santé, services publics, etc.) dans la ville d'Ajaccio selon les données OppChoVec ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 26 ans (Jeunes adultes), Salarié(e) – Employé(e), à Ajaccio, sur le thème 'Santé': La santé est important car sans la santé ou peut pas faire grand chose ou du moins on peut-être très vite limité.",
+      "metadata": {
+        "rank": 6,
+        "commune": "Ajaccio",
+        "genre": "Femme",
+        "age": 26,
+        "profession": "Salarié(e) – Employé(e)",
+        "dimension": "Santé",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 1,
+        "sub_question": "Quel est le nombre total d'établissements classés comme services de proximité (commerces, santé, services publics, etc.) dans la ville d'Ajaccio selon les données OppChoVec ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nScores moyens de l'enquête QdV pour la commune de Ajaccio (47 répondants). Score bonheur moyen : 3.68/5. Score qualité de vie moyen : 3.89/5. Score confiance avenir moyen : 2.75/5. Scores moyens par dimension (1-5) : Transports=0.95, Éducation=2.35, Réseaux téléphoniques=2.38, Institutions=1.85, Tourisme=1.57, Sécurité=2.73, Santé=1.80, Situation pro=2.90, Revenus=2.50, Temps travail/perso=2.23, Logement=2.80, Services locaux=2.40, Culture=2.40, Soutien social=3.11, Vie associative=0.64. Dimensions les plus citées comme prioritaires : Environnement, Santé.",
+      "metadata": {
+        "rank": 7,
+        "source_type": "enquete_scores_commune",
+        "data_type": "quanti",
+        "commune": "Ajaccio",
+        "num_chunks": null,
+        "view_name": null,
+        "distance": 0.748,
+        "sub_question_idx": 1,
+        "sub_question": "Quel est le nombre total d'établissements classés comme services de proximité (commerces, santé, services publics, etc.) dans la ville d'Ajaccio selon les données OppChoVec ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "La commune de Ajaccio compte une part de 12.9% de cadres et professions intellectuelles supérieures, 16.6% d'ouvriers, avec un taux d'activité de 75.6%. 87.8% des emplois y sont salariés. On y trouve 5.0 points de contact postal, 11.0 hypermarchés ou supermarchés, 38.0 supérettes ou épiceries, 51.0 boulangeries et 21.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 15.0 écoles maternelles, 20.0 écoles élémentaires, 6.0 collèges et 6.0 lycées. Elle possède 1.0 services d'urgence, 80.0 médecins généralistes, 31.0 pharmacies, 204.0 infirmiers et 15.0 crèches. La sécurité est assurée par 1.0 postes de police ou gendarmerie. Il y a également 2.0 agences Pôle emploi. Le taux de pauvreté est de 14.3%, la part de logements vacants est de 3.3%, et celle des résidences secondaires est de 9.2%. Le taux de coups et blessures volontaires est de 4.0 pour 1 000 habitants. Le prix moyen au m² est de 3666.90984455959€, pour une surface moyenne des logements de 71.7937823834197 m².",
+      "metadata": {
+        "rank": 8,
+        "source_type": "communes_equipements",
+        "data_type": "quanti",
+        "commune": "Ajaccio",
+        "num_chunks": null,
+        "view_name": null,
+        "distance": 0.725,
+        "sub_question_idx": 1,
+        "sub_question": "Quel est le nombre total d'établissements classés comme services de proximité (commerces, santé, services publics, etc.) dans la ville d'Ajaccio selon les données OppChoVec ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nProfil des répondants de la commune de Ajaccio — enquête qualité de vie en Corse\n\nNombre de répondants : 51\n\nRépartition par genre :\n  - Femme : 31 (60.8%)\n  - Homme : 20 (39.2%)\n\nRépartition par tranche d'âge :\n  - 45-59 : 20 (39.2%)\n  - 15-29 : 14 (27.5%)\n  - 30-44 : 11 (21.6%)\n  - 60-74 : 6 (11.8%)\n\nRépartition par catégorie socioprofessionnelle :\n  - SalariÃ©(e) â Cadre ou profession intermÃ©diaire : 17 (33.3%)\n  - Ãtudiant(e) : 12 (23.5%)\n  - Fonctionnaire : 9 (17.6%)\n  - SalariÃ©(e) â EmployÃ©(e) : 8 (15.7%)\n  - Travailleur(se) indÃ©pendant(e) / Entrepreneur(e) : 2 (3.9%)\n  - Autre : 2 (3.9%)\n  - RetraitÃ©(e) : 1 (2.0%)",
+      "metadata": {
+        "rank": 9,
+        "source_type": "communes_profil",
+        "data_type": "quanti",
+        "commune": "Ajaccio",
+        "num_chunks": null,
+        "view_name": null,
+        "distance": 0.472,
+        "sub_question_idx": 1,
+        "sub_question": "Quel est le nombre total d'établissements classés comme services de proximité (commerces, santé, services publics, etc.) dans la ville d'Ajaccio selon les données OppChoVec ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nClassement des composantes OppChoVec — Corse entière (360 communes).\n\nSous-scores principaux (du plus élevé au plus faible) :\n  1. Cho (Choix)               : 8.79/10 (très élevé)\n  2. Opp (Opportunités)        : 3.87/10 (moyen)\n  3. Vec (Vécu)                : 3.46/10 (moyen)\n\n-> COMPOSANTE LA PLUS ELEVEE  : Cho (Choix) (8.79/10)\n-> COMPOSANTE LA PLUS FAIBLE  : Vec (Vécu) (3.46/10)\n\nSous-dimensions du score Opportunités (Opp), classées :\n  1. Opp4 — Accès TIC               : 6.02/10 (élevé)\n  2. Opp3 — Mobilité                : 5.26/10 (élevé)\n  3. Opp2 — Diversité sociale       : 2.60/10 (faible)\n  4. Opp1 — Éducation               : 2.35/10 (faible)\n\n-> SOUS-DIMENSION OPP LA PLUS ELEVEE : Opp4 — Accès TIC (6.02/10)\n-> SOUS-DIMENSION OPP LA PLUS FAIBLE : Opp1 — Éducation (2.35/10)",
+      "metadata": {
+        "rank": 10,
+        "type": "oppchovec_score",
+        "source_type": "oppchovec_scores",
+        "commune": null,
+        "oppchovec_0_10": null,
+        "opp_0_10": null,
+        "cho_0_10": null,
+        "vec_0_10": null,
+        "distance": 0.0,
+        "sub_question_idx": 1,
+        "sub_question": "Quel est le nombre total d'établissements classés comme services de proximité (commerces, santé, services publics, etc.) dans la ville d'Ajaccio selon les données OppChoVec ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nClassement OppChoVec des 360 communes corses (score 0-10).\nFormat : rang. Commune [EPCI]  OppChoVec  Opp  Cho  Vec\n\nScore moyen Corse : 3.35/10  |  Médiane : 3.12/10\nMin : Érone (0.00/10)  Max : Afa (10.00/10)\n\n    1. Afa                          [CA du Pays Ajaccien           ]  10.00  Opp= 8.15  Cho= 9.27  Vec=10.00\n    2. Bastelicaccia                [CC de la Vallée du Prunelli   ]   9.81  Opp= 8.41  Cho= 8.94  Vec= 9.51\n    3. Appietto                     [CA du Pays Ajaccien           ]   9.61  Opp= 7.97  Cho= 9.50  Vec= 9.45\n    4. Alata                        [CA du Pays Ajaccien           ]   9.59  Opp= 7.88  Cho= 9.47  Vec= 9.61\n    5. Ville-di-Pietrabugno         [CA de Bastia                  ]   6.88  Opp= 6.66  Cho= 9.45  Vec= 6.80\n    6. Albitreccia                  [CC de la Pieve de L'ornano    ]   6.64  Opp= 7.22  Cho= 9.52  Vec= 5.09\n    7. Eccica-Suarella              [CC de la Vallée du Prunelli   ]   6.62  Opp= 4.74  Cho= 9.13  Vec= 9.85\n    8. San-Martino-di-Lota          [CA de Bastia                  ]   6.49  Opp= 6.63  Cho= 9.53  Vec= 5.92\n    9. Santa-Maria-di-Lota          [CA de Bastia                  ]   6.44  Opp= 6.61  Cho= 9.67  Vec= 5.70\n   10. Cauro                        [CC de la Vallée du Prunelli   ]   6.39  Opp= 4.94  Cho= 9.51  Vec= 8.73\n   11. Altiani           ",
+      "metadata": {
+        "rank": 11,
+        "type": "oppchovec_score",
+        "source_type": "oppchovec_scores",
+        "commune": null,
+        "oppchovec_0_10": null,
+        "opp_0_10": null,
+        "cho_0_10": null,
+        "vec_0_10": null,
+        "distance": 0.0,
+        "sub_question_idx": 1,
+        "sub_question": "Quel est le nombre total d'établissements classés comme services de proximité (commerces, santé, services publics, etc.) dans la ville d'Ajaccio selon les données OppChoVec ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théoriqu",
+      "metadata": {
+        "rank": 12,
+        "type": "oppchovec_score",
+        "source_type": "oppchovec_scores",
+        "commune": "",
+        "oppchovec_0_10": null,
+        "opp_0_10": null,
+        "cho_0_10": null,
+        "vec_0_10": null,
+        "distance": 0.0,
+        "sub_question_idx": 1,
+        "sub_question": "Quel est le nombre total d'établissements classés comme services de proximité (commerces, santé, services publics, etc.) dans la ville d'Ajaccio selon les données OppChoVec ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Ajaccio : 5.78/10 (élevé).\n\nSous-scores principaux de Ajaccio :\n  • Opportunités (Opp) : 10.00/10 (très élevé)  — rang 1e/360\n  • Choix (Cho)        : 1.27/10 (très faible)  — rang 358e/360\n  • Vécu (Vec)         : 4.80/10 (moyen)  — rang 41e/360\n  • OppChoVec global   : rang 19e/360\n\nSous-dimensions du score Opportunités (Opp) de Ajaccio :\n  • Opp1 — Éducation      : 7.42/10 (élevé)  [valeur brute : 5.760] — rang 24e/360\n  • Opp2 — Diversité soc. : 1.96/10 (faible)  [indice Theil : 0.2787] — rang 216e/360\n  • Opp3 — Mobilité       : 8.99/10 (très élevé)  [indicateur : 186.1/200] — rang 128e/360\n  • Opp4 — TIC (numérique): 9.35/10 (très élevé)  [couverture : 93.5%] — rang 24e/360\n\nAnalyse de Ajaccio :\n- Ajaccio se",
+      "metadata": {
+        "rank": 13,
+        "type": "oppchovec_score",
+        "source_type": "oppchovec_scores",
+        "commune": "Ajaccio",
+        "oppchovec_0_10": 5.779754,
+        "opp_0_10": 10.0,
+        "cho_0_10": 1.265509,
+        "vec_0_10": 4.796981,
+        "distance": 0.346,
+        "sub_question_idx": 1,
+        "sub_question": "Quel est le nombre total d'établissements classés comme services de proximité (commerces, santé, services publics, etc.) dans la ville d'Ajaccio selon les données OppChoVec ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nEnquête Qualité de Vie en Corse — Description méthodologique\n\nPRÉSENTATION GÉNÉRALE\nEnquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.\nObjectif : recueillir les perceptions subjectives de la qualité de vie (QdV) et du bien-être,\nen complément des indicateurs o",
+      "metadata": {
+        "rank": 14,
+        "type": "methodology",
+        "source_type": "methodology",
+        "view_name": "enquete_methodology",
+        "sub_question_idx": 1,
+        "sub_question": "Quel est le nombre total d'établissements classés comme services de proximité (commerces, santé, services publics, etc.) dans la ville d'Ajaccio selon les données OppChoVec ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : dimension=Services de proximité, nom=Ajaccio (N=7 personnes)**\n\n**Thèmes dominants** :\n1. **Accessibilité et mobilité** : La facilité d’accès aux services (à pied, à vélo) est soulignée à plusieurs reprises.\n   - *\"Accès aux commerces facilement\"* (Verbatim 1)\n   - *\"proximité [pieton] facilité\"* (Verbatim 3)\n   - *\"pouvoir s'y rendre à pied ou en vélo\"* (Verbatim 6)\n   - *\"pas de nécessité de transport\"* (Verbatim 7)\n\n2. **Qualité des services et cadre de vie** : Les services de proximité sont perçus comme un facteur d’amélioration de la qualité de vie.\n   - *\"Les services de proximité de qualité et variés permettent d’accéder à un cadre de vie agréable\"* (Verbatim 5)\n   - *\"La présence des services de proximité rend la vie plus facile\"* (Verbatim 7)\n\n3. **Dimension relationnelle et sociale** : L’importance des relations humaines dans les services de proximité est mentionnée.\n   - *\"proximité cohesion\"* (Verbatim 2)\n   - *\"service de proximité : relationnel, confiance, pratique\"* (Verbatim 4)\n   - *\"les relations sociales sont une des conditions du bien vivre\"* (Verbatim 9)\n\n4. **Services de santé** : La proximité des services de santé est explicitement citée comme un élément clé.\n   - *\"La présence de services de santé à proximité est bien évidemment un facteur essentiel du cadre de vie\"* (Verbatim 8)\n\n---\n\n**Points de convergence** :\n- **Accessibilité physique** : Tous les verbatims (sauf le 4 et le 9) mentionnent la facilité d’accès aux services, que ce soit à pied, à vélo ou sans besoin de transport.\n- **Impact sur le cadre de vie** : Les services de proximité sont globalement perçus comme un atout pour la qualité de vie (*\"cadre de vie agréable\"*, *\"vie plus facile\"*).\n- **Importance des services de santé** : Bien que moins fréquent, ce thème est explicitement souligné comme essentiel (Verbatim 8).\n\n---\n\n**Points de divergence** :\n- **Diversité des attentes** : Certains verbatims mettent l’accent sur l’aspect pratique (*\"trouver de dont on a besoin dans un rayon proche\"*, Verbatim 6), tandis que d’autres soulignent la dimension sociale (*\"relationnel, confiance\"*, Verbatim 4) ou la cohésion (*\"proximité cohesion\"*, Verbatim 2).\n- **Publics cibles** : Les verbatims 8 et 9 (personnes de 63 et 70 ans) insistent davantage sur les services de santé et les relations sociales, alors que les autres parlent plus d’accessibilité générale.\n\n---\n**Signaux faibles** :\n- **Mention isolée de la santé** : Seul le Verbatim 8 aborde spécifiquement les services de santé, ce qui pourrait indiquer un enjeu particulier pour une partie de la population (seniors ou jeunes parents).\n- **Absence de critiques** : Aucun verbatim ne mentionne de manque ou de problème lié aux services de proximité, ce qui pourrait refléter une satisfaction globale ou un biais d’échantillon.\n\n---\n**Limites de l’échantillon** :\n- **Taille réduite** : Seulement 7 personnes interrogées, ce qui limite la représentativité des avis.\n- **Surreprésentation des \"jeunes seniors\"** : 4 des 7 verbatims proviennent de personnes âgées de 51 à 70 ans, ce qui peut biaiser les thèmes vers les services de santé et les relations sociales.\n- **Absence de profils défavorisés** : Aucun verbatim ne provient de personnes en situation de précarité ou de difficultés socio-économiques, ce qui peut occulter des réalités contrastées.\n- **Focus sur l’accessibilité** : Les thèmes abordés sont majoritairement positifs, sans critique ou suggestion d’amélioration, ce qui peut refléter un biais de réponse (les répondants pourraient avoir été sélectionnés pour leur satisfaction).",
+      "metadata": {
+        "rank": 0,
+        "type": "raptor_summary",
+        "view": "dimension*commune",
+        "num_chunks": 9,
+        "sub_question_idx": 2,
+        "sub_question": "Combien de commerces de proximité (alimentation, boulangeries, pharmacies, etc.) sont recensés à Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : commune=Ajaccio (N=51)**\n\n---\n\n### **Satisfaction globale**\nLes scores globaux révèlent une satisfaction modérée à bonne pour le bonheur et la qualité de vie, mais une confiance limitée dans l’avenir. Le **bonheur** obtient une moyenne de **3,74/5** (n=47), tandis que la **qualité de vie** est légèrement supérieure à **3,85/5** (n=47). En revanche, la **confiance en l’avenir** est significativement plus basse, avec un score de **2,79/5** (n=43), suggérant une inquiétude marquée quant aux perspectives futures. Ces écarts indiquent que les habitants d’Ajaccio perçoivent globalement leur quotidien de manière positive, mais expriment des réserves sur les évolutions à long terme.\n\n---\n\n### **Toutes les dimensions — tableau complet (classées du score le plus élevé au plus faible)**\n\n| **Dimension**               | **Moyenne /5** | **Distribution des évaluations**                                                                                     |\n|-----------------------------|----------------|----------------------------------------------------------------------------------------------------------------------|\n| **Emploi**                  | 3,91           | ★5:13 | ★4:18 | ★3:8 | ★2:3 | ★1:1 |\n| **Sécurité**                | 3,81           | ★5:13 | ★4:17 | ★3:5 | ★2:8 | ★1:0 |\n| **Logement**                | 3,84           | ★5:10 | ★4:24 | ★3:2 | ★2:6 | ★1:1 |\n| **Revenus**                 | 3,51           | ★5:5  | ★4:22 | ★3:8 | ★2:6 | ★1:2 |\n| **Réseau**                  | 3,49           | ★5:7  | ★4:20 | ★3:5 | ★2:9 | ★1:2 |\n| **Culture**                 | 3,49           | ★5:3  | ★4:23 | ★3:11| ★2:4 | ★1:2 |\n| **Éducation**               | 3,44           | ★5:3  | ★4:20 | ★3:13| ★2:7 | ★1:0 |\n| **Services de proximité**   | 3,42           | ★5:3  | ★4:25 | ★3:4 | ★2:9 | ★1:2 |\n| **Communauté et relations** | 3,54           | Entourage=4,14 (★5:20 | ★4:21 | ★3:8 | ★2:1 | ★1:1) / ImplicationLocale=2,94 (★5:3 | ★4:17 | ★3:12 | ★2:12 | ★1:7) |\n| **Ratio vie pro/vie perso** | 3,19           | ★5:4  | ★4:16 | ★3:9 | ★2:12| ★1:2 |\n| **Institutions**            | 2,93           | ★5:4  | ★4:8  | ★3:16| ★2:11| ★1:4 |\n| **Santé**                   | 2,59           | Sante=2,86 (★5:3 | ★4:11 | ★3:9 | ★2:17| ★1:3) / MedecinsGeneralistes=2,98 (★5:3 | ★4:17 | ★3:14 | ★2:10| ★1:7) / AttenteRDV=2,53 (★5:3 | ★4:12 | ★3:7 | ★2:16| ★1:13) / MedecinsSpecialistes=1,98 (★5:1 | ★4:6 | ★3:5 | ★2:18| ★1:21) |\n| **Tourisme**                | 2,63           | ★5:0  | ★4:8  | ★3:16| ★2:14| ★1:5 |\n| **Transports**              | 2,20           | Transports=2,02 (★5:0 | ★4:4 | ★3:5 | ★2:22| ★1:12) / TransportsCommun=1,98 (★5:1 | ★4:7 | ★3:2 | ★2:21| ★1:20) / ReseauRoutier=2,78 (★5:3 | ★4:14 | ★3:11| ★2:15| ★1:8) / Encombrement=2,02 (★5:1 | ★4:5 | ★3:6 | ★2:21| ★1:18) |\n\n---\n### **Patterns notables**\n1. **Forte satisfaction dans les dimensions \"stables\" et personnelles** :\n   - Les dimensions liées à l’**emploi** (3,91/5), à la **sécurité** (3,81/5) et au **logement** (3,84/5) obtiennent les meilleurs scores. Cela suggère que les habitants perçoivent leur cadre de vie matériel et professionnel comme globalement satisfaisant.\n   - La **communauté et les relations** (3,54/5) sont également bien notées, avec un **entourage** très bien évalué (4,14/5), indiquant un fort ancrage social local.\n\n2. **Insatisfaction marquée dans les dimensions \"collectives\" et \"futuristes\"** :\n   - Les **transports** (2,20/5) et le **tourisme** (2,63/5) sont les dimensions les moins bien notées, reflétant des problèmes récurrents (encombrement, réseau routier, attractivité touristique).\n   - Les **institutions** (2,93/5) et la **santé** (2,59/5) — notamment les **médecins spécialistes** (1,98/5) et les **attentes de rendez-vous** (2,53/5) — révèlent des dysfonctionnements perçus dans les services publics et l’accès aux soins.\n\n3. **Contradictions internes** :\n   - Bien que la **qualité de vie** soit globalement bien notée (3,85/5), la **confiance en l’avenir** est très faible (2,79",
+      "metadata": {
+        "rank": 1,
+        "type": "raptor_enquete_summary",
+        "view": "enquete_commune",
+        "num_chunks": 51,
+        "sub_question_idx": 2,
+        "sub_question": "Combien de commerces de proximité (alimentation, boulangeries, pharmacies, etc.) sont recensés à Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 20 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Services de proximité': Accès aux commerces facilement",
+      "metadata": {
+        "rank": 2,
+        "commune": "Ajaccio",
+        "genre": "Homme",
+        "age": 20,
+        "profession": "Étudiant(e)",
+        "dimension": "Services de proximité",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 2,
+        "sub_question": "Combien de commerces de proximité (alimentation, boulangeries, pharmacies, etc.) sont recensés à Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 38 ans (Adultes), Salarié(e) – Cadre ou profession intermédiaire, à Ajaccio, sur le thème 'Services de proximité': proximité cohesion",
+      "metadata": {
+        "rank": 3,
+        "commune": "Ajaccio",
+        "genre": "Femme",
+        "age": 38,
+        "profession": "Salarié(e) – Cadre ou profession intermédiaire",
+        "dimension": "Services de proximité",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 2,
+        "sub_question": "Combien de commerces de proximité (alimentation, boulangeries, pharmacies, etc.) sont recensés à Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 38 ans (Adultes), Salarié(e) – Cadre ou profession intermédiaire, à Ajaccio, sur le thème 'Services de proximité': proximite pieton facilité",
+      "metadata": {
+        "rank": 4,
+        "commune": "Ajaccio",
+        "genre": "Femme",
+        "age": 38,
+        "profession": "Salarié(e) – Cadre ou profession intermédiaire",
+        "dimension": "Services de proximité",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 2,
+        "sub_question": "Combien de commerces de proximité (alimentation, boulangeries, pharmacies, etc.) sont recensés à Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 53 ans (Jeunes seniors), Salarié(e) – Employé(e), à Ajaccio, sur le thème 'Services de proximité': service de proximité : relationnel, confiance, pratique",
+      "metadata": {
+        "rank": 5,
+        "commune": "Ajaccio",
+        "genre": "Femme",
+        "age": 53,
+        "profession": "Salarié(e) – Employé(e)",
+        "dimension": "Services de proximité",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 2,
+        "sub_question": "Combien de commerces de proximité (alimentation, boulangeries, pharmacies, etc.) sont recensés à Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 51 ans (Jeunes seniors), Salarié(e) – Cadre ou profession intermédiaire, à Ajaccio, sur le thème 'Services de proximité': Les services de proximité de qualité et variés permettent d’accéder à un cadre de vie agréable",
+      "metadata": {
+        "rank": 6,
+        "commune": "Ajaccio",
+        "genre": "Homme",
+        "age": 51,
+        "profession": "Salarié(e) – Cadre ou profession intermédiaire",
+        "dimension": "Services de proximité",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 2,
+        "sub_question": "Combien de commerces de proximité (alimentation, boulangeries, pharmacies, etc.) sont recensés à Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "La commune de Ajaccio compte une part de 12.9% de cadres et professions intellectuelles supérieures, 16.6% d'ouvriers, avec un taux d'activité de 75.6%. 87.8% des emplois y sont salariés. On y trouve 5.0 points de contact postal, 11.0 hypermarchés ou supermarchés, 38.0 supérettes ou épiceries, 51.0 boulangeries et 21.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 15.0 écoles maternelles, 20.0 écoles élémentaires, 6.0 collèges et 6.0 lycées. Elle possède 1.0 services d'urgence, 80.0 médecins généralistes, 31.0 pharmacies, 204.0 infirmiers et 15.0 crèches. La sécurité est assurée par 1.0 postes de police ou gendarmerie. Il y a également 2.0 agences Pôle emploi. Le taux de pauvreté est de 14.3%, la part de logements vacants est de 3.3%, et celle des résidences secondaires est de 9.2%. Le taux de coups et blessures volontaires est de 4.0 pour 1 000 habitants. Le prix moyen au m² est de 3666.90984455959€, pour une surface moyenne des logements de 71.7937823834197 m².",
+      "metadata": {
+        "rank": 7,
+        "source_type": "communes_equipements",
+        "data_type": "quanti",
+        "commune": "Ajaccio",
+        "num_chunks": null,
+        "view_name": null,
+        "distance": 0.653,
+        "sub_question_idx": 2,
+        "sub_question": "Combien de commerces de proximité (alimentation, boulangeries, pharmacies, etc.) sont recensés à Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nProfil des répondants de la commune de Ajaccio — enquête qualité de vie en Corse\n\nNombre de répondants : 51\n\nRépartition par genre :\n  - Femme : 31 (60.8%)\n  - Homme : 20 (39.2%)\n\nRépartition par tranche d'âge :\n  - 45-59 : 20 (39.2%)\n  - 15-29 : 14 (27.5%)\n  - 30-44 : 11 (21.6%)\n  - 60-74 : 6 (11.8%)\n\nRépartition par catégorie socioprofessionnelle :\n  - SalariÃ©(e) â Cadre ou profession intermÃ©diaire : 17 (33.3%)\n  - Ãtudiant(e) : 12 (23.5%)\n  - Fonctionnaire : 9 (17.6%)\n  - SalariÃ©(e) â EmployÃ©(e) : 8 (15.7%)\n  - Travailleur(se) indÃ©pendant(e) / Entrepreneur(e) : 2 (3.9%)\n  - Autre : 2 (3.9%)\n  - RetraitÃ©(e) : 1 (2.0%)",
+      "metadata": {
+        "rank": 8,
+        "source_type": "communes_profil",
+        "data_type": "quanti",
+        "commune": "Ajaccio",
+        "num_chunks": null,
+        "view_name": null,
+        "distance": 0.471,
+        "sub_question_idx": 2,
+        "sub_question": "Combien de commerces de proximité (alimentation, boulangeries, pharmacies, etc.) sont recensés à Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théoriqu",
+      "metadata": {
+        "rank": 9,
+        "type": "oppchovec_score",
+        "source_type": "oppchovec_scores",
+        "commune": "",
+        "oppchovec_0_10": null,
+        "opp_0_10": null,
+        "cho_0_10": null,
+        "vec_0_10": null,
+        "distance": 0.0,
+        "sub_question_idx": 2,
+        "sub_question": "Combien de commerces de proximité (alimentation, boulangeries, pharmacies, etc.) sont recensés à Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Ajaccio : 5.78/10 (élevé).\n\nSous-scores principaux de Ajaccio :\n  • Opportunités (Opp) : 10.00/10 (très élevé)  — rang 1e/360\n  • Choix (Cho)        : 1.27/10 (très faible)  — rang 358e/360\n  • Vécu (Vec)         : 4.80/10 (moyen)  — rang 41e/360\n  • OppChoVec global   : rang 19e/360\n\nSous-dimensions du score Opportunités (Opp) de Ajaccio :\n  • Opp1 — Éducation      : 7.42/10 (élevé)  [valeur brute : 5.760] — rang 24e/360\n  • Opp2 — Diversité soc. : 1.96/10 (faible)  [indice Theil : 0.2787] — rang 216e/360\n  • Opp3 — Mobilité       : 8.99/10 (très élevé)  [indicateur : 186.1/200] — rang 128e/360\n  • Opp4 — TIC (numérique): 9.35/10 (très élevé)  [couverture : 93.5%] — rang 24e/360\n\nAnalyse de Ajaccio :\n- Ajaccio se",
+      "metadata": {
+        "rank": 10,
+        "type": "oppchovec_score",
+        "source_type": "oppchovec_scores",
+        "commune": "Ajaccio",
+        "oppchovec_0_10": 5.779754,
+        "opp_0_10": 10.0,
+        "cho_0_10": 1.265509,
+        "vec_0_10": 4.796981,
+        "distance": 0.481,
+        "sub_question_idx": 2,
+        "sub_question": "Combien de commerces de proximité (alimentation, boulangeries, pharmacies, etc.) sont recensés à Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nEnquête Qualité de Vie en Corse — Description méthodologique\n\nPRÉSENTATION GÉNÉRALE\nEnquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.\nObjectif : recueillir les perceptions subjectives de la qualité de vie (QdV) et du bien-être,\nen complément des indicateurs o",
+      "metadata": {
+        "rank": 11,
+        "type": "methodology",
+        "source_type": "methodology",
+        "view_name": "enquete_methodology",
+        "sub_question_idx": 2,
+        "sub_question": "Combien de commerces de proximité (alimentation, boulangeries, pharmacies, etc.) sont recensés à Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : dimension=Logement, nom=Ajaccio (N=9 personnes)**\n\n**Themes dominants** :\n1. **Confort et bien-être** : Mentionné par 7 personnes sur 9, avec des formulations comme *\"confort\"*, *\"décence\"*, *\"s'y sentir bien\"*, *\"cocooning\"*, *\"repos\"*, ou *\"intimité\"*.\n2. **Accessibilité financière et salubrité** : Évoquée par 4 personnes, avec des termes comme *\"prix\"*, *\"accessibilité financière\"*, *\"salubrité\"*, ou *\"logement sain et décent\"*.\n3. **Espace et fonctionnalité** : Souligné par 3 personnes, avec des attentes comme *\"assez de place\"*, *\"lumineux\"*, *\"équipement adapté\"*, ou *\"bonne connexion\"*.\n4. **Proximité des services et du travail** : Cité par 2 personnes, notamment *\"proximité des services et du travail\"*.\n\n---\n\n**Points de convergence** :\n- **Priorité à la qualité de vie dans le logement** : La majorité des répondants insistent sur l'importance d'un logement *confortable*, *décents* ou *sain*, avec des formulations comme *\"impératif qu'il soit décent\"* (Verbatim 1), *\"un logement sain et décent pour bien vivre\"* (Verbatim 9), ou *\"confort, sécurité, décoration\"* (Verbatim 6).\n- **Dimension financière comme contrainte** : Plusieurs verbatims soulignent les enjeux de *prix* ou d'*accessibilité financière* (Verbatims 4, 5, 9), suggérant une pression sur le budget lié au logement.\n- **Attentes pratiques** : Les jeunes (Verbatims 1, 2, 3) et les actifs (Verbatims 5, 7) mentionnent des critères concrets comme la *lumière*, l'*espace*, ou la *bonne connexion internet*, reflétant des besoins adaptés à leur mode de vie.\n\n---\n**Points de divergence** :\n- **Priorisation du logement** : Un répondant (Verbatim 8) indique que le logement n'est pas une priorité pour lui, contrairement aux autres, et place la *culture*, la *santé*, ou la *confiance envers les institutions* en tête de ses préoccupations.\n- **Diversité des profils et attentes** : Les jeunes (étudiants) mettent l'accent sur des critères basiques (*\"quelque part où dormir\"*, Verbatim 2) ou pratiques (*\"lumineux\"*, Verbatim 3), tandis que les seniors (Verbatims 6, 7) évoquent des notions plus subjectives comme *\"cocooning\"* ou *\"intimité\"*. Les actifs (Verbatims 5, 9) intègrent des dimensions plus larges (*proximité des services*, *sécurité*).\n\n---\n**Signaux faibles** :\n- **Mention isolée mais notable** : Le Verbatim 8 souligne une *nouvelle problématique* liée au logement, suggérant un changement de contexte (ex. : déménagement, crise du logement) qui n'est pas développé par les autres répondants.\n- **Dimension familiale** : Une seule personne (Verbatim 6) évoque explicitement la *famille* comme critère de choix, ce qui pourrait indiquer une minorité de répondants ayant des responsabilités familiales.\n\n---\n**Limites de l'échantillon** :\n- **Taille réduite (N=9)** : L'échantillon est trop petit pour généraliser les résultats à l'ensemble de la population d'Ajaccio.\n- **Surreprésentation des jeunes et des actifs** : 5 des 9 répondants sont des *jeunes* (20-30 ans) ou des *actifs* (30-55 ans), ce qui peut biaiser les thèmes dominants vers des préoccupations liées à la précarité étudiante ou aux contraintes professionnelles.\n- **Absence de retraités ou de personnes en situation de précarité** : Aucun répondant n'est âgé de plus de 55 ans (hors \"jeunes seniors\"), et aucun ne mentionne explicitement des difficultés liées à la précarité ou à l'isolement.\n- **Biais de genre** : 6 des 9 répondants sont des femmes, ce qui peut influencer les thèmes abordés (ex. : plus de mentions de *\"sécurité\"* ou *\"cocooning\"*).\n\n---\n**Note** : Les verbatims ne permettent pas d'identifier des tendances par quartier ou par type de logement (location/propriété), ni d'évaluer l'impact de la saisonnalité (ex. : pression touristique sur les prix).",
+      "metadata": {
+        "rank": 0,
+        "type": "raptor_summary",
+        "view": "dimension*commune",
+        "num_chunks": 9,
+        "sub_question_idx": 3,
+        "sub_question": "Quel est le nombre de services publics de proximité (mairies annexes, bureaux de poste, maisons de services au public) disponibles à Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : commune=Ajaccio (N=51)**\n\n---\n\n### **Satisfaction globale**\nLes scores globaux révèlent une satisfaction modérée à bonne pour le bonheur et la qualité de vie, mais une confiance limitée dans l’avenir. Le **bonheur** obtient une moyenne de **3,74/5** (n=47), tandis que la **qualité de vie** est légèrement supérieure à **3,85/5** (n=47). En revanche, la **confiance en l’avenir** est significativement plus basse, avec un score de **2,79/5** (n=43), suggérant une inquiétude marquée quant aux perspectives futures. Ces écarts indiquent que les habitants d’Ajaccio perçoivent globalement leur quotidien de manière positive, mais expriment des réserves sur les évolutions à long terme.\n\n---\n\n### **Toutes les dimensions — tableau complet (classées du score le plus élevé au plus faible)**\n\n| **Dimension**               | **Moyenne /5** | **Distribution des évaluations**                                                                                     |\n|-----------------------------|----------------|----------------------------------------------------------------------------------------------------------------------|\n| **Emploi**                  | 3,91           | ★5:13 | ★4:18 | ★3:8 | ★2:3 | ★1:1 |\n| **Sécurité**                | 3,81           | ★5:13 | ★4:17 | ★3:5 | ★2:8 | ★1:0 |\n| **Logement**                | 3,84           | ★5:10 | ★4:24 | ★3:2 | ★2:6 | ★1:1 |\n| **Revenus**                 | 3,51           | ★5:5  | ★4:22 | ★3:8 | ★2:6 | ★1:2 |\n| **Réseau**                  | 3,49           | ★5:7  | ★4:20 | ★3:5 | ★2:9 | ★1:2 |\n| **Culture**                 | 3,49           | ★5:3  | ★4:23 | ★3:11| ★2:4 | ★1:2 |\n| **Éducation**               | 3,44           | ★5:3  | ★4:20 | ★3:13| ★2:7 | ★1:0 |\n| **Services de proximité**   | 3,42           | ★5:3  | ★4:25 | ★3:4 | ★2:9 | ★1:2 |\n| **Communauté et relations** | 3,54           | Entourage=4,14 (★5:20 | ★4:21 | ★3:8 | ★2:1 | ★1:1) / ImplicationLocale=2,94 (★5:3 | ★4:17 | ★3:12 | ★2:12 | ★1:7) |\n| **Ratio vie pro/vie perso** | 3,19           | ★5:4  | ★4:16 | ★3:9 | ★2:12| ★1:2 |\n| **Institutions**            | 2,93           | ★5:4  | ★4:8  | ★3:16| ★2:11| ★1:4 |\n| **Santé**                   | 2,59           | Sante=2,86 (★5:3 | ★4:11 | ★3:9 | ★2:17| ★1:3) / MedecinsGeneralistes=2,98 (★5:3 | ★4:17 | ★3:14 | ★2:10| ★1:7) / AttenteRDV=2,53 (★5:3 | ★4:12 | ★3:7 | ★2:16| ★1:13) / MedecinsSpecialistes=1,98 (★5:1 | ★4:6 | ★3:5 | ★2:18| ★1:21) |\n| **Tourisme**                | 2,63           | ★5:0  | ★4:8  | ★3:16| ★2:14| ★1:5 |\n| **Transports**              | 2,20           | Transports=2,02 (★5:0 | ★4:4 | ★3:5 | ★2:22| ★1:12) / TransportsCommun=1,98 (★5:1 | ★4:7 | ★3:2 | ★2:21| ★1:20) / ReseauRoutier=2,78 (★5:3 | ★4:14 | ★3:11| ★2:15| ★1:8) / Encombrement=2,02 (★5:1 | ★4:5 | ★3:6 | ★2:21| ★1:18) |\n\n---\n### **Patterns notables**\n1. **Forte satisfaction dans les dimensions \"stables\" et personnelles** :\n   - Les dimensions liées à l’**emploi** (3,91/5), à la **sécurité** (3,81/5) et au **logement** (3,84/5) obtiennent les meilleurs scores. Cela suggère que les habitants perçoivent leur cadre de vie matériel et professionnel comme globalement satisfaisant.\n   - La **communauté et les relations** (3,54/5) sont également bien notées, avec un **entourage** très bien évalué (4,14/5), indiquant un fort ancrage social local.\n\n2. **Insatisfaction marquée dans les dimensions \"collectives\" et \"futuristes\"** :\n   - Les **transports** (2,20/5) et le **tourisme** (2,63/5) sont les dimensions les moins bien notées, reflétant des problèmes récurrents (encombrement, réseau routier, attractivité touristique).\n   - Les **institutions** (2,93/5) et la **santé** (2,59/5) — notamment les **médecins spécialistes** (1,98/5) et les **attentes de rendez-vous** (2,53/5) — révèlent des dysfonctionnements perçus dans les services publics et l’accès aux soins.\n\n3. **Contradictions internes** :\n   - Bien que la **qualité de vie** soit globalement bien notée (3,85/5), la **confiance en l’avenir** est très faible (2,79",
+      "metadata": {
+        "rank": 1,
+        "type": "raptor_enquete_summary",
+        "view": "enquete_commune",
+        "num_chunks": 51,
+        "sub_question_idx": 3,
+        "sub_question": "Quel est le nombre de services publics de proximité (mairies annexes, bureaux de poste, maisons de services au public) disponibles à Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 21 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Logement': Le logement est important car il est impératif qu'il soit décent et qu'on s'y sente bien",
+      "metadata": {
+        "rank": 2,
+        "commune": "Ajaccio",
+        "genre": "Femme",
+        "age": 21,
+        "profession": "Étudiant(e)",
+        "dimension": "Logement",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 3,
+        "sub_question": "Quel est le nombre de services publics de proximité (mairies annexes, bureaux de poste, maisons de services au public) disponibles à Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 23 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Logement': logement : avoir du confort, quelque part où dormir est très important",
+      "metadata": {
+        "rank": 3,
+        "commune": "Ajaccio",
+        "genre": "Femme",
+        "age": 23,
+        "profession": "Étudiant(e)",
+        "dimension": "Logement",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 3,
+        "sub_question": "Quel est le nombre de services publics de proximité (mairies annexes, bureaux de poste, maisons de services au public) disponibles à Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 20 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Logement': assez de place, lumineux, bonne connexion, équipement adapté",
+      "metadata": {
+        "rank": 4,
+        "commune": "Ajaccio",
+        "genre": "Homme",
+        "age": 20,
+        "profession": "Étudiant(e)",
+        "dimension": "Logement",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 3,
+        "sub_question": "Quel est le nombre de services publics de proximité (mairies annexes, bureaux de poste, maisons de services au public) disponibles à Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 30 ans (Jeunes adultes), Fonctionnaire, à Ajaccio, sur le thème 'Logement': accessibilité des logements, prix et salubrité",
+      "metadata": {
+        "rank": 5,
+        "commune": "Ajaccio",
+        "genre": "Femme",
+        "age": 30,
+        "profession": "Fonctionnaire",
+        "dimension": "Logement",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 3,
+        "sub_question": "Quel est le nombre de services publics de proximité (mairies annexes, bureaux de poste, maisons de services au public) disponibles à Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 47 ans (Adultes), Salarié(e) – Cadre ou profession intermédiaire, à Ajaccio, sur le thème 'Logement': Propriété, Confort, Proximité des services et du travail, Accessibilité financière",
+      "metadata": {
+        "rank": 6,
+        "commune": "Ajaccio",
+        "genre": "Homme",
+        "age": 47,
+        "profession": "Salarié(e) – Cadre ou profession intermédiaire",
+        "dimension": "Logement",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 3,
+        "sub_question": "Quel est le nombre de services publics de proximité (mairies annexes, bureaux de poste, maisons de services au public) disponibles à Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nScores moyens de l'enquête QdV pour la commune de Ajaccio (47 répondants). Score bonheur moyen : 3.68/5. Score qualité de vie moyen : 3.89/5. Score confiance avenir moyen : 2.75/5. Scores moyens par dimension (1-5) : Transports=0.95, Éducation=2.35, Réseaux téléphoniques=2.38, Institutions=1.85, Tourisme=1.57, Sécurité=2.73, Santé=1.80, Situation pro=2.90, Revenus=2.50, Temps travail/perso=2.23, Logement=2.80, Services locaux=2.40, Culture=2.40, Soutien social=3.11, Vie associative=0.64. Dimensions les plus citées comme prioritaires : Environnement, Santé.",
+      "metadata": {
+        "rank": 7,
+        "source_type": "enquete_scores_commune",
+        "data_type": "quanti",
+        "commune": "Ajaccio",
+        "num_chunks": null,
+        "view_name": null,
+        "distance": 0.74,
+        "sub_question_idx": 3,
+        "sub_question": "Quel est le nombre de services publics de proximité (mairies annexes, bureaux de poste, maisons de services au public) disponibles à Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "La commune de Ajaccio compte une part de 12.9% de cadres et professions intellectuelles supérieures, 16.6% d'ouvriers, avec un taux d'activité de 75.6%. 87.8% des emplois y sont salariés. On y trouve 5.0 points de contact postal, 11.0 hypermarchés ou supermarchés, 38.0 supérettes ou épiceries, 51.0 boulangeries et 21.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 15.0 écoles maternelles, 20.0 écoles élémentaires, 6.0 collèges et 6.0 lycées. Elle possède 1.0 services d'urgence, 80.0 médecins généralistes, 31.0 pharmacies, 204.0 infirmiers et 15.0 crèches. La sécurité est assurée par 1.0 postes de police ou gendarmerie. Il y a également 2.0 agences Pôle emploi. Le taux de pauvreté est de 14.3%, la part de logements vacants est de 3.3%, et celle des résidences secondaires est de 9.2%. Le taux de coups et blessures volontaires est de 4.0 pour 1 000 habitants. Le prix moyen au m² est de 3666.90984455959€, pour une surface moyenne des logements de 71.7937823834197 m².",
+      "metadata": {
+        "rank": 8,
+        "source_type": "communes_equipements",
+        "data_type": "quanti",
+        "commune": "Ajaccio",
+        "num_chunks": null,
+        "view_name": null,
+        "distance": 0.642,
+        "sub_question_idx": 3,
+        "sub_question": "Quel est le nombre de services publics de proximité (mairies annexes, bureaux de poste, maisons de services au public) disponibles à Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nProfil des répondants de la commune de Ajaccio — enquête qualité de vie en Corse\n\nNombre de répondants : 51\n\nRépartition par genre :\n  - Femme : 31 (60.8%)\n  - Homme : 20 (39.2%)\n\nRépartition par tranche d'âge :\n  - 45-59 : 20 (39.2%)\n  - 15-29 : 14 (27.5%)\n  - 30-44 : 11 (21.6%)\n  - 60-74 : 6 (11.8%)\n\nRépartition par catégorie socioprofessionnelle :\n  - SalariÃ©(e) â Cadre ou profession intermÃ©diaire : 17 (33.3%)\n  - Ãtudiant(e) : 12 (23.5%)\n  - Fonctionnaire : 9 (17.6%)\n  - SalariÃ©(e) â EmployÃ©(e) : 8 (15.7%)\n  - Travailleur(se) indÃ©pendant(e) / Entrepreneur(e) : 2 (3.9%)\n  - Autre : 2 (3.9%)\n  - RetraitÃ©(e) : 1 (2.0%)",
+      "metadata": {
+        "rank": 9,
+        "source_type": "communes_profil",
+        "data_type": "quanti",
+        "commune": "Ajaccio",
+        "num_chunks": null,
+        "view_name": null,
+        "distance": 0.449,
+        "sub_question_idx": 3,
+        "sub_question": "Quel est le nombre de services publics de proximité (mairies annexes, bureaux de poste, maisons de services au public) disponibles à Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théoriqu",
+      "metadata": {
+        "rank": 10,
+        "type": "oppchovec_score",
+        "source_type": "oppchovec_scores",
+        "commune": "",
+        "oppchovec_0_10": null,
+        "opp_0_10": null,
+        "cho_0_10": null,
+        "vec_0_10": null,
+        "distance": 0.0,
+        "sub_question_idx": 3,
+        "sub_question": "Quel est le nombre de services publics de proximité (mairies annexes, bureaux de poste, maisons de services au public) disponibles à Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Ajaccio : 5.78/10 (élevé).\n\nSous-scores principaux de Ajaccio :\n  • Opportunités (Opp) : 10.00/10 (très élevé)  — rang 1e/360\n  • Choix (Cho)        : 1.27/10 (très faible)  — rang 358e/360\n  • Vécu (Vec)         : 4.80/10 (moyen)  — rang 41e/360\n  • OppChoVec global   : rang 19e/360\n\nSous-dimensions du score Opportunités (Opp) de Ajaccio :\n  • Opp1 — Éducation      : 7.42/10 (élevé)  [valeur brute : 5.760] — rang 24e/360\n  • Opp2 — Diversité soc. : 1.96/10 (faible)  [indice Theil : 0.2787] — rang 216e/360\n  • Opp3 — Mobilité       : 8.99/10 (très élevé)  [indicateur : 186.1/200] — rang 128e/360\n  • Opp4 — TIC (numérique): 9.35/10 (très élevé)  [couverture : 93.5%] — rang 24e/360\n\nAnalyse de Ajaccio :\n- Ajaccio se",
+      "metadata": {
+        "rank": 11,
+        "type": "oppchovec_score",
+        "source_type": "oppchovec_scores",
+        "commune": "Ajaccio",
+        "oppchovec_0_10": 5.779754,
+        "opp_0_10": 10.0,
+        "cho_0_10": 1.265509,
+        "vec_0_10": 4.796981,
+        "distance": 0.43,
+        "sub_question_idx": 3,
+        "sub_question": "Quel est le nombre de services publics de proximité (mairies annexes, bureaux de poste, maisons de services au public) disponibles à Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nEnquête Qualité de Vie en Corse — Description méthodologique\n\nPRÉSENTATION GÉNÉRALE\nEnquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.\nObjectif : recueillir les perceptions subjectives de la qualité de vie (QdV) et du bien-être,\nen complément des indicateurs o",
+      "metadata": {
+        "rank": 12,
+        "type": "methodology",
+        "source_type": "methodology",
+        "view_name": "enquete_methodology",
+        "sub_question_idx": 3,
+        "sub_question": "Quel est le nombre de services publics de proximité (mairies annexes, bureaux de poste, maisons de services au public) disponibles à Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : dimension=Santé, nom=Ajaccio (N=16 personnes)**\n\n**Thèmes dominants** :\n1. **Importance centrale de la santé** : La santé est perçue comme une condition essentielle à la qualité de vie, à l’autonomie et au bien-être.\n   - Exemples : *\"La santé : si on a pas la santé, on a rien dans la vie\"* (Verbatim 1), *\"La santé est primordial\"* (Verbatim 10), *\"La santé avec l’accès aux soins est primordiale, c’est une évidence\"* (Verbatim 18).\n2. **Accès aux soins et qualité des services** : Plusieurs verbatims soulignent les enjeux d’accès aux soins, de qualité des professionnels et de l’attractivité du territoire pour les soignants.\n   - Exemples : *\"Les centres hospitaliers manquent de personnel\"* (Verbatim 3), *\"l’accès à la santé et à des professionnels de qualité est primordial\"* (Verbatim 12), *\"Accès à des consultations/soins de qualité, attractivité du territoire pour les personnels soignants\"* (Verbatim 11).\n3. **Équilibre physique et mental** : La santé est associée à un équilibre global, incluant le bien-être mental et la prévention.\n   - Exemples : *\"Pour garder une bonne humeur\"* (Verbatim 4), *\"Prévention, Accès aux soins, Nutrition, Activité physique, Bien-être mental\"* (Verbatim 15), *\"Équilibre physique et mental\"* (Verbatim 16).\n\n**Points de convergence** :\n- **Primordialité de la santé** : Tous les groupes d’âge et de statut professionnel s’accordent sur le caractère essentiel de la santé pour la qualité de vie.\n- **Critique de l’accès aux soins** : Plusieurs verbatims (notamment des jeunes adultes et des adultes) pointent un manque de personnel dans les centres hospitaliers et une difficulté à accéder à des soins de qualité sur l’île.\n  - Exemple : *\"Le meilleur médecin est malheureusement l’avion\"* (Verbatim 12).\n- **Stress lié à l’accès aux soins** : L’état de santé et l’accès aux soins sont perçus comme une source de stress pour certains habitants.\n  - Exemple : *\"L’état de santé et l’accès aux soins peuvent être source de stress\"* (Verbatim 14).\n\n**Points de divergence** :\n- **Variabilité des priorités** : Certains verbatims se limitent à une mention minimale (*\"Santé\"* ou *\"Emploi\"* dans le Verbatim 9), sans développement, ce qui peut refléter un manque d’intérêt ou une difficulté à exprimer une opinion structurée.\n- **Diversité des attentes** : Les attentes en matière de santé varient selon l’âge et le statut :\n  - Les jeunes (18-26 ans) insistent davantage sur l’accès aux soins et l’autonomie (*\"si notre santé est fragile on a une qualité de vie réduite\"* – Verbatim 2).\n  - Les adultes et seniors évoquent plus souvent l’équilibre global (physique, mental) et la prévention (*\"Équilibre physique et mental\"* – Verbatim 16).\n\n**Signaux faibles** :\n- **Mention isolée de l’emploi** : Un seul verbatim (Verbatim 9) associe la santé à l’emploi, sans explication supplémentaire. Cela pourrait indiquer une perception marginale de ce lien dans ce groupe.\n- **Absence de mentions spécifiques** : Aucun verbatim ne mentionne des maladies ou des problèmes de santé particuliers (chroniques, mentaux, etc.), ce qui peut refléter soit une absence de préoccupations spécifiques, soit un biais de réponse.\n\n**Limites de l’échantillon** :\n- **Taille réduite** : Avec seulement 16 personnes, l’échantillon est trop petit pour représenter l’ensemble des habitants d’Ajaccio. Les résultats ne peuvent pas être généralisés.\n- **Surreprésentation des jeunes et des actifs** : La majorité des verbatims proviennent de jeunes (18-26 ans) et d’adultes actifs (salariés, fonctionnaires), ce qui peut biaiser les résultats vers des préoccupations liées à l’accès aux soins et à l’autonomie.\n- **Manque de diversité sociale** : Peu de verbatims proviennent de personnes âgées ou de retraités, ce qui limite la représentativité des enjeux de santé liés au vieillissement.\n- **Verbatims incomplets** : Certains sont très courts (*\"test\"* – Verbatim 6, *\"Santé\"* – Verbatim 8) ou hors-sujet (*\"Emploi\"* dans le Verbatim 9), ce qui peut indiquer un manque d’engagement ou une difficulté à répondre à la question.",
+      "metadata": {
+        "rank": 0,
+        "type": "raptor_summary",
+        "view": "dimension*commune",
+        "num_chunks": 19,
+        "sub_question_idx": 4,
+        "sub_question": "Combien de structures de santé de proximité (médecins généralistes, infirmiers, kinésithérapeutes, etc.) sont implantées à Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : commune=Ajaccio (N=51)**\n\n---\n\n### **Satisfaction globale**\nLes scores globaux révèlent une satisfaction modérée à bonne pour le bonheur et la qualité de vie, mais une confiance limitée dans l’avenir. Le **bonheur** obtient une moyenne de **3,74/5** (n=47), tandis que la **qualité de vie** est légèrement supérieure à **3,85/5** (n=47). En revanche, la **confiance en l’avenir** est significativement plus basse, avec un score de **2,79/5** (n=43), suggérant une inquiétude marquée quant aux perspectives futures. Ces écarts indiquent que les habitants d’Ajaccio perçoivent globalement leur quotidien de manière positive, mais expriment des réserves sur les évolutions à long terme.\n\n---\n\n### **Toutes les dimensions — tableau complet (classées du score le plus élevé au plus faible)**\n\n| **Dimension**               | **Moyenne /5** | **Distribution des évaluations**                                                                                     |\n|-----------------------------|----------------|----------------------------------------------------------------------------------------------------------------------|\n| **Emploi**                  | 3,91           | ★5:13 | ★4:18 | ★3:8 | ★2:3 | ★1:1 |\n| **Sécurité**                | 3,81           | ★5:13 | ★4:17 | ★3:5 | ★2:8 | ★1:0 |\n| **Logement**                | 3,84           | ★5:10 | ★4:24 | ★3:2 | ★2:6 | ★1:1 |\n| **Revenus**                 | 3,51           | ★5:5  | ★4:22 | ★3:8 | ★2:6 | ★1:2 |\n| **Réseau**                  | 3,49           | ★5:7  | ★4:20 | ★3:5 | ★2:9 | ★1:2 |\n| **Culture**                 | 3,49           | ★5:3  | ★4:23 | ★3:11| ★2:4 | ★1:2 |\n| **Éducation**               | 3,44           | ★5:3  | ★4:20 | ★3:13| ★2:7 | ★1:0 |\n| **Services de proximité**   | 3,42           | ★5:3  | ★4:25 | ★3:4 | ★2:9 | ★1:2 |\n| **Communauté et relations** | 3,54           | Entourage=4,14 (★5:20 | ★4:21 | ★3:8 | ★2:1 | ★1:1) / ImplicationLocale=2,94 (★5:3 | ★4:17 | ★3:12 | ★2:12 | ★1:7) |\n| **Ratio vie pro/vie perso** | 3,19           | ★5:4  | ★4:16 | ★3:9 | ★2:12| ★1:2 |\n| **Institutions**            | 2,93           | ★5:4  | ★4:8  | ★3:16| ★2:11| ★1:4 |\n| **Santé**                   | 2,59           | Sante=2,86 (★5:3 | ★4:11 | ★3:9 | ★2:17| ★1:3) / MedecinsGeneralistes=2,98 (★5:3 | ★4:17 | ★3:14 | ★2:10| ★1:7) / AttenteRDV=2,53 (★5:3 | ★4:12 | ★3:7 | ★2:16| ★1:13) / MedecinsSpecialistes=1,98 (★5:1 | ★4:6 | ★3:5 | ★2:18| ★1:21) |\n| **Tourisme**                | 2,63           | ★5:0  | ★4:8  | ★3:16| ★2:14| ★1:5 |\n| **Transports**              | 2,20           | Transports=2,02 (★5:0 | ★4:4 | ★3:5 | ★2:22| ★1:12) / TransportsCommun=1,98 (★5:1 | ★4:7 | ★3:2 | ★2:21| ★1:20) / ReseauRoutier=2,78 (★5:3 | ★4:14 | ★3:11| ★2:15| ★1:8) / Encombrement=2,02 (★5:1 | ★4:5 | ★3:6 | ★2:21| ★1:18) |\n\n---\n### **Patterns notables**\n1. **Forte satisfaction dans les dimensions \"stables\" et personnelles** :\n   - Les dimensions liées à l’**emploi** (3,91/5), à la **sécurité** (3,81/5) et au **logement** (3,84/5) obtiennent les meilleurs scores. Cela suggère que les habitants perçoivent leur cadre de vie matériel et professionnel comme globalement satisfaisant.\n   - La **communauté et les relations** (3,54/5) sont également bien notées, avec un **entourage** très bien évalué (4,14/5), indiquant un fort ancrage social local.\n\n2. **Insatisfaction marquée dans les dimensions \"collectives\" et \"futuristes\"** :\n   - Les **transports** (2,20/5) et le **tourisme** (2,63/5) sont les dimensions les moins bien notées, reflétant des problèmes récurrents (encombrement, réseau routier, attractivité touristique).\n   - Les **institutions** (2,93/5) et la **santé** (2,59/5) — notamment les **médecins spécialistes** (1,98/5) et les **attentes de rendez-vous** (2,53/5) — révèlent des dysfonctionnements perçus dans les services publics et l’accès aux soins.\n\n3. **Contradictions internes** :\n   - Bien que la **qualité de vie** soit globalement bien notée (3,85/5), la **confiance en l’avenir** est très faible (2,79",
+      "metadata": {
+        "rank": 1,
+        "type": "raptor_enquete_summary",
+        "view": "enquete_commune",
+        "num_chunks": 51,
+        "sub_question_idx": 4,
+        "sub_question": "Combien de structures de santé de proximité (médecins généralistes, infirmiers, kinésithérapeutes, etc.) sont implantées à Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Santé': La santé : si on a pas la santé, on a rien dans la vie",
+      "metadata": {
+        "rank": 2,
+        "commune": "Ajaccio",
+        "genre": "Femme",
+        "age": 18,
+        "profession": "Étudiant(e)",
+        "dimension": "Santé",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 4,
+        "sub_question": "Combien de structures de santé de proximité (médecins généralistes, infirmiers, kinésithérapeutes, etc.) sont implantées à Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 20 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Santé': La santé car si notre santé est fragile on a une qualité de vie réduite",
+      "metadata": {
+        "rank": 3,
+        "commune": "Ajaccio",
+        "genre": "Homme",
+        "age": 20,
+        "profession": "Étudiant(e)",
+        "dimension": "Santé",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 4,
+        "sub_question": "Combien de structures de santé de proximité (médecins généralistes, infirmiers, kinésithérapeutes, etc.) sont implantées à Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Santé': Les centres hospitaliers manquent de personnel alors que tout le monde doit y avoir accès",
+      "metadata": {
+        "rank": 4,
+        "commune": "Ajaccio",
+        "genre": "Femme",
+        "age": 18,
+        "profession": "Étudiant(e)",
+        "dimension": "Santé",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 4,
+        "sub_question": "Combien de structures de santé de proximité (médecins généralistes, infirmiers, kinésithérapeutes, etc.) sont implantées à Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 21 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Santé': Pour garder une bonne humeur",
+      "metadata": {
+        "rank": 5,
+        "commune": "Ajaccio",
+        "genre": "Homme",
+        "age": 21,
+        "profession": "Étudiant(e)",
+        "dimension": "Santé",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 4,
+        "sub_question": "Combien de structures de santé de proximité (médecins généralistes, infirmiers, kinésithérapeutes, etc.) sont implantées à Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 26 ans (Jeunes adultes), Salarié(e) – Employé(e), à Ajaccio, sur le thème 'Santé': La santé est important car sans la santé ou peut pas faire grand chose ou du moins on peut-être très vite limité.",
+      "metadata": {
+        "rank": 6,
+        "commune": "Ajaccio",
+        "genre": "Femme",
+        "age": 26,
+        "profession": "Salarié(e) – Employé(e)",
+        "dimension": "Santé",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 4,
+        "sub_question": "Combien de structures de santé de proximité (médecins généralistes, infirmiers, kinésithérapeutes, etc.) sont implantées à Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "La commune de Ajaccio compte une part de 12.9% de cadres et professions intellectuelles supérieures, 16.6% d'ouvriers, avec un taux d'activité de 75.6%. 87.8% des emplois y sont salariés. On y trouve 5.0 points de contact postal, 11.0 hypermarchés ou supermarchés, 38.0 supérettes ou épiceries, 51.0 boulangeries et 21.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 15.0 écoles maternelles, 20.0 écoles élémentaires, 6.0 collèges et 6.0 lycées. Elle possède 1.0 services d'urgence, 80.0 médecins généralistes, 31.0 pharmacies, 204.0 infirmiers et 15.0 crèches. La sécurité est assurée par 1.0 postes de police ou gendarmerie. Il y a également 2.0 agences Pôle emploi. Le taux de pauvreté est de 14.3%, la part de logements vacants est de 3.3%, et celle des résidences secondaires est de 9.2%. Le taux de coups et blessures volontaires est de 4.0 pour 1 000 habitants. Le prix moyen au m² est de 3666.90984455959€, pour une surface moyenne des logements de 71.7937823834197 m².",
+      "metadata": {
+        "rank": 7,
+        "source_type": "communes_equipements",
+        "data_type": "quanti",
+        "commune": "Ajaccio",
+        "num_chunks": null,
+        "view_name": null,
+        "distance": 0.706,
+        "sub_question_idx": 4,
+        "sub_question": "Combien de structures de santé de proximité (médecins généralistes, infirmiers, kinésithérapeutes, etc.) sont implantées à Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nProfil des répondants de la commune de Ajaccio — enquête qualité de vie en Corse\n\nNombre de répondants : 51\n\nRépartition par genre :\n  - Femme : 31 (60.8%)\n  - Homme : 20 (39.2%)\n\nRépartition par tranche d'âge :\n  - 45-59 : 20 (39.2%)\n  - 15-29 : 14 (27.5%)\n  - 30-44 : 11 (21.6%)\n  - 60-74 : 6 (11.8%)\n\nRépartition par catégorie socioprofessionnelle :\n  - SalariÃ©(e) â Cadre ou profession intermÃ©diaire : 17 (33.3%)\n  - Ãtudiant(e) : 12 (23.5%)\n  - Fonctionnaire : 9 (17.6%)\n  - SalariÃ©(e) â EmployÃ©(e) : 8 (15.7%)\n  - Travailleur(se) indÃ©pendant(e) / Entrepreneur(e) : 2 (3.9%)\n  - Autre : 2 (3.9%)\n  - RetraitÃ©(e) : 1 (2.0%)",
+      "metadata": {
+        "rank": 8,
+        "source_type": "communes_profil",
+        "data_type": "quanti",
+        "commune": "Ajaccio",
+        "num_chunks": null,
+        "view_name": null,
+        "distance": 0.467,
+        "sub_question_idx": 4,
+        "sub_question": "Combien de structures de santé de proximité (médecins généralistes, infirmiers, kinésithérapeutes, etc.) sont implantées à Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théoriqu",
+      "metadata": {
+        "rank": 9,
+        "type": "oppchovec_score",
+        "source_type": "oppchovec_scores",
+        "commune": "",
+        "oppchovec_0_10": null,
+        "opp_0_10": null,
+        "cho_0_10": null,
+        "vec_0_10": null,
+        "distance": 0.0,
+        "sub_question_idx": 4,
+        "sub_question": "Combien de structures de santé de proximité (médecins généralistes, infirmiers, kinésithérapeutes, etc.) sont implantées à Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Ajaccio : 5.78/10 (élevé).\n\nSous-scores principaux de Ajaccio :\n  • Opportunités (Opp) : 10.00/10 (très élevé)  — rang 1e/360\n  • Choix (Cho)        : 1.27/10 (très faible)  — rang 358e/360\n  • Vécu (Vec)         : 4.80/10 (moyen)  — rang 41e/360\n  • OppChoVec global   : rang 19e/360\n\nSous-dimensions du score Opportunités (Opp) de Ajaccio :\n  • Opp1 — Éducation      : 7.42/10 (élevé)  [valeur brute : 5.760] — rang 24e/360\n  • Opp2 — Diversité soc. : 1.96/10 (faible)  [indice Theil : 0.2787] — rang 216e/360\n  • Opp3 — Mobilité       : 8.99/10 (très élevé)  [indicateur : 186.1/200] — rang 128e/360\n  • Opp4 — TIC (numérique): 9.35/10 (très élevé)  [couverture : 93.5%] — rang 24e/360\n\nAnalyse de Ajaccio :\n- Ajaccio se",
+      "metadata": {
+        "rank": 10,
+        "type": "oppchovec_score",
+        "source_type": "oppchovec_scores",
+        "commune": "Ajaccio",
+        "oppchovec_0_10": 5.779754,
+        "opp_0_10": 10.0,
+        "cho_0_10": 1.265509,
+        "vec_0_10": 4.796981,
+        "distance": 0.486,
+        "sub_question_idx": 4,
+        "sub_question": "Combien de structures de santé de proximité (médecins généralistes, infirmiers, kinésithérapeutes, etc.) sont implantées à Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nEnquête Qualité de Vie en Corse — Description méthodologique\n\nPRÉSENTATION GÉNÉRALE\nEnquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.\nObjectif : recueillir les perceptions subjectives de la qualité de vie (QdV) et du bien-être,\nen complément des indicateurs o",
+      "metadata": {
+        "rank": 11,
+        "type": "methodology",
+        "source_type": "methodology",
+        "view_name": "enquete_methodology",
+        "sub_question_idx": 4,
+        "sub_question": "Combien de structures de santé de proximité (médecins généralistes, infirmiers, kinésithérapeutes, etc.) sont implantées à Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : dimension=Culture, nom=Ajaccio (N=11 personnes)**\n\n**Themes dominants** :\n1. **Accès à la culture comme levier d’émancipation et de bien-être** : Mentionné par 6 répondants (Verbatims 1, 7, 8, 10, 6, 9).\n   - Exemples : *\"Accès à la culture source d’émancipation\"* (Verbatim 8), *\"condition essentielle à l’émancipation individuelle et au bien-être\"* (Verbatim 10).\n2. **Diversité et richesse de l’offre culturelle locale** : Soulignée par 5 répondants (Verbatims 2, 3, 5, 9, 11).\n   - Exemples : *\"La culture, avec davantage de choix depuis l’ouverture du Palatinu et de l’Empire\"* (Verbatim 2), *\"musique, arts, cinéma, littérature, spectacles vivants\"* (Verbatim 5).\n3. **Culture comme vecteur de lien social et d’ouverture d’esprit** : Évoqué par 4 répondants (Verbatims 4, 1, 3, 6).\n   - Exemples : *\"rencontre, ouverture d’esprit, curiosité, contact humain\"* (Verbatim 4), *\"pour un monde pacifié\"* (Verbatim 1).\n\n**Points de convergence** :\n- **Importance de l’accès à la culture** : Tous les répondants (sauf un) soulignent son rôle clé dans l’éducation, l’émancipation ou le bien-être.\n- **Reconnaissance de l’offre culturelle ajaccienne** : Plusieurs mentionnent une amélioration récente (ex. : *\"depuis l’ouverture du Palatinu et de l’Empire\"*).\n- **Culture comme outil de cohésion sociale** : Liens entre culture, rencontre et ouverture d’esprit.\n\n**Points de divergence** :\n- **Niveau de satisfaction** : Un répondant (Verbatim 11) indique un *\"point à améliorer\"* sans préciser, suggérant une insatisfaction partielle ou une attente non comblée.\n- **Diversité des pratiques culturelles** : Certains citent des lieux spécifiques (ex. : Palatinu, Empire), tandis que d’autres évoquent des formes plus larges (ex. : *\"spectacles vivants\"*).\n\n**Signaux faibles** :\n- **Pass Culture** : Une mention isolée (*\"pass culture comme dans certaines villes\"*) (Verbatim 7), suggérant un intérêt pour des dispositifs incitatifs.\n- **Âge et profession** : Les seniors (50 ans et plus) et les cadres/professions intermédiaires sont surreprésentés, limitant la généralisation.\n\n**Limites de l’échantillon** :\n- **Taille réduite (N=11)** et **biais de surreprésentation** :\n  - 8 femmes / 3 hommes.\n  - Forte proportion de *jeunes seniors* (50-69 ans) et de cadres/professions intermédiaires.\n  - Absence de jeunes adultes (sauf 1 répondant de 30 ans) et de catégories socio-professionnelles moins favorisées.\n- **Manque de précisions** : Certains verbatims sont vagues (*\"point à améliorer\"*).\n\n*Note* : Les extraits cités sont des reformulations fidèles des verbatims originaux.",
+      "metadata": {
+        "rank": 0,
+        "type": "raptor_summary",
+        "view": "dimension*commune",
+        "num_chunks": 11,
+        "sub_question_idx": 5,
+        "sub_question": "Quel est le nombre de services de proximité liés à l'éducation et à la petite enfance (écoles maternelles, crèches, centres de loisirs) dans la ville d'Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : commune=Ajaccio (N=51)**\n\n---\n\n### **Satisfaction globale**\nLes scores globaux révèlent une satisfaction modérée à bonne pour le bonheur et la qualité de vie, mais une confiance limitée dans l’avenir. Le **bonheur** obtient une moyenne de **3,74/5** (n=47), tandis que la **qualité de vie** est légèrement supérieure à **3,85/5** (n=47). En revanche, la **confiance en l’avenir** est significativement plus basse, avec un score de **2,79/5** (n=43), suggérant une inquiétude marquée quant aux perspectives futures. Ces écarts indiquent que les habitants d’Ajaccio perçoivent globalement leur quotidien de manière positive, mais expriment des réserves sur les évolutions à long terme.\n\n---\n\n### **Toutes les dimensions — tableau complet (classées du score le plus élevé au plus faible)**\n\n| **Dimension**               | **Moyenne /5** | **Distribution des évaluations**                                                                                     |\n|-----------------------------|----------------|----------------------------------------------------------------------------------------------------------------------|\n| **Emploi**                  | 3,91           | ★5:13 | ★4:18 | ★3:8 | ★2:3 | ★1:1 |\n| **Sécurité**                | 3,81           | ★5:13 | ★4:17 | ★3:5 | ★2:8 | ★1:0 |\n| **Logement**                | 3,84           | ★5:10 | ★4:24 | ★3:2 | ★2:6 | ★1:1 |\n| **Revenus**                 | 3,51           | ★5:5  | ★4:22 | ★3:8 | ★2:6 | ★1:2 |\n| **Réseau**                  | 3,49           | ★5:7  | ★4:20 | ★3:5 | ★2:9 | ★1:2 |\n| **Culture**                 | 3,49           | ★5:3  | ★4:23 | ★3:11| ★2:4 | ★1:2 |\n| **Éducation**               | 3,44           | ★5:3  | ★4:20 | ★3:13| ★2:7 | ★1:0 |\n| **Services de proximité**   | 3,42           | ★5:3  | ★4:25 | ★3:4 | ★2:9 | ★1:2 |\n| **Communauté et relations** | 3,54           | Entourage=4,14 (★5:20 | ★4:21 | ★3:8 | ★2:1 | ★1:1) / ImplicationLocale=2,94 (★5:3 | ★4:17 | ★3:12 | ★2:12 | ★1:7) |\n| **Ratio vie pro/vie perso** | 3,19           | ★5:4  | ★4:16 | ★3:9 | ★2:12| ★1:2 |\n| **Institutions**            | 2,93           | ★5:4  | ★4:8  | ★3:16| ★2:11| ★1:4 |\n| **Santé**                   | 2,59           | Sante=2,86 (★5:3 | ★4:11 | ★3:9 | ★2:17| ★1:3) / MedecinsGeneralistes=2,98 (★5:3 | ★4:17 | ★3:14 | ★2:10| ★1:7) / AttenteRDV=2,53 (★5:3 | ★4:12 | ★3:7 | ★2:16| ★1:13) / MedecinsSpecialistes=1,98 (★5:1 | ★4:6 | ★3:5 | ★2:18| ★1:21) |\n| **Tourisme**                | 2,63           | ★5:0  | ★4:8  | ★3:16| ★2:14| ★1:5 |\n| **Transports**              | 2,20           | Transports=2,02 (★5:0 | ★4:4 | ★3:5 | ★2:22| ★1:12) / TransportsCommun=1,98 (★5:1 | ★4:7 | ★3:2 | ★2:21| ★1:20) / ReseauRoutier=2,78 (★5:3 | ★4:14 | ★3:11| ★2:15| ★1:8) / Encombrement=2,02 (★5:1 | ★4:5 | ★3:6 | ★2:21| ★1:18) |\n\n---\n### **Patterns notables**\n1. **Forte satisfaction dans les dimensions \"stables\" et personnelles** :\n   - Les dimensions liées à l’**emploi** (3,91/5), à la **sécurité** (3,81/5) et au **logement** (3,84/5) obtiennent les meilleurs scores. Cela suggère que les habitants perçoivent leur cadre de vie matériel et professionnel comme globalement satisfaisant.\n   - La **communauté et les relations** (3,54/5) sont également bien notées, avec un **entourage** très bien évalué (4,14/5), indiquant un fort ancrage social local.\n\n2. **Insatisfaction marquée dans les dimensions \"collectives\" et \"futuristes\"** :\n   - Les **transports** (2,20/5) et le **tourisme** (2,63/5) sont les dimensions les moins bien notées, reflétant des problèmes récurrents (encombrement, réseau routier, attractivité touristique).\n   - Les **institutions** (2,93/5) et la **santé** (2,59/5) — notamment les **médecins spécialistes** (1,98/5) et les **attentes de rendez-vous** (2,53/5) — révèlent des dysfonctionnements perçus dans les services publics et l’accès aux soins.\n\n3. **Contradictions internes** :\n   - Bien que la **qualité de vie** soit globalement bien notée (3,85/5), la **confiance en l’avenir** est très faible (2,79",
+      "metadata": {
+        "rank": 1,
+        "type": "raptor_enquete_summary",
+        "view": "enquete_commune",
+        "num_chunks": 51,
+        "sub_question_idx": 5,
+        "sub_question": "Quel est le nombre de services de proximité liés à l'éducation et à la petite enfance (écoles maternelles, crèches, centres de loisirs) dans la ville d'Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 30 ans (Jeunes adultes), Salarié(e) – Cadre ou profession intermédiaire, à Ajaccio, sur le thème 'Culture': Accès à la culture est primordial pour l'éducation, la découverte de soi, la compréhension du monde, en faveur d'un monde pacifié",
+      "metadata": {
+        "rank": 2,
+        "commune": "Ajaccio",
+        "genre": "Femme",
+        "age": 30,
+        "profession": "Salarié(e) – Cadre ou profession intermédiaire",
+        "dimension": "Culture",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 5,
+        "sub_question": "Quel est le nombre de services de proximité liés à l'éducation et à la petite enfance (écoles maternelles, crèches, centres de loisirs) dans la ville d'Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 39 ans (Adultes), Salarié(e) – Cadre ou profession intermédiaire, à Ajaccio, sur le thème 'Culture': La culture, avec davantage de choix depuis l'ouverture du Palatinu et de l'Empire",
+      "metadata": {
+        "rank": 3,
+        "commune": "Ajaccio",
+        "genre": "Femme",
+        "age": 39,
+        "profession": "Salarié(e) – Cadre ou profession intermédiaire",
+        "dimension": "Culture",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 5,
+        "sub_question": "Quel est le nombre de services de proximité liés à l'éducation et à la petite enfance (écoles maternelles, crèches, centres de loisirs) dans la ville d'Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 50 ans (Jeunes seniors), Fonctionnaire, à Ajaccio, sur le thème 'Culture': Culture, art, spectacles, sorties, ouverture",
+      "metadata": {
+        "rank": 4,
+        "commune": "Ajaccio",
+        "genre": "Femme",
+        "age": 50,
+        "profession": "Fonctionnaire",
+        "dimension": "Culture",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 5,
+        "sub_question": "Quel est le nombre de services de proximité liés à l'éducation et à la petite enfance (écoles maternelles, crèches, centres de loisirs) dans la ville d'Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 53 ans (Jeunes seniors), Salarié(e) – Employé(e), à Ajaccio, sur le thème 'Culture': culture : rencontre, ouverture d'esprit, curiosité, contact humain",
+      "metadata": {
+        "rank": 5,
+        "commune": "Ajaccio",
+        "genre": "Femme",
+        "age": 53,
+        "profession": "Salarié(e) – Employé(e)",
+        "dimension": "Culture",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 5,
+        "sub_question": "Quel est le nombre de services de proximité liés à l'éducation et à la petite enfance (écoles maternelles, crèches, centres de loisirs) dans la ville d'Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 52 ans (Jeunes seniors), Salarié(e) – Cadre ou profession intermédiaire, à Ajaccio, sur le thème 'Culture': musique, arts, cinéma, littérature, spectacles vivants",
+      "metadata": {
+        "rank": 6,
+        "commune": "Ajaccio",
+        "genre": "Femme",
+        "age": 52,
+        "profession": "Salarié(e) – Cadre ou profession intermédiaire",
+        "dimension": "Culture",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 5,
+        "sub_question": "Quel est le nombre de services de proximité liés à l'éducation et à la petite enfance (écoles maternelles, crèches, centres de loisirs) dans la ville d'Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "La commune de Ajaccio compte une part de 12.9% de cadres et professions intellectuelles supérieures, 16.6% d'ouvriers, avec un taux d'activité de 75.6%. 87.8% des emplois y sont salariés. On y trouve 5.0 points de contact postal, 11.0 hypermarchés ou supermarchés, 38.0 supérettes ou épiceries, 51.0 boulangeries et 21.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 15.0 écoles maternelles, 20.0 écoles élémentaires, 6.0 collèges et 6.0 lycées. Elle possède 1.0 services d'urgence, 80.0 médecins généralistes, 31.0 pharmacies, 204.0 infirmiers et 15.0 crèches. La sécurité est assurée par 1.0 postes de police ou gendarmerie. Il y a également 2.0 agences Pôle emploi. Le taux de pauvreté est de 14.3%, la part de logements vacants est de 3.3%, et celle des résidences secondaires est de 9.2%. Le taux de coups et blessures volontaires est de 4.0 pour 1 000 habitants. Le prix moyen au m² est de 3666.90984455959€, pour une surface moyenne des logements de 71.7937823834197 m².",
+      "metadata": {
+        "rank": 7,
+        "source_type": "communes_equipements",
+        "data_type": "quanti",
+        "commune": "Ajaccio",
+        "num_chunks": null,
+        "view_name": null,
+        "distance": 0.652,
+        "sub_question_idx": 5,
+        "sub_question": "Quel est le nombre de services de proximité liés à l'éducation et à la petite enfance (écoles maternelles, crèches, centres de loisirs) dans la ville d'Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nProfil des répondants de la commune de Ajaccio — enquête qualité de vie en Corse\n\nNombre de répondants : 51\n\nRépartition par genre :\n  - Femme : 31 (60.8%)\n  - Homme : 20 (39.2%)\n\nRépartition par tranche d'âge :\n  - 45-59 : 20 (39.2%)\n  - 15-29 : 14 (27.5%)\n  - 30-44 : 11 (21.6%)\n  - 60-74 : 6 (11.8%)\n\nRépartition par catégorie socioprofessionnelle :\n  - SalariÃ©(e) â Cadre ou profession intermÃ©diaire : 17 (33.3%)\n  - Ãtudiant(e) : 12 (23.5%)\n  - Fonctionnaire : 9 (17.6%)\n  - SalariÃ©(e) â EmployÃ©(e) : 8 (15.7%)\n  - Travailleur(se) indÃ©pendant(e) / Entrepreneur(e) : 2 (3.9%)\n  - Autre : 2 (3.9%)\n  - RetraitÃ©(e) : 1 (2.0%)",
+      "metadata": {
+        "rank": 8,
+        "source_type": "communes_profil",
+        "data_type": "quanti",
+        "commune": "Ajaccio",
+        "num_chunks": null,
+        "view_name": null,
+        "distance": 0.451,
+        "sub_question_idx": 5,
+        "sub_question": "Quel est le nombre de services de proximité liés à l'éducation et à la petite enfance (écoles maternelles, crèches, centres de loisirs) dans la ville d'Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théoriqu",
+      "metadata": {
+        "rank": 9,
+        "type": "oppchovec_score",
+        "source_type": "oppchovec_scores",
+        "commune": "",
+        "oppchovec_0_10": null,
+        "opp_0_10": null,
+        "cho_0_10": null,
+        "vec_0_10": null,
+        "distance": 0.0,
+        "sub_question_idx": 5,
+        "sub_question": "Quel est le nombre de services de proximité liés à l'éducation et à la petite enfance (écoles maternelles, crèches, centres de loisirs) dans la ville d'Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Ajaccio : 5.78/10 (élevé).\n\nSous-scores principaux de Ajaccio :\n  • Opportunités (Opp) : 10.00/10 (très élevé)  — rang 1e/360\n  • Choix (Cho)        : 1.27/10 (très faible)  — rang 358e/360\n  • Vécu (Vec)         : 4.80/10 (moyen)  — rang 41e/360\n  • OppChoVec global   : rang 19e/360\n\nSous-dimensions du score Opportunités (Opp) de Ajaccio :\n  • Opp1 — Éducation      : 7.42/10 (élevé)  [valeur brute : 5.760] — rang 24e/360\n  • Opp2 — Diversité soc. : 1.96/10 (faible)  [indice Theil : 0.2787] — rang 216e/360\n  • Opp3 — Mobilité       : 8.99/10 (très élevé)  [indicateur : 186.1/200] — rang 128e/360\n  • Opp4 — TIC (numérique): 9.35/10 (très élevé)  [couverture : 93.5%] — rang 24e/360\n\nAnalyse de Ajaccio :\n- Ajaccio se",
+      "metadata": {
+        "rank": 10,
+        "type": "oppchovec_score",
+        "source_type": "oppchovec_scores",
+        "commune": "Ajaccio",
+        "oppchovec_0_10": 5.779754,
+        "opp_0_10": 10.0,
+        "cho_0_10": 1.265509,
+        "vec_0_10": 4.796981,
+        "distance": 0.445,
+        "sub_question_idx": 5,
+        "sub_question": "Quel est le nombre de services de proximité liés à l'éducation et à la petite enfance (écoles maternelles, crèches, centres de loisirs) dans la ville d'Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nEnquête Qualité de Vie en Corse — Description méthodologique\n\nPRÉSENTATION GÉNÉRALE\nEnquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.\nObjectif : recueillir les perceptions subjectives de la qualité de vie (QdV) et du bien-être,\nen complément des indicateurs o",
+      "metadata": {
+        "rank": 11,
+        "type": "methodology",
+        "source_type": "methodology",
+        "view_name": "enquete_methodology",
+        "sub_question_idx": 5,
+        "sub_question": "Quel est le nombre de services de proximité liés à l'éducation et à la petite enfance (écoles maternelles, crèches, centres de loisirs) dans la ville d'Ajaccio ?"
+      },
+      "source_type": "",
+      "label": ""
+    }
+  ],
+  "sources_mobilisees": [
+    {
+      "sq": 2,
+      "types": [
+        "Équipements et services communaux — Ajaccio",
+        "Synthèse verbatims enquête citoyenne — vue : dimension*commune — 9 répondants"
+      ]
+    },
+    {
+      "sq": 4,
+      "types": [
+        "Équipements et services communaux — Ajaccio",
+        "Synthèse scores enquête citoyenne — vue : enquete_commune — 51 répondants"
+      ]
+    },
+    {
+      "sq": 5,
+      "types": [
+        "Équipements et services communaux — Ajaccio"
+      ]
+    }
+  ],
+  "raisonnement": "La réponse fournit des données précises sur les services de proximité à Ajaccio, en utilisant des sources quantitatives pour les équipements et qualitatives pour les perceptions.",
+  "section_observee": "Retrieval mono-commune / Retrieval source-spécifique",
+  "comportement_attendu_selon_grille": "Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.",
+  "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+  "coherence_comportement_observe": "oui",
+  "sources_inventaire": [
+    {
+      "source": "communes_equipements:Ajaccio",
+      "type": "quanti"
+    },
+    {
+      "source": "raptor_summary:dimension*commune",
+      "type": "quali"
+    }
+  ],
+  "mislabelling_detecte": {
+    "regle_1_quali_quanti": "non",
+    "regle_2_surinterpretation_oppchovec": "non",
+    "regle_3_absence_quali_non_signalee": "non",
+    "regle_4_extrapolation_sous_groupe": "non"
+  },
+  "mislabelling_flag": false,
+  "elements_specifiques_question": [
+    "services de proximité",
+    "Ajaccio"
+  ],
+  "elements_traitement": [
+    {
+      "element": "services de proximité",
+      "traitement": "precis"
+    },
+    {
+      "element": "Ajaccio",
+      "traitement": "precis"
+    }
+  ],
+  "pertinence": 5,
+  "pertinence_justif": "La réponse est précise et ciblée, fournissant des informations détaillées sur les services de proximité à Ajaccio.",
+  "fondement_factuel": 5,
+  "fondement_factuel_justif": "Les affirmations sont bien fondées sur les données quantitatives disponibles et correctement étiquetées.",
+  "nuance_incertitude": 4,
+  "nuance_incertitude_justif": "La réponse mentionne les limites des données disponibles pour certains services publics, montrant une bonne nuance.",
+  "coherence_qualiquanti": 5,
+  "coherence_qualiquanti_justif": "Bonne intégration des données quantitatives et qualitatives, avec une distinction claire entre les deux types de données.",
+  "score_global": 4.75,
+  "judge_error": null,
+  "judge_elapsed_s": 5.4,
+  "k": 5,
+  "judge_model": "gpt-4o",
+  "judge_version": "V4.3",
+  "timestamp": "2026-07-18T17:39:57.705938"
+}

@@ -1,0 +1,507 @@
+{
+  "excel_row": 1,
+  "section": "Retrieval mono-commune",
+  "subsection": "Retrieval descriptif global",
+  "question": "Comment les habitants d'Ajaccio ressentent-ils le bien-être ?",
+  "rag_status": "ok",
+  "answer": "### **Synthèse : Comment les habitants d'Ajaccio ressentent-ils le bien-être ?**\n\nLe bien-être à Ajaccio se caractérise par un **paradoxe marqué** entre des **atouts objectifs exceptionnels** et un **ressenti citoyen contrasté**, marqué par des insatisfactions structurelles et une inquiétude pour l’avenir.\n\n---\n\n#### **1. Un territoire aux opportunités uniques, mais un vécu inégal**\nSelon les données territoriales objectives, **Ajaccio se distingue comme la commune corse offrant les meilleures opportunités** :\n- **Accès aux ressources** (éducation, mobilité, numérique) : **10/10** (1er rang sur 360 communes corses), grâce à une concentration urbaine de services, d’infrastructures et d’emplois.\n- **Revenu fiscal et accès aux services** : **4,8/10** (41e rang), un niveau moyen qui masque des inégalités internes (logement, salaires).\n\nCependant, ces atouts ne se traduisent pas en **liberté effective** pour les habitants :\n- Le score **\"Choix\"** s’effondre à **1,27/10** (358e rang), reflétant la présence de **quartiers prioritaires** et des **défis démocratiques** (participation électorale, sentiment d’exclusion).\n\n---\n\n#### **2. Un ressenti citoyen partagé : satisfaction du quotidien, mais défiance envers l’avenir**\nSelon l’enquête citoyenne (portant sur la Corse entière, sans données spécifiques à Ajaccio) :\n- **Satisfaction modérée du présent** :\n  - Bonheur : **3,68/5** | Qualité de vie : **3,89/5**.\n  - Points forts : **emploi (3,91/5)**, **logement (3,84/5)**, **sécurité (3,81/5)** et **liens sociaux (4,14/5)**.\n- **Inquiétude majeure pour l’avenir** :\n  - Confiance en l’avenir : **2,75/5** (score le plus bas).\n  - **Environnement** et **santé** identifiés comme priorités, mais mal notés (santé : **2,58/5**).\n\n**Tensions environnementales** :\n- Les habitants valorisent la **nature** (air, soleil, paysages) comme fondement de leur bien-être, mais dénoncent une **pollution croissante** (bateaux de croisière, manque d’espaces verts, déchets).\n- *\"À Ajaccio, beaucoup trop de pollution, pas vraiment d’espaces verts\"* (verbatim citoyen).\n\n---\n\n#### **3. Des services publics en crise, malgré les infrastructures**\nLes **défauts d’accès aux services** pèsent lourdement sur le ressenti :\n- **Santé** : **2,58/5** (13e/14 dimensions), avec des **pénuries de spécialistes** (1,98/5) et des **délais d’attente critiques**.\n  - *\"Le meilleur médecin est malheureusement l’avion\"* (entretien qualitatif).\n- **Transports** : **0,95/5** (pire score), reflétant un réseau **saturé et inefficace** (transports en commun : 1,98/5).\n- **Institutions** : **1,85/5**, signe d’une **méfiance envers les services publics locaux**.\n\nCes dysfonctionnements contrastent avec les **infrastructures objectives** (hôpitaux, routes, écoles), suggérant un **décalage entre offre théorique et qualité perçue**.\n\n---\n\n#### **4. Un bien-être social préservé, mais fragile**\n- **Liens sociaux** : **3,54/5**, avec un **entourage très bien noté (4,14/5)**, soulignant une **solidarité locale forte**.\n- **Vie associative et tourisme** : **0,64/5 et 1,57/5**, révélant un **manque d’attractivité culturelle** et un **tourisme mal vécu** (nuisances, pression immobilière).\n\n---\n\n### **Conclusion : Un bien-être en tension**\nÀ Ajaccio, le bien-être est **à double vitesse** :\n✅ **Atouts** : Opportunités économiques, accès aux services, cadre naturel, liens sociaux.\n❌ **Faiblesses** : Pollution, santé défaillante, transports chaotiques, défiance envers les institutions.\n\n**Le principal défi** : **Transformer les ressources objectives en qualité de vie concrète**, notamment en :\n- **Améliorant l’accès aux soins** (recrutement de spécialistes, désenclavement).\n- **Réformant les transports** (réseau en commun, réduction de la congestion).\n- **Luttant contre la pollution** (régulation des croisières, création d’espaces verts).\n\n**Sans ces correctifs, le risque est une érosion du bien-être**, malgré les atouts structurels de la ville.",
+  "sub_questions": [
+    {
+      "idx": 1,
+      "question": "Quel est le score OppChoVec global de bien-être à l'échelle de la commune d'Ajaccio, tel que mesuré par les indicateurs territoriaux disponibles ?",
+      "answer": "# Score OppChoVec global d'Ajaccio\n\nSelon les indicateurs territoriaux objectifs, **Ajaccio obtient un score OppChoVec global de 5,78/10**, la plaçant au **rang 19e sur 360 communes corses** — une position relativement favorable.\n\nCe score global masque cependant des **disparités très marquées** entre ses trois composantes :\n\n- **Opportunités (Opp) : 10,00/10** (rang 1er/360) — Ajaccio excelle en matière d'accès aux ressources territoriales, notamment grâce à un très bon accès aux TIC (9,35/10), une mobilité élevée (8,99/10) et un niveau d'éducation moyen satisfaisant (7,42/10).\n\n- **Choix (Cho) : 1,27/10** (rang 358e/360) — C'est la faiblesse majeure d'Ajaccio. Cette composante, qui mesure l'absence de quartiers prioritaires et la proportion de population avec droit de vote, révèle une situation critique.\n\n- **Vécu (Vec) : 4,80/10** (rang 41e/360) — Les réalisations concrètes (revenu fiscal moyen, qualité du logement, stabilité de l'emploi, accès aux services en moins de 20 minutes) se situent à un niveau moyen.\n\n**En synthèse**, Ajaccio bénéficie d'excellentes conditions d'accès aux ressources, mais cette richesse objective ne se traduit pas en liberté effective ni en bien-être réalisé pour l'ensemble de sa population."
+    },
+    {
+      "idx": 2,
+      "question": "Quels sont les principaux thèmes émergents des verbatims citoyens d'Ajaccio concernant leur ressenti du bien-être (ex : qualité de vie, accès aux services, environnement, liens sociaux) ?",
+      "answer": "# Principaux thèmes émergents du bien-être à Ajaccio selon les citoyens\n\n## Thèmes dominants\n\n**1. Environnement naturel comme fondement du bien-être**\n\nSelon l'enquête citoyenne, la nature et la qualité de l'environnement constituent le cœur des préoccupations des habitants d'Ajaccio. Les citoyens valorisent fortement *\"l'air frais, les sons ambiants, les zones vertes, l'accès au soleil\"* et associent directement ces éléments à leur santé et bien-être. Comme l'exprime un répondant : *\"Nature, beauté, respirer, contempler, besoin\"*. Cependant, cette appréciation coexiste avec une **critique aigüe de la pollution locale** : *\"À Ajaccio beaucoup trop de pollution avec les bateaux de croisière, pas vraiment d'espaces verts, déjections canines en permanence\"*. Ce contraste révèle une tension entre le potentiel environnemental perçu et les dysfonctionnements concrets.\n\n**2. Prise de conscience des enjeux environnementaux globaux et locaux**\n\nLes habitants expriment une conscience de la crise environnementale mondiale, tout en pointant des problèmes spécifiques à Ajaccio (qualité de l'air, de l'eau, biodiversité). La protection de l'environnement est perçue comme *\"vitale\"* et centrale pour la qualité de vie.\n\n**3. Décalage entre satisfaction du quotidien et inquiétude pour l'avenir**\n\nSelon l'enquête citoyenne quantitative, le **bonheur moyen est de 3,68/5** et la **qualité de vie de 3,89/5**, suggérant une satisfaction modérée du présent. Or, la **confiance en l'avenir chute à 2,75/5**, révélant une inquiétude marquée — probablement liée aux enjeux environnementaux et aux dysfonctionnements perçus dans les services publics.\n\n## Thèmes secondaires mais significatifs\n\n**Services et institutions défaillants** : Les scores d'enquête montrent une insatisfaction particulière concernant les **transports (0,95/5)**, les **institutions (1,85/5)** et la **santé (1,80/5)** — ces dimensions étant bien en deçà de la moyenne générale.\n\n**Liens sociaux préservés** : Le **soutien social est noté 3,11/5**, indiquant que malgré les critiques structurelles, l'entourage et les relations locales restent un point d'ancrage positif."
+    },
+    {
+      "idx": 3,
+      "question": "Comment les habitants d'Ajaccio évaluent-ils leur satisfaction globale dans les enquêtes locales ou régionales sur le bien-être (ex : notes moyennes, tendances récentes) ?",
+      "answer": "# Satisfaction globale des habitants d'Ajaccio : évaluation et tendances\n\n## Satisfaction générale modérée, mais confiance en l'avenir très faible\n\nSelon l'enquête citoyenne, les habitants d'Ajaccio expriment une satisfaction modérée à bonne pour leur quotidien immédiat, mais manifestent une inquiétude marquée concernant l'avenir. Le **bonheur** obtient une moyenne de **3,68/5**, tandis que la **qualité de vie** est légèrement supérieure à **3,89/5**. En revanche, la **confiance en l'avenir** s'effondre à **2,75/5**, révélant un écart significatif entre la perception du présent et les perspectives futures.\n\n## Dimensions les mieux et les moins bien évaluées\n\nLes dimensions personnelles et stables obtiennent les meilleures notes : **emploi** (2,90/5), **logement** (2,80/5) et **sécurité** (2,73/5) reflètent une certaine stabilité matérielle. À l'inverse, les dimensions collectives et de mobilité sont gravement déficitaires : les **transports** obtiennent un score critique de **0,95/5**, l'**éducation** **2,35/5**, les **institutions** **1,85/5** et la **santé** **1,80/5**. Le **tourisme** (1,57/5) et la **vie associative** (0,64/5) sont également très mal notés.\n\n## Priorités citoyennes déclarées\n\nSelon l'enquête citoyenne, les habitants d'Ajaccio identifient l'**environnement** et la **santé** comme leurs dimensions prioritaires, bien que ces thèmes ne soient pas uniformément bien évalués dans les scores de satisfaction.\n\n## Contexte territorial objectif\n\nLes indicateurs territoriaux objectifs révèlent un paradoxe : Ajaccio bénéficie d'un score OppChoVec global de **5,78/10** (rang 19e/360 communes corses), porté par des **Opportunités exceptionnelles** (**10,00/10**, 1er rang) — notamment en éducation (7,42/10), mobilité (8,99/10) et couverture numérique (9,35/10). Cependant, le score **Choix** est catastrophique (**1,27/10**, 358e rang), et le **Vécu** reste moyen (**4,80/10**, 41e rang). Cette divergence suggère que les ressources objectives du territoire ne se traduisent pas en bien-être perçu par les habitants."
+    },
+    {
+      "idx": 4,
+      "question": "Quels indicateurs territoriaux spécifiques (ex : accès aux soins, transports, sécurité, offre culturelle) sont les plus souvent cités comme influençant positivement ou négativement le bien-être à Ajaccio, selon les données disponibles ?",
+      "answer": "# Indicateurs territoriaux influençant le bien-être à Ajaccio\n\n## Influences négatives dominantes\n\n**Santé et accès aux soins** — L'enjeu le plus critique. Selon l'enquête citoyenne, la santé obtient un score de **2,58/5**, classée **13e sur 14 dimensions**. Cette insatisfaction se concentre sur :\n- Les **médecins spécialistes** : **1,98/5** (score particulièrement bas)\n- Les **délais d'attente pour rendez-vous** : **2,53/5**\n- Les **médecins généralistes** : **2,98/5**\n\nLes habitants expriment des critiques structurelles : *\"Les centres hospitaliers manquent de personnel\"* et *\"Le meilleur médecin est malheureusement l'avion\"* (selon les entretiens qualitatifs), reflétant une pénurie de professionnels et une nécessité de partir se soigner ailleurs.\n\n**Transports** — Dimension la plus mal évaluée globalement (**2,21/5**, 14e/14). Les données d'enquête détaillent :\n- Transports généraux : **2,02/5**\n- Transports en commun : **1,98/5**\n- Encombrement : **2,02/5**\n- Réseau routier : **2,78/5**\n\n**Institutions** — Score de **2,93/5**, reflétant une confiance limitée dans les services publics locaux.\n\n## Influences positives\n\n**Emploi** — Meilleur score (**3,91/5**), indiquant une satisfaction relative sur l'accès à l'emploi et la stabilité professionnelle.\n\n**Logement et sécurité** — Respectivement **3,84/5** et **3,81/5**, suggérant un cadre de vie matériel et physique globalement satisfaisant.\n\n**Communauté et relations sociales** — Score de **3,54/5**, avec un **entourage** très bien noté (**4,14/5**), indiquant un fort ancrage social local.\n\n## Paradoxe territorial objectif\n\nSelon les indicateurs territoriaux objectifs, Ajaccio affiche un score OppChoVec de **5,78/10** (rang 19e/360 communes corses), avec des **Opportunités exceptionnelles** (**10,00/10** — 1er rang). Cependant, ce potentiel objectif contraste fortement avec les perceptions citoyennes négatives sur la santé et les transports, suggérant un décalage entre les ressources théoriques disponibles et leur accessibilité concrète."
+    },
+    {
+      "idx": 5,
+      "question": "Existe-t-il des écarts significatifs entre le score OppChoVec d'Ajaccio et la moyenne des scores des autres communes corses, et si oui, quels facteurs objectifs (ex : densité urbaine, dynamisme économique) pourraient les expliquer ?",
+      "answer": "# Analyse des écarts OppChoVec : Ajaccio vs. moyenne corse\n\n## Écarts significatifs observés\n\nSelon les indicateurs territoriaux objectifs, **Ajaccio affiche un profil très contrasté** par rapport à la moyenne corse :\n\n- **Score OppChoVec global** : 5,78/10 pour Ajaccio vs. moyenne corse de ~5,57/10 (rang 19e/360) — écart modéré mais favorable.\n- **Opportunités (Opp)** : **10,00/10** pour Ajaccio (rang 1er/360) vs. 3,87/10 en moyenne corse — **écart massif de +6,13 points**.\n- **Choix (Cho)** : **1,27/10** pour Ajaccio (rang 358e/360) vs. 8,79/10 en moyenne corse — **écart catastrophique de -7,52 points**.\n- **Vécu (Vec)** : 4,80/10 pour Ajaccio (rang 41e/360) vs. 3,46/10 en moyenne corse — écart favorable de +1,34 points.\n\n## Facteurs objectifs expliquant ces écarts\n\n**1. Opportunités exceptionnelles (Opp = 10,00/10)**\n\nAjaccio bénéficie d'une **concentration urbaine majeure** :\n- **Mobilité** (Opp3 = 8,99/10) : densité urbaine élevée, accès routier développé, réseau de transports en commun structuré.\n- **TIC/numérique** (Opp4 = 9,35/10, couverture 93,5%) : infrastructure de haut débit supérieure aux zones rurales corses.\n- **Éducation** (Opp1 = 7,42/10) : présence d'établissements secondaires et supérieurs (université, lycées) attirant une population plus diplômée.\n\n**2. Choix très faible (Cho = 1,27/10) — paradoxe urbain**\n\nCe score reflète deux composantes du Cho :\n- **Absence de quartiers prioritaires (QPV)** : Ajaccio, en tant que capitale régionale, possède des quartiers en difficulté socio-économique (Arue, Salines, Jardins de l'Empereur), ce qui réduit ce sous-indicateur.\n- **Taux de participation électorale** : bien que non détaillé ici, le contexte suggère une implication civique limitée comparée à la moyenne corse.\n\n**3. Vécu moyen-supérieur (Vec = 4,80/10)**\n\nMalgré les opportunités, le **bien-être réalisé** reste modéré, reflétant :\n- Revenus fiscaux moyens et qualité du logement inégale (confirmés par les verbatims : *\"accessibilité des logements, prix et salubrité\"*).\n- Stabilité d'emploi relative (score emploi 3,91/5 selon l'enquête citoyenne), mais revenus limités (3,51/5).\n\n## Conclusion\n\n**Ajacc"
+    }
+  ],
+  "n_subquestions": 5,
+  "n_sources": 70,
+  "rag_elapsed_s": 101.4,
+  "sources": [
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "enquete_scores_commune",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "enquete_scores_commune",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_equipements",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_profil",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "methodology",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "enquete_scores_commune",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "enquete_scores_commune",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_equipements",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_profil",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "methodology",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "enquete_scores_commune",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "enquete_scores_commune",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_profil",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "methodology",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "enquete_scores_commune",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "enquete_scores_commune",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_equipements",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_profil",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "methodology",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "enquete_scores_commune",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_equipements",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_profil",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "methodology",
+      "label": ""
+    }
+  ],
+  "raisonnement": "La réponse utilise des scores quantitatifs pour décrire le ressenti des habitants sans signaler l'absence de données qualitatives spécifiques à Ajaccio.",
+  "section_observee": "Retrieval mono-commune / Retrieval descriptif global",
+  "comportement_attendu_selon_grille": "Réponse précise et ciblée.",
+  "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+  "coherence_comportement_observe": "non",
+  "sources_inventaire": [],
+  "mislabelling_detecte": {
+    "regle_1_quali_quanti": "oui — la réponse présente des scores quantitatifs comme des ressentis qualitatifs",
+    "regle_2_surinterpretation_oppchovec": "oui — les scores OppChoVec sont interprétés au-delà de leurs composantes réelles",
+    "regle_3_absence_quali_non_signalee": "oui — aucune source quali spécifique à Ajaccio n'est mentionnée",
+    "regle_4_extrapolation_sous_groupe": "non"
+  },
+  "mislabelling_flag": true,
+  "elements_specifiques_question": [
+    "Ajaccio",
+    "habitants",
+    "ressenti",
+    "bien-être"
+  ],
+  "elements_traitement": [
+    {
+      "element": "Ajaccio",
+      "traitement": "precis"
+    },
+    {
+      "element": "habitants",
+      "traitement": "approximation_non_signalee"
+    },
+    {
+      "element": "ressenti",
+      "traitement": "approximation_non_signalee"
+    },
+    {
+      "element": "bien-être",
+      "traitement": "approximation_non_signalee"
+    }
+  ],
+  "pertinence": 2,
+  "pertinence_justif": "La réponse présente des données générales sans signaler l'absence de données qualitatives spécifiques à Ajaccio.",
+  "fondement_factuel": 2,
+  "fondement_factuel_justif": "Les scores quantitatifs sont utilisés pour décrire des ressentis qualitatifs, ce qui constitue un mislabelling.",
+  "nuance_incertitude": 2,
+  "nuance_incertitude_justif": "Aucune mention de l'absence de données qualitatives spécifiques à Ajaccio, ton catégorique.",
+  "coherence_qualiquanti": 2,
+  "coherence_qualiquanti_justif": "Les données quantitatives sont présentées comme des ressentis qualitatifs sans signalement approprié.",
+  "score_global": 2.0,
+  "judge_error": null
+}

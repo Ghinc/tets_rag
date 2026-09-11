@@ -1,0 +1,990 @@
+{
+  "excel_row": 14,
+  "config": "v_decomp_raptor",
+  "orientation": "perception",
+  "question": "Que révèlent les verbatims sur la sécurité à Corte ?",
+  "section": "Retrieval mono-commune",
+  "subsection": "Retrieval source-spécifique",
+  "expected_type": "reponse_substantielle_attendue",
+  "rag_status": "ok",
+  "rag_elapsed_s": 81.3,
+  "n_sources": 55,
+  "n_subquestions": 5,
+  "answer": "### **Synthèse : Que révèlent les verbatims sur la sécurité à Corte ?**\n\nLes verbatims des habitants de Corte révèlent une **perception globalement positive de la sécurité**, marquée par une absence de signalements concrets de problèmes (vols, agressions, incivilités) et une insistance sur la tranquillité des rues. Plusieurs éléments clés émergent :\n\n- **Une sécurité perçue comme acquise** : Les habitants interrogés soulignent l’absence de délinquance et la possibilité de \"marcher en sécurité dans les rues\", associant cette situation à un sentiment de \"paix intérieure\" et de \"tranquillité\" [SQ1]. Un verbatim lie même cette sécurité à des facteurs culturels, évoquant le \"nationalisme\" comme garant de cette stabilité [SQ1].\n- **Aucun lieu ou quartier identifié comme dangereux** : Les données disponibles ne mentionnent aucun quartier ou lieu spécifique à Corte perçu comme peu sûr. Les verbatims restent généraux, sans géolocalisation des craintes [SQ2].\n- **Aucune période critique signalée** : Les répondants n’associent pas la sécurité à des moments particuliers (nuit, week-end, événements), décrivant une situation homogène dans le temps [SQ3].\n- **Des acteurs institutionnels invisibles** : Aucun verbatim ne cite explicitement la police municipale, la gendarmerie, les voisins ou les associations comme contributeurs à la sécurité. Les références restent abstraites (ex. : \"hommes civilisés\", \"vivre-ensemble respecté\") ou culturelles [SQ4].\n- **Aucune attente ou proposition concrète** : Les habitants expriment l’importance de la sécurité (\"point vital\", \"se sentir en sécurité partout en Corse\"), mais ne formulent aucune demande précise (renforcement des patrouilles, éclairage public, prévention, etc.) [SQ5].\n\n**Limites des données** :\n- L’échantillon est très réduit (6 répondants, dont 5 de moins de 30 ans) et pourrait refléter un biais de réponse, avec une surreprésentation de perceptions positives [SQ1].\n- Les verbatims ne permettent pas d’identifier des problèmes concrets ou des leviers d’amélioration, malgré l’importance accordée à la sécurité [SQ5].\n\n**À noter** : Aucune donnée territoriale objective (indicateurs OppChoVec ou équipements communaux) n’est mobilisable pour compléter cette analyse, car les réponses aux sous-questions ne les mentionnent pas.\n\n---",
+  "sub_questions": [
+    {
+      "idx": 1,
+      "question": "Quels sont les thèmes récurrents mentionnés dans les verbatims des habitants de Corte concernant les problèmes de sécurité (ex : vols, agressions, incivilités) ?",
+      "answer": "# Thèmes récurrents sur la sécurité à Corte selon les verbatims citoyens\n\nSelon les entretiens semi-directifs réalisés en 2022 auprès de 6 habitants de Corte interrogés sur la sécurité, **aucun problème spécifique de sécurité (vols, agressions, incivilités) n'est mentionné**. Au contraire, les verbatims expriment une **perception positive et rassurante** :\n\n- Les habitants soulignent l'absence de délinquance : *\"marcher en sécurité dans les rues, pas de délinquance\"* (Femme, 28 ans, étudiante).\n- La sécurité est associée à la **tranquillité** et à la **paix intérieure** (*\"La sécurité assure la tranquillité, la paix intérieure\"* – Homme, 26 ans, salarié).\n- Un verbatim lie la sécurité perçue à des facteurs culturels : *\"la Corse maintien encore cette sécurité grâce au nationalisme\"* (Femme, 28 ans).\n\n**Limite importante** : l'échantillon est très réduit (N=6, dont 5 jeunes de moins de 30 ans) et aucun verbatim ne critique l'état de la sécurité, ce qui peut refléter un biais de réponse. Les données d'enquête citoyenne ne permettent donc pas d'identifier des problèmes concrets de sécurité à Corte."
+    },
+    {
+      "idx": 2,
+      "question": "Quels lieux ou quartiers de Corte sont le plus fréquemment cités comme étant perçus comme dangereux ou peu sûrs dans les verbatims ?",
+      "answer": "# Réponse\n\nLe contexte fourni ne contient pas d'information spécifique sur les lieux ou quartiers de Corte perçus comme dangereux ou peu sûrs. \n\nBien que la sécurité soit un thème dominant dans l'enquête citoyenne (mentionnée dans plusieurs verbatims), les données disponibles ne détaillent pas de géolocalisation intra-communale des perceptions d'insécurité. Les verbatims cités illustrent plutôt des positions générales sur la sécurité en Corse (*\"La sécurité assure la tranquillité, la paix intérieure\"* – Verbatim 12) ou des divergences de perception (*\"La Corse maintien encore cette sécurité grâce au nationalisme\"* – Verbatim 26), sans identifier de quartiers ou lieux spécifiques à Corte.\n\nPour répondre à cette sous-question, il faudrait disposer de verbatims ou d'entretiens qualitatifs géolocalisés au niveau infra-communal, qui ne sont pas présents dans le contexte."
+    },
+    {
+      "idx": 3,
+      "question": "Quelles sont les périodes (jour/nuit, week-end, événements spécifiques) associées à un sentiment d'insécurité dans les verbatims des citoyens de Corte ?",
+      "answer": "# Analyse des périodes d'insécurité à Corte\n\nSelon les entretiens semi-directifs réalisés en 2022, **aucune période spécifique (jour/nuit, week-end, événements) n'est mentionnée** dans les verbatims citoyens de Corte concernant un sentiment d'insécurité.\n\nLes six répondants interrogés sur la sécurité formulent des perceptions **générales et positives** : ils évoquent l'importance de \"marcher en sécurité dans les rues\" et l'absence de délinquance, mais sans différencier les moments de la journée, les jours de la semaine ou des contextes événementiels particuliers. Un seul verbatim mentionne explicitement un souhait de sécurité territoriale large (\"je veux me sentir en sécurité partout en Corse\"), sans préciser de temporalité.\n\n**Limite importante** : l'échantillon est très réduit (N=6 pour la dimension Sécurité) et surreprésenté par des jeunes (5/6 répondants < 30 ans), ce qui limite la capacité à identifier des variations temporelles ou contextuelles du sentiment d'insécurité."
+    },
+    {
+      "idx": 4,
+      "question": "Quels types d'acteurs (police municipale, gendarmerie, voisins, associations) sont évoqués dans les verbatims comme contribuant ou non à la sécurité à Corte ?",
+      "answer": "# Analyse des acteurs de sécurité évoqués dans les verbatims de Corte\n\nSelon les entretiens semi-directifs réalisés à Corte, **aucun acteur institutionnel ou collectif spécifique (police municipale, gendarmerie, voisins, associations) n'est explicitement mentionné** dans les verbatims disponibles sur la sécurité.\n\nLes habitants interrogés formulent la sécurité de manière générale et abstraite :\n- Un seul verbatim évoque indirectement un acteur collectif en mentionnant *\"hommes civilisés\"* et *\"vivre-ensemble respecté\"* (Verbatim 3), mais sans identifier d'institution ou d'organisation responsable.\n- Un autre verbatim attribue la sécurité perçue à une dimension culturelle : *\"la Corse maintien encore cette sécurité grâce au nationalisme\"* (Verbatim 3), ce qui renvoie à une logique identitaire plutôt qu'à des acteurs institutionnels concrets.\n\n**Conclusion** : Les données d'entretiens disponibles ne permettent pas d'identifier quels acteurs (forces de l'ordre, collectivités, tissu social local) les habitants de Corte considèrent comme contributeurs ou défaillants en matière de sécurité. Cette absence de mention peut refléter soit une satisfaction implicite envers les dispositifs existants, soit un manque de visibilité de ces acteurs dans la perception citoyenne."
+    },
+    {
+      "idx": 5,
+      "question": "Quelles propositions ou attentes des habitants de Corte en matière de sécurité émergent des verbatims (ex : renforcement des patrouilles, éclairage public, prévention) ?",
+      "answer": "# Propositions et attentes en matière de sécurité à Corte\n\nLe contexte fourni ne contient **aucune proposition ou attente concrète** formulée par les habitants de Corte concernant des mesures de sécurité (renforcement de patrouilles, éclairage public, prévention, etc.).\n\nLes verbatims disponibles (selon les entretiens semi-directifs réalisés en 2022) expriment l'**importance perçue de la sécurité** — décrite comme un \"point vital\" et une condition de \"tranquillité\" — mais **ne formulent aucune demande spécifique d'amélioration ou d'action publique**. Les habitants interrogés énoncent plutôt des **aspirations générales** : \"marcher en sécurité dans les rues, pas de délinquance\" ou \"se sentir en sécurité partout en Corse\", sans préciser les leviers ou dispositifs qu'ils souhaiteraient voir mis en place.\n\n**Limite de l'échantillon** : les données qualitatives proviennent de seulement 6 répondants sur les 50 habitants de Corte interrogés dans l'enquête citoyenne, et aucun verbatim supplémentaire n'est fourni pour cette dimension."
+    }
+  ],
+  "sources": [
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : dimension=Sécurité, nom=Corte (N=6 personnes)**\n\n**Themes dominants** :\n1. **Importance centrale de la sécurité** : La sécurité est perçue comme un pilier essentiel de la qualité de vie, avec des formulations comme *\"point vital\"* (Verbatim 5) ou *\"importante vu le monde dans lequel on vit\"* (Verbatim 1).\n2. **Sécurité comme condition de tranquillité** : Plusieurs verbatims associent la sécurité à la paix intérieure (*\"assure la tranquillité\"* – Verbatim 2) ou à un sentiment de sérénité (*\"Être rassurée\"* – Verbatim 6).\n3. **Sécurité dans l’espace public** : La marche en sécurité dans les rues et l’absence de délinquance sont explicitement mentionnées (*\"marcher en sécurité dans les rues, pas de délinquance\"* – Verbatim 3).\n4. **Dimension collective et identitaire** : Un verbatim lie la sécurité à la culture corse et au nationalisme (*\"la Corse maintien encore cette sécurité grâce au nationalisme\"* – Verbatim 3).\n\n**Points de convergence** :\n- **Primauté de la sécurité** : Tous les répondants soulignent son caractère indispensable, sans nuance négative.\n- **Lien avec le bien-être** : La sécurité est présentée comme un prérequis pour une meilleure qualité de vie (*\"meilleure qualité de vie\"* – Verbatim 5 ; *\"tranquillité, paix intérieure\"* – Verbatim 2).\n- **Attachement territorial** : La sécurité est associée à la Corse, soit comme un acquis (*\"Safe\"* – Verbatim 6), soit comme un élément culturel (*\"vivre-ensemble respecté\"* – Verbatim 3).\n\n**Points de divergence** :\n- **Perception de la délinquance** : Un seul verbatim mentionne explicitement la délinquance comme une menace (*\"pas de délinquance\"* – Verbatim 3), tandis que les autres abordent la sécurité de manière générale.\n- **Rôle du nationalisme** : L’idée que le nationalisme corse garantit la sécurité (Verbatim 3) n’est pas reprise ailleurs, suggérant une divergence sur les causes de la sécurité perçue.\n\n**Signaux faibles** :\n- **Formulation minimaliste** : *\"Être rassurée Safe\"* (Verbatim 6) pourrait indiquer une réponse expéditive ou une priorité absolue accordée à la sécurité, mais sans développement.\n- **Âge et statut** : Les jeunes (19–28 ans) et les adultes (46 ans) sont représentés, mais les cadres sont absents, ce qui limite la diversité des profils socio-professionnels.\n\n**Limites de l’échantillon** :\n- **Taille réduite** (N=6) : Les conclusions ne peuvent prétendre à une représentativité statistique.\n- **Surreprésentation des jeunes** : 5/6 répondants ont moins de 30 ans, ce qui peut biaiser la perception (ex. : sensibilité accrue aux questions de sécurité publique).\n- **Absence de critiques** : Aucun verbatim ne remet en cause l’état de la sécurité à Corte, ce qui peut refléter un biais de réponse (volonté de plaire ou manque de recul).",
+      "metadata": {
+        "rank": 0,
+        "type": "raptor_summary",
+        "view": "dimension*commune",
+        "num_chunks": 6,
+        "sub_question_idx": 1,
+        "sub_question": "Quels sont les thèmes récurrents mentionnés dans les verbatims des habitants de Corte concernant les problèmes de sécurité (ex : vols, agressions, incivilités) ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : commune=Corte (N=50)**\n\n---\n\n### **Satisfaction globale**\nLes scores globaux reflètent une **satisfaction modérée** à **neutre** pour les habitants de Corte, avec des nuances selon les dimensions évaluées :\n- **Bonheur** : 3,52/5 (n=48) → Une majorité des répondants expriment un niveau de bonheur **moyen à satisfaisant**, mais avec une tendance à la neutralité ou à une satisfaction modérée.\n- **Qualité de vie** : 3,81/5 (n=48) → Une perception globalement **positive**, légèrement supérieure au score de bonheur, suggérant que les conditions de vie sont jugées meilleures que le ressenti émotionnel.\n- **Confiance dans l’avenir** : 2,96/5 (n=47) → **Le score le plus faible**, indiquant une **méfiance marquée** quant à l’évolution future de la qualité de vie, des opportunités ou des conditions locales. Ce résultat contraste avec les autres dimensions et pourrait refléter des inquiétudes structurelles (emploi, revenus, transports, etc.).\n\n---\n\n### **Toutes les dimensions — tableau complet (classées du score le plus élevé au plus faible)**\n\n| **Dimension**               | **Moyenne (/5)** | **Distribution des réponses**                                                                                     |\n|-----------------------------|------------------|------------------------------------------------------------------------------------------------------------------|\n| **Éducation**               | 3,96             | ★5: 13 | ★4: 24 | ★3: 8 | ★2: 2 | ★1: 1                                            |\n| **Logement**                | 3,67             | ★5: 11 | ★4: 23 | ★3: 3 | ★2: 9 | ★1: 2                                            |\n| **Emploi**                  | 3,71             | ★5: 9  | ★4: 23 | ★3: 11| ★2: 3 | ★1: 2                                            |\n| **Sécurité**                | 3,71             | ★5: 13 | ★4: 18 | ★3: 9 | ★2: 6 | ★1: 2                                            |\n| **Réseau**                  | 3,48             | ★5: 6  | ★4: 23 | ★3: 10| ★2: 6 | ★1: 3                                            |\n| **Ratio vie pro/vie perso** | 3,44             | ★5: 6  | ★4: 20 | ★3: 12| ★2: 9 | ★1: 1                                            |\n| **Revenus**                 | 3,21             | ★5: 4  | ★4: 17 | ★3: 14| ★2: 11| ★1: 2                                            |\n| **Services de proximité**   | 3,06             | ★5: 2  | ★4: 18 | ★3: 12| ★2: 11| ★1: 4                                            |\n| **Institutions**            | 3,02             | ★5: 3  | ★4: 13 | ★3: 18| ★2: 10| ★1: 4                                            |\n| **Culture**                 | 2,94             | ★5: 3  | ★4: 16 | ★3: 9 | ★2: 13| ★1: 6                                            |\n| **Communauté et relations** | 3,20             | **Entourage** : 3,80 (★5:14 | ★4:17 | ★3:14 | ★2:5 | ★1:0) <br> **Implication locale** : 2,60 (★5:3 | ★4:6 | ★3:15 | ★2:20 | ★1:6) |\n| **Tourisme**                | 2,83             | ★5: 2  | ★4: 8  | ★3: 23| ★2: 10| ★1: 5                                            |\n| **Santé**                   | 2,63             | **Santé globale** : 2,71 (★5:1 | ★4:17 | ★3:7 | ★2:13 | ★1:10) <br> **Médecins généralistes** : 3,04 (★5:4 | ★4:15 | ★3:15 | ★2:11 | ★1:5) <br> **Attente RDV** : 2,84 (★5:5 | ★4:11 | ★3:15 | ★2:9 | ★1:10) <br> **Médecins spécialistes** : 1,94 (★5:1 | ★4:3 | ★3:10 | ★2:14 | ★1:22) |\n| **Transports**              | 2,35             | **Transports** : 2,06 (★5:0 | ★4:5 | ★3:7 | ★2:22 | ★1:14) <br> **Transports communs** : 1,92 (★5:0 | ★4:4 | ★3:9 | ★2:16 | ★1:21) <br> **Réseau routier** : 2,78 (★5:1 | ★4:19 | ★3:7 | ★2:14 | ★1:9) <br> **Encombrement** : 2,64 (★5:1 | ★4:11 | ★3:16 | ★2:13 | ★1:9) |\n\n---\n\n### **Patterns notables**\n1. **Éducation : un point fort** :\n   - Avec un score de **3,96/5**, l’éducation est la dimension **la mieux notée**, suggérant une satisfaction élevée envers le système éducatif local (établissements, enseignement, etc.). Cette tendance est cohérente avec les réponses brutes, où 13 répondants attribuent **5★** à cette dimension.\n\n2. **Transports : un point de friction majeur** :\n   - **Score global de 2,35/5**, avec des sous-dimensions particulièrement critiques :\n     - **Transports communs** (1,92/5) et **Transports** (2,06/5) sont les **plus mal notés**, indiquant des problèmes d’accessibilité, de fréquence ou de qualité des transports en commun",
+      "metadata": {
+        "rank": 1,
+        "type": "raptor_enquete_summary",
+        "view": "enquete_commune",
+        "num_chunks": 50,
+        "sub_question_idx": 1,
+        "sub_question": "Quels sont les thèmes récurrents mentionnés dans les verbatims des habitants de Corte concernant les problèmes de sécurité (ex : vols, agressions, incivilités) ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 19 ans (Jeunes), Étudiant(e), à Corte, sur le thème 'Sécurité': La sécurité est importante vu le monde dans lequel on vit !",
+      "metadata": {
+        "rank": 2,
+        "commune": "Corte",
+        "genre": "Femme",
+        "age": 19,
+        "profession": "Étudiant(e)",
+        "dimension": "Sécurité",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 1,
+        "sub_question": "Quels sont les thèmes récurrents mentionnés dans les verbatims des habitants de Corte concernant les problèmes de sécurité (ex : vols, agressions, incivilités) ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 26 ans (Jeunes adultes), Salarié(e) – Employé(e), à Corte, sur le thème 'Sécurité': La sécurité assure la tranquillité, la paix intérieure.",
+      "metadata": {
+        "rank": 3,
+        "commune": "Corte",
+        "genre": "Homme",
+        "age": 26,
+        "profession": "Salarié(e) – Employé(e)",
+        "dimension": "Sécurité",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 1,
+        "sub_question": "Quels sont les thèmes récurrents mentionnés dans les verbatims des habitants de Corte concernant les problèmes de sécurité (ex : vols, agressions, incivilités) ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 28 ans (Jeunes adultes), Étudiant(e), à Corte, sur le thème 'Sécurité': La sécurité est importante pour moi ( marcher en sécurité dans les rues, pas de délinquance, hommes civilisés, vivre-ensemble respecté ) et la Corse maintien encore cette sécurité grace au nationalisme.",
+      "metadata": {
+        "rank": 4,
+        "commune": "Corte",
+        "genre": "Femme",
+        "age": 28,
+        "profession": "Étudiant(e)",
+        "dimension": "Sécurité",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 1,
+        "sub_question": "Quels sont les thèmes récurrents mentionnés dans les verbatims des habitants de Corte concernant les problèmes de sécurité (ex : vols, agressions, incivilités) ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 21 ans (Jeunes), Étudiant(e), à Corte, sur le thème 'Sécurité': Sécurité : je veux me sentir en sécurité partout en Corse",
+      "metadata": {
+        "rank": 5,
+        "commune": "Corte",
+        "genre": "Femme",
+        "age": 21,
+        "profession": "Étudiant(e)",
+        "dimension": "Sécurité",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 1,
+        "sub_question": "Quels sont les thèmes récurrents mentionnés dans les verbatims des habitants de Corte concernant les problèmes de sécurité (ex : vols, agressions, incivilités) ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 25 ans (Jeunes adultes), Étudiant(e), à Corte, sur le thème 'Sécurité': La sécurité est un point vitale pour une meilleure qualité de vie",
+      "metadata": {
+        "rank": 6,
+        "commune": "Corte",
+        "genre": "Homme",
+        "age": 25,
+        "profession": "Étudiant(e)",
+        "dimension": "Sécurité",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 1,
+        "sub_question": "Quels sont les thèmes récurrents mentionnés dans les verbatims des habitants de Corte concernant les problèmes de sécurité (ex : vols, agressions, incivilités) ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nProfil des répondants de la commune de Corte — enquête qualité de vie en Corse\n\nNombre de répondants : 49\n\nRépartition par genre :\n  - Femme : 35 (71.4%)\n  - Homme : 14 (28.6%)\n\nRépartition par tranche d'âge :\n  - 15-29 : 17 (34.7%)\n  - 30-44 : 16 (32.7%)\n  - 45-59 : 14 (28.6%)\n  - 60-74 : 2 (4.1%)\n\nRépartition par catégorie socioprofessionnelle :\n  - Ãtudiant(e) : 16 (32.7%)\n  - Fonctionnaire : 16 (32.7%)\n  - SalariÃ©(e) â Cadre ou profession intermÃ©diaire : 9 (18.4%)\n  - SalariÃ©(e) â EmployÃ©(e) : 8 (16.3%)",
+      "metadata": {
+        "rank": 7,
+        "source_type": "communes_profil",
+        "data_type": "quanti",
+        "commune": "Corte",
+        "num_chunks": null,
+        "view_name": null,
+        "distance": 0.542,
+        "sub_question_idx": 1,
+        "sub_question": "Quels sont les thèmes récurrents mentionnés dans les verbatims des habitants de Corte concernant les problèmes de sécurité (ex : vols, agressions, incivilités) ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théoriqu",
+      "metadata": {
+        "rank": 8,
+        "type": "oppchovec_score",
+        "source_type": "oppchovec_scores",
+        "commune": "",
+        "oppchovec_0_10": null,
+        "opp_0_10": null,
+        "cho_0_10": null,
+        "vec_0_10": null,
+        "distance": 0.0,
+        "sub_question_idx": 1,
+        "sub_question": "Quels sont les thèmes récurrents mentionnés dans les verbatims des habitants de Corte concernant les problèmes de sécurité (ex : vols, agressions, incivilités) ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Corte : 2.71/10 (faible).\n\nSous-scores principaux de Corte :\n  • Opportunités (Opp) : 6.34/10 (élevé)  — rang 23e/360\n  • Choix (Cho)        : 5.87/10 (élevé)  — rang 343e/360\n  • Vécu (Vec)         : 0.11/10 (très faible)  — rang 359e/360\n  • OppChoVec global   : rang 246e/360\n\nSous-dimensions du score Opportunités (Opp) de Corte :\n  • Opp1 — Éducation      : 1.74/10 (faible)  [valeur brute : 5.255] — rang 205e/360\n  • Opp2 — Diversité soc. : 3.76/10 (moyen)  [indice Theil : 0.4439] — rang 73e/360\n  • Opp3 — Mobilité       : 8.43/10 (très élevé)  [indicateur : 178.4/200] — rang 160e/360\n  • Opp4 — TIC (numérique): 9.20/10 (très élevé)  [couverture : 92.0%] — rang 31e/360\n\nAnalyse de Corte :\n- Corte se distingue s",
+      "metadata": {
+        "rank": 9,
+        "type": "oppchovec_score",
+        "source_type": "oppchovec_scores",
+        "commune": "Corte",
+        "oppchovec_0_10": 2.713254,
+        "opp_0_10": 6.340089,
+        "cho_0_10": 5.869274,
+        "vec_0_10": 0.108391,
+        "distance": 0.523,
+        "sub_question_idx": 1,
+        "sub_question": "Quels sont les thèmes récurrents mentionnés dans les verbatims des habitants de Corte concernant les problèmes de sécurité (ex : vols, agressions, incivilités) ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nEnquête Qualité de Vie en Corse — Description méthodologique\n\nPRÉSENTATION GÉNÉRALE\nEnquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.\nObjectif : recueillir les perceptions subjectives de la qualité de vie (QdV) et du bien-être,\nen complément des indicateurs o",
+      "metadata": {
+        "rank": 10,
+        "type": "methodology",
+        "source_type": "methodology",
+        "view_name": "enquete_methodology",
+        "sub_question_idx": 1,
+        "sub_question": "Quels sont les thèmes récurrents mentionnés dans les verbatims des habitants de Corte concernant les problèmes de sécurité (ex : vols, agressions, incivilités) ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : nom=Corte (N=41 personnes)**\n\n---\n\n### **Thèmes dominants**\n1. **Santé** (mentionnée dans 22 verbatims)\n   - Priorité absolue pour la qualité de vie, souvent associée à l’accès aux soins et à un mode de vie sain.\n   - Exemples : *\"La santé est la base du bien-être\"* (Verbatim 44), *\"Sans la santé, nous ne pouvons rien faire\"* (Verbatim 54).\n\n2. **Revenus/Emploi** (mentionnés dans 20 verbatims)\n   - Importance des revenus stables pour subvenir aux besoins et accéder à un logement décent.\n   - Exemples : *\"Le revenu est important puisqu'il permet une bonne qualité de vie\"* (Verbatim 20), *\"Il est difficile de trouver un logement à coût abordable ici\"* (Verbatim 48).\n\n3. **Environnement** (mentionné dans 18 verbatims)\n   - Valorisation des paysages, de la qualité de l’air et de la nature, avec une attention portée à la préservation.\n   - Exemples : *\"Vivre dans un environnement sain me semble nécessaire\"* (Verbatim 19), *\"Protéger l’environnement doit être une priorité pour un milieu sain\"* (Verbatim 15).\n\n4. **Logement** (mentionné dans 12 verbatims)\n   - Besoin d’un logement accessible, adapté et de qualité, notamment pour les étudiants et les jeunes actifs.\n   - Exemples : *\"Logements décents et à prix accessibles pour les étudiants\"* (Verbatim 31), *\"Être propriétaire de son logement est aujourd’hui primordial\"* (Verbatim 102).\n\n---\n\n### **Points de convergence**\n- **Santé comme pilier** : La santé est perçue comme un prérequis pour tout le reste (travail, loisirs, relations). Plusieurs verbatims soulignent son caractère non négociable.\n  - *\"La santé permet de réaliser tout ce que l’on souhaite\"* (Verbatim 59).\n  - *\"Une mauvaise santé peut avoir un impact sur notre humeur\"* (Verbatim 54).\n\n- **Importance des revenus** : Le manque de revenus ou leur instabilité est associé à des difficultés concrètes (logement, accès aux loisirs, stress).\n  - *\"Le manque de revenu du au manque d'emploi se répercute sur le style de vie que je mène\"* (Verbatim 47).\n\n- **Environnement et qualité de vie** : La préservation de l’environnement est liée au bien-être physique et mental.\n  - *\"La qualité de l'environnement est vitale\"* (Verbatim 109).\n  - *\"Un environnement sain permet d'être en bonne santé\"* (Verbatim 58).\n\n- **Sécurité** : La tranquillité et la sécurité sont des attentes fortes, notamment pour les femmes et les familles.\n  - *\"La sécurité assure la tranquillité, la paix intérieure\"* (Verbatim 12).\n  - *\"Je veux me sentir en sécurité partout en Corse\"* (Verbatim 33).\n\n- **Accès aux services de proximité** : Besoin de commerces locaux, de soins et de transports accessibles.\n  - *\"Les prix des services de proximité sont trop élevés\"* (Verbatim 39).\n  - *\"Bénéficier de services de proximité permet le développement économique soutenable\"* (Verbatim 71).\n\n---\n### **Points de divergence**\n- **Perception de la sécurité** :\n  - Certains soulignent une sécurité préservée grâce au nationalisme (*\"La Corse maintien encore cette sécurité grâce au nationalisme\"* – Verbatim 26), tandis que d’autres expriment des craintes (*\"La sécurité est importante vu le monde dans lequel on vit !\"* – Verbatim 7).\n\n- **Rôle de l’argent** :\n  - Certains estiment que l’argent est indispensable pour une vie épanouie (*\"L'argent facilite tout le reste\"* – Verbatim 200), tandis que d’autres relativisent son importance face à la santé (*\"Une personne en mauvaise santé donnera tout pour pouvoir être en bonne santé. La santé n'a pas de prix\"* – Verbatim 11).\n\n- **Priorités générationnelles** :\n  - Les jeunes (18-25 ans) mettent davantage l’accent sur l’accès aux loisirs et à la culture (*\"cinéma musée concert théâtre musique\"* – Verbatim 22), tandis que les seniors (50+ ans) insistent sur la propriété immobilière et la stabilité (*\"Être propriétaire de son logement est aujourd’hui primordial\"* – Verbatim 102).\n\n---\n### **Signaux faibles**\n- **Désert médical** : Une mention isolée mais préoccupante (*\"Désert médical difficile à vivre\"* – Verbatim 136).\n- **Transports** : Difficultés liées aux horaires des transports en commun (*\"Les horaires des trains ne permettent pas de rentrer tard d'autres villes\"* – Verbatim 46).\n- **Burn-out** : Une référence au surmenage professionnel (*\"burn-out\"* – Verbatim 41).\n- **Inflation** : Impact sur le pouvoir d’achat (*\"inflation\"* – Verbatim 42).\n- **Tourisme** : Perçu comme une opportunité économique mais aussi une contrainte (*\"On est obligé de travailler donc tourisme importa\"* – Verbatim 126).\n\n---\n### **Limites de l’échantillon**\n- **Biais de représentativité** :\n  - Surreprésentation des **jeunes adultes (18-30 ans)** (environ 50% des répondants), notamment des étudiants.\n  - Sous-représentation des **seniors (60+ ans)** et des **actifs non-étudiants** (seulement 3-4 verbatims pour les 50+ ans).\n  - **Genre** : Légère surreprésentation des femmes (environ 60% des répondants).\n\n- **Biais thématiques** :\n  - Les thèmes comme la **santé**, les **revenus** et l’**environnement** sont très présents, tandis que d’autres (ex : éducation, culture) sont moins développés, possiblement en raison de la formulation des questions ou de l’intérêt des répondants.\n\n- **Qualité des réponses** :\n  - Certains verbatims sont très courts ou peu développés (ex : *\"bxgbv\"*, *\"bvnbvb\"*, *\"!!\"* – Verbatims 55, 56, 103-105), ce qui limite l’analyse.\n\n---\n**Note** : Cette synthèse repose exclusivement sur les verbatims fournis. Aucune interprétation externe ou extrapolation n",
+      "metadata": {
+        "rank": 0,
+        "type": "raptor_summary",
+        "view": "commune",
+        "num_chunks": 141,
+        "sub_question_idx": 2,
+        "sub_question": "Quels lieux ou quartiers de Corte sont le plus fréquemment cités comme étant perçus comme dangereux ou peu sûrs dans les verbatims ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : commune=Corte (N=50)**\n\n---\n\n### **Satisfaction globale**\nLes scores globaux reflètent une **satisfaction modérée** à **neutre** pour les habitants de Corte, avec des nuances selon les dimensions évaluées :\n- **Bonheur** : 3,52/5 (n=48) → Une majorité des répondants expriment un niveau de bonheur **moyen à satisfaisant**, mais avec une tendance à la neutralité ou à une satisfaction modérée.\n- **Qualité de vie** : 3,81/5 (n=48) → Une perception globalement **positive**, légèrement supérieure au score de bonheur, suggérant que les conditions de vie sont jugées meilleures que le ressenti émotionnel.\n- **Confiance dans l’avenir** : 2,96/5 (n=47) → **Le score le plus faible**, indiquant une **méfiance marquée** quant à l’évolution future de la qualité de vie, des opportunités ou des conditions locales. Ce résultat contraste avec les autres dimensions et pourrait refléter des inquiétudes structurelles (emploi, revenus, transports, etc.).\n\n---\n\n### **Toutes les dimensions — tableau complet (classées du score le plus élevé au plus faible)**\n\n| **Dimension**               | **Moyenne (/5)** | **Distribution des réponses**                                                                                     |\n|-----------------------------|------------------|------------------------------------------------------------------------------------------------------------------|\n| **Éducation**               | 3,96             | ★5: 13 | ★4: 24 | ★3: 8 | ★2: 2 | ★1: 1                                            |\n| **Logement**                | 3,67             | ★5: 11 | ★4: 23 | ★3: 3 | ★2: 9 | ★1: 2                                            |\n| **Emploi**                  | 3,71             | ★5: 9  | ★4: 23 | ★3: 11| ★2: 3 | ★1: 2                                            |\n| **Sécurité**                | 3,71             | ★5: 13 | ★4: 18 | ★3: 9 | ★2: 6 | ★1: 2                                            |\n| **Réseau**                  | 3,48             | ★5: 6  | ★4: 23 | ★3: 10| ★2: 6 | ★1: 3                                            |\n| **Ratio vie pro/vie perso** | 3,44             | ★5: 6  | ★4: 20 | ★3: 12| ★2: 9 | ★1: 1                                            |\n| **Revenus**                 | 3,21             | ★5: 4  | ★4: 17 | ★3: 14| ★2: 11| ★1: 2                                            |\n| **Services de proximité**   | 3,06             | ★5: 2  | ★4: 18 | ★3: 12| ★2: 11| ★1: 4                                            |\n| **Institutions**            | 3,02             | ★5: 3  | ★4: 13 | ★3: 18| ★2: 10| ★1: 4                                            |\n| **Culture**                 | 2,94             | ★5: 3  | ★4: 16 | ★3: 9 | ★2: 13| ★1: 6                                            |\n| **Communauté et relations** | 3,20             | **Entourage** : 3,80 (★5:14 | ★4:17 | ★3:14 | ★2:5 | ★1:0) <br> **Implication locale** : 2,60 (★5:3 | ★4:6 | ★3:15 | ★2:20 | ★1:6) |\n| **Tourisme**                | 2,83             | ★5: 2  | ★4: 8  | ★3: 23| ★2: 10| ★1: 5                                            |\n| **Santé**                   | 2,63             | **Santé globale** : 2,71 (★5:1 | ★4:17 | ★3:7 | ★2:13 | ★1:10) <br> **Médecins généralistes** : 3,04 (★5:4 | ★4:15 | ★3:15 | ★2:11 | ★1:5) <br> **Attente RDV** : 2,84 (★5:5 | ★4:11 | ★3:15 | ★2:9 | ★1:10) <br> **Médecins spécialistes** : 1,94 (★5:1 | ★4:3 | ★3:10 | ★2:14 | ★1:22) |\n| **Transports**              | 2,35             | **Transports** : 2,06 (★5:0 | ★4:5 | ★3:7 | ★2:22 | ★1:14) <br> **Transports communs** : 1,92 (★5:0 | ★4:4 | ★3:9 | ★2:16 | ★1:21) <br> **Réseau routier** : 2,78 (★5:1 | ★4:19 | ★3:7 | ★2:14 | ★1:9) <br> **Encombrement** : 2,64 (★5:1 | ★4:11 | ★3:16 | ★2:13 | ★1:9) |\n\n---\n\n### **Patterns notables**\n1. **Éducation : un point fort** :\n   - Avec un score de **3,96/5**, l’éducation est la dimension **la mieux notée**, suggérant une satisfaction élevée envers le système éducatif local (établissements, enseignement, etc.). Cette tendance est cohérente avec les réponses brutes, où 13 répondants attribuent **5★** à cette dimension.\n\n2. **Transports : un point de friction majeur** :\n   - **Score global de 2,35/5**, avec des sous-dimensions particulièrement critiques :\n     - **Transports communs** (1,92/5) et **Transports** (2,06/5) sont les **plus mal notés**, indiquant des problèmes d’accessibilité, de fréquence ou de qualité des transports en commun",
+      "metadata": {
+        "rank": 1,
+        "type": "raptor_enquete_summary",
+        "view": "enquete_commune",
+        "num_chunks": 50,
+        "sub_question_idx": 2,
+        "sub_question": "Quels lieux ou quartiers de Corte sont le plus fréquemment cités comme étant perçus comme dangereux ou peu sûrs dans les verbatims ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 22 ans (Jeunes), Étudiant(e), à Corte, sur le thème 'Environnement': qualité de l'air et paysages",
+      "metadata": {
+        "rank": 2,
+        "commune": "Corte",
+        "genre": "Femme",
+        "age": 22,
+        "profession": "Étudiant(e)",
+        "dimension": "Environnement",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 2,
+        "sub_question": "Quels lieux ou quartiers de Corte sont le plus fréquemment cités comme étant perçus comme dangereux ou peu sûrs dans les verbatims ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 22 ans (Jeunes), Étudiant(e), à Corte, sur le thème 'Culture': se trouver des passions",
+      "metadata": {
+        "rank": 3,
+        "commune": "Corte",
+        "genre": "Femme",
+        "age": 22,
+        "profession": "Étudiant(e)",
+        "dimension": "Culture",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 2,
+        "sub_question": "Quels lieux ou quartiers de Corte sont le plus fréquemment cités comme étant perçus comme dangereux ou peu sûrs dans les verbatims ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 22 ans (Jeunes), Étudiant(e), à Corte, sur le thème 'Santé': avoir des soins et hôpitaux",
+      "metadata": {
+        "rank": 4,
+        "commune": "Corte",
+        "genre": "Femme",
+        "age": 22,
+        "profession": "Étudiant(e)",
+        "dimension": "Santé",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 2,
+        "sub_question": "Quels lieux ou quartiers de Corte sont le plus fréquemment cités comme étant perçus comme dangereux ou peu sûrs dans les verbatims ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 20 ans (Jeunes), Étudiant(e), à Corte, sur le thème 'Réseau': Le réseau pour les cours est les papiers",
+      "metadata": {
+        "rank": 5,
+        "commune": "Corte",
+        "genre": "Femme",
+        "age": 20,
+        "profession": "Étudiant(e)",
+        "dimension": "Réseau",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 2,
+        "sub_question": "Quels lieux ou quartiers de Corte sont le plus fréquemment cités comme étant perçus comme dangereux ou peu sûrs dans les verbatims ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 20 ans (Jeunes), Étudiant(e), à Corte, sur le thème 'Logement': Un logement au calme et adapté à mes besoins",
+      "metadata": {
+        "rank": 6,
+        "commune": "Corte",
+        "genre": "Femme",
+        "age": 20,
+        "profession": "Étudiant(e)",
+        "dimension": "Logement",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 2,
+        "sub_question": "Quels lieux ou quartiers de Corte sont le plus fréquemment cités comme étant perçus comme dangereux ou peu sûrs dans les verbatims ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nProfil des répondants de la commune de Corte — enquête qualité de vie en Corse\n\nNombre de répondants : 49\n\nRépartition par genre :\n  - Femme : 35 (71.4%)\n  - Homme : 14 (28.6%)\n\nRépartition par tranche d'âge :\n  - 15-29 : 17 (34.7%)\n  - 30-44 : 16 (32.7%)\n  - 45-59 : 14 (28.6%)\n  - 60-74 : 2 (4.1%)\n\nRépartition par catégorie socioprofessionnelle :\n  - Ãtudiant(e) : 16 (32.7%)\n  - Fonctionnaire : 16 (32.7%)\n  - SalariÃ©(e) â Cadre ou profession intermÃ©diaire : 9 (18.4%)\n  - SalariÃ©(e) â EmployÃ©(e) : 8 (16.3%)",
+      "metadata": {
+        "rank": 7,
+        "source_type": "communes_profil",
+        "data_type": "quanti",
+        "commune": "Corte",
+        "num_chunks": null,
+        "view_name": null,
+        "distance": 0.584,
+        "sub_question_idx": 2,
+        "sub_question": "Quels lieux ou quartiers de Corte sont le plus fréquemment cités comme étant perçus comme dangereux ou peu sûrs dans les verbatims ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théoriqu",
+      "metadata": {
+        "rank": 8,
+        "type": "oppchovec_score",
+        "source_type": "oppchovec_scores",
+        "commune": "",
+        "oppchovec_0_10": null,
+        "opp_0_10": null,
+        "cho_0_10": null,
+        "vec_0_10": null,
+        "distance": 0.0,
+        "sub_question_idx": 2,
+        "sub_question": "Quels lieux ou quartiers de Corte sont le plus fréquemment cités comme étant perçus comme dangereux ou peu sûrs dans les verbatims ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Corte : 2.71/10 (faible).\n\nSous-scores principaux de Corte :\n  • Opportunités (Opp) : 6.34/10 (élevé)  — rang 23e/360\n  • Choix (Cho)        : 5.87/10 (élevé)  — rang 343e/360\n  • Vécu (Vec)         : 0.11/10 (très faible)  — rang 359e/360\n  • OppChoVec global   : rang 246e/360\n\nSous-dimensions du score Opportunités (Opp) de Corte :\n  • Opp1 — Éducation      : 1.74/10 (faible)  [valeur brute : 5.255] — rang 205e/360\n  • Opp2 — Diversité soc. : 3.76/10 (moyen)  [indice Theil : 0.4439] — rang 73e/360\n  • Opp3 — Mobilité       : 8.43/10 (très élevé)  [indicateur : 178.4/200] — rang 160e/360\n  • Opp4 — TIC (numérique): 9.20/10 (très élevé)  [couverture : 92.0%] — rang 31e/360\n\nAnalyse de Corte :\n- Corte se distingue s",
+      "metadata": {
+        "rank": 9,
+        "type": "oppchovec_score",
+        "source_type": "oppchovec_scores",
+        "commune": "Corte",
+        "oppchovec_0_10": 2.713254,
+        "opp_0_10": 6.340089,
+        "cho_0_10": 5.869274,
+        "vec_0_10": 0.108391,
+        "distance": 0.538,
+        "sub_question_idx": 2,
+        "sub_question": "Quels lieux ou quartiers de Corte sont le plus fréquemment cités comme étant perçus comme dangereux ou peu sûrs dans les verbatims ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nEnquête Qualité de Vie en Corse — Description méthodologique\n\nPRÉSENTATION GÉNÉRALE\nEnquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.\nObjectif : recueillir les perceptions subjectives de la qualité de vie (QdV) et du bien-être,\nen complément des indicateurs o",
+      "metadata": {
+        "rank": 10,
+        "type": "methodology",
+        "source_type": "methodology",
+        "view_name": "enquete_methodology",
+        "sub_question_idx": 2,
+        "sub_question": "Quels lieux ou quartiers de Corte sont le plus fréquemment cités comme étant perçus comme dangereux ou peu sûrs dans les verbatims ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : dimension=Sécurité, nom=Corte (N=6 personnes)**\n\n**Themes dominants** :\n1. **Importance centrale de la sécurité** : La sécurité est perçue comme un pilier essentiel de la qualité de vie, avec des formulations comme *\"point vital\"* (Verbatim 5) ou *\"importante vu le monde dans lequel on vit\"* (Verbatim 1).\n2. **Sécurité comme condition de tranquillité** : Plusieurs verbatims associent la sécurité à la paix intérieure (*\"assure la tranquillité\"* – Verbatim 2) ou à un sentiment de sérénité (*\"Être rassurée\"* – Verbatim 6).\n3. **Sécurité dans l’espace public** : La marche en sécurité dans les rues et l’absence de délinquance sont explicitement mentionnées (*\"marcher en sécurité dans les rues, pas de délinquance\"* – Verbatim 3).\n4. **Dimension collective et identitaire** : Un verbatim lie la sécurité à la culture corse et au nationalisme (*\"la Corse maintien encore cette sécurité grâce au nationalisme\"* – Verbatim 3).\n\n**Points de convergence** :\n- **Primauté de la sécurité** : Tous les répondants soulignent son caractère indispensable, sans nuance négative.\n- **Lien avec le bien-être** : La sécurité est présentée comme un prérequis pour une meilleure qualité de vie (*\"meilleure qualité de vie\"* – Verbatim 5 ; *\"tranquillité, paix intérieure\"* – Verbatim 2).\n- **Attachement territorial** : La sécurité est associée à la Corse, soit comme un acquis (*\"Safe\"* – Verbatim 6), soit comme un élément culturel (*\"vivre-ensemble respecté\"* – Verbatim 3).\n\n**Points de divergence** :\n- **Perception de la délinquance** : Un seul verbatim mentionne explicitement la délinquance comme une menace (*\"pas de délinquance\"* – Verbatim 3), tandis que les autres abordent la sécurité de manière générale.\n- **Rôle du nationalisme** : L’idée que le nationalisme corse garantit la sécurité (Verbatim 3) n’est pas reprise ailleurs, suggérant une divergence sur les causes de la sécurité perçue.\n\n**Signaux faibles** :\n- **Formulation minimaliste** : *\"Être rassurée Safe\"* (Verbatim 6) pourrait indiquer une réponse expéditive ou une priorité absolue accordée à la sécurité, mais sans développement.\n- **Âge et statut** : Les jeunes (19–28 ans) et les adultes (46 ans) sont représentés, mais les cadres sont absents, ce qui limite la diversité des profils socio-professionnels.\n\n**Limites de l’échantillon** :\n- **Taille réduite** (N=6) : Les conclusions ne peuvent prétendre à une représentativité statistique.\n- **Surreprésentation des jeunes** : 5/6 répondants ont moins de 30 ans, ce qui peut biaiser la perception (ex. : sensibilité accrue aux questions de sécurité publique).\n- **Absence de critiques** : Aucun verbatim ne remet en cause l’état de la sécurité à Corte, ce qui peut refléter un biais de réponse (volonté de plaire ou manque de recul).",
+      "metadata": {
+        "rank": 0,
+        "type": "raptor_summary",
+        "view": "dimension*commune",
+        "num_chunks": 6,
+        "sub_question_idx": 3,
+        "sub_question": "Quelles sont les périodes (jour/nuit, week-end, événements spécifiques) associées à un sentiment d'insécurité dans les verbatims des citoyens de Corte ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : commune=Corte (N=50)**\n\n---\n\n### **Satisfaction globale**\nLes scores globaux reflètent une **satisfaction modérée** à **neutre** pour les habitants de Corte, avec des nuances selon les dimensions évaluées :\n- **Bonheur** : 3,52/5 (n=48) → Une majorité des répondants expriment un niveau de bonheur **moyen à satisfaisant**, mais avec une tendance à la neutralité ou à une satisfaction modérée.\n- **Qualité de vie** : 3,81/5 (n=48) → Une perception globalement **positive**, légèrement supérieure au score de bonheur, suggérant que les conditions de vie sont jugées meilleures que le ressenti émotionnel.\n- **Confiance dans l’avenir** : 2,96/5 (n=47) → **Le score le plus faible**, indiquant une **méfiance marquée** quant à l’évolution future de la qualité de vie, des opportunités ou des conditions locales. Ce résultat contraste avec les autres dimensions et pourrait refléter des inquiétudes structurelles (emploi, revenus, transports, etc.).\n\n---\n\n### **Toutes les dimensions — tableau complet (classées du score le plus élevé au plus faible)**\n\n| **Dimension**               | **Moyenne (/5)** | **Distribution des réponses**                                                                                     |\n|-----------------------------|------------------|------------------------------------------------------------------------------------------------------------------|\n| **Éducation**               | 3,96             | ★5: 13 | ★4: 24 | ★3: 8 | ★2: 2 | ★1: 1                                            |\n| **Logement**                | 3,67             | ★5: 11 | ★4: 23 | ★3: 3 | ★2: 9 | ★1: 2                                            |\n| **Emploi**                  | 3,71             | ★5: 9  | ★4: 23 | ★3: 11| ★2: 3 | ★1: 2                                            |\n| **Sécurité**                | 3,71             | ★5: 13 | ★4: 18 | ★3: 9 | ★2: 6 | ★1: 2                                            |\n| **Réseau**                  | 3,48             | ★5: 6  | ★4: 23 | ★3: 10| ★2: 6 | ★1: 3                                            |\n| **Ratio vie pro/vie perso** | 3,44             | ★5: 6  | ★4: 20 | ★3: 12| ★2: 9 | ★1: 1                                            |\n| **Revenus**                 | 3,21             | ★5: 4  | ★4: 17 | ★3: 14| ★2: 11| ★1: 2                                            |\n| **Services de proximité**   | 3,06             | ★5: 2  | ★4: 18 | ★3: 12| ★2: 11| ★1: 4                                            |\n| **Institutions**            | 3,02             | ★5: 3  | ★4: 13 | ★3: 18| ★2: 10| ★1: 4                                            |\n| **Culture**                 | 2,94             | ★5: 3  | ★4: 16 | ★3: 9 | ★2: 13| ★1: 6                                            |\n| **Communauté et relations** | 3,20             | **Entourage** : 3,80 (★5:14 | ★4:17 | ★3:14 | ★2:5 | ★1:0) <br> **Implication locale** : 2,60 (★5:3 | ★4:6 | ★3:15 | ★2:20 | ★1:6) |\n| **Tourisme**                | 2,83             | ★5: 2  | ★4: 8  | ★3: 23| ★2: 10| ★1: 5                                            |\n| **Santé**                   | 2,63             | **Santé globale** : 2,71 (★5:1 | ★4:17 | ★3:7 | ★2:13 | ★1:10) <br> **Médecins généralistes** : 3,04 (★5:4 | ★4:15 | ★3:15 | ★2:11 | ★1:5) <br> **Attente RDV** : 2,84 (★5:5 | ★4:11 | ★3:15 | ★2:9 | ★1:10) <br> **Médecins spécialistes** : 1,94 (★5:1 | ★4:3 | ★3:10 | ★2:14 | ★1:22) |\n| **Transports**              | 2,35             | **Transports** : 2,06 (★5:0 | ★4:5 | ★3:7 | ★2:22 | ★1:14) <br> **Transports communs** : 1,92 (★5:0 | ★4:4 | ★3:9 | ★2:16 | ★1:21) <br> **Réseau routier** : 2,78 (★5:1 | ★4:19 | ★3:7 | ★2:14 | ★1:9) <br> **Encombrement** : 2,64 (★5:1 | ★4:11 | ★3:16 | ★2:13 | ★1:9) |\n\n---\n\n### **Patterns notables**\n1. **Éducation : un point fort** :\n   - Avec un score de **3,96/5**, l’éducation est la dimension **la mieux notée**, suggérant une satisfaction élevée envers le système éducatif local (établissements, enseignement, etc.). Cette tendance est cohérente avec les réponses brutes, où 13 répondants attribuent **5★** à cette dimension.\n\n2. **Transports : un point de friction majeur** :\n   - **Score global de 2,35/5**, avec des sous-dimensions particulièrement critiques :\n     - **Transports communs** (1,92/5) et **Transports** (2,06/5) sont les **plus mal notés**, indiquant des problèmes d’accessibilité, de fréquence ou de qualité des transports en commun",
+      "metadata": {
+        "rank": 1,
+        "type": "raptor_enquete_summary",
+        "view": "enquete_commune",
+        "num_chunks": 50,
+        "sub_question_idx": 3,
+        "sub_question": "Quelles sont les périodes (jour/nuit, week-end, événements spécifiques) associées à un sentiment d'insécurité dans les verbatims des citoyens de Corte ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 19 ans (Jeunes), Étudiant(e), à Corte, sur le thème 'Sécurité': La sécurité est importante vu le monde dans lequel on vit !",
+      "metadata": {
+        "rank": 2,
+        "commune": "Corte",
+        "genre": "Femme",
+        "age": 19,
+        "profession": "Étudiant(e)",
+        "dimension": "Sécurité",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 3,
+        "sub_question": "Quelles sont les périodes (jour/nuit, week-end, événements spécifiques) associées à un sentiment d'insécurité dans les verbatims des citoyens de Corte ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 26 ans (Jeunes adultes), Salarié(e) – Employé(e), à Corte, sur le thème 'Sécurité': La sécurité assure la tranquillité, la paix intérieure.",
+      "metadata": {
+        "rank": 3,
+        "commune": "Corte",
+        "genre": "Homme",
+        "age": 26,
+        "profession": "Salarié(e) – Employé(e)",
+        "dimension": "Sécurité",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 3,
+        "sub_question": "Quelles sont les périodes (jour/nuit, week-end, événements spécifiques) associées à un sentiment d'insécurité dans les verbatims des citoyens de Corte ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 28 ans (Jeunes adultes), Étudiant(e), à Corte, sur le thème 'Sécurité': La sécurité est importante pour moi ( marcher en sécurité dans les rues, pas de délinquance, hommes civilisés, vivre-ensemble respecté ) et la Corse maintien encore cette sécurité grace au nationalisme.",
+      "metadata": {
+        "rank": 4,
+        "commune": "Corte",
+        "genre": "Femme",
+        "age": 28,
+        "profession": "Étudiant(e)",
+        "dimension": "Sécurité",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 3,
+        "sub_question": "Quelles sont les périodes (jour/nuit, week-end, événements spécifiques) associées à un sentiment d'insécurité dans les verbatims des citoyens de Corte ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 21 ans (Jeunes), Étudiant(e), à Corte, sur le thème 'Sécurité': Sécurité : je veux me sentir en sécurité partout en Corse",
+      "metadata": {
+        "rank": 5,
+        "commune": "Corte",
+        "genre": "Femme",
+        "age": 21,
+        "profession": "Étudiant(e)",
+        "dimension": "Sécurité",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 3,
+        "sub_question": "Quelles sont les périodes (jour/nuit, week-end, événements spécifiques) associées à un sentiment d'insécurité dans les verbatims des citoyens de Corte ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 25 ans (Jeunes adultes), Étudiant(e), à Corte, sur le thème 'Sécurité': La sécurité est un point vitale pour une meilleure qualité de vie",
+      "metadata": {
+        "rank": 6,
+        "commune": "Corte",
+        "genre": "Homme",
+        "age": 25,
+        "profession": "Étudiant(e)",
+        "dimension": "Sécurité",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 3,
+        "sub_question": "Quelles sont les périodes (jour/nuit, week-end, événements spécifiques) associées à un sentiment d'insécurité dans les verbatims des citoyens de Corte ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nProfil des répondants de la commune de Corte — enquête qualité de vie en Corse\n\nNombre de répondants : 49\n\nRépartition par genre :\n  - Femme : 35 (71.4%)\n  - Homme : 14 (28.6%)\n\nRépartition par tranche d'âge :\n  - 15-29 : 17 (34.7%)\n  - 30-44 : 16 (32.7%)\n  - 45-59 : 14 (28.6%)\n  - 60-74 : 2 (4.1%)\n\nRépartition par catégorie socioprofessionnelle :\n  - Ãtudiant(e) : 16 (32.7%)\n  - Fonctionnaire : 16 (32.7%)\n  - SalariÃ©(e) â Cadre ou profession intermÃ©diaire : 9 (18.4%)\n  - SalariÃ©(e) â EmployÃ©(e) : 8 (16.3%)",
+      "metadata": {
+        "rank": 7,
+        "source_type": "communes_profil",
+        "data_type": "quanti",
+        "commune": "Corte",
+        "num_chunks": null,
+        "view_name": null,
+        "distance": 0.486,
+        "sub_question_idx": 3,
+        "sub_question": "Quelles sont les périodes (jour/nuit, week-end, événements spécifiques) associées à un sentiment d'insécurité dans les verbatims des citoyens de Corte ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théoriqu",
+      "metadata": {
+        "rank": 8,
+        "type": "oppchovec_score",
+        "source_type": "oppchovec_scores",
+        "commune": "",
+        "oppchovec_0_10": null,
+        "opp_0_10": null,
+        "cho_0_10": null,
+        "vec_0_10": null,
+        "distance": 0.0,
+        "sub_question_idx": 3,
+        "sub_question": "Quelles sont les périodes (jour/nuit, week-end, événements spécifiques) associées à un sentiment d'insécurité dans les verbatims des citoyens de Corte ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Corte : 2.71/10 (faible).\n\nSous-scores principaux de Corte :\n  • Opportunités (Opp) : 6.34/10 (élevé)  — rang 23e/360\n  • Choix (Cho)        : 5.87/10 (élevé)  — rang 343e/360\n  • Vécu (Vec)         : 0.11/10 (très faible)  — rang 359e/360\n  • OppChoVec global   : rang 246e/360\n\nSous-dimensions du score Opportunités (Opp) de Corte :\n  • Opp1 — Éducation      : 1.74/10 (faible)  [valeur brute : 5.255] — rang 205e/360\n  • Opp2 — Diversité soc. : 3.76/10 (moyen)  [indice Theil : 0.4439] — rang 73e/360\n  • Opp3 — Mobilité       : 8.43/10 (très élevé)  [indicateur : 178.4/200] — rang 160e/360\n  • Opp4 — TIC (numérique): 9.20/10 (très élevé)  [couverture : 92.0%] — rang 31e/360\n\nAnalyse de Corte :\n- Corte se distingue s",
+      "metadata": {
+        "rank": 9,
+        "type": "oppchovec_score",
+        "source_type": "oppchovec_scores",
+        "commune": "Corte",
+        "oppchovec_0_10": 2.713254,
+        "opp_0_10": 6.340089,
+        "cho_0_10": 5.869274,
+        "vec_0_10": 0.108391,
+        "distance": 0.498,
+        "sub_question_idx": 3,
+        "sub_question": "Quelles sont les périodes (jour/nuit, week-end, événements spécifiques) associées à un sentiment d'insécurité dans les verbatims des citoyens de Corte ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nEnquête Qualité de Vie en Corse — Description méthodologique\n\nPRÉSENTATION GÉNÉRALE\nEnquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.\nObjectif : recueillir les perceptions subjectives de la qualité de vie (QdV) et du bien-être,\nen complément des indicateurs o",
+      "metadata": {
+        "rank": 10,
+        "type": "methodology",
+        "source_type": "methodology",
+        "view_name": "enquete_methodology",
+        "sub_question_idx": 3,
+        "sub_question": "Quelles sont les périodes (jour/nuit, week-end, événements spécifiques) associées à un sentiment d'insécurité dans les verbatims des citoyens de Corte ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : dimension=Sécurité, nom=Corte (N=6 personnes)**\n\n**Themes dominants** :\n1. **Importance centrale de la sécurité** : La sécurité est perçue comme un pilier essentiel de la qualité de vie, avec des formulations comme *\"point vital\"* (Verbatim 5) ou *\"importante vu le monde dans lequel on vit\"* (Verbatim 1).\n2. **Sécurité comme condition de tranquillité** : Plusieurs verbatims associent la sécurité à la paix intérieure (*\"assure la tranquillité\"* – Verbatim 2) ou à un sentiment de sérénité (*\"Être rassurée\"* – Verbatim 6).\n3. **Sécurité dans l’espace public** : La marche en sécurité dans les rues et l’absence de délinquance sont explicitement mentionnées (*\"marcher en sécurité dans les rues, pas de délinquance\"* – Verbatim 3).\n4. **Dimension collective et identitaire** : Un verbatim lie la sécurité à la culture corse et au nationalisme (*\"la Corse maintien encore cette sécurité grâce au nationalisme\"* – Verbatim 3).\n\n**Points de convergence** :\n- **Primauté de la sécurité** : Tous les répondants soulignent son caractère indispensable, sans nuance négative.\n- **Lien avec le bien-être** : La sécurité est présentée comme un prérequis pour une meilleure qualité de vie (*\"meilleure qualité de vie\"* – Verbatim 5 ; *\"tranquillité, paix intérieure\"* – Verbatim 2).\n- **Attachement territorial** : La sécurité est associée à la Corse, soit comme un acquis (*\"Safe\"* – Verbatim 6), soit comme un élément culturel (*\"vivre-ensemble respecté\"* – Verbatim 3).\n\n**Points de divergence** :\n- **Perception de la délinquance** : Un seul verbatim mentionne explicitement la délinquance comme une menace (*\"pas de délinquance\"* – Verbatim 3), tandis que les autres abordent la sécurité de manière générale.\n- **Rôle du nationalisme** : L’idée que le nationalisme corse garantit la sécurité (Verbatim 3) n’est pas reprise ailleurs, suggérant une divergence sur les causes de la sécurité perçue.\n\n**Signaux faibles** :\n- **Formulation minimaliste** : *\"Être rassurée Safe\"* (Verbatim 6) pourrait indiquer une réponse expéditive ou une priorité absolue accordée à la sécurité, mais sans développement.\n- **Âge et statut** : Les jeunes (19–28 ans) et les adultes (46 ans) sont représentés, mais les cadres sont absents, ce qui limite la diversité des profils socio-professionnels.\n\n**Limites de l’échantillon** :\n- **Taille réduite** (N=6) : Les conclusions ne peuvent prétendre à une représentativité statistique.\n- **Surreprésentation des jeunes** : 5/6 répondants ont moins de 30 ans, ce qui peut biaiser la perception (ex. : sensibilité accrue aux questions de sécurité publique).\n- **Absence de critiques** : Aucun verbatim ne remet en cause l’état de la sécurité à Corte, ce qui peut refléter un biais de réponse (volonté de plaire ou manque de recul).",
+      "metadata": {
+        "rank": 0,
+        "type": "raptor_summary",
+        "view": "dimension*commune",
+        "num_chunks": 6,
+        "sub_question_idx": 4,
+        "sub_question": "Quels types d'acteurs (police municipale, gendarmerie, voisins, associations) sont évoqués dans les verbatims comme contribuant ou non à la sécurité à Corte ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : commune=Corte (N=50)**\n\n---\n\n### **Satisfaction globale**\nLes scores globaux reflètent une **satisfaction modérée** à **neutre** pour les habitants de Corte, avec des nuances selon les dimensions évaluées :\n- **Bonheur** : 3,52/5 (n=48) → Une majorité des répondants expriment un niveau de bonheur **moyen à satisfaisant**, mais avec une tendance à la neutralité ou à une satisfaction modérée.\n- **Qualité de vie** : 3,81/5 (n=48) → Une perception globalement **positive**, légèrement supérieure au score de bonheur, suggérant que les conditions de vie sont jugées meilleures que le ressenti émotionnel.\n- **Confiance dans l’avenir** : 2,96/5 (n=47) → **Le score le plus faible**, indiquant une **méfiance marquée** quant à l’évolution future de la qualité de vie, des opportunités ou des conditions locales. Ce résultat contraste avec les autres dimensions et pourrait refléter des inquiétudes structurelles (emploi, revenus, transports, etc.).\n\n---\n\n### **Toutes les dimensions — tableau complet (classées du score le plus élevé au plus faible)**\n\n| **Dimension**               | **Moyenne (/5)** | **Distribution des réponses**                                                                                     |\n|-----------------------------|------------------|------------------------------------------------------------------------------------------------------------------|\n| **Éducation**               | 3,96             | ★5: 13 | ★4: 24 | ★3: 8 | ★2: 2 | ★1: 1                                            |\n| **Logement**                | 3,67             | ★5: 11 | ★4: 23 | ★3: 3 | ★2: 9 | ★1: 2                                            |\n| **Emploi**                  | 3,71             | ★5: 9  | ★4: 23 | ★3: 11| ★2: 3 | ★1: 2                                            |\n| **Sécurité**                | 3,71             | ★5: 13 | ★4: 18 | ★3: 9 | ★2: 6 | ★1: 2                                            |\n| **Réseau**                  | 3,48             | ★5: 6  | ★4: 23 | ★3: 10| ★2: 6 | ★1: 3                                            |\n| **Ratio vie pro/vie perso** | 3,44             | ★5: 6  | ★4: 20 | ★3: 12| ★2: 9 | ★1: 1                                            |\n| **Revenus**                 | 3,21             | ★5: 4  | ★4: 17 | ★3: 14| ★2: 11| ★1: 2                                            |\n| **Services de proximité**   | 3,06             | ★5: 2  | ★4: 18 | ★3: 12| ★2: 11| ★1: 4                                            |\n| **Institutions**            | 3,02             | ★5: 3  | ★4: 13 | ★3: 18| ★2: 10| ★1: 4                                            |\n| **Culture**                 | 2,94             | ★5: 3  | ★4: 16 | ★3: 9 | ★2: 13| ★1: 6                                            |\n| **Communauté et relations** | 3,20             | **Entourage** : 3,80 (★5:14 | ★4:17 | ★3:14 | ★2:5 | ★1:0) <br> **Implication locale** : 2,60 (★5:3 | ★4:6 | ★3:15 | ★2:20 | ★1:6) |\n| **Tourisme**                | 2,83             | ★5: 2  | ★4: 8  | ★3: 23| ★2: 10| ★1: 5                                            |\n| **Santé**                   | 2,63             | **Santé globale** : 2,71 (★5:1 | ★4:17 | ★3:7 | ★2:13 | ★1:10) <br> **Médecins généralistes** : 3,04 (★5:4 | ★4:15 | ★3:15 | ★2:11 | ★1:5) <br> **Attente RDV** : 2,84 (★5:5 | ★4:11 | ★3:15 | ★2:9 | ★1:10) <br> **Médecins spécialistes** : 1,94 (★5:1 | ★4:3 | ★3:10 | ★2:14 | ★1:22) |\n| **Transports**              | 2,35             | **Transports** : 2,06 (★5:0 | ★4:5 | ★3:7 | ★2:22 | ★1:14) <br> **Transports communs** : 1,92 (★5:0 | ★4:4 | ★3:9 | ★2:16 | ★1:21) <br> **Réseau routier** : 2,78 (★5:1 | ★4:19 | ★3:7 | ★2:14 | ★1:9) <br> **Encombrement** : 2,64 (★5:1 | ★4:11 | ★3:16 | ★2:13 | ★1:9) |\n\n---\n\n### **Patterns notables**\n1. **Éducation : un point fort** :\n   - Avec un score de **3,96/5**, l’éducation est la dimension **la mieux notée**, suggérant une satisfaction élevée envers le système éducatif local (établissements, enseignement, etc.). Cette tendance est cohérente avec les réponses brutes, où 13 répondants attribuent **5★** à cette dimension.\n\n2. **Transports : un point de friction majeur** :\n   - **Score global de 2,35/5**, avec des sous-dimensions particulièrement critiques :\n     - **Transports communs** (1,92/5) et **Transports** (2,06/5) sont les **plus mal notés**, indiquant des problèmes d’accessibilité, de fréquence ou de qualité des transports en commun",
+      "metadata": {
+        "rank": 1,
+        "type": "raptor_enquete_summary",
+        "view": "enquete_commune",
+        "num_chunks": 50,
+        "sub_question_idx": 4,
+        "sub_question": "Quels types d'acteurs (police municipale, gendarmerie, voisins, associations) sont évoqués dans les verbatims comme contribuant ou non à la sécurité à Corte ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 19 ans (Jeunes), Étudiant(e), à Corte, sur le thème 'Sécurité': La sécurité est importante vu le monde dans lequel on vit !",
+      "metadata": {
+        "rank": 2,
+        "commune": "Corte",
+        "genre": "Femme",
+        "age": 19,
+        "profession": "Étudiant(e)",
+        "dimension": "Sécurité",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 4,
+        "sub_question": "Quels types d'acteurs (police municipale, gendarmerie, voisins, associations) sont évoqués dans les verbatims comme contribuant ou non à la sécurité à Corte ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 26 ans (Jeunes adultes), Salarié(e) – Employé(e), à Corte, sur le thème 'Sécurité': La sécurité assure la tranquillité, la paix intérieure.",
+      "metadata": {
+        "rank": 3,
+        "commune": "Corte",
+        "genre": "Homme",
+        "age": 26,
+        "profession": "Salarié(e) – Employé(e)",
+        "dimension": "Sécurité",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 4,
+        "sub_question": "Quels types d'acteurs (police municipale, gendarmerie, voisins, associations) sont évoqués dans les verbatims comme contribuant ou non à la sécurité à Corte ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 28 ans (Jeunes adultes), Étudiant(e), à Corte, sur le thème 'Sécurité': La sécurité est importante pour moi ( marcher en sécurité dans les rues, pas de délinquance, hommes civilisés, vivre-ensemble respecté ) et la Corse maintien encore cette sécurité grace au nationalisme.",
+      "metadata": {
+        "rank": 4,
+        "commune": "Corte",
+        "genre": "Femme",
+        "age": 28,
+        "profession": "Étudiant(e)",
+        "dimension": "Sécurité",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 4,
+        "sub_question": "Quels types d'acteurs (police municipale, gendarmerie, voisins, associations) sont évoqués dans les verbatims comme contribuant ou non à la sécurité à Corte ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 21 ans (Jeunes), Étudiant(e), à Corte, sur le thème 'Sécurité': Sécurité : je veux me sentir en sécurité partout en Corse",
+      "metadata": {
+        "rank": 5,
+        "commune": "Corte",
+        "genre": "Femme",
+        "age": 21,
+        "profession": "Étudiant(e)",
+        "dimension": "Sécurité",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 4,
+        "sub_question": "Quels types d'acteurs (police municipale, gendarmerie, voisins, associations) sont évoqués dans les verbatims comme contribuant ou non à la sécurité à Corte ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 25 ans (Jeunes adultes), Étudiant(e), à Corte, sur le thème 'Sécurité': La sécurité est un point vitale pour une meilleure qualité de vie",
+      "metadata": {
+        "rank": 6,
+        "commune": "Corte",
+        "genre": "Homme",
+        "age": 25,
+        "profession": "Étudiant(e)",
+        "dimension": "Sécurité",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 4,
+        "sub_question": "Quels types d'acteurs (police municipale, gendarmerie, voisins, associations) sont évoqués dans les verbatims comme contribuant ou non à la sécurité à Corte ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nProfil des répondants de la commune de Corte — enquête qualité de vie en Corse\n\nNombre de répondants : 49\n\nRépartition par genre :\n  - Femme : 35 (71.4%)\n  - Homme : 14 (28.6%)\n\nRépartition par tranche d'âge :\n  - 15-29 : 17 (34.7%)\n  - 30-44 : 16 (32.7%)\n  - 45-59 : 14 (28.6%)\n  - 60-74 : 2 (4.1%)\n\nRépartition par catégorie socioprofessionnelle :\n  - Ãtudiant(e) : 16 (32.7%)\n  - Fonctionnaire : 16 (32.7%)\n  - SalariÃ©(e) â Cadre ou profession intermÃ©diaire : 9 (18.4%)\n  - SalariÃ©(e) â EmployÃ©(e) : 8 (16.3%)",
+      "metadata": {
+        "rank": 7,
+        "source_type": "communes_profil",
+        "data_type": "quanti",
+        "commune": "Corte",
+        "num_chunks": null,
+        "view_name": null,
+        "distance": 0.511,
+        "sub_question_idx": 4,
+        "sub_question": "Quels types d'acteurs (police municipale, gendarmerie, voisins, associations) sont évoqués dans les verbatims comme contribuant ou non à la sécurité à Corte ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théoriqu",
+      "metadata": {
+        "rank": 8,
+        "type": "oppchovec_score",
+        "source_type": "oppchovec_scores",
+        "commune": "",
+        "oppchovec_0_10": null,
+        "opp_0_10": null,
+        "cho_0_10": null,
+        "vec_0_10": null,
+        "distance": 0.0,
+        "sub_question_idx": 4,
+        "sub_question": "Quels types d'acteurs (police municipale, gendarmerie, voisins, associations) sont évoqués dans les verbatims comme contribuant ou non à la sécurité à Corte ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Corte : 2.71/10 (faible).\n\nSous-scores principaux de Corte :\n  • Opportunités (Opp) : 6.34/10 (élevé)  — rang 23e/360\n  • Choix (Cho)        : 5.87/10 (élevé)  — rang 343e/360\n  • Vécu (Vec)         : 0.11/10 (très faible)  — rang 359e/360\n  • OppChoVec global   : rang 246e/360\n\nSous-dimensions du score Opportunités (Opp) de Corte :\n  • Opp1 — Éducation      : 1.74/10 (faible)  [valeur brute : 5.255] — rang 205e/360\n  • Opp2 — Diversité soc. : 3.76/10 (moyen)  [indice Theil : 0.4439] — rang 73e/360\n  • Opp3 — Mobilité       : 8.43/10 (très élevé)  [indicateur : 178.4/200] — rang 160e/360\n  • Opp4 — TIC (numérique): 9.20/10 (très élevé)  [couverture : 92.0%] — rang 31e/360\n\nAnalyse de Corte :\n- Corte se distingue s",
+      "metadata": {
+        "rank": 9,
+        "type": "oppchovec_score",
+        "source_type": "oppchovec_scores",
+        "commune": "Corte",
+        "oppchovec_0_10": 2.713254,
+        "opp_0_10": 6.340089,
+        "cho_0_10": 5.869274,
+        "vec_0_10": 0.108391,
+        "distance": 0.528,
+        "sub_question_idx": 4,
+        "sub_question": "Quels types d'acteurs (police municipale, gendarmerie, voisins, associations) sont évoqués dans les verbatims comme contribuant ou non à la sécurité à Corte ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nEnquête Qualité de Vie en Corse — Description méthodologique\n\nPRÉSENTATION GÉNÉRALE\nEnquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.\nObjectif : recueillir les perceptions subjectives de la qualité de vie (QdV) et du bien-être,\nen complément des indicateurs o",
+      "metadata": {
+        "rank": 10,
+        "type": "methodology",
+        "source_type": "methodology",
+        "view_name": "enquete_methodology",
+        "sub_question_idx": 4,
+        "sub_question": "Quels types d'acteurs (police municipale, gendarmerie, voisins, associations) sont évoqués dans les verbatims comme contribuant ou non à la sécurité à Corte ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : dimension=Sécurité, nom=Corte (N=6 personnes)**\n\n**Themes dominants** :\n1. **Importance centrale de la sécurité** : La sécurité est perçue comme un pilier essentiel de la qualité de vie, avec des formulations comme *\"point vital\"* (Verbatim 5) ou *\"importante vu le monde dans lequel on vit\"* (Verbatim 1).\n2. **Sécurité comme condition de tranquillité** : Plusieurs verbatims associent la sécurité à la paix intérieure (*\"assure la tranquillité\"* – Verbatim 2) ou à un sentiment de sérénité (*\"Être rassurée\"* – Verbatim 6).\n3. **Sécurité dans l’espace public** : La marche en sécurité dans les rues et l’absence de délinquance sont explicitement mentionnées (*\"marcher en sécurité dans les rues, pas de délinquance\"* – Verbatim 3).\n4. **Dimension collective et identitaire** : Un verbatim lie la sécurité à la culture corse et au nationalisme (*\"la Corse maintien encore cette sécurité grâce au nationalisme\"* – Verbatim 3).\n\n**Points de convergence** :\n- **Primauté de la sécurité** : Tous les répondants soulignent son caractère indispensable, sans nuance négative.\n- **Lien avec le bien-être** : La sécurité est présentée comme un prérequis pour une meilleure qualité de vie (*\"meilleure qualité de vie\"* – Verbatim 5 ; *\"tranquillité, paix intérieure\"* – Verbatim 2).\n- **Attachement territorial** : La sécurité est associée à la Corse, soit comme un acquis (*\"Safe\"* – Verbatim 6), soit comme un élément culturel (*\"vivre-ensemble respecté\"* – Verbatim 3).\n\n**Points de divergence** :\n- **Perception de la délinquance** : Un seul verbatim mentionne explicitement la délinquance comme une menace (*\"pas de délinquance\"* – Verbatim 3), tandis que les autres abordent la sécurité de manière générale.\n- **Rôle du nationalisme** : L’idée que le nationalisme corse garantit la sécurité (Verbatim 3) n’est pas reprise ailleurs, suggérant une divergence sur les causes de la sécurité perçue.\n\n**Signaux faibles** :\n- **Formulation minimaliste** : *\"Être rassurée Safe\"* (Verbatim 6) pourrait indiquer une réponse expéditive ou une priorité absolue accordée à la sécurité, mais sans développement.\n- **Âge et statut** : Les jeunes (19–28 ans) et les adultes (46 ans) sont représentés, mais les cadres sont absents, ce qui limite la diversité des profils socio-professionnels.\n\n**Limites de l’échantillon** :\n- **Taille réduite** (N=6) : Les conclusions ne peuvent prétendre à une représentativité statistique.\n- **Surreprésentation des jeunes** : 5/6 répondants ont moins de 30 ans, ce qui peut biaiser la perception (ex. : sensibilité accrue aux questions de sécurité publique).\n- **Absence de critiques** : Aucun verbatim ne remet en cause l’état de la sécurité à Corte, ce qui peut refléter un biais de réponse (volonté de plaire ou manque de recul).",
+      "metadata": {
+        "rank": 0,
+        "type": "raptor_summary",
+        "view": "dimension*commune",
+        "num_chunks": 6,
+        "sub_question_idx": 5,
+        "sub_question": "Quelles propositions ou attentes des habitants de Corte en matière de sécurité émergent des verbatims (ex : renforcement des patrouilles, éclairage public, prévention) ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\n**Groupe : commune=Corte (N=50)**\n\n---\n\n### **Satisfaction globale**\nLes scores globaux reflètent une **satisfaction modérée** à **neutre** pour les habitants de Corte, avec des nuances selon les dimensions évaluées :\n- **Bonheur** : 3,52/5 (n=48) → Une majorité des répondants expriment un niveau de bonheur **moyen à satisfaisant**, mais avec une tendance à la neutralité ou à une satisfaction modérée.\n- **Qualité de vie** : 3,81/5 (n=48) → Une perception globalement **positive**, légèrement supérieure au score de bonheur, suggérant que les conditions de vie sont jugées meilleures que le ressenti émotionnel.\n- **Confiance dans l’avenir** : 2,96/5 (n=47) → **Le score le plus faible**, indiquant une **méfiance marquée** quant à l’évolution future de la qualité de vie, des opportunités ou des conditions locales. Ce résultat contraste avec les autres dimensions et pourrait refléter des inquiétudes structurelles (emploi, revenus, transports, etc.).\n\n---\n\n### **Toutes les dimensions — tableau complet (classées du score le plus élevé au plus faible)**\n\n| **Dimension**               | **Moyenne (/5)** | **Distribution des réponses**                                                                                     |\n|-----------------------------|------------------|------------------------------------------------------------------------------------------------------------------|\n| **Éducation**               | 3,96             | ★5: 13 | ★4: 24 | ★3: 8 | ★2: 2 | ★1: 1                                            |\n| **Logement**                | 3,67             | ★5: 11 | ★4: 23 | ★3: 3 | ★2: 9 | ★1: 2                                            |\n| **Emploi**                  | 3,71             | ★5: 9  | ★4: 23 | ★3: 11| ★2: 3 | ★1: 2                                            |\n| **Sécurité**                | 3,71             | ★5: 13 | ★4: 18 | ★3: 9 | ★2: 6 | ★1: 2                                            |\n| **Réseau**                  | 3,48             | ★5: 6  | ★4: 23 | ★3: 10| ★2: 6 | ★1: 3                                            |\n| **Ratio vie pro/vie perso** | 3,44             | ★5: 6  | ★4: 20 | ★3: 12| ★2: 9 | ★1: 1                                            |\n| **Revenus**                 | 3,21             | ★5: 4  | ★4: 17 | ★3: 14| ★2: 11| ★1: 2                                            |\n| **Services de proximité**   | 3,06             | ★5: 2  | ★4: 18 | ★3: 12| ★2: 11| ★1: 4                                            |\n| **Institutions**            | 3,02             | ★5: 3  | ★4: 13 | ★3: 18| ★2: 10| ★1: 4                                            |\n| **Culture**                 | 2,94             | ★5: 3  | ★4: 16 | ★3: 9 | ★2: 13| ★1: 6                                            |\n| **Communauté et relations** | 3,20             | **Entourage** : 3,80 (★5:14 | ★4:17 | ★3:14 | ★2:5 | ★1:0) <br> **Implication locale** : 2,60 (★5:3 | ★4:6 | ★3:15 | ★2:20 | ★1:6) |\n| **Tourisme**                | 2,83             | ★5: 2  | ★4: 8  | ★3: 23| ★2: 10| ★1: 5                                            |\n| **Santé**                   | 2,63             | **Santé globale** : 2,71 (★5:1 | ★4:17 | ★3:7 | ★2:13 | ★1:10) <br> **Médecins généralistes** : 3,04 (★5:4 | ★4:15 | ★3:15 | ★2:11 | ★1:5) <br> **Attente RDV** : 2,84 (★5:5 | ★4:11 | ★3:15 | ★2:9 | ★1:10) <br> **Médecins spécialistes** : 1,94 (★5:1 | ★4:3 | ★3:10 | ★2:14 | ★1:22) |\n| **Transports**              | 2,35             | **Transports** : 2,06 (★5:0 | ★4:5 | ★3:7 | ★2:22 | ★1:14) <br> **Transports communs** : 1,92 (★5:0 | ★4:4 | ★3:9 | ★2:16 | ★1:21) <br> **Réseau routier** : 2,78 (★5:1 | ★4:19 | ★3:7 | ★2:14 | ★1:9) <br> **Encombrement** : 2,64 (★5:1 | ★4:11 | ★3:16 | ★2:13 | ★1:9) |\n\n---\n\n### **Patterns notables**\n1. **Éducation : un point fort** :\n   - Avec un score de **3,96/5**, l’éducation est la dimension **la mieux notée**, suggérant une satisfaction élevée envers le système éducatif local (établissements, enseignement, etc.). Cette tendance est cohérente avec les réponses brutes, où 13 répondants attribuent **5★** à cette dimension.\n\n2. **Transports : un point de friction majeur** :\n   - **Score global de 2,35/5**, avec des sous-dimensions particulièrement critiques :\n     - **Transports communs** (1,92/5) et **Transports** (2,06/5) sont les **plus mal notés**, indiquant des problèmes d’accessibilité, de fréquence ou de qualité des transports en commun",
+      "metadata": {
+        "rank": 1,
+        "type": "raptor_enquete_summary",
+        "view": "enquete_commune",
+        "num_chunks": 50,
+        "sub_question_idx": 5,
+        "sub_question": "Quelles propositions ou attentes des habitants de Corte en matière de sécurité émergent des verbatims (ex : renforcement des patrouilles, éclairage public, prévention) ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 19 ans (Jeunes), Étudiant(e), à Corte, sur le thème 'Sécurité': La sécurité est importante vu le monde dans lequel on vit !",
+      "metadata": {
+        "rank": 2,
+        "commune": "Corte",
+        "genre": "Femme",
+        "age": 19,
+        "profession": "Étudiant(e)",
+        "dimension": "Sécurité",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 5,
+        "sub_question": "Quelles propositions ou attentes des habitants de Corte en matière de sécurité émergent des verbatims (ex : renforcement des patrouilles, éclairage public, prévention) ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 26 ans (Jeunes adultes), Salarié(e) – Employé(e), à Corte, sur le thème 'Sécurité': La sécurité assure la tranquillité, la paix intérieure.",
+      "metadata": {
+        "rank": 3,
+        "commune": "Corte",
+        "genre": "Homme",
+        "age": 26,
+        "profession": "Salarié(e) – Employé(e)",
+        "dimension": "Sécurité",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 5,
+        "sub_question": "Quelles propositions ou attentes des habitants de Corte en matière de sécurité émergent des verbatims (ex : renforcement des patrouilles, éclairage public, prévention) ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 28 ans (Jeunes adultes), Étudiant(e), à Corte, sur le thème 'Sécurité': La sécurité est importante pour moi ( marcher en sécurité dans les rues, pas de délinquance, hommes civilisés, vivre-ensemble respecté ) et la Corse maintien encore cette sécurité grace au nationalisme.",
+      "metadata": {
+        "rank": 4,
+        "commune": "Corte",
+        "genre": "Femme",
+        "age": 28,
+        "profession": "Étudiant(e)",
+        "dimension": "Sécurité",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 5,
+        "sub_question": "Quelles propositions ou attentes des habitants de Corte en matière de sécurité émergent des verbatims (ex : renforcement des patrouilles, éclairage public, prévention) ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Femme de 21 ans (Jeunes), Étudiant(e), à Corte, sur le thème 'Sécurité': Sécurité : je veux me sentir en sécurité partout en Corse",
+      "metadata": {
+        "rank": 5,
+        "commune": "Corte",
+        "genre": "Femme",
+        "age": 21,
+        "profession": "Étudiant(e)",
+        "dimension": "Sécurité",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 5,
+        "sub_question": "Quelles propositions ou attentes des habitants de Corte en matière de sécurité émergent des verbatims (ex : renforcement des patrouilles, éclairage public, prévention) ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nVerbatim d'un(e) Homme de 25 ans (Jeunes adultes), Étudiant(e), à Corte, sur le thème 'Sécurité': La sécurité est un point vitale pour une meilleure qualité de vie",
+      "metadata": {
+        "rank": 6,
+        "commune": "Corte",
+        "genre": "Homme",
+        "age": 25,
+        "profession": "Étudiant(e)",
+        "dimension": "Sécurité",
+        "source_type": "verbatim_evidence",
+        "sub_question_idx": 5,
+        "sub_question": "Quelles propositions ou attentes des habitants de Corte en matière de sécurité émergent des verbatims (ex : renforcement des patrouilles, éclairage public, prévention) ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nProfil des répondants de la commune de Corte — enquête qualité de vie en Corse\n\nNombre de répondants : 49\n\nRépartition par genre :\n  - Femme : 35 (71.4%)\n  - Homme : 14 (28.6%)\n\nRépartition par tranche d'âge :\n  - 15-29 : 17 (34.7%)\n  - 30-44 : 16 (32.7%)\n  - 45-59 : 14 (28.6%)\n  - 60-74 : 2 (4.1%)\n\nRépartition par catégorie socioprofessionnelle :\n  - Ãtudiant(e) : 16 (32.7%)\n  - Fonctionnaire : 16 (32.7%)\n  - SalariÃ©(e) â Cadre ou profession intermÃ©diaire : 9 (18.4%)\n  - SalariÃ©(e) â EmployÃ©(e) : 8 (16.3%)",
+      "metadata": {
+        "rank": 7,
+        "source_type": "communes_profil",
+        "data_type": "quanti",
+        "commune": "Corte",
+        "num_chunks": null,
+        "view_name": null,
+        "distance": 0.51,
+        "sub_question_idx": 5,
+        "sub_question": "Quelles propositions ou attentes des habitants de Corte en matière de sécurité émergent des verbatims (ex : renforcement des patrouilles, éclairage public, prévention) ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théoriqu",
+      "metadata": {
+        "rank": 8,
+        "type": "oppchovec_score",
+        "source_type": "oppchovec_scores",
+        "commune": "",
+        "oppchovec_0_10": null,
+        "opp_0_10": null,
+        "cho_0_10": null,
+        "vec_0_10": null,
+        "distance": 0.0,
+        "sub_question_idx": 5,
+        "sub_question": "Quelles propositions ou attentes des habitants de Corte en matière de sécurité émergent des verbatims (ex : renforcement des patrouilles, éclairage public, prévention) ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Corte : 2.71/10 (faible).\n\nSous-scores principaux de Corte :\n  • Opportunités (Opp) : 6.34/10 (élevé)  — rang 23e/360\n  • Choix (Cho)        : 5.87/10 (élevé)  — rang 343e/360\n  • Vécu (Vec)         : 0.11/10 (très faible)  — rang 359e/360\n  • OppChoVec global   : rang 246e/360\n\nSous-dimensions du score Opportunités (Opp) de Corte :\n  • Opp1 — Éducation      : 1.74/10 (faible)  [valeur brute : 5.255] — rang 205e/360\n  • Opp2 — Diversité soc. : 3.76/10 (moyen)  [indice Theil : 0.4439] — rang 73e/360\n  • Opp3 — Mobilité       : 8.43/10 (très élevé)  [indicateur : 178.4/200] — rang 160e/360\n  • Opp4 — TIC (numérique): 9.20/10 (très élevé)  [couverture : 92.0%] — rang 31e/360\n\nAnalyse de Corte :\n- Corte se distingue s",
+      "metadata": {
+        "rank": 9,
+        "type": "oppchovec_score",
+        "source_type": "oppchovec_scores",
+        "commune": "Corte",
+        "oppchovec_0_10": 2.713254,
+        "opp_0_10": 6.340089,
+        "cho_0_10": 5.869274,
+        "vec_0_10": 0.108391,
+        "distance": 0.492,
+        "sub_question_idx": 5,
+        "sub_question": "Quelles propositions ou attentes des habitants de Corte en matière de sécurité émergent des verbatims (ex : renforcement des patrouilles, éclairage public, prévention) ?"
+      },
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nEnquête Qualité de Vie en Corse — Description méthodologique\n\nPRÉSENTATION GÉNÉRALE\nEnquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.\nObjectif : recueillir les perceptions subjectives de la qualité de vie (QdV) et du bien-être,\nen complément des indicateurs o",
+      "metadata": {
+        "rank": 10,
+        "type": "methodology",
+        "source_type": "methodology",
+        "view_name": "enquete_methodology",
+        "sub_question_idx": 5,
+        "sub_question": "Quelles propositions ou attentes des habitants de Corte en matière de sécurité émergent des verbatims (ex : renforcement des patrouilles, éclairage public, prévention) ?"
+      },
+      "source_type": "",
+      "label": ""
+    }
+  ],
+  "sources_mobilisees": [
+    {
+      "sq": 1,
+      "types": [
+        "Verbatims bruts enquête citoyenne — Corte",
+        "Entretiens semi-directifs (6 répondants)"
+      ]
+    },
+    {
+      "sq": 2,
+      "types": [
+        "Verbatims bruts enquête citoyenne — Corte"
+      ]
+    },
+    {
+      "sq": 3,
+      "types": [
+        "Verbatims bruts enquête citoyenne — Corte",
+        "Entretiens semi-directifs (6 répondants)"
+      ]
+    },
+    {
+      "sq": 4,
+      "types": [
+        "Verbatims bruts enquête citoyenne — Corte",
+        "Entretiens semi-directifs (6 répondants)"
+      ]
+    },
+    {
+      "sq": 5,
+      "types": [
+        "Verbatims bruts enquête citoyenne — Corte",
+        "Entretiens semi-directifs (6 répondants)"
+      ]
+    }
+  ],
+  "raisonnement": "La réponse utilise les verbatims pour fournir une analyse précise de la perception de la sécurité à Corte, en soulignant les thèmes dominants et les limites des données.",
+  "section_observee": "Retrieval mono-commune / Retrieval source-spécifique",
+  "comportement_attendu_selon_grille": "Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.",
+  "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+  "coherence_comportement_observe": "oui",
+  "sources_inventaire": [
+    {
+      "source": "raptor_summary:dimension*commune:Corte",
+      "type": "quali"
+    },
+    {
+      "source": "entretiens:Corte",
+      "type": "quali"
+    }
+  ],
+  "mislabelling_detecte": {
+    "regle_1_quali_quanti": "non",
+    "regle_2_surinterpretation_oppchovec": "non",
+    "regle_3_absence_quali_non_signalee": "non",
+    "regle_4_extrapolation_sous_groupe": "non"
+  },
+  "mislabelling_flag": false,
+  "elements_specifiques_question": [
+    "verbatims",
+    "sécurité",
+    "Corte"
+  ],
+  "elements_traitement": [
+    {
+      "element": "verbatims",
+      "traitement": "precis"
+    },
+    {
+      "element": "sécurité",
+      "traitement": "precis"
+    },
+    {
+      "element": "Corte",
+      "traitement": "precis"
+    }
+  ],
+  "pertinence": 5,
+  "pertinence_justif": "La réponse est parfaitement alignée avec la question, utilisant les verbatims pour fournir une analyse ciblée sur la sécurité à Corte.",
+  "fondement_factuel": 5,
+  "fondement_factuel_justif": "Les affirmations sont bien fondées sur les verbatims et synthèses RAPTOR disponibles, sans mislabelling.",
+  "nuance_incertitude": 5,
+  "nuance_incertitude_justif": "La réponse inclut des modalisateurs et signale les limites des données, notamment l'échantillon réduit et le biais potentiel.",
+  "coherence_qualiquanti": 5,
+  "coherence_qualiquanti_justif": "L'intégration des données qualitatives est exemplaire, avec un ciblage précis sur les perceptions de sécurité à Corte.",
+  "score_global": 5.0,
+  "judge_error": null,
+  "judge_elapsed_s": 8.0,
+  "k": 5,
+  "judge_model": "gpt-4o",
+  "judge_version": "V4.3",
+  "timestamp": "2026-07-18T17:38:05.402730"
+}

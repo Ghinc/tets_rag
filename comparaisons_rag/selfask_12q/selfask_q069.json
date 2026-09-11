@@ -1,0 +1,391 @@
+{
+  "excel_row": 69,
+  "question": "Le niveau de densité de population peut-il contribuer à expliquer les écarts de bien-être perçu entre Ajaccio et Lozzi ?",
+  "section": "Raisonnement causal et contre-intuitif",
+  "subsection": "Raisonnement causal explicite",
+  "expected_type": "reponse_substantielle_attendue",
+  "hops": [
+    {
+      "hop": 1,
+      "follow_up": "Quels sont les scores OppChoVec globaux et les composantes spécifiques (Opp, Cho, Vec) pour Ajaccio et Lozzi?",
+      "model_raw": "Follow up: Quels sont les scores OppChoVec globaux et les composantes spécifiques (Opp, Cho, Vec) pour Ajaccio et Lozzi ?",
+      "sources": [
+        {
+          "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nClassement des composantes OppChoVec — Corse entière (360 communes).\n\nSous-scores principaux (du plus élevé au plus faible) :\n  1. Cho (Choix)               : 8.79/10 (très élevé)\n  2. Opp (Opportunités)        : 3.87/10 (moyen)\n  3. Vec (Vécu)                : 3.46/10 (moyen)\n\n-> COMPOSANTE LA PLUS ELEVEE  : Cho (Choix) (8.79/10)\n-> COMPOSANTE LA PLUS FAIBLE  : Vec (Vécu) (3.46/10)\n\nSous-dimensions du score Opportunités (Opp), classées :\n  1. Opp4 — Accès TIC               : 6.02/10 (élevé)\n  2. Opp3 — Mobilité                : 5.26/10 (élevé)\n  3. Opp2 — Diversité sociale       : 2.60/10 (faible)\n  4. Opp1 — Éducation               : 2.35/10 (faible)\n\n-> SOUS-DIMENSION OPP LA PLUS ELEVEE : Opp4 — Accès TIC (6.02/10)\n-> SOUS-DIMENSION OPP LA PLUS FAIBLE : Opp1 — Éducation (2.35/10)",
+          "metadata": {
+            "epci": "",
+            "type": "classement",
+            "source": "oppchovec_classement",
+            "zone": "Corse"
+          },
+          "source_type": "oppchovec_scores",
+          "label": "Scores OppChoVec — Corse"
+        },
+        {
+          "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théorique >= 30 min de trajet.\n\n• Opp4 — Avoir accès aux TIC (poids 0,25)\n  Couverture locale par Internet haut débit (>= 30 Mbit/s) et réseau 4G.\n\nDIMENSION 2 — CHOIX (Cho)\nLa liberté de choix effective dont disposent les individus sur ce territoire.\n\n• Cho1 — Ne pas être discriminé(e) (poids 0,5)\n  Présence ou absence de quartiers cibles de la politique de la ville dans la commune (indicateur pénalisant la concentration de précarité).\n\n• Cho2 — Avoir les moyens d'influencer les décisions publiques (poids 0,5)\n  Proportion d'individus ayant le droit de vote (nationalité française, >= 18 ans) parmi la population en âge de travailler (>= 16 ans).\n\nDIMENSION 3 — VÉCU (Vec)\nLes réalisations effectives des individus — ce qui a été réellement accompli et vécu.\n\n• Vec1 — Avoir un revenu décent (poids 0,25)\n  Revenu fiscal moyen par foyer fiscal dans la commune.\n\n• Vec2 — Avoir un logement décent (poids 0,25, réparti sur 3 sous-indicateurs)\n  - Vec2a : Nombre moyen de personnes par pièce (surpeuplement)\n  - Vec2b : Proportion de logements avec équipements sanitaires complets (eau chaude, douche/baignoire, chauffage, cuisine avec évier)\n  - Vec2c : Proportion de la population vivant dans une habitation individuelle\n\n• Vec3 — Être bien inséré sur le marché du travail (poids 0,25)\n  Stabilité des emplois des résidents (5 niveaux : chômeur, emploi aidé, contrat ponctuel, CDD, emploi stable — CDI, fonctionnaire, indépendant).\n\n• Vec4 — Être proche des services (poids 0,25)\n  Nombre d'établissements de vie courante accessibles en moins de 20 minutes (santé, éducation, commerces, culture, administration), calculé par algorithme de plus court chemin (Dijkstra) sur réseau routier.\n\nCALCUL DE L'INDICE\n\nÉtape 1 — Standardisation (commensurabilité) :\n  V(i,j,k) = (Xijk − Xjk,min) / (Xjk,max − Xjk,min)\n  Chaque sous-indicateur est ramené entre 0 (minimum observé) et 1 (maximum observé).\n\nÉtape 2 — Agrégation par dimension (moyenne pondérée) :\n  Dk(i) = Σ pjk × V(i,j,k)\n  Les poids pjk sont égaux au sein de chaque dimension.\n\nÉtape 3 — Indice global (avec aversion à la pauvreté et complémentarité) :\n  OppChoVec(i) = agrégation des 3 dimensions Dk avec :\n    - paramètre β = 2,5 (aversion à la pauvreté : pénalise les très faibles scores)\n    - paramètre γ = 1,5 (complémentarité : pénalise les déséquilibres entre dimensions)\n  Le résultat brut (0-1) est ensuite renormalisé sur 0-10 pour l'application corse.\n\nINTERPRÉTATION DE L'ÉCHELLE 0-10\n\n- 0 = niveau de bien-être minimal parmi les 360 communes corses\n- 10 = niveau de bien-être maximal parmi les 360 communes corses\n- ~5 = niveau médian corse\n\nUn score élevé signifie que la commune offre à la fois de bonnes opportunités, une réelle liberté de choix et un vécu satisfaisant. Un score faible peut refléter un déficit sur une ou plusieurs dimensions. Les trois scores partiels (Opp, Cho, Vec) permettent de diagnostiquer la nature du déficit : une commune peut avoir de bonnes opportunités (Opp élevé) mais un vécu difficile (Vec faible), signalant un décalage entre l'offre territoriale et les conditions de vie réelles.\n\nSource : Bourdeau-Lepage L. (2011), adapté pour la Corse. Données : oppchovec_betti_0_10.",
+          "metadata": {
+            "source": "methodology",
+            "type": "methodology",
+            "commune": ""
+          },
+          "source_type": "oppchovec_scores",
+          "label": "Scores OppChoVec — "
+        },
+        {
+          "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Ajaccio : 5.78/10 (élevé).\n\nSous-scores principaux de Ajaccio :\n  • Opportunités (Opp) : 10.00/10 (très élevé)  — rang 1e/360\n  • Choix (Cho)        : 1.27/10 (très faible)  — rang 358e/360\n  • Vécu (Vec)         : 4.80/10 (moyen)  — rang 41e/360\n  • OppChoVec global   : rang 19e/360\n\nSous-dimensions du score Opportunités (Opp) de Ajaccio :\n  • Opp1 — Éducation      : 7.42/10 (élevé)  [valeur brute : 5.760] — rang 24e/360\n  • Opp2 — Diversité soc. : 1.96/10 (faible)  [indice Theil : 0.2787] — rang 216e/360\n  • Opp3 — Mobilité       : 8.99/10 (très élevé)  [indicateur : 186.1/200] — rang 128e/360\n  • Opp4 — TIC (numérique): 9.35/10 (très élevé)  [couverture : 93.5%] — rang 24e/360\n\nAnalyse de Ajaccio :\n- Ajaccio se distingue surtout par ses opportunités (Opp=10.00/10).\n- Le point le plus faible de Ajaccio est le score Choix (1.27/10).\n\nValeurs brutes (non normalisées) de Ajaccio :\n- OppChoVec brut : 0.1026\n- Opp brut : 0.7095\n- Cho brut : 0.4294\n- Vec brut : 0.5801",
+          "metadata": {
+            "opp1_0_10": 7.4157,
+            "rank_opp1": 24,
+            "rank_opp": 1,
+            "opp4_0_10": 9.35,
+            "source": "oppchovec_betti_0_10",
+            "cho_0_10": 1.265509,
+            "opp3_0_10": 8.9891,
+            "rank_vec": 41,
+            "rank_total": 19,
+            "rank_opp2": 216,
+            "opp2_0_10": 1.9557,
+            "rank_opp4": 24,
+            "rank_opp3": 128,
+            "vec_0_10": 4.796981,
+            "oppchovec_0_10": 5.779754,
+            "opp_0_10": 10.0,
+            "commune": "Ajaccio",
+            "rank_cho": 358
+          },
+          "source_type": "oppchovec_scores",
+          "label": "Scores OppChoVec — Ajaccio"
+        },
+        {
+          "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Lozzi : 2.35/10 (faible).\n\nSous-scores principaux de Lozzi :\n  • Opportunités (Opp) : 2.27/10 (faible)  — rang 302e/360\n  • Choix (Cho)        : 9.20/10 (très élevé)  — rang 181e/360\n  • Vécu (Vec)         : 3.04/10 (moyen)  — rang 235e/360\n  • OppChoVec global   : rang 291e/360\n\nSous-dimensions du score Opportunités (Opp) de Lozzi :\n  • Opp1 — Éducation      : 2.06/10 (faible)  [valeur brute : 5.283] — rang 177e/360\n  • Opp2 — Diversité soc. : 2.52/10 (faible)  [indice Theil : 0.3308] — rang 151e/360\n  • Opp3 — Mobilité       : 1.64/10 (faible)  [indicateur : 85.0/200] — rang 307e/360\n  • Opp4 — TIC (numérique): 4.50/10 (moyen)  [couverture : 45.0%] — rang 327e/360\n\nAnalyse de Lozzi :\n- Lozzi se distingue surtout par ses choix (Cho=9.20/10).\n- Le point le plus faible de Lozzi est le score Opportunités (2.27/10).\n\nValeurs brutes (non normalisées) de Lozzi :\n- OppChoVec brut : 0.0554\n- Opp brut : 0.2513\n- Cho brut : 0.9475\n- Vec brut : 0.4858",
+          "metadata": {
+            "cho_0_10": 9.196357,
+            "rank_opp": 302,
+            "rank_total": 291,
+            "vec_0_10": 3.037185,
+            "commune": "Lozzi",
+            "rank_opp4": 327,
+            "rank_opp3": 307,
+            "rank_opp2": 151,
+            "opp2_0_10": 2.5248,
+            "rank_cho": 181,
+            "opp1_0_10": 2.0562,
+            "opp_0_10": 2.266512,
+            "oppchovec_0_10": 2.353016,
+            "rank_vec": 235,
+            "source": "oppchovec_betti_0_10",
+            "opp3_0_10": 1.6364,
+            "rank_opp1": 177,
+            "opp4_0_10": 4.5
+          },
+          "source_type": "oppchovec_scores",
+          "label": "Scores OppChoVec — Lozzi"
+        },
+        {
+          "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nQ : Par rapport à quoi ?  \n\nA : En tout cas, les vaches c’est le moment où elles sont redescendues donc dans le village, c'est compliqué. Après sur la façon, après tu sais, juillet-août c’est le moment où tous les gens du continent reviennent, les gens de la diaspora … nous Lozzi c'est un village sympa, ça se passe bien, tu vois y a pas de souci à part un ou deux énergumènes mais qu'on connaît depuis toujours tu vois, mais sinon y a pas de problème hein. On a on a un bar qui est ouvert que l'été, qui fait pizzeria et on a le foyer qui est ouvert toute l'année, tous les week-ends. Au début on avait rien d'ouvert le week-end et quand le foyer a rouvert ça a fait aussi que les gens sont remonté le week-end et savaient que le vendredi, samedi, dimanche y avait un lieu où se retrouver. Tu vois l'hiver c'est hyper important. L'été, ils font un comptoir d'été. Après y a les campings, on peut boire un coup, c’est très sympa aussi, mais on y va pas forcément tous les jours comme on ira au foyer par exemple.",
+          "metadata": {
+            "nom": "Lozzi",
+            "source_type": "entretien",
+            "commune": "Lozzi",
+            "data_type": "quali",
+            "num_entretien": 1,
+            "chunk_idx": 37
+          },
+          "source_type": "portrait_entretiens",
+          "label": "Entretien semi-directif (subjectif/quali)"
+        }
+      ],
+      "intermediate_answer": "# Scores OppChoVec : Ajaccio vs Lozzi\n\n## Ajaccio\n\nSelon les indicateurs territoriaux objectifs, **Ajaccio affiche un score OppChoVec global de 5.78/10 (rang 19e/360 communes corses)**, reflétant un bien-être territorial élevé.\n\n**Composantes principales :**\n- **Opportunités (Opp) : 10.00/10 (très élevé, rang 1er/360)** — Ajaccio excelle en accès aux ressources territoriales, notamment grâce à une mobilité très élevée (8.99/10) et un accès TIC excellent (9.35/10, couverture 93.5%). L'éducation moyenne est également solide (7.42/10, rang 24e).\n- **Choix (Cho) : 1.27/10 (très faible, rang 358e/360)** — Contraste saisissant : la commune affiche une liberté effective extrêmement faible, indiquant une présence de quartiers prioritaires ou une structure démographique/électorale contrainte.\n- **Vécu (Vec) : 4.80/10 (moyen, rang 41e/360)** — Les réalisations concrètes (revenu fiscal, qualité du logement, stabilité de l'emploi, accès aux services) restent modérées.\n\n## Lozzi\n\nSelon les indicateurs territoriaux objectifs, **Lozzi affiche un score OppChoVec global de 2.35/10 (faible, rang 291e/360 communes corses)**, reflétant un bien-être territorial limité.\n\n**Composantes principales :**\n- **Opportunités (Opp) : 2.27/10 (faible, rang 302e/360)** — Lozzi souffre de ressources territoriales réduites, particulièrement en mobilité (1.64/10, indicateur 85.0/200) et en accès TIC (4.50/10, couverture 45.0%). L'éducation (2.06/10) et la diversité sociale (2.52/10) sont également faibles.\n- **Choix (Cho) : 9.20/10 (très élevé, rang 181e/360)** — Paradoxalement, Lozzi bénéficie d'une liberté effective très élevée, sans quartiers prioritaires et avec une structure électorale stable.\n- **Vécu (Vec) : 3.04/10 (moyen, rang 235e/360)** — Les conditions de vie concrètes restent limitées.\n\n**Synthèse comparative :** Ajaccio dispose d'opportunités exceptionnelles mais d'une liberté effective très contrainte ; Lozzi inverse ce profil avec une liberté élevée mais des ressources territoriales très réduites."
+    },
+    {
+      "hop": 2,
+      "follow_up": "Quels sont les niveaux de densité de population et les verbatims citoyens disponibles pour Ajaccio et Lozzi concernant le bien-être perçu?",
+      "model_raw": "Follow up: Quels sont les niveaux de densité de population et les verbatims citoyens disponibles pour Ajaccio et Lozzi concernant le bien-être perçu ?",
+      "sources": [
+        {
+          "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théorique >= 30 min de trajet.\n\n• Opp4 — Avoir accès aux TIC (poids 0,25)\n  Couverture locale par Internet haut débit (>= 30 Mbit/s) et réseau 4G.\n\nDIMENSION 2 — CHOIX (Cho)\nLa liberté de choix effective dont disposent les individus sur ce territoire.\n\n• Cho1 — Ne pas être discriminé(e) (poids 0,5)\n  Présence ou absence de quartiers cibles de la politique de la ville dans la commune (indicateur pénalisant la concentration de précarité).\n\n• Cho2 — Avoir les moyens d'influencer les décisions publiques (poids 0,5)\n  Proportion d'individus ayant le droit de vote (nationalité française, >= 18 ans) parmi la population en âge de travailler (>= 16 ans).\n\nDIMENSION 3 — VÉCU (Vec)\nLes réalisations effectives des individus — ce qui a été réellement accompli et vécu.\n\n• Vec1 — Avoir un revenu décent (poids 0,25)\n  Revenu fiscal moyen par foyer fiscal dans la commune.\n\n• Vec2 — Avoir un logement décent (poids 0,25, réparti sur 3 sous-indicateurs)\n  - Vec2a : Nombre moyen de personnes par pièce (surpeuplement)\n  - Vec2b : Proportion de logements avec équipements sanitaires complets (eau chaude, douche/baignoire, chauffage, cuisine avec évier)\n  - Vec2c : Proportion de la population vivant dans une habitation individuelle\n\n• Vec3 — Être bien inséré sur le marché du travail (poids 0,25)\n  Stabilité des emplois des résidents (5 niveaux : chômeur, emploi aidé, contrat ponctuel, CDD, emploi stable — CDI, fonctionnaire, indépendant).\n\n• Vec4 — Être proche des services (poids 0,25)\n  Nombre d'établissements de vie courante accessibles en moins de 20 minutes (santé, éducation, commerces, culture, administration), calculé par algorithme de plus court chemin (Dijkstra) sur réseau routier.\n\nCALCUL DE L'INDICE\n\nÉtape 1 — Standardisation (commensurabilité) :\n  V(i,j,k) = (Xijk − Xjk,min) / (Xjk,max − Xjk,min)\n  Chaque sous-indicateur est ramené entre 0 (minimum observé) et 1 (maximum observé).\n\nÉtape 2 — Agrégation par dimension (moyenne pondérée) :\n  Dk(i) = Σ pjk × V(i,j,k)\n  Les poids pjk sont égaux au sein de chaque dimension.\n\nÉtape 3 — Indice global (avec aversion à la pauvreté et complémentarité) :\n  OppChoVec(i) = agrégation des 3 dimensions Dk avec :\n    - paramètre β = 2,5 (aversion à la pauvreté : pénalise les très faibles scores)\n    - paramètre γ = 1,5 (complémentarité : pénalise les déséquilibres entre dimensions)\n  Le résultat brut (0-1) est ensuite renormalisé sur 0-10 pour l'application corse.\n\nINTERPRÉTATION DE L'ÉCHELLE 0-10\n\n- 0 = niveau de bien-être minimal parmi les 360 communes corses\n- 10 = niveau de bien-être maximal parmi les 360 communes corses\n- ~5 = niveau médian corse\n\nUn score élevé signifie que la commune offre à la fois de bonnes opportunités, une réelle liberté de choix et un vécu satisfaisant. Un score faible peut refléter un déficit sur une ou plusieurs dimensions. Les trois scores partiels (Opp, Cho, Vec) permettent de diagnostiquer la nature du déficit : une commune peut avoir de bonnes opportunités (Opp élevé) mais un vécu difficile (Vec faible), signalant un décalage entre l'offre territoriale et les conditions de vie réelles.\n\nSource : Bourdeau-Lepage L. (2011), adapté pour la Corse. Données : oppchovec_betti_0_10.",
+          "metadata": {
+            "type": "methodology",
+            "commune": "",
+            "source": "methodology"
+          },
+          "source_type": "oppchovec_scores",
+          "label": "Scores OppChoVec — "
+        },
+        {
+          "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Ajaccio : 5.78/10 (élevé).\n\nSous-scores principaux de Ajaccio :\n  • Opportunités (Opp) : 10.00/10 (très élevé)  — rang 1e/360\n  • Choix (Cho)        : 1.27/10 (très faible)  — rang 358e/360\n  • Vécu (Vec)         : 4.80/10 (moyen)  — rang 41e/360\n  • OppChoVec global   : rang 19e/360\n\nSous-dimensions du score Opportunités (Opp) de Ajaccio :\n  • Opp1 — Éducation      : 7.42/10 (élevé)  [valeur brute : 5.760] — rang 24e/360\n  • Opp2 — Diversité soc. : 1.96/10 (faible)  [indice Theil : 0.2787] — rang 216e/360\n  • Opp3 — Mobilité       : 8.99/10 (très élevé)  [indicateur : 186.1/200] — rang 128e/360\n  • Opp4 — TIC (numérique): 9.35/10 (très élevé)  [couverture : 93.5%] — rang 24e/360\n\nAnalyse de Ajaccio :\n- Ajaccio se distingue surtout par ses opportunités (Opp=10.00/10).\n- Le point le plus faible de Ajaccio est le score Choix (1.27/10).\n\nValeurs brutes (non normalisées) de Ajaccio :\n- OppChoVec brut : 0.1026\n- Opp brut : 0.7095\n- Cho brut : 0.4294\n- Vec brut : 0.5801",
+          "metadata": {
+            "source": "oppchovec_betti_0_10",
+            "rank_vec": 41,
+            "cho_0_10": 1.265509,
+            "rank_opp": 1,
+            "rank_opp2": 216,
+            "rank_cho": 358,
+            "opp1_0_10": 7.4157,
+            "rank_opp4": 24,
+            "oppchovec_0_10": 5.779754,
+            "opp_0_10": 10.0,
+            "opp2_0_10": 1.9557,
+            "rank_total": 19,
+            "vec_0_10": 4.796981,
+            "commune": "Ajaccio",
+            "opp3_0_10": 8.9891,
+            "rank_opp1": 24,
+            "opp4_0_10": 9.35,
+            "rank_opp3": 128
+          },
+          "source_type": "oppchovec_scores",
+          "label": "Scores OppChoVec — Ajaccio"
+        },
+        {
+          "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Lozzi : 2.35/10 (faible).\n\nSous-scores principaux de Lozzi :\n  • Opportunités (Opp) : 2.27/10 (faible)  — rang 302e/360\n  • Choix (Cho)        : 9.20/10 (très élevé)  — rang 181e/360\n  • Vécu (Vec)         : 3.04/10 (moyen)  — rang 235e/360\n  • OppChoVec global   : rang 291e/360\n\nSous-dimensions du score Opportunités (Opp) de Lozzi :\n  • Opp1 — Éducation      : 2.06/10 (faible)  [valeur brute : 5.283] — rang 177e/360\n  • Opp2 — Diversité soc. : 2.52/10 (faible)  [indice Theil : 0.3308] — rang 151e/360\n  • Opp3 — Mobilité       : 1.64/10 (faible)  [indicateur : 85.0/200] — rang 307e/360\n  • Opp4 — TIC (numérique): 4.50/10 (moyen)  [couverture : 45.0%] — rang 327e/360\n\nAnalyse de Lozzi :\n- Lozzi se distingue surtout par ses choix (Cho=9.20/10).\n- Le point le plus faible de Lozzi est le score Opportunités (2.27/10).\n\nValeurs brutes (non normalisées) de Lozzi :\n- OppChoVec brut : 0.0554\n- Opp brut : 0.2513\n- Cho brut : 0.9475\n- Vec brut : 0.4858",
+          "metadata": {
+            "cho_0_10": 9.196357,
+            "commune": "Lozzi",
+            "opp1_0_10": 2.0562,
+            "opp3_0_10": 1.6364,
+            "source": "oppchovec_betti_0_10",
+            "rank_cho": 181,
+            "rank_opp2": 151,
+            "opp2_0_10": 2.5248,
+            "rank_opp3": 307,
+            "rank_opp4": 327,
+            "vec_0_10": 3.037185,
+            "rank_total": 291,
+            "oppchovec_0_10": 2.353016,
+            "rank_vec": 235,
+            "opp_0_10": 2.266512,
+            "opp4_0_10": 4.5,
+            "rank_opp": 302,
+            "rank_opp1": 177
+          },
+          "source_type": "oppchovec_scores",
+          "label": "Scores OppChoVec — Lozzi"
+        },
+        {
+          "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nQ : En fait le bien-être c’est différents critères que vous vous allez chercher, ou qui sont importants pour vous, pour vous sentir bien dans votre territoire. Y en a par exemple ça va être la proximité de l’environnement, ça va être les services de proximité etc.  \n\nA: Alors je suis obligé de parler un peu de moi et de ma vie, sinon je vais avoir du mal à expliquer… Alors pour revenir à Lozzi. Bon Lozzi est un village très particulier, c’est la commune la plus haute de Corse, le sommet monte sur le Monte Cintu à 2700m et continue, traverse le massif du Cintu et arrive du côté de Galéria, Calvi à 1 km de la mer. Pourquoi ? Parce que c’est le chemin de transhumance des bergers traditionnels de la vallée, de Lozzi en particulier. Donc depuis le XXème siècle, ils avaient la main mise sur le territoire, comme les cinq communes du Niolu par exemple, là-bas le village de l’autre côté il arrive à 1km de Porto. Et tous les gens de Porto sont originaires d’ici, et comme tous les gens de Calvi, de ce qu’on appelle la Balagne sont originaires d’ici. Vous retrouvez les mêmes noms, ils savent tous d’où ils viennent, d’où ils sont. Comme Calacuccia arrive à 1km de Corte en passant par-dessus la montagne en face. En plus Lozzi avait un côté très particulier, c’était des gens très particuliers. C’était un peu le village des poètes corses antiques, il est réputé pour ça, il y a eu le plus grand poète corse, on a fait des chansons et ils étaient connus pour leur philosophie pour leur manipulation de la langue Corse. Voilà, on a tous été élevés dans ce passé, dans la tradition orale, aux veillées qui racontaient … il y avait pas la télé, tout se transmettait par la tradition orale le soir à la veillée dans les maisons. Chacun disait la sienne, et tout s’apprenait comme ça, le contact des jeunes aux vieux, tous les sons de cloches s’entendaient, c’est comme ça que s’est formé… c’était comme les philosophes grecque sur le Parthénon, ou les romains sur le forum, jusqu’en 70, jusqu’y a 50 ans c’était comme ça. Après quand la télévision, le téléphone et la voiture est arrivé, tout a explosé. Evidemment la facilité du monde moderne, tout à fait que les gens ont abandonnés un peu le système ancien et on s’est fait un peu manger par le monde moderne. Ca c’est un peu l’histoire. Moi je suis né à Lozzi, mon père et ma mère était originaires d’ici. Mon père était militaire comme la plupart des corses et quand j’avais trois ans il a été muté à Marseille, on est partis à Marseille et j’ai été élevé à Marseille jusqu’à l’âge de 28 ans. Après j’ai fait des études là-bas, comme tous les corses expatriés, il fallait bien qu’on vive, ici dans le village y avait plus de possibilité, à part faire le berger c’était très compliqué. Toute ma vie j’ai vécu ça comme un arrachement. Comme un arrachement que je comprenais pas d’ailleurs. De l’âge de cinq ans à l’âge de 28 ans quand … je venais l’été pour les vacances comme la plupart des gens juillet août, quand je reprenais le bateau pour retourner à Marseille, de l’âge de 5 ans à 28 ans je pleurais.",
+          "metadata": {
+            "data_type": "quali",
+            "num_entretien": 4,
+            "commune": "Lozzi",
+            "chunk_idx": 1,
+            "nom": "Lozzi",
+            "source_type": "entretien"
+          },
+          "source_type": "portrait_entretiens",
+          "label": "Entretien semi-directif (subjectif/quali)"
+        },
+        {
+          "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nQ : Donc c'est intéressant. Et vous ? Comment vous ressentez, la vie à Lozzi quels sont un peu les points positifs, les points négatifs ? Si vous vous sentez bien ...  \n\n \nA : Pour nous, on s'y sent très bien. Après point positif, le cadre, le fait de de vivre dans un cadre ... enfin auprès de la nature, nous, c'est ce qu'on recherchait. Après, on n'est pas nombreux mais en fait bon, on n'est pas nombreux mais on se connaît tous. On est quand même, on a encore un peu, un esprit de de communauté. Voilà, pour moi, c'est l'essentiel. Après, si on veut voir autre chose, on a les moyens de partir aujourd'hui, enfin, de partir, de voyager ou même d'aller à la ville, enfin voilà. Donc, pour nous, c'est pas du tout un poids. Après oui, moi je suis contente que mes enfants puissent le week-end sortir après 12h00 dans le village avec leurs copains sans crainte, qu'ils soient pas toujours à la maison sur des écrans. Enfin, ce genre de choses quoi.",
+          "metadata": {
+            "chunk_idx": 10,
+            "data_type": "quali",
+            "nom": "Lozzi",
+            "commune": "Lozzi",
+            "source_type": "entretien",
+            "num_entretien": 5
+          },
+          "source_type": "portrait_entretiens",
+          "label": "Entretien semi-directif (subjectif/quali)"
+        }
+      ],
+      "intermediate_answer": "# Densité de population et bien-être perçu : Ajaccio et Lozzi\n\n## Densité de population\n\nLe contexte fourni ne contient **aucune donnée chiffrée sur la densité de population** pour Ajaccio ou Lozzi. Les indicateurs OppChoVec disponibles ne précisent pas ce paramètre démographique.\n\n## Bien-être perçu — verbatims citoyens\n\n**Pour Lozzi**, selon les entretiens qualitatifs réalisés en 2022, les habitants expriment une **satisfaction positive** :\n- « *Pour nous, on s'y sent très bien* » — appréciation du cadre naturel et de la proximité environnementale.\n- « *On n'est pas nombreux mais on se connaît tous. On a encore un peu un esprit de communauté* » — valorisation du lien social et de la cohésion locale.\n- « *Je suis contente que mes enfants puissent le week-end sortir après 12h00 dans le village avec leurs copains sans crainte* » — perception positive de la sécurité et de la qualité de vie familiale.\n\n**Pour Ajaccio**, le contexte ne contient **aucun verbatim citoyen** relatif au bien-être perçu. Seuls les indicateurs objectifs OppChoVec sont disponibles (score global 5.78/10, rang 19e/360)."
+    }
+  ],
+  "n_hops": 2,
+  "final_answer": "**La densité de population semble effectivement contribuer aux écarts de bien-être perçu entre Ajaccio et Lozzi, bien que les données démographiques précises manquent.**\n\nÀ Ajaccio, la forte concentration urbaine (bien que non quantifiée ici) est associée à un **score OppChoVec global modéré (5,78/10)**, marqué par des **opportunités exceptionnelles (10/10)** mais une **liberté effective très faible (1,27/10)**. Ce paradoxe reflète probablement les tensions liées à la densité : accès accru aux services et emplois, mais aussi contraintes (coût de la vie, saturation des infrastructures, inégalités territoriales). Les indicateurs objectifs suggèrent que la densité ajaccienne génère des externalités négatives sur le vécu quotidien, même si les verbatims citoyens manquent pour confirmer cette interprétation.\n\nÀ l’inverse, Lozzi, commune rurale de montagne à faible densité, affiche un **score OppChoVec global faible (2,35/10)** en raison de **ressources territoriales limitées (2,27/10 en Opportunités)**, mais une **liberté effective élevée (9,20/10)** et un **bien-être perçu positif** dans les verbatims. Les habitants soulignent la qualité de vie liée à l’espace, à la sécurité et à la cohésion sociale, des atouts typiques des territoires peu denses. La faible pression démographique y préserve un cadre de vie apaisé, compensant partiellement les carences en services ou en mobilité.\n\n**En résumé**, la densité apparaît comme un facteur structurant des écarts de bien-être : à Ajaccio, elle amplifie les opportunités tout en générant des contraintes matérielles et sociales ; à Lozzi, sa faiblesse limite l’accès aux ressources mais favorise un bien-être subjectif ancré dans la tranquillité et le lien communautaire. Ces dynamiques illustrent le **trade-off classique entre accessibilité et qualité de vie**, central dans les territoires insulaires comme la Corse. *(Sources : Indicateurs OppChoVec 2022, entretiens citoyens Lozzi 2022.)*",
+  "all_sources": [
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nClassement des composantes OppChoVec — Corse entière (360 communes).\n\nSous-scores principaux (du plus élevé au plus faible) :\n  1. Cho (Choix)               : 8.79/10 (très élevé)\n  2. Opp (Opportunités)        : 3.87/10 (moyen)\n  3. Vec (Vécu)                : 3.46/10 (moyen)\n\n-> COMPOSANTE LA PLUS ELEVEE  : Cho (Choix) (8.79/10)\n-> COMPOSANTE LA PLUS FAIBLE  : Vec (Vécu) (3.46/10)\n\nSous-dimensions du score Opportunités (Opp), classées :\n  1. Opp4 — Accès TIC               : 6.02/10 (élevé)\n  2. Opp3 — Mobilité                : 5.26/10 (élevé)\n  3. Opp2 — Diversité sociale       : 2.60/10 (faible)\n  4. Opp1 — Éducation               : 2.35/10 (faible)\n\n-> SOUS-DIMENSION OPP LA PLUS ELEVEE : Opp4 — Accès TIC (6.02/10)\n-> SOUS-DIMENSION OPP LA PLUS FAIBLE : Opp1 — Éducation (2.35/10)",
+      "metadata": {
+        "epci": "",
+        "type": "classement",
+        "source": "oppchovec_classement",
+        "zone": "Corse"
+      },
+      "source_type": "oppchovec_scores",
+      "label": "Scores OppChoVec — Corse"
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théorique >= 30 min de trajet.\n\n• Opp4 — Avoir accès aux TIC (poids 0,25)\n  Couverture locale par Internet haut débit (>= 30 Mbit/s) et réseau 4G.\n\nDIMENSION 2 — CHOIX (Cho)\nLa liberté de choix effective dont disposent les individus sur ce territoire.\n\n• Cho1 — Ne pas être discriminé(e) (poids 0,5)\n  Présence ou absence de quartiers cibles de la politique de la ville dans la commune (indicateur pénalisant la concentration de précarité).\n\n• Cho2 — Avoir les moyens d'influencer les décisions publiques (poids 0,5)\n  Proportion d'individus ayant le droit de vote (nationalité française, >= 18 ans) parmi la population en âge de travailler (>= 16 ans).\n\nDIMENSION 3 — VÉCU (Vec)\nLes réalisations effectives des individus — ce qui a été réellement accompli et vécu.\n\n• Vec1 — Avoir un revenu décent (poids 0,25)\n  Revenu fiscal moyen par foyer fiscal dans la commune.\n\n• Vec2 — Avoir un logement décent (poids 0,25, réparti sur 3 sous-indicateurs)\n  - Vec2a : Nombre moyen de personnes par pièce (surpeuplement)\n  - Vec2b : Proportion de logements avec équipements sanitaires complets (eau chaude, douche/baignoire, chauffage, cuisine avec évier)\n  - Vec2c : Proportion de la population vivant dans une habitation individuelle\n\n• Vec3 — Être bien inséré sur le marché du travail (poids 0,25)\n  Stabilité des emplois des résidents (5 niveaux : chômeur, emploi aidé, contrat ponctuel, CDD, emploi stable — CDI, fonctionnaire, indépendant).\n\n• Vec4 — Être proche des services (poids 0,25)\n  Nombre d'établissements de vie courante accessibles en moins de 20 minutes (santé, éducation, commerces, culture, administration), calculé par algorithme de plus court chemin (Dijkstra) sur réseau routier.\n\nCALCUL DE L'INDICE\n\nÉtape 1 — Standardisation (commensurabilité) :\n  V(i,j,k) = (Xijk − Xjk,min) / (Xjk,max − Xjk,min)\n  Chaque sous-indicateur est ramené entre 0 (minimum observé) et 1 (maximum observé).\n\nÉtape 2 — Agrégation par dimension (moyenne pondérée) :\n  Dk(i) = Σ pjk × V(i,j,k)\n  Les poids pjk sont égaux au sein de chaque dimension.\n\nÉtape 3 — Indice global (avec aversion à la pauvreté et complémentarité) :\n  OppChoVec(i) = agrégation des 3 dimensions Dk avec :\n    - paramètre β = 2,5 (aversion à la pauvreté : pénalise les très faibles scores)\n    - paramètre γ = 1,5 (complémentarité : pénalise les déséquilibres entre dimensions)\n  Le résultat brut (0-1) est ensuite renormalisé sur 0-10 pour l'application corse.\n\nINTERPRÉTATION DE L'ÉCHELLE 0-10\n\n- 0 = niveau de bien-être minimal parmi les 360 communes corses\n- 10 = niveau de bien-être maximal parmi les 360 communes corses\n- ~5 = niveau médian corse\n\nUn score élevé signifie que la commune offre à la fois de bonnes opportunités, une réelle liberté de choix et un vécu satisfaisant. Un score faible peut refléter un déficit sur une ou plusieurs dimensions. Les trois scores partiels (Opp, Cho, Vec) permettent de diagnostiquer la nature du déficit : une commune peut avoir de bonnes opportunités (Opp élevé) mais un vécu difficile (Vec faible), signalant un décalage entre l'offre territoriale et les conditions de vie réelles.\n\nSource : Bourdeau-Lepage L. (2011), adapté pour la Corse. Données : oppchovec_betti_0_10.",
+      "metadata": {
+        "source": "methodology",
+        "type": "methodology",
+        "commune": ""
+      },
+      "source_type": "oppchovec_scores",
+      "label": "Scores OppChoVec — "
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Ajaccio : 5.78/10 (élevé).\n\nSous-scores principaux de Ajaccio :\n  • Opportunités (Opp) : 10.00/10 (très élevé)  — rang 1e/360\n  • Choix (Cho)        : 1.27/10 (très faible)  — rang 358e/360\n  • Vécu (Vec)         : 4.80/10 (moyen)  — rang 41e/360\n  • OppChoVec global   : rang 19e/360\n\nSous-dimensions du score Opportunités (Opp) de Ajaccio :\n  • Opp1 — Éducation      : 7.42/10 (élevé)  [valeur brute : 5.760] — rang 24e/360\n  • Opp2 — Diversité soc. : 1.96/10 (faible)  [indice Theil : 0.2787] — rang 216e/360\n  • Opp3 — Mobilité       : 8.99/10 (très élevé)  [indicateur : 186.1/200] — rang 128e/360\n  • Opp4 — TIC (numérique): 9.35/10 (très élevé)  [couverture : 93.5%] — rang 24e/360\n\nAnalyse de Ajaccio :\n- Ajaccio se distingue surtout par ses opportunités (Opp=10.00/10).\n- Le point le plus faible de Ajaccio est le score Choix (1.27/10).\n\nValeurs brutes (non normalisées) de Ajaccio :\n- OppChoVec brut : 0.1026\n- Opp brut : 0.7095\n- Cho brut : 0.4294\n- Vec brut : 0.5801",
+      "metadata": {
+        "opp1_0_10": 7.4157,
+        "rank_opp1": 24,
+        "rank_opp": 1,
+        "opp4_0_10": 9.35,
+        "source": "oppchovec_betti_0_10",
+        "cho_0_10": 1.265509,
+        "opp3_0_10": 8.9891,
+        "rank_vec": 41,
+        "rank_total": 19,
+        "rank_opp2": 216,
+        "opp2_0_10": 1.9557,
+        "rank_opp4": 24,
+        "rank_opp3": 128,
+        "vec_0_10": 4.796981,
+        "oppchovec_0_10": 5.779754,
+        "opp_0_10": 10.0,
+        "commune": "Ajaccio",
+        "rank_cho": 358
+      },
+      "source_type": "oppchovec_scores",
+      "label": "Scores OppChoVec — Ajaccio"
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Lozzi : 2.35/10 (faible).\n\nSous-scores principaux de Lozzi :\n  • Opportunités (Opp) : 2.27/10 (faible)  — rang 302e/360\n  • Choix (Cho)        : 9.20/10 (très élevé)  — rang 181e/360\n  • Vécu (Vec)         : 3.04/10 (moyen)  — rang 235e/360\n  • OppChoVec global   : rang 291e/360\n\nSous-dimensions du score Opportunités (Opp) de Lozzi :\n  • Opp1 — Éducation      : 2.06/10 (faible)  [valeur brute : 5.283] — rang 177e/360\n  • Opp2 — Diversité soc. : 2.52/10 (faible)  [indice Theil : 0.3308] — rang 151e/360\n  • Opp3 — Mobilité       : 1.64/10 (faible)  [indicateur : 85.0/200] — rang 307e/360\n  • Opp4 — TIC (numérique): 4.50/10 (moyen)  [couverture : 45.0%] — rang 327e/360\n\nAnalyse de Lozzi :\n- Lozzi se distingue surtout par ses choix (Cho=9.20/10).\n- Le point le plus faible de Lozzi est le score Opportunités (2.27/10).\n\nValeurs brutes (non normalisées) de Lozzi :\n- OppChoVec brut : 0.0554\n- Opp brut : 0.2513\n- Cho brut : 0.9475\n- Vec brut : 0.4858",
+      "metadata": {
+        "cho_0_10": 9.196357,
+        "rank_opp": 302,
+        "rank_total": 291,
+        "vec_0_10": 3.037185,
+        "commune": "Lozzi",
+        "rank_opp4": 327,
+        "rank_opp3": 307,
+        "rank_opp2": 151,
+        "opp2_0_10": 2.5248,
+        "rank_cho": 181,
+        "opp1_0_10": 2.0562,
+        "opp_0_10": 2.266512,
+        "oppchovec_0_10": 2.353016,
+        "rank_vec": 235,
+        "source": "oppchovec_betti_0_10",
+        "opp3_0_10": 1.6364,
+        "rank_opp1": 177,
+        "opp4_0_10": 4.5
+      },
+      "source_type": "oppchovec_scores",
+      "label": "Scores OppChoVec — Lozzi"
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nQ : Par rapport à quoi ?  \n\nA : En tout cas, les vaches c’est le moment où elles sont redescendues donc dans le village, c'est compliqué. Après sur la façon, après tu sais, juillet-août c’est le moment où tous les gens du continent reviennent, les gens de la diaspora … nous Lozzi c'est un village sympa, ça se passe bien, tu vois y a pas de souci à part un ou deux énergumènes mais qu'on connaît depuis toujours tu vois, mais sinon y a pas de problème hein. On a on a un bar qui est ouvert que l'été, qui fait pizzeria et on a le foyer qui est ouvert toute l'année, tous les week-ends. Au début on avait rien d'ouvert le week-end et quand le foyer a rouvert ça a fait aussi que les gens sont remonté le week-end et savaient que le vendredi, samedi, dimanche y avait un lieu où se retrouver. Tu vois l'hiver c'est hyper important. L'été, ils font un comptoir d'été. Après y a les campings, on peut boire un coup, c’est très sympa aussi, mais on y va pas forcément tous les jours comme on ira au foyer par exemple.",
+      "metadata": {
+        "nom": "Lozzi",
+        "source_type": "entretien",
+        "commune": "Lozzi",
+        "data_type": "quali",
+        "num_entretien": 1,
+        "chunk_idx": 37
+      },
+      "source_type": "portrait_entretiens",
+      "label": "Entretien semi-directif (subjectif/quali)"
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nQ : En fait le bien-être c’est différents critères que vous vous allez chercher, ou qui sont importants pour vous, pour vous sentir bien dans votre territoire. Y en a par exemple ça va être la proximité de l’environnement, ça va être les services de proximité etc.  \n\nA: Alors je suis obligé de parler un peu de moi et de ma vie, sinon je vais avoir du mal à expliquer… Alors pour revenir à Lozzi. Bon Lozzi est un village très particulier, c’est la commune la plus haute de Corse, le sommet monte sur le Monte Cintu à 2700m et continue, traverse le massif du Cintu et arrive du côté de Galéria, Calvi à 1 km de la mer. Pourquoi ? Parce que c’est le chemin de transhumance des bergers traditionnels de la vallée, de Lozzi en particulier. Donc depuis le XXème siècle, ils avaient la main mise sur le territoire, comme les cinq communes du Niolu par exemple, là-bas le village de l’autre côté il arrive à 1km de Porto. Et tous les gens de Porto sont originaires d’ici, et comme tous les gens de Calvi, de ce qu’on appelle la Balagne sont originaires d’ici. Vous retrouvez les mêmes noms, ils savent tous d’où ils viennent, d’où ils sont. Comme Calacuccia arrive à 1km de Corte en passant par-dessus la montagne en face. En plus Lozzi avait un côté très particulier, c’était des gens très particuliers. C’était un peu le village des poètes corses antiques, il est réputé pour ça, il y a eu le plus grand poète corse, on a fait des chansons et ils étaient connus pour leur philosophie pour leur manipulation de la langue Corse. Voilà, on a tous été élevés dans ce passé, dans la tradition orale, aux veillées qui racontaient … il y avait pas la télé, tout se transmettait par la tradition orale le soir à la veillée dans les maisons. Chacun disait la sienne, et tout s’apprenait comme ça, le contact des jeunes aux vieux, tous les sons de cloches s’entendaient, c’est comme ça que s’est formé… c’était comme les philosophes grecque sur le Parthénon, ou les romains sur le forum, jusqu’en 70, jusqu’y a 50 ans c’était comme ça. Après quand la télévision, le téléphone et la voiture est arrivé, tout a explosé. Evidemment la facilité du monde moderne, tout à fait que les gens ont abandonnés un peu le système ancien et on s’est fait un peu manger par le monde moderne. Ca c’est un peu l’histoire. Moi je suis né à Lozzi, mon père et ma mère était originaires d’ici. Mon père était militaire comme la plupart des corses et quand j’avais trois ans il a été muté à Marseille, on est partis à Marseille et j’ai été élevé à Marseille jusqu’à l’âge de 28 ans. Après j’ai fait des études là-bas, comme tous les corses expatriés, il fallait bien qu’on vive, ici dans le village y avait plus de possibilité, à part faire le berger c’était très compliqué. Toute ma vie j’ai vécu ça comme un arrachement. Comme un arrachement que je comprenais pas d’ailleurs. De l’âge de cinq ans à l’âge de 28 ans quand … je venais l’été pour les vacances comme la plupart des gens juillet août, quand je reprenais le bateau pour retourner à Marseille, de l’âge de 5 ans à 28 ans je pleurais.",
+      "metadata": {
+        "data_type": "quali",
+        "num_entretien": 4,
+        "commune": "Lozzi",
+        "chunk_idx": 1,
+        "nom": "Lozzi",
+        "source_type": "entretien"
+      },
+      "source_type": "portrait_entretiens",
+      "label": "Entretien semi-directif (subjectif/quali)"
+    },
+    {
+      "content": "[Entretiens semi-directifs — Réalisés en 2022.]\nQ : Donc c'est intéressant. Et vous ? Comment vous ressentez, la vie à Lozzi quels sont un peu les points positifs, les points négatifs ? Si vous vous sentez bien ...  \n\n \nA : Pour nous, on s'y sent très bien. Après point positif, le cadre, le fait de de vivre dans un cadre ... enfin auprès de la nature, nous, c'est ce qu'on recherchait. Après, on n'est pas nombreux mais en fait bon, on n'est pas nombreux mais on se connaît tous. On est quand même, on a encore un peu, un esprit de de communauté. Voilà, pour moi, c'est l'essentiel. Après, si on veut voir autre chose, on a les moyens de partir aujourd'hui, enfin, de partir, de voyager ou même d'aller à la ville, enfin voilà. Donc, pour nous, c'est pas du tout un poids. Après oui, moi je suis contente que mes enfants puissent le week-end sortir après 12h00 dans le village avec leurs copains sans crainte, qu'ils soient pas toujours à la maison sur des écrans. Enfin, ce genre de choses quoi.",
+      "metadata": {
+        "chunk_idx": 10,
+        "data_type": "quali",
+        "nom": "Lozzi",
+        "commune": "Lozzi",
+        "source_type": "entretien",
+        "num_entretien": 5
+      },
+      "source_type": "portrait_entretiens",
+      "label": "Entretien semi-directif (subjectif/quali)"
+    }
+  ],
+  "elapsed_rag_s": 33.9,
+  "meta": {
+    "max_hops": 5,
+    "k": 5,
+    "mistral_temp": 0.0,
+    "answerer": "haiku",
+    "ts": "2026-07-20T18:00:32.818185"
+  },
+  "raisonnement": "La réponse mobilise les données OppChoVec et les entretiens pour Lozzi, mais surinterprète Vec et Cho comme des mesures subjectives (Règle 2). Elle signale partiellement l'absence de verbatims pour Ajaccio mais ne précise pas que les données qualitatives manquent pour valider les perceptions. La densité est évoquée sans quantification, et la causalité est présentée comme plausible sans modalisateurs suffisants.",
+  "section_observee": "Raisonnement causal et contre-intuitif / Raisonnement causal explicite",
+  "comportement_attendu_selon_grille": "Réponse de fond avec mobilisation des données et nuance corrélation vs causalité. Signalement des limites si les données ne permettent pas d'inférer une causalité stricte.",
+  "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+  "coherence_comportement_observe": "partiel",
+  "sources_inventaire": [
+    {
+      "source": "oppchovec_classement",
+      "type": "quanti"
+    },
+    {
+      "source": "methodology",
+      "type": "quanti"
+    },
+    {
+      "source": "oppchovec:Ajaccio",
+      "type": "quanti"
+    },
+    {
+      "source": "oppchovec:Lozzi",
+      "type": "quanti"
+    },
+    {
+      "source": "entretien:Lozzi",
+      "type": "quali"
+    }
+  ],
+  "mislabelling_detecte": {
+    "regle_1_quali_quanti": "non",
+    "regle_2_surinterpretation_oppchovec": "oui — Vec est présenté comme 'vécu quotidien' et 'bien-être perçu' alors qu'il s'agit d'un proxy statistique (revenu, logement, emploi, accès services). La réponse interprète aussi Cho comme 'liberté effective' sans préciser qu'il s'agit uniquement de droit de vote + absence de QPV.",
+    "regle_3_absence_quali_non_signalee": "partiel — La réponse mentionne l'absence de verbatims pour Ajaccio mais ne signale pas explicitement que les données qualitatives manquent pour confirmer les perceptions des Ajacciens. Pour Lozzi, les verbatims sont bien mobilisés.",
+    "regle_4_extrapolation_sous_groupe": "non"
+  },
+  "mislabelling_flag": true,
+  "elements_specifiques_question": [
+    "densité de population",
+    "écarts de bien-être perçu",
+    "Ajaccio",
+    "Lozzi",
+    "contribution causale"
+  ],
+  "elements_traitement": [
+    {
+      "element": "densité de population",
+      "traitement": "approximation_signalee"
+    },
+    {
+      "element": "écarts de bien-être perçu",
+      "traitement": "approximation_non_signalee"
+    },
+    {
+      "element": "Ajaccio",
+      "traitement": "precis"
+    },
+    {
+      "element": "Lozzi",
+      "traitement": "precis"
+    },
+    {
+      "element": "contribution causale",
+      "traitement": "approximation_non_signalee"
+    }
+  ],
+  "pertinence": 3,
+  "pertinence_justif": "La réponse traite les éléments spécifiques 'Ajaccio' et 'Lozzi' avec précision, mais la densité de population est abordée de manière approximative (non quantifiée). L'écart de bien-être perçu est interprété à partir de données quantitatives sans signalement clair des limites pour Ajaccio (absence de verbatims).",
+  "fondement_factuel": 3,
+  "fondement_factuel_justif": "Les scores OppChoVec sont correctement rapportés, mais Vec et Cho sont surinterprétés comme des mesures subjectives (Règle 2). Les entretiens pour Lozzi sont bien mobilisés, mais l'absence de données qualitatives pour Ajaccio n'est pas suffisamment signalée. Plafond à 3 en raison de la surinterprétation.",
+  "nuance_incertitude": 3,
+  "nuance_incertitude_justif": "La réponse utilise des modalisateurs ('semble', 'probablement', 'suggèrent') mais ne signale pas clairement que la causalité ne peut être établie avec les données disponibles. L'absence de verbatims pour Ajaccio est mentionnée, mais pas assez explicitement pour éviter une interprétation abusive.",
+  "coherence_qualiquanti": 3,
+  "coherence_qualiquanti_justif": "Les entretiens pour Lozzi sont bien intégrés, mais les données quantitatives sont présentées comme des proxys du bien-être perçu sans distinction claire. Pour Ajaccio, l'absence de données qualitatives limite la cohérence du croisement. Plafond à 3 en raison de la surinterprétation des indicateurs quantitatifs.",
+  "score_global": 3.0,
+  "error": null,
+  "elapsed_judge_s": 32.9
+}

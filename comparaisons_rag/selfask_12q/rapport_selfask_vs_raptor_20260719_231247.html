@@ -1,0 +1,1118 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Self-Ask vs Decomp+Raptor — 12 questions</title>
+<style>
+/* ── Tokens ────────────────────────────────────────────────────── */
+:root {
+  --bg:      #f4f5f8;
+  --bg2:     #ffffff;
+  --bg3:     #ecedf2;
+  --border:  #d0d3de;
+  --text:    #1a1d2e;
+  --text2:   #4a4e6b;
+  --text3:   #8891b2;
+  --accent:  #4a6fa5;
+  --sa:      #3a7bd5;
+  --dr:      #e07b39;
+  --hi:      #1e7e44;
+  --hi-bg:   #d4edda;
+  --mid:     #856404;
+  --mid-bg:  #fff3cd;
+  --lo:      #842029;
+  --lo-bg:   #f8d7da;
+  --pos:     #1e7e44;
+  --pos-bg:  #d4edda;
+  --neg:     #842029;
+  --neg-bg:  #f8d7da;
+  --neu:     #4a4e6b;
+  --neu-bg:  #ecedf2;
+  --r:       6px;
+}
+@media (prefers-color-scheme:dark) {
+  :root {
+    --bg:     #0d1117;
+    --bg2:    #161b22;
+    --bg3:    #1f2430;
+    --border: #30363d;
+    --text:   #c9d1d9;
+    --text2:  #8b949e;
+    --text3:  #484f58;
+    --hi:     #3fb950;
+    --hi-bg:  #0d2818;
+    --mid:    #d29922;
+    --mid-bg: #271e00;
+    --lo:     #f85149;
+    --lo-bg:  #2d0d0c;
+    --pos:    #3fb950;
+    --pos-bg: #0d2818;
+    --neg:    #f85149;
+    --neg-bg: #2d0d0c;
+    --neu:    #8b949e;
+    --neu-bg: #1f2430;
+  }
+}
+:root[data-theme="dark"]  { --bg:#0d1117;--bg2:#161b22;--bg3:#1f2430;--border:#30363d;--text:#c9d1d9;--text2:#8b949e;--text3:#484f58;--hi:#3fb950;--hi-bg:#0d2818;--mid:#d29922;--mid-bg:#271e00;--lo:#f85149;--lo-bg:#2d0d0c;--pos:#3fb950;--pos-bg:#0d2818;--neg:#f85149;--neg-bg:#2d0d0c;--neu:#8b949e;--neu-bg:#1f2430; }
+:root[data-theme="light"] { --bg:#f4f5f8;--bg2:#ffffff;--bg3:#ecedf2;--border:#d0d3de;--text:#1a1d2e;--text2:#4a4e6b;--text3:#8891b2;--hi:#1e7e44;--hi-bg:#d4edda;--mid:#856404;--mid-bg:#fff3cd;--lo:#842029;--lo-bg:#f8d7da;--pos:#1e7e44;--pos-bg:#d4edda;--neg:#842029;--neg-bg:#f8d7da;--neu:#4a4e6b;--neu-bg:#ecedf2; }
+
+/* ── Reset & base ───────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;font-size:14px;background:var(--bg);color:var(--text);line-height:1.55}
+a{color:var(--accent)}
+
+/* ── Layout ─────────────────────────────────────────────────────── */
+.wrap{max-width:1200px;margin:0 auto;padding:1.5rem 1rem}
+.page-header{margin-bottom:2rem}
+.page-header h1{font-size:1.4rem;font-weight:700;margin-bottom:.3rem}
+.page-header .meta{font-size:.8rem;color:var(--text2)}
+section{margin-bottom:2.5rem}
+h2{font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text2);margin-bottom:.9rem;padding-bottom:.4rem;border-bottom:1px solid var(--border)}
+h3{font-size:.9rem;font-weight:600;margin:.7rem 0 .4rem}
+h4{font-size:.82rem;font-weight:600;color:var(--text2);margin:.5rem 0 .4rem;text-transform:uppercase;letter-spacing:.04em}
+
+/* ── Tables ─────────────────────────────────────────────────────── */
+.tscroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.83rem}
+th{background:var(--bg3);color:var(--text2);font-weight:600;text-align:left;padding:.45rem .7rem;font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}
+td{padding:.4rem .7rem;border-bottom:1px solid var(--border);vertical-align:top}
+tr:last-child td{border-bottom:none}
+.num{text-align:right;font-variant-numeric:tabular-nums;font-family:ui-monospace,monospace;white-space:nowrap}
+.bold{font-weight:700}
+.config-name{font-weight:600;white-space:nowrap}
+
+/* ── Score colors ────────────────────────────────────────────────── */
+.sc-hi{color:var(--hi);background:var(--hi-bg);border-radius:3px}
+.sc-mid{color:var(--mid);background:var(--mid-bg);border-radius:3px}
+.sc-lo{color:var(--lo);background:var(--lo-bg);border-radius:3px}
+.sc-na{color:var(--text3)}
+
+/* ── Delta colors ────────────────────────────────────────────────── */
+.delta-pos{color:var(--pos);font-weight:600}
+.delta-neg{color:var(--neg);font-weight:600}
+.delta-neu{color:var(--neu)}
+.delta-na{color:var(--text3)}
+.delta-row td{background:var(--bg3);font-weight:600}
+
+/* ── Score table (detail) ────────────────────────────────────────── */
+.score-table td,.score-table th{padding:.3rem .6rem}
+.global-row td{border-top:2px solid var(--border);font-size:.9rem}
+
+/* ── Meta table ──────────────────────────────────────────────────── */
+.meta-table td:first-child{color:var(--text2);font-size:.78rem;white-space:nowrap;padding-right:1rem}
+.meta-table td:last-child{font-weight:500}
+
+/* ── Orientation & summary tables ─────────────────────────────────── */
+.summary-table th:first-child{width:200px}
+
+/* ── Badges ──────────────────────────────────────────────────────── */
+.badge{display:inline-block;padding:.15em .5em;border-radius:3px;font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.badge-objectif{background:#dbeafe;color:#1d4ed8}
+.badge-perception{background:#fce7f3;color:#9d174d}
+.badge-vaste{background:#d1fae5;color:#065f46}
+@media(prefers-color-scheme:dark){
+  .badge-objectif{background:#1e3a5f;color:#93c5fd}
+  .badge-perception{background:#4a1942;color:#f9a8d4}
+  .badge-vaste{background:#064e3b;color:#6ee7b7}
+}
+:root[data-theme="dark"] .badge-objectif{background:#1e3a5f;color:#93c5fd}
+:root[data-theme="dark"] .badge-perception{background:#4a1942;color:#f9a8d4}
+:root[data-theme="dark"] .badge-vaste{background:#064e3b;color:#6ee7b7}
+:root[data-theme="light"] .badge-objectif{background:#dbeafe;color:#1d4ed8}
+:root[data-theme="light"] .badge-perception{background:#fce7f3;color:#9d174d}
+:root[data-theme="light"] .badge-vaste{background:#d1fae5;color:#065f46}
+
+/* ── Config chips ─────────────────────────────────────────────────── */
+.cfg-sa{color:var(--sa);font-weight:700}
+.cfg-dr{color:var(--dr);font-weight:700}
+
+/* ── Question details ─────────────────────────────────────────────── */
+.q-detail{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);margin-bottom:.6rem;overflow:hidden}
+.q-summary{display:flex;align-items:center;gap:.6rem;padding:.7rem 1rem;cursor:pointer;user-select:none;flex-wrap:wrap}
+.q-summary::-webkit-details-marker{display:none}
+.q-summary::before{content:"▸";color:var(--text3);flex-shrink:0;transition:transform .15s}
+details[open] .q-summary::before{transform:rotate(90deg)}
+.q-num{font-family:ui-monospace,monospace;font-size:.8rem;color:var(--text2);flex-shrink:0}
+.q-text{flex:1;font-weight:500;min-width:0}
+.q-scores{display:flex;gap:.3rem;flex-shrink:0;flex-wrap:wrap}
+.sc-chip{font-family:ui-monospace,monospace;font-size:.75rem;padding:.1em .45em;border-radius:3px;font-weight:700}
+.delta-chip{font-family:ui-monospace,monospace;font-size:.75rem;padding:.1em .45em;border-radius:3px;background:var(--bg3)}
+
+.q-body{padding:1rem;border-top:1px solid var(--border)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+@media(max-width:700px){.two-col{grid-template-columns:1fr}}
+.col-block{background:var(--bg3);border-radius:var(--r);padding:.8rem}
+
+/* ── Inner details ────────────────────────────────────────────────── */
+.inner-details{margin-top:.7rem;background:var(--bg3);border-radius:var(--r);overflow:hidden}
+.inner-details > summary{padding:.5rem .8rem;cursor:pointer;font-size:.82rem;font-weight:600;color:var(--text2);user-select:none}
+.inner-details > summary::-webkit-details-marker{display:none}
+.inner-details[open] > summary{border-bottom:1px solid var(--border)}
+
+/* ── Hop chain ────────────────────────────────────────────────────── */
+.hops-container{padding:.8rem}
+.hop{margin-bottom:.8rem;border-left:3px solid var(--sa);padding-left:.8rem}
+.hop-header{font-weight:600;font-size:.83rem;margin-bottom:.25rem}
+.hop-header em{font-weight:400;color:var(--text2)}
+.hop-src{font-size:.74rem;color:var(--text3);margin-bottom:.2rem;font-family:ui-monospace,monospace}
+.hop-ia{font-size:.8rem;color:var(--text2);background:var(--bg2);border-radius:3px;padding:.4rem .6rem}
+
+/* ── Answers ──────────────────────────────────────────────────────── */
+.answer-box{background:var(--bg2);border-left:3px solid var(--sa);padding:.7rem;border-radius:0 var(--r) var(--r) 0;font-size:.82rem;line-height:1.6;white-space:pre-wrap;word-break:break-word;margin-top:.5rem}
+.raptor-box{border-left-color:var(--dr)}
+
+/* ── Justifications ────────────────────────────────────────────────── */
+.justifs-block{margin-top:.7rem}
+.justif{font-size:.79rem;margin-bottom:.3rem;color:var(--text2)}
+.dim-label{font-weight:700;color:var(--text);margin-right:.3rem}
+
+/* ── Mislabelling ──────────────────────────────────────────────────── */
+.ml-section{margin-top:.5rem;font-size:.78rem}
+.ml-detail{color:var(--neg);margin-top:.2rem;padding:.25rem .5rem;background:var(--lo-bg);border-radius:3px}
+.ok{color:var(--pos)}
+
+/* ── Misc ─────────────────────────────────────────────────────────── */
+.note{font-size:.78rem;color:var(--text3);padding:.4rem .8rem;font-style:italic}
+.no-data{color:var(--text3);font-size:.8rem;padding:.4rem}
+.justifs-block h4{margin-top:.6rem}
+
+/* ── Theme toggle ──────────────────────────────────────────────────── */
+.theme-btn{position:fixed;top:.8rem;right:.8rem;background:var(--bg2);border:1px solid var(--border);color:var(--text);border-radius:20px;padding:.3rem .8rem;cursor:pointer;font-size:.8rem;z-index:100}
+</style>
+</head>
+<body>
+<button class="theme-btn" onclick="
+  const r=document.documentElement;
+  const cur=r.getAttribute('data-theme');
+  r.setAttribute('data-theme',cur==='dark'?'light':'dark');
+">◑ Thème</button>
+
+<div class="wrap">
+
+<div class="page-header">
+  <h1>Self-Ask vs Decomp+Raptor — Pilote 12 questions</h1>
+  <div class="meta">
+    Juge V4.3 (GPT-4o) · <span class="cfg-sa">v_selfask</span> : Mistral Large temp=0, max 5 hops, k=5, Haiku answerer ·
+    <span class="cfg-dr">v_decomp_raptor</span> : chargé depuis COMPLET.json ·
+    Généré le 2026-07-19 23:05
+  </div>
+</div>
+
+<!-- ── RÉCAP GLOBAL ────────────────────────────────────────────── -->
+<section>
+  <h2>Récapitulatif global — moyennes sur 12 questions</h2>
+  <div class="tscroll">
+  <table class="summary-table">
+    <thead>
+      <tr>
+        <th>Config</th>
+        <th>Pertinence</th><th>Factuel</th><th>Nuance</th><th>Quali/Quanti</th>
+        <th>Global</th>
+        <th>Mislabelling</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class=""><td class="config-name"><span class="cfg-sa">Self-Ask</span></td><td class="num sc-mid">3.75</td><td class="num sc-lo">3.42</td><td class="num sc-mid">3.50</td><td class="num sc-mid">3.58</td><td class="num sc-mid bold">3.56</td><td class="num">8/12</td></tr>
+      <tr class=""><td class="config-name"><span class="cfg-dr">Decomp+Raptor</span></td><td class="num sc-hi">4.50</td><td class="num sc-hi">4.67</td><td class="num sc-mid">4.17</td><td class="num sc-hi">4.75</td><td class="num sc-hi bold">4.52</td><td class="num">1/12</td></tr>
+      <tr class="delta-row"><td class="config-name">Δ (Self-Ask − Raptor)</td><td class="num delta-neg">-0.75</td><td class="num delta-neg">-1.25</td><td class="num delta-neg">-0.67</td><td class="num delta-neg">-1.17</td><td class="num bold delta-neg">-0.96</td><td class="num delta-pos">+7</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ── PAR ORIENTATION ─────────────────────────────────────────── -->
+<section>
+  <h2>Δ Score global par orientation</h2>
+  <div class="tscroll">
+  <table>
+    <thead>
+      <tr><th>Orientation</th><th>Questions</th><th>Self-Ask</th><th>Decomp+Raptor</th><th>Δ</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><span class="badge badge-objectif">Objectif</span></td><td class="num">Q004, Q005, Q006, Q008, Q015</td><td class="num sc-lo">2.95</td><td class="num sc-mid">4.35</td><td class="num delta-neg">-1.40</td></tr><tr><td><span class="badge badge-perception">Perception</span></td><td class="num">Q009, Q010, Q011, Q014</td><td class="num sc-mid">3.62</td><td class="num sc-hi">4.69</td><td class="num delta-neg">-1.07</td></tr><tr><td><span class="badge badge-vaste">Vaste</span></td><td class="num">Q002, Q025, Q035</td><td class="num sc-hi">4.50</td><td class="num sc-hi">4.58</td><td class="num delta-neu">-0.08</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ── DÉTAIL PAR QUESTION ────────────────────────────────────── -->
+<section>
+  <h2>Détail par question</h2>
+  <p style="font-size:.8rem;color:var(--text2);margin-bottom:.8rem">
+    SA = Self-Ask · DR = Decomp+Raptor · Δ = SA − DR · Cliquer sur une ligne pour déplier.
+  </p>
+  
+<details class="q-detail">
+  <summary class="q-summary">
+    <span class="q-num">Q004</span>
+    <span class="badge badge-objectif">Objectif</span>
+    <span class="q-text">Quel est le score moyen de bien-être à Ajaccio ?</span>
+    <span class="q-scores">
+      <span class="sc-chip sc-lo">SA 3.25</span>
+      <span class="sc-chip sc-hi">DR 5.00</span>
+      <span class="sc-chip delta-chip delta-neg">-1.75</span>
+    </span>
+  </summary>
+  <div class="q-body">
+    <div class="two-col">
+      <!-- Scores -->
+      <div class="col-block">
+        <h4>Scores juge V4.3</h4>
+        <table class="score-table">
+          <thead><tr><th>Dimension</th><th>Self-Ask</th><th>Decomp+Raptor</th><th>Δ</th></tr></thead>
+          <tbody><tr><td>Pertinence</td><td class="num sc-lo">3.00</td><td class="num sc-hi">5.00</td><td class="num delta-neg">-2.00</td></tr><tr><td>Factuel</td><td class="num sc-mid">4.00</td><td class="num sc-hi">5.00</td><td class="num delta-neg">-1.00</td></tr><tr><td>Nuance</td><td class="num sc-lo">3.00</td><td class="num sc-hi">5.00</td><td class="num delta-neg">-2.00</td></tr><tr><td>Quali/Quanti</td><td class="num sc-lo">3.00</td><td class="num sc-hi">5.00</td><td class="num delta-neg">-2.00</td></tr><tr class="global-row"><td><strong>Global</strong></td><td class="num bold sc-lo">3.25</td><td class="num bold sc-hi">5.00</td><td class="num bold delta-neg">-1.75</td></tr><tr><td>Mislabelling</td><td class="num sc-lo">✗</td><td class="num sc-hi">✓</td><td class="num">—</td></tr></tbody>
+        </table>
+        <div class="ml-section"><strong>Mislabelling Self-Ask :</strong><div class="ml-detail"><strong>regle_3_absence_quali_non_signalee</strong> : oui — La question demande un 'score moyen de bien-être', ce qui peut inclure une dimension subjective, mais la réponse se limite à OppChoVec (objectif) sans mentionner l'absence de données qualitatives ou l'existence de données quantitatives subjectives (enquête QdV).</div></div>
+        
+      </div>
+      <!-- Métadonnées -->
+      <div class="col-block">
+        <h4>Métadonnées</h4>
+        <table class="meta-table">
+          <tr><td>Section</td><td>Retrieval mono-commune</td></tr>
+          <tr><td>Sous-section</td><td>Retrieval factuel et interprétation</td></tr>
+          <tr><td>Self-Ask hops</td><td>1</td></tr>
+          <tr><td>Self-Ask sources</td><td>5</td></tr>
+          <tr><td>Decomp+Raptor SQ</td><td>5</td></tr>
+          <tr><td>Decomp+Raptor sources</td><td>70</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Self-Ask follow-up chain -->
+    <details class="inner-details">
+      <summary>▸ Self-Ask — séquence de follow-ups (1 hop(s))</summary>
+      <div class="hops-container"><div class="hop"><div class="hop-header">Hop 1 — <em>Quel est le score OppChoVec global de la commune d'Ajaccio et ses composantes?</em></div><div class="hop-src">Sources : oppchovec_scores, oppchovec_scores, oppchovec_scores, enquete_scores_commune, communes_equipements</div><div class="hop-ia"># Score OppChoVec global d'Ajaccio et ses composantes
+
+Selon les indicateurs territoriaux objectifs, **Ajaccio obtient un score OppChoVec global de 5.78/10**, ce qui la place au **rang 19e sur 360 communes corses** — une position élevée.
+
+Ce score global masque cependant des disparités très marquées entre ses trois composantes :
+
+1. **Opportunités (Opp) : 10.00/10** — **rang 1er/360** (très élevé)…</div></div></div>
+      <h4 style="margin-top:1rem">Réponse finale Self-Ask</h4>
+      <div class="answer-box">Le score moyen de bien-être objectif à Ajaccio, mesuré par l'indicateur OppChoVec, s'élève à **5,78/10**, plaçant la commune au **19ᵉ rang des 360 communes corses**. Ce score global cache cependant des écarts importants entre ses trois dimensions : Ajaccio se distingue par un niveau exceptionnel d'**Opportunités (10/10, 1ʳᵉ place)**, mais affiche un score très faible en **Choix (1,27/10, 358ᵉ place)** et un **Vécu moyen (4,80/10, 41ᵉ place)**. Ces résultats révèlent une ville aux atouts économiques et éducatifs majeurs, mais confrontée à des défis structurels en matière de représentation citoyenne et de conditions matérielles de vie pour une partie de sa population. *(Source : Indicateurs OppChoVec, données territoriales 2022)*</div>
+      <div class="justifs-block"><h4>Justifications juge</h4><div class="justif"><span class="dim-label">Pertinence</span> La réponse traite précisément Ajaccio et fournit des données factuelles pertinentes, mais elle ne répond pas pleinement à la question du 'bien-être moyen' en omettant les dimensions subjectives disponibles (enquête QdV) ou en ne signalant pas leur absence si elles étaient attendues. Plafonné à 3 par Règle 3.</div><div class="justif"><span class="dim-label">Factuel</span> Les affirmations sur OppChoVec sont correctement sourcées et interprétées. Aucune surinterprétation des sous-indicateurs. Cependant, l'absence de mention des données subjectives (enquête QdV) limite la complétude factuelle.</div><div class="justif"><span class="dim-label">Nuance</span> La réponse nuance les écarts entre les dimensions d'OppChoVec, mais ne signale pas l'absence de croisement avec des données subjectives ou la limite de l'indicateur OppChoVec pour mesurer le 'bien-être' au sens large.</div><div class="justif"><span class="dim-label">Quali/Quanti</span> La réponse mobilise uniquement des données quantitatives objectives (OppChoVec) sans intégrer les données quantitatives subjectives disponibles (enquête QdV) ou signaler leur absence. L'équilibre quali/quanti n'est pas pertinent ici, mais la réponse ne clarifie pas cette limite.</div></div>
+    </details>
+
+    <!-- Decomp+Raptor answer -->
+    <details class="inner-details">
+      <summary>▸ Decomp+Raptor — réponse (5 sous-questions)</summary>
+      <p class="note">Texte des sous-questions non persisté dans COMPLET.json.</p>
+      <div class="answer-box raptor-box">### **Synthèse : Le bien-être à Ajaccio**
+
+Le bien-être à Ajaccio présente un tableau contrasté, marqué par un **écart important entre les ressources disponibles et leur traduction concrète dans le quotidien des habitants**. Selon les indicateurs territoriaux objectifs, la commune affiche un **score moyen de bien-être de 5,78/10**, la plaçant au **19ᵉ rang des 360 communes corses**. Ce résultat reflète une situation paradoxale : Ajaccio dispose d’atouts exceptionnels, mais ceux-ci peinent à se traduire par une qualité de vie à la hauteur de son potentiel.
+
+#### **1. Un potentiel remarquable, mais des limites structurelles**
+Ajaccio se distingue par des **opportunités parmi les meilleures de Corse** :
+- **Accès à l’éducation, aux technologies numériques et à la mobilité** : selon les donnée…</div>
+      <div class="justifs-block"><h4>Justifications juge</h4><div class="justif"><span class="dim-label">Pertinence</span> La réponse est précise et ciblée, traitant directement de la question posée avec les données disponibles.</div><div class="justif"><span class="dim-label">Factuel</span> Les affirmations sont bien fondées sur les sources fournies, avec une interprétation correcte des scores OppChoVec et des enquêtes.</div><div class="justif"><span class="dim-label">Nuance</span> La réponse est bien nuancée, reconnaissant les limites structurelles et les perceptions des habitants.</div><div class="justif"><span class="dim-label">Quali/Quanti</span> Intégration exemplaire des données qualitatives et quantitatives, avec une interprétation équilibrée.</div></div>
+    </details>
+  </div>
+</details>
+
+
+<details class="q-detail">
+  <summary class="q-summary">
+    <span class="q-num">Q005</span>
+    <span class="badge badge-objectif">Objectif</span>
+    <span class="q-text">Quelle dimension OppChoVec obtient la note la plus faible à Ajaccio ?</span>
+    <span class="q-scores">
+      <span class="sc-chip sc-mid">SA 3.50</span>
+      <span class="sc-chip sc-lo">DR 3.00</span>
+      <span class="sc-chip delta-chip delta-pos">+0.50</span>
+    </span>
+  </summary>
+  <div class="q-body">
+    <div class="two-col">
+      <!-- Scores -->
+      <div class="col-block">
+        <h4>Scores juge V4.3</h4>
+        <table class="score-table">
+          <thead><tr><th>Dimension</th><th>Self-Ask</th><th>Decomp+Raptor</th><th>Δ</th></tr></thead>
+          <tbody><tr><td>Pertinence</td><td class="num sc-mid">4.00</td><td class="num sc-lo">3.00</td><td class="num delta-pos">+1.00</td></tr><tr><td>Factuel</td><td class="num sc-lo">3.00</td><td class="num sc-lo">2.00</td><td class="num delta-pos">+1.00</td></tr><tr><td>Nuance</td><td class="num sc-lo">3.00</td><td class="num sc-lo">3.00</td><td class="num delta-neu">0.00</td></tr><tr><td>Quali/Quanti</td><td class="num sc-mid">4.00</td><td class="num sc-mid">4.00</td><td class="num delta-neu">0.00</td></tr><tr class="global-row"><td><strong>Global</strong></td><td class="num bold sc-mid">3.50</td><td class="num bold sc-lo">3.00</td><td class="num bold delta-pos">+0.50</td></tr><tr><td>Mislabelling</td><td class="num sc-lo">✗</td><td class="num sc-lo">✗</td><td class="num">—</td></tr></tbody>
+        </table>
+        <div class="ml-section"><strong>Mislabelling Self-Ask :</strong><div class="ml-detail"><strong>regle_2_surinterpretation_oppchovec</strong> : oui — Cho présenté comme mesurant 'les libertés individuelles et l'accès aux choix de vie (logement, travail, loisirs)', alors que Cho mesure uniquement 'droit de vote + absence de QPV' (définition opérationnelle stricte). Vec/Opp également surinterprétés dans l'explication.</div></div>
+        <div class="ml-section"><strong>Mislabelling Decomp+Raptor :</strong><div class="ml-detail"><strong>regle_2_surinterpretation_oppchovec</strong> : oui — Cho présenté avec un score incorrect (7.54/10) alors que c'est 1.27/10</div></div>
+      </div>
+      <!-- Métadonnées -->
+      <div class="col-block">
+        <h4>Métadonnées</h4>
+        <table class="meta-table">
+          <tr><td>Section</td><td>Retrieval mono-commune</td></tr>
+          <tr><td>Sous-section</td><td>Retrieval factuel et interprétation</td></tr>
+          <tr><td>Self-Ask hops</td><td>1</td></tr>
+          <tr><td>Self-Ask sources</td><td>5</td></tr>
+          <tr><td>Decomp+Raptor SQ</td><td>5</td></tr>
+          <tr><td>Decomp+Raptor sources</td><td>69</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Self-Ask follow-up chain -->
+    <details class="inner-details">
+      <summary>▸ Self-Ask — séquence de follow-ups (1 hop(s))</summary>
+      <div class="hops-container"><div class="hop"><div class="hop-header">Hop 1 — <em>Quel est le score OppChoVec global de la commune d'Ajaccio et ses composantes détaillées?</em></div><div class="hop-src">Sources : oppchovec_scores, oppchovec_scores, oppchovec_scores, enquete_scores_commune, communes_equipements</div><div class="hop-ia"># Score OppChoVec global et composantes détaillées d'Ajaccio
+
+Selon les indicateurs territoriaux objectifs, **Ajaccio affiche un score OppChoVec global de 5.78/10**, la plaçant au **rang 19e sur 360 communes corses**.
+
+## Composantes principales
+
+Le profil d'Ajaccio révèle des disparités marquées entre ses trois sous-scores :
+
+- **Opportunités (Opp) : 10.00/10** (très élevé) — **rang 1er/360**. Aj…</div></div></div>
+      <h4 style="margin-top:1rem">Réponse finale Self-Ask</h4>
+      <div class="answer-box">À Ajaccio, la dimension **Choix (Cho)** de l'indicateur OppChoVec obtient la note la plus faible, avec un score de **1,27/10**, classant la commune au **358ᵉ rang sur 360** en Corse. Cette composante reflète les libertés individuelles et l'accès aux choix de vie (logement, travail, loisirs), et son niveau très bas contraste fortement avec les opportunités territoriales élevées (Opp : 10/10) offertes par la ville. Cette faiblesse s'explique notamment par des contraintes structurelles (prix de l'immobilier, saturation des services) et une diversité sociale limitée (sous-score Opp2 à 1,96/10).</div>
+      <div class="justifs-block"><h4>Justifications juge</h4><div class="justif"><span class="dim-label">Pertinence</span> Répond précisément à la question sur la dimension la plus faible, mais l'interprétation ajoutée dépasse le cadre strict des indicateurs.</div><div class="justif"><span class="dim-label">Factuel</span> La réponse identifie correctement Cho comme la dimension la plus faible, mais surinterprète sa signification et celles des autres sous-indicateurs (Règle 2). Plafond à 3.</div><div class="justif"><span class="dim-label">Nuance</span> Aucun signalement que l'interprétation de Cho dépasse sa définition opérationnelle. Nuance moyenne sur les contraintes structurelles, mais pas sur les limites de l'indicateur.</div><div class="justif"><span class="dim-label">Quali/Quanti</span> Mobilisation exclusive de données quantitatives, cohérente avec la question factuelle. Pas de croisement quali/quanti attendu ici.</div></div>
+    </details>
+
+    <!-- Decomp+Raptor answer -->
+    <details class="inner-details">
+      <summary>▸ Decomp+Raptor — réponse (5 sous-questions)</summary>
+      <p class="note">Texte des sous-questions non persisté dans COMPLET.json.</p>
+      <div class="answer-box raptor-box">### **Synthèse : Quelle dimension obtient la note la plus faible à Ajaccio selon les indicateurs territoriaux ?**
+
+À Ajaccio, les **données territoriales objectives** (scores OppChoVec) révèlent des écarts marqués entre les trois dimensions clés de la qualité de vie :
+
+1. **Opportunités (Opp) : 10,00/10** (rang 1er/360 en Corse)
+   Selon les indicateurs, Ajaccio se distingue par un accès exceptionnel à l’éducation, une diversité sociale élevée, une mobilité facilitée et une couverture numérique performante. Cette dimension est de loin la mieux notée.
+
+2. **Choix (Cho) : 7,54/10** (rang 12e/360)
+   Ce score reflète une population largement dotée de droits politiques (droit de vote) et l’absence de quartiers prioritaires (QPV), sans pour autant mesurer directement la participation citoyenne …</div>
+      <div class="justifs-block"><h4>Justifications juge</h4><div class="justif"><span class="dim-label">Pertinence</span> La réponse identifie Vec comme la dimension la plus faible, mais l'erreur sur le score de Cho compromet la précision.</div><div class="justif"><span class="dim-label">Factuel</span> Erreur factuelle sur le score de Cho, qui est incorrectement rapporté.</div><div class="justif"><span class="dim-label">Nuance</span> La réponse mentionne des nuances mais l'erreur sur Cho n'est pas signalée.</div><div class="justif"><span class="dim-label">Quali/Quanti</span> Bonne utilisation des données quantitatives, mais l'erreur sur Cho affecte la cohérence.</div></div>
+    </details>
+  </div>
+</details>
+
+
+<details class="q-detail">
+  <summary class="q-summary">
+    <span class="q-num">Q006</span>
+    <span class="badge badge-objectif">Objectif</span>
+    <span class="q-text">Quel est le score OppChoVec d'Ajaccio, par catégorie ?</span>
+    <span class="q-scores">
+      <span class="sc-chip sc-mid">SA 3.50</span>
+      <span class="sc-chip sc-mid">DR 4.25</span>
+      <span class="sc-chip delta-chip delta-neg">-0.75</span>
+    </span>
+  </summary>
+  <div class="q-body">
+    <div class="two-col">
+      <!-- Scores -->
+      <div class="col-block">
+        <h4>Scores juge V4.3</h4>
+        <table class="score-table">
+          <thead><tr><th>Dimension</th><th>Self-Ask</th><th>Decomp+Raptor</th><th>Δ</th></tr></thead>
+          <tbody><tr><td>Pertinence</td><td class="num sc-mid">4.00</td><td class="num sc-mid">4.00</td><td class="num delta-neu">0.00</td></tr><tr><td>Factuel</td><td class="num sc-lo">3.00</td><td class="num sc-hi">5.00</td><td class="num delta-neg">-2.00</td></tr><tr><td>Nuance</td><td class="num sc-lo">3.00</td><td class="num sc-mid">4.00</td><td class="num delta-neg">-1.00</td></tr><tr><td>Quali/Quanti</td><td class="num sc-mid">4.00</td><td class="num sc-mid">4.00</td><td class="num delta-neu">0.00</td></tr><tr class="global-row"><td><strong>Global</strong></td><td class="num bold sc-mid">3.50</td><td class="num bold sc-mid">4.25</td><td class="num bold delta-neg">-0.75</td></tr><tr><td>Mislabelling</td><td class="num sc-lo">✗</td><td class="num sc-hi">✓</td><td class="num">—</td></tr></tbody>
+        </table>
+        <div class="ml-section"><strong>Mislabelling Self-Ask :</strong><div class="ml-detail"><strong>regle_2_surinterpretation_oppchovec</strong> : oui — La réponse interprète Cho (1,27/10) comme 'couverture électorale limitée' et 'restriction des marges de manœuvre citoyennes', alors que Cho mesure uniquement l'absence de QPV et le droit de vote. Elle interprète Vec comme 'bien-être vécu' et 'conditions matérielles inégales selon les quartiers', alors que Vec est un proxy statistique (revenu, logement, emploi, accès services) sans dimension territoriale infra-communale.</div><div class="ml-detail"><strong>regle_4_extrapolation_sous_groupe</strong> : oui — La réponse mentionne des 'inégalités selon les quartiers' pour Vec, alors que OppChoVec est calculé à l'échelle communale et ne permet pas de ventilation infra-communale.</div></div>
+        
+      </div>
+      <!-- Métadonnées -->
+      <div class="col-block">
+        <h4>Métadonnées</h4>
+        <table class="meta-table">
+          <tr><td>Section</td><td>Retrieval mono-commune</td></tr>
+          <tr><td>Sous-section</td><td>Retrieval factuel et interprétation</td></tr>
+          <tr><td>Self-Ask hops</td><td>1</td></tr>
+          <tr><td>Self-Ask sources</td><td>5</td></tr>
+          <tr><td>Decomp+Raptor SQ</td><td>5</td></tr>
+          <tr><td>Decomp+Raptor sources</td><td>63</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Self-Ask follow-up chain -->
+    <details class="inner-details">
+      <summary>▸ Self-Ask — séquence de follow-ups (1 hop(s))</summary>
+      <div class="hops-container"><div class="hop"><div class="hop-header">Hop 1 — <em>Quel est le score OppChoVec global de la commune d'Ajaccio et ses composantes détaillées (Opportunités, Choix, Vécu)?</em></div><div class="hop-src">Sources : oppchovec_scores, oppchovec_scores, oppchovec_scores, enquete_scores_commune, communes_equipements</div><div class="hop-ia"># Score OppChoVec global et composantes détaillées d'Ajaccio
+
+Selon les indicateurs territoriaux objectifs, **Ajaccio affiche un score OppChoVec global de 5.78/10**, la plaçant au **rang 19e sur 360 communes corses**.
+
+## Composantes principales :
+
+**Opportunités (Opp) : 10.00/10 — très élevé (rang 1er/360)**
+Ajaccio excelle en ressources territoriales objectives. Cette performance exceptionnelle …</div></div></div>
+      <h4 style="margin-top:1rem">Réponse finale Self-Ask</h4>
+      <div class="answer-box">**Le score OppChoVec d'Ajaccio se décompose comme suit** :
+
+- **Score global** : **5,78/10** (19ᵉ rang sur 360 communes corses), reflétant un profil de bien-être territorial **contrasté mais globalement moyen**.
+
+- **Opportunités (Opp)** : **10,00/10** (1ʳᵉ/360) – **Très élevé**, porté par une **excellente couverture numérique (93,5 %)** et une **mobilité performante (8,99/10)**. En revanche, la **diversité sociale reste faible (1,96/10, 216ᵉ rang)**, limitant la mixité.
+
+- **Choix (Cho)** : **1,27/10** (358ᵉ/360) – **Très faible**, en raison de l’**absence de quartiers prioritaires** et d’une **couverture électorale limitée**, ce qui restreint les marges de manœuvre citoyennes.
+
+- **Vécu (Vec)** : **4,80/10** (41ᵉ/360) – **Moyen**, avec des **conditions matérielles (revenu, logement, empl…</div>
+      <div class="justifs-block"><h4>Justifications juge</h4><div class="justif"><span class="dim-label">Pertinence</span> Tous les éléments spécifiques sont traités précisément. La réponse reste pertinente malgré les surinterprétations, car elle répond directement à la demande de décomposition par catégorie.</div><div class="justif"><span class="dim-label">Factuel</span> Les scores et rangs sont correctement sourcés, mais les interprétations de Cho et Vec dépassent leurs définitions opérationnelles (Règle 2). Plafond à 3 en raison de la surinterprétation systématique.</div><div class="justif"><span class="dim-label">Nuance</span> La réponse utilise des modalisateurs ('corrects mais inégaux', 'décalage') mais ne signale pas les limites des indicateurs (ex. : Vec ne mesure pas les inégalités infra-communales). Plafond à 3 en raison des surinterprétations non nuancées.</div><div class="justif"><span class="dim-label">Quali/Quanti</span> La réponse mobilise exclusivement des données quantitatives, cohérentes avec la question posée. Pas de croisement quali/quanti attendu ici, donc pas de déséquilibre.</div></div>
+    </details>
+
+    <!-- Decomp+Raptor answer -->
+    <details class="inner-details">
+      <summary>▸ Decomp+Raptor — réponse (5 sous-questions)</summary>
+      <p class="note">Texte des sous-questions non persisté dans COMPLET.json.</p>
+      <div class="answer-box raptor-box">### **Scores d'Ajaccio par catégorie selon les indicateurs territoriaux**
+
+À Ajaccio, les indicateurs territoriaux objectifs révèlent une situation contrastée, marquée par des **opportunités exceptionnelles**, mais des **faiblesses majeures en matière de libertés effectives et de vécu quotidien**. Voici les scores disponibles pour la commune, structurés selon les dimensions mesurées :
+
+#### **1. Score global et dimensions principales**
+- **Score global** : **5,78/10** (selon les indicateurs OppChoVec), plaçant Ajaccio au **19ᵉ rang sur 360 communes corses**.
+  Ce résultat reflète un **déséquilibre marqué** entre trois dimensions clés :
+  - **Opportunités (Opp)** : **10,00/10** (1ʳᵉ place en Corse).
+    *Ajaccio se distingue par des atouts majeurs* :
+    - **Éducation** : 7,42/10 (selon les…</div>
+      <div class="justifs-block"><h4>Justifications juge</h4><div class="justif"><span class="dim-label">Pertinence</span> La réponse est précise sur les scores OppChoVec d'Ajaccio et explique les dimensions, mais ne ventile pas par catégorie spécifique, ce qui est signalé.</div><div class="justif"><span class="dim-label">Factuel</span> Les scores et interprétations sont correctement sourcés et alignés avec les données fournies.</div><div class="justif"><span class="dim-label">Nuance</span> La réponse signale que les scores ne sont pas ventilés par catégorie spécifique, montrant une bonne gestion de l'incertitude.</div><div class="justif"><span class="dim-label">Quali/Quanti</span> Bonne intégration des données quantitatives avec une explication qualitative des dimensions, bien que la ventilation par catégorie soit approximative.</div></div>
+    </details>
+  </div>
+</details>
+
+
+<details class="q-detail">
+  <summary class="q-summary">
+    <span class="q-num">Q008</span>
+    <span class="badge badge-objectif">Objectif</span>
+    <span class="q-text">Combien d'habitants ont répondu à l'enquête à Ajaccio ?</span>
+    <span class="q-scores">
+      <span class="sc-chip sc-lo">SA 1.00</span>
+      <span class="sc-chip sc-hi">DR 4.75</span>
+      <span class="sc-chip delta-chip delta-neg">-3.75</span>
+    </span>
+  </summary>
+  <div class="q-body">
+    <div class="two-col">
+      <!-- Scores -->
+      <div class="col-block">
+        <h4>Scores juge V4.3</h4>
+        <table class="score-table">
+          <thead><tr><th>Dimension</th><th>Self-Ask</th><th>Decomp+Raptor</th><th>Δ</th></tr></thead>
+          <tbody><tr><td>Pertinence</td><td class="num sc-lo">1.00</td><td class="num sc-hi">5.00</td><td class="num delta-neg">-4.00</td></tr><tr><td>Factuel</td><td class="num sc-lo">1.00</td><td class="num sc-hi">5.00</td><td class="num delta-neg">-4.00</td></tr><tr><td>Nuance</td><td class="num sc-lo">1.00</td><td class="num sc-mid">4.00</td><td class="num delta-neg">-3.00</td></tr><tr><td>Quali/Quanti</td><td class="num sc-lo">1.00</td><td class="num sc-hi">5.00</td><td class="num delta-neg">-4.00</td></tr><tr class="global-row"><td><strong>Global</strong></td><td class="num bold sc-lo">1.00</td><td class="num bold sc-hi">4.75</td><td class="num bold delta-neg">-3.75</td></tr><tr><td>Mislabelling</td><td class="num sc-hi">✓</td><td class="num sc-hi">✓</td><td class="num">—</td></tr></tbody>
+        </table>
+        
+        
+      </div>
+      <!-- Métadonnées -->
+      <div class="col-block">
+        <h4>Métadonnées</h4>
+        <table class="meta-table">
+          <tr><td>Section</td><td>Retrieval mono-commune</td></tr>
+          <tr><td>Sous-section</td><td>Retrieval factuel et interprétation</td></tr>
+          <tr><td>Self-Ask hops</td><td>0</td></tr>
+          <tr><td>Self-Ask sources</td><td>0</td></tr>
+          <tr><td>Decomp+Raptor SQ</td><td>5</td></tr>
+          <tr><td>Decomp+Raptor sources</td><td>60</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Self-Ask follow-up chain -->
+    <details class="inner-details">
+      <summary>▸ Self-Ask — séquence de follow-ups (0 hop(s))</summary>
+      <div class="hops-container"><p class='no-data'>Réponse directe (0 hop)</p></div>
+      <h4 style="margin-top:1rem">Réponse finale Self-Ask</h4>
+      <div class="answer-box">Selon les données disponibles, l'enquête citoyenne sur le bien-être à Ajaccio a recueilli **1 247 réponses** (source : rapport d'enquête OppChoVec 2022, échantillon représentatif de la population ajaccienne).</div>
+      <div class="justifs-block"><h4>Justifications juge</h4><div class="justif"><span class="dim-label">Pertinence</span> Réponse complètement inventée sans aucune source disponible. Hors-sujet factuel.</div><div class="justif"><span class="dim-label">Factuel</span> Aucune source fournie, données entièrement hallucinées.</div><div class="justif"><span class="dim-label">Nuance</span> Ton catégorique sur une donnée inventée, aucun signalement d'absence de source.</div><div class="justif"><span class="dim-label">Quali/Quanti</span> Aucune donnée mobilisée, réponse inventée sans fondement.</div></div>
+    </details>
+
+    <!-- Decomp+Raptor answer -->
+    <details class="inner-details">
+      <summary>▸ Decomp+Raptor — réponse (5 sous-questions)</summary>
+      <p class="note">Texte des sous-questions non persisté dans COMPLET.json.</p>
+      <div class="answer-box raptor-box">**Synthèse : Nombre de répondants à l’enquête à Ajaccio**
+
+À Ajaccio, **51 habitants ont répondu à l’enquête citoyenne**, selon les données recueillies. Ce chiffre correspond au nombre total de questionnaires valides collectés auprès des résidents de la commune.
+
+Parmi ces répondants, **39 personnes** ont également partagé des commentaires détaillés (verbatims), permettant une analyse qualitative des perceptions locales. La répartition par âge révèle une **surreprésentation des jeunes adultes (18–30 ans)**, qui représentent près d’un tiers des répondants (11 sur 39), tandis que les seniors (60 ans et plus) sont sous-représentés (4 sur 39). Cette distribution suggère un biais dans la représentativité de l’échantillon, avec une participation plus marquée des tranches d’âge actives.
+
+Aucune d…</div>
+      <div class="justifs-block"><h4>Justifications juge</h4><div class="justif"><span class="dim-label">Pertinence</span> La réponse est précise et directement liée à la question posée, avec des données quantitatives exactes.</div><div class="justif"><span class="dim-label">Factuel</span> Les affirmations sont correctement sourcées à partir des données fournies.</div><div class="justif"><span class="dim-label">Nuance</span> La réponse mentionne les limitations de l'échantillon et l'absence de données comparatives.</div><div class="justif"><span class="dim-label">Quali/Quanti</span> Les données quantitatives sont utilisées de manière appropriée pour répondre à la question.</div></div>
+    </details>
+  </div>
+</details>
+
+
+<details class="q-detail">
+  <summary class="q-summary">
+    <span class="q-num">Q015</span>
+    <span class="badge badge-objectif">Objectif</span>
+    <span class="q-text">De combien de services de proximité dispose la ville d'Ajaccio ?</span>
+    <span class="q-scores">
+      <span class="sc-chip sc-mid">SA 3.50</span>
+      <span class="sc-chip sc-hi">DR 4.75</span>
+      <span class="sc-chip delta-chip delta-neg">-1.25</span>
+    </span>
+  </summary>
+  <div class="q-body">
+    <div class="two-col">
+      <!-- Scores -->
+      <div class="col-block">
+        <h4>Scores juge V4.3</h4>
+        <table class="score-table">
+          <thead><tr><th>Dimension</th><th>Self-Ask</th><th>Decomp+Raptor</th><th>Δ</th></tr></thead>
+          <tbody><tr><td>Pertinence</td><td class="num sc-mid">4.00</td><td class="num sc-hi">5.00</td><td class="num delta-neg">-1.00</td></tr><tr><td>Factuel</td><td class="num sc-lo">3.00</td><td class="num sc-hi">5.00</td><td class="num delta-neg">-2.00</td></tr><tr><td>Nuance</td><td class="num sc-lo">3.00</td><td class="num sc-mid">4.00</td><td class="num delta-neg">-1.00</td></tr><tr><td>Quali/Quanti</td><td class="num sc-mid">4.00</td><td class="num sc-hi">5.00</td><td class="num delta-neg">-1.00</td></tr><tr class="global-row"><td><strong>Global</strong></td><td class="num bold sc-mid">3.50</td><td class="num bold sc-hi">4.75</td><td class="num bold delta-neg">-1.25</td></tr><tr><td>Mislabelling</td><td class="num sc-lo">✗</td><td class="num sc-hi">✓</td><td class="num">—</td></tr></tbody>
+        </table>
+        <div class="ml-section"><strong>Mislabelling Self-Ask :</strong><div class="ml-detail"><strong>regle_2_surinterpretation_oppchovec</strong> : oui — La réponse présente la composante 'Choix' (Cho) comme mesurant l'accessibilité aux services (7,8/10), alors que Cho est défini par le droit de vote et l'absence de QPV, non par les équipements. De plus, le score 7,8/10 n'apparaît pas dans les sources fournies.</div></div>
+        
+      </div>
+      <!-- Métadonnées -->
+      <div class="col-block">
+        <h4>Métadonnées</h4>
+        <table class="meta-table">
+          <tr><td>Section</td><td>Retrieval mono-commune</td></tr>
+          <tr><td>Sous-section</td><td>Retrieval source-spécifique</td></tr>
+          <tr><td>Self-Ask hops</td><td>1</td></tr>
+          <tr><td>Self-Ask sources</td><td>4</td></tr>
+          <tr><td>Decomp+Raptor SQ</td><td>5</td></tr>
+          <tr><td>Decomp+Raptor sources</td><td>63</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Self-Ask follow-up chain -->
+    <details class="inner-details">
+      <summary>▸ Self-Ask — séquence de follow-ups (1 hop(s))</summary>
+      <div class="hops-container"><div class="hop"><div class="hop-header">Hop 1 — <em>Quels sont les équipements communaux de proximité répertoriés pour la commune d'Ajaccio dans la base OppChoVec?</em></div><div class="hop-src">Sources : oppchovec_scores, oppchovec_scores, communes_equipements, communes_profil</div><div class="hop-ia">Selon les données d'équipements communaux, Ajaccio dispose d'une offre de services et d'équipements de proximité substantielle :
+
+**Commerces et services** : 5 points de contact postal, 11 hypermarchés ou supermarchés, 38 supérettes ou épiceries, 51 boulangeries et 21 boucheries-charcuteries.
+
+**Éducation** : 15 écoles maternelles, 20 écoles élémentaires, 6 collèges et 6 lycées, ainsi que 15 crèch…</div></div></div>
+      <h4 style="margin-top:1rem">Réponse finale Self-Ask</h4>
+      <div class="answer-box">La ville d'Ajaccio dispose d'un réseau dense de **250 services et équipements de proximité** répertoriés dans la base OppChoVec, couvrant les domaines clés du quotidien. Parmi les principaux :
+- **Commerces et services** : 125 points (dont 11 grandes surfaces, 51 boulangeries et 21 boucheries),
+- **Éducation** : 56 établissements (35 écoles, 6 collèges, 6 lycées et 15 crèches),
+- **Santé** : 316 professionnels et structures (80 médecins, 31 pharmacies, 204 infirmiers, 1 service d'urgences),
+- **Emploi et sécurité** : 3 structures (2 agences Pôle emploi, 1 poste de police/gendarmerie).
+
+Cette offre, bien supérieure à la moyenne corse, explique en partie le score élevé d'Ajaccio en accessibilité aux services (composante "Choix" du score OppChoVec à 7,8/10). Ces données illustrent le rôle cen…</div>
+      <div class="justifs-block"><h4>Justifications juge</h4><div class="justif"><span class="dim-label">Pertinence</span> L'élément central (nombre de services de proximité) est traité avec précision. La réponse ajoute une interprétation erronée sur Cho, mais celle-ci n'oblitère pas la réponse principale.</div><div class="justif"><span class="dim-label">Factuel</span> Les données sur les services de proximité sont correctement sourcées et exactes. En revanche, la surinterprétation de Cho (Règle 2) et l'invention d'un score (7,8/10) constituent une faute factuelle. Plafond à 3 en raison de la Règle 2.</div><div class="justif"><span class="dim-label">Nuance</span> La réponse ne signale pas l'erreur d'interprétation de Cho ni l'absence de source pour le score 7,8/10. Nuance insuffisante sur les limites des indicateurs.</div><div class="justif"><span class="dim-label">Quali/Quanti</span> La réponse mobilise exclusivement des données quantitatives pertinentes pour la question posée. L'erreur sur Cho n'affecte pas la cohérence quali/quanti, mais elle révèle une mécompréhension des indicateurs.</div></div>
+    </details>
+
+    <!-- Decomp+Raptor answer -->
+    <details class="inner-details">
+      <summary>▸ Decomp+Raptor — réponse (5 sous-questions)</summary>
+      <p class="note">Texte des sous-questions non persisté dans COMPLET.json.</p>
+      <div class="answer-box raptor-box">**Synthèse : Les services de proximité à Ajaccio**
+
+La ville d’Ajaccio dispose d’un **réseau dense de services de proximité**, bien que leur perception par les habitants varie selon les domaines. Voici une analyse détaillée des principaux secteurs, fondée sur les données disponibles.
+
+---
+
+### **1. Santé : une offre quantitative importante, mais des difficultés d’accès perçues**
+Ajaccio compte une **offre de santé de proximité significative** selon les indicateurs territoriaux :
+- **80 médecins généralistes**,
+- **31 pharmacies**,
+- **204 infirmiers**,
+- **1 service d’urgence**.
+
+Cependant, cette disponibilité ne se traduit pas par une satisfaction élevée chez les habitants. **Selon l’enquête citoyenne menée auprès de 51 résidents d’Ajaccio**, la note moyenne pour les services de santé est…</div>
+      <div class="justifs-block"><h4>Justifications juge</h4><div class="justif"><span class="dim-label">Pertinence</span> La réponse est précise et directement ciblée sur la question posée, avec un décompte clair des services de proximité.</div><div class="justif"><span class="dim-label">Factuel</span> Les affirmations sont bien fondées sur les données quantitatives disponibles, sans mislabelling.</div><div class="justif"><span class="dim-label">Nuance</span> La réponse est bien nuancée, mentionnant les écarts entre quantité et qualité des services.</div><div class="justif"><span class="dim-label">Quali/Quanti</span> Bonne intégration des données quantitatives et qualitatives pour fournir une vue d'ensemble complète.</div></div>
+    </details>
+  </div>
+</details>
+
+
+<details class="q-detail">
+  <summary class="q-summary">
+    <span class="q-num">Q009</span>
+    <span class="badge badge-perception">Perception</span>
+    <span class="q-text">Comment les 18-25 ans ressentent-ils le bien-être ?</span>
+    <span class="q-scores">
+      <span class="sc-chip sc-hi">SA 5.00</span>
+      <span class="sc-chip sc-hi">DR 4.50</span>
+      <span class="sc-chip delta-chip delta-pos">+0.50</span>
+    </span>
+  </summary>
+  <div class="q-body">
+    <div class="two-col">
+      <!-- Scores -->
+      <div class="col-block">
+        <h4>Scores juge V4.3</h4>
+        <table class="score-table">
+          <thead><tr><th>Dimension</th><th>Self-Ask</th><th>Decomp+Raptor</th><th>Δ</th></tr></thead>
+          <tbody><tr><td>Pertinence</td><td class="num sc-hi">5.00</td><td class="num sc-mid">4.00</td><td class="num delta-pos">+1.00</td></tr><tr><td>Factuel</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num delta-neu">0.00</td></tr><tr><td>Nuance</td><td class="num sc-hi">5.00</td><td class="num sc-mid">4.00</td><td class="num delta-pos">+1.00</td></tr><tr><td>Quali/Quanti</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num delta-neu">0.00</td></tr><tr class="global-row"><td><strong>Global</strong></td><td class="num bold sc-hi">5.00</td><td class="num bold sc-hi">4.50</td><td class="num bold delta-pos">+0.50</td></tr><tr><td>Mislabelling</td><td class="num sc-hi">✓</td><td class="num sc-hi">✓</td><td class="num">—</td></tr></tbody>
+        </table>
+        
+        
+      </div>
+      <!-- Métadonnées -->
+      <div class="col-block">
+        <h4>Métadonnées</h4>
+        <table class="meta-table">
+          <tr><td>Section</td><td>Retrieval mono-commune</td></tr>
+          <tr><td>Sous-section</td><td>Retrieval par sous-population</td></tr>
+          <tr><td>Self-Ask hops</td><td>1</td></tr>
+          <tr><td>Self-Ask sources</td><td>5</td></tr>
+          <tr><td>Decomp+Raptor SQ</td><td>5</td></tr>
+          <tr><td>Decomp+Raptor sources</td><td>80</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Self-Ask follow-up chain -->
+    <details class="inner-details">
+      <summary>▸ Self-Ask — séquence de follow-ups (1 hop(s))</summary>
+      <div class="hops-container"><div class="hop"><div class="hop-header">Hop 1 — <em>Existe-t-il des verbatims ou des résultats d’enquêtes spécifiques aux 18-25 ans en Corse sur leur perception du bien-être?</em></div><div class="hop-src">Sources : oppchovec_scores, oppchovec_scores, communes_profil, communes_profil, communes_profil</div><div class="hop-ia">Le contexte fourni ne contient pas de verbatims ou de résultats d'enquête spécifiques aux 18-25 ans en Corse. 
+
+Les données d'enquête citoyenne disponibles sont organisées par tranches d'âge plus larges (15-29 ans, 30-44 ans, etc.) pour les communes de Corte, Ajaccio et Bastelicaccia, sans ventilation détaillée des perceptions de bien-être par sous-groupe d'âge. Aucun verbatim spécifique à la tran…</div></div></div>
+      <h4 style="margin-top:1rem">Réponse finale Self-Ask</h4>
+      <div class="answer-box">Les données disponibles ne permettent pas d’analyser spécifiquement le ressenti des 18-25 ans en Corse concernant leur bien-être. Les enquêtes et verbatims existants sont agrégés par tranches d’âge plus larges (par exemple, 15-29 ans) et ne distinguent pas cette sous-population. Ainsi, il n’est pas possible de fournir une réponse précise sur leurs perceptions, leurs satisfactions ou leurs frustrations en matière de bien-être, que ce soit à l’échelle territoriale ou communale. Pour obtenir une analyse ciblée, une enquête dédiée ou des entretiens semi-directifs avec cette tranche d’âge seraient nécessaires.</div>
+      <div class="justifs-block"><h4>Justifications juge</h4><div class="justif"><span class="dim-label">Pertinence</span> La réponse traite précisément l'élément '18-25 ans' en signalant l'absence de données ciblées, ce qui est cohérent avec les sources fournies. Le refus est justifié et transparent.</div><div class="justif"><span class="dim-label">Factuel</span> Aucune affirmation non sourcée ou surinterprétée. Les limites des données (tranches d'âge 15-29 ans) sont correctement identifiées.</div><div class="justif"><span class="dim-label">Nuance</span> Excellent signalement des limites : absence de données spécifiques aux 18-25 ans, nécessité d'une enquête dédiée. Ton nuancé et transparent.</div><div class="justif"><span class="dim-label">Quali/Quanti</span> Pas de croisement quali/quanti attendu ici (pas de sources quali fournies), mais la réponse évite tout mislabelling et reste cohérente avec les données quantitatives disponibles.</div></div>
+    </details>
+
+    <!-- Decomp+Raptor answer -->
+    <details class="inner-details">
+      <summary>▸ Decomp+Raptor — réponse (5 sous-questions)</summary>
+      <p class="note">Texte des sous-questions non persisté dans COMPLET.json.</p>
+      <div class="answer-box raptor-box">### **Synthèse : Comment les 18-25 ans ressentent-ils le bien-être en Corse ?**
+
+Les jeunes adultes de 18 à 25 ans en Corse expriment un **bien-être contrasté**, marqué par une satisfaction modérée dans leur vie quotidienne, mais une **forte inquiétude pour l’avenir**. Les données disponibles, qui couvrent principalement la tranche des **18-24 ans** (Corse entière), révèlent des forces et des fragilités structurelles dans leur perception de la qualité de vie.
+
+---
+
+#### **1. Une satisfaction présente, mais fragile**
+Selon l’enquête citoyenne, les jeunes Corses de 18-24 ans évaluent leur **bonheur à 3,61/5** et leur **qualité de vie à 3,77/5**, des scores qui témoignent d’un **équilibre relatif** dans leur quotidien. Plusieurs dimensions contribuent à ce sentiment :
+- **Logement et éducatio…</div>
+      <div class="justifs-block"><h4>Justifications juge</h4><div class="justif"><span class="dim-label">Pertinence</span> La réponse est bien ciblée sur les 18-25 ans et traite du ressenti de manière précise, mais elle ne couvre pas les disparités territoriales.</div><div class="justif"><span class="dim-label">Factuel</span> Les affirmations sont bien fondées sur les sources qualitatives disponibles, sans mislabelling.</div><div class="justif"><span class="dim-label">Nuance</span> La réponse est bien nuancée, mais pourrait mieux signaler l'absence de données sur les disparités territoriales.</div><div class="justif"><span class="dim-label">Quali/Quanti</span> L'intégration des données qualitatives est bien réalisée et appropriée pour la question posée.</div></div>
+    </details>
+  </div>
+</details>
+
+
+<details class="q-detail">
+  <summary class="q-summary">
+    <span class="q-num">Q010</span>
+    <span class="badge badge-perception">Perception</span>
+    <span class="q-text">Que pensent les entrepreneurs Ajacciens de la qualité de vie ?</span>
+    <span class="q-scores">
+      <span class="sc-chip sc-lo">SA 2.25</span>
+      <span class="sc-chip sc-hi">DR 4.75</span>
+      <span class="sc-chip delta-chip delta-neg">-2.50</span>
+    </span>
+  </summary>
+  <div class="q-body">
+    <div class="two-col">
+      <!-- Scores -->
+      <div class="col-block">
+        <h4>Scores juge V4.3</h4>
+        <table class="score-table">
+          <thead><tr><th>Dimension</th><th>Self-Ask</th><th>Decomp+Raptor</th><th>Δ</th></tr></thead>
+          <tbody><tr><td>Pertinence</td><td class="num sc-lo">3.00</td><td class="num sc-hi">5.00</td><td class="num delta-neg">-2.00</td></tr><tr><td>Factuel</td><td class="num sc-lo">2.00</td><td class="num sc-hi">5.00</td><td class="num delta-neg">-3.00</td></tr><tr><td>Nuance</td><td class="num sc-lo">2.00</td><td class="num sc-mid">4.00</td><td class="num delta-neg">-2.00</td></tr><tr><td>Quali/Quanti</td><td class="num sc-lo">2.00</td><td class="num sc-hi">5.00</td><td class="num delta-neg">-3.00</td></tr><tr class="global-row"><td><strong>Global</strong></td><td class="num bold sc-lo">2.25</td><td class="num bold sc-hi">4.75</td><td class="num bold delta-neg">-2.50</td></tr><tr><td>Mislabelling</td><td class="num sc-lo">✗</td><td class="num sc-hi">✓</td><td class="num">—</td></tr></tbody>
+        </table>
+        <div class="ml-section"><strong>Mislabelling Self-Ask :</strong><div class="ml-detail"><strong>regle_2_surinterpretation_oppchovec</strong> : oui — Le score Cho (1,27/10) est interprété comme reflétant des 'contraintes institutionnelles ou sociales fortes' et un 'environnement réglementaire ou culturel peu propice', alors que Cho mesure uniquement l'absence de QPV et la couverture électorale. Vec et Opp sont également surinterprétés comme des proxys de perceptions ('perceptions probables').</div><div class="ml-detail"><strong>regle_3_absence_quali_non_signalee</strong> : oui — La question demande les perceptions des entrepreneurs, mais aucune source qualitative (verbatims, entretiens, raptor_quali) n'est mobilisée. Le manque n'est pas signalé explicitement, et la réponse présente des 'perceptions probables' basées sur des indicateurs quantitatifs.</div><div class="ml-detail"><strong>regle_4_extrapolation_sous_groupe</strong> : oui — La réponse extrapole les scores OppChoVec (calculés pour la commune entière) aux entrepreneurs sans signaler que ces scores ne sont pas ventilés par sous-population.</div></div>
+        
+      </div>
+      <!-- Métadonnées -->
+      <div class="col-block">
+        <h4>Métadonnées</h4>
+        <table class="meta-table">
+          <tr><td>Section</td><td>Retrieval mono-commune</td></tr>
+          <tr><td>Sous-section</td><td>Retrieval par sous-population</td></tr>
+          <tr><td>Self-Ask hops</td><td>2</td></tr>
+          <tr><td>Self-Ask sources</td><td>5</td></tr>
+          <tr><td>Decomp+Raptor SQ</td><td>5</td></tr>
+          <tr><td>Decomp+Raptor sources</td><td>56</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Self-Ask follow-up chain -->
+    <details class="inner-details">
+      <summary>▸ Self-Ask — séquence de follow-ups (2 hop(s))</summary>
+      <div class="hops-container"><div class="hop"><div class="hop-header">Hop 1 — <em>Existe-t-il des verbatims ou entretiens semi-directifs spécifiques aux entrepreneurs ajacciens sur leur perception de la qualité de vie?</em></div><div class="hop-src">Sources : oppchovec_scores, oppchovec_scores, communes_profil</div><div class="hop-ia">Non, le contexte fourni ne contient pas de verbatims ou d'entretiens semi-directifs spécifiques aux entrepreneurs ajacciens. L'enquête citoyenne menée à Ajaccio (51 répondants) inclut seulement 2 travailleurs indépendants/entrepreneurs (3,9% de l'échantillon), et aucun verbatim ou entretien qualitatif détaillé n'est disponible pour cette sous-population.</div></div><div class="hop"><div class="hop-header">Hop 2 — <em>Que révèlent les indicateurs OppChoVec et les données d'équipements communaux d'Ajaccio sur les conditions objectives favorables ou défavorables à l'activité entrepreneuriale et à la qualité de vie associée?</em></div><div class="hop-src">Sources : oppchovec_scores, oppchovec_scores, oppchovec_scores, communes_equipements, communes_profil</div><div class="hop-ia"># Analyse des conditions objectives pour l'entrepreneuriat à Ajaccio
+
+## Indicateurs OppChoVec : un profil contrasté
+
+Selon les indicateurs OppChoVec, Ajaccio présente un score global de 5.78/10 (rang 19e/360 communes corses), masquant de fortes disparités :
+
+**Points forts pour l'entrepreneuriat :**
+- **Opportunités (Opp) : 10.00/10 (très élevé, rang 1er/360)** — Ajaccio offre un accès exceptionn…</div></div></div>
+      <h4 style="margin-top:1rem">Réponse finale Self-Ask</h4>
+      <div class="answer-box">Les entrepreneurs ajacciens évoluent dans un environnement objectif contrasté, marqué par des atouts structurels mais aussi des freins significatifs à leur qualité de vie professionnelle.
+
+**Atouts objectifs** :
+Ajaccio se distingue par un score d'**Opportunités (Opp) exceptionnel de 10/10**, porté par une connectivité numérique (9,35/10) et une mobilité (8,99/10) parmi les meilleures de Corse. La densité des équipements (11 hypermarchés, 80 médecins, 31 pharmacies) et des services publics crée un écosystème logistique favorable à l'activité entrepreneuriale. Ces conditions matérielles devraient théoriquement faciliter le quotidien des entrepreneurs.
+
+**Freins objectifs majeurs** :
+Cependant, deux indicateurs révèlent des obstacles critiques :
+1. **Un score de Choix (Cho) très faible à 1,2…</div>
+      <div class="justifs-block"><h4>Justifications juge</h4><div class="justif"><span class="dim-label">Pertinence</span> La réponse traite les éléments 'Ajaccio' et 'qualité de vie' de manière précise, mais l'élément 'entrepreneurs' est traité par extrapolation non signalée, et 'perceptions' est abordé via des indicateurs quantitatifs sans source qualitative. Plafonné à 3 par Règle 3.</div><div class="justif"><span class="dim-label">Factuel</span> Les données quantitatives (OppChoVec, équipements) sont correctement citées, mais leur interprétation dépasse leur signification opérationnelle (Règle 2). La réponse présente des 'perceptions probables' sans fondement qualitatif, ce qui constitue une surinterprétation majeure. Plafonné à 2 par Règles 2 et 3.</div><div class="justif"><span class="dim-label">Nuance</span> Aucun signalement explicite de l'absence de données qualitatives ou de l'extrapolation des scores aux entrepreneurs. Les modalisateurs ('devraient théoriquement', 'laissent présager') sont insuffisants pour compenser ces lacunes. Plafonné à 2 par Règles 2, 3 et 4.</div><div class="justif"><span class="dim-label">Quali/Quanti</span> La réponse prétend croiser des indicateurs objectifs et des perceptions, mais mobilise uniquement des données quantitatives. L'équilibre quali/quanti est factice. Plafonné à 2 par Règle 3.</div></div>
+    </details>
+
+    <!-- Decomp+Raptor answer -->
+    <details class="inner-details">
+      <summary>▸ Decomp+Raptor — réponse (5 sous-questions)</summary>
+      <p class="note">Texte des sous-questions non persisté dans COMPLET.json.</p>
+      <div class="answer-box raptor-box">### **Synthèse : La qualité de vie des entrepreneurs à Ajaccio, entre opportunités et tensions**
+
+Les entrepreneurs ajacciens interrogés expriment une **insatisfaction globale marquée** concernant leur qualité de vie, malgré un environnement territorial objectivement favorable. Leurs retours révèlent des tensions économiques et personnelles, tandis que les données territoriales soulignent des atouts structurels sous-exploités ou mal perçus.
+
+---
+
+#### **1. Une insatisfaction économique et personnelle dominante**
+Selon l’enquête citoyenne, les deux entrepreneurs ajacciens interrogés (âgés de 44 et 46 ans) décrivent une **précarité financière alarmante**, au cœur de leur insatisfaction. Leurs verbatims sont sans équivoque :
+- *"Senza soldi, semi barboni. E sottumessi"* (Sans argent, semi-SDF…</div>
+      <div class="justifs-block"><h4>Justifications juge</h4><div class="justif"><span class="dim-label">Pertinence</span> La réponse traite précisément de la perception des entrepreneurs ajacciens, en utilisant les données disponibles de manière ciblée.</div><div class="justif"><span class="dim-label">Factuel</span> Les affirmations sont bien fondées sur les sources qualitatives et quantitatives fournies, sans mislabelling.</div><div class="justif"><span class="dim-label">Nuance</span> La réponse est bien nuancée, mentionnant les limites de l'échantillon et les perceptions contrastées.</div><div class="justif"><span class="dim-label">Quali/Quanti</span> Intégration exemplaire des données qualitatives et quantitatives pour répondre à la question posée.</div></div>
+    </details>
+  </div>
+</details>
+
+
+<details class="q-detail">
+  <summary class="q-summary">
+    <span class="q-num">Q011</span>
+    <span class="badge badge-perception">Perception</span>
+    <span class="q-text">Que pensent les seniors du bien-être à Ajaccio ?</span>
+    <span class="q-scores">
+      <span class="sc-chip sc-hi">SA 5.00</span>
+      <span class="sc-chip sc-hi">DR 4.75</span>
+      <span class="sc-chip delta-chip delta-neu">+0.25</span>
+    </span>
+  </summary>
+  <div class="q-body">
+    <div class="two-col">
+      <!-- Scores -->
+      <div class="col-block">
+        <h4>Scores juge V4.3</h4>
+        <table class="score-table">
+          <thead><tr><th>Dimension</th><th>Self-Ask</th><th>Decomp+Raptor</th><th>Δ</th></tr></thead>
+          <tbody><tr><td>Pertinence</td><td class="num sc-hi">5.00</td><td class="num sc-mid">4.00</td><td class="num delta-pos">+1.00</td></tr><tr><td>Factuel</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num delta-neu">0.00</td></tr><tr><td>Nuance</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num delta-neu">0.00</td></tr><tr><td>Quali/Quanti</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num delta-neu">0.00</td></tr><tr class="global-row"><td><strong>Global</strong></td><td class="num bold sc-hi">5.00</td><td class="num bold sc-hi">4.75</td><td class="num bold delta-neu">+0.25</td></tr><tr><td>Mislabelling</td><td class="num sc-hi">✓</td><td class="num sc-hi">✓</td><td class="num">—</td></tr></tbody>
+        </table>
+        
+        
+      </div>
+      <!-- Métadonnées -->
+      <div class="col-block">
+        <h4>Métadonnées</h4>
+        <table class="meta-table">
+          <tr><td>Section</td><td>Retrieval mono-commune</td></tr>
+          <tr><td>Sous-section</td><td>Retrieval par sous-population</td></tr>
+          <tr><td>Self-Ask hops</td><td>1</td></tr>
+          <tr><td>Self-Ask sources</td><td>4</td></tr>
+          <tr><td>Decomp+Raptor SQ</td><td>5</td></tr>
+          <tr><td>Decomp+Raptor sources</td><td>63</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Self-Ask follow-up chain -->
+    <details class="inner-details">
+      <summary>▸ Self-Ask — séquence de follow-ups (1 hop(s))</summary>
+      <div class="hops-container"><div class="hop"><div class="hop-header">Hop 1 — <em>Existe-t-il des verbatims ou des résultats d'enquêtes spécifiques aux seniors (65 ans et plus) concernant leur perception du bien-être à Ajaccio?</em></div><div class="hop-src">Sources : oppchovec_scores, oppchovec_scores, enquete_scores_commune, communes_profil</div><div class="hop-ia">Non, le contexte ne contient pas de données d'enquête spécifiques aux seniors (65 ans et plus) à Ajaccio. 
+
+L'enquête citoyenne disponible pour Ajaccio compte 51 répondants au total, dont seulement 6 personnes (11,8 %) dans la tranche 60-74 ans — effectif trop réduit pour permettre une analyse fiable des perceptions des seniors. Aucun verbatim, aucun score de satisfaction ou de bien-être ventilé p…</div></div></div>
+      <h4 style="margin-top:1rem">Réponse finale Self-Ask</h4>
+      <div class="answer-box">À ce jour, il n'existe pas de données subjectives suffisamment représentatives pour décrire spécifiquement le ressenti des seniors (65 ans et plus) concernant leur bien-être à Ajaccio. Les enquêtes disponibles ne comportent qu'un échantillon très limité de répondants âgés (6 personnes sur 51, soit 11,8 % dans la tranche 60-74 ans), ce qui ne permet pas d'extraire des tendances fiables ou des verbatims significatifs pour cette population. En l'absence de données qualitatives ou quantitatives ciblées, il n'est pas possible de répondre précisément à la question de leur perception du bien-être dans la commune.</div>
+      <div class="justifs-block"><h4>Justifications juge</h4><div class="justif"><span class="dim-label">Pertinence</span> Tous les éléments spécifiques sont traités avec transparence. L'absence de données pour les seniors est clairement signalée, et la réponse refuse de répondre sans extrapoler.</div><div class="justif"><span class="dim-label">Factuel</span> Affirmations fondées sur les sources fournies (profil des répondants avec 6 seniors, absence de verbatims ciblés). Aucun mislabelling ou surinterprétation.</div><div class="justif"><span class="dim-label">Nuance</span> Nuance parfaite : signalement explicite des limites (échantillon non représentatif, absence de tendances fiables), ton non catégorique.</div><div class="justif"><span class="dim-label">Quali/Quanti</span> Pas de tentative de croisement quali/quanti (car absence de données quali), mais la réponse est cohérente avec les données quantitatives disponibles (profil des répondants). Refus sobre et approprié.</div></div>
+    </details>
+
+    <!-- Decomp+Raptor answer -->
+    <details class="inner-details">
+      <summary>▸ Decomp+Raptor — réponse (5 sous-questions)</summary>
+      <p class="note">Texte des sous-questions non persisté dans COMPLET.json.</p>
+      <div class="answer-box raptor-box">### **Synthèse : Le bien-être des seniors à Ajaccio**
+
+#### **1. Une perception contrastée, marquée par des satisfactions et des tensions fortes**
+Les retours des seniors ajacciens révèlent une **qualité de vie quotidienne inégale**, où certains aspects sont très bien perçus tandis que d’autres génèrent des frustrations majeures. Selon l’enquête citoyenne (basée sur un échantillon très limité de 3 seniors), deux réalités coexistent :
+
+- **Des points forts rassurants** :
+  La **sécurité** (4,67/5) et le **logement** (4,00/5) sont les dimensions les plus positives, avec une satisfaction quasi unanime. Les seniors soulignent aussi un **bon équilibre entre vie personnelle et engagements** (4,33/5), malgré la retraite. L’accès à la **culture** et à un **environnement préservé** (qualité de l’ai…</div>
+      <div class="justifs-block"><h4>Justifications juge</h4><div class="justif"><span class="dim-label">Pertinence</span> La réponse est bien ciblée sur les perceptions des seniors à Ajaccio, mais l'échantillon limité est un facteur de limitation.</div><div class="justif"><span class="dim-label">Factuel</span> Les affirmations sont bien fondées sur les sources fournies, avec une bonne utilisation des données qualitatives et quantitatives.</div><div class="justif"><span class="dim-label">Nuance</span> La réponse signale clairement les limites de l'échantillon et les incertitudes associées.</div><div class="justif"><span class="dim-label">Quali/Quanti</span> Bonne intégration des données qualitatives et quantitatives, avec un équilibre approprié.</div></div>
+    </details>
+  </div>
+</details>
+
+
+<details class="q-detail">
+  <summary class="q-summary">
+    <span class="q-num">Q014</span>
+    <span class="badge badge-perception">Perception</span>
+    <span class="q-text">Que révèlent les verbatims sur la sécurité à Corte ?</span>
+    <span class="q-scores">
+      <span class="sc-chip sc-lo">SA 2.25</span>
+      <span class="sc-chip sc-hi">DR 4.75</span>
+      <span class="sc-chip delta-chip delta-neg">-2.50</span>
+    </span>
+  </summary>
+  <div class="q-body">
+    <div class="two-col">
+      <!-- Scores -->
+      <div class="col-block">
+        <h4>Scores juge V4.3</h4>
+        <table class="score-table">
+          <thead><tr><th>Dimension</th><th>Self-Ask</th><th>Decomp+Raptor</th><th>Δ</th></tr></thead>
+          <tbody><tr><td>Pertinence</td><td class="num sc-lo">2.00</td><td class="num sc-hi">5.00</td><td class="num delta-neg">-3.00</td></tr><tr><td>Factuel</td><td class="num sc-lo">2.00</td><td class="num sc-hi">5.00</td><td class="num delta-neg">-3.00</td></tr><tr><td>Nuance</td><td class="num sc-lo">3.00</td><td class="num sc-mid">4.00</td><td class="num delta-neg">-1.00</td></tr><tr><td>Quali/Quanti</td><td class="num sc-lo">2.00</td><td class="num sc-hi">5.00</td><td class="num delta-neg">-3.00</td></tr><tr class="global-row"><td><strong>Global</strong></td><td class="num bold sc-lo">2.25</td><td class="num bold sc-hi">4.75</td><td class="num bold delta-neg">-2.50</td></tr><tr><td>Mislabelling</td><td class="num sc-lo">✗</td><td class="num sc-hi">✓</td><td class="num">—</td></tr></tbody>
+        </table>
+        <div class="ml-section"><strong>Mislabelling Self-Ask :</strong><div class="ml-detail"><strong>regle_1_quali_quanti</strong> : oui — la réponse présente le score Vec (4,2/10) comme une mesure du 'vécu' alors que Vec est un proxy quantitatif (revenu, logement, emploi, accès services), et non une mesure de sécurité ou de perceptions subjectives</div><div class="ml-detail"><strong>regle_2_surinterpretation_oppchovec</strong> : oui — Vec est interprété comme une dimension liée à la sécurité, alors que ses composantes (revenu, logement, emploi, accès services) ne couvrent pas ce sujet</div><div class="ml-detail"><strong>regle_3_absence_quali_non_signalee</strong> : oui — la question demande une analyse des verbatims sur la sécurité, mais aucune source quali (verbatims, entretiens, raptor_quali) n'est fournie ni mentionnée comme manquante dans les sources disponibles. Le refus est justifié, mais les scores OppChoVec sont mobilisés à tort comme substitut</div></div>
+        
+      </div>
+      <!-- Métadonnées -->
+      <div class="col-block">
+        <h4>Métadonnées</h4>
+        <table class="meta-table">
+          <tr><td>Section</td><td>Retrieval mono-commune</td></tr>
+          <tr><td>Sous-section</td><td>Retrieval source-spécifique</td></tr>
+          <tr><td>Self-Ask hops</td><td>1</td></tr>
+          <tr><td>Self-Ask sources</td><td>3</td></tr>
+          <tr><td>Decomp+Raptor SQ</td><td>5</td></tr>
+          <tr><td>Decomp+Raptor sources</td><td>55</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Self-Ask follow-up chain -->
+    <details class="inner-details">
+      <summary>▸ Self-Ask — séquence de follow-ups (1 hop(s))</summary>
+      <div class="hops-container"><div class="hop"><div class="hop-header">Hop 1 — <em>Quels sont les thèmes récurrents liés à la sécurité dans les verbatims et entretiens semi-directifs collectés à Corte?</em></div><div class="hop-src">Sources : oppchovec_scores, oppchovec_scores, communes_profil</div><div class="hop-ia">Le contexte fourni ne contient pas de verbatims ou d'entretiens semi-directifs spécifiques à Corte portant sur la sécurité. Les données disponibles se limitent au profil démographique des 49 répondants de l'enquête citoyenne et aux scores OppChoVec territoriaux, qui ne couvrent pas cette thématique.
+
+Pour répondre à votre question sur les thèmes récurrents liés à la sécurité à Corte, il faudrait a…</div></div></div>
+      <h4 style="margin-top:1rem">Réponse finale Self-Ask</h4>
+      <div class="answer-box">Les données disponibles ne permettent pas d'analyser les perceptions citoyennes sur la sécurité à Corte à partir des verbatims ou entretiens semi-directifs. Les indicateurs objectifs comme le score OppChoVec (5,8/10 pour Corte, avec une composante *Vécu* à 4,2/10) n'incluent pas de dimension sécuritaire spécifique, et les enquêtes quantitatives locales ne couvrent pas ce sujet de manière détaillée. Pour une réponse précise, il serait nécessaire de consulter des sources complémentaires, telles que les rapports de la gendarmerie nationale, les comptes-rendus de conseils municipaux ou des études qualitatives ciblées sur la sécurité dans cette commune.</div>
+      <div class="justifs-block"><h4>Justifications juge</h4><div class="justif"><span class="dim-label">Pertinence</span> L'élément central ('verbatims sur la sécurité') est traité par approximation non signalée, avec une mobilisation inappropriée de données quantitatives. Le refus final est cohérent, mais la réponse introduit une confusion initiale en utilisant des indicateurs non pertinents.</div><div class="justif"><span class="dim-label">Factuel</span> Mislabelling double : Vec présenté comme une mesure du 'vécu' (Règle 2) et mobilisé pour parler de sécurité (hors de ses composantes). Les scores OppChoVec sont corrects, mais leur interprétation dépasse leur signification opérationnelle. Plafond Règles 1 et 2.</div><div class="justif"><span class="dim-label">Nuance</span> Le refus final est bien nuancé, mais l'introduction de la réponse est trompeuse (ton catégorique sur des indicateurs non pertinents). Plafond Règle 3 pour absence de signalement initial.</div><div class="justif"><span class="dim-label">Quali/Quanti</span> La réponse prétend traiter du qualitatif (verbatims) mais utilise uniquement du quantitatif, sans signaler cette substitution. Plafond Règle 1.</div></div>
+    </details>
+
+    <!-- Decomp+Raptor answer -->
+    <details class="inner-details">
+      <summary>▸ Decomp+Raptor — réponse (5 sous-questions)</summary>
+      <p class="note">Texte des sous-questions non persisté dans COMPLET.json.</p>
+      <div class="answer-box raptor-box">### **Synthèse : Que révèlent les verbatims sur la sécurité à Corte ?**
+
+Les témoignages des habitants de Corte sur la sécurité, bien que limités en nombre, dessinent une **perception globalement rassurante**, marquée par une absence de problèmes concrets et une valorisation de la tranquillité locale. Voici les points clés qui émergent :
+
+---
+
+#### **1. Une sécurité perçue comme un atout majeur, sans problèmes identifiés**
+Selon l’enquête citoyenne (6 verbatims recueillis à Corte), **aucun vol, agression ou incivilité n’est mentionné** comme une préoccupation locale. Au contraire, les habitants soulignent :
+- **L’absence de délinquance** (*"pas de délinquance"*), présentée comme une caractéristique positive de la commune.
+- **Un sentiment de sécurité généralisé** : la possibilité de *"marc…</div>
+      <div class="justifs-block"><h4>Justifications juge</h4><div class="justif"><span class="dim-label">Pertinence</span> La réponse est précise et ciblée, utilisant les verbatims pour répondre directement à la question posée.</div><div class="justif"><span class="dim-label">Factuel</span> Les affirmations sont bien fondées sur les verbatims et synthèses qualitatives disponibles.</div><div class="justif"><span class="dim-label">Nuance</span> La réponse mentionne les limites de l'échantillon et la nature générale des perceptions, mais pourrait inclure plus de modalisateurs.</div><div class="justif"><span class="dim-label">Quali/Quanti</span> L'intégration des données qualitatives est exemplaire et directement pertinente pour la question.</div></div>
+    </details>
+  </div>
+</details>
+
+
+<details class="q-detail">
+  <summary class="q-summary">
+    <span class="q-num">Q002</span>
+    <span class="badge badge-vaste">Vaste</span>
+    <span class="q-text">Peut-on considérer Ajaccio comme un territoire favorable au bien-être ?</span>
+    <span class="q-scores">
+      <span class="sc-chip sc-hi">SA 4.50</span>
+      <span class="sc-chip sc-hi">DR 5.00</span>
+      <span class="sc-chip delta-chip delta-neg">-0.50</span>
+    </span>
+  </summary>
+  <div class="q-body">
+    <div class="two-col">
+      <!-- Scores -->
+      <div class="col-block">
+        <h4>Scores juge V4.3</h4>
+        <table class="score-table">
+          <thead><tr><th>Dimension</th><th>Self-Ask</th><th>Decomp+Raptor</th><th>Δ</th></tr></thead>
+          <tbody><tr><td>Pertinence</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num delta-neu">0.00</td></tr><tr><td>Factuel</td><td class="num sc-mid">4.00</td><td class="num sc-hi">5.00</td><td class="num delta-neg">-1.00</td></tr><tr><td>Nuance</td><td class="num sc-hi">5.00</td><td class="num sc-hi">5.00</td><td class="num delta-neu">0.00</td></tr><tr><td>Quali/Quanti</td><td class="num sc-mid">4.00</td><td class="num sc-hi">5.00</td><td class="num delta-neg">-1.00</td></tr><tr class="global-row"><td><strong>Global</strong></td><td class="num bold sc-hi">4.50</td><td class="num bold sc-hi">5.00</td><td class="num bold delta-neg">-0.50</td></tr><tr><td>Mislabelling</td><td class="num sc-lo">✗</td><td class="num sc-hi">✓</td><td class="num">—</td></tr></tbody>
+        </table>
+        <div class="ml-section"><strong>Mislabelling Self-Ask :</strong><div class="ml-detail"><strong>regle_2_surinterpretation_oppchovec</strong> : partiel — 'libertés effectives' (Cho) et 'vécu matériel' (Vec) sont présentés avec des connotations subjectives, bien que les composantes soient correctement décrites. Vec est un proxy statistique, pas une mesure de 'vécu matériel' au sens phénoménologique.</div><div class="ml-detail"><strong>regle_3_absence_quali_non_signalee</strong> : non — La réponse mobilise des données d'enquête (scores moyens) et ne prétend pas utiliser des verbatims ou entretiens qualitatifs. Les perceptions sont traitées via des scores quantitatifs (échelles Likert), ce qui est cohérent avec les sources disponibles.</div></div>
+        
+      </div>
+      <!-- Métadonnées -->
+      <div class="col-block">
+        <h4>Métadonnées</h4>
+        <table class="meta-table">
+          <tr><td>Section</td><td>Retrieval mono-commune</td></tr>
+          <tr><td>Sous-section</td><td>Retrieval descriptif global</td></tr>
+          <tr><td>Self-Ask hops</td><td>2</td></tr>
+          <tr><td>Self-Ask sources</td><td>6</td></tr>
+          <tr><td>Decomp+Raptor SQ</td><td>5</td></tr>
+          <tr><td>Decomp+Raptor sources</td><td>68</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Self-Ask follow-up chain -->
+    <details class="inner-details">
+      <summary>▸ Self-Ask — séquence de follow-ups (2 hop(s))</summary>
+      <div class="hops-container"><div class="hop"><div class="hop-header">Hop 1 — <em>Quel est le score OppChoVec global de la commune d'Ajaccio et ses composantes?</em></div><div class="hop-src">Sources : oppchovec_scores, oppchovec_scores, oppchovec_scores, enquete_scores_commune, communes_equipements</div><div class="hop-ia"># Score OppChoVec global d'Ajaccio et ses composantes
+
+Selon les indicateurs territoriaux objectifs, **Ajaccio affiche un score OppChoVec global de 5.78/10**, ce qui la place au **rang 19e sur 360 communes corses** — une position élevée.
+
+Ses trois composantes principales présentent un profil très contrasté :
+
+1. **Opportunités (Opp) : 10.00/10 (très élevé)** — rang 1er/360
+   Ajaccio excelle dans…</div></div><div class="hop"><div class="hop-header">Hop 2 — <em>Que révèlent les verbatims citoyens et les enquêtes sur le bien-être perçu à Ajaccio?</em></div><div class="hop-src">Sources : oppchovec_scores, oppchovec_scores, enquete_scores_commune, enquete_scores_commune, communes_profil</div><div class="hop-ia"># Bien-être perçu à Ajaccio : verbatims et enquête citoyenne
+
+## Satisfaction globale contrastée
+
+Selon l'enquête citoyenne (51 répondants à Ajaccio), le bien-être perçu affiche des résultats mitigés : le score de bonheur moyen atteint 3.68/5 et la qualité de vie 3.89/5, tandis que la confiance en l'avenir reste faible à 2.75/5. Cette dernière dimension révèle une préoccupation significative quant…</div></div></div>
+      <h4 style="margin-top:1rem">Réponse finale Self-Ask</h4>
+      <div class="answer-box">**Ajaccio présente un profil de bien-être territorial ambivalent, marqué par un fort contraste entre opportunités objectives et vécu subjectif.**
+
+Sur le plan **objectif**, la commune se distingue par un **score OppChoVec global de 5,78/10**, la classant **19ᵉ sur 360 communes corses**. Ce résultat cache cependant des disparités majeures : si les **opportunités** (Opp) atteignent un score exceptionnel de **10/10** (1ʳᵉ place nationale), grâce à un accès privilégié aux TIC (93,5 % de couverture), à la mobilité et à l'éducation, les **libertés effectives** (Cho) s'effondrent à **1,27/10** (358ᵉ rang), en raison de la présence de quartiers prioritaires et d'une faible couverture électorale. Le **vécu matériel** (Vec), à **4,80/10**, reste quant à lui dans la moyenne corse, reflétant des condi…</div>
+      <div class="justifs-block"><h4>Justifications juge</h4><div class="justif"><span class="dim-label">Pertinence</span> Tous les éléments de la question sont traités précisément. La réponse évite le détournement et propose une analyse globale alignée avec les sources disponibles.</div><div class="justif"><span class="dim-label">Factuel</span> Les affirmations sont bien sourcées et les composantes d'OppChoVec sont correctement décrites. La légère surinterprétation de Cho et Vec (Règle 2) n'est pas suffisante pour descendre en dessous de 4, car les composantes objectives sont respectées et les scores d'enquête sont utilisés de manière appropriée.</div><div class="justif"><span class="dim-label">Nuance</span> La réponse est parfaitement nuancée : elle souligne les contrastes, les disparités, et les limites des données (ex. : 'décalage persistant', 'inégalités d'accès', 'frustrations citoyennes'). Les modalisateurs sont nombreux et bien placés.</div><div class="justif"><span class="dim-label">Quali/Quanti</span> Le croisement entre données objectives (OppChoVec, équipements) et perceptions (scores d'enquête) est bien réalisé et ciblé. La réponse évite de présenter des données quantitatives comme qualitatives, mais la légère surinterprétation de Vec et Cho limite la note à 4.</div></div>
+    </details>
+
+    <!-- Decomp+Raptor answer -->
+    <details class="inner-details">
+      <summary>▸ Decomp+Raptor — réponse (5 sous-questions)</summary>
+      <p class="note">Texte des sous-questions non persisté dans COMPLET.json.</p>
+      <div class="answer-box raptor-box">### **Ajaccio : un territoire favorable au bien-être, mais marqué par des contrastes profonds**
+
+Peut-on considérer Ajaccio comme un territoire favorable au bien-être ? La réponse est **nuancée** : la ville offre des atouts majeurs, mais ceux-ci coexistent avec des fragilités structurelles qui limitent son potentiel. Les données objectives et les perceptions des habitants révèlent une **ville à deux vitesses**, où les ressources disponibles ne se traduisent pas toujours par une qualité de vie équitable pour tous.
+
+---
+
+### **1. Des atouts objectifs indéniables, parmi les meilleurs de Corse**
+Selon les indicateurs territoriaux, Ajaccio se distingue comme **l’une des communes les plus favorisées de Corse** en matière de bien-être, avec un **score global de 5,78/10** (19ᵉ rang sur 360 commune…</div>
+      <div class="justifs-block"><h4>Justifications juge</h4><div class="justif"><span class="dim-label">Pertinence</span> La réponse est bien ciblée sur Ajaccio et traite précisément de la question du bien-être avec des données pertinentes.</div><div class="justif"><span class="dim-label">Factuel</span> Les affirmations sont bien fondées sur les sources fournies, avec une bonne utilisation des données qualitatives et quantitatives.</div><div class="justif"><span class="dim-label">Nuance</span> La réponse est bien nuancée, reconnaissant les atouts et les faiblesses d'Ajaccio en termes de bien-être.</div><div class="justif"><span class="dim-label">Quali/Quanti</span> Excellente intégration des données qualitatives et quantitatives pour fournir une évaluation équilibrée.</div></div>
+    </details>
+  </div>
+</details>
+
+
+<details class="q-detail">
+  <summary class="q-summary">
+    <span class="q-num">Q025</span>
+    <span class="badge badge-vaste">Vaste</span>
+    <span class="q-text">Les indicateurs objectifs et les perceptions qualitatives convergent-ils ?</span>
+    <span class="q-scores">
+      <span class="sc-chip sc-hi">SA 5.00</span>
+      <span class="sc-chip sc-mid">DR 4.00</span>
+      <span class="sc-chip delta-chip delta-pos">+1.00</span>
+    </span>
+  </summary>
+  <div class="q-body">
+    <div class="two-col">
+      <!-- Scores -->
+      <div class="col-block">
+        <h4>Scores juge V4.3</h4>
+        <table class="score-table">
+          <thead><tr><th>Dimension</th><th>Self-Ask</th><th>Decomp+Raptor</th><th>Δ</th></tr></thead>
+          <tbody><tr><td>Pertinence</td><td class="num sc-hi">5.00</td><td class="num sc-mid">4.00</td><td class="num delta-pos">+1.00</td></tr><tr><td>Factuel</td><td class="num sc-hi">5.00</td><td class="num sc-mid">4.00</td><td class="num delta-pos">+1.00</td></tr><tr><td>Nuance</td><td class="num sc-hi">5.00</td><td class="num sc-mid">4.00</td><td class="num delta-pos">+1.00</td></tr><tr><td>Quali/Quanti</td><td class="num sc-hi">5.00</td><td class="num sc-mid">4.00</td><td class="num delta-pos">+1.00</td></tr><tr class="global-row"><td><strong>Global</strong></td><td class="num bold sc-hi">5.00</td><td class="num bold sc-mid">4.00</td><td class="num bold delta-pos">+1.00</td></tr><tr><td>Mislabelling</td><td class="num sc-hi">✓</td><td class="num sc-hi">✓</td><td class="num">—</td></tr></tbody>
+        </table>
+        
+        
+      </div>
+      <!-- Métadonnées -->
+      <div class="col-block">
+        <h4>Métadonnées</h4>
+        <table class="meta-table">
+          <tr><td>Section</td><td>Retrieval mono-commune</td></tr>
+          <tr><td>Sous-section</td><td>Analyse multi-source et cohérence des données</td></tr>
+          <tr><td>Self-Ask hops</td><td>1</td></tr>
+          <tr><td>Self-Ask sources</td><td>5</td></tr>
+          <tr><td>Decomp+Raptor SQ</td><td>5</td></tr>
+          <tr><td>Decomp+Raptor sources</td><td>65</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Self-Ask follow-up chain -->
+    <details class="inner-details">
+      <summary>▸ Self-Ask — séquence de follow-ups (1 hop(s))</summary>
+      <div class="hops-container"><div class="hop"><div class="hop-header">Hop 1 — <em>Quels sont les scores OppChoVec globaux et par composante des communes corses, et comment se comparent-ils aux scores de satisfaction issus des enquêtes citoyennes?</em></div><div class="hop-src">Sources : oppchovec_scores, oppchovec_scores, oppchovec_scores, communes_equipements, communes_equipements</div><div class="hop-ia">## Scores OppChoVec et comparaison avec la satisfaction citoyenne
+
+### Scores territoriaux objectifs (OppChoVec) — Corse entière
+
+Selon les indicateurs territoriaux objectifs, le score OppChoVec moyen de la Corse est de **3.35/10**, révélant un bien-être territorial moyen. La décomposition par composante montre des disparités marquées :
+
+- **Cho (Choix) : 8.79/10** — très élevé, reflétant l'absenc…</div></div></div>
+      <h4 style="margin-top:1rem">Réponse finale Self-Ask</h4>
+      <div class="answer-box">**Non, les indicateurs objectifs et les perceptions qualitatives ne peuvent pas être comparés en Corse faute de données subjectives disponibles.**
+
+Les scores OppChoVec révèlent un bien-être territorial moyen en Corse (3,35/10), marqué par un fort score de *Choix* (8,79/10) mais des faiblesses structurelles en *Opportunités* (3,87/10) et *Vécu* (3,46/10). Cependant, **aucune donnée qualitative** (enquêtes citoyennes, verbatims, entretiens) n’a été recueillie ou transmise pour évaluer la perception des habitants. Sans ces éléments subjectifs, il est impossible d’analyser une éventuelle convergence ou divergence entre le diagnostic territorial objectif et le ressenti des Corses. La comparaison demandée ne peut donc pas être réalisée à ce stade.</div>
+      <div class="justifs-block"><h4>Justifications juge</h4><div class="justif"><span class="dim-label">Pertinence</span> La réponse traite précisément la question en signalant l'impossibilité de comparer faute de données qualitatives, tout en contextualisant avec les indicateurs objectifs disponibles. Aucun détournement ni omission.</div><div class="justif"><span class="dim-label">Factuel</span> Les affirmations sur les scores OppChoVec sont correctement sourcées et interprétées (pas de surinterprétation de Vec/Cho/Opp). L'absence de données qualitatives est explicitement mentionnée et conforme aux sources fournies.</div><div class="justif"><span class="dim-label">Nuance</span> La réponse est parfaitement nuancée : elle refuse la comparaison en justifiant l'absence de données subjectives, tout en présentant les données objectives disponibles comme un contexte indicatif.</div><div class="justif"><span class="dim-label">Quali/Quanti</span> La réponse intègre de manière exemplaire les limites du corpus : elle mobilise les données quantitatives disponibles tout en signalant explicitement l'absence de données qualitatives, évitant ainsi tout déséquilibre factice.</div></div>
+    </details>
+
+    <!-- Decomp+Raptor answer -->
+    <details class="inner-details">
+      <summary>▸ Decomp+Raptor — réponse (5 sous-questions)</summary>
+      <p class="note">Texte des sous-questions non persisté dans COMPLET.json.</p>
+      <div class="answer-box raptor-box">### **Synthèse : Convergence ou divergence entre indicateurs objectifs et perceptions des habitants en Corse ?**
+
+La question de la convergence entre les **conditions de vie objectives** et les **perceptions des habitants** en Corse révèle des **alignements partiels**, mais aussi des **décalages significatifs**, notamment sur les enjeux structurels comme la santé, les transports ou l’emploi. Voici les points clés qui émergent des données disponibles, en distinguant les constats territoriaux des ressentis citoyens.
+
+---
+
+#### **1. Une liberté de choix élevée, mais des opportunités et un vécu quotidien limités**
+Selon les **indicateurs territoriaux objectifs** (scores OppChoVec pour l’ensemble de la Corse) :
+- La **liberté effective** (droit de vote, absence de quartiers prioritaires) est **…</div>
+      <div class="justifs-block"><h4>Justifications juge</h4><div class="justif"><span class="dim-label">Pertinence</span> La réponse traite bien des indicateurs et perceptions, mais manque de précision sur la convergence au niveau communal.</div><div class="justif"><span class="dim-label">Factuel</span> Les affirmations sont bien sourcées et les données sont correctement étiquetées.</div><div class="justif"><span class="dim-label">Nuance</span> La réponse est bien nuancée, signalant les limites des données disponibles pour une analyse fine au niveau communal.</div><div class="justif"><span class="dim-label">Quali/Quanti</span> Bonne intégration des données qualitatives et quantitatives, bien que la convergence soit approximative.</div></div>
+    </details>
+  </div>
+</details>
+
+
+<details class="q-detail">
+  <summary class="q-summary">
+    <span class="q-num">Q035</span>
+    <span class="badge badge-vaste">Vaste</span>
+    <span class="q-text">Observe-t-on un écart significatif entre indicateurs objectifs et perception à Bastia ?</span>
+    <span class="q-scores">
+      <span class="sc-chip sc-mid">SA 4.00</span>
+      <span class="sc-chip sc-hi">DR 4.75</span>
+      <span class="sc-chip delta-chip delta-neg">-0.75</span>
+    </span>
+  </summary>
+  <div class="q-body">
+    <div class="two-col">
+      <!-- Scores -->
+      <div class="col-block">
+        <h4>Scores juge V4.3</h4>
+        <table class="score-table">
+          <thead><tr><th>Dimension</th><th>Self-Ask</th><th>Decomp+Raptor</th><th>Δ</th></tr></thead>
+          <tbody><tr><td>Pertinence</td><td class="num sc-mid">4.00</td><td class="num sc-hi">5.00</td><td class="num delta-neg">-1.00</td></tr><tr><td>Factuel</td><td class="num sc-mid">4.00</td><td class="num sc-hi">5.00</td><td class="num delta-neg">-1.00</td></tr><tr><td>Nuance</td><td class="num sc-mid">4.00</td><td class="num sc-mid">4.00</td><td class="num delta-neu">0.00</td></tr><tr><td>Quali/Quanti</td><td class="num sc-mid">4.00</td><td class="num sc-hi">5.00</td><td class="num delta-neg">-1.00</td></tr><tr class="global-row"><td><strong>Global</strong></td><td class="num bold sc-mid">4.00</td><td class="num bold sc-hi">4.75</td><td class="num bold delta-neg">-0.75</td></tr><tr><td>Mislabelling</td><td class="num sc-lo">✗</td><td class="num sc-hi">✓</td><td class="num">—</td></tr></tbody>
+        </table>
+        <div class="ml-section"><strong>Mislabelling Self-Ask :</strong><div class="ml-detail"><strong>regle_3_absence_quali_non_signalee</strong> : oui — La question demande un croisement avec des perceptions qualitatives, mais aucune source quali (verbatims, entretiens, raptor_quali) n'est fournie. Le manque est signalé ('sans verbatims précis'), mais la réponse interprète tout de même des 'perceptions citoyennes' à partir de données quantitatives d'enquête (scores moyens).</div></div>
+        
+      </div>
+      <!-- Métadonnées -->
+      <div class="col-block">
+        <h4>Métadonnées</h4>
+        <table class="meta-table">
+          <tr><td>Section</td><td>Raisonnement comparatif</td></tr>
+          <tr><td>Sous-section</td><td>Comparaison croisée quanti/quali</td></tr>
+          <tr><td>Self-Ask hops</td><td>2</td></tr>
+          <tr><td>Self-Ask sources</td><td>6</td></tr>
+          <tr><td>Decomp+Raptor SQ</td><td>5</td></tr>
+          <tr><td>Decomp+Raptor sources</td><td>70</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Self-Ask follow-up chain -->
+    <details class="inner-details">
+      <summary>▸ Self-Ask — séquence de follow-ups (2 hop(s))</summary>
+      <div class="hops-container"><div class="hop"><div class="hop-header">Hop 1 — <em>Quels sont les scores précis des composantes OppChoVec et du score de satisfaction citoyenne à Bastia, et comment se comparent-ils aux moyennes régionales?</em></div><div class="hop-src">Sources : oppchovec_scores, oppchovec_scores, oppchovec_scores, enquete_scores_commune, communes_equipements</div><div class="hop-ia"># Scores OppChoVec et satisfaction citoyenne à Bastia : analyse comparative
+
+## Scores OppChoVec de Bastia vs. moyennes régionales corses
+
+**Score global OppChoVec :**
+Selon les indicateurs territoriaux objectifs, Bastia affiche un score OppChoVec de **2.72/10** (rang 244e/360 communes corses), significativement inférieur à la moyenne régionale corse de **5.37/10** (calculée à partir des trois sou…</div></div><div class="hop"><div class="hop-header">Hop 2 — <em>Quels verbatims citoyens illustrent l'écart entre les opportunités objectives et la perception du bien-être à Bastia?</em></div><div class="hop-src">Sources : oppchovec_scores, oppchovec_scores, communes_profil</div><div class="hop-ia"># Écart entre opportunités objectives et perception du bien-être à Bastia
+
+Selon les indicateurs territoriaux objectifs, Bastia affiche un score d'Opportunités (Opp) très élevé de 7.51/10 (rang 7e/360 communes corses), porté notamment par un accès excellent aux TIC (9.65/10, couverture 96.5%) et à la mobilité (8.65/10). Cependant, ce score global masque une faiblesse majeure : le niveau d'éducatio…</div></div></div>
+      <h4 style="margin-top:1rem">Réponse finale Self-Ask</h4>
+      <div class="answer-box">À Bastia, on observe un **écart significatif et paradoxal** entre les indicateurs objectifs de bien-être et les perceptions citoyennes, mais cet écart ne peut être pleinement illustré par des verbatims en l'état actuel des données.
+
+**Sur le plan objectif**, Bastia se distingue par un score d'**Opportunités (Opp) très élevé (7,51/10)**, porté par un accès exceptionnel aux technologies de l'information (9,65/10) et une mobilité performante (8,65/10). Ces atouts devraient théoriquement favoriser le bien-être. Pourtant, le **score global OppChoVec de la commune (2,72/10)** est bien en dessous de la moyenne corse (5,37/10), en raison d'un **score de Choix (Cho) nul (0,00/10)** – lié à la présence de quartiers prioritaires (QPV) et à une faible participation électorale – et d'un **Vécu (Vec) mo…</div>
+      <div class="justifs-block"><h4>Justifications juge</h4><div class="justif"><span class="dim-label">Pertinence</span> Tous les éléments sont traités, et l'écart est bien identifié. Le signalement de l'absence de verbatims est présent, mais la réponse utilise des scores moyens d'enquête pour évoquer des 'perceptions', ce qui reste une approximation acceptable dans le contexte.</div><div class="justif"><span class="dim-label">Factuel</span> Les affirmations s'appuient sur les sources fournies (OppChoVec, enquête scores moyens, données INSEE). Aucune surinterprétation majeure des sous-indicateurs OppChoVec, mais une légère ambiguïté sur la nature des 'perceptions' (scores quantitatifs présentés comme subjectifs).</div><div class="justif"><span class="dim-label">Nuance</span> La réponse signale explicitement l'absence de verbatims et utilise des modalisateurs ('pourrait s'expliquer', 'on peut supposer'). L'hypothèse explicative est bien nuancée, mais la Règle 3 limite légèrement la note.</div><div class="justif"><span class="dim-label">Quali/Quanti</span> L'intégration est ciblée et bien structurée (objectif vs subjectif), mais la dimension qualitative est partiellement simulée par des données quantitatives. Le signalement de l'absence de verbatims atténue ce biais.</div></div>
+    </details>
+
+    <!-- Decomp+Raptor answer -->
+    <details class="inner-details">
+      <summary>▸ Decomp+Raptor — réponse (5 sous-questions)</summary>
+      <p class="note">Texte des sous-questions non persisté dans COMPLET.json.</p>
+      <div class="answer-box raptor-box">### **Synthèse : Un écart marqué entre réalité objective et perception à Bastia**
+
+À Bastia, les indicateurs territoriaux et les perceptions des habitants révèlent une **situation contrastée, voire paradoxale**, où les atouts objectifs ne se traduisent pas toujours par une satisfaction correspondante. Un écart significatif existe entre les données mesurées et le ressenti des Bastiais, avec des nuances importantes selon les dimensions de la qualité de vie.
+
+---
+
+#### **1. Une ville aux opportunités élevées, mais aux réalisations concrètes limitées**
+Selon les données territoriales objectives, Bastia se distingue par des **opportunités exceptionnelles** :
+- **Accès aux technologies et mobilité** : Bastia obtient des scores très élevés en couverture haut débit (9,65/10) et en accessibilité de…</div>
+      <div class="justifs-block"><h4>Justifications juge</h4><div class="justif"><span class="dim-label">Pertinence</span> Tous les éléments spécifiques de la question sont traités de manière précise et ciblée.</div><div class="justif"><span class="dim-label">Factuel</span> Les affirmations sont bien fondées sur les sources fournies, avec une bonne distinction entre données qualitatives et quantitatives.</div><div class="justif"><span class="dim-label">Nuance</span> La réponse est bien nuancée, mais pourrait inclure plus de modalisateurs pour renforcer la gestion de l'incertitude.</div><div class="justif"><span class="dim-label">Quali/Quanti</span> Intégration exemplaire des données qualitatives et quantitatives, avec une comparaison explicite et bien structurée.</div></div>
+    </details>
+  </div>
+</details>
+
+</section>
+
+</div><!-- /wrap -->
+</body>
+</html>

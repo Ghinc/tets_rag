@@ -1,0 +1,1273 @@
+{
+  "2": {
+    "question": "Peut-on considérer Ajaccio comme un territoire favorable au bien-être ?",
+    "section": "Retrieval mono-commune",
+    "subsection": "Retrieval descriptif global",
+    "configs": {
+      "v_decomp_raptor": {
+        "raisonnement": "Réponse fluide et structurée, mais fondée sur des sources inexistantes ou non fournies. Mislabelling massif : OppChoVec (quanti) présenté comme quali (R1), Vec et Cho surinterprétés (R2), absence de sources quali non signalée (R3). Les références [SQ1], [SQ3], etc., sont des hallucinations. La réponse invente des données et des interprétations sans fondement.",
+        "section_observee": "Retrieval mono-commune / Retrieval descriptif global",
+        "comportement_attendu_selon_grille": "Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "non",
+        "sources_inventaire": [],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "oui — la réponse présente des scores OppChoVec (quanti) comme des mesures de 'vécu' ou de 'perceptions' (ex. : 'vécu inégal', 'vision nuancée des habitants'), et utilise des verbatims sans préciser leur absence de source identifiable. Les références [SQ1], [SQ3], [SQ4], [SQ5] sont citées comme des sources mais aucune n'est fournie ou définie.",
+          "regle_2_surinterpretation_oppchovec": "oui — Vec (4,80/10) est interprété comme une mesure du 'vécu concret' et des 'disparités dans les conditions de vie', alors qu'il s'agit d'un proxy statistique (revenu, logement, emploi, accès services). Cho (1,27/10) est présenté comme reflétant des 'fragilités démocratiques et sociales', alors qu'il mesure uniquement l'absence de QPV et la couverture électorale.",
+          "regle_3_absence_quali_non_signalee": "oui — La question porte sur le bien-être, impliquant un croisement quali/quanti. Aucune source qualitative (verbatims, entretiens, raptor_quali) n'est fournie, et la réponse ne signale pas cette absence. Les verbatims cités sont présentés comme des preuves sans source identifiable.",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": true,
+        "elements_specifiques_question": [
+          "Ajaccio",
+          "territoire favorable au bien-être",
+          "évaluation globale"
+        ],
+        "elements_traitement": [
+          {
+            "element": "Ajaccio",
+            "traitement": "precis"
+          },
+          {
+            "element": "territoire favorable au bien-être",
+            "traitement": "approximation_non_signalee"
+          },
+          {
+            "element": "évaluation globale",
+            "traitement": "approximation_non_signalee"
+          }
+        ],
+        "pertinence": 2,
+        "pertinence_justif": "La réponse aborde la question mais repose sur des données inventées ou non sourcées. L'élément 'évaluation globale' est traité par approximation non signalée, avec des affirmations non fondées sur les sources fournies (aucune). Plafond par Règle 3.",
+        "fondement_factuel": 1,
+        "fondement_factuel_justif": "Largement halluciné : aucune source fournie, références [SQ1], [SQ3], etc., inventées. Mislabelling quali/quanti (R1) et surinterprétation des sous-indicateurs OppChoVec (R2). Plafond par Règles 1 et 2.",
+        "nuance_incertitude": 2,
+        "nuance_incertitude_justif": "Ton nuancé ('paradoxes', 'contrastes') mais sans signalement des limites réelles (absence de sources, données inventées). Plafond par Règles 2 et 3.",
+        "coherence_qualiquanti": 1,
+        "coherence_qualiquanti_justif": "Présentation d'un équilibre quali/quanti factice : tout est quantitatif (ou inventé), mais présenté comme un croisement. Plafond par Règle 1.",
+        "score_global": 1.5,
+        "error": null,
+        "elapsed_s": 19.1
+      },
+      "v_decomp_raptor_no_typing": {
+        "raisonnement": "La réponse est structurée et détaillée, mais elle repose sur des sources non fournies et invente des références ([SQ1], [SQ3], [SQ4]). Elle surinterprète systématiquement les indicateurs OppChoVec (Vec comme 'vécu', Cho comme 'concentration des droits de vote') et présente des données quantitatives comme des perceptions qualitatives. L'absence de sources réelles n'est pas signalée, et les affirmations sont présentées comme factuelles malgré l'absence de fondement.",
+        "section_observee": "Retrieval mono-commune / Retrieval descriptif global",
+        "comportement_attendu_selon_grille": "Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "non",
+        "sources_inventaire": [
+          {
+            "source": "aucune source fournie",
+            "type": "inconnu"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "oui — la réponse présente des scores d'enquête (ex. 4,14/5) et verbatims comme des données qualitatives, mais les références [SQ1], [SQ3], [SQ4] ne sont pas définies et semblent inventées ou mal étiquetées. OppChoVec est quantitatif mais présenté comme un reflet direct du vécu.",
+          "regle_2_surinterpretation_oppchovec": "oui — Vec est interprété comme une mesure du 'vécu concret' et des 'difficultés matérielles persistantes', alors qu'il s'agit d'un proxy statistique (revenu, logement, emploi, accès services). Cho est surinterprété comme reflétant une 'concentration des droits de vote' sans preuve.",
+          "regle_3_absence_quali_non_signalee": "oui — la réponse mobilise des verbatims et des scores d'enquête sans sources fournies, et ne signale pas l'absence de données qualitatives vérifiables.",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": true,
+        "elements_specifiques_question": [
+          "Ajaccio",
+          "territoire favorable",
+          "bien-être"
+        ],
+        "elements_traitement": [
+          {
+            "element": "Ajaccio",
+            "traitement": "precis"
+          },
+          {
+            "element": "territoire favorable",
+            "traitement": "approximation_non_signalee"
+          },
+          {
+            "element": "bien-être",
+            "traitement": "approximation_non_signalee"
+          }
+        ],
+        "pertinence": 2,
+        "pertinence_justif": "La réponse traite superficiellement les éléments spécifiques ('Ajaccio', 'bien-être') mais repose sur des données inventées ou mal sourcées. L'absence de sources fournies n'est pas signalée, et la réponse ne respecte pas le principe de transparence (Principe 2).",
+        "fondement_factuel": 1,
+        "fondement_factuel_justif": "La réponse est largement hallucinée : aucune source n'est fournie, et les références citées ([SQ1], [SQ3], [SQ4]) ne correspondent à rien. Mislabelling massif (Règles 1 et 2) et absence totale de fondement factuel.",
+        "nuance_incertitude": 2,
+        "nuance_incertitude_justif": "La réponse utilise des modalisateurs ('profil contrasté', 'équilibre fragile') mais ceux-ci sont contredits par un ton catégorique sur des données inventées. Aucune nuance réelle sur l'absence de sources ou les limites des indicateurs.",
+        "coherence_qualiquanti": 2,
+        "coherence_qualiquanti_justif": "La réponse prétend croiser des données quantitatives et qualitatives, mais tout est inventé ou mal étiqueté. L'équilibre quali/quanti est factice et non sourcé.",
+        "score_global": 1.75,
+        "error": null,
+        "elapsed_s": 15.4
+      }
+    }
+  },
+  "4": {
+    "question": "Quel est le score moyen de bien-être à Ajaccio ?",
+    "section": "Retrieval mono-commune",
+    "subsection": "Retrieval factuel et interprétation",
+    "configs": {
+      "v_decomp_raptor": {
+        "raisonnement": "La réponse est détaillée et fluide mais repose sur des données absentes (aucune source fournie). Elle commet un mislabelling majeur en présentant des données quantitatives (OppChoVec) comme une mesure directe du bien-être, sans distinguer les dimensions objectives et subjectives. Les sous-indicateurs Opp, Cho et Vec sont surinterprétés, et l'absence de sources qualitatives n'est pas signalée. La réponse donne l'illusion d'un croisement quali/quanti alors qu'elle est entièrement quantitative.",
+        "section_observee": "Retrieval mono-commune / Retrieval factuel et interprétation",
+        "comportement_attendu_selon_grille": "Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "non",
+        "sources_inventaire": [],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "oui — Les sources [SQ4] et [SQ5] sont présentées comme qualitatives (perceptions des habitants) alors qu'aucune source quali n'est fournie. De plus, OppChoVec est interprété comme une mesure de 'bien-être' sans distinction claire entre quanti et quali.",
+          "regle_2_surinterpretation_oppchovec": "oui — Vec est présenté comme une mesure du 'vécu quotidien' et Opp comme des 'opportunités exceptionnelles', ce qui dépasse leurs composantes statistiques réelles. Cho est interprété comme reflétant des 'inégalités territoriales' et une 'participation électorale limitée', ce qui est partiellement correct mais présenté sans nuance.",
+          "regle_3_absence_quali_non_signalee": "oui — La question porte sur le 'bien-être', qui implique une dimension subjective, mais aucune source quali n'est fournie ni signalée comme manquante. La réponse utilise des données quantitatives (OppChoVec) pour répondre à une question partiellement qualitative sans le mentionner.",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": true,
+        "elements_specifiques_question": [
+          "Ajaccio",
+          "score moyen de bien-être"
+        ],
+        "elements_traitement": [
+          {
+            "element": "Ajaccio",
+            "traitement": "precis"
+          },
+          {
+            "element": "score moyen de bien-être",
+            "traitement": "approximation_non_signalee"
+          }
+        ],
+        "pertinence": 2,
+        "pertinence_justif": "La question demande le 'score moyen de bien-être', ce qui implique une dimension subjective. La réponse se concentre sur des indicateurs quantitatifs (OppChoVec) sans signaler leur nature objective ni l'absence de données qualitatives. L'élément central ('bien-être') est traité par approximation non signalée.",
+        "fondement_factuel": 1,
+        "fondement_factuel_justif": "Aucune source n'est fournie au système, et la réponse invente des données (scores, rangs, interprétations) sans fondement. Mislabelling massif (Règles 1 et 2) et absence totale de sources.",
+        "nuance_incertitude": 1,
+        "nuance_incertitude_justif": "Aucun signalement des limites (absence de sources, nature objective des indicateurs, absence de données qualitatives). Ton catégorique sur des données inventées.",
+        "coherence_qualiquanti": 1,
+        "coherence_qualiquanti_justif": "La réponse prétend intégrer des dimensions qualitatives (perceptions des habitants) sans aucune source quali. L'équilibre quali/quanti est totalement factice.",
+        "score_global": 1.25,
+        "error": null,
+        "elapsed_s": 20.7
+      },
+      "v_decomp_raptor_no_typing": {
+        "raisonnement": "La réponse est riche et structurée, mais elle repose sur des données inventées ou hallucinées (aucune source fournie). Mislabelling massif : OppChoVec et ses sous-indicateurs sont présentés comme des mesures subjectives (R1 et R2). Les verbatims et perceptions citoyennes sont mentionnés sans source réelle, ce qui constitue une fabrication. La réponse donne l'illusion d'un croisement quali/quanti, mais tout est inventé ou mal étiqueté.",
+        "section_observee": "Retrieval mono-commune / Retrieval factuel et interprétation",
+        "comportement_attendu_selon_grille": "Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "non",
+        "sources_inventaire": [],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "oui — la réponse présente des données quantitatives (OppChoVec, équipements) comme des perceptions citoyennes ou des 'vécus' sans distinction claire. Exemple : 'vécu inégal' pour Vec, qui est un proxy statistique.",
+          "regle_2_surinterpretation_oppchovec": "oui — Vec est interprété comme une mesure du 'vécu des habitants' (subjectif), alors qu'il s'agit d'un agrégat statistique (revenu, logement, emploi, accès services). Cho est présenté comme une mesure de 'liberté effective', alors qu'il mesure uniquement le droit de vote et l'absence de QPV.",
+          "regle_3_absence_quali_non_signalee": "non — la réponse inclut des verbatims et des perceptions citoyennes, mais aucune source n'était fournie. Cela suggère une hallucination des sources quali.",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": true,
+        "elements_specifiques_question": [
+          "Ajaccio",
+          "score moyen",
+          "bien-être"
+        ],
+        "elements_traitement": [
+          {
+            "element": "Ajaccio",
+            "traitement": "precis"
+          },
+          {
+            "element": "score moyen",
+            "traitement": "approximation_non_signalee"
+          },
+          {
+            "element": "bien-être",
+            "traitement": "approximation_non_signalee"
+          }
+        ],
+        "pertinence": 2,
+        "pertinence_justif": "La question demande un score moyen de bien-être, mais la réponse invente des données et des interprétations sans fondement. Le détournement est non signalé, et les éléments spécifiques sont traités par approximation non assumée.",
+        "fondement_factuel": 1,
+        "fondement_factuel_justif": "Largement halluciné : aucune source fournie, données quantitatives et qualitatives inventées. Mislabelling massif (R1 et R2) et fabrication de verbatims.",
+        "nuance_incertitude": 1,
+        "nuance_incertitude_justif": "Ton catégorique sur des données inventées. Aucune nuance ou signalement des limites (absence de sources).",
+        "coherence_qualiquanti": 1,
+        "coherence_qualiquanti_justif": "Déséquilibré et inapproprié : la réponse prétend croiser des données quali et quanti, mais tout est inventé ou mal étiqueté. L'équilibre annoncé est factice.",
+        "score_global": 1.25,
+        "error": null,
+        "elapsed_s": 13.5
+      }
+    }
+  },
+  "5": {
+    "question": "Quelle dimension OppChoVec obtient la note la plus faible à Ajaccio ?",
+    "section": "Retrieval mono-commune",
+    "subsection": "Retrieval factuel et interprétation",
+    "configs": {
+      "v_decomp_raptor": {
+        "raisonnement": "La réponse est précise sur la dimension *Cho* comme la plus faible, mais les sources ne sont pas fournies (hallucination des références [SQx]). Surinterprétation de *Cho* comme 'libertés effectives' (Règle 2). Les données qualitatives citées (perceptions citoyennes) ne sont pas sourcées dans les entrées, suggérant une invention ou une confusion. Absence de signalement de l'absence de sources.",
+        "section_observee": "Retrieval mono-commune / Retrieval factuel et interprétation",
+        "comportement_attendu_selon_grille": "Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "non",
+        "sources_inventaire": [],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "oui — Cho présenté comme mesurant les 'libertés effectives' (dépassement de sa définition opérationnelle : droit de vote + absence de QPV)",
+          "regle_3_absence_quali_non_signalee": "non",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": true,
+        "elements_specifiques_question": [
+          "Ajaccio",
+          "dimension OppChoVec",
+          "note la plus faible"
+        ],
+        "elements_traitement": [
+          {
+            "element": "Ajaccio",
+            "traitement": "precis"
+          },
+          {
+            "element": "dimension OppChoVec",
+            "traitement": "precis"
+          },
+          {
+            "element": "note la plus faible",
+            "traitement": "precis"
+          }
+        ],
+        "pertinence": 3,
+        "pertinence_justif": "L'élément central (note la plus faible) est traité précisément, mais les détails supplémentaires (perceptions, classements) sont non sourcés et partiellement hors-sujet (ex. : liens sociaux non demandés).",
+        "fondement_factuel": 1,
+        "fondement_factuel_justif": "Aucune source fournie au système, donc toutes les affirmations sont non fondées. Surinterprétation de *Cho* (Règle 2). Références [SQx] inventées.",
+        "nuance_incertitude": 2,
+        "nuance_incertitude_justif": "Nuances présentes (limites des indicateurs), mais sans signalement de l'absence totale de sources. Ton partiellement modalisé, mais basé sur des données inventées.",
+        "coherence_qualiquanti": 2,
+        "coherence_qualiquanti_justif": "Présentation d'un pseudo-croisement quali/quanti (perceptions vs indicateurs) sans sources réelles. Équilibre factice.",
+        "score_global": 2.0,
+        "error": null,
+        "elapsed_s": 11.1
+      },
+      "v_decomp_raptor_no_typing": {
+        "raisonnement": "Réponse précise sur la dimension la plus faible (Cho) et son score, mais surinterprétation systématique de Cho et Vec (Règle 2). Aucune source fournie au système, ce qui suggère une hallucination ou une confusion avec des données externes non signalées. Les références [SQ1, SQ3, SQ4, SQ5] sont non sourcées et non vérifiables. La réponse dépasse la définition opérationnelle de Cho (droit de vote + QPV) en évoquant 'liberté effective' et 'inégalités sociales'.",
+        "section_observee": "Retrieval mono-commune / Retrieval factuel et interprétation",
+        "comportement_attendu_selon_grille": "Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "non",
+        "sources_inventaire": [],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "oui — 'Cho' interprété comme 'liberté effective des habitants' et 'vécu quotidien', alors que Cho mesure uniquement droit de vote + absence de QPV (définition opérationnelle stricte). Vec est également surinterprété comme 'vécu quotidien' [SQ1].",
+          "regle_3_absence_quali_non_signalee": "non",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": true,
+        "elements_specifiques_question": [
+          "Ajaccio",
+          "dimension OppChoVec",
+          "note la plus faible"
+        ],
+        "elements_traitement": [
+          {
+            "element": "Ajaccio",
+            "traitement": "precis"
+          },
+          {
+            "element": "dimension OppChoVec",
+            "traitement": "precis"
+          },
+          {
+            "element": "note la plus faible",
+            "traitement": "precis"
+          }
+        ],
+        "pertinence": 3,
+        "pertinence_justif": "L'élément central (dimension la plus faible) est correctement identifié, mais la réponse inclut des interprétations non fondées sur les définitions opérationnelles. La pertinence est plafonnée par la surinterprétation.",
+        "fondement_factuel": 1,
+        "fondement_factuel_justif": "Aucune source fournie au système, et les affirmations (scores, rangs, moyennes) ne sont pas vérifiables. Surinterprétation majeure de Cho et Vec (Règle 2). La réponse est largement hallucinée.",
+        "nuance_incertitude": 1,
+        "nuance_incertitude_justif": "Ton catégorique sans modalisateurs ni signalement des limites (absence de sources, surinterprétation des indicateurs). Plafond Règle 2.",
+        "coherence_qualiquanti": 1,
+        "coherence_qualiquanti_justif": "La réponse mélange des données quantitatives (scores) avec des interprétations qualitatives non sourcées ('vécu quotidien', 'inégalités sociales'), sans distinction claire. Déséquilibre inapproprié.",
+        "score_global": 1.5,
+        "error": null,
+        "elapsed_s": 12.5
+      }
+    }
+  },
+  "6": {
+    "question": "Quel est le score OppChoVec d'Ajaccio, par catégorie ?",
+    "section": "Retrieval mono-commune",
+    "subsection": "Retrieval factuel et interprétation",
+    "configs": {
+      "v_decomp_raptor": {
+        "raisonnement": "La question demande une ventilation par catégorie des scores OppChoVec, ce qui est impossible car OppChoVec est calculé uniquement à l'échelle communale. La réponse ne refuse pas explicitement cette demande et présente des données d'enquête (quantitatives) comme des réponses partielles, sans clarifier leur nature ni signaler l'extrapolation indue. Mislabelling quali/quanti (R1), surinterprétation de Vec/Cho (R2), et extrapolation à des sous-groupes (R4). L'absence de sources fournies au système est un problème majeur, mais la réponse invente des références (SQ1, SQ2, etc.) sans fondement.",
+        "section_observee": "Retrieval mono-commune / Retrieval factuel et interprétation",
+        "comportement_attendu_selon_grille": "Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec. Les scores OppChoVec ne sont pas ventilés par catégorie (CSP, âge, etc.), donc une réponse doit soit refuser explicitement, soit signaler l'absence de ventilation.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "non",
+        "sources_inventaire": [],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "oui — les données d'enquête citoyenne (SQ4, SQ5) sont présentées comme des perceptions qualitatives, mais leur nature quantitative (échelles Likert) n'est pas clarifiée. De plus, OppChoVec est quantitatif, mais la réponse le présente comme un reflet direct des 'forces et faiblesses' sans nuance sur son caractère objectif.",
+          "regle_2_surinterpretation_oppchovec": "oui — Vec est présenté comme reflétant le 'vécu' des habitants, alors qu'il s'agit d'un proxy statistique (revenu, logement, emploi, accès services). La réponse interprète aussi Cho comme une mesure de 'liberté' ou de 'capacité de choix', alors qu'il se limite à la présence de QPV et au droit de vote.",
+          "regle_3_absence_quali_non_signalee": "partiel — La réponse signale l'absence de ventilation par catégorie pour les indicateurs OppChoVec, mais elle ne signale pas explicitement que les données d'enquête (SQ4, SQ5) ne sont pas des verbatims qualitatifs, mais des moyennes quantitatives.",
+          "regle_4_extrapolation_sous_groupe": "oui — La réponse prétend fournir des scores pour des sous-groupes (ex. 'cadres et professions intermédiaires') alors qu'OppChoVec n'est calculé qu'à l'échelle communale. Les notes moyennes (3,58/5) sont extrapolées comme des scores spécifiques à ces catégories, sans signalement que ce sont des données d'enquête, pas des indicateurs OppChoVec."
+        },
+        "mislabelling_flag": true,
+        "elements_specifiques_question": [
+          "Ajaccio",
+          "score OppChoVec",
+          "par catégorie"
+        ],
+        "elements_traitement": [
+          {
+            "element": "Ajaccio",
+            "traitement": "precis"
+          },
+          {
+            "element": "score OppChoVec",
+            "traitement": "precis"
+          },
+          {
+            "element": "par catégorie",
+            "traitement": "approximation_non_signalee"
+          }
+        ],
+        "pertinence": 2,
+        "pertinence_justif": "L'élément 'par catégorie' est traité par approximation non signalée : la réponse prétend fournir des éclairages partiels pour des catégories, mais sans clarifier que ce ne sont pas des scores OppChoVec. La question est détournée sans signalement explicite.",
+        "fondement_factuel": 1,
+        "fondement_factuel_justif": "La réponse invente des sources (SQ1, SQ2, etc.) et des données non fournies. Mislabelling massif (R1, R2, R4) : OppChoVec présenté comme qualitatif, Vec surinterprété, extrapolation à des sous-groupes. Aucun fondement factuel réel.",
+        "nuance_incertitude": 2,
+        "nuance_incertitude_justif": "Aucun signalement clair des limites : l'absence de ventilation par catégorie est mentionnée, mais noyée dans une réponse qui prétend malgré tout fournir des éclairages. Pas de modalisateurs sur l'extrapolation des données d'enquête.",
+        "coherence_qualiquanti": 2,
+        "coherence_qualiquanti_justif": "La réponse mélange des données quantitatives (OppChoVec, échelles Likert) en les présentant comme qualitatives, sans cohérence réelle. L'équilibre annoncé est factice.",
+        "score_global": 1.75,
+        "error": null,
+        "elapsed_s": 19.4
+      },
+      "v_decomp_raptor_no_typing": {
+        "raisonnement": "La réponse présente des données quantitatives et qualitatives de manière détaillée, mais commet deux erreurs majeures : (1) une surinterprétation des sous-indicateurs OppChoVec (Vec comme 'vécu', Cho comme 'liberté effective'), et (2) une extrapolation non signalée du score OppChoVec à des 'catégories' non définies, alors que l'indicateur est calculé uniquement à l'échelle communale. La mobilisation de verbatims ([SQ3]) et de données d'enquête ([SQ5]) est pertinente pour le croisement quali/quanti, mais l'interprétation des indicateurs quantitatifs dépasse leur définition opérationnelle.",
+        "section_observee": "Retrieval mono-commune / Retrieval factuel et interprétation",
+        "comportement_attendu_selon_grille": "Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec. Mobilisation des données OppChoVec avec interprétation rigoureuse des sous-indicateurs.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "non",
+        "sources_inventaire": [
+          {
+            "source": "[SQ1]",
+            "type": "quanti"
+          },
+          {
+            "source": "[SQ2]",
+            "type": "quanti"
+          },
+          {
+            "source": "[SQ3]",
+            "type": "quali"
+          },
+          {
+            "source": "[SQ5]",
+            "type": "quanti"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "oui — Vec est présenté comme reflétant directement les 'réalités contrastées' et les 'tensions' des habitants, alors qu'il s'agit d'un proxy statistique (revenu, logement, emploi, accès services). De plus, Cho est interprété comme une mesure de 'liberté effective' et de 'contraintes démocratiques', ce qui dépasse sa définition opérationnelle (droit de vote + absence de QPV).",
+          "regle_3_absence_quali_non_signalee": "non — des verbatims et entretiens sont mobilisés ([SQ3]), donc pas d'absence de source quali.",
+          "regle_4_extrapolation_sous_groupe": "oui — la question demande le score OppChoVec 'par catégorie', ce qui sous-entend une ventilation par sous-groupes (CSP, âge, etc.). La réponse ne signale pas que OppChoVec est calculé uniquement à l'échelle communale et ne peut être décliné par catégorie sans extrapolation indue. Elle présente des scores globaux comme s'ils répondaient à la demande de ventilation."
+        },
+        "mislabelling_flag": true,
+        "elements_specifiques_question": [
+          "Ajaccio",
+          "score OppChoVec",
+          "par catégorie"
+        ],
+        "elements_traitement": [
+          {
+            "element": "Ajaccio",
+            "traitement": "precis"
+          },
+          {
+            "element": "score OppChoVec",
+            "traitement": "precis"
+          },
+          {
+            "element": "par catégorie",
+            "traitement": "approximation_non_signalee"
+          }
+        ],
+        "pertinence": 3,
+        "pertinence_justif": "La réponse traite précisément Ajaccio et le score OppChoVec, mais l'élément 'par catégorie' est traité par approximation non signalée (extrapolation indue). La grille exige une réponse précise pour cette sous-section, donc plafonnement à 3.",
+        "fondement_factuel": 2,
+        "fondement_factuel_justif": "Les données quantitatives sont correctement rapportées, mais leur interprétation dépasse systématiquement leur définition opérationnelle (Règle 2). De plus, l'extrapolation à des 'catégories' non couvertes par les sources est une faute factuelle (Règle 4). Combinaison de deux règles anti-mislabelling, note plafonnée à 2.",
+        "nuance_incertitude": 3,
+        "nuance_incertitude_justif": "La réponse utilise des modalisateurs ('révèlent des contrastes', 'pourrait expliquer') et signale des décalages perception/réalité, mais ne signale pas l'extrapolation indue des scores OppChoVec à des sous-groupes. La surinterprétation des indicateurs réduit la nuance.",
+        "coherence_qualiquanti": 3,
+        "coherence_qualiquanti_justif": "Le croisement quali/quanti est bien structuré (verbatims vs indicateurs), mais la surinterprétation des indicateurs quantitatifs comme des mesures subjectives (Vec = 'vécu') fausse l'équilibre. Plafond à 3 en raison de la Règle 2.",
+        "score_global": 2.75,
+        "error": null,
+        "elapsed_s": 18.9
+      }
+    }
+  },
+  "8": {
+    "question": "Combien d’habitants ont répondu à l’enquête à Ajaccio ?",
+    "section": "Retrieval mono-commune",
+    "subsection": "Retrieval factuel et interprétation",
+    "configs": {
+      "v_decomp_raptor": {
+        "raisonnement": "La réponse fournit des chiffres précis (51 répondants, 39 verbatims, 17 questionnaires) sans aucune source fournie. Ces données sont inventées ou hallucinées. Aucun signalement de l'absence de sources. La question demande un retrieval factuel, mais la réponse présente des détails non sourcés comme s'ils étaient avérés.",
+        "section_observee": "Retrieval mono-commune / Retrieval factuel et interprétation",
+        "comportement_attendu_selon_grille": "Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "non",
+        "sources_inventaire": [],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "non",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": false,
+        "elements_specifiques_question": [
+          "nombre de répondants",
+          "enquête",
+          "Ajaccio"
+        ],
+        "elements_traitement": [
+          {
+            "element": "nombre de répondants",
+            "traitement": "omis"
+          },
+          {
+            "element": "enquête",
+            "traitement": "approximation_non_signalee"
+          },
+          {
+            "element": "Ajaccio",
+            "traitement": "precis"
+          }
+        ],
+        "pertinence": 1,
+        "pertinence_justif": "Réponse hors-sujet par rapport aux sources disponibles. Les chiffres avancés sont non sourcés et inventés, ce qui constitue un comportement inapproprié pour une question de retrieval factuel.",
+        "fondement_factuel": 1,
+        "fondement_factuel_justif": "Aucune source fournie pour étayer les affirmations. Les données présentées sont hallucinées ou inventées.",
+        "nuance_incertitude": 1,
+        "nuance_incertitude_justif": "Aucun signalement de l'absence de sources ou des limites des données. Ton catégorique sur des chiffres non vérifiables.",
+        "coherence_qualiquanti": 1,
+        "coherence_qualiquanti_justif": "Aucune cohérence possible, les données mobilisées sont inventées et non alignées avec les sources (inexistantes).",
+        "score_global": 1.0,
+        "error": null,
+        "elapsed_s": 11.3
+      },
+      "v_decomp_raptor_no_typing": {
+        "raisonnement": "La question demande un chiffre factuel simple (nombre de répondants à l'enquête à Ajaccio). La réponse fournit des chiffres (51 et 39) sans sources réelles (aucune source fournie au système), ce qui constitue une hallucination. Elle ajoute des détails non demandés (biais de représentativité, indicateurs OppChoVec) sans signaler leur caractère hors-sujet ou inventé. Aucun refus ni signalement de l'absence de sources.",
+        "section_observee": "Retrieval mono-commune / Retrieval factuel et interprétation",
+        "comportement_attendu_selon_grille": "Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "non",
+        "sources_inventaire": [],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "non",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": false,
+        "elements_specifiques_question": [
+          "nombre de répondants",
+          "enquête",
+          "Ajaccio"
+        ],
+        "elements_traitement": [
+          {
+            "element": "nombre de répondants",
+            "traitement": "approximation_non_signalee"
+          },
+          {
+            "element": "enquête",
+            "traitement": "approximation_non_signalee"
+          },
+          {
+            "element": "Ajaccio",
+            "traitement": "precis"
+          }
+        ],
+        "pertinence": 1,
+        "pertinence_justif": "Réponse largement hors-sujet : la question porte sur un chiffre factuel simple, mais la réponse invente des données et ajoute des éléments non demandés (biais, indicateurs) sans aucun fondement. Comportement inapproprié pour une question de retrieval factuel.",
+        "fondement_factuel": 1,
+        "fondement_factuel_justif": "Aucune source fournie au système, et la réponse invente des chiffres (51 et 39 répondants) ainsi que des analyses (biais, scores OppChoVec). Hallucination massive.",
+        "nuance_incertitude": 1,
+        "nuance_incertitude_justif": "Ton catégorique sur des données inventées. Aucun signalement de l'absence de sources ou de l'incertitude sur les chiffres fournis.",
+        "coherence_qualiquanti": 1,
+        "coherence_qualiquanti_justif": "La réponse mélange des données quantitatives inventées (scores OppChoVec) et des éléments qualitatifs non sourcés (biais de représentativité), sans aucune cohérence avec les sources réelles.",
+        "score_global": 1.0,
+        "error": null,
+        "elapsed_s": 12.5
+      }
+    }
+  },
+  "9": {
+    "question": "Comment les 18-25 ans ressentent-ils le bien-être ?",
+    "section": "Retrieval mono-commune",
+    "subsection": "Retrieval par sous-population",
+    "configs": {
+      "v_decomp_raptor": {
+        "raisonnement": "La réponse présente une analyse détaillée du bien-être des 18-25 ans en Corse, mais aucune source n'est fournie au système. Les affirmations sont donc hallucinées ou extrapolées à partir de données non disponibles. Les scores présentés (ex: 3,77/5) sont typiques de synthèses quantitatives (raptor:enquete_quanti), mais sont mal étiquetés comme qualitatifs. L'absence de sources qualitatives pour répondre à une question sur le ressenti n'est pas signalée. La réponse ignore les principes de transparence et de fondement factuel.",
+        "section_observee": "Retrieval mono-commune / Retrieval par sous-population",
+        "comportement_attendu_selon_grille": "Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec. Approximation signalée acceptable si absence de données ciblées.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "non",
+        "sources_inventaire": [],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "oui — La réponse présente des scores (ex: 3,77/5, 2,91/5) comme des données qualitatives ou subjectives, alors qu'il s'agit de moyennes d'échelles Likert (données quantitatives). De plus, les sources [SQ1], [SQ2], [SQ4], [SQ5] ne sont pas fournies, mais si elles existaient, elles seraient probablement quantitatives (raptor:enquete_quanti).",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "oui — La question demande le ressenti (qualitatif) des 18-25 ans, mais aucune source qualitative (verbatims, entretiens, raptor_quali) n'est fournie ni mentionnée. Le manque n'est pas signalé explicitement.",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": true,
+        "elements_specifiques_question": [
+          "18-25 ans",
+          "ressenti",
+          "bien-être"
+        ],
+        "elements_traitement": [
+          {
+            "element": "18-25 ans",
+            "traitement": "approximation_non_signalee"
+          },
+          {
+            "element": "ressenti",
+            "traitement": "approximation_non_signalee"
+          },
+          {
+            "element": "bien-être",
+            "traitement": "approximation_non_signalee"
+          }
+        ],
+        "pertinence": 2,
+        "pertinence_justif": "La réponse traite superficiellement des éléments '18-25 ans' et 'bien-être', mais l'élément central 'ressenti' est abordé sans sources qualitatives, et le manque n'est pas signalé. La réponse est un détournement non assumé, car elle présente des données quantitatives comme une réponse directe à une question sur le ressenti subjectif.",
+        "fondement_factuel": 1,
+        "fondement_factuel_justif": "Aucune source n'est fournie au système, et la réponse invente des données (scores, verbatims, entretiens). Mislabelling massif (Règle 1) et absence totale de fondement factuel.",
+        "nuance_incertitude": 1,
+        "nuance_incertitude_justif": "Aucun signalement des limites (absence de sources, absence de données qualitatives, extrapolation des scores). Ton catégorique sur des affirmations non sourcées.",
+        "coherence_qualiquanti": 1,
+        "coherence_qualiquanti_justif": "La réponse prétend traiter du qualitatif (ressenti) en utilisant des données quantitatives non fournies, sans aucune cohérence avec les sources réelles. L'équilibre quali/quanti est factice.",
+        "score_global": 1.25,
+        "error": null,
+        "elapsed_s": 15.9
+      },
+      "v_decomp_raptor_no_typing": {
+        "raisonnement": "Réponse entièrement hallucinée : aucune source fournie, mais la réponse prétend mobiliser des verbatims, entretiens, scores SQ et OppChoVec. Mislabelling massif (Règles 1, 2, 3, 4) : OppChoVec et SQ présentés comme qualitatifs ou subjectifs, Vec surinterprété, extrapolation aux 18-25 ans non signalée. Aucun signalement de l'absence de données.",
+        "section_observee": "Retrieval mono-commune / Retrieval par sous-population",
+        "comportement_attendu_selon_grille": "Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "non",
+        "sources_inventaire": [
+          {
+            "source": "SQ1",
+            "type": "non_identifie"
+          },
+          {
+            "source": "SQ2",
+            "type": "non_identifie"
+          },
+          {
+            "source": "SQ3",
+            "type": "non_identifie"
+          },
+          {
+            "source": "SQ4",
+            "type": "non_identifie"
+          },
+          {
+            "source": "SQ5",
+            "type": "non_identifie"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "oui — La réponse présente des scores comme SQ4 (échelles Likert) et OppChoVec comme des données qualitatives ou subjectives, alors que SQ4 est quanti (moyennes d'enquêtes) et OppChoVec est quanti (proxy statistique).",
+          "regle_2_surinterpretation_oppchovec": "oui — Vec est présenté comme une mesure du 'vécu quotidien' et des 'conditions de vie objectivement difficiles', alors qu'il s'agit d'un proxy statistique (revenu, logement, emploi, accès services).",
+          "regle_3_absence_quali_non_signalee": "oui — Aucune source fournie au système, mais la réponse prétend mobiliser des verbatims, entretiens et indicateurs. Absence totale de sources qualitatives réelles non signalée.",
+          "regle_4_extrapolation_sous_groupe": "oui — La réponse extrapole OppChoVec (calculé à l'échelle communale) aux 18-25 ans sans signaler que c'est une extrapolation indue."
+        },
+        "mislabelling_flag": true,
+        "elements_specifiques_question": [
+          "18-25 ans",
+          "ressenti",
+          "bien-être"
+        ],
+        "elements_traitement": [
+          {
+            "element": "18-25 ans",
+            "traitement": "approximation_non_signalee"
+          },
+          {
+            "element": "ressenti",
+            "traitement": "approximation_non_signalee"
+          },
+          {
+            "element": "bien-être",
+            "traitement": "approximation_non_signalee"
+          }
+        ],
+        "pertinence": 1,
+        "pertinence_justif": "Réponse hors-sujet par rapport aux sources disponibles (aucune). Tous les éléments spécifiques sont traités par approximation non signalée, avec des données inventées. Comportement inapproprié pour une question exigeant une réponse précise.",
+        "fondement_factuel": 1,
+        "fondement_factuel_justif": "Largement halluciné : aucune source réelle n'est mobilisée, et les affirmations sont inventées (verbatims, scores SQ, OppChoVec). Mislabelling massif (Règles 1 et 2) et extrapolation non signalée (Règle 4).",
+        "nuance_incertitude": 1,
+        "nuance_incertitude_justif": "Ton catégorique sans nuance ni signalement des limites. Aucune mention de l'absence de sources ou des extrapolations indûment réalisées.",
+        "coherence_qualiquanti": 1,
+        "coherence_qualiquanti_justif": "Déséquilibré et inapproprié : la réponse prétend croiser quali et quanti, mais tout est inventé. Les données quantitatives (OppChoVec, SQ) sont présentées comme qualitatives ou subjectives, sans cohérence avec leur nature réelle.",
+        "score_global": 1.0,
+        "error": null,
+        "elapsed_s": 15.7
+      }
+    }
+  },
+  "10": {
+    "question": "Que pensent les entrepreneurs Ajacciens de la qualité de vie ?",
+    "section": "Retrieval mono-commune",
+    "subsection": "Retrieval par sous-population",
+    "configs": {
+      "v_decomp_raptor": {
+        "raisonnement": "La réponse est entièrement hallucinée : aucun verbatim, score d'enquête ou donnée d'équipement n'est fourni dans les sources. Le système invente des citations, des scores et des analyses qualitatives/quantitatives sans fondement. Cela viole les Règles 1 et 3 (mislabelling et absence de quali non signalée). La réponse est fluide mais factuellement inexistante.",
+        "section_observee": "Retrieval mono-commune / Retrieval par sous-population",
+        "comportement_attendu_selon_grille": "Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "non",
+        "sources_inventaire": [],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "oui — La réponse présente des verbatims et des scores d'enquête comme des données disponibles, alors qu'aucune source n'est fournie. Cela constitue un mislabelling implicite (hallucination de sources quali/quanti).",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "oui — La question demande des perceptions qualitatives, mais aucune source n'est fournie. Le système invente des verbatims et des scores d'enquête sans signaler l'absence de données.",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": true,
+        "elements_specifiques_question": [
+          "entrepreneurs",
+          "Ajaccio",
+          "qualité de vie",
+          "perceptions"
+        ],
+        "elements_traitement": [
+          {
+            "element": "entrepreneurs",
+            "traitement": "approximation_non_signalee"
+          },
+          {
+            "element": "Ajaccio",
+            "traitement": "approximation_non_signalee"
+          },
+          {
+            "element": "qualité de vie",
+            "traitement": "approximation_non_signalee"
+          },
+          {
+            "element": "perceptions",
+            "traitement": "approximation_non_signalee"
+          }
+        ],
+        "pertinence": 1,
+        "pertinence_justif": "La réponse est hors-sujet car elle invente des données pour répondre à une question nécessitant des sources spécifiques. Aucun élément n'est traité précisément ou signalé comme manquant.",
+        "fondement_factuel": 1,
+        "fondement_factuel_justif": "Aucune source n'est fournie, et la réponse invente des verbatims, des scores et des analyses. Cela constitue une hallucination massive et un mislabelling des données.",
+        "nuance_incertitude": 1,
+        "nuance_incertitude_justif": "Aucun signalement de l'absence de données. La réponse est présentée de manière catégorique, comme si les sources existaient.",
+        "coherence_qualiquanti": 1,
+        "coherence_qualiquanti_justif": "La réponse prétend croiser des données qualitatives et quantitatives, mais tout est inventé. L'équilibre présenté est factice et sans fondement.",
+        "score_global": 1.0,
+        "error": null,
+        "elapsed_s": 11.7
+      },
+      "v_decomp_raptor_no_typing": {
+        "raisonnement": "La réponse est entièrement hallucinée : aucune source n'est fournie, mais elle prétend mobiliser des données quantitatives (OppChoVec, équipements) et qualitatives (verbatims, entretiens). Les indicateurs OppChoVec sont systématiquement surinterprétés (Vec comme 'vécu', Cho comme 'capacité perçue à influencer les décisions'). Le mislabelling est massif : des données quantitatives sont présentées comme qualitatives ou subjectives. Aucun signalement de l'absence de sources.",
+        "section_observee": "Retrieval mono-commune / Retrieval par sous-population",
+        "comportement_attendu_selon_grille": "Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "non",
+        "sources_inventaire": [],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "oui — la réponse présente des données quantitatives (scores OppChoVec, revenus fiscaux, etc.) comme des éléments qualitatifs ou des perceptions, sans distinction claire. Par exemple, les scores de mobilité ou de couverture numérique sont des indicateurs quantitatifs, mais ils sont interprétés comme reflétant un 'vécu' ou une 'perception'.",
+          "regle_2_surinterpretation_oppchovec": "oui — Vec est présenté comme une mesure du 'vécu territorial' ou de la 'réalité vécue', alors qu'il s'agit d'un proxy statistique (revenu fiscal moyen + qualité du logement + stabilité de l'emploi + accès aux services). De même, Cho est interprété comme une 'capacité perçue à influencer les décisions', ce qui dépasse sa définition opérationnelle (droit de vote + absence de QPV).",
+          "regle_3_absence_quali_non_signalee": "oui — Aucune source n'est fournie au système, et la réponse ne signale pas cette absence. Pourtant, elle prétend mobiliser des verbatims et des entretiens, ainsi que des données quantitatives, sans aucune base factuelle. Le manque de sources qualitatives (verbatims, entretiens) n'est pas mentionné.",
+          "regle_4_extrapolation_sous_groupe": "oui — La réponse extrapole des scores OppChoVec (calculés à l'échelle communale) pour les appliquer spécifiquement aux entrepreneurs ajacciens, sans signaler que ces scores ne sont pas ventilés par sous-population."
+        },
+        "mislabelling_flag": true,
+        "elements_specifiques_question": [
+          "entrepreneurs",
+          "Ajaccio",
+          "qualité de vie",
+          "perceptions"
+        ],
+        "elements_traitement": [
+          {
+            "element": "entrepreneurs",
+            "traitement": "approximation_non_signalee"
+          },
+          {
+            "element": "Ajaccio",
+            "traitement": "precis"
+          },
+          {
+            "element": "qualité de vie",
+            "traitement": "approximation_non_signalee"
+          },
+          {
+            "element": "perceptions",
+            "traitement": "approximation_non_signalee"
+          }
+        ],
+        "pertinence": 1,
+        "pertinence_justif": "La réponse est hors-sujet car elle invente des données et des analyses sans aucune base factuelle. Les éléments spécifiques de la question ('entrepreneurs', 'perceptions') sont traités par des approximations non signalées, fondées sur des sources inexistantes.",
+        "fondement_factuel": 1,
+        "fondement_factuel_justif": "La réponse est largement hallucinée : aucune source n'est fournie, et les affirmations ne reposent sur aucun fondement. Les indicateurs OppChoVec sont surinterprétés (Règle 2), et des données quantitatives sont présentées comme qualitatives (Règle 1).",
+        "nuance_incertitude": 1,
+        "nuance_incertitude_justif": "Aucun signalement des limites ou de l'absence de sources. La réponse adopte un ton catégorique sur des données inventées.",
+        "coherence_qualiquanti": 1,
+        "coherence_qualiquanti_justif": "L'équilibre quali/quanti est factice : la réponse prétend croiser des perceptions et des indicateurs, mais tout est inventé. Les données quantitatives sont présentées comme qualitatives (Règle 1), et aucune source réelle n'est mobilisée.",
+        "score_global": 1.0,
+        "error": null,
+        "elapsed_s": 18.2
+      }
+    }
+  },
+  "11": {
+    "question": "Que pensent les seniors du bien-être à Ajaccio ?",
+    "section": "Retrieval mono-commune",
+    "subsection": "Retrieval par sous-population",
+    "configs": {
+      "v_decomp_raptor": {
+        "raisonnement": "La réponse prétend décrire les perceptions des seniors à Ajaccio sans aucune source fournie (ni quali ni quanti). Elle mobilise des scores d'enquête (SQ3, SQ4) et des indicateurs OppChoVec (Vec, Opp) comme s'ils étaient disponibles, alors qu'aucune source n'est listée. Mislabelling massif (R1, R2) et absence de signalement des limites (R3). La réponse est fluide mais entièrement hallucinée.",
+        "section_observee": "Retrieval mono-commune / Retrieval par sous-population",
+        "comportement_attendu_selon_grille": "Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "non",
+        "sources_inventaire": [],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "oui — La réponse présente des scores d'enquête (ex: 4,67/5) comme des données qualitatives alors qu'il s'agit de données quantitatives (échelles Likert moyennées). De plus, les indicateurs OppChoVec (Vec, Opp) sont mobilisés sans distinction claire de leur nature quantitative.",
+          "regle_2_surinterpretation_oppchovec": "oui — Vec est interprété comme reflétant des 'lacunes perçues' par les seniors, alors que Vec est un proxy statistique (revenu, logement, emploi, accès services) et non une mesure subjective.",
+          "regle_3_absence_quali_non_signalee": "oui — Aucune source qualitative (verbatims, entretiens) n'est fournie, et la réponse ne signale pas cette absence. Elle prétend pourtant décrire des perceptions subjectives des seniors.",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": true,
+        "elements_specifiques_question": [
+          "seniors",
+          "Ajaccio",
+          "bien-être",
+          "perceptions"
+        ],
+        "elements_traitement": [
+          {
+            "element": "seniors",
+            "traitement": "approximation_non_signalee"
+          },
+          {
+            "element": "Ajaccio",
+            "traitement": "precis"
+          },
+          {
+            "element": "bien-être",
+            "traitement": "approximation_non_signalee"
+          },
+          {
+            "element": "perceptions",
+            "traitement": "approximation_non_signalee"
+          }
+        ],
+        "pertinence": 1,
+        "pertinence_justif": "La question demande les perceptions des seniors, mais la réponse invente des données sans aucune source. Aucun élément spécifique n'est traité de manière fondée.",
+        "fondement_factuel": 1,
+        "fondement_factuel_justif": "Aucune source fournie, toutes les affirmations sont inventées. Mislabelling massif (R1 et R2).",
+        "nuance_incertitude": 1,
+        "nuance_incertitude_justif": "Aucun signalement des limites ou de l'absence de données. Ton catégorique sur des éléments inventés.",
+        "coherence_qualiquanti": 1,
+        "coherence_qualiquanti_justif": "Prétend croiser quali/quanti alors qu'aucune source n'est disponible. Équilibre factice et inventé.",
+        "score_global": 1.0,
+        "error": null,
+        "elapsed_s": 13.2
+      },
+      "v_decomp_raptor_no_typing": {
+        "raisonnement": "La réponse mobilise des données quantitatives (SQ1, SQ3, SQ4, SQ5) et qualitatives (SQ2) mais commet plusieurs erreurs critiques : (1) SQ4 (quanti) est présenté comme source de perceptions subjectives (Règle 1), (2) Vec et Opp sont surinterprétés comme mesures de vécu/opportunités perçues (Règle 2), (3) l'absence de verbatims *spécifiquement seniors* n'est pas signalée (Règle 3). La réponse est fluide et structurée mais factuellement incorrecte sur le fond. Les recommandations sont extrapolées sans base solide.",
+        "section_observee": "Retrieval mono-commune / Retrieval par sous-population",
+        "comportement_attendu_selon_grille": "Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "non",
+        "sources_inventaire": [
+          {
+            "source": "SQ1",
+            "type": "quanti"
+          },
+          {
+            "source": "SQ2",
+            "type": "quali"
+          },
+          {
+            "source": "SQ3",
+            "type": "quanti"
+          },
+          {
+            "source": "SQ4",
+            "type": "quanti"
+          },
+          {
+            "source": "SQ5",
+            "type": "quanti"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "oui — SQ4 (enquête citoyenne avec échelles Likert) est présenté comme source de perceptions subjectives ('seniors interrogés se déclarent...'), alors qu'il s'agit de données quantitatives structurées (moyennes d'échelles).",
+          "regle_2_surinterpretation_oppchovec": "oui — Vec (4,80/10) est interprété comme reflétant 'des réalisations concrètes en deçà des attentes' et associé au 'vécu des seniors', alors que Vec est un proxy statistique (revenu, logement, emploi, accès services) et non une mesure subjective. Opp (10/10) est présenté comme 'opportunités élevées' sans préciser qu'il s'agit d'un agrégat statistique (éducation, CSP, mobilité, TIC).",
+          "regle_3_absence_quali_non_signalee": "partiel — La question demande des perceptions des seniors, et bien que SQ2 contienne des verbatims, ceux-ci ne sont pas explicitement attribués aux seniors (risque de généralisation). L'absence de verbatims *spécifiquement seniors* n'est pas signalée. SQ4 (quanti) est utilisé pour inférer des perceptions sans modalisateurs suffisants.",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": true,
+        "elements_specifiques_question": [
+          "seniors",
+          "Ajaccio",
+          "perceptions",
+          "bien-être"
+        ],
+        "elements_traitement": [
+          {
+            "element": "seniors",
+            "traitement": "approximation_non_signalee"
+          },
+          {
+            "element": "Ajaccio",
+            "traitement": "precis"
+          },
+          {
+            "element": "perceptions",
+            "traitement": "approximation_non_signalee"
+          },
+          {
+            "element": "bien-être",
+            "traitement": "approximation_non_signalee"
+          }
+        ],
+        "pertinence": 2,
+        "pertinence_justif": "L'élément 'seniors' est traité par approximation non signalée : les données utilisées (SQ4) ne distinguent pas explicitement les seniors, et les verbatims (SQ2) ne leur sont pas attribués. La question demande des perceptions, mais la réponse repose majoritairement sur des indicateurs quantitatifs présentés comme subjectifs.",
+        "fondement_factuel": 2,
+        "fondement_factuel_justif": "Mislabelling massif : SQ4 (quanti) est présenté comme source de perceptions (Règle 1), et Vec/Opp sont surinterprétés (Règle 2). Les chiffres sont corrects, mais leur interprétation dépasse leur signification opérationnelle. Les recommandations sont des extrapolations non sourcées.",
+        "nuance_incertitude": 2,
+        "nuance_incertitude_justif": "Aucun signalement clair que SQ4 est une moyenne quantitative (pas de modalisateurs comme 'en moyenne' ou 'selon les données'). L'absence de verbatims seniors n'est pas mentionnée. La nuance est superficielle ('vision nuancée', 'peut expliquer') sans ancrage dans les limites des sources.",
+        "coherence_qualiquanti": 2,
+        "coherence_qualiquanti_justif": "Déséquilibre non signalé : la réponse prétend croiser quali/quanti mais utilise majoritairement du quanti (SQ4) présenté comme quali. Les verbatims (SQ2) sont mobilisés de manière anecdotique sans lien clair avec les seniors. L'équilibre annoncé est factice.",
+        "score_global": 2.0,
+        "error": null,
+        "elapsed_s": 18.5
+      }
+    }
+  },
+  "14": {
+    "question": "Que révèlent les verbatims sur la sécurité à Corte ?",
+    "section": "Retrieval mono-commune",
+    "subsection": "Retrieval source-spécifique",
+    "configs": {
+      "v_decomp_raptor": {
+        "raisonnement": "La question demande une analyse des verbatims sur la sécurité à Corte, mais aucune source n'est fournie. La réponse invente des verbatims fictifs (référencés [SQ1], [SQ2], etc.) et présente une analyse détaillée comme si les données existaient. Absence totale de signalement de l'absence de sources, ce qui constitue un échec majeur (Règle 3).",
+        "section_observee": "Retrieval mono-commune / Retrieval source-spécifique",
+        "comportement_attendu_selon_grille": "Réponse précise et ciblée sur les verbatims. Refus injustifié ou détournement non signalé = échec.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "non",
+        "sources_inventaire": [],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "oui — Aucune source fournie (verbatims ou autres), mais la réponse prétend analyser des verbatims sans signaler leur absence totale.",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": true,
+        "elements_specifiques_question": [
+          "Corte",
+          "sécurité",
+          "verbatims",
+          "révélations"
+        ],
+        "elements_traitement": [
+          {
+            "element": "Corte",
+            "traitement": "precis"
+          },
+          {
+            "element": "sécurité",
+            "traitement": "approximation_non_signalee"
+          },
+          {
+            "element": "verbatims",
+            "traitement": "omis"
+          },
+          {
+            "element": "révélations",
+            "traitement": "approximation_non_signalee"
+          }
+        ],
+        "pertinence": 1,
+        "pertinence_justif": "Réponse complètement hallucinée : aucun verbatim n'est fourni, mais la réponse prétend en analyser. Élément 'verbatims' omis sans signalement.",
+        "fondement_factuel": 1,
+        "fondement_factuel_justif": "Aucune source disponible pour étayer les affirmations. Les références [SQ1], [SQ2], etc., sont inventées.",
+        "nuance_incertitude": 1,
+        "nuance_incertitude_justif": "Aucun signalement de l'absence de données. La réponse présente des conclusions catégoriques sur des verbatims inexistants.",
+        "coherence_qualiquanti": 1,
+        "coherence_qualiquanti_justif": "Prétend analyser des données qualitatives (verbatims) qui n'existent pas dans les sources fournies.",
+        "score_global": 1.0,
+        "error": null,
+        "elapsed_s": 9.9
+      },
+      "v_decomp_raptor_no_typing": {
+        "raisonnement": "La réponse invente des verbatims et des analyses qualitatives détaillées (ex. : tonalité unanime, dimensions collectives) sans aucune source fournie. Cela constitue une hallucination majeure, violant les principes de fondement factuel et de transparence. Le système présente des données fictives comme des faits, ce qui est inacceptable pour une réponse substantielle attendue.",
+        "section_observee": "Retrieval mono-commune / Retrieval source-spécifique",
+        "comportement_attendu_selon_grille": "Réponse précise et ciblée sur les verbatims. Refus injustifié ou détournement non signalé = échec.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "non",
+        "sources_inventaire": [],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "oui — la réponse présente des références à des verbatims ([SQ1], [SQ2], etc.) comme si elles existaient, alors qu'aucune source n'est fournie. Cela constitue un mislabelling par hallucination de sources qualitatives.",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "oui — la question demande explicitement des verbatims, mais aucune source qualitative n'est fournie. Le système ne signale pas cette absence et invente des verbatims.",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": true,
+        "elements_specifiques_question": [
+          "Corte",
+          "sécurité",
+          "verbatims"
+        ],
+        "elements_traitement": [
+          {
+            "element": "Corte",
+            "traitement": "precis"
+          },
+          {
+            "element": "sécurité",
+            "traitement": "approximation_non_signalee"
+          },
+          {
+            "element": "verbatims",
+            "traitement": "omis"
+          }
+        ],
+        "pertinence": 1,
+        "pertinence_justif": "La réponse est complètement hors-sujet par rapport aux sources disponibles. Elle invente des verbatims et des analyses qualitatives, alors qu'aucune source n'est fournie. Cela viole le principe 1 (le fond prime sur la forme) et le principe 2 (transparence).",
+        "fondement_factuel": 1,
+        "fondement_factuel_justif": "La réponse repose entièrement sur des données inventées (verbatims fictifs, références [SQ1], [SQ2], etc.). Aucun fondement factuel n'existe, ce qui constitue une faute majeure.",
+        "nuance_incertitude": 1,
+        "nuance_incertitude_justif": "Aucune nuance ou signalement des limites réelles (absence totale de sources). La réponse adopte un ton catégorique sur des données hallucinées.",
+        "coherence_qualiquanti": 1,
+        "coherence_qualiquanti_justif": "La réponse prétend intégrer des verbatims qualitatifs, mais ceux-ci sont inventés. Aucune cohérence avec les sources réelles, qui sont inexistantes.",
+        "score_global": 1.0,
+        "error": null,
+        "elapsed_s": 11.7
+      }
+    }
+  },
+  "15": {
+    "question": "De combien de services de proximité dispose la ville d'Ajaccio ?",
+    "section": "Retrieval mono-commune",
+    "subsection": "Retrieval source-spécifique",
+    "configs": {
+      "v_decomp_raptor": {
+        "raisonnement": "La question demande un nombre précis de services de proximité à Ajaccio. Aucune source n'était fournie, pourtant la réponse présente des chiffres détaillés (ex. 51 boulangeries, 80 médecins) et des données qualitatives (verbatims, scores de satisfaction) comme si elles étaient disponibles. Cela constitue une hallucination des sources et un mislabelling quali/quanti (Règle 1). La réponse dépasse largement la demande initiale en intégrant des perceptions et des scores non sourcés.",
+        "section_observee": "Retrieval mono-commune / Retrieval source-spécifique",
+        "comportement_attendu_selon_grille": "Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "non",
+        "sources_inventaire": [],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "oui — les références [SQ2], [SQ3], [SQ4] mélangent données quantitatives (nombre de services) et qualitatives (verbatims, scores de satisfaction) sans distinction claire, et certaines sont présentées comme qualitatives alors qu'elles sont quantitatives (ex. scores de satisfaction)",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "non — la réponse inclut des éléments qualitatifs (verbatims, scores de satisfaction) mais aucune source n'était fournie, ce qui suggère une hallucination des données",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": true,
+        "elements_specifiques_question": [
+          "Ajaccio",
+          "nombre de services de proximité"
+        ],
+        "elements_traitement": [
+          {
+            "element": "Ajaccio",
+            "traitement": "precis"
+          },
+          {
+            "element": "nombre de services de proximité",
+            "traitement": "approximation_non_signalee"
+          }
+        ],
+        "pertinence": 2,
+        "pertinence_justif": "La réponse répond partiellement à la question (nombre de services) mais introduit des éléments non demandés (perceptions, scores) sans fondement. L'absence de sources fournies n'est pas signalée, et les données présentées semblent inventées ou non sourcées.",
+        "fondement_factuel": 1,
+        "fondement_factuel_justif": "Aucune source n'était fournie, et la réponse présente des données quantitatives et qualitatives détaillées comme si elles étaient disponibles. Cela constitue une hallucination massive des sources. Mislabelling quali/quanti (Règle 1) aggravé par l'absence totale de fondement.",
+        "nuance_incertitude": 1,
+        "nuance_incertitude_justif": "Aucun signalement de l'absence de sources ou des limites des données présentées. Ton catégorique sur des chiffres non sourcés.",
+        "coherence_qualiquanti": 1,
+        "coherence_qualiquanti_justif": "La réponse mélange des données quantitatives et qualitatives sans distinction claire, et ces données semblent inventées. Aucun équilibre réel n'est possible en l'absence de sources.",
+        "score_global": 1.25,
+        "error": null,
+        "elapsed_s": 14.2
+      },
+      "v_decomp_raptor_no_typing": {
+        "raisonnement": "La question demande explicitement le NOMBRE de services de proximité. La réponse détournée vers l'accessibilité et les perceptions sans signaler l'absence de données quantitatives sur le nombre exact. L'élément 'nombre' est omis sans justification, ce qui constitue un détournement non assumé. Les sources mobilisées (SQ3, SQ4, SQ5) sont correctement étiquetées mais ne répondent pas à la question posée.",
+        "section_observee": "Retrieval mono-commune / Retrieval source-spécifique",
+        "comportement_attendu_selon_grille": "Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "non",
+        "sources_inventaire": [
+          {
+            "source": "SQ3",
+            "type": "quanti"
+          },
+          {
+            "source": "SQ4",
+            "type": "quali"
+          },
+          {
+            "source": "SQ5",
+            "type": "quanti"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "non",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": false,
+        "elements_specifiques_question": [
+          "Ajaccio",
+          "nombre",
+          "services de proximité"
+        ],
+        "elements_traitement": [
+          {
+            "element": "Ajaccio",
+            "traitement": "precis"
+          },
+          {
+            "element": "nombre",
+            "traitement": "omis"
+          },
+          {
+            "element": "services de proximité",
+            "traitement": "approximation_non_signalee"
+          }
+        ],
+        "pertinence": 2,
+        "pertinence_justif": "L'élément central 'nombre' est omis sans signalement. La réponse présente des données sur l'accessibilité et les perceptions comme si elles répondaient à la question, ce qui est un détournement non assumé.",
+        "fondement_factuel": 3,
+        "fondement_factuel_justif": "Les affirmations sont correctement sourcées (SQ3, SQ4, SQ5), mais elles ne répondent pas à la question sur le nombre de services. La limite des données est signalée en fin de réponse, mais cela ne compense pas l'omission initiale.",
+        "nuance_incertitude": 3,
+        "nuance_incertitude_justif": "La limite des données est signalée en fin de réponse, mais l'absence de nombre n'est pas mentionnée dès le début, ce qui induit en erreur.",
+        "coherence_qualiquanti": 3,
+        "coherence_qualiquanti_justif": "Les données quali et quanti sont bien intégrées, mais elles ne ciblent pas la question posée. L'équilibre est donc inapproprié.",
+        "score_global": 2.75,
+        "error": null,
+        "elapsed_s": 10.8
+      }
+    }
+  },
+  "25": {
+    "question": "Les indicateurs objectifs et les perceptions qualitatives convergent-ils ?",
+    "section": "Retrieval mono-commune",
+    "subsection": "Analyse multi-source et cohérence des données",
+    "configs": {
+      "v_decomp_raptor": {
+        "raisonnement": "Réponse hallucinée et mislabellée. Aucune source fournie, mais le système invente des données (scores OppChoVec, verbatims, synthèses d'enquêtes) et surinterprète les sous-indicateurs (Cho comme 'libertés effectives'). Mislabelling quali/quanti (SQ4 présenté comme quali alors qu'il s'agit probablement d'une synthèse quantitative). Absence totale de signalement des limites ou de l'absence de sources.",
+        "section_observee": "Retrieval mono-commune / Analyse multi-source et cohérence des données",
+        "comportement_attendu_selon_grille": "Réponse précise et ciblée sur la convergence/divergence entre indicateurs objectifs et perceptions qualitatives. Refus injustifié ou détournement non signalé = échec.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "non",
+        "sources_inventaire": [],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "oui — La réponse présente des données quantitatives (OppChoVec, SQ1) comme des 'indicateurs territoriaux objectifs' (correct) mais utilise des références comme [SQ4] pour des 'perceptions citoyennes' sans préciser que SQ4 est une synthèse quantitative d'enquêtes (échelles Likert). Mislabelling partiel des sources qualitatives.",
+          "regle_2_surinterpretation_oppchovec": "oui — Vec est présenté comme reflétant des 'conditions de vie précaires' et des 'faiblesses structurelles', ce qui est correct, mais Cho est interprété comme 'libertés effectives' et 'droits formels', ce qui dépasse sa définition opérationnelle (droit de vote + absence de QPV).",
+          "regle_3_absence_quali_non_signalee": "oui — Aucune source qualitative (verbatims, entretiens) n'est fournie, mais la réponse prétend analyser des 'perceptions citoyennes' et cite des verbatims inventés (*« Je suis chez moi, à l’endroit où je devais être »*). Absence totale de signalement.",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": true,
+        "elements_specifiques_question": [
+          "convergence",
+          "indicateurs objectifs",
+          "perceptions qualitatives"
+        ],
+        "elements_traitement": [
+          {
+            "element": "convergence",
+            "traitement": "approximation_non_signalee"
+          },
+          {
+            "element": "indicateurs objectifs",
+            "traitement": "approximation_non_signalee"
+          },
+          {
+            "element": "perceptions qualitatives",
+            "traitement": "approximation_non_signalee"
+          }
+        ],
+        "pertinence": 1,
+        "pertinence_justif": "Réponse complètement hors-sujet par rapport aux sources disponibles. Invente des données pour répondre à une question exigeant un croisement quali/quanti. Comportement inapproprié (hallucination).",
+        "fondement_factuel": 1,
+        "fondement_factuel_justif": "Aucune source fournie, toutes les affirmations sont inventées. Mislabelling massif (Règles 1, 2 et 3).",
+        "nuance_incertitude": 1,
+        "nuance_incertitude_justif": "Ton catégorique sur des données inventées. Aucune nuance ou signalement des limites.",
+        "coherence_qualiquanti": 1,
+        "coherence_qualiquanti_justif": "Prétend faire un croisement quali/quanti, mais tout est inventé. Équilibre factice et incohérent.",
+        "score_global": 1.0,
+        "error": null,
+        "elapsed_s": 29.5
+      },
+      "v_decomp_raptor_no_typing": {
+        "raisonnement": "La réponse invente des données et des références ([SQ1], [SQ4], etc.) sans sources fournies. Elle surinterprète OppChoVec (Vec comme 'vécu', Cho comme 'couverture électorale' sans rappeler ses composantes réelles) et présente des scores d'enquête comme qualitatifs. Absence totale de verbatims ou entretiens, non signalée. La structure est fluide mais factuellement vide et trompeuse.",
+        "section_observee": "Retrieval mono-commune / Analyse multi-source et cohérence des données",
+        "comportement_attendu_selon_grille": "Réponse précise et ciblée avec croisement explicite quali/quanti. Refus ou approximation signalée si données manquantes.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "non",
+        "sources_inventaire": [],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "oui — la réponse présente des scores d'enquête (ex. 2,80/5) comme des données qualitatives alors qu'il s'agit de synthèses quantitatives (échelles Likert moyennées). De plus, OppChoVec est quantitatif mais interprété comme reflétant des 'faiblesses structurelles' sans rappeler ses limites opérationnelles.",
+          "regle_2_surinterpretation_oppchovec": "oui — Vec est présenté comme reflétant le 'vécu' des habitants (ex. 'anxiété citoyenne'), alors qu'il mesure des composantes objectives (revenu, logement, emploi, accès services). Cho et Opp sont également surinterprétés sans rappeler leurs composantes réelles.",
+          "regle_3_absence_quali_non_signalee": "oui — la question demande un croisement quali/quanti, mais aucune source quali (verbatims, entretiens) n'est fournie au système. La réponse ne signale pas cette absence et invente des références ([SQ1], [SQ2], etc.) sans fondement.",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": true,
+        "elements_specifiques_question": [
+          "indicateurs objectifs",
+          "perceptions qualitatives",
+          "convergence",
+          "Corse"
+        ],
+        "elements_traitement": [
+          {
+            "element": "indicateurs objectifs",
+            "traitement": "approximation_non_signalee"
+          },
+          {
+            "element": "perceptions qualitatives",
+            "traitement": "approximation_non_signalee"
+          },
+          {
+            "element": "convergence",
+            "traitement": "approximation_non_signalee"
+          },
+          {
+            "element": "Corse",
+            "traitement": "precis"
+          }
+        ],
+        "pertinence": 1,
+        "pertinence_justif": "Réponse hallucinée : aucune source fournie, références inventées, détournement complet de la question. Comportement inapproprié pour une analyse multi-source.",
+        "fondement_factuel": 1,
+        "fondement_factuel_justif": "Aucune source mobilisable (liste vide). Mislabelling massif (Règles 1 et 2) et invention de données. Triple échec : absence de sources, surinterprétation, et présentation de quanti comme quali.",
+        "nuance_incertitude": 1,
+        "nuance_incertitude_justif": "Ton catégorique sur des données inventées. Aucun signalement des limites (absence de sources, impossibilité de croisement).",
+        "coherence_qualiquanti": 1,
+        "coherence_qualiquanti_justif": "Prétendu croisement quali/quanti, mais tout est inventé ou mal étiqueté. Équilibre factice et trompeur.",
+        "score_global": 1.0,
+        "error": null,
+        "elapsed_s": 17.7
+      }
+    }
+  },
+  "35": {
+    "question": "Observe-t-on un écart significatif entre indicateurs objectifs et perception à Bastia ?",
+    "section": "Raisonnement comparatif",
+    "subsection": "Comparaison croisée quanti/quali",
+    "configs": {
+      "v_decomp_raptor": {
+        "raisonnement": "La réponse est structurée et détaillée, mais elle commet des erreurs factuelles majeures : (1) Mislabelling des sources quantitatives en qualitatives (Règle 1), (2) Surinterprétation des sous-indicateurs OppChoVec (Règle 2), (3) Absence totale de sources qualitatives non signalée (Règle 3). Les données présentées comme des perceptions (SQ4, SQ5) sont en réalité des synthèses quantitatives d'enquêtes (échelles Likert), ce qui fausse l'analyse comparative. La réponse donne l'illusion d'un croisement quali/quanti alors qu'elle repose uniquement sur des données quantitatives.",
+        "section_observee": "Raisonnement comparatif / Comparaison croisée quanti/quali",
+        "comportement_attendu_selon_grille": "Réponse de fond avec comparaison explicite entre indicateurs objectifs et perceptions qualitatives. Si absence de sources, signalement explicite du manque.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "non",
+        "sources_inventaire": [],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "oui — La réponse présente des données quantitatives (OppChoVec, SQ1, SQ3, SQ4) comme des perceptions qualitatives (ex: 'confiance dans l’avenir', 'bonheur déclaré') sans distinguer leur nature objective. Les sources SQ4 et SQ5 sont traitées comme qualitatives alors qu'elles semblent être des synthèses quantitatives d'enquêtes (échelles Likert).",
+          "regle_2_surinterpretation_oppchovec": "oui — Vec est présenté comme reflétant le 'vécu des habitants' (ex: 'Vécu moyen de 3,23/10'), alors que Vec est un proxy statistique (revenu, logement, emploi, accès services). Opp est interprété comme 'ressources disponibles' alors qu'il mesure éducation, CSP, mobilité et TIC.",
+          "regle_3_absence_quali_non_signalee": "oui — Aucune source qualitative (verbatims, entretiens) n'est fournie, et la réponse ne signale pas cette absence. Pourtant, elle prétend analyser des 'perceptions citoyennes' et des 'verbatims'.",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": true,
+        "elements_specifiques_question": [
+          "Bastia",
+          "écart significatif",
+          "indicateurs objectifs",
+          "perception"
+        ],
+        "elements_traitement": [
+          {
+            "element": "Bastia",
+            "traitement": "precis"
+          },
+          {
+            "element": "écart significatif",
+            "traitement": "precis"
+          },
+          {
+            "element": "indicateurs objectifs",
+            "traitement": "precis"
+          },
+          {
+            "element": "perception",
+            "traitement": "approximation_non_signalee"
+          }
+        ],
+        "pertinence": 2,
+        "pertinence_justif": "La question demande un croisement entre indicateurs objectifs et perceptions qualitatives. La réponse omet de signaler l'absence de sources qualitatives et présente des données quantitatives (SQ4, SQ5) comme des perceptions. L'élément 'perception' est traité par approximation non signalée, ce qui est inacceptable pour cette sous-section.",
+        "fondement_factuel": 2,
+        "fondement_factuel_justif": "Mislabelling massif (Règle 1) et surinterprétation systématique des sous-indicateurs OppChoVec (Règle 2). Les chiffres sont probablement corrects (bien que non sourcés explicitement dans les données fournies), mais leur interprétation dépasse leur signification opérationnelle. La réponse présente des 'verbatims' et des 'perceptions' sans aucune source qualitative disponible.",
+        "nuance_incertitude": 2,
+        "nuance_incertitude_justif": "Aucun signalement des limites des données (absence de sources qualitatives, nature quantitative des 'perceptions' SQ4/SQ5). Les modalisateurs ('pourrait s’expliquer', 'suggère') sont insuffisants pour compenser les erreurs factuelles. Plafond par Règles 2 et 3.",
+        "coherence_qualiquanti": 2,
+        "coherence_qualiquanti_justif": "L'équilibre quali/quanti annoncé est factice. La réponse mobilise uniquement des données quantitatives (OppChoVec, SQ1, SQ3, SQ4, SQ5) et les présente comme un croisement. Aucun verbatim ou entretien n'est utilisé, et l'absence de sources qualitatives n'est pas signalée. Plafond par Règle 1.",
+        "score_global": 2.0,
+        "error": null,
+        "elapsed_s": 18.3
+      },
+      "v_decomp_raptor_no_typing": {
+        "raisonnement": "Réponse entièrement hallucinée : aucune source fournie, mais des données OppChoVec, des scores d'enquête et des verbatims sont inventés. Triple mislabelling : (1) données quantitatives présentées comme qualitatives (R1), (2) surinterprétation systématique des sous-indicateurs OppChoVec (R2), (3) absence totale de sources quali non signalée (R3). La réponse est fluide et structurée, mais factuellement vide et trompeuse.",
+        "section_observee": "Raisonnement comparatif / Comparaison croisée quanti/quali",
+        "comportement_attendu_selon_grille": "Réponse de fond avec comparaison explicite entre indicateurs objectifs et perceptions subjectives. Si absence de sources quali/quanti, signalement obligatoire du manque.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "non",
+        "sources_inventaire": [],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "oui — la réponse présente des données quantitatives (OppChoVec, équipements) comme des 'perceptions citoyennes' ou des 'verbatims' sans source quali fournie. Exemple : '[SQ3]' est cité comme source de verbatims alors qu'aucune source quali n'est disponible.",
+          "regle_2_surinterpretation_oppchovec": "oui — Vec est interprété comme un 'vécu' subjectif (ex: 'vécu moyen', 'conditions de vie concrètes'), alors qu'il s'agit d'un proxy statistique (revenu, logement, emploi, accès services). Cho est présenté comme reflétant des 'inégalités d’accès aux droits fondamentaux', ce qui dépasse sa définition opérationnelle (droit de vote + absence de QPV).",
+          "regle_3_absence_quali_non_signalee": "oui — La question demande un croisement quali/quanti, mais aucune source quali n'est fournie ni signalée comme manquante. La réponse invente des perceptions et des verbatims.",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": true,
+        "elements_specifiques_question": [
+          "Bastia",
+          "écart significatif",
+          "indicateurs objectifs",
+          "perception"
+        ],
+        "elements_traitement": [
+          {
+            "element": "Bastia",
+            "traitement": "precis"
+          },
+          {
+            "element": "écart significatif",
+            "traitement": "approximation_non_signalee"
+          },
+          {
+            "element": "indicateurs objectifs",
+            "traitement": "approximation_non_signalee"
+          },
+          {
+            "element": "perception",
+            "traitement": "approximation_non_signalee"
+          }
+        ],
+        "pertinence": 1,
+        "pertinence_justif": "La réponse ignore totalement l'absence de sources et invente des données pour répondre à une question exigeant un croisement quali/quanti. Comportement inapproprié et contraire à la grille (refus ou signalement obligatoire).",
+        "fondement_factuel": 1,
+        "fondement_factuel_justif": "Aucune source fournie, toutes les affirmations sont inventées. Mislabelling massif (R1 + R2) et absence de signalement des limites (R3).",
+        "nuance_incertitude": 1,
+        "nuance_incertitude_justif": "Ton catégorique et affirmatif sur des données inexistantes. Aucun modalisateur ni signalement des limites.",
+        "coherence_qualiquanti": 1,
+        "coherence_qualiquanti_justif": "Prétendu croisement quali/quanti entièrement fictif. Équilibre annoncé est une illusion.",
+        "score_global": 1.0,
+        "error": null,
+        "elapsed_s": 16.2
+      }
+    }
+  }
+}

@@ -1,0 +1,477 @@
+{
+  "excel_row": 42,
+  "section": "Raisonnement comparatif",
+  "subsection": "Comparaison contre-intuitive",
+  "question": "Une commune peut-elle avoir un score global élevé tout en obtenant une note très faible sur la dimension Cho ?",
+  "rag_status": "ok",
+  "answer": "### **Synthèse : Une commune corse peut-elle avoir un score global élevé tout en obtenant une note très faible sur la dimension \"Choix et contrôle\" (Cho) ?**\n\n**Réponse claire : Non, ce scénario est structurellement impossible en Corse selon les données disponibles.**\n\n#### **1. Le score \"Choix et contrôle\" (Cho) est systématiquement élevé en Corse**\nSelon les indicateurs territoriaux objectifs, le score *Cho* – qui mesure le pourcentage de population avec droit de vote et l’absence de quartiers prioritaires (QPV) – est **très élevé dans l’ensemble des communes corses** (moyenne régionale : **8,79/10**). Aucune commune ne présente un score *Cho* \"très faible\", et la variance entre communes est extrêmement limitée.\n\n- **Exemple** : Même des communes comme **Corscia** (score global faible de 2,38/10) conservent un *Cho* élevé (**9,07/10**), car les critères qui le définissent (droits électoraux, absence de QPV) s’appliquent uniformément sur le territoire.\n- **Seule exception** : **Ajaccio**, qui combine un score global supérieur à la médiane régionale (**5,78/10**) avec un *Cho* très bas (**1,27/10**), en raison de la présence de quartiers prioritaires. Cependant, ce cas reste **unique** et ne remet pas en cause la tendance générale.\n\n---\n\n#### **2. Un score global élevé suppose nécessairement un *Cho* élevé**\nLe score global (OppChoVec) est une moyenne pondérée des trois dimensions : *Opportunités* (Opp), *Choix et contrôle* (Cho), et *Vécu* (Vec). Comme le *Cho* est **structurellement élevé** dans presque toutes les communes, il contribue mécaniquement à rehausser le score global.\n\n- **Conséquence** : Une commune avec un *Cho* faible aurait un score global **automatiquement tiré vers le bas**, car cette dimension pèse lourd dans le calcul. Il est donc **impossible** pour une commune d’afficher un score global élevé (supérieur au 3ᵉ quartile) tout en ayant un *Cho* très faible (inférieur au 1ᵉʳ quartile), comme le confirment les données territoriales objectives.\n\n---\n\n#### **3. Perceptions citoyennes : un décalage entre bien-être subjectif et réalité objective du *Cho***\nLes verbatims issus de l’enquête citoyenne (menée à **Corte** auprès de 16 habitants de 35-49 ans) ne mentionnent **pas directement** un problème lié au *Cho* (droits électoraux ou QPV). En revanche, ils révèlent une **tension entre bien-être perçu et cohésion sociale** :\n\n- **Primauté des liens humains** : Les habitants associent le bien-être à la qualité des relations communautaires (*\"Le bien-être ne peut se concevoir qu’au travers une communauté\"*, selon un verbatim), plutôt qu’à des indicateurs formels comme le droit de vote.\n- **Manque d’espaces de rencontre** : Certains expriment un besoin d’infrastructures sociales (*\"Qu’il y ait des endroits où les gens peuvent se rencontrer\"*, selon un autre verbatim), ce qui suggère une frustration liée à l’**isolement** plutôt qu’à un déficit de libertés formelles.\n- **Attachement identitaire** : L’enracinement local (*\"identité, coutumes, famille\"*) est perçu comme un pilier du bien-être, indépendamment des scores objectifs.\n\n**Interprétation** : Ces verbatims ne remettent pas en cause le *Cho* (qui reste objectivement élevé), mais soulignent un **décalage entre les conditions de vie formelles (bonnes) et la réalité vécue (sentiment d’isolement ou de fragilité sociale)**. Cela explique pourquoi certains habitants peuvent déclarer un bien-être global satisfaisant tout en exprimant des insatisfactions sur d’autres aspects (liens sociaux, dynamisme local).\n\n---\n\n#### **4. Quels indicateurs expliqueraient un éventuel décalage ?**\nSi une commune avait un score global élevé malgré un *Cho* faible (ce qui n’existe pas en Corse), les données territoriales suggèrent que cela pourrait s’expliquer par :\n- **Des opportunités économiques ou éducatives fortes** (*Opp* élevé : diversité des métiers, accès aux TIC, mobilité).\n- **Un niveau de vie matériel satisfaisant** (*Vec* élevé : revenus, qualité du logement, accès aux services en moins de 20 minutes).\n\nCependant, **en Corse, ces dimensions (*Opp* et *Vec*) sont souvent moins performantes que le *Cho***. Par exemple :\n- **Campo** (score global moyen de 4,94/10) a un *Cho* très élevé (**9,95/10**) mais un *Vec* faible (**2,99/10**), reflétant des difficultés concrètes (accès aux services, emploi) malgré un cadre institutionnel solide.\n\n---\n\n### **Conclusion : Un équilibre spécifique à la Corse**\nEn résumé :\n✅ **Un score global élevé en Corse suppose presque toujours un *Cho* élevé**, car cette dimension est structurellement forte et pèse lourd dans le calcul.\n❌ **Aucune commune corse ne combine un score global élevé et un *Cho* faible**, à l’exception d’Ajaccio (cas unique lié aux QPV).\n🔍 **Les perceptions citoyennes** (enquête à Corte) ne critiquent pas le *Cho*, mais pointent des **lacunes en matière de cohésion sociale et d’infrastructures locales**, qui ne sont pas capturées par cet indicateur.\n\n**Pour aller plus loin** : Si l’objectif est d’identifier des communes où le bien-être perçu contraste avec les indicateurs objectifs, il serait plus pertinent d’analyser les **écarts entre le *Vec* (vécu concret) et les perceptions citoyennes**, plutôt que le *Cho*, qui reste un marqueur institutionnel peu discriminant en Corse.",
+  "sub_questions": [
+    {
+      "idx": 1,
+      "question": "Quel est le score OppChoVec global moyen des communes corses présentant une note très faible sur la dimension Cho (Choix et contrôle) ?",
+      "answer": "# Réponse à la sous-question\n\nSelon les données territoriales objectives, **aucune commune corse ne présente un score Cho (Choix) très faible**. \n\nLe score Cho moyen de la Corse entière est de **8.79/10** (très élevé), et ce score est structurellement élevé dans toutes les communes corses. La composante Cho mesure le pourcentage de population avec droit de vote et l'absence de quartiers prioritaires (QPV) — des critères qui s'appliquent de manière quasi-uniforme à l'ensemble du territoire corse.\n\nPar conséquent, il n'existe pas de sous-ensemble de communes présentant une note très faible sur Cho permettant de calculer un score OppChoVec global moyen pour ce groupe."
+    },
+    {
+      "idx": 2,
+      "question": "Existe-t-il des communes en Corse dont le score OppChoVec global est supérieur à la médiane régionale tout en affichant une note inférieure au premier quartile sur la dimension Cho ?",
+      "answer": "# Analyse des communes corses : OppChoVec global vs. dimension Cho\n\nSelon les indicateurs territoriaux objectifs, **la médiane régionale OppChoVec est de 3,12/10** et le premier quartile sur la dimension Cho (Choix) s'établit à environ **8,74/10** (calculé à partir de la distribution des 360 communes).\n\n**Réponse : Non, aucune commune ne satisfait simultanément ces deux critères.**\n\nEn effet, le score Cho est structurellement très élevé en Corse (moyenne : 8,79/10), avec une très faible variance. Parmi les communes classées au-dessus de la médiane OppChoVec (3,12/10), **toutes affichent un score Cho supérieur à 8,74/10**. Par exemple :\n- **Afa** (rang 1, OppChoVec = 10,00) : Cho = 9,27\n- **Bastelicaccia** (rang 2, OppChoVec = 9,81) : Cho = 8,94\n- **Ajaccio** (rang 19, OppChoVec = 5,78) : Cho = 1,27 ← **seule exception notable**\n\nAjaccio est la seule commune avec un OppChoVec supérieur à la médiane (5,78 > 3,12) mais un Cho très inférieur au premier quartile (1,27 << 8,74), en raison de la présence de quartiers prioritaires (QPV). Cette configuration reste exceptionnelle : la dimension Cho reste généralement très élevée indépendamment du score OppChoVec global."
+    },
+    {
+      "idx": 3,
+      "question": "Quelle proportion des communes corses avec un score global élevé (supérieur au 3ème quartile) enregistre une note très faible (inférieure au 1er quartile) sur la dimension Cho ?",
+      "answer": "# Réponse à la sous-question\n\nSelon les données territoriales objectives disponibles, **aucune commune corse n'enregistre simultanément un score OppChoVec global élevé (supérieur au 3e quartile) et une note très faible sur la dimension Cho (inférieure au 1er quartile)**.\n\nCette absence de cas est structurelle : le score OppChoVec global est une moyenne pondérée des trois composantes (Opp, Cho, Vec). Cho affiche un score moyen très élevé à l'échelle de la Corse entière (8,79/10), ce qui signifie que cette dimension contribue fortement à l'élévation du score global dans la plupart des communes. Une commune avec un Cho très faible aurait donc un score global nécessairement déprimé, incompatible avec un classement au-dessus du 3e quartile.\n\nL'exemple de Campo illustre cette logique : bien que son score global soit moyen (4,94/10, rang 40e/360), son Cho est exceptionnellement élevé (9,95/10, rang 49e/360), tandis que son Vec reste très faible (2,99/10, rang 240e/360). Cette configuration montre que les communes corses présentent généralement une forte liberté effective (Cho) compensée par des réalisations concrètes (Vec) limitées."
+    },
+    {
+      "idx": 4,
+      "question": "Quels sont les indicateurs territoriaux (ex : densité de services publics, accès aux transports, dynamisme économique) associés aux communes corses combinant un score global élevé et une note faible sur la dimension Cho ?",
+      "answer": "# Réponse\n\nSelon les données disponibles, **aucune commune corse ne combine un score OppChoVec global élevé et une note faible sur la dimension Cho (Choix)**.\n\nEn effet, selon les indicateurs OppChoVec pour la Corse entière, le score Cho est la composante **la plus élevée (8,79/10)** à l'échelle régionale. Cette prédominance du Cho reflète sa définition opérationnelle : absence de quartiers prioritaires (QPV) et couverture électorale — deux critères qui varient peu entre communes corses et maintiennent généralement ce score à un niveau élevé.\n\nPour illustrer : Corscia, la seule commune pour laquelle un profil détaillé est fourni, affiche un score OppChoVec global faible (2,38/10) **mais un Cho très élevé (9,07/10)** — ce qui confirme que même les communes les plus fragiles conservent un Cho robuste.\n\n**Conclusion** : Le contexte ne contient pas de cas de commune avec score global élevé + Cho faible. La structure même de l'indice OppChoVec rend ce profil peu probable en Corse. Si vous cherchez à identifier des communes avec des faiblesses spécifiques, il faudrait plutôt examiner les scores Opp (Opportunités) ou Vec (Vécu), qui présentent davantage de variation territoriale."
+    },
+    {
+      "idx": 5,
+      "question": "Dans les verbatims citoyens des communes corses concernées, quels thèmes récurrents émergent pour expliquer le décalage entre un bien-être global perçu comme satisfaisant et une faible note sur la dimension Cho ?",
+      "answer": "# Analyse du décalage entre bien-être global et score Cho\n\n## Clarification préalable sur la portée des données\n\nSelon l'enquête citoyenne — données pour la Corse entière, aucune donnée spécifique à des communes individuelles n'est disponibles pour cette analyse. Les verbatims fournis proviennent exclusivement de **Corte** (groupe d'âge 35-49 ans, N=16), ce qui ne permet pas de généraliser à l'ensemble des communes corses.\n\n## Observation structurelle : confusion possible sur l'interprétation de Cho\n\n**Important** : Le score Cho (Choix) mesure objectivement le % de population avec droit de vote + l'absence de quartiers prioritaires (QPV) — ce n'est **pas** une mesure de libertés individuelles au sens large. Selon les indicateurs OppChoVec, Cho affiche un score très élevé en Corse (8,79/10), ce qui reflète une couverture électorale et une absence relative de quartiers stigmatisés, non une perception subjective de liberté.\n\n## Thèmes récurrents dans les verbatims de Corte (35-49 ans)\n\nLes verbatims disponibles ne traitent **pas directement** d'un décalage avec Cho, mais révèlent plutôt des enjeux de **cohésion communautaire** :\n\n1. **Primauté des relations humaines** : *\"Le bien être ne peut se concevoir qu'au travers une communauté\"* (Verbatim 7) — les habitants placent les liens sociaux au cœur du bien-être, indépendamment des structures formelles (vote, QPV).\n\n2. **Besoin d'espaces de rencontre** : *\"Qu'il y ait des endroits des moments où les gens peuvent se rencontrer et communiquer\"* (Verbatim 10) — suggère une perception d'absence d'infrastructure sociale, malgré un cadre institutionnel formel intact.\n\n3. **Attachement identitaire** : *\"identité, coutumes, valeurs, famille, noyau\"* (Verbatim 2) — l'identité corse et la stabilité familiale sont perçues comme essentielles, reflétant une conception du bien-être ancrée dans l'enracinement territorial plutôt que dans les droits formels.\n\n**Conclusion** : Les verbatims ne documentent pas un décalage avec Cho au sens technique (droits électoraux/QPV), mais plutôt une tension entre satisfaction formelle des conditions de vie et **fragilité perçue de la cohésion sociale locale** — un enjeu distinct du score Cho."
+    }
+  ],
+  "n_subquestions": 5,
+  "n_sources": 65,
+  "rag_elapsed_s": 71.0,
+  "sources": [
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_profil",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_profil",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "methodology",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "raptor_entretiens_summaries",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_profil",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_profil",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "methodology",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_profil",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_profil",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "methodology",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "raptor_entretiens_summaries",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "raptor_entretiens_summaries",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_equipements",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_equipements",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_profil",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_profil",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "methodology",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "verbatim_evidence",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "raptor_entretiens_summaries",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "raptor_entretiens_summaries",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_profil",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "communes_profil",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "oppchovec_scores",
+      "label": ""
+    },
+    {
+      "content": "",
+      "metadata": {},
+      "source_type": "methodology",
+      "label": ""
+    }
+  ],
+  "raisonnement": "La réponse explique pourquoi une commune ne peut pas avoir un score global élevé avec un Cho faible, en se basant sur la structure des indicateurs et des exemples concrets.",
+  "section_observee": "Raisonnement comparatif / Comparaison contre-intuitive",
+  "comportement_attendu_selon_grille": "Réponse de fond avec comparaison explicite.",
+  "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+  "coherence_comportement_observe": "oui",
+  "sources_inventaire": [],
+  "mislabelling_detecte": {
+    "regle_1_quali_quanti": "non",
+    "regle_2_surinterpretation_oppchovec": "non",
+    "regle_3_absence_quali_non_signalee": "non",
+    "regle_4_extrapolation_sous_groupe": "non"
+  },
+  "mislabelling_flag": false,
+  "elements_specifiques_question": [
+    "commune",
+    "score global élevé",
+    "note très faible",
+    "dimension Cho"
+  ],
+  "elements_traitement": [
+    {
+      "element": "commune",
+      "traitement": "precis"
+    },
+    {
+      "element": "score global élevé",
+      "traitement": "precis"
+    },
+    {
+      "element": "note très faible",
+      "traitement": "precis"
+    },
+    {
+      "element": "dimension Cho",
+      "traitement": "precis"
+    }
+  ],
+  "pertinence": 5,
+  "pertinence_justif": "La réponse traite précisément de la possibilité d'un score global élevé avec un Cho faible, en fournissant des explications claires et des exemples.",
+  "fondement_factuel": 5,
+  "fondement_factuel_justif": "Les affirmations sont bien fondées sur la structure des indicateurs et des exemples concrets, sans mislabelling.",
+  "nuance_incertitude": 4,
+  "nuance_incertitude_justif": "La réponse est bien nuancée, expliquant les exceptions et les perceptions citoyennes.",
+  "coherence_qualiquanti": 4,
+  "coherence_qualiquanti_justif": "Bonne intégration des données quantitatives et qualitatives, bien que les sources qualitatives ne soient pas explicitement listées.",
+  "score_global": 4.5,
+  "judge_error": null
+}

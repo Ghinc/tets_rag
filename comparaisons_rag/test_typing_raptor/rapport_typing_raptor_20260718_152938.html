@@ -1,0 +1,1083 @@
+<title>Test typage Raptor — 18/07/2026 15:56</title>
+<style>
+:root {
+  --bg:#F1F3F7; --surface:#FFF; --surface-2:#F7F8FB; --border:#DDE1EC;
+  --text:#1C2033; --muted:#6272A0; --accent:#7C3AED; --accent-dim:#EDE9FE;
+  --pos:#16A34A; --neg:#DC2626; --warn:#B45309; --warn-bg:#FFFBEB;
+  --shadow:0 1px 3px rgba(28,32,51,.08),0 4px 16px rgba(28,32,51,.04);
+  --radius:6px;
+  --font:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+  --mono:ui-monospace,'SF Mono',Consolas,monospace;
+}
+@media(prefers-color-scheme:dark){
+  :root{--bg:#0D0F18;--surface:#161929;--surface-2:#1E2236;--border:#2A2F47;
+  --text:#E8EAF6;--muted:#8892B0;--accent:#9B67F8;--accent-dim:#2A1F4F;
+  --pos:#22C55E;--neg:#F87171;--warn:#FBBF24;--warn-bg:#1C1400;}
+}
+:root[data-theme=dark]{--bg:#0D0F18;--surface:#161929;--surface-2:#1E2236;--border:#2A2F47;--text:#E8EAF6;--muted:#8892B0;--accent:#9B67F8;--accent-dim:#2A1F4F;--pos:#22C55E;--neg:#F87171;--warn:#FBBF24;--warn-bg:#1C1400;}
+:root[data-theme=light]{--bg:#F1F3F7;--surface:#FFF;--surface-2:#F7F8FB;--border:#DDE1EC;--text:#1C2033;--muted:#6272A0;--accent:#7C3AED;--accent-dim:#EDE9FE;--pos:#16A34A;--neg:#DC2626;--warn:#B45309;--warn-bg:#FFFBEB;}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);font-size:13px;line-height:1.6;color:var(--text);background:var(--bg);min-height:100vh}
+
+.topnav{position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:1px solid var(--border);
+  padding:0 24px;display:flex;align-items:center;height:44px;box-shadow:0 1px 4px rgba(28,32,51,.06)}
+.nav-brand{font-weight:700;font-size:12px;letter-spacing:.04em;color:var(--accent);text-transform:uppercase;margin-right:20px}
+.nav-links{display:flex;flex:1;overflow-x:auto}
+.nav-links a{padding:0 14px;height:44px;display:flex;align-items:center;font-size:12px;color:var(--muted);
+  white-space:nowrap;border-bottom:2px solid transparent;transition:color .15s,border-color .15s}
+.nav-links a:hover{color:var(--text);text-decoration:none;border-color:var(--border)}
+.theme-btn{margin-left:auto;padding:4px 10px;border-radius:4px;border:1px solid var(--border);
+  background:var(--surface-2);color:var(--muted);cursor:pointer;font-size:11px}
+
+.page{max-width:1200px;margin:0 auto;padding:32px 24px 80px}
+.section{margin-bottom:48px;scroll-margin-top:56px}
+.section-eyebrow{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.section-title{font-size:18px;font-weight:700;color:var(--text);letter-spacing:-.02em;margin-bottom:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:20px 24px;margin-bottom:16px}
+.overflow-x{overflow-x:auto}
+
+/* Verdict hero */
+.verdict-hero{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--accent);
+  border-radius:var(--radius);padding:20px 24px;margin-bottom:28px;box-shadow:var(--shadow)}
+.verdict-hero .label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+.verdict-hero .headline{font-size:17px;font-weight:700;letter-spacing:-.02em;line-height:1.3}
+.verdict-hero .sub{margin-top:8px;color:var(--muted);font-size:12px}
+
+/* Summary table */
+table{border-collapse:collapse;width:100%;font-size:12px}
+th{background:var(--surface-2);color:var(--muted);font-weight:600;font-size:10px;text-transform:uppercase;
+  letter-spacing:.06em;padding:8px 10px;border-bottom:2px solid var(--border);white-space:nowrap;
+  position:sticky;top:44px;z-index:10}
+td{padding:6px 10px;border-bottom:1px solid var(--border);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--surface-2)}
+.num{font-variant-numeric:tabular-nums;font-family:var(--mono)}
+.center{text-align:center}
+.muted{color:var(--muted)}
+.small{font-size:11px}
+
+/* orientation row colors */
+tr.orient-objective{}
+tr.orient-perception{background:color-mix(in srgb, #7C3AED 4%, var(--surface))}
+tr.orient-vaste{background:color-mix(in srgb, #2980B9 3%, var(--surface))}
+.orient-cell{font-size:11px;color:var(--muted);white-space:nowrap}
+
+/* Badges */
+.badge{display:inline-block;padding:2px 7px;border-radius:10px;font-size:11px;font-weight:600;white-space:nowrap}
+.badge.good{background:color-mix(in srgb,var(--pos) 14%,transparent);color:var(--pos)}
+.badge.bad{background:color-mix(in srgb,var(--neg) 14%,transparent);color:var(--neg)}
+.badge.warn{background:color-mix(in srgb,var(--warn) 14%,transparent);color:var(--warn)}
+.badge.na{background:var(--surface-2);color:var(--muted)}
+
+/* Note */
+.note{background:var(--surface-2);border:1px solid var(--border);border-radius:4px;
+  padding:10px 14px;color:var(--muted);font-size:11px;margin-bottom:16px;line-height:1.6}
+.note strong{color:var(--text)}
+.note.warn{background:var(--warn-bg);border-color:color-mix(in srgb,var(--warn) 40%,transparent);color:var(--warn)}
+
+/* Detail Q sections */
+.q-section{margin-bottom:32px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.section-bad{border-color:color-mix(in srgb,var(--neg) 30%,var(--border))}
+.q-header{padding:12px 16px;background:var(--surface-2);border-bottom:1px solid var(--border);display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.q-num{font-weight:700;color:var(--accent);font-size:14px;flex-shrink:0}
+.q-orient-badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:.05em;flex-shrink:0}
+.orient-objective .q-orient-badge,.q-orient-badge.orient-objective{background:color-mix(in srgb,#C0392B 12%,transparent);color:#C0392B}
+.orient-perception .q-orient-badge,.q-orient-badge.orient-perception{background:var(--accent-dim);color:var(--accent)}
+.orient-vaste .q-orient-badge,.q-orient-badge.orient-vaste{background:color-mix(in srgb,#2980B9 12%,transparent);color:#2980B9}
+.q-text{font-size:13px;color:var(--text)}
+
+.q-cols{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.col-inner{padding:14px 16px;border-right:1px solid var(--border)}
+.col-inner:last-child{border-right:none}
+.col-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:10px}
+.detail-block{margin-bottom:12px}
+.detail-lbl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:4px}
+.verdict-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:4px}
+.sig-lbl{font-size:11px;color:var(--muted)}
+.b-detail{margin-top:3px;line-height:1.4}
+.answer-box{background:var(--surface-2);border:1px solid var(--border);border-radius:4px;
+  padding:8px 10px;font-size:11px;line-height:1.5;max-height:120px;overflow-y:auto;color:var(--text)}
+.col-error{padding:14px;color:var(--neg);font-size:12px}
+
+.sq-list{margin:0;padding-left:18px;font-size:12px;line-height:1.5}
+.sq-list li{margin-bottom:3px}
+.sq-idx{font-weight:600;color:var(--accent);margin-right:4px}
+
+.pill-quali{display:inline-block;padding:1px 7px;border-radius:10px;font-size:10px;margin:2px 2px;
+  background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent)}
+.pill-quanti{display:inline-block;padding:1px 7px;border-radius:10px;font-size:10px;margin:2px 2px;
+  background:color-mix(in srgb,#C0392B 14%,transparent);color:#C0392B}
+.pill-mixed{display:inline-block;padding:1px 7px;border-radius:10px;font-size:10px;margin:2px 2px;
+  background:color-mix(in srgb,#E07020 14%,transparent);color:#E07020}
+.reg-info{margin-top:4px}
+
+.stat-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:14px 18px;flex:1;min-width:120px;box-shadow:var(--shadow)}
+.sc-label{font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.sc-val{font-size:22px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;margin:2px 0 1px}
+.sc-sub{font-size:11px;color:var(--muted)}
+.section + .section{border-top:1px solid var(--border);padding-top:40px;margin-top:0}
+</style>
+
+<nav class="topnav">
+  <span class="nav-brand">Test Typage Raptor</span>
+  <div class="nav-links">
+    <a href="#synthese">Synthèse</a>
+    <a href="#detail">Détail Q×Q</a>
+  </div>
+  <button class="theme-btn" onclick="toggleTheme()">◐ Thème</button>
+</nav>
+
+<div class="page">
+
+<div id="synthese" class="section">
+<div class="section-eyebrow">Résultat principal</div>
+<div class="section-title">Effet de la règle de typage sur Decomp+Raptor</div>
+
+<div class="verdict-hero">
+  <div class="label">Verdict</div>
+  <div class="headline" style="color:#16A34A">RAPTOR neutralise la règle de typage : violations identiques dans les deux configs.</div>
+  <div class="sub">
+    12 questions · 2 configs · Signal (a) déterministe (sources) + Signal (b) LLM étroit (GPT-4o-mini) · 18/07/2026 15:56<br>
+    <b>Fast-path global Corse</b> : aucune des 12 questions ne le déclenche (vérifié) — les deux variantes passent par decompose_question().
+  </div>
+</div>
+
+<div class="stat-row">
+  <div class="stat-card">
+    <div class="sc-label">Violations (a) — Typage</div>
+    <div class="sc-val" style="color:var(--pos)">0/9</div>
+    <div class="sc-sub">questions orientées</div>
+  </div>
+  <div class="stat-card">
+    <div class="sc-label">Violations (a) — No_Typing</div>
+    <div class="sc-val" style="color:var(--pos)">0/9</div>
+    <div class="sc-sub">questions orientées</div>
+  </div>
+  <div class="stat-card">
+    <div class="sc-label">Violations (b) — Typage</div>
+    <div class="sc-val" style="color:var(--pos)">0/9</div>
+    <div class="sc-sub">questions orientées</div>
+  </div>
+  <div class="stat-card">
+    <div class="sc-label">Violations (b) — No_Typing</div>
+    <div class="sc-val" style="color:var(--pos)">0/9</div>
+    <div class="sc-sub">questions orientées</div>
+  </div>
+  <div class="stat-card">
+    <div class="sc-label">Incomplets vastes — Typage</div>
+    <div class="sc-val">0/3</div>
+    <div class="sc-sub">contrôle (Δ = +0)</div>
+  </div>
+</div>
+
+<div class="note">
+  <strong>Signal (a) :</strong> classification déterministe depuis <code>sources_mobilisees</code> (auto-déclaration Mistral via le bloc <code>===SOURCES_MOBILISEES===</code>).
+  VIOLATION = question objective qui mobilise substantiellement du QUALI (ou perception → QUANTI).
+  INCOMPLET = question vaste sans mix des deux familles.<br>
+  <strong>Signal (b) :</strong> GPT-4o-mini ciblé (1 appel par réponse orientée, ~100 tokens) — détecte si la réponse contient substantiellement du registre opposé.
+  N/A pour les questions vastes (les deux registres sont légitimes).
+</div>
+
+<div class="overflow-x">
+<table>
+<tr>
+  <th>#</th><th>Orient.</th><th>Question</th>
+  <th colspan="2" style="background:color-mix(in srgb,#27AE60 8%,var(--surface-2))">TYPAGE</th>
+  <th colspan="2" style="background:color-mix(in srgb,#7C3AED 8%,var(--surface-2))">NO_TYPING</th>
+</tr>
+<tr>
+  <th></th><th></th><th></th>
+  <th style="background:color-mix(in srgb,#27AE60 8%,var(--surface-2))">Sig.(a)</th>
+  <th style="background:color-mix(in srgb,#27AE60 8%,var(--surface-2))">Sig.(b)</th>
+  <th style="background:color-mix(in srgb,#7C3AED 8%,var(--surface-2))">Sig.(a)</th>
+  <th style="background:color-mix(in srgb,#7C3AED 8%,var(--surface-2))">Sig.(b)</th>
+</tr>
+<tr class="orient-objective"><td class="num muted">Q4</td><td class="orient-cell">Objectif</td><td class="muted small">Quel est le score moyen de bien-être à Ajaccio ?…</td><td class="center"><span class="badge good">COHERENT</span></td><td class="center"><span class="badge bad">VIOLATION</span></td><td class="center"><span class="badge good">COHERENT</span></td><td class="center"><span class="badge bad">VIOLATION</span></td></tr>
+<tr class="orient-objective"><td class="num muted">Q5</td><td class="orient-cell">Objectif</td><td class="muted small">Quelle dimension OppChoVec obtient la note la plus faib…</td><td class="center"><span class="badge good">COHERENT</span></td><td class="center"><span class="badge good">COHERENT</span></td><td class="center"><span class="badge good">COHERENT</span></td><td class="center"><span class="badge bad">VIOLATION</span></td></tr>
+<tr class="orient-objective"><td class="num muted">Q6</td><td class="orient-cell">Objectif</td><td class="muted small">Quel est le score OppChoVec d'Ajaccio, par catégorie ?…</td><td class="center"><span class="badge good">COHERENT</span></td><td class="center"><span class="badge bad">VIOLATION</span></td><td class="center"><span class="badge good">COHERENT</span></td><td class="center"><span class="badge good">COHERENT</span></td></tr>
+<tr class="orient-objective"><td class="num muted">Q8</td><td class="orient-cell">Objectif</td><td class="muted small">Combien d'habitants ont répondu à l'enquête à Ajaccio ?…</td><td class="center"><span class="badge good">COHERENT</span></td><td class="center"><span class="badge bad">VIOLATION</span></td><td class="center"><span class="badge good">COHERENT</span></td><td class="center"><span class="badge bad">VIOLATION</span></td></tr>
+<tr class="orient-objective"><td class="num muted">Q15</td><td class="orient-cell">Objectif</td><td class="muted small">De combien de services de proximité dispose la ville d'…</td><td class="center"><span class="badge good">COHERENT</span></td><td class="center"><span class="badge bad">VIOLATION</span></td><td class="center"><span class="badge good">COHERENT</span></td><td class="center"><span class="badge bad">VIOLATION</span></td></tr>
+<tr class="orient-perception"><td class="num muted">Q9</td><td class="orient-cell">Perception</td><td class="muted small">Comment les 18-25 ans ressentent-ils le bien-être ?…</td><td class="center"><span class="badge good">COHERENT</span></td><td class="center"><span class="badge good">COHERENT</span></td><td class="center"><span class="badge good">COHERENT</span></td><td class="center"><span class="badge bad">VIOLATION</span></td></tr>
+<tr class="orient-perception"><td class="num muted">Q10</td><td class="orient-cell">Perception</td><td class="muted small">Que pensent les entrepreneurs Ajacciens de la qualité d…</td><td class="center"><span class="badge good">COHERENT</span></td><td class="center"><span class="badge bad">VIOLATION</span></td><td class="center"><span class="badge good">COHERENT</span></td><td class="center"><span class="badge bad">VIOLATION</span></td></tr>
+<tr class="orient-perception"><td class="num muted">Q11</td><td class="orient-cell">Perception</td><td class="muted small">Que pensent les seniors du bien-être à Ajaccio ?…</td><td class="center"><span class="badge good">COHERENT</span></td><td class="center"><span class="badge bad">VIOLATION</span></td><td class="center"><span class="badge good">COHERENT</span></td><td class="center"><span class="badge bad">VIOLATION</span></td></tr>
+<tr class="orient-perception"><td class="num muted">Q14</td><td class="orient-cell">Perception</td><td class="muted small">Que révèlent les verbatims sur la sécurité à Corte ?…</td><td class="center"><span class="badge good">COHERENT</span></td><td class="center"><span class="badge good">COHERENT</span></td><td class="center"><span class="badge good">COHERENT</span></td><td class="center"><span class="badge good">COHERENT</span></td></tr>
+<tr class="orient-vaste"><td class="num muted">Q2</td><td class="orient-cell">Vaste</td><td class="muted small">Peut-on considérer Ajaccio comme un territoire favorabl…</td><td class="center"><span class="badge good">COHERENT</span></td><td class="center"><span class="badge na">N/A</span></td><td class="center"><span class="badge good">COHERENT</span></td><td class="center"><span class="badge na">N/A</span></td></tr>
+<tr class="orient-vaste"><td class="num muted">Q25</td><td class="orient-cell">Vaste</td><td class="muted small">Les indicateurs objectifs et les perceptions qualitativ…</td><td class="center"><span class="badge good">COHERENT</span></td><td class="center"><span class="badge na">N/A</span></td><td class="center"><span class="badge good">COHERENT</span></td><td class="center"><span class="badge na">N/A</span></td></tr>
+<tr class="orient-vaste"><td class="num muted">Q35</td><td class="orient-cell">Vaste</td><td class="muted small">Observe-t-on un écart significatif entre indicateurs ob…</td><td class="center"><span class="badge good">COHERENT</span></td><td class="center"><span class="badge na">N/A</span></td><td class="center"><span class="badge good">COHERENT</span></td><td class="center"><span class="badge na">N/A</span></td></tr>
+</table>
+</div>
+</div>
+
+<div id="detail" class="section">
+<div class="section-eyebrow">Section 2</div>
+<div class="section-title">Détail côte à côte par question</div>
+
+<div class="note">
+  <span style="color:#C0392B">■</span> Objectif (QUANTI attendu) &nbsp;
+  <span style="color:var(--accent)">■</span> Perception (QUALI attendu) &nbsp;
+  <span style="color:#2980B9">■</span> Vaste (deux familles, témoins)
+  &nbsp;·&nbsp; Bordure rouge gauche = au moins une violation détectée.
+</div>
+
+
+<div class="q-section section-bad">
+  <div class="q-header">
+    <span class="q-num">Q4</span>
+    <span class="q-orient-badge orient-objective">Objectif — QUANTI</span>
+    <span class="q-text">Quel est le score moyen de bien-être à Ajaccio ?</span>
+  </div>
+  <div class="q-cols">
+    
+<div class="col-inner" style="border-left:3px solid #DC2626">
+  <div class="col-label">v_decomp_raptor (TYPAGE)</div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sous-questions</div>
+    <ol class="sq-list"><li><span class="sq-idx">1</span> Quel est le score global OppChoVec de bien-être pour la commune d'Ajaccio ?</li><li><span class="sq-idx">2</span> Quel est le rang d'Ajaccio parmi les communes corses en termes de score OppChoVec de bien-être ?</li><li><span class="sq-idx">3</span> Quel est le score OppChoVec de la dimension 'Cadre de vie' à Ajaccio ?</li><li><span class="sq-idx">4</span> Quel est le score OppChoVec de la dimension 'Liens sociaux' à Ajaccio ?</li><li><span class="sq-idx">5</span> Quel est le score OppChoVec de la dimension 'Accès aux services' à Ajaccio ?</li></ol>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sources mobilisées (type)</div>
+    <span class="pill-quanti">SQ1: Indicateurs OppChoVec · Indicateurs OppChoVec — Ajaccio</span><br><span class="pill-quanti">SQ2: Indicateurs OppChoVec · Indicateurs OppChoVec — Ajaccio</span><br><span class="pill-mixed">SQ4: Synthèse scores enquête citoyenne — vue : enquete_commune — </span><br><span class="pill-mixed">SQ5: Synthèse scores enquête citoyenne — vue : enquete_commune — </span>
+    <div class="reg-info muted small">dominant=quanti (quanti:2, mixed:2)</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Verdict registre</div>
+    <div class="verdict-row">
+      <span class="sig-lbl">(a) sources :</span> <span class="badge good">COHERENT</span>
+      <span class="sig-lbl" style="margin-left:12px">(b) LLM :</span> <span class="badge bad">VIOLATION</span>
+    </div>
+    <div class="b-detail muted small"><b>Extrait :</b> un classement qui reflète une situation contrastée entre des atouts majeurs et des fragilités struct</div>
+    <div class="b-detail muted small"><b>Explication :</b> Cette phrase introduit une évaluation qualitative des atouts et fragilités, ce qui s'écarte du registre quantitatif atte</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Réponse (400 chars)</div>
+    <div class="answer-box">**Synthèse : Quel est le score moyen de bien-être à Ajaccio ?**
+
+À Ajaccio, le score moyen de bien-être, mesuré par les indicateurs territoriaux objectifs, s’élève à **5,78 sur 10** [SQ1]. Ce résultat place la commune au **19ᵉ rang parmi les 360 communes corses** [SQ2], un classement qui reflète une situation contrastée entre des atouts majeurs et des fragilités structurelles.
+
+### **Points clés d</div>
+  </div>
+</div>
+    
+<div class="col-inner" style="border-left:3px solid #DC2626">
+  <div class="col-label">v_decomp_raptor_no_typing (NO_TYPING)</div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sous-questions</div>
+    <ol class="sq-list"><li><span class="sq-idx">1</span> Quel est le score OppChoVec moyen de bien-être pour la commune d'Ajaccio, tel que mesuré à l'échelle</li><li><span class="sq-idx">2</span> Quels sont les verbatims citoyens recueillis à Ajaccio qui illustrent les dimensions du bien-être (e</li><li><span class="sq-idx">3</span> Quels indicateurs territoriaux objectifs (ex : accès aux soins, transports, emploi) sont disponibles</li><li><span class="sq-idx">4</span> Comment le score OppChoVec d'Ajaccio évolue-t-il sur les trois dernières années disponibles (si les </li><li><span class="sq-idx">5</span> Quels sont les points forts et les points faibles du bien-être à Ajaccio, identifiés à partir des sc</li></ol>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sources mobilisées (type)</div>
+    <span class="pill-mixed">SQ1: Indicateurs OppChoVec · Indicateurs OppChoVec — Ajaccio · Sy</span><br><span class="pill-quali">SQ2: Verbatims bruts enquête citoyenne — Ajaccio · Synthèse verba</span><br><span class="pill-quanti">SQ3: Indicateurs OppChoVec · Indicateurs OppChoVec — Ajaccio</span><br><span class="pill-quanti">SQ4: Indicateurs OppChoVec · Indicateurs OppChoVec — Ajaccio</span><br><span class="pill-mixed">SQ5: Synthèse scores enquête citoyenne — vue : enquete_commune · </span>
+    <div class="reg-info muted small">dominant=quanti (quanti:2, quali:1, mixed:2)</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Verdict registre</div>
+    <div class="verdict-row">
+      <span class="sig-lbl">(a) sources :</span> <span class="badge good">COHERENT</span>
+      <span class="sig-lbl" style="margin-left:12px">(b) LLM :</span> <span class="badge bad">VIOLATION</span>
+    </div>
+    <div class="b-detail muted small"><b>Extrait :</b> Un potentiel territorial exceptionnel, mais un vécu inégal</div>
+    <div class="b-detail muted small"><b>Explication :</b> La mention d'un 'vécu inégal' introduit une dimension qualitative non attendue.</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Réponse (400 chars)</div>
+    <div class="answer-box">**Synthèse : Score moyen de bien-être à Ajaccio**
+
+À Ajaccio, le bien-être se caractérise par un **score moyen contrasté de 5,78/10** selon les indicateurs territoriaux objectifs, reflétant des atouts majeurs mais aussi des fragilités structurelles [SQ1].
+
+### **Un potentiel territorial exceptionnel, mais un vécu inégal**
+Les données territoriales montrent qu’Ajaccio se distingue par des **opportu</div>
+  </div>
+</div>
+  </div>
+</div>
+
+<div class="q-section section-bad">
+  <div class="q-header">
+    <span class="q-num">Q5</span>
+    <span class="q-orient-badge orient-objective">Objectif — QUANTI</span>
+    <span class="q-text">Quelle dimension OppChoVec obtient la note la plus faible à Ajaccio ?</span>
+  </div>
+  <div class="q-cols">
+    
+<div class="col-inner">
+  <div class="col-label">v_decomp_raptor (TYPAGE)</div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sous-questions</div>
+    <ol class="sq-list"><li><span class="sq-idx">1</span> Quel est le score OppChoVec global de la dimension 'Environnement et cadre de vie' à Ajaccio ?</li><li><span class="sq-idx">2</span> Quel est le score OppChoVec global de la dimension 'Accès aux services et équipements' à Ajaccio ?</li><li><span class="sq-idx">3</span> Quel est le score OppChoVec global de la dimension 'Dynamique économique et emploi' à Ajaccio ?</li><li><span class="sq-idx">4</span> Quel est le score OppChoVec global de la dimension 'Lien social et solidarité' à Ajaccio ?</li><li><span class="sq-idx">5</span> Quel est le score OppChoVec global de la dimension 'Gouvernance et participation citoyenne' à Ajacci</li></ol>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sources mobilisées (type)</div>
+    <span class="pill-mixed">SQ1: Indicateurs OppChoVec — Ajaccio · Verbatims bruts enquête ci</span><br><span class="pill-quanti">SQ2: Indicateurs OppChoVec — Ajaccio</span><br><span class="pill-mixed">SQ3: Indicateurs OppChoVec — Ajaccio · Données enquête citoyenne </span><br><span class="pill-quali">SQ4: Données enquête citoyenne — Ajaccio</span><br><span class="pill-quanti">SQ5: Indicateurs OppChoVec — Ajaccio</span>
+    <div class="reg-info muted small">dominant=quanti (quanti:2, quali:1, mixed:2)</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Verdict registre</div>
+    <div class="verdict-row">
+      <span class="sig-lbl">(a) sources :</span> <span class="badge good">COHERENT</span>
+      <span class="sig-lbl" style="margin-left:12px">(b) LLM :</span> <span class="badge good">COHERENT</span>
+    </div>
+    
+    <div class="b-detail muted small"><b>Explication :</b> La réponse reste dans un registre quantitatif en fournissant des scores et des classements.</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Réponse (400 chars)</div>
+    <div class="answer-box">À Ajaccio, la dimension **Choix (Cho)** obtient la note la plus faible parmi les trois composantes OppChoVec, avec un score de **1,27/10** selon les indicateurs territoriaux objectifs [SQ5]. Ce résultat place la commune au **358ᵉ rang sur 360** en Corse, reflétant des limites structurelles dans les libertés effectives mesurées (droit de vote et absence de quartiers prioritaires) [SQ5].
+
+Les deux a</div>
+  </div>
+</div>
+    
+<div class="col-inner" style="border-left:3px solid #DC2626">
+  <div class="col-label">v_decomp_raptor_no_typing (NO_TYPING)</div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sous-questions</div>
+    <ol class="sq-list"><li><span class="sq-idx">1</span> Quel est le score global OppChoVec de la commune d'Ajaccio, toutes dimensions confondues ?</li><li><span class="sq-idx">2</span> Quelles sont les cinq dimensions OppChoVec évaluées pour la commune d'Ajaccio ?</li><li><span class="sq-idx">3</span> Parmi les cinq dimensions OppChoVec d'Ajaccio, quelle est celle qui obtient le score le plus faible </li><li><span class="sq-idx">4</span> Quelle est la valeur numérique du score OppChoVec de la dimension la plus faible à Ajaccio ?</li><li><span class="sq-idx">5</span> Comment ce score le plus faible d'Ajaccio se situe-t-il par rapport à la moyenne des scores des autr</li></ol>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sources mobilisées (type)</div>
+    <span class="pill-quanti">SQ1: Indicateurs OppChoVec — Ajaccio</span><br><span class="pill-quanti">SQ3: Indicateurs OppChoVec — Ajaccio</span><br><span class="pill-quanti">SQ4: Indicateurs OppChoVec — Ajaccio</span><br><span class="pill-quanti">SQ5: Indicateurs OppChoVec · Indicateurs OppChoVec — Ajaccio</span>
+    <div class="reg-info muted small">dominant=quanti (quanti:4)</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Verdict registre</div>
+    <div class="verdict-row">
+      <span class="sig-lbl">(a) sources :</span> <span class="badge good">COHERENT</span>
+      <span class="sig-lbl" style="margin-left:12px">(b) LLM :</span> <span class="badge bad">VIOLATION</span>
+    </div>
+    <div class="b-detail muted small"><b>Extrait :</b> Ce score reflète des **déséquilibres structurels**</div>
+    <div class="b-detail muted small"><b>Explication :</b> L'expression 'déséquilibres structurels' introduit une analyse qualitative des conditions sous-jacentes.</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Réponse (400 chars)</div>
+    <div class="answer-box">À Ajaccio, **la dimension qui obtient la note la plus faible selon les indicateurs territoriaux est "Choix" (Cho)**, avec un score de **1,27/10** [SQ3, SQ4]. Ce résultat place la commune au **rang 358ᵉ sur 360 communes corses** pour cette dimension [SQ4], ce qui en fait l'une des plus faibles de l'île sur ce critère.
+
+Ce score reflète des **déséquilibres structurels** : malgré des atouts majeurs e</div>
+  </div>
+</div>
+  </div>
+</div>
+
+<div class="q-section section-bad">
+  <div class="q-header">
+    <span class="q-num">Q6</span>
+    <span class="q-orient-badge orient-objective">Objectif — QUANTI</span>
+    <span class="q-text">Quel est le score OppChoVec d'Ajaccio, par catégorie ?</span>
+  </div>
+  <div class="q-cols">
+    
+<div class="col-inner" style="border-left:3px solid #DC2626">
+  <div class="col-label">v_decomp_raptor (TYPAGE)</div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sous-questions</div>
+    <ol class="sq-list"><li><span class="sq-idx">1</span> Quel est le score OppChoVec global de la commune d'Ajaccio ?</li><li><span class="sq-idx">2</span> Quel est le score OppChoVec d'Ajaccio pour la catégorie 'Cadre de vie et environnement' ?</li><li><span class="sq-idx">3</span> Quel est le score OppChoVec d'Ajaccio pour la catégorie 'Accès aux services et équipements' ?</li><li><span class="sq-idx">4</span> Quel est le score OppChoVec d'Ajaccio pour la catégorie 'Dynamique économique et emploi' ?</li><li><span class="sq-idx">5</span> Quel est le score OppChoVec d'Ajaccio pour la catégorie 'Lien social et gouvernance' ?</li></ol>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sources mobilisées (type)</div>
+    <span class="pill-quanti">SQ1: Indicateurs OppChoVec — Ajaccio</span><br><span class="pill-mixed">SQ2: Synthèse scores enquête citoyenne — vue : enquete_profession</span><br><span class="pill-quanti">SQ3: Indicateurs OppChoVec — Ajaccio</span><br><span class="pill-mixed">SQ4: Synthèse scores enquête citoyenne — vue : enquete_commune</span><br><span class="pill-mixed">SQ5: Synthèse scores enquête citoyenne — vue : enquete_commune · </span>
+    <div class="reg-info muted small">dominant=mixed (quanti:2, mixed:3)</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Verdict registre</div>
+    <div class="verdict-row">
+      <span class="sig-lbl">(a) sources :</span> <span class="badge good">COHERENT</span>
+      <span class="sig-lbl" style="margin-left:12px">(b) LLM :</span> <span class="badge bad">VIOLATION</span>
+    </div>
+    <div class="b-detail muted small"><b>Extrait :</b> profil contrasté, marqué par des forces et des faiblesses très prononcées selon les dimensions analy</div>
+    <div class="b-detail muted small"><b>Explication :</b> La réponse inclut une évaluation qualitative des forces et faiblesses, ce qui est opposé à l'attente quantitative.</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Réponse (400 chars)</div>
+    <div class="answer-box">**Synthèse : Scores d'Ajaccio par catégorie selon les indicateurs territoriaux**
+
+À Ajaccio, les indicateurs territoriaux objectifs révèlent un profil contrasté, marqué par des forces et des faiblesses très prononcées selon les dimensions analysées.
+
+- **Opportunités (Opp)** : Ajaccio se distingue par un score **exceptionnel de 10,00/10**, le plaçant au **1er rang des 360 communes corses** [SQ1]. </div>
+  </div>
+</div>
+    
+<div class="col-inner">
+  <div class="col-label">v_decomp_raptor_no_typing (NO_TYPING)</div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sous-questions</div>
+    <ol class="sq-list"><li><span class="sq-idx">1</span> Quel est le score OppChoVec global de la commune d'Ajaccio, tel que disponible à l'échelle communale</li><li><span class="sq-idx">2</span> Quels sont les principaux indicateurs territoriaux (ex : accès aux services, environnement, emploi) </li><li><span class="sq-idx">3</span> Existe-t-il des verbatims citoyens recueillis à Ajaccio qui illustrent des perceptions liées aux dim</li><li><span class="sq-idx">4</span> Comment le score OppChoVec d'Ajaccio se compare-t-il à la moyenne des scores des communes corses de </li><li><span class="sq-idx">5</span> Quelles sont les tendances observées dans les enquêtes récentes sur le bien-être à Ajaccio (ex : sat</li></ol>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sources mobilisées (type)</div>
+    <span class="pill-quanti">SQ1: Indicateurs OppChoVec — Ajaccio</span><br><span class="pill-quanti">SQ2: Indicateurs OppChoVec — Ajaccio · Équipements et services co</span><br><span class="pill-quali">SQ3: Verbatims bruts enquête citoyenne — Ajaccio · Synthèse verba</span><br><span class="pill-mixed">SQ5: Données enquête citoyenne — Ajaccio · Synthèse scores enquêt</span>
+    <div class="reg-info muted small">dominant=quanti (quanti:2, quali:1, mixed:1)</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Verdict registre</div>
+    <div class="verdict-row">
+      <span class="sig-lbl">(a) sources :</span> <span class="badge good">COHERENT</span>
+      <span class="sig-lbl" style="margin-left:12px">(b) LLM :</span> <span class="badge good">COHERENT</span>
+    </div>
+    
+    <div class="b-detail muted small"><b>Explication :</b> La réponse fournit des scores quantitatifs sans inclure de contenu qualitatif.</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Réponse (400 chars)</div>
+    <div class="answer-box">### **Score OppChoVec d'Ajaccio par catégorie**
+
+À Ajaccio, les indicateurs territoriaux montrent un **score global de 5,78/10** [SQ1], révélant des contrastes marqués entre les trois dimensions clés de la qualité de vie :
+
+- **Opportunités (Opp) : 10,00/10** [SQ1]
+  Ajaccio se distingue par un accès exceptionnel aux ressources territoriales, avec une **éducation moyenne élevée (7,42/10)** [SQ2], </div>
+  </div>
+</div>
+  </div>
+</div>
+
+<div class="q-section section-bad">
+  <div class="q-header">
+    <span class="q-num">Q8</span>
+    <span class="q-orient-badge orient-objective">Objectif — QUANTI</span>
+    <span class="q-text">Combien d'habitants ont répondu à l'enquête à Ajaccio ?</span>
+  </div>
+  <div class="q-cols">
+    
+<div class="col-inner" style="border-left:3px solid #DC2626">
+  <div class="col-label">v_decomp_raptor (TYPAGE)</div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sous-questions</div>
+    <ol class="sq-list"><li><span class="sq-idx">1</span> Quel est le nombre total de répondants à l'enquête sur le bien-être à Ajaccio ?</li><li><span class="sq-idx">2</span> Quelle est la répartition du nombre de répondants par tranche d'âge à Ajaccio dans cette enquête (si</li><li><span class="sq-idx">3</span> Quel est le nombre de répondants par genre (homme/femme/autre) à Ajaccio dans cette enquête (si disp</li><li><span class="sq-idx">4</span> Quel est le taux de participation des habitants d'Ajaccio à cette enquête (nombre de répondants rapp</li><li><span class="sq-idx">5</span> Combien de questionnaires complets et exploitables ont été recueillis à Ajaccio dans le cadre de cet</li></ol>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sources mobilisées (type)</div>
+    <span class="pill-mixed">SQ1: Synthèse scores enquête citoyenne — vue : enquete_commune · </span><br><span class="pill-quali">SQ2: Synthèse verbatims enquête citoyenne — vue : commune</span><br><span class="pill-mixed">SQ3: Aucune source mobilisable (données manquantes)</span><br><span class="pill-mixed">SQ4: Synthèse scores enquête citoyenne — vue : enquete_commune</span><br><span class="pill-mixed">SQ5: Synthèse scores enquête citoyenne — vue : enquete_profession</span>
+    <div class="reg-info muted small">dominant=mixed (quali:1, mixed:4)</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Verdict registre</div>
+    <div class="verdict-row">
+      <span class="sig-lbl">(a) sources :</span> <span class="badge good">COHERENT</span>
+      <span class="sig-lbl" style="margin-left:12px">(b) LLM :</span> <span class="badge bad">VIOLATION</span>
+    </div>
+    <div class="b-detail muted small"><b>Extrait :</b> 39 personnes ont fourni des verbatims exploitables pour une analyse qualitative des perceptions loca</div>
+    <div class="b-detail muted small"><b>Explication :</b> La réponse inclut une analyse qualitative des perceptions, ce qui est en opposition avec l'orientation attendue.</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Réponse (400 chars)</div>
+    <div class="answer-box">**Synthèse finale :**
+
+À Ajaccio, **51 habitants ont répondu à l'enquête citoyenne sur le bien-être** [SQ1]. Parmi eux, **39 personnes** ont fourni des verbatims exploitables pour une analyse qualitative des perceptions locales [SQ1]. Un sous-groupe plus restreint, composé de **17 questionnaires complets et exploitables**, a été recueilli spécifiquement auprès de salariés cadres ou professions int</div>
+  </div>
+</div>
+    
+<div class="col-inner" style="border-left:3px solid #DC2626">
+  <div class="col-label">v_decomp_raptor_no_typing (NO_TYPING)</div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sous-questions</div>
+    <ol class="sq-list"><li><span class="sq-idx">1</span> Quel est le nombre total de répondants à l'enquête sur le bien-être menée à Ajaccio ?</li><li><span class="sq-idx">2</span> Quelle est la répartition des répondants à l'enquête d'Ajaccio par type d'enquête (ex : en ligne, en</li><li><span class="sq-idx">3</span> Quel est le taux de participation des habitants d'Ajaccio à cette enquête par rapport à la populatio</li><li><span class="sq-idx">4</span> Existe-t-il des données sur la représentativité des répondants à Ajaccio par rapport à la structure </li><li><span class="sq-idx">5</span> Quels sont les scores OppChoVec globaux d'Ajaccio issus de cette enquête, en précisant que les venti</li></ol>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sources mobilisées (type)</div>
+    <span class="pill-mixed">SQ1: Synthèse verbatims enquête citoyenne — vue : commune · Synth</span><br><span class="pill-mixed">SQ3: Synthèse scores enquête citoyenne — vue : enquete_commune</span><br><span class="pill-quali">SQ4: Synthèse verbatims enquête citoyenne — vue : commune</span><br><span class="pill-quanti">SQ5: Indicateurs OppChoVec — Ajaccio</span>
+    <div class="reg-info muted small">dominant=mixed (quanti:1, quali:1, mixed:2)</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Verdict registre</div>
+    <div class="verdict-row">
+      <span class="sig-lbl">(a) sources :</span> <span class="badge good">COHERENT</span>
+      <span class="sig-lbl" style="margin-left:12px">(b) LLM :</span> <span class="badge bad">VIOLATION</span>
+    </div>
+    <div class="b-detail muted small"><b>Extrait :</b> 39 personnes ont participé à la collecte de verbatims qualitatifs, permettant d'identifier des thème</div>
+    <div class="b-detail muted small"><b>Explication :</b> La réponse inclut une mention substantielle de la collecte de verbatims qualitatifs, ce qui est en opposition avec l'ori</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Réponse (400 chars)</div>
+    <div class="answer-box">**Synthèse finale : Nombre de répondants à l'enquête sur la qualité de vie à Ajaccio**
+
+À Ajaccio, **51 habitants ont répondu à l'enquête citoyenne** pour la partie quantitative évaluant leur satisfaction sur différentes dimensions du bien-être [SQ1]. Parallèlement, **39 personnes** ont participé à la collecte de verbatims qualitatifs, permettant d'identifier des thèmes clés dans leurs perceptions</div>
+  </div>
+</div>
+  </div>
+</div>
+
+<div class="q-section section-bad">
+  <div class="q-header">
+    <span class="q-num">Q15</span>
+    <span class="q-orient-badge orient-objective">Objectif — QUANTI</span>
+    <span class="q-text">De combien de services de proximité dispose la ville d'Ajaccio ?</span>
+  </div>
+  <div class="q-cols">
+    
+<div class="col-inner" style="border-left:3px solid #DC2626">
+  <div class="col-label">v_decomp_raptor (TYPAGE)</div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sous-questions</div>
+    <ol class="sq-list"><li><span class="sq-idx">1</span> Quel est le nombre total de services de proximité répertoriés dans la commune d'Ajaccio selon les do</li><li><span class="sq-idx">2</span> Combien de services de santé de proximité (médecins généralistes, pharmacies, infirmiers, etc.) sont</li><li><span class="sq-idx">3</span> Quel est le nombre de commerces de proximité (boulangeries, épiceries, superettes, etc.) présents da</li><li><span class="sq-idx">4</span> Combien d’établissements scolaires de proximité (écoles maternelles, primaires, collèges) sont impla</li><li><span class="sq-idx">5</span> Quel est le nombre de services publics de proximité (mairies annexes, bureaux de poste, maisons de s</li></ol>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sources mobilisées (type)</div>
+    <span class="pill-quanti">SQ1: Équipements et services communaux — Ajaccio · Indicateurs Op</span><br><span class="pill-mixed">SQ2: Équipements et services communaux — Ajaccio · Synthèse score</span><br><span class="pill-mixed">SQ3: Équipements et services communaux — Ajaccio · Synthèse score</span><br><span class="pill-mixed">SQ4: Équipements et services communaux — Ajaccio · Indicateurs Op</span><br><span class="pill-mixed">SQ5: Aucune donnée disponible</span>
+    <div class="reg-info muted small">dominant=mixed (quanti:1, mixed:4)</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Verdict registre</div>
+    <div class="verdict-row">
+      <span class="sig-lbl">(a) sources :</span> <span class="badge good">COHERENT</span>
+      <span class="sig-lbl" style="margin-left:12px">(b) LLM :</span> <span class="badge bad">VIOLATION</span>
+    </div>
+    <div class="b-detail muted small"><b>Extrait :</b> Les habitants interrogés soulignent la fa</div>
+    <div class="b-detail muted small"><b>Explication :</b> La réponse inclut une mention des perceptions des habitants, ce qui est un contenu qualitatif non attendu.</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Réponse (400 chars)</div>
+    <div class="answer-box">**Synthèse : Nombre de services de proximité à Ajaccio**
+
+Ajaccio dispose d’un réseau dense de services de proximité, bien que leur accessibilité et leur qualité perçue varient selon les secteurs.
+
+**Commerces et équipements du quotidien**
+La ville compte **51 boulangeries, 38 supérettes ou épiceries, 21 boucheries-charcuteries et 11 hypermarchés ou supermarchés**, ainsi que **5 points de contact </div>
+  </div>
+</div>
+    
+<div class="col-inner" style="border-left:3px solid #DC2626">
+  <div class="col-label">v_decomp_raptor_no_typing (NO_TYPING)</div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sous-questions</div>
+    <ol class="sq-list"><li><span class="sq-idx">1</span> Quel est le nombre total de services de proximité répertoriés dans la commune d'Ajaccio selon les do</li><li><span class="sq-idx">2</span> Quels sont les types de services de proximité les plus représentés à Ajaccio (ex : alimentation, san</li><li><span class="sq-idx">3</span> Quel est le score OppChoVec de la commune d'Ajaccio pour l'indicateur lié à l'accessibilité aux serv</li><li><span class="sq-idx">4</span> Quels verbatims citoyens d'Ajaccio mentionnent explicitement la disponibilité ou le manque de servic</li><li><span class="sq-idx">5</span> Existe-t-il des données d'enquêtes locales (ex : enquêtes de satisfaction, diagnostics territoriaux)</li></ol>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sources mobilisées (type)</div>
+    <span class="pill-mixed">SQ3: Indicateurs OppChoVec — Ajaccio · Synthèse scores enquête ci</span><br><span class="pill-quali">SQ4: Verbatims bruts enquête citoyenne — Ajaccio · Synthèse verba</span><br><span class="pill-mixed">SQ5: Données enquête citoyenne — Ajaccio · Synthèse scores enquêt</span>
+    <div class="reg-info muted small">dominant=mixed (quali:1, mixed:2)</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Verdict registre</div>
+    <div class="verdict-row">
+      <span class="sig-lbl">(a) sources :</span> <span class="badge good">COHERENT</span>
+      <span class="sig-lbl" style="margin-left:12px">(b) LLM :</span> <span class="badge bad">VIOLATION</span>
+    </div>
+    <div class="b-detail muted small"><b>Extrait :</b> réseau de services de proximité jugé accessible</div>
+    <div class="b-detail muted small"><b>Explication :</b> La réponse se concentre sur des perceptions et jugements qualitatifs plutôt que sur des données quantitatives.</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Réponse (400 chars)</div>
+    <div class="answer-box">**Synthèse : Nombre et perception des services de proximité à Ajaccio**
+
+La ville d’Ajaccio dispose d’un **réseau de services de proximité jugé accessible**, mais les données disponibles ne permettent pas d’en préciser le nombre exact. Voici ce que révèlent les indicateurs et perceptions des habitants :
+
+- **Accessibilité objective élevée** : Les indicateurs territoriaux montrent une **mobilité tr</div>
+  </div>
+</div>
+  </div>
+</div>
+
+<div class="q-section section-bad">
+  <div class="q-header">
+    <span class="q-num">Q9</span>
+    <span class="q-orient-badge orient-perception">Perception — QUALI</span>
+    <span class="q-text">Comment les 18-25 ans ressentent-ils le bien-être ?</span>
+  </div>
+  <div class="q-cols">
+    
+<div class="col-inner">
+  <div class="col-label">v_decomp_raptor (TYPAGE)</div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sous-questions</div>
+    <ol class="sq-list"><li><span class="sq-idx">1</span> Quels sont les verbatims des 18-25 ans en Corse concernant leur sentiment général de bien-être dans </li><li><span class="sq-idx">2</span> Quelles dimensions du bien-être (ex : accès à l'emploi, logement, loisirs, santé) sont les plus fréq</li><li><span class="sq-idx">3</span> Comment les 18-25 ans évaluent-ils leur niveau de stress ou d'anxiété dans les enquêtes de perceptio</li><li><span class="sq-idx">4</span> Quels sont les principaux facteurs environnementaux ou sociaux (ex : isolement, dynamisme local, tra</li><li><span class="sq-idx">5</span> Quelles différences de perception du bien-être sont observées entre les 18-25 ans résidant en zones </li></ol>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sources mobilisées (type)</div>
+    <span class="pill-mixed">SQ1: Synthèse scores enquête citoyenne — vue : enquete_age_range </span><br><span class="pill-mixed">SQ2: Synthèse scores enquête citoyenne — vue : enquete_age_range </span><br><span class="pill-quali">SQ4: Synthèse verbatims enquête citoyenne — vue : dimension · Ver</span><br><span class="pill-mixed">SQ5: Synthèse scores enquête citoyenne — vue : enquete_age_range*</span>
+    <div class="reg-info muted small">dominant=mixed (quali:1, mixed:3)</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Verdict registre</div>
+    <div class="verdict-row">
+      <span class="sig-lbl">(a) sources :</span> <span class="badge good">COHERENT</span>
+      <span class="sig-lbl" style="margin-left:12px">(b) LLM :</span> <span class="badge good">COHERENT</span>
+    </div>
+    
+    <div class="b-detail muted small"><b>Explication :</b> La réponse se concentre sur des perceptions et opinions qualitatives sans mentionner de données quantitatives.</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Réponse (400 chars)</div>
+    <div class="answer-box">### **Synthèse : Comment les 18-25 ans ressentent-ils le bien-être en Corse ?**
+
+Les 18-25 ans en Corse expriment un **bien-être contrasté**, marqué par une satisfaction modérée dans leur vie quotidienne, mais une **forte inquiétude pour l’avenir**, notamment sur les plans économique et professionnel. Leur ressenti varie selon les dimensions du bien-être, avec des points forts liés à leur environn</div>
+  </div>
+</div>
+    
+<div class="col-inner" style="border-left:3px solid #DC2626">
+  <div class="col-label">v_decomp_raptor_no_typing (NO_TYPING)</div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sous-questions</div>
+    <ol class="sq-list"><li><span class="sq-idx">1</span> Quel est le score global de bien-être (OppChoVec) à l'échelle des communes corses où réside une prop</li><li><span class="sq-idx">2</span> Quels sont les principaux thèmes émergents dans les verbatims des 18-25 ans concernant leur ressenti</li><li><span class="sq-idx">3</span> Quels indicateurs territoriaux (ex : taux de chômage des jeunes, offre de formations, prix des logem</li><li><span class="sq-idx">4</span> Comment les 18-25 ans évaluent-ils leur satisfaction globale dans les enquêtes de bien-être (ex : no</li><li><span class="sq-idx">5</span> Quelles disparités géographiques (ex : zones urbaines vs rurales) sont observées dans les verbatims </li></ol>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sources mobilisées (type)</div>
+    <span class="pill-mixed">SQ1: Synthèse scores enquête citoyenne — vue : enquete_age_range </span><br><span class="pill-mixed">SQ2: Synthèse verbatims enquête citoyenne — vue : dimension · Syn</span><br><span class="pill-mixed">SQ3: Synthèse scores enquête citoyenne — vue : enquete_age_range </span><br><span class="pill-mixed">SQ4: Synthèse scores enquête citoyenne — vue : enquete_age_range </span><br><span class="pill-mixed">SQ5: Verbatims bruts enquête citoyenne — Corte · Verbatims bruts </span>
+    <div class="reg-info muted small">dominant=mixed (mixed:5)</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Verdict registre</div>
+    <div class="verdict-row">
+      <span class="sig-lbl">(a) sources :</span> <span class="badge good">COHERENT</span>
+      <span class="sig-lbl" style="margin-left:12px">(b) LLM :</span> <span class="badge bad">VIOLATION</span>
+    </div>
+    <div class="b-detail muted small"><b>Extrait :</b> indicateurs territoriaux</div>
+    <div class="b-detail muted small"><b>Explication :</b> La mention des 'indicateurs territoriaux' introduit un registre quantitatif non attendu.</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Réponse (400 chars)</div>
+    <div class="answer-box">### **Synthèse : Comment les 18-25 ans ressentent-ils le bien-être en Corse ?**
+
+Les jeunes adultes de 18 à 25 ans en Corse expriment un **bien-être contrasté**, marqué par une satisfaction modérée dans leur quotidien, mais une **méfiance prononcée envers l’avenir**, notamment en raison de difficultés économiques et d’un accès limité aux services essentiels. Leurs perceptions, croisées avec les in</div>
+  </div>
+</div>
+  </div>
+</div>
+
+<div class="q-section section-bad">
+  <div class="q-header">
+    <span class="q-num">Q10</span>
+    <span class="q-orient-badge orient-perception">Perception — QUALI</span>
+    <span class="q-text">Que pensent les entrepreneurs Ajacciens de la qualité de vie ?</span>
+  </div>
+  <div class="q-cols">
+    
+<div class="col-inner" style="border-left:3px solid #DC2626">
+  <div class="col-label">v_decomp_raptor (TYPAGE)</div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sous-questions</div>
+    <ol class="sq-list"><li><span class="sq-idx">1</span> Quels sont les verbatims des entrepreneurs ajacciens concernant leur satisfaction globale vis-à-vis </li><li><span class="sq-idx">2</span> Quelles sont les principales dimensions de la qualité de vie (ex : accès aux services, environnement</li><li><span class="sq-idx">3</span> Quels aspects de la qualité de vie (ex : transports, coût de la vie, logement) sont perçus comme des</li><li><span class="sq-idx">4</span> Comment les entrepreneurs ajacciens évaluent-ils l’équilibre entre vie professionnelle et vie person</li><li><span class="sq-idx">5</span> Quelles suggestions ou demandes récurrentes les entrepreneurs ajacciens formulent-ils pour améliorer</li></ol>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sources mobilisées (type)</div>
+    <span class="pill-mixed">SQ1: Synthèse verbatims enquête citoyenne — vue : profession*comm</span><br><span class="pill-mixed">SQ2: Synthèse verbatims enquête citoyenne — vue : profession*comm</span><br><span class="pill-mixed">SQ3: Synthèse verbatims enquête citoyenne — vue : profession*comm</span><br><span class="pill-mixed">SQ4: Synthèse verbatims enquête citoyenne — vue : profession*comm</span><br><span class="pill-quali">SQ5: Synthèse verbatims enquête citoyenne — vue : profession*comm</span>
+    <div class="reg-info muted small">dominant=mixed (quali:1, mixed:4)</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Verdict registre</div>
+    <div class="verdict-row">
+      <span class="sig-lbl">(a) sources :</span> <span class="badge good">COHERENT</span>
+      <span class="sig-lbl" style="margin-left:12px">(b) LLM :</span> <span class="badge bad">VIOLATION</span>
+    </div>
+    <div class="b-detail muted small"><b>Extrait :</b> situation financière critique, avec des revenus jugés insuffisants</div>
+    <div class="b-detail muted small"><b>Explication :</b> La mention de la situation financière et des revenus évoque un registre quantitatif.</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Réponse (400 chars)</div>
+    <div class="answer-box">**Synthèse : Perception de la qualité de vie par les entrepreneurs ajacciens**
+
+Les entrepreneurs ajacciens interrogés expriment une **insatisfaction marquée** vis-à-vis de leur qualité de vie, dominée par des difficultés économiques et des tensions entre vie professionnelle et personnelle. Voici les points clés qui ressortent :
+
+### **1. Une précarité économique et financière alarmante**
+Les entr</div>
+  </div>
+</div>
+    
+<div class="col-inner" style="border-left:3px solid #DC2626">
+  <div class="col-label">v_decomp_raptor_no_typing (NO_TYPING)</div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sous-questions</div>
+    <ol class="sq-list"><li><span class="sq-idx">1</span> Quel est le score OppChoVec global de la commune d'Ajaccio concernant la qualité de vie perçue, tel </li><li><span class="sq-idx">2</span> Quels sont les verbatims des entrepreneurs Ajacciens recueillis dans les enquêtes citoyennes sur leu</li><li><span class="sq-idx">3</span> Quels indicateurs territoriaux objectifs (ex : densité de services, taux d'emploi, infrastructures) </li><li><span class="sq-idx">4</span> Existe-t-il des enquêtes ou retours spécifiques aux entrepreneurs à Ajaccio sur des aspects concrets</li><li><span class="sq-idx">5</span> Comment les entrepreneurs Ajacciens évaluent-ils, dans les verbatims, l'adéquation entre les infrast</li></ol>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sources mobilisées (type)</div>
+    <span class="pill-mixed">SQ1: Indicateurs OppChoVec — Ajaccio · Données enquête citoyenne </span><br><span class="pill-quali">SQ2: Synthèse verbatims enquête citoyenne — vue : profession*comm</span><br><span class="pill-quanti">SQ3: Indicateurs OppChoVec — Ajaccio · Équipements et services co</span><br><span class="pill-mixed">SQ4: Synthèse scores enquête citoyenne — vue : enquete_profession</span><br><span class="pill-mixed">SQ5: Verbatims bruts enquête citoyenne — Ajaccio · Indicateurs Op</span>
+    <div class="reg-info muted small">dominant=mixed (quanti:1, quali:1, mixed:3)</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Verdict registre</div>
+    <div class="verdict-row">
+      <span class="sig-lbl">(a) sources :</span> <span class="badge good">COHERENT</span>
+      <span class="sig-lbl" style="margin-left:12px">(b) LLM :</span> <span class="badge bad">VIOLATION</span>
+    </div>
+    <div class="b-detail muted small"><b>Extrait :</b> la commune se classe **1ère sur 360 en Corse**</div>
+    <div class="b-detail muted small"><b>Explication :</b> La mention d'un classement et d'indicateurs constitue un contenu quantitatif non attendu.</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Réponse (400 chars)</div>
+    <div class="answer-box">Les entrepreneurs ajacciens portent un regard contrasté, voire critique, sur la qualité de vie dans leur ville, mêlant reconnaissance des atouts objectifs et frustration face aux difficultés concrètes du quotidien professionnel.
+
+### **Un environnement professionnel objectivement favorable, mais peu perçu comme tel**
+Les indicateurs territoriaux montrent qu’Ajaccio offre des **opportunités excepti</div>
+  </div>
+</div>
+  </div>
+</div>
+
+<div class="q-section section-bad">
+  <div class="q-header">
+    <span class="q-num">Q11</span>
+    <span class="q-orient-badge orient-perception">Perception — QUALI</span>
+    <span class="q-text">Que pensent les seniors du bien-être à Ajaccio ?</span>
+  </div>
+  <div class="q-cols">
+    
+<div class="col-inner" style="border-left:3px solid #DC2626">
+  <div class="col-label">v_decomp_raptor (TYPAGE)</div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sous-questions</div>
+    <ol class="sq-list"><li><span class="sq-idx">1</span> Quels sont les verbatims des seniors d'Ajaccio concernant leur perception globale du bien-être dans </li><li><span class="sq-idx">2</span> Quelles dimensions du bien-être (santé, lien social, sécurité, environnement, mobilité, etc.) sont l</li><li><span class="sq-idx">3</span> Quels aspects positifs du bien-être à Ajaccio sont soulignés par les seniors dans les enquêtes ou en</li><li><span class="sq-idx">4</span> Quels sont les principaux défis ou points négatifs du bien-être à Ajaccio rapportés par les seniors </li><li><span class="sq-idx">5</span> Comment les seniors d'Ajaccio évaluent-ils leur qualité de vie quotidienne (accès aux services, tran</li></ol>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sources mobilisées (type)</div>
+    <span class="pill-mixed">SQ1: Synthèse scores enquête citoyenne — vue : enquete_age_range*</span><br><span class="pill-mixed">SQ2: Synthèse verbatims enquête citoyenne — vue : age_range*commu</span><br><span class="pill-mixed">SQ3: Synthèse scores enquête citoyenne — vue : enquete_age_range*</span><br><span class="pill-mixed">SQ4: Synthèse scores enquête citoyenne — vue : enquete_age_range*</span><br><span class="pill-mixed">SQ5: Synthèse scores enquête citoyenne — vue : enquete_age_range*</span>
+    <div class="reg-info muted small">dominant=mixed (mixed:5)</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Verdict registre</div>
+    <div class="verdict-row">
+      <span class="sig-lbl">(a) sources :</span> <span class="badge good">COHERENT</span>
+      <span class="sig-lbl" style="margin-left:12px">(b) LLM :</span> <span class="badge bad">VIOLATION</span>
+    </div>
+    <div class="b-detail muted small"><b>Extrait :</b> satisfaction élevée sur certains aspects</div>
+    <div class="b-detail muted small"><b>Explication :</b> La mention de 'satisfaction élevée' implique une évaluation quantitative des perceptions.</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Réponse (400 chars)</div>
+    <div class="answer-box">### **Synthèse : Perception du bien-être des seniors à Ajaccio**
+
+Les seniors d’Ajaccio expriment une vision **contrastée** de leur bien-être, marquée par une **satisfaction élevée sur certains aspects** (sécurité, logement) mais une **insatisfaction forte sur d’autres** (santé, transports). Leur perception globale reflète à la fois des atouts territoriaux et des défis structurels, avec une **conf</div>
+  </div>
+</div>
+    
+<div class="col-inner" style="border-left:3px solid #DC2626">
+  <div class="col-label">v_decomp_raptor_no_typing (NO_TYPING)</div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sous-questions</div>
+    <ol class="sq-list"><li><span class="sq-idx">1</span> Quel est le score OppChoVec global de bien-être à l'échelle de la commune d'Ajaccio, tel que mesuré </li><li><span class="sq-idx">2</span> Quels sont les principaux thèmes émergents dans les verbatims des citoyens d'Ajaccio concernant le b</li><li><span class="sq-idx">3</span> Quels indicateurs territoriaux spécifiques (ex : accès aux soins, mobilité, cadre de vie) sont les p</li><li><span class="sq-idx">4</span> Existe-t-il des données d'enquêtes ou des retours qualitatifs (verbatims) de seniors à Ajaccio sur d</li><li><span class="sq-idx">5</span> Comment le score OppChoVec d'Ajaccio se compare-t-il à la moyenne des scores des autres communes cor</li></ol>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sources mobilisées (type)</div>
+    <span class="pill-mixed">SQ1: Indicateurs OppChoVec — Ajaccio · Synthèse scores enquête ci</span><br><span class="pill-mixed">SQ2: Synthèse verbatims enquête citoyenne — vue : age_range*commu</span><br><span class="pill-mixed">SQ3: Indicateurs OppChoVec — Ajaccio · Synthèse scores enquête ci</span><br><span class="pill-mixed">SQ4: Synthèse verbatims enquête citoyenne — vue : age_range*commu</span><br><span class="pill-quanti">SQ5: Indicateurs OppChoVec — Ajaccio</span>
+    <div class="reg-info muted small">dominant=mixed (quanti:1, mixed:4)</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Verdict registre</div>
+    <div class="verdict-row">
+      <span class="sig-lbl">(a) sources :</span> <span class="badge good">COHERENT</span>
+      <span class="sig-lbl" style="margin-left:12px">(b) LLM :</span> <span class="badge bad">VIOLATION</span>
+    </div>
+    <div class="b-detail muted small"><b>Extrait :</b> des données disponibles</div>
+    <div class="b-detail muted small"><b>Explication :</b> La mention de 'données disponibles' indique une approche quantitative, ce qui est opposé à l'orientation qualitative att</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Réponse (400 chars)</div>
+    <div class="answer-box">### **Synthèse : Perception du bien-être des seniors à Ajaccio**
+
+Les seniors d’Ajaccio expriment une vision nuancée de leur bien-être, marquée par des contrastes entre des conditions de vie globalement satisfaisantes sur certains aspects et des difficultés majeures sur d’autres. Voici les points clés qui ressortent des données disponibles :
+
+---
+
+#### **1. Un cadre de vie perçu comme sécurisé et </div>
+  </div>
+</div>
+  </div>
+</div>
+
+<div class="q-section ">
+  <div class="q-header">
+    <span class="q-num">Q14</span>
+    <span class="q-orient-badge orient-perception">Perception — QUALI</span>
+    <span class="q-text">Que révèlent les verbatims sur la sécurité à Corte ?</span>
+  </div>
+  <div class="q-cols">
+    
+<div class="col-inner">
+  <div class="col-label">v_decomp_raptor (TYPAGE)</div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sous-questions</div>
+    <ol class="sq-list"><li><span class="sq-idx">1</span> Quels sont les thèmes récurrents dans les verbatims des citoyens de Corte concernant les problèmes d</li><li><span class="sq-idx">2</span> Comment les habitants de Corte décrivent-ils leur sentiment d'insécurité dans les différents quartie</li><li><span class="sq-idx">3</span> Quels verbatims illustrent les perceptions des citoyens de Corte sur l'efficacité des forces de l'or</li><li><span class="sq-idx">4</span> Quels types d'événements ou de situations sont le plus fréquemment mentionnés comme sources d'insécu</li><li><span class="sq-idx">5</span> Quelles suggestions ou demandes les habitants de Corte formulent-ils dans les verbatims pour amélior</li></ol>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sources mobilisées (type)</div>
+    <span class="pill-quali">SQ1: Synthèse verbatims enquête citoyenne — vue : dimension*commu</span><br><span class="pill-quali">SQ2: Synthèse verbatims enquête citoyenne — vue : dimension*commu</span><br><span class="pill-quali">SQ4: Synthèse verbatims enquête citoyenne — vue : dimension*commu</span><br><span class="pill-quali">SQ5: Synthèse verbatims enquête citoyenne — vue : dimension*commu</span>
+    <div class="reg-info muted small">dominant=quali (quali:4)</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Verdict registre</div>
+    <div class="verdict-row">
+      <span class="sig-lbl">(a) sources :</span> <span class="badge good">COHERENT</span>
+      <span class="sig-lbl" style="margin-left:12px">(b) LLM :</span> <span class="badge good">COHERENT</span>
+    </div>
+    
+    <div class="b-detail muted small"><b>Explication :</b> La réponse se concentre sur des perceptions et opinions qualitatives sans mentionner de données quantitatives.</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Réponse (400 chars)</div>
+    <div class="answer-box">### **Synthèse : Que révèlent les verbatims sur la sécurité à Corte ?**
+
+Les verbatims des habitants de Corte sur la sécurité révèlent une **perception globalement positive**, marquée par l’absence de préoccupations majeures et une vision de la sécurité comme un acquis territorial. Voici les points clés qui émergent des retours citoyens :
+
+- **Une sécurité perçue comme un pilier du bien-être** :
+ </div>
+  </div>
+</div>
+    
+<div class="col-inner">
+  <div class="col-label">v_decomp_raptor_no_typing (NO_TYPING)</div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sous-questions</div>
+    <ol class="sq-list"><li><span class="sq-idx">1</span> Quels sont les thèmes récurrents liés à la sécurité mentionnés dans les verbatims des citoyens de Co</li><li><span class="sq-idx">2</span> Quelle est la tonalité générale (positive, négative, neutre) des verbatims concernant la sécurité à </li><li><span class="sq-idx">3</span> Quels événements ou situations spécifiques relatifs à la sécurité sont le plus fréquemment cités dan</li><li><span class="sq-idx">4</span> Comment les verbatims des citoyens de Corte décrivent-ils l'efficacité des actions locales en matièr</li><li><span class="sq-idx">5</span> Existe-t-il des différences notables dans les préoccupations liées à la sécurité entre les quartiers</li></ol>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sources mobilisées (type)</div>
+    <span class="pill-mixed">SQ1: Synthèse verbatims enquête citoyenne — vue : dimension*commu</span><br><span class="pill-quali">SQ2: Synthèse verbatims enquête citoyenne — vue : dimension*commu</span><br><span class="pill-quali">SQ3: Synthèse verbatims enquête citoyenne — vue : dimension*commu</span><br><span class="pill-quali">SQ4: Synthèse verbatims enquête citoyenne — vue : dimension*commu</span><br><span class="pill-quali">SQ5: Synthèse verbatims enquête citoyenne — vue : dimension*commu</span>
+    <div class="reg-info muted small">dominant=quali (quali:4, mixed:1)</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Verdict registre</div>
+    <div class="verdict-row">
+      <span class="sig-lbl">(a) sources :</span> <span class="badge good">COHERENT</span>
+      <span class="sig-lbl" style="margin-left:12px">(b) LLM :</span> <span class="badge good">COHERENT</span>
+    </div>
+    
+    <div class="b-detail muted small"><b>Explication :</b> La réponse reste dans un registre qualitatif en se concentrant sur les perceptions et opinions des habitants.</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Réponse (400 chars)</div>
+    <div class="answer-box">### **Synthèse : Ce que révèlent les verbatims sur la sécurité à Corte**
+
+Les verbatims des habitants de Corte dressent un portrait **globalement positif et consensuel** de la sécurité dans la commune, bien que marqué par des limites méthodologiques et une absence de détails concrets. Voici les principaux enseignements :
+
+---
+
+#### **1. Une sécurité perçue comme un pilier du bien-être, sans critiq</div>
+  </div>
+</div>
+  </div>
+</div>
+
+<div class="q-section ">
+  <div class="q-header">
+    <span class="q-num">Q2</span>
+    <span class="q-orient-badge orient-vaste">Vaste — BOTH</span>
+    <span class="q-text">Peut-on considérer Ajaccio comme un territoire favorable au bien-être ?</span>
+  </div>
+  <div class="q-cols">
+    
+<div class="col-inner">
+  <div class="col-label">v_decomp_raptor (TYPAGE)</div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sous-questions</div>
+    <ol class="sq-list"><li><span class="sq-idx">1</span> Quel est le score OppChoVec global de la commune d'Ajaccio en matière de bien-être territorial ?</li><li><span class="sq-idx">2</span> Quel est le rang d'Ajaccio parmi les communes corses selon le score OppChoVec de bien-être ?</li><li><span class="sq-idx">3</span> Quels sont les résultats des enquêtes quantitatives (scores moyens) sur la satisfaction des habitant</li><li><span class="sq-idx">4</span> Quels sont les verbatims citoyens recueillis dans les enquêtes récentes exprimant les perceptions de</li><li><span class="sq-idx">5</span> Quels sont les principaux indicateurs territoriaux (ex : densité de médecins, taux de chômage, offre</li></ol>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sources mobilisées (type)</div>
+    <span class="pill-mixed">SQ1: Indicateurs OppChoVec — Ajaccio · Synthèse scores enquête ci</span><br><span class="pill-quanti">SQ2: Indicateurs OppChoVec — Ajaccio</span><br><span class="pill-mixed">SQ3: Synthèse scores enquête citoyenne — vue : enquete_commune — </span><br><span class="pill-quali">SQ4: Verbatims bruts enquête citoyenne — Ajaccio · Synthèse verba</span><br><span class="pill-quanti">SQ5: Indicateurs OppChoVec — Ajaccio · Équipements et services co</span>
+    <div class="reg-info muted small">dominant=quanti (quanti:2, quali:1, mixed:2)</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Verdict registre</div>
+    <div class="verdict-row">
+      <span class="sig-lbl">(a) sources :</span> <span class="badge good">COHERENT</span>
+      <span class="sig-lbl" style="margin-left:12px">(b) LLM :</span> <span class="badge na">N/A</span>
+    </div>
+    
+    <div class="b-detail muted small"><b>Explication :</b> Question vaste — les deux registres sont légitimes</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Réponse (400 chars)</div>
+    <div class="answer-box">**Ajaccio : un territoire favorable au bien-être, mais marqué par des contrastes profonds**
+
+Ajaccio présente un profil de bien-être territorial **à la fois avantageux et fragile**, où des atouts objectifs majeurs coexistent avec des limites structurelles et des insatisfactions citoyennes marquées. Son évaluation globale révèle une **ville de paradoxes**, où les opportunités offertes ne se traduis</div>
+  </div>
+</div>
+    
+<div class="col-inner">
+  <div class="col-label">v_decomp_raptor_no_typing (NO_TYPING)</div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sous-questions</div>
+    <ol class="sq-list"><li><span class="sq-idx">1</span> Quel est le score OppChoVec global de la commune d'Ajaccio, et comment se situe-t-il par rapport à l</li><li><span class="sq-idx">2</span> Quels sont les principaux indicateurs territoriaux (ex : accès aux services, environnement, sécurité</li><li><span class="sq-idx">3</span> Quels sont les thèmes récurrents dans les verbatims citoyens concernant le bien-être à Ajaccio (ex :</li><li><span class="sq-idx">4</span> Existe-t-il des enquêtes locales ou régionales récentes (ex : enquêtes de satisfaction, baromètres s</li><li><span class="sq-idx">5</span> Comment les scores ou indicateurs de bien-être à Ajaccio évoluent-ils sur les 5 dernières années (si</li></ol>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sources mobilisées (type)</div>
+    <span class="pill-mixed">SQ1: Indicateurs OppChoVec — Ajaccio · Synthèse scores enquête ci</span><br><span class="pill-quanti">SQ2: Indicateurs OppChoVec — Ajaccio · Équipements et services co</span><br><span class="pill-quali">SQ3: Synthèse verbatims enquête citoyenne — vue : profession*comm</span><br><span class="pill-mixed">SQ4: Synthèse scores enquête citoyenne — vue : enquete_commune · </span>
+    <div class="reg-info muted small">dominant=mixed (quanti:1, quali:1, mixed:2)</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Verdict registre</div>
+    <div class="verdict-row">
+      <span class="sig-lbl">(a) sources :</span> <span class="badge good">COHERENT</span>
+      <span class="sig-lbl" style="margin-left:12px">(b) LLM :</span> <span class="badge na">N/A</span>
+    </div>
+    
+    <div class="b-detail muted small"><b>Explication :</b> Question vaste — les deux registres sont légitimes</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Réponse (400 chars)</div>
+    <div class="answer-box">### **Ajaccio est-elle un territoire favorable au bien-être ?**
+
+Ajaccio présente un **profil contrasté**, où des atouts objectifs en matière d’opportunités coexistent avec des fragilités structurelles et des perceptions citoyennes mitigées. Voici les éléments clés pour évaluer son caractère favorable au bien-être.
+
+---
+
+#### **1. Un territoire riche en opportunités, mais aux réalisations inégales</div>
+  </div>
+</div>
+  </div>
+</div>
+
+<div class="q-section ">
+  <div class="q-header">
+    <span class="q-num">Q25</span>
+    <span class="q-orient-badge orient-vaste">Vaste — BOTH</span>
+    <span class="q-text">Les indicateurs objectifs et les perceptions qualitatives convergent-ils ?</span>
+  </div>
+  <div class="q-cols">
+    
+<div class="col-inner">
+  <div class="col-label">v_decomp_raptor (TYPAGE)</div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sous-questions</div>
+    <ol class="sq-list"><li><span class="sq-idx">1</span> Quel est le score OppChoVec moyen des communes corses pour les dimensions objectives du bien-être (e</li><li><span class="sq-idx">2</span> Quel est le rang de la Corse par rapport aux autres régions françaises en termes d'indicateurs objec</li><li><span class="sq-idx">3</span> Quels sont les écarts moyens entre les scores OppChoVec des communes corses et les moyennes national</li><li><span class="sq-idx">4</span> Quelles sont les perceptions dominantes des citoyens corses concernant leur bien-être général, d'apr</li><li><span class="sq-idx">5</span> Existe-t-il des communes corses où les scores OppChoVec objectifs sont élevés mais les perceptions c</li></ol>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sources mobilisées (type)</div>
+    <span class="pill-mixed">SQ1: Indicateurs OppChoVec · Synthèse verbatims enquête citoyenne</span><br><span class="pill-mixed">SQ4: Synthèse verbatims enquête citoyenne — vue : dimension*age_r</span>
+    <div class="reg-info muted small">dominant=mixed (mixed:2)</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Verdict registre</div>
+    <div class="verdict-row">
+      <span class="sig-lbl">(a) sources :</span> <span class="badge good">COHERENT</span>
+      <span class="sig-lbl" style="margin-left:12px">(b) LLM :</span> <span class="badge na">N/A</span>
+    </div>
+    
+    <div class="b-detail muted small"><b>Explication :</b> Question vaste — les deux registres sont légitimes</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Réponse (400 chars)</div>
+    <div class="answer-box">### **Synthèse : Convergence ou divergence entre indicateurs objectifs et perceptions citoyennes en Corse ?**
+
+Les données disponibles révèlent une **convergence partielle** entre les indicateurs territoriaux objectifs et les perceptions des habitants, mais aussi des **décalages marquants**, notamment sur les dimensions matérielles et les attentes citoyennes. Voici les points clés :
+
+---
+
+#### **1</div>
+  </div>
+</div>
+    
+<div class="col-inner">
+  <div class="col-label">v_decomp_raptor_no_typing (NO_TYPING)</div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sous-questions</div>
+    <ol class="sq-list"><li><span class="sq-idx">1</span> Quel est le score OppChoVec moyen (indicateur objectif) pour l'ensemble des communes de Corse, et co</li><li><span class="sq-idx">2</span> Quels sont les principaux thèmes émergents des verbatims citoyens en Corse concernant le bien-être (</li><li><span class="sq-idx">3</span> Existe-t-il une corrélation statistique entre le score OppChoVec communal (indicateur objectif) et l</li><li><span class="sq-idx">4</span> Quels écarts observe-t-on entre les indicateurs objectifs (ex : OppChoVec) et les perceptions qualit</li><li><span class="sq-idx">5</span> Les enquêtes territoriales disponibles en Corse révèlent-elles des disparités entre les attentes exp</li></ol>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sources mobilisées (type)</div>
+    <span class="pill-quanti">SQ1: Indicateurs OppChoVec</span><br><span class="pill-quali">SQ2: Synthèse verbatims enquête citoyenne — vue : dimension · Ver</span><br><span class="pill-mixed">SQ4: Synthèse scores enquête citoyenne — vue : enquete_profession</span><br><span class="pill-mixed">SQ5: Synthèse scores enquête citoyenne — vue : enquete_global</span>
+    <div class="reg-info muted small">dominant=mixed (quanti:1, quali:1, mixed:2)</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Verdict registre</div>
+    <div class="verdict-row">
+      <span class="sig-lbl">(a) sources :</span> <span class="badge good">COHERENT</span>
+      <span class="sig-lbl" style="margin-left:12px">(b) LLM :</span> <span class="badge na">N/A</span>
+    </div>
+    
+    <div class="b-detail muted small"><b>Explication :</b> Question vaste — les deux registres sont légitimes</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Réponse (400 chars)</div>
+    <div class="answer-box">### **Synthèse : Convergence ou divergence entre indicateurs objectifs et perceptions citoyennes en Corse ?**
+
+Les données disponibles révèlent une **divergence marquée** entre les mesures objectives du bien-être territorial et les perceptions des habitants en Corse, avec des écarts particulièrement prononcés sur des dimensions clés comme la santé, les transports et la confiance dans l’avenir.
+
+##</div>
+  </div>
+</div>
+  </div>
+</div>
+
+<div class="q-section ">
+  <div class="q-header">
+    <span class="q-num">Q35</span>
+    <span class="q-orient-badge orient-vaste">Vaste — BOTH</span>
+    <span class="q-text">Observe-t-on un écart significatif entre indicateurs objectifs et perceptions à Bastia ?</span>
+  </div>
+  <div class="q-cols">
+    
+<div class="col-inner">
+  <div class="col-label">v_decomp_raptor (TYPAGE)</div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sous-questions</div>
+    <ol class="sq-list"><li><span class="sq-idx">1</span> Quel est le score OppChoVec global de bien-être objectif pour la commune de Bastia, et comment se si</li><li><span class="sq-idx">2</span> Quel est le rang de Bastia parmi les communes corses en termes de score OppChoVec global ?</li><li><span class="sq-idx">3</span> Quels sont les scores OppChoVec détaillés (ex : accès aux services, environnement, sécurité) pour Ba</li><li><span class="sq-idx">4</span> Quels sont les résultats des enquêtes de perception citoyenne à Bastia concernant la qualité de vie </li><li><span class="sq-idx">5</span> Observe-t-on des écarts notables entre les scores OppChoVec (indicateurs objectifs) et les verbatims</li></ol>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sources mobilisées (type)</div>
+    <span class="pill-mixed">SQ1: Indicateurs OppChoVec — Bastia · Synthèse scores enquête cit</span><br><span class="pill-quanti">SQ2: Indicateurs OppChoVec — Bastia</span><br><span class="pill-mixed">SQ3: Indicateurs OppChoVec — Bastia · Synthèse verbatims enquête </span><br><span class="pill-mixed">SQ4: Synthèse scores enquête citoyenne — vue : enquete_commune · </span><br><span class="pill-mixed">SQ5: Synthèse verbatims enquête citoyenne — vue : profession*comm</span>
+    <div class="reg-info muted small">dominant=mixed (quanti:1, mixed:4)</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Verdict registre</div>
+    <div class="verdict-row">
+      <span class="sig-lbl">(a) sources :</span> <span class="badge good">COHERENT</span>
+      <span class="sig-lbl" style="margin-left:12px">(b) LLM :</span> <span class="badge na">N/A</span>
+    </div>
+    
+    <div class="b-detail muted small"><b>Explication :</b> Question vaste — les deux registres sont légitimes</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Réponse (400 chars)</div>
+    <div class="answer-box">### **Synthèse : Écart entre indicateurs objectifs et perceptions à Bastia**
+
+À Bastia, un **écart significatif** existe entre les indicateurs territoriaux objectifs et les perceptions des habitants, révélant des contrastes marqués selon les dimensions de la qualité de vie.
+
+#### **1. Un bien-être objectif contrasté, mais globalement faible**
+Les données territoriales montrent que Bastia affiche u</div>
+  </div>
+</div>
+    
+<div class="col-inner">
+  <div class="col-label">v_decomp_raptor_no_typing (NO_TYPING)</div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sous-questions</div>
+    <ol class="sq-list"><li><span class="sq-idx">1</span> Quel est le score OppChoVec global de la commune de Bastia, reflétant les conditions objectives de b</li><li><span class="sq-idx">2</span> Quels sont les principaux indicateurs territoriaux objectifs disponibles pour Bastia (ex : taux de c</li><li><span class="sq-idx">3</span> Quelles sont les perceptions des citoyens de Bastia concernant leur bien-être, telles qu'exprimées d</li><li><span class="sq-idx">4</span> Existe-t-il des écarts notables entre les indicateurs objectifs (score OppChoVec et données territor</li><li><span class="sq-idx">5</span> Comment les écarts éventuels entre indicateurs objectifs et perceptions à Bastia se comparent-ils à </li></ol>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Sources mobilisées (type)</div>
+    <span class="pill-mixed">SQ1: Indicateurs OppChoVec — Bastia · Données enquête citoyenne —</span><br><span class="pill-quanti">SQ2: Indicateurs OppChoVec — Bastia · Équipements et services com</span><br><span class="pill-mixed">SQ3: Synthèse scores enquête citoyenne — vue : enquete_commune · </span><br><span class="pill-mixed">SQ4: Synthèse verbatims enquête citoyenne — vue : profession*comm</span>
+    <div class="reg-info muted small">dominant=mixed (quanti:1, mixed:3)</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Verdict registre</div>
+    <div class="verdict-row">
+      <span class="sig-lbl">(a) sources :</span> <span class="badge good">COHERENT</span>
+      <span class="sig-lbl" style="margin-left:12px">(b) LLM :</span> <span class="badge na">N/A</span>
+    </div>
+    
+    <div class="b-detail muted small"><b>Explication :</b> Question vaste — les deux registres sont légitimes</div>
+  </div>
+  <div class="detail-block">
+    <div class="detail-lbl">Réponse (400 chars)</div>
+    <div class="answer-box">### **Synthèse : Écart entre indicateurs objectifs et perceptions à Bastia**
+
+À Bastia, un **écart marqué et paradoxal** existe entre les conditions objectives de bien-être et les perceptions des habitants, révélant des dynamiques territoriales complexes.
+
+#### **1. Un profil objectif contrasté, marqué par des extrêmes**
+Les indicateurs territoriaux montrent que Bastia cumule des **atouts structur</div>
+  </div>
+</div>
+  </div>
+</div>
+</div>
+
+<p style="color:var(--muted);font-size:11px;margin-top:32px">
+  Généré le 18/07/2026 15:56 · Commande : <code>python test_typing_raptor.py</code>
+  · Configs : v_decomp_raptor (use_bilan=False) vs v_decomp_raptor_no_typing (use_bilan=False, no_typing=True)
+  · Signal (b) : GPT-4o-mini
+</p>
+</div>
+
+<script>
+function toggleTheme() {
+  const root = document.documentElement;
+  const cur  = root.getAttribute('data-theme');
+  const dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  if (!cur) root.setAttribute('data-theme', dark ? 'light' : 'dark');
+  else if (cur === 'dark') root.setAttribute('data-theme', 'light');
+  else root.removeAttribute('data-theme');
+}
+</script>

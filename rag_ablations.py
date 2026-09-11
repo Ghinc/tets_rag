@@ -119,6 +119,7 @@ class VanillaRAG:
         answer = _call_mistral(
             f"Contexte :\n{context[:12000]}\n\nQuestion : {question}",
             _SYSTEM_VANILLA,
+            max_tokens=4000,
         )
         return answer, sources
 

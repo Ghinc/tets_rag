@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Benchmark RAG — 4 systèmes</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  :root {
+    --bg: #f8f9fa; --surface: #ffffff; --text: #1a1a2e;
+    --muted: #6b7280; --border: #e5e7eb;
+    --pipeline: #2563EB; --hipporag: #059669;
+    --graphrag: #D97706; --lightrag: #7C3AED;
+    --radius: 10px; --shadow: 0 2px 12px rgba(0,0,0,.07);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg:#111827; --surface:#1f2937; --text:#f3f4f6;
+      --muted:#9ca3af; --border:#374151;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg:#111827; --surface:#1f2937; --text:#f3f4f6;
+    --muted:#9ca3af; --border:#374151;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+  a { color: inherit; }
+
+  /* Header */
+  header { background: #0f172a; color: #f1f5f9; padding: 3rem 2rem 2.5rem; text-align: center; }
+  header h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 700; letter-spacing: -.02em; }
+  header p { margin-top: .5rem; color: #94a3b8; font-size: .95rem; }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  /* Tableau podium */
+  .scoreboard { background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; margin-bottom: 2.5rem; }
+  .scoreboard h2 { padding: 1.2rem 1.5rem; border-bottom: 1px solid var(--border); font-size: 1.05rem; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { padding: .7rem 1rem; text-align: left; }
+  th { font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); border-bottom: 1px solid var(--border); }
+  tr + tr { border-top: 1px solid var(--border); }
+  .rank-1 { background: color-mix(in srgb, #2563EB 5%, transparent); }
+  .rank-cell { font-size: 1.1rem; white-space: nowrap; }
+  .sys-cell { font-weight: 600; }
+  .score-cell { font-size: 1.1rem; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .bar-cell { width: 200px; }
+  .bar-wrap { display: flex; align-items: center; gap: .5rem; }
+  .bar { height: 8px; border-radius: 4px; transition: width .4s; }
+  .bar-val { font-size: .8rem; color: var(--muted); white-space: nowrap; }
+  .src-ok { background: #d1fae5; color: #065f46; padding: .2rem .5rem; border-radius: 4px; font-size: .75rem; font-weight: 600; }
+  .src-no { background: #fee2e2; color: #991b1b; padding: .2rem .5rem; border-radius: 4px; font-size: .75rem; }
+
+  /* Question blocks */
+  .question-block { background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.5rem; margin-bottom: 2rem; }
+  .q-title { font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 1rem; padding-bottom: .6rem; border-bottom: 1px solid var(--border); }
+
+  .mini-scoreboard { display: flex; gap: .75rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
+  .mini-score { display: flex; align-items: center; gap: .5rem; padding: .4rem .8rem; border: 2px solid; border-radius: 20px; font-size: .85rem; }
+  .sys-name { color: var(--muted); }
+
+  .pill { padding: .15rem .5rem; border-radius: 99px; font-size: .8rem; font-weight: 700; }
+  .pill-green { background: #d1fae5; color: #065f46; }
+  .pill-yellow { background: #fef3c7; color: #92400e; }
+  .pill-red { background: #fee2e2; color: #991b1b; }
+
+  .answer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+  @media (max-width: 750px) { .answer-grid { grid-template-columns: 1fr; } }
+
+  .answer-card { border: 2px solid var(--accent, #888); border-radius: 8px; padding: 1rem; display: flex; flex-direction: column; gap: .6rem; }
+  .card-header { font-size: .9rem; font-weight: 700; color: var(--accent); display: flex; align-items: center; gap: .5rem; }
+  .badge-new { background: #d1fae5; color: #065f46; font-size: .7rem; padding: .1rem .45rem; border-radius: 4px; font-weight: 600; }
+
+  .eval-row { display: flex; flex-direction: column; gap: .3rem; }
+  .eval-label { font-size: .75rem; color: var(--muted); }
+
+  .answer-text { font-size: .88rem; line-height: 1.55; color: var(--text); white-space: pre-wrap; }
+
+  details.sources-details { border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+  details.sources-details summary { padding: .5rem .75rem; cursor: pointer; font-size: .82rem; font-weight: 600; color: var(--muted); background: var(--bg); }
+  details.sources-details summary:hover { background: color-mix(in srgb, var(--accent) 8%, var(--bg)); }
+
+  .src-block { padding: .7rem .75rem; border-top: 1px solid var(--border); }
+  .src-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: .3rem; }
+  .src-rank { font-size: .78rem; font-weight: 600; color: var(--muted); }
+  .src-score { font-size: .75rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .src-text { font-size: .82rem; line-height: 1.5; color: var(--text); white-space: pre-wrap; }
+  .no-src { color: var(--muted); font-size: .82rem; padding: .5rem; }
+
+  .judge-comment { font-size: .8rem; font-style: italic; color: var(--muted); border-top: 1px solid var(--border); padding-top: .5rem; }
+
+  .other-systems { margin-top: .5rem; }
+  .other-systems > details > summary { cursor: pointer; font-size: .82rem; color: var(--muted); padding: .3rem 0; }
+  .other-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin-top: .75rem; }
+  @media (max-width: 600px) { .other-grid { grid-template-columns: 1fr; } }
+  .other-card { background: var(--bg); padding: .75rem; border-radius: 6px; font-size: .82rem; }
+  .other-card p { margin-top: .4rem; color: var(--text); }
+
+  .section-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; margin-top: 2rem; }
+  footer { text-align: center; padding: 2rem; font-size: .8rem; color: var(--muted); border-top: 1px solid var(--border); margin-top: 2rem; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Benchmark RAG — 4 Systèmes</h1>
+  <p>Enquête bien-être en Corse &nbsp;·&nbsp; 5 questions &nbsp;·&nbsp; Juge : gpt-4o-mini</p>
+</header>
+
+<div class="container">
+
+  <section class="scoreboard">
+    <h2>Classement général</h2>
+    <div style="overflow-x:auto">
+    <table>
+      <thead>
+        <tr>
+          <th>Rang</th><th>Système</th><th>Score moyen</th><th>Barre</th><th>Sources</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+<tr class="rank-1">
+  <td class="rank-cell">🥇 #1</td>
+  <td class="sys-cell" style="color:#2563EB">Pipeline RAG v10</td>
+  <td class="score-cell">4.92/5</td>
+  <td class="bar-cell"><div class="bar-wrap"><div class="bar" style="width:98%;background:#2563EB"></div></div></td>
+  <td class="note-cell"><span class="src-ok">✓ sources consultables</span></td>
+</tr>
+<tr class="">
+  <td class="rank-cell">🥈 #2</td>
+  <td class="sys-cell" style="color:#D97706">GraphRAG 2.7.2</td>
+  <td class="score-cell">4.22/5</td>
+  <td class="bar-cell"><div class="bar-wrap"><div class="bar" style="width:84%;background:#D97706"></div></div></td>
+  <td class="note-cell"><span class="src-no">✗ sources non consultables</span></td>
+</tr>
+<tr class="">
+  <td class="rank-cell">🥉 #3</td>
+  <td class="sys-cell" style="color:#7C3AED">LightRAG 1.5.6</td>
+  <td class="score-cell">4.08/5</td>
+  <td class="bar-cell"><div class="bar-wrap"><div class="bar" style="width:81%;background:#7C3AED"></div></div></td>
+  <td class="note-cell"><span class="src-no">✗ sources non consultables</span></td>
+</tr>
+<tr class="">
+  <td class="rank-cell">4e #4</td>
+  <td class="sys-cell" style="color:#059669">HippoRAG v2</td>
+  <td class="score-cell">3.02/5</td>
+  <td class="bar-cell"><div class="bar-wrap"><div class="bar" style="width:60%;background:#059669"></div></div></td>
+  <td class="note-cell"><span class="src-ok">✓ sources consultables</span></td>
+</tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <h2 class="section-title">Détail par question</h2>
+  
+<section class="question-block" id="bien_etre_ajaccio">
+  <h3 class="q-title">Quels sont les principaux facteurs de bien-être évoqués par les habitants d&#x27;Ajaccio ?</h3>
+
+  <div class="mini-scoreboard">
+    <div class="mini-score" style="border-color:#2563EB">
+      <span class="sys-name">Pipeline v10</span>
+      <span class="pill pill-green">5.0</span>
+    </div>
+    <div class="mini-score" style="border-color:#059669">
+      <span class="sys-name">HippoRAG v2</span>
+      <span class="pill pill-yellow">3.8</span>
+    </div>
+    <div class="mini-score" style="border-color:#D97706">
+      <span class="sys-name">GraphRAG</span>
+      <span class="pill pill-yellow">4.2</span>
+    </div>
+    <div class="mini-score" style="border-color:#7C3AED">
+      <span class="sys-name">LightRAG</span>
+      <span class="pill pill-yellow">4.2</span>
+    </div>
+  </div>
+
+  <div class="answer-grid">
+
+    <div class="answer-card" style="--accent:#2563EB">
+      <div class="card-header">Pipeline RAG v10</div>
+      <div class="eval-row">
+        <div class="bar-wrap"><div class="bar" style="width:100%;background:#2563EB"></div><span class="bar-val">5/5</span></div>
+        <span class="eval-label">Pertinence</span>
+        <div class="bar-wrap"><div class="bar" style="width:100%;background:#2563EB"></div><span class="bar-val">5/5</span></div>
+        <span class="eval-label">Précision</span>
+      </div>
+      <p class="answer-text">### **Principaux facteurs de bien-être évoqués par les habitants d&#x27;Ajaccio**
+
+Les habitants d’Ajaccio associent leur bien-être à une combinaison de **facteurs environnementaux, sociaux, économiques et territoriaux**, avec des perceptions contrastées entre satisfactions locales et insatisfactions structurelles. Voici les principaux leviers et freins identifiés, distinguant les ressentis des habitants et les réalités territoriales.
+
+---
+
+#### **1. Le cadre naturel et la qualité de vie environnementale : un atout majeur**
+Les habitants d’Ajaccio placent **l’environnement et la nature au cœur de leur bien-être** [SQ1]. Selon l’enquête citoyenne, **6 répondants sur 12** (salariés et cadres) citent la biodiversité, la fraîcheur des espaces naturels et la préservation des paysages comme des éléments essentiels de leur qualité de vie [SQ1]. Ces verbatims soulignent une **fierté locale** liée au cadre de vie ajaccien, perçu comme un rempart contre le stress urbain.
+
+---
+
+#### **2. La culture : un vecteur d’épanouissement et de lien social**
+La **culture** émerge comme un **pilier du bien-être** à Ajaccio, tant dans les perceptions que dans les dynamiques locales :
+- **Selon les verbati…</p>
+      <details class="sources-details">
+        <summary>Sources (13 passages)</summary>
+        <div class="src-block"><span class="src-rank"></span><div class="src-text"></div></div><div class="src-block"><span class="src-rank"></span><div class="src-text"></div></div><div class="src-block"><span class="src-rank">Ajaccio</span><div class="src-text"></div></div><div class="src-block"><span class="src-rank">Ajaccio</span><div class="src-text"></div></div><div class="src-block"><span class="src-rank">Ajaccio</span><div class="src-text"></div></div>
+      </details>
+      <div class="judge-comment">La réponse est très pertinente et couvre de manière exhaustive les principaux facteurs de bien-être des habitants d&#x27;Ajaccio, avec des données précises et bien sourcées.</div>
+    </div>
+
+    <div class="answer-card" style="--accent:#059669">
+      <div class="card-header">HippoRAG v2 <span class="badge-new">sources consultables</span></div>
+      <div class="eval-row">
+        <div class="bar-wrap"><div class="bar" style="width:100%;background:#059669"></div><span class="bar-val">5/5</span></div>
+        <span class="eval-label">Pertinence</span>
+        <div class="bar-wrap"><div class="bar" style="width:80%;background:#059669"></div><span class="bar-val">4/5</span></div>
+        <span class="eval-label">Précision</span>
+      </div>
+      <p class="answer-text">Qualité de l&#x27;environnement naturel, biodiversité, sécurité, emploi, logement, relations communautaires.</p>
+      <details class="sources-details">
+        <summary>Sources PPR (50 passages — texte intégral)</summary>
+        
+<div class="src-block">
+  <div class="src-header">
+    <span class="src-rank">#1 — RAPTOR_enquete_commune_RAPTOR enquete commune _ Ajaccio.md</span>
+    <span class="src-score">PPR: 0.0555</span>
+  </div>
+  <div class="src-text">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+**Groupe : commune=Ajaccio (N=51)**
+
+---
+
+### **Satisfaction globale**
+Les scores globaux révèlent une satisfaction modérée à bonne pour le bonheur et la qualité de vie, mais une confiance limitée dans l’avenir. Le **bonheur** obtient une moyenne de **3,74/5** (n=47), tandis que la **qualité de vie** est légèrement supérieure à **3,85/5** (n=47). En revanche, la **confiance en l’avenir** est …</div>
+</div>
+<div class="src-block">
+  <div class="src-header">
+    <span class="src-rank">#2 — RAPTOR_entretiens_dim_commune_RAPTOR entretiens dim commune _ Environnement _ Ajaccio.md</span>
+    <span class="src-score">PPR: 0.0074</span>
+  </div>
+  <div class="src-text">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+**Groupe : dimension=Environnement, nom=Ajaccio (N=21 personnes)**
+
+---
+
+**Themes dominants** :
+1. **Qualité de l’environnement naturel et bien-être** :
+   - La nature, la biodiversité, la fraîcheur et la qualité de l’air sont des éléments centraux pour les répondants, associés à un sentiment de bien-être et de santé.
+   - Exemples : *&quot;Air frais, sons ambiants, zones vertes, accès au soleil&quot;*…</div>
+</div>
+<div class="src-block">
+  <div class="src-header">
+    <span class="src-rank">#3 — indicateurs_socioeco_communes.csv</span>
+    <span class="src-score">PPR: 0.0072</span>
+  </div>
+  <div class="src-text">.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;550.0&quot;,&quot;1&quot;,&quot;41.8528771718&quot;,&quot;8.97204670982&quot;,&quot;0.0&quot;
+&quot;Ajaccio&quot;,&quot;Cargiaca&quot;,&quot;14.3&quot;,&quot;10.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;2360.0&quot;,&quot;0&quot;,&quot;41.7315838648&quot;,&quot;9.04097819601&quot;,&quot;0.0&quot;
+&quot;Ajaccio&quot;,&quot;Casaglione&quot;,&quot;14.3&quot;,&quot;0.2&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;1.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;4370.07142857143&quot;,&quot;1&quot;,&quot;42.0695824094&quot;,&quot;8.75999305453&quot;,&quot;0.8620320855614972&quot;
+&quot;Ajaccio&quot;,&quot;Cauro&quot;,&quot;14.3&quot;,&quot;0.4&quot;,&quot;2.0&quot;,&quot;0.0&quot;,&quot;1.0&quot;,&quot;0.0&quot;,&quot;1.0&quot;,&quot;3484.22222222222&quot;,&quot;0&quot;,&quot;41.9042036105&quot;,&quot;8.89390218223&quot;,&quot;0.8620320855614972&quot;
+&quot;Ajaccio&quot;,&quot;Ciamannacce&quot;,&quot;14.3&quot;,&quot;6…</div>
+</div>
+<div class="src-block">
+  <div class="src-header">
+    <span class="src-rank">#4 — RAPTOR_enquete_global_RAPTOR enquete global.md</span>
+    <span class="src-score">PPR: 0.0072</span>
+  </div>
+  <div class="src-text">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+### **Synthèse analytique globale — Qualité de Vie en Corse (N=246)**
+
+---
+
+#### **1. Satisfaction globale**
+Les scores moyens révèlent une **satisfaction modérée** des Corses quant à leur qualité de vie, avec des disparités notables entre les dimensions évaluées.
+
+- **Bonheur** : **3,66/5** (n=237)
+  Les répondants expriment un niveau de bonheur globalement positif, proche de la moyenne haut…</div>
+</div>
+<div class="src-block">
+  <div class="src-header">
+    <span class="src-rank">#5 — indicateurs_socioeco_communes.csv</span>
+    <span class="src-score">PPR: 0.0072</span>
+  </div>
+  <div class="src-text">6&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;969.0&quot;,&quot;1&quot;,&quot;42.2083267447&quot;,&quot;8.72012145017&quot;,&quot;0.8620320855614972&quot;
+&quot;Ajaccio&quot;,&quot;Moca-Croce&quot;,&quot;14.3&quot;,&quot;7.7&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;1031.0&quot;,&quot;0&quot;,&quot;41.7880108212&quot;,&quot;9.00990338011&quot;,&quot;0.8620320855614972&quot;
+&quot;Ajaccio&quot;,&quot;Murzo&quot;,&quot;14.3&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;2310.0&quot;,&quot;1&quot;,&quot;42.1585493633&quot;,&quot;8.84670847877&quot;,&quot;0.8620320855614972&quot;
+&quot;Ajaccio&quot;,&quot;Ocana&quot;,&quot;14.3&quot;,&quot;1.6&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;2.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;3977.0&quot;,&quot;0&quot;,&quot;41.9503939626&quot;,&quot;8.909888839&quot;,&quot;0.8620320855614972&quot;
+&quot;Ajaccio&quot;,&quot;Olivese…</div>
+</div>
+      </details>
+      <div class="judge-comment">La réponse aborde bien les facteurs de bien-être, mais manque de sources claires pour appuyer les informations fournies. Une liste plus détaillée des aspects pourrait améliorer l&#x27;exhaustivité.</div>
+    </div>
+
+  </div>
+
+  <div class="other-systems">
+    <details>
+      <summary>Réponses GraphRAG &amp; LightRAG</summary>
+      <div class="other-grid">
+        <div class="other-card" style="border-left:3px solid #D97706">
+          <strong>GraphRAG 2.7.2</strong> <span class="pill pill-yellow">4.2</span>
+          <p>## Facteurs de Bien-Être à Ajaccio
+
+Les habitants d&#x27;Ajaccio, la capitale de la Corse, expriment divers facteurs qui influencent leur bien-être et leur qualité de vie. Ces éléments sont souvent interconnectés et reflètent les défis et les atouts de la communauté.
+
+### 1. Satisfaction et Bonheur
+
+Un des aspects les plus positifs relevés par les résidents est leur niveau de satisfaction et de bonheur. Selon une enquête citoyenne, Ajaccio a obtenu un score de bonheur moyen de 3.74 sur 5, ce qui indique un niveau de satisfaction relativement élevé parmi ses habitants [Data: Entities (132)]. De plus, une autre évaluation de la qualité de vie a révélé un score de 92.96, soulignant une perception généralement positive des conditions de vie [Data: Reports (0, 15)].
+
+### 2. Environnement et Pollutio</p>
+        </div>
+        <div class="other-card" style="border-left:3px solid #7C3AED">
+          <strong>LightRAG 1.5.6</strong> <span class="pill pill-yellow">4.2</span>
+          <p>Les habitants d&#x27;Ajaccio évoquent plusieurs facteurs clés qui contribuent à leur bien-être et à leur qualité de vie. Voici les principaux :
+
+### 1. **Emploi**
+Les résidents attribuent une grande importance à l&#x27;emploi, qui obtient une note moyenne de **3,91/5**. Cela témoigne d&#x27;une satisfaction relativement élevée par rapport aux conditions d&#x27;emploi et aux opportunités professionnelles disponibles dans la commune.
+
+### 2. **Sécurité**
+La sécurité est également un aspect vital, noté à **3,81/5**. Les habitants se sentent généralement en sécurité, ce qui influence positivement leur qualité de vie.
+
+### 3. **Logement**
+Le logement est un autre facteur majeur, avec une évaluation moyenne de **3,84/5**. Les habitants soulignent l&#x27;importance d&#x27;avoir un logement décent et accessible, qui joue un rô</p>
+        </div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<section class="question-block" id="corte_vs_bastia">
+  <h3 class="q-title">Quelles différences observe-t-on entre Corte et Bastia en matière de revenus et de logement ?</h3>
+
+  <div class="mini-scoreboard">
+    <div class="mini-score" style="border-color:#2563EB">
+      <span class="sys-name">Pipeline v10</span>
+      <span class="pill pill-green">4.8</span>
+    </div>
+    <div class="mini-score" style="border-color:#059669">
+      <span class="sys-name">HippoRAG v2</span>
+      <span class="pill pill-red">3.0</span>
+    </div>
+    <div class="mini-score" style="border-color:#D97706">
+      <span class="sys-name">GraphRAG</span>
+      <span class="pill pill-yellow">4.0</span>
+    </div>
+    <div class="mini-score" style="border-color:#7C3AED">
+      <span class="sys-name">LightRAG</span>
+      <span class="pill pill-yellow">4.0</span>
+    </div>
+  </div>
+
+  <div class="answer-grid">
+
+    <div class="answer-card" style="--accent:#2563EB">
+      <div class="card-header">Pipeline RAG v10</div>
+      <div class="eval-row">
+        <div class="bar-wrap"><div class="bar" style="width:100%;background:#2563EB"></div><span class="bar-val">5/5</span></div>
+        <span class="eval-label">Pertinence</span>
+        <div class="bar-wrap"><div class="bar" style="width:80%;background:#2563EB"></div><span class="bar-val">4/5</span></div>
+        <span class="eval-label">Précision</span>
+      </div>
+      <p class="answer-text">### **Synthèse : Différences entre Corte et Bastia en matière de revenus et de logement**
+
+Les données disponibles permettent d’éclairer certaines différences entre **Corte** et **Bastia** sur les revenus et le logement, bien que des lacunes subsistent sur des indicateurs précis comme le revenu médian ou les prix immobiliers. Voici les principaux constats, en distinguant les **perceptions des habitants** (enquêtes citoyennes) et les **données territoriales objectives** (indicateurs OppChoVec et profils démographiques).
+
+---
+
+#### **1. Revenus : des écarts perçus et mesurés, mais des données incomplètes**
+- **Perceptions des habitants** :
+  Les enquêtes citoyennes révèlent une **préoccupation forte** concernant les revenus dans les deux villes. À **Bastia**, les verbatims indiquent que *&quot;les salaires sont trop bas pour vivre décemment&quot;* [SQ1], tandis qu’à **Corte**, les habitants soulignent que *&quot;les revenus ne suivent pas le coût de la vie&quot;*, avec une insistance sur les difficultés des jeunes actifs et des retraités [SQ1]. Ces perceptions suggèrent un **sentiment d’insuffisance des revenus** dans les deux communes, sans distinction marquée entre elles sur ce poi…</p>
+      <details class="sources-details">
+        <summary>Sources (15 passages)</summary>
+        <div class="src-block"><span class="src-rank"></span><div class="src-text"></div></div><div class="src-block"><span class="src-rank"></span><div class="src-text"></div></div><div class="src-block"><span class="src-rank">Corte</span><div class="src-text"></div></div><div class="src-block"><span class="src-rank">Corte</span><div class="src-text"></div></div><div class="src-block"><span class="src-rank">Bastia</span><div class="src-text"></div></div>
+      </details>
+      <div class="judge-comment">La réponse aborde de manière pertinente et exhaustive les différences entre Corte et Bastia, tout en fournissant des données sourcées. Cependant, certaines informations manquent de précision, notamment sur les revenus médians et les prix immobiliers.</div>
+    </div>
+
+    <div class="answer-card" style="--accent:#059669">
+      <div class="card-header">HippoRAG v2 <span class="badge-new">sources consultables</span></div>
+      <div class="eval-row">
+        <div class="bar-wrap"><div class="bar" style="width:80%;background:#059669"></div><span class="bar-val">4/5</span></div>
+        <span class="eval-label">Pertinence</span>
+        <div class="bar-wrap"><div class="bar" style="width:60%;background:#059669"></div><span class="bar-val">3/5</span></div>
+        <span class="eval-label">Précision</span>
+      </div>
+      <p class="answer-text">Bastia a une satisfaction élevée pour le logement (4,05/5) et des préoccupations modérées sur les revenus (3,45/5). Corte, bien que moins de données soient disponibles, semble avoir des préoccupations similaires sur les revenus, mais moins d&#x27;accent sur le logement.</p>
+      <details class="sources-details">
+        <summary>Sources PPR (50 passages — texte intégral)</summary>
+        
+<div class="src-block">
+  <div class="src-header">
+    <span class="src-rank">#1 — RAPTOR_entretiens_commune_RAPTOR entretiens commune _ Bastia.md</span>
+    <span class="src-score">PPR: 0.0197</span>
+  </div>
+  <div class="src-text">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+**Groupe : nom=Bastia (N=20 personnes)**
+
+---
+
+### **Thèmes dominants**
+1. **Santé** (mentionné dans **12 verbatims** sur 66, soit ~18%)
+   - Priorité absolue pour la qualité de vie, avec des attentes fortes en matière d’**accessibilité** et de **qualité des soins**.
+   - Exemples :
+     *&quot;La santé est hyper importante pour avoir une bonne qualité de vie, c&#x27;est un peu un pilier fondamental&quot;* …</div>
+</div>
+<div class="src-block">
+  <div class="src-header">
+    <span class="src-rank">#2 — RAPTOR_enquete_commune_RAPTOR enquete commune _ Bastia.md</span>
+    <span class="src-score">PPR: 0.0184</span>
+  </div>
+  <div class="src-text">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+**Groupe : commune=Bastia (N=23)**
+
+---
+
+### **Satisfaction globale**
+Les scores globaux reflètent une perception contrastée de la qualité de vie à Bastia parmi les répondants. Le **bonheur** (3,55/5) et la **qualité de vie** (3,82/5) obtiennent des évaluations modérément positives, suggérant une satisfaction générale acceptable, bien que perfectible. En revanche, la **confiance dans l’avenir…</div>
+</div>
+<div class="src-block">
+  <div class="src-header">
+    <span class="src-rank">#3 — indicateurs_socioeco_communes.csv</span>
+    <span class="src-score">PPR: 0.0087</span>
+  </div>
+  <div class="src-text">&quot;0.0&quot;,&quot;3690.5&quot;,&quot;0&quot;,&quot;42.65726441&quot;,&quot;9.35851486603&quot;,&quot;0.0&quot;
+&quot;Bastia&quot;,&quot;Poggio-Marinaccio&quot;,&quot;19.3&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;550.0&quot;,&quot;1&quot;,&quot;42.4359731293&quot;,&quot;9.34821605679&quot;,&quot;0.0&quot;
+&quot;Bastia&quot;,&quot;Polveroso&quot;,&quot;19.3&quot;,&quot;5.8&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;550.0&quot;,&quot;1&quot;,&quot;42.4013407453&quot;,&quot;9.36126897942&quot;,&quot;0.0&quot;
+&quot;Bastia&quot;,&quot;Porri&quot;,&quot;19.3&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;926.0&quot;,&quot;1&quot;,&quot;42.4493786063&quot;,&quot;9.44236110212&quot;,&quot;0.0&quot;
+&quot;Bastia&quot;,&quot;La Porta&quot;,&quot;19.3&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;1.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;748.0&quot;,&quot;0&quot;,&quot;42.4241824082&quot;,&quot;9.35847…</div>
+</div>
+<div class="src-block">
+  <div class="src-header">
+    <span class="src-rank">#4 — indicateurs_socioeco_communes.csv</span>
+    <span class="src-score">PPR: 0.0085</span>
+  </div>
+  <div class="src-text">0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;2110.75&quot;,&quot;1&quot;,&quot;42.4960198579&quot;,&quot;9.35529599495&quot;,&quot;0.0&quot;
+&quot;Bastia&quot;,&quot;Campitello&quot;,&quot;19.3&quot;,&quot;9.8&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;1571.0&quot;,&quot;1&quot;,&quot;42.526148234&quot;,&quot;9.3252006896&quot;,&quot;0.8620320855614972&quot;
+&quot;Bastia&quot;,&quot;Canari&quot;,&quot;19.3&quot;,&quot;1.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;1.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;3465.33333333333&quot;,&quot;0&quot;,&quot;42.8430542103&quot;,&quot;9.34556643621&quot;,&quot;0.0&quot;
+&quot;Bastia&quot;,&quot;Carcheto-Brustico&quot;,&quot;19.3&quot;,&quot;3.1&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;378.0&quot;,&quot;1&quot;,&quot;42.3547035924&quot;,&quot;9.36050471193&quot;,&quot;0.0&quot;
+&quot;Bastia&quot;,&quot;Carticasi&quot;,&quot;19.3&quot;,&quot;3.8&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,…</div>
+</div>
+<div class="src-block">
+  <div class="src-header">
+    <span class="src-rank">#5 — indicateurs_socioeco_communes.csv</span>
+    <span class="src-score">PPR: 0.0083</span>
+  </div>
+  <div class="src-text">1&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;550.0&quot;,&quot;1&quot;,&quot;42.3157105384&quot;,&quot;9.26621042677&quot;,&quot;0.0&quot;
+&quot;Corte&quot;,&quot;Soveria&quot;,&quot;21.1&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;550.0&quot;,&quot;0&quot;,&quot;42.3496030616&quot;,&quot;9.14569806657&quot;,&quot;0.0&quot;
+&quot;Corte&quot;,&quot;Sant&#x27;Andréa-di-Bozio&quot;,&quot;21.1&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;1571.0&quot;,&quot;1&quot;,&quot;42.2767589636&quot;,&quot;9.28470824076&quot;,&quot;0.8620320855614972&quot;
+&quot;Corte&quot;,&quot;San-Lorenzo&quot;,&quot;21.1&quot;,&quot;0.8&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;1.0&quot;,&quot;0.0&quot;,&quot;0.0&quot;,&quot;550.0&quot;,&quot;0&quot;,&quot;42.3897522574&quot;,&quot;9.28923196943&quot;,&quot;0.0&quot;
+&quot;Corte&quot;,&quot;Santa-Lucia-di-Mercurio&quot;,&quot;21.1&quot;,&quot;0.0…</div>
+</div>
+      </details>
+      <div class="judge-comment">La réponse aborde bien la question, mais manque de détails et de sources pour étayer les affirmations. Les informations sur Corte sont particulièrement vagues.</div>
+    </div>
+
+  </div>
+
+  <div class="other-systems">
+    <details>
+      <summary>Réponses GraphRAG &amp; LightRAG</summary>
+      <div class="other-grid">
+        <div class="other-card" style="border-left:3px solid #D97706">
+          <strong>GraphRAG 2.7.2</strong> <span class="pill pill-yellow">4.0</span>
+          <p>## Différences entre Corte et Bastia en matière de revenus et de logement
+
+### Contexte général
+
+Corte et Bastia sont deux communes situées en Corse, chacune ayant ses propres caractéristiques socio-économiques. Bastia, en tant que capitale de la Haute-Corse, est un centre urbain majeur, tandis que Corte est connue pour son histoire et son cadre montagnard. Les différences en matière de revenus et de logement entre ces deux localités sont significatives et reflètent des réalités distinctes.
+
+### Revenus
+
+Les données sur les revenus à Corte indiquent que le coût de la vie est un sujet de préoccupation pour les résidents, ce qui peut influencer leur niveau de revenu disponible. En revanche, Bastia, en tant que ville plus développée économiquement, pourrait offrir des opportunités d&#x27;emploi pl</p>
+        </div>
+        <div class="other-card" style="border-left:3px solid #7C3AED">
+          <strong>LightRAG 1.5.6</strong> <span class="pill pill-yellow">4.0</span>
+          <p>Les comparaisons entre Corte et Bastia au niveau des revenus et du logement révèlent des différences significatives en termes de satisfaction et de perception des résidents.
+
+### Revenus
+
+1. **Niveau de Satisfaction**:
+   - À **Bastia**, la satisfaction relative aux revenus est marquée par un score moyen de **3,45/5**. Les résidents expriment des difficultés à joindre les deux bouts face au coût élevé de la vie, accentué par des commentaires sur l&#x27;insuffisance des revenus pour couvrir les besoins essentiels.
+   - En revanche, à **Corte**, les revenus sont perçus comme un pilier fondamental pour maintenir une qualité de vie acceptable. Les verbatims soulignent l&#x27;importance des revenus pour la sécurité financière, indiquant que des revenus adéquats sont cruciaux pour répondre aux besoins de </p>
+        </div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<section class="question-block" id="etudiants_qov">
+  <h3 class="q-title">Comment les étudiants perçoivent-ils leur qualité de vie en Corse ?</h3>
+
+  <div class="mini-scoreboard">
+    <div class="mini-score" style="border-color:#2563EB">
+      <span class="sys-name">Pipeline v10</span>
+      <span class="pill pill-green">5.0</span>
+    </div>
+    <div class="mini-score" style="border-color:#059669">
+      <span class="sys-name">HippoRAG v2</span>
+      <span class="pill pill-red">2.5</span>
+    </div>
+    <div class="mini-score" style="border-color:#D97706">
+      <span class="sys-name">GraphRAG</span>
+      <span class="pill pill-yellow">4.2</span>
+    </div>
+    <div class="mini-score" style="border-color:#7C3AED">
+      <span class="sys-name">LightRAG</span>
+      <span class="pill pill-yellow">4.2</span>
+    </div>
+  </div>
+
+  <div class="answer-grid">
+
+    <div class="answer-card" style="--accent:#2563EB">
+      <div class="card-header">Pipeline RAG v10</div>
+      <div class="eval-row">
+        <div class="bar-wrap"><div class="bar" style="width:100%;background:#2563EB"></div><span class="bar-val">5/5</span></div>
+        <span class="eval-label">Pertinence</span>
+        <div class="bar-wrap"><div class="bar" style="width:100%;background:#2563EB"></div><span class="bar-val">5/5</span></div>
+        <span class="eval-label">Précision</span>
+      </div>
+      <p class="answer-text">### **Synthèse : Comment les étudiants perçoivent-ils leur qualité de vie en Corse ?**
+
+La qualité de vie des étudiants en Corse est marquée par des **contrastes forts** entre des atouts perçus (cadre naturel, sécurité, logement) et des **défis structurels** (transports, accès aux soins, précarité économique). Les perceptions varient peu entre zones urbaines et rurales en raison de **données limitées**, mais les indicateurs objectifs révèlent des disparités territoriales.
+
+---
+
+#### **1. Une satisfaction globale modérée, portée par le cadre de vie et la sécurité**
+Les étudiants interrogés en Corse expriment une **satisfaction modérée** vis-à-vis de leur qualité de vie, avec des scores moyens oscillant entre **2,66/5 et 3,97/5** selon les dimensions [SQ3]. Leurs principaux motifs de satisfaction sont :
+- **Le logement (3,95/5)** : perçu comme accessible et adapté aux jeunes, avec une majorité d’évaluations positives [SQ3].
+- **La sécurité (3,81/5)** : les étudiants soulignent un sentiment de tranquillité, caractéristique de l’île [SQ3].
+- **L’environnement naturel** : bien que non chiffré isolément, les verbatims valorisent la qualité de l’air et les paysages (*&quot;vivre dans un e…</p>
+      <details class="sources-details">
+        <summary>Sources (39 passages)</summary>
+        <div class="src-block"><span class="src-rank"></span><div class="src-text"></div></div><div class="src-block"><span class="src-rank"></span><div class="src-text"></div></div><div class="src-block"><span class="src-rank">Corte</span><div class="src-text"></div></div><div class="src-block"><span class="src-rank">Moltifao</span><div class="src-text"></div></div><div class="src-block"><span class="src-rank">Casevecchie</span><div class="src-text"></div></div>
+      </details>
+      <div class="judge-comment">La réponse aborde de manière exhaustive et précise la perception des étudiants sur leur qualité de vie en Corse, tout en fournissant des données sourcées et des exemples concrets. Les différents aspects sont bien couverts, ce qui renforce la pertinence de l&#x27;analyse.</div>
+    </div>
+
+    <div class="answer-card" style="--accent:#059669">
+      <div class="card-header">HippoRAG v2 <span class="badge-new">sources consultables</span></div>
+      <div class="eval-row">
+        <div class="bar-wrap"><div class="bar" style="width:80%;background:#059669"></div><span class="bar-val">4/5</span></div>
+        <span class="eval-label">Pertinence</span>
+        <div class="bar-wrap"><div class="bar" style="width:60%;background:#059669"></div><span class="bar-val">3/5</span></div>
+        <span class="eval-label">Précision</span>
+      </div>
+      <p class="answer-text">Les étudiants perçoivent leur qualité de vie en Corse comme modérément satisfaisante, avec des préoccupations concernant leur avenir.</p>
+      <details class="sources-details">
+        <summary>Sources PPR (50 passages — texte intégral)</summary>
+        
+<div class="src-block">
+  <div class="src-header">
+    <span class="src-rank">#1 — RAPTOR_entretiens_commune_RAPTOR entretiens commune _ Ajaccio.md</span>
+    <span class="src-score">PPR: 0.0233</span>
+  </div>
+  <div class="src-text">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+**Groupe : nom=Ajaccio (N=39 personnes)**
+
+---
+
+### **Themes dominants**
+1. **Revenus et pouvoir d’achat**
+   - Mentionné dans **12 verbatims** (ex. : *&quot;Les revenus permettent de me payer un logement, la nourriture et quelques plaisirs/loisirs à côté&quot;*, Verbatim 5 ; *&quot;Sans revenus on est dans la merde&quot;* Verbatim 10 ; *&quot;Le coût de la vie en Corse est très élevé&quot;* Verbatim 90).
+   - Préoccupati…</div>
+</div>
+<div class="src-block">
+  <div class="src-header">
+    <span class="src-rank">#2 — RAPTOR_enquete_profession_RAPTOR enquete profession _ Étudiant_e_.md</span>
+    <span class="src-score">PPR: 0.0112</span>
+  </div>
+  <div class="src-text">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+**Groupe : csp=Étudiant(e) (N=51)**
+
+---
+
+### **Satisfaction globale**
+Les étudiants en Corse expriment une satisfaction modérée à mitigée vis-à-vis de leur qualité de vie et de leur bonheur, avec des scores moyens de **3,52/5** pour le bonheur (n=44) et **3,75/5** pour la qualité de vie (n=44). Leur confiance dans l’avenir est plus faible, avec un score de **2,95/5** (n=43), reflétant une pe…</div>
+</div>
+<div class="src-block">
+  <div class="src-header">
+    <span class="src-rank">#3 — RAPTOR_enquete_commune_RAPTOR enquete commune _ Ajaccio.md</span>
+    <span class="src-score">PPR: 0.0107</span>
+  </div>
+  <div class="src-text">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+**Groupe : commune=Ajaccio (N=51)**
+
+---
+
+### **Satisfaction globale**
+Les scores globaux révèlent une satisfaction modérée à bonne pour le bonheur et la qualité de vie, mais une confiance limitée dans l’avenir. Le **bonheur** obtient une moyenne de **3,74/5** (n=47), tandis que la **qualité de vie** est légèrement supérieure à **3,85/5** (n=47). En revanche, la **confiance en l’avenir** est …</div>
+</div>
+<div class="src-block">
+  <div class="src-header">
+    <span class="src-rank">#4 — RAPTOR_enquete_global_RAPTOR enquete global.md</span>
+    <span class="src-score">PPR: 0.0104</span>
+  </div>
+  <div class="src-text">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+### **Synthèse analytique globale — Qualité de Vie en Corse (N=246)**
+
+---
+
+#### **1. Satisfaction globale**
+Les scores moyens révèlent une **satisfaction modérée** des Corses quant à leur qualité de vie, avec des disparités notables entre les dimensions évaluées.
+
+- **Bonheur** : **3,66/5** (n=237)
+  Les répondants expriment un niveau de bonheur globalement positif, proche de la moyenne haut…</div>
+</div>
+<div class="src-block">
+  <div class="src-header">
+    <span class="src-rank">#5 — RAPTOR_entretiens_commune_RAPTOR entretiens commune _ Corte.md</span>
+    <span class="src-score">PPR: 0.0098</span>
+  </div>
+  <div class="src-text">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+**Groupe : nom=Corte (N=41 personnes)**
+
+---
+
+### **Thèmes dominants**
+1. **Santé** (mentionnée dans 22 verbatims)
+   - Priorité absolue pour la qualité de vie, souvent associée à l’accès aux soins et à un mode de vie sain.
+   - Exemples : *&quot;La santé est la base du bien-être&quot;* (Verbatim 44), *&quot;Sans la santé, nous ne pouvons rien faire&quot;* (Verbatim 54).
+
+2. **Revenus/Emploi** (mentionnés dans 2…</div>
+</div>
+      </details>
+      <div class="judge-comment">La réponse aborde la question de manière pertinente mais manque de détails et de sources pour étayer les affirmations. Les préoccupations concernant l&#x27;avenir sont mentionnées, mais d&#x27;autres aspects de la qualité de vie ne sont pas explorés.</div>
+    </div>
+
+  </div>
+
+  <div class="other-systems">
+    <details>
+      <summary>Réponses GraphRAG &amp; LightRAG</summary>
+      <div class="other-grid">
+        <div class="other-card" style="border-left:3px solid #D97706">
+          <strong>GraphRAG 2.7.2</strong> <span class="pill pill-yellow">4.2</span>
+          <p>## Perception de la Qualité de Vie des Étudiants en Corse
+
+Les étudiants en Corse expriment des préoccupations variées concernant leur qualité de vie, qui englobent des dimensions essentielles telles que la santé, l&#x27;éducation, l&#x27;environnement, et les services de proximité. Ces éléments sont cruciaux pour leur bien-être général et leur réussite académique.
+
+### Santé et Accès aux Soins
+
+La santé est souvent citée comme une priorité majeure par les étudiants. Ils soulignent l&#x27;importance de l&#x27;accessibilité aux soins de santé, avec des attentes élevées concernant la disponibilité des praticiens et la qualité des services. Les étudiants ressentent une pression liée à l&#x27;attente prolongée pour obtenir des rendez-vous médicaux, ce qui impacte leur tranquillité d&#x27;esprit et leur capacité à se concen</p>
+        </div>
+        <div class="other-card" style="border-left:3px solid #7C3AED">
+          <strong>LightRAG 1.5.6</strong> <span class="pill pill-yellow">4.2</span>
+          <p>Les étudiants en Corse expriment une perception modérée à mitigée de leur qualité de vie, avec des scores allant de la satisfaction impactant divers aspects de leur quotidien. Voici une synthèse de leurs points de vue :
+
+### Satisfaction Générale
+- **Bonheur** : Les étudiants évaluent leur bonheur à **3,52 sur 5**, ce qui indique un niveau de satisfaction plutôt moyen.
+- **Qualité de Vie** : Leur qualité de vie est notée à **3,75 sur 5**, ce qui démontre une perception relativement positive, mais avec des préoccupations sous-jacentes.
+
+### Confiance et Perspectives d&#x27;Avenir
+- Les étudiants affichent une confiance dans l’avenir légèrement inférieure, estimée à **2,95 sur 5**. Ceci suggère une inquiétude concernant leurs perspectives futures, notamment dans des domaines tels que l’emploi et </p>
+        </div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<section class="question-block" id="scores_satisfaction">
+  <h3 class="q-title">Quelles communes ont les scores de satisfaction les plus élevés dans l&#x27;enquête ?</h3>
+
+  <div class="mini-scoreboard">
+    <div class="mini-score" style="border-color:#2563EB">
+      <span class="sys-name">Pipeline v10</span>
+      <span class="pill pill-green">5.0</span>
+    </div>
+    <div class="mini-score" style="border-color:#059669">
+      <span class="sys-name">HippoRAG v2</span>
+      <span class="pill pill-red">2.8</span>
+    </div>
+    <div class="mini-score" style="border-color:#D97706">
+      <span class="sys-name">GraphRAG</span>
+      <span class="pill pill-green">4.5</span>
+    </div>
+    <div class="mini-score" style="border-color:#7C3AED">
+      <span class="sys-name">LightRAG</span>
+      <span class="pill pill-yellow">3.8</span>
+    </div>
+  </div>
+
+  <div class="answer-grid">
+
+    <div class="answer-card" style="--accent:#2563EB">
+      <div class="card-header">Pipeline RAG v10</div>
+      <div class="eval-row">
+        <div class="bar-wrap"><div class="bar" style="width:100%;background:#2563EB"></div><span class="bar-val">5/5</span></div>
+        <span class="eval-label">Pertinence</span>
+        <div class="bar-wrap"><div class="bar" style="width:100%;background:#2563EB"></div><span class="bar-val">5/5</span></div>
+        <span class="eval-label">Précision</span>
+      </div>
+      <p class="answer-text">### **Synthèse : Quelles communes ont les scores de satisfaction les plus élevés dans l’enquête ?**
+
+**Réponse directe à la question initiale :**
+*Aucune commune corse ne peut être identifiée comme ayant les scores de satisfaction les plus élevés dans l’enquête citoyenne disponible.* **Les données d’enquête ne sont pas ventilées par commune** : elles couvrent uniquement la Corse entière, sans distinction géographique fine [SQ1][SQ2][SQ3]. Ainsi, il est impossible de classer ou de comparer les communes entre elles sur la base des perceptions des habitants.
+
+---
+
+### **Points clés sur les données disponibles**
+
+#### **1. Scores de satisfaction globaux en Corse (perceptions des habitants)**
+Selon l’enquête citoyenne menée auprès de 246 répondants en Corse :
+- Le **score moyen de satisfaction globale en qualité de vie** s’élève à **3,83/5** [SQ3].
+- Les dimensions les mieux notées sont le **logement (3,98/5)** et la **sécurité (3,79/5)**, tandis que la **confiance dans l’avenir (2,80/5)** et les **revenus (2,92/5)** obtiennent les scores les plus bas [SQ4].
+- Ces résultats reflètent une **perception moyenne des habitants de l’île**, sans possibilité de les attribuer à une commune en pa…</p>
+      <details class="sources-details">
+        <summary>Sources (20 passages)</summary>
+        <div class="src-block"><span class="src-rank"></span><div class="src-text"></div></div><div class="src-block"><span class="src-rank"></span><div class="src-text"></div></div><div class="src-block"><span class="src-rank">Corte</span><div class="src-text"></div></div><div class="src-block"><span class="src-rank">Ajaccio</span><div class="src-text"></div></div><div class="src-block"><span class="src-rank">Lozzi</span><div class="src-text"></div></div>
+      </details>
+      <div class="judge-comment">La réponse est très pertinente et précise, abordant clairement l&#x27;absence de données communales tout en fournissant des informations complémentaires sur les indicateurs objectifs. Elle est bien sourcée et exhaustive dans son analyse.</div>
+    </div>
+
+    <div class="answer-card" style="--accent:#059669">
+      <div class="card-header">HippoRAG v2 <span class="badge-new">sources consultables</span></div>
+      <div class="eval-row">
+        <div class="bar-wrap"><div class="bar" style="width:100%;background:#059669"></div><span class="bar-val">5/5</span></div>
+        <span class="eval-label">Pertinence</span>
+        <div class="bar-wrap"><div class="bar" style="width:60%;background:#059669"></div><span class="bar-val">3/5</span></div>
+        <span class="eval-label">Précision</span>
+      </div>
+      <p class="answer-text">Porto-Vecchio.</p>
+      <details class="sources-details">
+        <summary>Sources PPR (50 passages — texte intégral)</summary>
+        
+<div class="src-block">
+  <div class="src-header">
+    <span class="src-rank">#1 — RAPTOR_enquete_commune_RAPTOR enquete commune _ Bastia.md</span>
+    <span class="src-score">PPR: 0.0289</span>
+  </div>
+  <div class="src-text">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+**Groupe : commune=Bastia (N=23)**
+
+---
+
+### **Satisfaction globale**
+Les scores globaux reflètent une perception contrastée de la qualité de vie à Bastia parmi les répondants. Le **bonheur** (3,55/5) et la **qualité de vie** (3,82/5) obtiennent des évaluations modérément positives, suggérant une satisfaction générale acceptable, bien que perfectible. En revanche, la **confiance dans l’avenir…</div>
+</div>
+<div class="src-block">
+  <div class="src-header">
+    <span class="src-rank">#2 — RAPTOR_enquete_commune_RAPTOR enquete commune _ Ajaccio.md</span>
+    <span class="src-score">PPR: 0.0136</span>
+  </div>
+  <div class="src-text">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+**Groupe : commune=Ajaccio (N=51)**
+
+---
+
+### **Satisfaction globale**
+Les scores globaux révèlent une satisfaction modérée à bonne pour le bonheur et la qualité de vie, mais une confiance limitée dans l’avenir. Le **bonheur** obtient une moyenne de **3,74/5** (n=47), tandis que la **qualité de vie** est légèrement supérieure à **3,85/5** (n=47). En revanche, la **confiance en l’avenir** est …</div>
+</div>
+<div class="src-block">
+  <div class="src-header">
+    <span class="src-rank">#3 — RAPTOR_enquete_commune_RAPTOR enquete commune _ Corte.md</span>
+    <span class="src-score">PPR: 0.0113</span>
+  </div>
+  <div class="src-text">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+**Groupe : commune=Corte (N=50)**
+
+---
+
+### **Satisfaction globale**
+Les scores globaux reflètent une **satisfaction modérée** à **neutre** pour les habitants de Corte, avec des nuances selon les dimensions évaluées :
+- **Bonheur** : 3,52/5 (n=48) → Une majorité des répondants expriment un niveau de bonheur **moyen à satisfaisant**, mais avec une tendance à la neutralité ou à une satisfaction…</div>
+</div>
+<div class="src-block">
+  <div class="src-header">
+    <span class="src-rank">#4 — RAPTOR_enquete_commune_RAPTOR enquete commune _ Porto-Vecchio.md</span>
+    <span class="src-score">PPR: 0.0106</span>
+  </div>
+  <div class="src-text">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+**Groupe : commune=Porto-Vecchio (N=7)**
+
+---
+
+### **Satisfaction globale**
+Les scores globaux de ce groupe de 7 répondants à Porto-Vecchio révèlent une **satisfaction modérée**, avec des écarts notables entre les différentes dimensions évaluées.
+- Le **bonheur** est évalué à **4,00/5**, indiquant une perception globalement positive du bien-être ressenti.
+- La **qualité de vie** obtient un sc…</div>
+</div>
+<div class="src-block">
+  <div class="src-header">
+    <span class="src-rank">#5 — RAPTOR_enquete_global_RAPTOR enquete global.md</span>
+    <span class="src-score">PPR: 0.0101</span>
+  </div>
+  <div class="src-text">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+### **Synthèse analytique globale — Qualité de Vie en Corse (N=246)**
+
+---
+
+#### **1. Satisfaction globale**
+Les scores moyens révèlent une **satisfaction modérée** des Corses quant à leur qualité de vie, avec des disparités notables entre les dimensions évaluées.
+
+- **Bonheur** : **3,66/5** (n=237)
+  Les répondants expriment un niveau de bonheur globalement positif, proche de la moyenne haut…</div>
+</div>
+      </details>
+      <div class="judge-comment">La réponse est pertinente car elle mentionne une commune avec un score de satisfaction, mais elle manque de précision et d&#x27;exhaustivité, et il n&#x27;y a pas de source fournie pour vérifier l&#x27;information.</div>
+    </div>
+
+  </div>
+
+  <div class="other-systems">
+    <details>
+      <summary>Réponses GraphRAG &amp; LightRAG</summary>
+      <div class="other-grid">
+        <div class="other-card" style="border-left:3px solid #D97706">
+          <strong>GraphRAG 2.7.2</strong> <span class="pill pill-green">4.5</span>
+          <p>## Scores de Satisfaction des Communes
+
+L&#x27;enquête a révélé des scores de satisfaction variés parmi les différentes communes, mettant en lumière celles qui se distinguent par des conditions de vie favorables. Voici un aperçu des communes avec les scores de satisfaction les plus élevés :
+
+### 1. Balogna
+Balogna se distingue avec un score de qualité de vie de **216.0**, ce qui en fait l&#x27;une des communes les mieux notées en termes de satisfaction des résidents [Data: Reports (17)].
+
+### 2. Aleria
+Aleria suit de près avec un score de **194.0**, indiquant également un environnement de vie favorable pour ses habitants [Data: Reports (19)].
+
+### 3. Azilone-Ampaza
+Azilone-Ampaza a obtenu un score de **185.5**, ce qui suggère un cadre de vie agréable pour ses résidents [Data: Reports (19)].
+
+### 4. </p>
+        </div>
+        <div class="other-card" style="border-left:3px solid #7C3AED">
+          <strong>LightRAG 1.5.6</strong> <span class="pill pill-yellow">3.8</span>
+          <p>Dans l&#x27;enquête sur la satisfaction de la qualité de vie en Corse, plusieurs communes se distinguent par leurs scores élevés. Voici les résultats des communes avec les scores les plus notables :
+
+1. **Logement** :
+   - **Ajaccio** : 3,84/5
+   - **Bastia** : 4,05/5
+   - **Corte** : 3,67/5
+
+2. **Emploi** :
+   - **Ajaccio** : 3,91/5
+   - **Bastia** : 3,73/5
+   - **Corte** : 3,71/5
+
+3. **Éducation** :
+   - **Corte** : 3,96/5
+   - **Bastia** : 3,32/5
+   - **Ajaccio** : 3,44/5
+
+4. **Sécurité** :
+   - **Ajaccio** : 3,81/5
+   - **Bastia** : 3,68/5
+   - **Corte** : 3,71/5
+
+5. **Qualité de Vie** :
+   - **Ajaccio** : 3,85/5
+   - **Bastia** : 3,82/5
+   - **Corte** : 3,81/5
+
+Ces scores montrent que des dimensions comme le logement, l&#x27;emploi, la sécurité, et l&#x27;éducation sont perçues de manière favorable,</p>
+        </div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<section class="question-block" id="environnement_bienetre">
+  <h3 class="q-title">Quels liens existent entre l&#x27;environnement naturel et le bien-être subjectif en Corse ?</h3>
+
+  <div class="mini-scoreboard">
+    <div class="mini-score" style="border-color:#2563EB">
+      <span class="sys-name">Pipeline v10</span>
+      <span class="pill pill-green">4.8</span>
+    </div>
+    <div class="mini-score" style="border-color:#059669">
+      <span class="sys-name">HippoRAG v2</span>
+      <span class="pill pill-red">3.0</span>
+    </div>
+    <div class="mini-score" style="border-color:#D97706">
+      <span class="sys-name">GraphRAG</span>
+      <span class="pill pill-yellow">4.2</span>
+    </div>
+    <div class="mini-score" style="border-color:#7C3AED">
+      <span class="sys-name">LightRAG</span>
+      <span class="pill pill-yellow">4.2</span>
+    </div>
+  </div>
+
+  <div class="answer-grid">
+
+    <div class="answer-card" style="--accent:#2563EB">
+      <div class="card-header">Pipeline RAG v10</div>
+      <div class="eval-row">
+        <div class="bar-wrap"><div class="bar" style="width:100%;background:#2563EB"></div><span class="bar-val">5/5</span></div>
+        <span class="eval-label">Pertinence</span>
+        <div class="bar-wrap"><div class="bar" style="width:80%;background:#2563EB"></div><span class="bar-val">4/5</span></div>
+        <span class="eval-label">Précision</span>
+      </div>
+      <p class="answer-text">### **Synthèse : Liens entre environnement naturel et bien-être subjectif en Corse**
+
+L’environnement naturel occupe une place centrale dans le bien-être des habitants corses, à la fois comme source de satisfaction profonde et comme sujet de préoccupation. Les perceptions citoyennes et les indicateurs disponibles révèlent des liens étroits, bien que les données objectives sur l’environnement restent limitées.
+
+---
+
+#### **1. L’environnement naturel, pilier du bien-être subjectif**
+Selon l’enquête citoyenne couvrant la Corse entière, **92 % des répondants** estiment que l’environnement naturel influence directement leur qualité de vie [SQ3]. Les verbatims citoyens soulignent son rôle comme *&quot;base du bien-être&quot;* et *&quot;ressource vitale&quot;* : la nature (montagnes, mer, forêts) est décrite comme *&quot;essentielle à la sérénité&quot;* et à la santé physique et mentale [SQ3, SQ5]. Un habitant résume : *&quot;Notre île possède un environnement naturel exceptionnel, et c’est ce qui fait notre bonheur&quot;* [SQ5].
+
+Les entretiens qualitatifs confirment cette connexion émotionnelle : à **Lozzi** (253 répondants) et **Grossetto-Prugna** (31 répondants), les habitants décrive…</p>
+      <details class="sources-details">
+        <summary>Sources (21 passages)</summary>
+        <div class="src-block"><span class="src-rank"></span><div class="src-text"></div></div><div class="src-block"><span class="src-rank"></span><div class="src-text"></div></div><div class="src-block"><span class="src-rank">Corte</span><div class="src-text"></div></div><div class="src-block"><span class="src-rank">Grossetto Prugna</span><div class="src-text"></div></div><div class="src-block"><span class="src-rank">Lozzi</span><div class="src-text"></div></div>
+      </details>
+      <div class="judge-comment">La réponse aborde de manière approfondie les liens entre l&#x27;environnement naturel et le bien-être subjectif en Corse, tout en fournissant des données et des citations précises. Cependant, quelques informations pourraient bénéficier d&#x27;une vérification plus rigoureuse pour assurer leur exactitude.</div>
+    </div>
+
+    <div class="answer-card" style="--accent:#059669">
+      <div class="card-header">HippoRAG v2 <span class="badge-new">sources consultables</span></div>
+      <div class="eval-row">
+        <div class="bar-wrap"><div class="bar" style="width:80%;background:#059669"></div><span class="bar-val">4/5</span></div>
+        <span class="eval-label">Pertinence</span>
+        <div class="bar-wrap"><div class="bar" style="width:60%;background:#059669"></div><span class="bar-val">3/5</span></div>
+        <span class="eval-label">Précision</span>
+      </div>
+      <p class="answer-text">L&#x27;environnement naturel est lié au bien-être subjectif en Corse par son impact sur la santé, l&#x27;appréciation de la nature, le moral, la nécessité de préservation et la qualité de vie globale.</p>
+      <details class="sources-details">
+        <summary>Sources PPR (50 passages — texte intégral)</summary>
+        
+<div class="src-block">
+  <div class="src-header">
+    <span class="src-rank">#1 — verbatims_Ajaccio.txt</span>
+    <span class="src-score">PPR: 0.0542</span>
+  </div>
+  <div class="src-text">alité de vie: Services de proximité
+Verbatim: La présence des services de proximité rend la vie plus facile (pas de nécessité de transport, ...).
+
+--- Verbatim 113 ---
+Genre: Femme
+Âge: 63
+Profession: Fonctionnaire
+Dimension qualité de vie: Santé
+Verbatim: La présence de services de santé à proximité est bien évidemment un facteur essentiel du cadre de vie (sécurisation, facilitation des soins,...).
+
+--- Verbatim 114 ---
+Genre: Femme
+Âge: 63
+Profession: Fonctionnaire
+Dimension qualité de vie: En…</div>
+</div>
+<div class="src-block">
+  <div class="src-header">
+    <span class="src-rank">#2 — RAPTOR_entretiens_commune_RAPTOR entretiens commune _ Corte.md</span>
+    <span class="src-score">PPR: 0.0216</span>
+  </div>
+  <div class="src-text">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+**Groupe : nom=Corte (N=41 personnes)**
+
+---
+
+### **Thèmes dominants**
+1. **Santé** (mentionnée dans 22 verbatims)
+   - Priorité absolue pour la qualité de vie, souvent associée à l’accès aux soins et à un mode de vie sain.
+   - Exemples : *&quot;La santé est la base du bien-être&quot;* (Verbatim 44), *&quot;Sans la santé, nous ne pouvons rien faire&quot;* (Verbatim 54).
+
+2. **Revenus/Emploi** (mentionnés dans 2…</div>
+</div>
+<div class="src-block">
+  <div class="src-header">
+    <span class="src-rank">#3 — RAPTOR_entretiens_dim_commune_RAPTOR entretiens dim commune _ Environnement _ Ajaccio.md</span>
+    <span class="src-score">PPR: 0.0054</span>
+  </div>
+  <div class="src-text">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+**Groupe : dimension=Environnement, nom=Ajaccio (N=21 personnes)**
+
+---
+
+**Themes dominants** :
+1. **Qualité de l’environnement naturel et bien-être** :
+   - La nature, la biodiversité, la fraîcheur et la qualité de l’air sont des éléments centraux pour les répondants, associés à un sentiment de bien-être et de santé.
+   - Exemples : *&quot;Air frais, sons ambiants, zones vertes, accès au soleil&quot;*…</div>
+</div>
+<div class="src-block">
+  <div class="src-header">
+    <span class="src-rank">#4 — RAPTOR_entretiens_dim_commune_RAPTOR entretiens dim commune _ Environnement _ Corte.md</span>
+    <span class="src-score">PPR: 0.0049</span>
+  </div>
+  <div class="src-text">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+**Groupe : dimension=Environnement, nom=Corte (N=20 personnes)**
+
+---
+
+**Themes dominants** :
+1. **Qualité de l&#x27;environnement et santé** : La majorité des répondants associent un environnement sain à un impact positif sur la santé physique et mentale.
+   - Exemples : *&quot;Un environnement sain permet d&#x27;être en bonne santé&quot;* (Verbatim 6), *&quot;qualité de l&#x27;air et paysages&quot;* (Verbatim 1), *&quot;qualité d…</div>
+</div>
+<div class="src-block">
+  <div class="src-header">
+    <span class="src-rank">#5 — RAPTOR_entretiens_commune_RAPTOR entretiens commune _ Porto-Vecchio.md</span>
+    <span class="src-score">PPR: 0.0048</span>
+  </div>
+  <div class="src-text">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+**Groupe : nom=Porto-Vecchio (N=7 personnes)**
+
+**Themes dominants** :
+1. **Revenus et qualité de vie** : Mentionnés comme essentiels pour accéder à une vie décente (&quot;Sans revenu pas de vie&quot;, &quot;les revenus permettent d&#x27;accéder à une qualité de vie&quot;).
+2. **Environnement et cadre de vie** : Valorisation de la nature, du calme et du patrimoine (&quot;Nature ; respiration ; milieu-ressource ; magie ; p…</div>
+</div>
+      </details>
+      <div class="judge-comment">La réponse aborde bien la question, mais manque de détails et de sources précises pour étayer les affirmations. Une exploration plus approfondie des liens spécifiques serait bénéfique.</div>
+    </div>
+
+  </div>
+
+  <div class="other-systems">
+    <details>
+      <summary>Réponses GraphRAG &amp; LightRAG</summary>
+      <div class="other-grid">
+        <div class="other-card" style="border-left:3px solid #D97706">
+          <strong>GraphRAG 2.7.2</strong> <span class="pill pill-yellow">4.2</span>
+          <p># Liens entre l&#x27;environnement naturel et le bien-être subjectif en Corse
+
+L&#x27;environnement naturel en Corse joue un rôle crucial dans le bien-être subjectif des résidents. Plusieurs études et analyses mettent en lumière les interconnexions entre la qualité de l&#x27;environnement et la santé physique et mentale des individus. Voici un aperçu des principaux liens identifiés.
+
+## Importance de l&#x27;environnement naturel
+
+Les résidents de Corse, notamment ceux d&#x27;Ajaccio, soulignent que leur bien-être est fortement lié à la qualité de l&#x27;environnement. Une dégradation de cet environnement pourrait entraîner des conséquences néfastes sur la santé, ce qui met en évidence la nécessité de politiques environnementales robustes pour préserver la santé communautaire [Data: Reports (18, 12, 11, 30, 73)]. La pré</p>
+        </div>
+        <div class="other-card" style="border-left:3px solid #7C3AED">
+          <strong>LightRAG 1.5.6</strong> <span class="pill pill-yellow">4.2</span>
+          <p>Les résultats d&#x27;une enquête citoyenne sur la qualité de vie en Corse mettent en lumière plusieurs liens significatifs entre l&#x27;environnement naturel et le bien-être subjectif des habitants. Voici les points clés qui illustrent cette relation :
+
+1. **Évaluation de la qualité de l&#x27;environnement** : Les répondants expriment une forte corrélation entre un environnement sain et leur bien-être. La majorité associe la qualité de l&#x27;environnement à leur santé physique et mentale, affirmant que « un environnement sain permet d&#x27;être en bonne santé » (Verbatim 6).
+
+2. **Impact de la nature sur le bien-être psychologique** : La présence d&#x27;éléments naturels comme des paysages, des espaces verts et une bonne qualité de l&#x27;air est perçue comme essentielle au bien-être psychologique. Les répondants valorisen</p>
+        </div>
+      </div>
+    </details>
+  </div>
+</section>
+
+</div>
+
+<footer>Rapport généré par 03_build_report.py &nbsp;·&nbsp; HippoRAG v2.0.0a3 · GraphRAG 2.7.2 · LightRAG 1.5.6 · Pipeline RAG v10</footer>
+</body>
+</html>

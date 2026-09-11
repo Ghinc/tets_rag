@@ -1,0 +1,56 @@
+{
+  "excel_row": 44,
+  "section": "Gestion d’absence d’information",
+  "subsection": "Absence totale de données",
+  "question": "Quel est le score OppChoVec de la commune de Nice ?",
+  "rag_status": "ok",
+  "answer": "Cette question porte sur une commune qui n'est pas en Corse. L'indicateur OppChoVec et les données de l'enquête qualité de vie ne couvrent que les 360 communes corses. Aucune donnée n'est disponible pour cette commune dans la base.",
+  "sub_questions": [
+    {
+      "idx": 1,
+      "question": "Quel est le score OppChoVec de la commune de Nice ?",
+      "answer": "Cette question porte sur une commune qui n'est pas en Corse. L'indicateur OppChoVec et les données de l'enquête qualité de vie ne couvrent que les 360 communes corses. Aucune donnée n'est disponible pour cette commune dans la base."
+    }
+  ],
+  "n_subquestions": 1,
+  "n_sources": 0,
+  "rag_elapsed_s": 3.8,
+  "sources": [],
+  "raisonnement": "La réponse refuse correctement en signalant que Nice n'est pas couverte par les données OppChoVec, qui se limitent aux communes corses.",
+  "section_observee": "Gestion d’absence d’information / Absence totale de données",
+  "comportement_attendu_selon_grille": "Refus explicite ou approximation très signalée.",
+  "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+  "coherence_comportement_observe": "oui",
+  "sources_inventaire": [],
+  "mislabelling_detecte": {
+    "regle_1_quali_quanti": "non",
+    "regle_2_surinterpretation_oppchovec": "non",
+    "regle_3_absence_quali_non_signalee": "non",
+    "regle_4_extrapolation_sous_groupe": "non"
+  },
+  "mislabelling_flag": false,
+  "elements_specifiques_question": [
+    "Nice",
+    "OppChoVec"
+  ],
+  "elements_traitement": [
+    {
+      "element": "Nice",
+      "traitement": "precis"
+    },
+    {
+      "element": "OppChoVec",
+      "traitement": "precis"
+    }
+  ],
+  "pertinence": 5,
+  "pertinence_justif": "La réponse est parfaitement pertinente, signalant l'absence de données pour Nice.",
+  "fondement_factuel": 5,
+  "fondement_factuel_justif": "Le refus est correctement fondé sur l'absence de données pour Nice.",
+  "nuance_incertitude": 5,
+  "nuance_incertitude_justif": "La réponse est claire et précise sur les limites géographiques des données.",
+  "coherence_qualiquanti": 5,
+  "coherence_qualiquanti_justif": "La réponse est cohérente avec l'absence totale de données, sans tentative d'inventer des informations.",
+  "score_global": 5.0,
+  "judge_error": null
+}

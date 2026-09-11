@@ -1,0 +1,2229 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Smoke Test Phase 1 — RAG v12</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --bg:#f0f4fa; --surface:#fff; --surface2:#eaf0fa; --border:#c8d4e8;
+  --text:#1a2744; --text2:#4a5f80; --text3:#7a90b0;
+  --bl-stripe:#2563eb; --p1-stripe:#059669; --ref-stripe:#7c3aed;
+  --green:#16a34a; --green-bg:#dcfce7;
+  --amber:#b45309; --amber-bg:#fef3c7;
+  --red:#dc2626; --red-bg:#fee2e2;
+  --warn-bg:#fffbeb; --warn-border:#d97706; --warn-text:#78350f;
+  --body:"Source Sans 3",system-ui,sans-serif;
+  --mono:"JetBrains Mono","Cascadia Code",monospace;
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0c1422; --surface:#152030; --surface2:#1b2a40; --border:#263a58;
+  --text:#dde8f8; --text2:#8aaac8; --text3:#4e6888;
+  --green:#22c55e; --green-bg:#052a0f;
+  --amber:#f59e0b; --amber-bg:#3a1e02;
+  --red:#ef4444; --red-bg:#300808;
+  --warn-bg:#1a1204; --warn-border:#d97706; --warn-text:#fcd34d;
+}}
+:root[data-theme="dark"]{
+  --bg:#0c1422; --surface:#152030; --surface2:#1b2a40; --border:#263a58;
+  --text:#dde8f8; --text2:#8aaac8; --text3:#4e6888;
+  --green:#22c55e; --green-bg:#052a0f;
+  --amber:#f59e0b; --amber-bg:#3a1e02;
+  --red:#ef4444; --red-bg:#300808;
+  --warn-bg:#1a1204; --warn-border:#d97706; --warn-text:#fcd34d;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--body);font-size:15px;line-height:1.65;color:var(--text);background:var(--bg)}
+.page{max-width:980px;margin:0 auto;padding:2.5rem 1.5rem 4rem}
+code{font-family:var(--mono);font-size:.85em;background:var(--surface2);padding:1px 4px;border-radius:3px}
+
+.rh{border-bottom:2px solid var(--border);padding-bottom:1.25rem;margin-bottom:2rem}
+.rh-label{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--bl-stripe);margin-bottom:.3rem}
+h1{font-size:1.5rem;font-weight:700;color:var(--text);text-wrap:balance;line-height:1.25;margin-bottom:.55rem}
+.meta{display:flex;flex-wrap:wrap;gap:.3rem 1.2rem;font-size:12px;color:var(--text3);font-family:var(--mono)}
+
+.warn{background:var(--warn-bg);border:1px solid var(--warn-border);border-left:4px solid var(--warn-border);
+  color:var(--warn-text);border-radius:4px;padding:.75rem 1rem;font-size:13.5px;margin-bottom:2rem;line-height:1.55}
+.warn strong{color:inherit}
+
+.st{font-size:1rem;font-weight:700;color:var(--text);margin:2rem 0 .9rem;
+  padding-bottom:.4rem;border-bottom:1px solid var(--border)}
+.caption{font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);margin-bottom:.5rem}
+.note{font-size:12.5px;color:var(--text3);font-style:italic;margin-top:.4rem;line-height:1.5}
+
+.tw{overflow-x:auto;margin-bottom:1rem}
+table{border-collapse:collapse;width:100%;font-size:13.5px;font-variant-numeric:tabular-nums}
+th{text-align:left;padding:.45rem .7rem;font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--text3);background:var(--surface2);border-bottom:2px solid var(--border);white-space:nowrap}
+td{padding:.5rem .7rem;border-bottom:1px solid var(--border);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+
+.badge{display:inline-flex;align-items:center;justify-content:center;min-width:44px;height:24px;
+  border-radius:4px;font-family:var(--mono);font-size:13px;font-weight:600;padding:0 5px}
+.badge-green{background:var(--green-bg);color:var(--green)}
+.badge-amber{background:var(--amber-bg);color:var(--amber)}
+.badge-red{background:var(--red-bg);color:var(--red)}
+.badge-gray{background:var(--surface2);color:var(--text3)}
+.tok-count{font-family:var(--mono);font-size:11px;color:var(--text3)}
+
+.qs{background:var(--surface);border:1px solid var(--border);border-radius:6px;margin-bottom:2rem;overflow:hidden}
+.qs-head{padding:.9rem 1.25rem .75rem;background:var(--surface2);border-bottom:1px solid var(--border)}
+.qs-tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:.3rem}
+.qs-q{font-weight:600;font-size:15px;color:var(--text);text-wrap:balance;line-height:1.45}
+.qs-body{padding:1.25rem;display:flex;flex-direction:column;gap:1.25rem}
+
+.cmp3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.85rem}
+@media(max-width:780px){.cmp3{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.cmp3{grid-template-columns:1fr}}
+
+.ac{border-radius:4px;border:1px solid var(--border);overflow:hidden}
+.ac-head{padding:.45rem .7rem;font-family:var(--mono);font-size:11px;letter-spacing:.07em;
+  text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;gap:.5rem;font-weight:500}
+.ac-hl{display:flex;align-items:center;gap:.4rem}
+.ac.bl .ac-head{background:color-mix(in srgb,#2563eb 11%,var(--surface2));color:#2563eb;border-left:3px solid #2563eb}
+.ac.p1 .ac-head{background:color-mix(in srgb,#059669 11%,var(--surface2));color:#059669;border-left:3px solid #059669}
+.ac.ref .ac-head{background:color-mix(in srgb,#7c3aed 11%,var(--surface2));color:#7c3aed;border-left:3px solid #7c3aed}
+.ac.tout .ac-head{background:var(--red-bg);color:var(--red)}
+.ac-body{padding:.75rem;max-height:320px;overflow-y:auto;font-size:13px;line-height:1.6;color:var(--text);white-space:pre-wrap}
+
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+@media(max-width:580px){.sg{grid-template-columns:1fr}}
+.sc{border-radius:4px;border:1px solid var(--border);overflow:hidden}
+.sc-head{padding:.35rem .6rem;font-family:var(--mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;font-weight:500}
+.sc.bl .sc-head{background:color-mix(in srgb,#2563eb 9%,var(--surface2));color:#2563eb}
+.sc.p1 .sc-head{background:color-mix(in srgb,#059669 9%,var(--surface2));color:#059669}
+.sc-body{padding:.6rem .75rem;font-family:var(--mono);font-size:11.5px;line-height:1.5;color:var(--text2);max-height:210px;overflow-y:auto}
+.sq{margin-bottom:.55rem}.sq:last-child{margin-bottom:0}
+.sq-lbl{color:var(--text3);font-size:10px;text-transform:uppercase;letter-spacing:.06em}
+.sq-q{color:var(--text2);font-size:11px;margin:.1rem 0}
+.sq-prose{color:var(--text);background:var(--surface2);border-radius:3px;padding:.2rem .4rem;font-size:11.5px;margin-top:.15rem;white-space:pre-wrap}
+.sq-empty{color:var(--text3);font-style:italic;font-size:11px;margin-top:.1rem}
+
+.jb{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:.8rem 1rem}
+.jb-title{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);margin-bottom:.55rem}
+.jr{display:flex;flex-wrap:wrap;gap:.25rem .65rem;align-items:center;margin-bottom:.3rem}
+.jr-lbl{font-family:var(--mono);font-size:11px;text-transform:uppercase;min-width:88px;flex-shrink:0}
+.dc{display:flex;flex-wrap:wrap;gap:.2rem;align-items:center}
+.dch{font-family:var(--mono);font-size:11.5px;padding:1px 6px;border-radius:3px;background:var(--surface);border:1px solid var(--border);color:var(--text2)}
+.jc{font-size:13px;color:var(--text2);font-style:italic;margin:.25rem 0 .45rem 88px;line-height:1.5}
+.jc.halluc{color:var(--red);font-style:normal;background:var(--red-bg);border-radius:3px;padding:.3rem .5rem;margin-left:0;margin-top:.3rem}
+.jc.ok{color:var(--green);font-style:normal;background:var(--green-bg);border-radius:3px;padding:.3rem .5rem;margin-left:0;margin-top:.3rem}
+
+.tout-msg{background:var(--red-bg);border:1px solid var(--red);border-radius:4px;padding:.8rem 1rem;font-size:13.5px;color:var(--red);line-height:1.55}
+
+/* Sources */
+.src-details{border:1px solid var(--border);border-radius:4px;overflow:hidden}
+.src-summary{cursor:pointer;padding:.55rem .85rem;background:var(--surface2);font-family:var(--mono);
+  font-size:11.5px;font-weight:500;color:var(--text2);display:flex;align-items:center;gap:.5rem;
+  list-style:none;user-select:none}
+.src-summary::-webkit-details-marker{display:none}
+.src-summary::before{content:"▶";font-size:10px;color:var(--text3);transition:transform .15s}
+details[open] .src-summary::before{transform:rotate(90deg)}
+.src-body{padding:.75rem;display:flex;flex-direction:column;gap:.75rem}
+.src-warn{background:var(--red-bg);border:1px solid var(--red);color:var(--red);border-radius:3px;
+  padding:.5rem .75rem;font-size:13px;line-height:1.5}
+.src-info{background:var(--amber-bg);border:1px solid var(--amber-border,var(--amber));color:var(--amber);border-radius:3px;
+  padding:.5rem .75rem;font-size:13px;line-height:1.5}
+.sq-group{margin-bottom:.6rem}
+.sq-group:last-child{margin-bottom:0}
+.sq-group-label{font-family:var(--mono);font-size:10.5px;color:var(--text3);margin-bottom:.35rem;
+  text-transform:uppercase;letter-spacing:.06em;padding-bottom:.25rem;border-bottom:1px dashed var(--border)}
+.src-table{border-collapse:collapse;width:100%;font-size:12px}
+.src-table th{padding:.3rem .5rem;font-family:var(--mono);font-size:10px;text-transform:uppercase;
+  letter-spacing:.06em;color:var(--text3);background:var(--surface2);border-bottom:1px solid var(--border)}
+.src-table td{padding:.35rem .5rem;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.45}
+.src-table tr:last-child td{border-bottom:none}
+.src-rank{font-family:var(--mono);font-size:11px;color:var(--text3);width:30px;text-align:center}
+.src-commune{font-family:var(--mono);font-size:11.5px;font-weight:500;color:var(--text2);white-space:nowrap;min-width:80px}
+.src-extrait{font-size:12px;color:var(--text);white-space:pre-wrap;font-family:var(--mono);max-width:500px}
+.st-tag{display:inline-block;font-family:var(--mono);font-size:10px;padding:1px 5px;border-radius:3px;
+  font-weight:500;white-space:nowrap}
+.st-opp{background:#dbeafe;color:#1e40af}
+.st-raptor{background:#f3e8ff;color:#6b21a8}
+.st-method{background:var(--amber-bg);color:var(--amber)}
+.st-verbatim{background:var(--surface2);color:var(--text3);border:1px solid var(--border)}
+.st-other{background:var(--surface2);color:var(--text3)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  .st-opp{background:#1e3a6e;color:#93c5fd}
+  .st-raptor{background:#3b0764;color:#d8b4fe}
+}}
+:root[data-theme="dark"] .st-opp{background:#1e3a6e;color:#93c5fd}
+:root[data-theme="dark"] .st-raptor{background:#3b0764;color:#d8b4fe}
+
+.findings{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--bl-stripe);
+  border-radius:4px;padding:1rem 1.25rem;margin-top:1.5rem}
+.findings h3{font-size:.95rem;font-weight:700;color:var(--text);margin-bottom:.7rem}
+.findings ul{padding-left:1.25rem;display:flex;flex-direction:column;gap:.4rem}
+.findings li{font-size:14px;color:var(--text);line-height:1.55}
+.dl{font-size:12px;color:var(--text3);font-family:var(--mono);margin-top:.5rem}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="rh">
+  <div class="rh-label">Rapport d’évaluation — RAG v12 Local Inference</div>
+  <h1>Smoke Test Phase 1 — JSON structuré vs Baseline</h1>
+  <div class="meta">
+    <span>Date : 2026-08-21</span>
+    <span>Backend : Qwen3.5-9B @ llama-server 0.22.319</span>
+    <span>Juge : gpt-4o V4.3</span>
+    <span>Référence : v_decomp_raptor RERUN2</span>
+    <span>Questions : 3 (causal · multi_communes · no_data)</span>
+  </div>
+</div>
+
+<div class="warn">
+  <strong>⚠ Résultats produits par le backend LOCAL (Qwen3.5-9B, thinking mode non maîtrisé)</strong> —
+  le build llama.cpp v0.22.319 ignore <code>/no_think</code>, génère des milliers de tokens de raisonnement par appel.
+  Token counts gonflés ; certains SQ retournent <code>N/D</code> alors que des données existent.
+  Multi-communes : timeout complet. À lire comme un <strong>test de robustesse sous conditions dégradées</strong>.
+</div>
+
+<div class="st">Scores globaux — Juge V4.3 (gpt-4o)</div>
+<div class="tw">
+<table>
+<tr>
+  <th>Question</th><th>Type</th>
+  <th>Réf. RERUN2</th><th>v12 Baseline</th><th>v12 Phase 1</th>
+  <th>Δ (P1 vs Base)</th>
+</tr>
+<tr>
+  <td><strong>Causal Ajaccio</strong></td>
+  <td style="font-family:var(--mono);font-size:11.5px;color:var(--text3)">raisonnement causal</td>
+  <td><span class="badge badge-green">5.0</span></td><td><span class="badge badge-amber">3.5</span></td><td><span class="badge badge-green">4.5</span></td>
+  <td style="font-family:var(--mono);font-weight:600;font-size:13px;color:var(--green)">+1.0</td>
+</tr>
+<tr>
+  <td><strong>Multi-communes</strong></td>
+  <td style="font-family:var(--mono);font-size:11.5px;color:var(--text3)">comparatif</td>
+  <td><span class="badge badge-green">4.75</span></td>
+  <td><span class="badge badge-gray">⏱</span></td>
+  <td><span class="badge badge-gray">⏱</span></td>
+  <td style="font-family:var(--mono);font-size:13px;color:var(--text3)">— timeout</td>
+</tr>
+<tr>
+  <td><strong>No-data Aïti</strong></td>
+  <td style="font-family:var(--mono);font-size:11.5px;color:var(--text3)">absence de données</td>
+  <td><span class="badge badge-amber">3.5</span> <span style="font-size:10.5px;color:var(--amber)">[mislabel]</span></td>
+  <td><span class="badge badge-red">2.0</span></td><td><span class="badge badge-green">5.0</span></td>
+  <td style="font-family:var(--mono);font-weight:600;font-size:13px;color:var(--green)">+3.0</td>
+</tr>
+</table>
+</div>
+<p class="dl">P = pertinence · F = fondement factuel · N = nuance/incertitude · Q = cohérence quali/quanti</p>
+
+<div class="st" style="margin-top:1.5rem">Économie de tokens (step Answer)</div>
+<div class="tw">
+<table>
+<tr>
+  <th>Question</th>
+  <th style="text-align:right">Baseline</th>
+  <th style="text-align:right">Phase 1</th>
+  <th style="text-align:right">Gain</th>
+  <th>Note</th>
+</tr>
+<tr>
+  <td>Causal Ajaccio</td>
+  <td style="text-align:right;font-family:var(--mono)">4 000</td>
+  <td style="text-align:right;font-family:var(--mono)">2 000</td>
+  <td style="text-align:right;font-family:var(--mono);color:var(--green);font-weight:600">−50 %</td>
+  <td style="font-size:12px;color:var(--text3)">Thinking-inflated (cible API : 800→400 tok/SQ)</td>
+</tr>
+<tr>
+  <td>Multi-communes</td>
+  <td style="text-align:right;font-family:var(--mono);color:var(--text3)">—</td>
+  <td style="text-align:right;font-family:var(--mono);color:var(--text3)">—</td>
+  <td style="text-align:right;font-family:var(--mono);color:var(--red)">⏱</td>
+  <td style="font-size:12px;color:var(--text3)">Timeout</td>
+</tr>
+<tr>
+  <td>No-data Aïti</td>
+  <td style="text-align:right;font-family:var(--mono)">800</td>
+  <td style="text-align:right;font-family:var(--mono)">400</td>
+  <td style="text-align:right;font-family:var(--mono);color:var(--green);font-weight:600">−50 %</td>
+  <td style="font-size:12px;color:var(--text3)">Phase1 fast (no-decompose path, 41 s)</td>
+</tr>
+</table>
+</div>
+
+<div class="st" style="margin-top:2rem">Q1 — Raisonnement causal (Ajaccio)</div>
+<div class="qs">
+  <div class="qs-head">
+    <div class="qs-tag">Type · raisonnement causal multi-facteurs</div>
+    <div class="qs-q">Le niveau de bien-être à Ajaccio peut-il s’expliquer par une combinaison de facteurs environnementaux, socio-économiques et institutionnels ?</div>
+  </div>
+  <div class="qs-body">
+    <div class="cmp3">
+      <div class="ac bl">
+  <div class="ac-head">
+    <span class="ac-hl">Baseline <span class="tok-count">4,000 tok</span></span>
+    <span class="badge badge-amber">3.5</span>
+  </div>
+  <div class="ac-body">### **Synthèse : Le bien-être à Ajaccio, une combinaison de facteurs environnementaux, socio-économiques et institutionnels**
+
+Le niveau de bien-être à Ajaccio s’explique par une interaction complexe entre des atouts objectifs et des perceptions contrastées des habitants. Les données disponibles révèlent une ville aux performances inégales selon les dimensions analysées, où les indicateurs territoriaux objectifs peinent parfois à refléter les ressentis exprimés par les citoyens.
+
+---
+
+#### **1. Un bien-être global légèrement supérieur à la moyenne corse, mais des écarts marqués entre dimensions**
+- **Selon les indicateurs territoriaux**, Ajaccio affiche un score global de bien-être de **6,8/10**, soit **0,5 point au-dessus de la moyenne des communes corses** [SQ1]. Ce résultat place la ville dans le tiers supérieur des communes de l’île, mais masque des disparités internes.
+- **Les habitants interrogés** expriment cependant une **satisfaction modérée** : seulement **42 % d’entre eux** déclarent un bien-être "élevé" ou "très élevé", tandis que **31 %** le jugent "moyen" et **27 %** "faible" [SQ5]. Ces perceptions, recueillies spécifiquement auprès des Ajacciens, soulignent un décalage entre les données objectives et le vécu quotidien.
+
+---
+
+#### **2. Environnement : des atouts naturels contrebalancés par des défis urbains**
+- **Les indicateurs territoriaux** placent Ajaccio **au-dessus de la moyenne corse** pour l’accès aux espaces verts (score de **7,2/10**) et la qualité de l’air (score de **6,5/10**), grâce à sa façade maritime et ses parcs urbains [SQ2]. Cependant, la ville obtient un score **inférieur à la moyenne régionale** pour la gestion des déchets (**5,3/10**) et la pollution sonore (**4,9/10**), reflétant des tensions liées à l’urbanisation dense.
+- **Les verbatims citoyens** confirment ces contrastes : les habitants louent la proximité de la mer et des montagnes ("*On a la chance d’avoir la nature à deux pas*"), mais dénoncent les **nuisances sonores**, les **embouteillages** et la **saturation des plages en été** [SQ5]. Ces éléments environnementaux sont cités comme des **facteurs clés de stress** par **48 % des répondants** [SQ2].
+
+---
+
+#### **3. Contexte socio-économique : une dynamique positive, mais des inégalités persistantes**
+- **Les données territoriales objectives** montrent qu’Ajaccio bénéficie d’un **revenu fiscal moyen supérieur de 15 % à la moyenne corse** (22 500 €/an contre 19 600 €) et d’un **taux de chômage inférieur de 2 points** (8,7 % contre 10,5 % en Corse) [SQ3]. La ville concentre également **60 % des médecins spécialistes de l’île** et **40 % des établissements scolaires supérieurs**, selon les données d’équipements communaux [SQ3].
+- **Cependant**, ces indicateurs masquent des **disparités internes** :
+  - Le **taux de pauvreté** (18 %) reste proche de la moyenne corse, mais **22 % des ménages** déclarent des difficultés à payer leurs factures d’énergie ou de logement [SQ5].
+  - **Les entretiens qualitatifs** révèlent une **précarité cachée**, notamment chez les jeunes et les retraités : "*Les loyers sont trop chers, et les salaires ne suivent pas*" [SQ5].
+  - **Les scores OppChoVec** sur la **stabilité de l’emploi** (5,8/10) et la **qualité du logement** (6,1/10) sont **inférieurs à la moyenne corse**, soulignant des fragilités structurelles [SQ3].
+
+---
+
+#### **4. Dimensions institutionnelles : une confiance fragile dans les services publics**
+- **Les indicateurs territoriaux** attribuent à Ajaccio un score de **6,4/10** pour la **qualité des services publics** (transports, santé, éducation), soit **0,3 point au-dessus de la moyenne corse** [SQ4]. La ville se distingue notamment par :
+  - Un **accès aux services essentiels en moins de 20 minutes** pour **92 % de la population** (contre 85 % en moyenne régionale) [SQ4].
+  - Une **couverture numérique** (haut débit) évaluée à **7,9/10**, parmi les meilleures de Corse [SQ4].
+- **En revanche**, **les perceptions des habitants** sont **beaucoup plus critiques** :
+  - Seuls **35 % des répondants** déclarent avoir **confiance dans les institutions locales** (mairie, services administratifs), un taux **inférieur de 10 points à la moyenne corse** [SQ5].
+  - Les **verbatims** pointent des **lenteurs administratives**, un **manque de transparence** et une **gestion jugée inefficace des problèmes urbains** (déchets, circulation) : "*On a l’impression que rien ne bouge, malgré les promesses*" [SQ5].
+  - Le score OppChoVec pour l’**absence de quartiers prioritaires (QPV)** (8,2/10) contraste avec les **témoignages sur les inégalités territoriales** : plusieurs habitants évoquent des **zones délaissées** (ex : quartiers périphériques comme *Les Salines*), où les services publics sont perçus comme **moins accessibles** [SQ4].
+
+---
+
+#### **5. Une combinaison de facteurs expliquant le bien-être ajaccien**
+Le bien-être à Ajaccio résulte d’un **équilibre instable** entre :
+✅ **Des atouts objectifs** :
+   - Une **situation socio-économique globalement favorable** (revenus, emploi, équipements) [SQ3].
+   - Un **cadre de vie enviable** (mer, espaces verts, climat) [SQ2].
+   - Des **infrastructures et services publics mieux dotés** que dans le reste de la Corse [SQ4].
+
+⚠️ **Des limites structurelles** :
+   - **Des inégalités internes** (précarité, logement, accès aux soins) [SQ3].
+   - **Des nuisances urbaines** (bruit, pollution, saturation estivale) [SQ2].
+   - **Un déficit de confiance dans les institutions**, perçues comme **peu réactives** [SQ4].
+
+🔄 **Un décalage entre données et ressentis** :
+   - Les **indicateurs territoriaux** placent Ajaccio **au-dessus de la moyenne corse**, mais **les habitants expriment un bien-être inférieur à ce que suggèrent les chiffres** [SQ1, SQ5]. Ce paradoxe s’explique par :
+     - Une **sensibilité accrue aux problèmes urbains** (embouteillages, coût de la vie).
+     - Une **attente forte en matière de qualité de vie**, exacerbée par le cadre naturel exceptionnel.
+     - Une **méfiance envers les pouvoirs publics**, qui pèse sur la perception globale du bien-être.
+
+---
+
+### **Conclusion : Un bien-être à deux vitesses**
+Le niveau de bien-être à Ajaccio ne peut s’expliquer par un seul facteur, mais par **l’interaction dynamique entre environnement, contexte socio-économique et gouvernance**. Si la ville bénéficie d’**atouts objectifs indéniables** (revenus, équipements, cadre naturel), ceux-ci sont **contrebalancés par des défis urbains et des inégalités** qui minent la qualité de vie perçue. **Les habitants ne se contentent plus des indicateurs "moyens" : ils attendent des améliorations concrètes** en matière de mobilité, de logement, et de transparence institutionnelle.
+
+Pour renforcer le bien-être ajaccien, une **approche intégrée** serait nécessaire, combinant :
+- **Des politiques environnementales ciblées** (réduction des nuisances, désenclavement des quartiers périphériques).
+- **Des mesures socio-économiques** pour réduire les inégalités (accès au logement, emploi stable).
+- **Un renforcement de la confiance institutionnelle** (simplification administrative, participation citoyenne).
+
+---
+===**SOURCES_MOBILISEES**===
+- **Données d’enquête citoyenne** (perceptions, verbatims) : [SQ1, SQ2, SQ3, SQ4, SQ5]
+- **Indicateurs territoriaux OppChoVec** (scores objectifs) : [SQ1, SQ2, SQ3, SQ4]
+- **Données d’équipements communaux** (médecins, écoles, services) : [SQ3]
+- **Profil démographique et socio-économique** : [SQ3]
+===**FIN_SOURCES**===</div>
+</div>
+      <div class="ac p1">
+  <div class="ac-head">
+    <span class="ac-hl">Phase 1 <span class="tok-count">2,000 tok</span></span>
+    <span class="badge badge-green">4.5</span>
+  </div>
+  <div class="ac-body">Le niveau de bien-être à Ajaccio ne peut pas être expliqué de manière précise et complète par une combinaison de facteurs environnementaux, socio-économiques et institutionnels en l’état actuel des données disponibles. Voici une synthèse des éléments mobilisables, tout en soulignant les limites importantes qui persistent.
+
+---
+
+### **Points clés sur le bien-être à Ajaccio**
+
+#### **1. Absence de données objectives structurées**
+Aucune donnée territoriale objective (scores OppChoVec ou indicateurs socio-économiques détaillés) n’a pu être exploitée pour Ajaccio sur les dimensions environnementales, socio-économiques ou institutionnelles [SQ1, SQ2, SQ3, SQ4]. Cela signifie qu’il est impossible, à ce stade, de quantifier :
+- Le niveau de bien-être global de la commune par rapport aux autres communes corses.
+- La qualité de l’environnement (accès aux espaces verts, qualité de l’air, etc.).
+- Les indicateurs socio-économiques clés (taux de chômage, revenu médian, niveau d’éducation, etc.) et leur impact sur le bien-être.
+- La performance des services publics locaux ou la confiance dans les institutions.
+
+Cette lacune empêche toute analyse comparative ou causale entre ces facteurs et le bien-être.
+
+---
+
+#### **2. Perceptions des habitants : des tendances contrastées**
+Les données d’enquête citoyenne spécifiques à Ajaccio (51 répondants) révèlent des perceptions nuancées, bien que limitées en représentativité [SQ5] :
+- **Points positifs** :
+  - Les habitants interrogés soulignent souvent la **qualité de vie liée à l’environnement urbain** (proximité de la mer, ensoleillement, cadre de vie) et la **diversité des services** (commerces, santé, éducation). Certains verbatims évoquent un "cadre de vie agréable malgré les défauts" ou une "ville dynamique où tout est accessible".
+  - La **mobilité** est perçue comme un atout, avec des transports en commun jugés "corrects" pour une ville insulaire, bien que des critiques émergent sur les embouteillages aux heures de pointe.
+- **Points négatifs** :
+  - **Pression immobilière et coût de la vie** : Plusieurs répondants mentionnent une "hausse des loyers insoutenable" et des difficultés à se loger, notamment pour les jeunes et les ménages modestes. Cela reflète une préoccupation socio-économique majeure.
+  - **Inégalités territoriales** : Certains quartiers (non précisés dans les verbatims) sont décrits comme "délaissés" ou "peu attractifs", avec un manque d’espaces verts ou de services publics de qualité.
+  - **Confiance limitée dans les institutions** : Les entretiens révèlent une méfiance envers les décisions municipales, perçues comme "peu transparentes" ou "favorisant certains quartiers au détriment d’autres". La gestion des déchets et des infrastructures est souvent citée comme un point faible.
+  - **Environnement dégradé** : La pollution de l’air (liée au trafic) et la gestion des déchets sont des sujets récurrents de mécontentement, avec des verbatims comme "on étouffe en été" ou "les poubelles débordent trop souvent".
+
+Ces perceptions suggèrent que le bien-être à Ajaccio est **fortement influencé par des disparités internes** (quartiers, catégories sociales) et par des tensions entre atouts naturels et défis urbains. Cependant, ces résultats ne couvrent pas l’ensemble de la population ajaccienne et ne permettent pas de généraliser à l’échelle de la commune.
+
+---
+
+#### **3. Équipements et services : des éléments partiels**
+Les données d’équipements communaux disponibles [SQ3, SQ5] indiquent :
+- Une **offre de services globalement dense** pour une ville corse : présence de médecins spécialistes, d’établissements scolaires (du primaire au supérieur), de commerces variés et de transports en commun. Cela peut contribuer positivement au bien-être en facilitant l’accès aux besoins quotidiens.
+- Cependant, **aucune donnée quantitative** (taux d’équipement par habitant, délais d’accès aux services, etc.) n’est fournie pour évaluer leur adéquation avec les besoins réels ou leur répartition géographique au sein de la commune.
+
+---
+
+### **Synthèse analytique**
+Le bien-être à Ajaccio semble résulter d’une **combinaison complexe de forces et de faiblesses**, mais l’absence de données objectives empêche d’en mesurer précisément les déterminants. Voici les hypothèses que l’on peut formuler à partir des éléments disponibles :
+- **Facteurs environnementaux** : Le cadre naturel (mer, climat) est un atout majeur selon les habitants, mais la pollution et la gestion urbaine (déchets, espaces verts) sont des points de friction. Sans indicateurs objectifs, il est impossible de savoir si ces perceptions reflètent une réalité mesurable.
+- **Facteurs socio-économiques** : Les inégalités (logement, revenus) et le coût de la vie apparaissent comme des freins au bien-être, en particulier pour les ménages modestes. Là encore, l’absence de données sur le chômage, les revenus ou l’éducation limite l’analyse.
+- **Facteurs institutionnels** : La défiance envers les institutions locales et les disparités territoriales suggèrent que la gouvernance et l’équité dans l’accès aux services jouent un rôle clé. Les équipements existent, mais leur qualité et leur répartition sont questionnées.
+
+**En résumé** :
+- **Ce qui est certain** : Les habitants d’Ajaccio perçoivent leur bien-être comme un équilibre fragile entre atouts naturels, dynamisme urbain et défis socio-économiques ou institutionnels. Les inégalités internes et la pression immobilière sont des préoccupations centrales.
+- **Ce qui manque** : Aucune donnée objective ne permet de confirmer ou d’infirmer ces perceptions, ni de quantifier l’impact réel des facteurs environnementaux, socio-économiques ou institutionnels. Une analyse robuste nécessiterait des indicateurs territoriaux actualisés et une enquête citoyenne plus représentative.
+
+---</div>
+</div>
+      <div class="ac ref">
+  <div class="ac-head">
+    <span class="ac-hl">RERUN2 décomp+RAPTOR </span>
+    <span class="badge badge-green">5.0</span>
+  </div>
+  <div class="ac-body">### **Synthèse : Le bien-être à Ajaccio, une alchimie complexe entre opportunités, tensions et perceptions**
+
+Le niveau de bien-être à Ajaccio résulte d’un **équilibre fragile** entre des atouts territoriaux majeurs, des faiblesses structurelles et des perceptions citoyennes contrastées, où les facteurs environnementaux, socio-économiques et institutionnels s’entremêlent sans toujours se renforcer.
+
+---
+
+#### **1. Un territoire d’opportunités exceptionnelles, mais un vécu inégal**
+Ajaccio se distingue par des **ressources objectives parmi les plus élevées de Corse**, avec un score global de **5,78/10** [SQ1], la plaçant au **19ᵉ rang des 360 communes** [SQ1]. Ce résultat s’explique presque exclusivement par sa dimension **"Opportunités" (Opp) : 10/10** [SQ1], la meilleure note de l’île. Les indicateurs territoriaux montrent en effet :
+- Un **accès à l’éducation supérieur** (7,42/10) [SQ3], bien au-dessus de la moyenne corse.
+- Une **mobilité facilitée** (8,99/10) [SQ3], rare en milieu insulaire.
+- Une **couverture numérique quasi optimale** (9,35/10) [SQ3], avec 93,5 % de couverture haut débit.
+
+Pourtant, ces atouts ne se traduisent pas en bien-être réalisé. Le **"Vécu" (Vec) plafonne à 4,80/10** [SQ1], un score moyen reflétant des **revenus, un logement et un emploi stables mais sans éclat** [SQ3]. Surtout, la dimension **"Choix" (Cho) s’effondre à 1,27/10** [SQ1], soit l’un des **pires scores de Corse** (358ᵉ/360). Cette faiblesse ne mesure pas une défiance institutionnelle, mais une **structure démographique et électorale spécifique** (absence de quartiers prioritaires, population vieillissante) [SQ1], qui limite les marges de manœuvre individuelles.
+
+**→ Bilan objectif** : Ajaccio offre un **cadre de vie potentiellement enviable**, mais ses habitants peinent à en tirer pleinement parti, comme en témoigne l’écart entre opportunités (10/10) et vécu (4,8/10).
+
+---
+
+#### **2. Environnement : un capital naturel valorisé, mais des nuisances locales criantes**
+Les **données territoriales objectives manquent** pour évaluer la qualité de l’air, l’accès aux espaces verts ou la biodiversité [SQ2]. En revanche, **l’enquête citoyenne révèle une perception clivée** :
+- **Une majorité d’habitants associent Ajaccio à la nature** : *"Air frais, sons ambiants, zones vertes, accès au soleil"* [SQ5]. Pour eux, l’environnement est synonyme de **santé et de bien-être moral** [SQ5].
+- **Une minorité active dénonce des pollutions concrètes** : *"Trop de bateaux de croisière, pas d’espaces verts, déjections canines partout"* [SQ5]. Ces critiques ciblent des **problèmes localisés** (gestion des déchets, trafic maritime), absents des indicateurs mais **fortement ressentis** [SQ2].
+
+**→ Tension centrale** : L’environnement ajaccien est **à la fois un atout identitaire et une source de frustration**, selon que l’on vit près du port ou des collines.
+
+---
+
+#### **3. Socio-économie : stabilité apparente, mais précarité et inégalités sous-jacentes**
+Les **indicateurs territoriaux** peignent un tableau **globalement favorable** :
+- **Niveau d’éducation élevé** (7,42/10) [SQ3], supérieur à la moyenne corse.
+- **Accès aux services** (mobilité, numérique) parmi les meilleurs de l’île [SQ3].
+
+Cependant, deux **signaux d’alerte** émergent :
+1. **Une diversité socio-professionnelle très faible** (1,96/10) [SQ3], reflétant une **économie peu diversifiée** (forte dépendance au tourisme et à l’administration).
+2. **Des revenus et un emploi perçus comme fragiles** : Les habitants notent leur satisfaction à **3,51/5 pour les revenus** et **3,91/5 pour l’emploi** [SQ3], des scores **modérés** qui trahissent une **stabilité précaire** pour une partie de la population.
+
+**→ Paradoxe ajaccien** : La ville concentre **richesse et services**, mais aussi **inégalités et insécurité économique**, invisibles dans les moyennes.
+
+---
+
+#### **4. Institutions : une confiance érodée, malgré des services publics performants**
+Les **indicateurs territoriaux ne mesurent pas directement la qualité des institutions** [SQ4], mais l’enquête citoyenne révèle une **méfiance marquée** :
+- **Confiance en l’avenir à 2,79/5** [SQ5], soit l’un des scores les plus bas de l’enquête.
+- **Verbatims critiques** : *"Les institutions ne font rien pour nous"* [SQ5], ou *"On se sent abandonnés malgré les promesses"* [SQ5].
+
+Pourtant, Ajaccio dispose **objectivement** d’un **accès aux services publics supérieur à la moyenne corse** (mobilité, éducation, santé) [SQ3]. Ce décalage suggère que la défiance ne vient pas d’un **manque de moyens**, mais d’un **décrochage entre les attentes citoyennes et les réalisations perçues** [SQ5].
+
+**→ Hypothèse clé** : La **crise de légitimité institutionnelle** à Ajaccio semble moins liée à des **carences matérielles** qu’à un **défaut de représentation et de transparence**, amplifié par les tensions socio-économiques.
+
+---
+
+### **Conclusion : Une équation à trois inconnues**
+Le bien-être à Ajaccio s’explique par **trois dynamiques contradictoires** :
+1. **Un socle territorial solide** (opportunités, services, éducation) [SQ1, SQ3], qui devrait théoriquement garantir un haut niveau de vie.
+2. **Des freins structurels** (inégalités, faible diversité CSP, environnement dégradé localement) [SQ2, SQ3], qui limitent la conversion de ces atouts en bien-être réel.
+3. **Des perceptions citoyennes polarisées** [SQ5] : satisfaction pour le cadre de vie naturel et les services, mais **méfiance envers les institutions** et **inquiétude économique**, surtout chez les plus précaires.
+
+**→ Le bien-être ajaccien est donc moins une question de ressources que de leur répartition et de leur perception** :
+- **Les indicateurs objectifs** décrivent une ville **bien dotée**, mais **peu inclusive**.
+- **Les citoyens** ressentent une **stabilité trompeuse**, où les opportunités profitent à une partie de la population, tandis que d’autres subissent **pollution, précarité et sentiment d’abandon**.
+
+**Pistes pour agir** (sans extrapoler) :
+- **Renforcer la diversité socio-économique** [SQ3] pour réduire les inégalités.
+- **Améliorer la gestion environnementale locale** [SQ2] (espaces verts, pollution portuaire), citée comme un levier de bien-être par les habitants.
+- **Rétablir le dialogue institutionnel** [SQ5], car la défiance semble moins liée à des **manques** qu’à un **défaut de lisibilité** des actions publiques.
+
+---</div>
+</div>
+    </div>
+
+    <div>
+      <div class="caption">Entrée du synthétiseur (Mistral Large) — 5 sous-questions</div>
+      <div class="sg">
+        <div class="sc bl">
+          <div class="sc-head">Baseline — réponse prose brute</div>
+          <div class="sc-body"><div class="sq"><div class="sq-lbl">SQ1</div><div class="sq-q">Quel est le score OppChoVec global de bien-être pour la commune d'Ajaccio, …</div><div class="sq-empty">(texte plein transmis directement — non capturé ici)</div></div><div class="sq"><div class="sq-lbl">SQ2</div><div class="sq-q">Quels sont les scores OppChoVec spécifiques aux dimensions environnementale…</div><div class="sq-empty">(texte plein transmis directement — non capturé ici)</div></div><div class="sq"><div class="sq-lbl">SQ3</div><div class="sq-q">Quels sont les indicateurs socio-économiques clés (ex : taux de chômage, re…</div><div class="sq-empty">(texte plein transmis directement — non capturé ici)</div></div><div class="sq"><div class="sq-lbl">SQ4</div><div class="sq-q">Quels sont les scores OppChoVec liés aux dimensions institutionnelles (ex :…</div><div class="sq-empty">(texte plein transmis directement — non capturé ici)</div></div><div class="sq"><div class="sq-lbl">SQ5</div><div class="sq-q">Quelles sont les perceptions des habitants d'Ajaccio concernant leur bien-ê…</div><div class="sq-empty">(texte plein transmis directement — non capturé ici)</div></div></div>
+        </div>
+        <div class="sc p1">
+          <div class="sc-head">Phase 1 — JSON → prose converti</div>
+          <div class="sc-body"><div class="sq"><div class="sq-lbl">SQ1</div><div class="sq-q">Quel est le score OppChoVec global de bien-être pour la commune d'Ajaccio, …</div><div class="sq-prose">[aucune_donnee, confiance:low] Valeur : N/D. </div></div><div class="sq"><div class="sq-lbl">SQ2</div><div class="sq-q">Quels sont les scores OppChoVec spécifiques aux dimensions environnementale…</div><div class="sq-prose">[aucune_donnee, confiance:low] Valeur : N/D. </div></div><div class="sq"><div class="sq-lbl">SQ3</div><div class="sq-q">Quels sont les indicateurs socio-économiques clés (ex : taux de chômage, re…</div><div class="sq-prose">[aucune_donnee, confiance:low] Valeur : N/D. </div></div><div class="sq"><div class="sq-lbl">SQ4</div><div class="sq-q">Quels sont les scores OppChoVec liés aux dimensions institutionnelles (ex :…</div><div class="sq-prose">[aucune_donnee, confiance:low] Valeur : N/D. </div></div><div class="sq"><div class="sq-lbl">SQ5</div><div class="sq-q">Quelles sont les perceptions des habitants d'Ajaccio concernant leur bien-ê…</div><div class="sq-prose">[aucune_donnee, confiance:low] Valeur : N/D. </div></div></div>
+        </div>
+      </div>
+      <p class="note">
+        Phase 1 : le modèle local retourne <code>N/D</code> pour toutes les SQ — artefact Qwen3.5-9B thinking.
+      </p>
+    </div>
+
+    <details class="src-details">
+  <summary class="src-summary">72 sources récupérées — baseline</summary>
+  <div class="src-body">
+    <div class="src-info">ℹ Les extraits OppChoVec sont tronqués à 500 chars — les scores réels Ajaccio (Opp = 10/10, Cho = 1,27/10, Vec = 4,80/10) apparaissent après la coupure. Le modèle avait accès au texte complet. Le « 6,8/10 » cité dans la réponse n’apparaît dans aucune source → hallucination probable.</div>
+    <div class="sq-group">
+  <div class="sq-group-label">SQ1 — Quel est le score OppChoVec global de bien-être pour la commune d'Ajaccio, et comment se s</div>
+  <table class="src-table"><tr>
+  <td class="src-rank">0</td>
+  <td><span class="st-tag st-raptor">RAPTOR</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+**Groupe : nom=Ajaccio (N=39 personnes)**
+
+---
+
+### **Themes dominants**
+1. **Revenus et pouvoir d’achat**
+   - Mentionné dans **12 verbatims** (ex. : *"Les revenus permettent de me payer un logement, la nourriture et quelques plaisirs/loisirs à…</td>
+</tr><tr>
+  <td class="src-rank">1</td>
+  <td><span class="st-tag st-raptor">RAPTOR enquête</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+**Groupe : commune=Ajaccio (N=51)**
+
+---
+
+### **Satisfaction globale**
+Les scores globaux révèlent une satisfaction modérée à bonne pour le bonheur et la qualité de vie, mais une confiance limitée dans l’avenir. Le **bonheur** obtient une moyenn…</td>
+</tr><tr>
+  <td class="src-rank">2</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Santé': La santé : si on a pas la santé, on a rien dans la vie</td>
+</tr><tr>
+  <td class="src-rank">3</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Ratio vie pro/ vie perso': Le ratio vie pro et vie perso, car c’est important d’avoir un bon équilibre entre les deux</td>
+</tr><tr>
+  <td class="src-rank">4</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Education': D’éducation : importante dans la société d’aujourd’hui</td>
+</tr><tr>
+  <td class="src-rank">5</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 21 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Ratio vie pro/ vie perso': Le ratio vie pro/vie perso est important pour moi pour avoir un équilibre de vie sain car il ne faut pas que les deux se mélangent trop : une coupure est importante entre ces deux mondes.</td>
+</tr><tr>
+  <td class="src-rank">6</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 21 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Revenus': Les revenus permettent de me payer un logement, la nourriture et quelques plaisirs/loisirs à côté.</td>
+</tr><tr>
+  <td class="src-rank">7</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Scores moyens de l'enquête QdV pour la commune de Ajaccio (47 répondants). Score bonheur moyen : 3.68/5. Score qualité de vie moyen : 3.89/5. Score confiance avenir moyen : 2.75/5. Scores moyens par dimension (1-5) : Transports=0.95, Éducation=2.35, Réseaux télép…</td>
+</tr><tr>
+  <td class="src-rank">8</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Poggio-d’Oletta</td>
+  <td class="src-extrait">[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Scores moyens de l'enquête QdV pour la commune de Poggio-d’Oletta (1 répondants). Score bonheur moyen : 4.00/5. Score qualité de vie moyen : 4.00/5. Score confiance avenir moyen : 2.00/5. Scores moyens par dimension (1-5) : Transports=0.00, Éducation=3.00, Réseau…</td>
+</tr><tr>
+  <td class="src-rank">9</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Profil des répondants de la commune de Ajaccio — enquête qualité de vie en Corse
+
+Nombre de répondants : 51
+
+Répartition par genre :
+  - Femme : 31 (60.8%)
+  - Homme : 20 (39.2%)
+
+Répartition par tranche d'âge :
+  - 45-59 : 20 (39.2%)
+  - 15-29 : 14 (27.5%)
+  - 3…</td>
+</tr><tr>
+  <td class="src-rank">10</td>
+  <td><span class="st-tag st-opp">OppChoVec</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]
+Classement des composantes OppChoVec — Corse entière (360 communes).
+
+Sous-scores principaux (du plus élevé au plus faible) :
+  1. Cho (Choix)               : 8.79/10 (très éle…</td>
+</tr><tr>
+  <td class="src-rank">11</td>
+  <td><span class="st-tag st-opp">OppChoVec</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]
+L'indicateur OppChoVec — Indice de bien-être objectif territorial
+
+L'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spat…</td>
+</tr><tr>
+  <td class="src-rank">12</td>
+  <td><span class="st-tag st-opp">OppChoVec</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]
+NOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :
+  • Opp (Opportunités) = accès aux ressources du territoire
+  • Cho (Choix) = liberté effective…</td>
+</tr><tr>
+  <td class="src-rank">13</td>
+  <td><span class="st-tag st-method">Métho</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Enquête Qualité de Vie en Corse — Description méthodologique
+
+PRÉSENTATION GÉNÉRALE
+Enquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.
+Objectif : recueillir les perceptions subjectives de la qualité de vie (QdV…</td>
+</tr></table>
+</div><div class="sq-group">
+  <div class="sq-group-label">SQ2 — Quels sont les scores OppChoVec spécifiques aux dimensions environnementales (ex : qualité</div>
+  <table class="src-table"><tr>
+  <td class="src-rank">0</td>
+  <td><span class="st-tag st-raptor">RAPTOR</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+**Groupe : dimension=Environnement, nom=Ajaccio (N=21 personnes)**
+
+---
+
+**Themes dominants** :
+1. **Qualité de l’environnement naturel et bien-être** :
+   - La nature, la biodiversité, la fraîcheur et la qualité de l’air sont des éléments centr…</td>
+</tr><tr>
+  <td class="src-rank">1</td>
+  <td><span class="st-tag st-raptor">RAPTOR enquête</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+**Groupe : commune=Ajaccio (N=51)**
+
+---
+
+### **Satisfaction globale**
+Les scores globaux révèlent une satisfaction modérée à bonne pour le bonheur et la qualité de vie, mais une confiance limitée dans l’avenir. Le **bonheur** obtient une moyenn…</td>
+</tr><tr>
+  <td class="src-rank">2</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Homme de 20 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Environnement': Air frais, sons ambiants, zones vertes, accès au soleil</td>
+</tr><tr>
+  <td class="src-rank">3</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Homme de 22 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Environnement': Faire en sorte que les pré-étudiants aient plus de choix en arrivant en étude supérieur en Corse</td>
+</tr><tr>
+  <td class="src-rank">4</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Homme de 22 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Environnement': La crise environnemental est un problème partout dans le monde</td>
+</tr><tr>
+  <td class="src-rank">5</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 20 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Environnement': environnement pour qualité de l'air</td>
+</tr><tr>
+  <td class="src-rank">6</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 19 ans (Jeunes), Salarié(e) – Cadre ou profession intermédiaire, à Ajaccio, sur le thème 'Environnement': bxb</td>
+</tr><tr>
+  <td class="src-rank">7</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Scores moyens de l'enquête QdV pour la commune de Ajaccio (47 répondants). Score bonheur moyen : 3.68/5. Score qualité de vie moyen : 3.89/5. Score confiance avenir moyen : 2.75/5. Scores moyens par dimension (1-5) : Transports=0.95, Éducation=2.35, Réseaux télép…</td>
+</tr><tr>
+  <td class="src-rank">8</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Classement des 14 dimensions de satisfaction — commune de Ajaccio (N=51 répondants).
+
+Du plus satisfaisant au moins satisfaisant :
+   1. Emploi                         : 3.91/5 (moyen-fort)
+   2. Logement                       : 3.84/5 (moyen-fort)
+   3. Sécurité…</td>
+</tr><tr>
+  <td class="src-rank">9</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Profil des répondants de la commune de Ajaccio — enquête qualité de vie en Corse
+
+Nombre de répondants : 51
+
+Répartition par genre :
+  - Femme : 31 (60.8%)
+  - Homme : 20 (39.2%)
+
+Répartition par tranche d'âge :
+  - 45-59 : 20 (39.2%)
+  - 15-29 : 14 (27.5%)
+  - 3…</td>
+</tr><tr>
+  <td class="src-rank">10</td>
+  <td><span class="st-tag st-opp">OppChoVec</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]
+Classement des composantes OppChoVec — Corse entière (360 communes).
+
+Sous-scores principaux (du plus élevé au plus faible) :
+  1. Cho (Choix)               : 8.79/10 (très éle…</td>
+</tr><tr>
+  <td class="src-rank">11</td>
+  <td><span class="st-tag st-opp">OppChoVec</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]
+L'indicateur OppChoVec — Indice de bien-être objectif territorial
+
+L'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spat…</td>
+</tr><tr>
+  <td class="src-rank">12</td>
+  <td><span class="st-tag st-opp">OppChoVec</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]
+NOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :
+  • Opp (Opportunités) = accès aux ressources du territoire
+  • Cho (Choix) = liberté effective…</td>
+</tr><tr>
+  <td class="src-rank">13</td>
+  <td><span class="st-tag st-method">Métho</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Enquête Qualité de Vie en Corse — Description méthodologique
+
+PRÉSENTATION GÉNÉRALE
+Enquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.
+Objectif : recueillir les perceptions subjectives de la qualité de vie (QdV…</td>
+</tr></table>
+</div><div class="sq-group">
+  <div class="sq-group-label">SQ3 — Quels sont les indicateurs socio-économiques clés (ex : taux de chômage, revenu médian, ni</div>
+  <table class="src-table"><tr>
+  <td class="src-rank">0</td>
+  <td><span class="st-tag st-raptor">RAPTOR</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+**Groupe : dimension=Education, nom=Ajaccio (N=7 personnes)**
+
+**Themes dominants** :
+1. **Importance fondamentale de l’éducation** : L’éducation est perçue comme un pilier essentiel de la société, de la liberté individuelle et de l’avenir.
+   -…</td>
+</tr><tr>
+  <td class="src-rank">1</td>
+  <td><span class="st-tag st-raptor">RAPTOR enquête</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+**Groupe : commune=Ajaccio (N=51)**
+
+---
+
+### **Satisfaction globale**
+Les scores globaux révèlent une satisfaction modérée à bonne pour le bonheur et la qualité de vie, mais une confiance limitée dans l’avenir. Le **bonheur** obtient une moyenn…</td>
+</tr><tr>
+  <td class="src-rank">2</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Education': D’éducation : importante dans la société d’aujourd’hui</td>
+</tr><tr>
+  <td class="src-rank">3</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 20 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Education': éducation pour trouver un emploi après</td>
+</tr><tr>
+  <td class="src-rank">4</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Homme de 44 ans (Adultes), Travailleur(se) indépendant(e) / Entrepreneur(e), à Ajaccio, sur le thème 'Education': U nosciu avvenne : A ghjuventù</td>
+</tr><tr>
+  <td class="src-rank">5</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Homme de 32 ans (Jeunes adultes), Salarié(e) – Employé(e), à Ajaccio, sur le thème 'Education': Éducation</td>
+</tr><tr>
+  <td class="src-rank">6</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 48 ans (Adultes), Fonctionnaire, à Ajaccio, sur le thème 'Education': Pour moi l’accès à l’éducation est la base fondamentale de la société et de la liberté des choix qu’on fera</td>
+</tr><tr>
+  <td class="src-rank">7</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Scores moyens de l'enquête QdV pour la commune de Ajaccio (47 répondants). Score bonheur moyen : 3.68/5. Score qualité de vie moyen : 3.89/5. Score confiance avenir moyen : 2.75/5. Scores moyens par dimension (1-5) : Transports=0.95, Éducation=2.35, Réseaux télép…</td>
+</tr><tr>
+  <td class="src-rank">8</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Classement des 14 dimensions de satisfaction — commune de Ajaccio (N=51 répondants).
+
+Du plus satisfaisant au moins satisfaisant :
+   1. Emploi                         : 3.91/5 (moyen-fort)
+   2. Logement                       : 3.84/5 (moyen-fort)
+   3. Sécurité…</td>
+</tr><tr>
+  <td class="src-rank">9</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">La commune de Ajaccio compte une part de 12.9% de cadres et professions intellectuelles supérieures, 16.6% d'ouvriers, avec un taux d'activité de 75.6%. 87.8% des emplois y sont salariés. On y trouve 5.0 points de contact postal, 11.0 hypermarchés ou supermarchés, 38.0 supérettes ou épiceries, 51.0 boulangeries et 21.0 boucheries-charcuteries. En m…</td>
+</tr><tr>
+  <td class="src-rank">10</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Profil des répondants de la commune de Ajaccio — enquête qualité de vie en Corse
+
+Nombre de répondants : 51
+
+Répartition par genre :
+  - Femme : 31 (60.8%)
+  - Homme : 20 (39.2%)
+
+Répartition par tranche d'âge :
+  - 45-59 : 20 (39.2%)
+  - 15-29 : 14 (27.5%)
+  - 3…</td>
+</tr><tr>
+  <td class="src-rank">11</td>
+  <td><span class="st-tag st-opp">OppChoVec</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]
+L'indicateur OppChoVec — Indice de bien-être objectif territorial
+
+L'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spat…</td>
+</tr><tr>
+  <td class="src-rank">12</td>
+  <td><span class="st-tag st-opp">OppChoVec</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]
+NOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :
+  • Opp (Opportunités) = accès aux ressources du territoire
+  • Cho (Choix) = liberté effective…</td>
+</tr><tr>
+  <td class="src-rank">13</td>
+  <td><span class="st-tag st-method">Métho</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Enquête Qualité de Vie en Corse — Description méthodologique
+
+PRÉSENTATION GÉNÉRALE
+Enquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.
+Objectif : recueillir les perceptions subjectives de la qualité de vie (QdV…</td>
+</tr></table>
+</div><div class="sq-group">
+  <div class="sq-group-label">SQ4 — Quels sont les scores OppChoVec liés aux dimensions institutionnelles (ex : qualité des se</div>
+  <table class="src-table"><tr>
+  <td class="src-rank">0</td>
+  <td><span class="st-tag st-raptor">RAPTOR</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+**Groupe : nom=Ajaccio (N=39 personnes)**
+
+---
+
+### **Themes dominants**
+1. **Revenus et pouvoir d’achat**
+   - Mentionné dans **12 verbatims** (ex. : *"Les revenus permettent de me payer un logement, la nourriture et quelques plaisirs/loisirs à…</td>
+</tr><tr>
+  <td class="src-rank">1</td>
+  <td><span class="st-tag st-raptor">RAPTOR enquête</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+**Groupe : commune=Ajaccio (N=51)**
+
+---
+
+### **Satisfaction globale**
+Les scores globaux révèlent une satisfaction modérée à bonne pour le bonheur et la qualité de vie, mais une confiance limitée dans l’avenir. Le **bonheur** obtient une moyenn…</td>
+</tr><tr>
+  <td class="src-rank">2</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Santé': La santé : si on a pas la santé, on a rien dans la vie</td>
+</tr><tr>
+  <td class="src-rank">3</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Ratio vie pro/ vie perso': Le ratio vie pro et vie perso, car c’est important d’avoir un bon équilibre entre les deux</td>
+</tr><tr>
+  <td class="src-rank">4</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Education': D’éducation : importante dans la société d’aujourd’hui</td>
+</tr><tr>
+  <td class="src-rank">5</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 21 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Ratio vie pro/ vie perso': Le ratio vie pro/vie perso est important pour moi pour avoir un équilibre de vie sain car il ne faut pas que les deux se mélangent trop : une coupure est importante entre ces deux mondes.</td>
+</tr><tr>
+  <td class="src-rank">6</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 21 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Revenus': Les revenus permettent de me payer un logement, la nourriture et quelques plaisirs/loisirs à côté.</td>
+</tr><tr>
+  <td class="src-rank">7</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Scores moyens de l'enquête QdV pour la commune de Ajaccio (47 répondants). Score bonheur moyen : 3.68/5. Score qualité de vie moyen : 3.89/5. Score confiance avenir moyen : 2.75/5. Scores moyens par dimension (1-5) : Transports=0.95, Éducation=2.35, Réseaux télép…</td>
+</tr><tr>
+  <td class="src-rank">8</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Classement des 14 dimensions de satisfaction — commune de Ajaccio (N=51 répondants).
+
+Du plus satisfaisant au moins satisfaisant :
+   1. Emploi                         : 3.91/5 (moyen-fort)
+   2. Logement                       : 3.84/5 (moyen-fort)
+   3. Sécurité…</td>
+</tr><tr>
+  <td class="src-rank">9</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">La commune de Ajaccio compte une part de 12.9% de cadres et professions intellectuelles supérieures, 16.6% d'ouvriers, avec un taux d'activité de 75.6%. 87.8% des emplois y sont salariés. On y trouve 5.0 points de contact postal, 11.0 hypermarchés ou supermarchés, 38.0 supérettes ou épiceries, 51.0 boulangeries et 21.0 boucheries-charcuteries. En m…</td>
+</tr><tr>
+  <td class="src-rank">10</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Profil des répondants de la commune de Ajaccio — enquête qualité de vie en Corse
+
+Nombre de répondants : 51
+
+Répartition par genre :
+  - Femme : 31 (60.8%)
+  - Homme : 20 (39.2%)
+
+Répartition par tranche d'âge :
+  - 45-59 : 20 (39.2%)
+  - 15-29 : 14 (27.5%)
+  - 3…</td>
+</tr><tr>
+  <td class="src-rank">11</td>
+  <td><span class="st-tag st-opp">OppChoVec</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]
+Classement des composantes OppChoVec — Corse entière (360 communes).
+
+Sous-scores principaux (du plus élevé au plus faible) :
+  1. Cho (Choix)               : 8.79/10 (très éle…</td>
+</tr><tr>
+  <td class="src-rank">12</td>
+  <td><span class="st-tag st-opp">OppChoVec</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]
+L'indicateur OppChoVec — Indice de bien-être objectif territorial
+
+L'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spat…</td>
+</tr><tr>
+  <td class="src-rank">13</td>
+  <td><span class="st-tag st-opp">OppChoVec</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]
+NOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :
+  • Opp (Opportunités) = accès aux ressources du territoire
+  • Cho (Choix) = liberté effective…</td>
+</tr><tr>
+  <td class="src-rank">14</td>
+  <td><span class="st-tag st-method">Métho</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Enquête Qualité de Vie en Corse — Description méthodologique
+
+PRÉSENTATION GÉNÉRALE
+Enquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.
+Objectif : recueillir les perceptions subjectives de la qualité de vie (QdV…</td>
+</tr></table>
+</div><div class="sq-group">
+  <div class="sq-group-label">SQ5 — Quelles sont les perceptions des habitants d'Ajaccio concernant leur bien-être global, not</div>
+  <table class="src-table"><tr>
+  <td class="src-rank">0</td>
+  <td><span class="st-tag st-raptor">RAPTOR</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+**Groupe : dimension=Environnement, nom=Ajaccio (N=21 personnes)**
+
+---
+
+**Themes dominants** :
+1. **Qualité de l’environnement naturel et bien-être** :
+   - La nature, la biodiversité, la fraîcheur et la qualité de l’air sont des éléments centr…</td>
+</tr><tr>
+  <td class="src-rank">1</td>
+  <td><span class="st-tag st-raptor">RAPTOR enquête</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+**Groupe : commune=Ajaccio (N=51)**
+
+---
+
+### **Satisfaction globale**
+Les scores globaux révèlent une satisfaction modérée à bonne pour le bonheur et la qualité de vie, mais une confiance limitée dans l’avenir. Le **bonheur** obtient une moyenn…</td>
+</tr><tr>
+  <td class="src-rank">2</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Homme de 20 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Environnement': Air frais, sons ambiants, zones vertes, accès au soleil</td>
+</tr><tr>
+  <td class="src-rank">3</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Homme de 22 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Environnement': Faire en sorte que les pré-étudiants aient plus de choix en arrivant en étude supérieur en Corse</td>
+</tr><tr>
+  <td class="src-rank">4</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Homme de 22 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Environnement': La crise environnemental est un problème partout dans le monde</td>
+</tr><tr>
+  <td class="src-rank">5</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 20 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Environnement': environnement pour qualité de l'air</td>
+</tr><tr>
+  <td class="src-rank">6</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 19 ans (Jeunes), Salarié(e) – Cadre ou profession intermédiaire, à Ajaccio, sur le thème 'Environnement': bxb</td>
+</tr><tr>
+  <td class="src-rank">7</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Scores moyens de l'enquête QdV pour la commune de Ajaccio (47 répondants). Score bonheur moyen : 3.68/5. Score qualité de vie moyen : 3.89/5. Score confiance avenir moyen : 2.75/5. Scores moyens par dimension (1-5) : Transports=0.95, Éducation=2.35, Réseaux télép…</td>
+</tr><tr>
+  <td class="src-rank">8</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Classement des 14 dimensions de satisfaction — commune de Ajaccio (N=51 répondants).
+
+Du plus satisfaisant au moins satisfaisant :
+   1. Emploi                         : 3.91/5 (moyen-fort)
+   2. Logement                       : 3.84/5 (moyen-fort)
+   3. Sécurité…</td>
+</tr><tr>
+  <td class="src-rank">9</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">La commune de Ajaccio compte une part de 12.9% de cadres et professions intellectuelles supérieures, 16.6% d'ouvriers, avec un taux d'activité de 75.6%. 87.8% des emplois y sont salariés. On y trouve 5.0 points de contact postal, 11.0 hypermarchés ou supermarchés, 38.0 supérettes ou épiceries, 51.0 boulangeries et 21.0 boucheries-charcuteries. En m…</td>
+</tr><tr>
+  <td class="src-rank">10</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Profil des répondants de la commune de Ajaccio — enquête qualité de vie en Corse
+
+Nombre de répondants : 51
+
+Répartition par genre :
+  - Femme : 31 (60.8%)
+  - Homme : 20 (39.2%)
+
+Répartition par tranche d'âge :
+  - 45-59 : 20 (39.2%)
+  - 15-29 : 14 (27.5%)
+  - 3…</td>
+</tr><tr>
+  <td class="src-rank">11</td>
+  <td><span class="st-tag st-opp">OppChoVec</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]
+Classement des composantes OppChoVec — Corse entière (360 communes).
+
+Sous-scores principaux (du plus élevé au plus faible) :
+  1. Cho (Choix)               : 8.79/10 (très éle…</td>
+</tr><tr>
+  <td class="src-rank">12</td>
+  <td><span class="st-tag st-opp">OppChoVec</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]
+L'indicateur OppChoVec — Indice de bien-être objectif territorial
+
+L'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spat…</td>
+</tr><tr>
+  <td class="src-rank">13</td>
+  <td><span class="st-tag st-opp">OppChoVec</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]
+NOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :
+  • Opp (Opportunités) = accès aux ressources du territoire
+  • Cho (Choix) = liberté effective…</td>
+</tr><tr>
+  <td class="src-rank">14</td>
+  <td><span class="st-tag st-method">Métho</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Enquête Qualité de Vie en Corse — Description méthodologique
+
+PRÉSENTATION GÉNÉRALE
+Enquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.
+Objectif : recueillir les perceptions subjectives de la qualité de vie (QdV…</td>
+</tr></table>
+</div>
+  </div>
+</details>
+    <details class="src-details">
+  <summary class="src-summary">72 sources récupérées — phase 1</summary>
+  <div class="src-body">
+    
+    <div class="sq-group">
+  <div class="sq-group-label">SQ1 — Quel est le score OppChoVec global de bien-être pour la commune d'Ajaccio, et comment se s</div>
+  <table class="src-table"><tr>
+  <td class="src-rank">0</td>
+  <td><span class="st-tag st-raptor">RAPTOR</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+**Groupe : nom=Ajaccio (N=39 personnes)**
+
+---
+
+### **Themes dominants**
+1. **Revenus et pouvoir d’achat**
+   - Mentionné dans **12 verbatims** (ex. : *"Les revenus permettent de me payer un logement, la nourriture et quelques plaisirs/loisirs à…</td>
+</tr><tr>
+  <td class="src-rank">1</td>
+  <td><span class="st-tag st-raptor">RAPTOR enquête</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+**Groupe : commune=Ajaccio (N=51)**
+
+---
+
+### **Satisfaction globale**
+Les scores globaux révèlent une satisfaction modérée à bonne pour le bonheur et la qualité de vie, mais une confiance limitée dans l’avenir. Le **bonheur** obtient une moyenn…</td>
+</tr><tr>
+  <td class="src-rank">2</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Santé': La santé : si on a pas la santé, on a rien dans la vie</td>
+</tr><tr>
+  <td class="src-rank">3</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Ratio vie pro/ vie perso': Le ratio vie pro et vie perso, car c’est important d’avoir un bon équilibre entre les deux</td>
+</tr><tr>
+  <td class="src-rank">4</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Education': D’éducation : importante dans la société d’aujourd’hui</td>
+</tr><tr>
+  <td class="src-rank">5</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 21 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Ratio vie pro/ vie perso': Le ratio vie pro/vie perso est important pour moi pour avoir un équilibre de vie sain car il ne faut pas que les deux se mélangent trop : une coupure est importante entre ces deux mondes.</td>
+</tr><tr>
+  <td class="src-rank">6</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 21 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Revenus': Les revenus permettent de me payer un logement, la nourriture et quelques plaisirs/loisirs à côté.</td>
+</tr><tr>
+  <td class="src-rank">7</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Scores moyens de l'enquête QdV pour la commune de Ajaccio (47 répondants). Score bonheur moyen : 3.68/5. Score qualité de vie moyen : 3.89/5. Score confiance avenir moyen : 2.75/5. Scores moyens par dimension (1-5) : Transports=0.95, Éducation=2.35, Réseaux télép…</td>
+</tr><tr>
+  <td class="src-rank">8</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Poggio-d’Oletta</td>
+  <td class="src-extrait">[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Scores moyens de l'enquête QdV pour la commune de Poggio-d’Oletta (1 répondants). Score bonheur moyen : 4.00/5. Score qualité de vie moyen : 4.00/5. Score confiance avenir moyen : 2.00/5. Scores moyens par dimension (1-5) : Transports=0.00, Éducation=3.00, Réseau…</td>
+</tr><tr>
+  <td class="src-rank">9</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Profil des répondants de la commune de Ajaccio — enquête qualité de vie en Corse
+
+Nombre de répondants : 51
+
+Répartition par genre :
+  - Femme : 31 (60.8%)
+  - Homme : 20 (39.2%)
+
+Répartition par tranche d'âge :
+  - 45-59 : 20 (39.2%)
+  - 15-29 : 14 (27.5%)
+  - 3…</td>
+</tr><tr>
+  <td class="src-rank">10</td>
+  <td><span class="st-tag st-opp">OppChoVec</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]
+Classement des composantes OppChoVec — Corse entière (360 communes).
+
+Sous-scores principaux (du plus élevé au plus faible) :
+  1. Cho (Choix)               : 8.79/10 (très éle…</td>
+</tr><tr>
+  <td class="src-rank">11</td>
+  <td><span class="st-tag st-opp">OppChoVec</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]
+L'indicateur OppChoVec — Indice de bien-être objectif territorial
+
+L'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spat…</td>
+</tr><tr>
+  <td class="src-rank">12</td>
+  <td><span class="st-tag st-opp">OppChoVec</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]
+NOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :
+  • Opp (Opportunités) = accès aux ressources du territoire
+  • Cho (Choix) = liberté effective…</td>
+</tr><tr>
+  <td class="src-rank">13</td>
+  <td><span class="st-tag st-method">Métho</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Enquête Qualité de Vie en Corse — Description méthodologique
+
+PRÉSENTATION GÉNÉRALE
+Enquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.
+Objectif : recueillir les perceptions subjectives de la qualité de vie (QdV…</td>
+</tr></table>
+</div><div class="sq-group">
+  <div class="sq-group-label">SQ2 — Quels sont les scores OppChoVec spécifiques aux dimensions environnementales (ex : qualité</div>
+  <table class="src-table"><tr>
+  <td class="src-rank">0</td>
+  <td><span class="st-tag st-raptor">RAPTOR</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+**Groupe : dimension=Environnement, nom=Ajaccio (N=21 personnes)**
+
+---
+
+**Themes dominants** :
+1. **Qualité de l’environnement naturel et bien-être** :
+   - La nature, la biodiversité, la fraîcheur et la qualité de l’air sont des éléments centr…</td>
+</tr><tr>
+  <td class="src-rank">1</td>
+  <td><span class="st-tag st-raptor">RAPTOR enquête</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+**Groupe : commune=Ajaccio (N=51)**
+
+---
+
+### **Satisfaction globale**
+Les scores globaux révèlent une satisfaction modérée à bonne pour le bonheur et la qualité de vie, mais une confiance limitée dans l’avenir. Le **bonheur** obtient une moyenn…</td>
+</tr><tr>
+  <td class="src-rank">2</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Homme de 20 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Environnement': Air frais, sons ambiants, zones vertes, accès au soleil</td>
+</tr><tr>
+  <td class="src-rank">3</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Homme de 22 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Environnement': Faire en sorte que les pré-étudiants aient plus de choix en arrivant en étude supérieur en Corse</td>
+</tr><tr>
+  <td class="src-rank">4</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Homme de 22 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Environnement': La crise environnemental est un problème partout dans le monde</td>
+</tr><tr>
+  <td class="src-rank">5</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 20 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Environnement': environnement pour qualité de l'air</td>
+</tr><tr>
+  <td class="src-rank">6</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 19 ans (Jeunes), Salarié(e) – Cadre ou profession intermédiaire, à Ajaccio, sur le thème 'Environnement': bxb</td>
+</tr><tr>
+  <td class="src-rank">7</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Scores moyens de l'enquête QdV pour la commune de Ajaccio (47 répondants). Score bonheur moyen : 3.68/5. Score qualité de vie moyen : 3.89/5. Score confiance avenir moyen : 2.75/5. Scores moyens par dimension (1-5) : Transports=0.95, Éducation=2.35, Réseaux télép…</td>
+</tr><tr>
+  <td class="src-rank">8</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Classement des 14 dimensions de satisfaction — commune de Ajaccio (N=51 répondants).
+
+Du plus satisfaisant au moins satisfaisant :
+   1. Emploi                         : 3.91/5 (moyen-fort)
+   2. Logement                       : 3.84/5 (moyen-fort)
+   3. Sécurité…</td>
+</tr><tr>
+  <td class="src-rank">9</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Profil des répondants de la commune de Ajaccio — enquête qualité de vie en Corse
+
+Nombre de répondants : 51
+
+Répartition par genre :
+  - Femme : 31 (60.8%)
+  - Homme : 20 (39.2%)
+
+Répartition par tranche d'âge :
+  - 45-59 : 20 (39.2%)
+  - 15-29 : 14 (27.5%)
+  - 3…</td>
+</tr><tr>
+  <td class="src-rank">10</td>
+  <td><span class="st-tag st-opp">OppChoVec</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]
+Classement des composantes OppChoVec — Corse entière (360 communes).
+
+Sous-scores principaux (du plus élevé au plus faible) :
+  1. Cho (Choix)               : 8.79/10 (très éle…</td>
+</tr><tr>
+  <td class="src-rank">11</td>
+  <td><span class="st-tag st-opp">OppChoVec</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]
+L'indicateur OppChoVec — Indice de bien-être objectif territorial
+
+L'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spat…</td>
+</tr><tr>
+  <td class="src-rank">12</td>
+  <td><span class="st-tag st-opp">OppChoVec</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]
+NOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :
+  • Opp (Opportunités) = accès aux ressources du territoire
+  • Cho (Choix) = liberté effective…</td>
+</tr><tr>
+  <td class="src-rank">13</td>
+  <td><span class="st-tag st-method">Métho</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Enquête Qualité de Vie en Corse — Description méthodologique
+
+PRÉSENTATION GÉNÉRALE
+Enquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.
+Objectif : recueillir les perceptions subjectives de la qualité de vie (QdV…</td>
+</tr></table>
+</div><div class="sq-group">
+  <div class="sq-group-label">SQ3 — Quels sont les indicateurs socio-économiques clés (ex : taux de chômage, revenu médian, ni</div>
+  <table class="src-table"><tr>
+  <td class="src-rank">0</td>
+  <td><span class="st-tag st-raptor">RAPTOR</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+**Groupe : dimension=Education, nom=Ajaccio (N=7 personnes)**
+
+**Themes dominants** :
+1. **Importance fondamentale de l’éducation** : L’éducation est perçue comme un pilier essentiel de la société, de la liberté individuelle et de l’avenir.
+   -…</td>
+</tr><tr>
+  <td class="src-rank">1</td>
+  <td><span class="st-tag st-raptor">RAPTOR enquête</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+**Groupe : commune=Ajaccio (N=51)**
+
+---
+
+### **Satisfaction globale**
+Les scores globaux révèlent une satisfaction modérée à bonne pour le bonheur et la qualité de vie, mais une confiance limitée dans l’avenir. Le **bonheur** obtient une moyenn…</td>
+</tr><tr>
+  <td class="src-rank">2</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Education': D’éducation : importante dans la société d’aujourd’hui</td>
+</tr><tr>
+  <td class="src-rank">3</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 20 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Education': éducation pour trouver un emploi après</td>
+</tr><tr>
+  <td class="src-rank">4</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Homme de 44 ans (Adultes), Travailleur(se) indépendant(e) / Entrepreneur(e), à Ajaccio, sur le thème 'Education': U nosciu avvenne : A ghjuventù</td>
+</tr><tr>
+  <td class="src-rank">5</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Homme de 32 ans (Jeunes adultes), Salarié(e) – Employé(e), à Ajaccio, sur le thème 'Education': Éducation</td>
+</tr><tr>
+  <td class="src-rank">6</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 48 ans (Adultes), Fonctionnaire, à Ajaccio, sur le thème 'Education': Pour moi l’accès à l’éducation est la base fondamentale de la société et de la liberté des choix qu’on fera</td>
+</tr><tr>
+  <td class="src-rank">7</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Scores moyens de l'enquête QdV pour la commune de Ajaccio (47 répondants). Score bonheur moyen : 3.68/5. Score qualité de vie moyen : 3.89/5. Score confiance avenir moyen : 2.75/5. Scores moyens par dimension (1-5) : Transports=0.95, Éducation=2.35, Réseaux télép…</td>
+</tr><tr>
+  <td class="src-rank">8</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Classement des 14 dimensions de satisfaction — commune de Ajaccio (N=51 répondants).
+
+Du plus satisfaisant au moins satisfaisant :
+   1. Emploi                         : 3.91/5 (moyen-fort)
+   2. Logement                       : 3.84/5 (moyen-fort)
+   3. Sécurité…</td>
+</tr><tr>
+  <td class="src-rank">9</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">La commune de Ajaccio compte une part de 12.9% de cadres et professions intellectuelles supérieures, 16.6% d'ouvriers, avec un taux d'activité de 75.6%. 87.8% des emplois y sont salariés. On y trouve 5.0 points de contact postal, 11.0 hypermarchés ou supermarchés, 38.0 supérettes ou épiceries, 51.0 boulangeries et 21.0 boucheries-charcuteries. En m…</td>
+</tr><tr>
+  <td class="src-rank">10</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Profil des répondants de la commune de Ajaccio — enquête qualité de vie en Corse
+
+Nombre de répondants : 51
+
+Répartition par genre :
+  - Femme : 31 (60.8%)
+  - Homme : 20 (39.2%)
+
+Répartition par tranche d'âge :
+  - 45-59 : 20 (39.2%)
+  - 15-29 : 14 (27.5%)
+  - 3…</td>
+</tr><tr>
+  <td class="src-rank">11</td>
+  <td><span class="st-tag st-opp">OppChoVec</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]
+L'indicateur OppChoVec — Indice de bien-être objectif territorial
+
+L'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spat…</td>
+</tr><tr>
+  <td class="src-rank">12</td>
+  <td><span class="st-tag st-opp">OppChoVec</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]
+NOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :
+  • Opp (Opportunités) = accès aux ressources du territoire
+  • Cho (Choix) = liberté effective…</td>
+</tr><tr>
+  <td class="src-rank">13</td>
+  <td><span class="st-tag st-method">Métho</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Enquête Qualité de Vie en Corse — Description méthodologique
+
+PRÉSENTATION GÉNÉRALE
+Enquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.
+Objectif : recueillir les perceptions subjectives de la qualité de vie (QdV…</td>
+</tr></table>
+</div><div class="sq-group">
+  <div class="sq-group-label">SQ4 — Quels sont les scores OppChoVec liés aux dimensions institutionnelles (ex : qualité des se</div>
+  <table class="src-table"><tr>
+  <td class="src-rank">0</td>
+  <td><span class="st-tag st-raptor">RAPTOR</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+**Groupe : nom=Ajaccio (N=39 personnes)**
+
+---
+
+### **Themes dominants**
+1. **Revenus et pouvoir d’achat**
+   - Mentionné dans **12 verbatims** (ex. : *"Les revenus permettent de me payer un logement, la nourriture et quelques plaisirs/loisirs à…</td>
+</tr><tr>
+  <td class="src-rank">1</td>
+  <td><span class="st-tag st-raptor">RAPTOR enquête</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+**Groupe : commune=Ajaccio (N=51)**
+
+---
+
+### **Satisfaction globale**
+Les scores globaux révèlent une satisfaction modérée à bonne pour le bonheur et la qualité de vie, mais une confiance limitée dans l’avenir. Le **bonheur** obtient une moyenn…</td>
+</tr><tr>
+  <td class="src-rank">2</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Santé': La santé : si on a pas la santé, on a rien dans la vie</td>
+</tr><tr>
+  <td class="src-rank">3</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Ratio vie pro/ vie perso': Le ratio vie pro et vie perso, car c’est important d’avoir un bon équilibre entre les deux</td>
+</tr><tr>
+  <td class="src-rank">4</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 18 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Education': D’éducation : importante dans la société d’aujourd’hui</td>
+</tr><tr>
+  <td class="src-rank">5</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 21 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Ratio vie pro/ vie perso': Le ratio vie pro/vie perso est important pour moi pour avoir un équilibre de vie sain car il ne faut pas que les deux se mélangent trop : une coupure est importante entre ces deux mondes.</td>
+</tr><tr>
+  <td class="src-rank">6</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 21 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Revenus': Les revenus permettent de me payer un logement, la nourriture et quelques plaisirs/loisirs à côté.</td>
+</tr><tr>
+  <td class="src-rank">7</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Scores moyens de l'enquête QdV pour la commune de Ajaccio (47 répondants). Score bonheur moyen : 3.68/5. Score qualité de vie moyen : 3.89/5. Score confiance avenir moyen : 2.75/5. Scores moyens par dimension (1-5) : Transports=0.95, Éducation=2.35, Réseaux télép…</td>
+</tr><tr>
+  <td class="src-rank">8</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Classement des 14 dimensions de satisfaction — commune de Ajaccio (N=51 répondants).
+
+Du plus satisfaisant au moins satisfaisant :
+   1. Emploi                         : 3.91/5 (moyen-fort)
+   2. Logement                       : 3.84/5 (moyen-fort)
+   3. Sécurité…</td>
+</tr><tr>
+  <td class="src-rank">9</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">La commune de Ajaccio compte une part de 12.9% de cadres et professions intellectuelles supérieures, 16.6% d'ouvriers, avec un taux d'activité de 75.6%. 87.8% des emplois y sont salariés. On y trouve 5.0 points de contact postal, 11.0 hypermarchés ou supermarchés, 38.0 supérettes ou épiceries, 51.0 boulangeries et 21.0 boucheries-charcuteries. En m…</td>
+</tr><tr>
+  <td class="src-rank">10</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Profil des répondants de la commune de Ajaccio — enquête qualité de vie en Corse
+
+Nombre de répondants : 51
+
+Répartition par genre :
+  - Femme : 31 (60.8%)
+  - Homme : 20 (39.2%)
+
+Répartition par tranche d'âge :
+  - 45-59 : 20 (39.2%)
+  - 15-29 : 14 (27.5%)
+  - 3…</td>
+</tr><tr>
+  <td class="src-rank">11</td>
+  <td><span class="st-tag st-opp">OppChoVec</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]
+Classement des composantes OppChoVec — Corse entière (360 communes).
+
+Sous-scores principaux (du plus élevé au plus faible) :
+  1. Cho (Choix)               : 8.79/10 (très éle…</td>
+</tr><tr>
+  <td class="src-rank">12</td>
+  <td><span class="st-tag st-opp">OppChoVec</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]
+L'indicateur OppChoVec — Indice de bien-être objectif territorial
+
+L'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spat…</td>
+</tr><tr>
+  <td class="src-rank">13</td>
+  <td><span class="st-tag st-opp">OppChoVec</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]
+NOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :
+  • Opp (Opportunités) = accès aux ressources du territoire
+  • Cho (Choix) = liberté effective…</td>
+</tr><tr>
+  <td class="src-rank">14</td>
+  <td><span class="st-tag st-method">Métho</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Enquête Qualité de Vie en Corse — Description méthodologique
+
+PRÉSENTATION GÉNÉRALE
+Enquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.
+Objectif : recueillir les perceptions subjectives de la qualité de vie (QdV…</td>
+</tr></table>
+</div><div class="sq-group">
+  <div class="sq-group-label">SQ5 — Quelles sont les perceptions des habitants d'Ajaccio concernant leur bien-être, notamment </div>
+  <table class="src-table"><tr>
+  <td class="src-rank">0</td>
+  <td><span class="st-tag st-raptor">RAPTOR</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+**Groupe : dimension=Environnement, nom=Ajaccio (N=21 personnes)**
+
+---
+
+**Themes dominants** :
+1. **Qualité de l’environnement naturel et bien-être** :
+   - La nature, la biodiversité, la fraîcheur et la qualité de l’air sont des éléments centr…</td>
+</tr><tr>
+  <td class="src-rank">1</td>
+  <td><span class="st-tag st-raptor">RAPTOR enquête</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+**Groupe : commune=Ajaccio (N=51)**
+
+---
+
+### **Satisfaction globale**
+Les scores globaux révèlent une satisfaction modérée à bonne pour le bonheur et la qualité de vie, mais une confiance limitée dans l’avenir. Le **bonheur** obtient une moyenn…</td>
+</tr><tr>
+  <td class="src-rank">2</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Homme de 20 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Environnement': Air frais, sons ambiants, zones vertes, accès au soleil</td>
+</tr><tr>
+  <td class="src-rank">3</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Homme de 22 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Environnement': Faire en sorte que les pré-étudiants aient plus de choix en arrivant en étude supérieur en Corse</td>
+</tr><tr>
+  <td class="src-rank">4</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Homme de 22 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Environnement': La crise environnemental est un problème partout dans le monde</td>
+</tr><tr>
+  <td class="src-rank">5</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 20 ans (Jeunes), Étudiant(e), à Ajaccio, sur le thème 'Environnement': environnement pour qualité de l'air</td>
+</tr><tr>
+  <td class="src-rank">6</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 19 ans (Jeunes), Salarié(e) – Cadre ou profession intermédiaire, à Ajaccio, sur le thème 'Environnement': bxb</td>
+</tr><tr>
+  <td class="src-rank">7</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Scores moyens de l'enquête QdV pour la commune de Ajaccio (47 répondants). Score bonheur moyen : 3.68/5. Score qualité de vie moyen : 3.89/5. Score confiance avenir moyen : 2.75/5. Scores moyens par dimension (1-5) : Transports=0.95, Éducation=2.35, Réseaux télép…</td>
+</tr><tr>
+  <td class="src-rank">8</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Classement des 14 dimensions de satisfaction — commune de Ajaccio (N=51 répondants).
+
+Du plus satisfaisant au moins satisfaisant :
+   1. Emploi                         : 3.91/5 (moyen-fort)
+   2. Logement                       : 3.84/5 (moyen-fort)
+   3. Sécurité…</td>
+</tr><tr>
+  <td class="src-rank">9</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">La commune de Ajaccio compte une part de 12.9% de cadres et professions intellectuelles supérieures, 16.6% d'ouvriers, avec un taux d'activité de 75.6%. 87.8% des emplois y sont salariés. On y trouve 5.0 points de contact postal, 11.0 hypermarchés ou supermarchés, 38.0 supérettes ou épiceries, 51.0 boulangeries et 21.0 boucheries-charcuteries. En m…</td>
+</tr><tr>
+  <td class="src-rank">10</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Profil des répondants de la commune de Ajaccio — enquête qualité de vie en Corse
+
+Nombre de répondants : 51
+
+Répartition par genre :
+  - Femme : 31 (60.8%)
+  - Homme : 20 (39.2%)
+
+Répartition par tranche d'âge :
+  - 45-59 : 20 (39.2%)
+  - 15-29 : 14 (27.5%)
+  - 3…</td>
+</tr><tr>
+  <td class="src-rank">11</td>
+  <td><span class="st-tag st-opp">OppChoVec</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]
+Classement des composantes OppChoVec — Corse entière (360 communes).
+
+Sous-scores principaux (du plus élevé au plus faible) :
+  1. Cho (Choix)               : 8.79/10 (très éle…</td>
+</tr><tr>
+  <td class="src-rank">12</td>
+  <td><span class="st-tag st-opp">OppChoVec</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]
+L'indicateur OppChoVec — Indice de bien-être objectif territorial
+
+L'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spat…</td>
+</tr><tr>
+  <td class="src-rank">13</td>
+  <td><span class="st-tag st-opp">OppChoVec</span></td>
+  <td class="src-commune">Ajaccio</td>
+  <td class="src-extrait">[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]
+NOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :
+  • Opp (Opportunités) = accès aux ressources du territoire
+  • Cho (Choix) = liberté effective…</td>
+</tr><tr>
+  <td class="src-rank">14</td>
+  <td><span class="st-tag st-method">Métho</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Enquête Qualité de Vie en Corse — Description méthodologique
+
+PRÉSENTATION GÉNÉRALE
+Enquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.
+Objectif : recueillir les perceptions subjectives de la qualité de vie (QdV…</td>
+</tr></table>
+</div>
+  </div>
+</details>
+    <div class="jb">
+  <div class="jb-title">Juge V4.3 — gpt-4o</div>
+  <div class="jr">
+    <span class="jr-lbl" style="color:var(--ref-stripe)">Réf. RERUN2</span>
+    <div class="dc"><span class="badge badge-green">5.0</span> <span class="dch">P 5</span><span class="dch">F 5</span><span class="dch">N 5</span><span class="dch">Q 5</span></div>
+  </div>
+  <div class="jr">
+    <span class="jr-lbl" style="color:var(--bl-stripe)">Baseline</span>
+    <div class="dc"><span class="badge badge-amber">3.5</span> <span class="dch">P 4</span><span class="dch">F 3</span><span class="dch">N 3</span><span class="dch">Q 4</span></div>
+  </div>
+  <div class='jc'>La réponse mobilise des données qualitatives et quantitatives pour expliquer le bien-être à Ajaccio, mais surinterprète Vec comme une mesure subjective.…</div>
+  
+  <div class="jr" style="margin-top:.3rem">
+    <span class="jr-lbl" style="color:var(--p1-stripe)">Phase 1</span>
+    <div class="dc"><span class="badge badge-green">4.5</span> <span class="dch">P 4</span><span class="dch">F 4</span><span class="dch">N 5</span><span class="dch">Q 5</span></div>
+  </div>
+  <div class='jc'>La réponse mobilise des données qualitatives et quantitatives pour discuter des facteurs influençant le bien-être à Ajaccio, tout en signalant les limites des données disponibles.…</div>
+  
+</div>
+  </div>
+</div>
+
+<div class="st">Q2 — Comparatif multi-communes</div>
+<div class="qs">
+  <div class="qs-head">
+    <div class="qs-tag">Type · raisonnement comparatif avec hiérarchisation</div>
+    <div class="qs-q">Quelle commune obtient le score objectif global le plus élevé entre Ajaccio, Corte et Bastia ? Justifiez à partir des données OppChoVec.</div>
+  </div>
+  <div class="qs-body">
+    <div class="tout-msg">
+      <strong>⏱ Timeout — les deux modes ont échoué</strong><br>
+      Qwen3.5-9B thinking non borné : &gt;10 000 tokens de raisonnement/appel, dépassement du timeout OpenAI (600 s × 5 retries).
+      Elapsed : baseline 1 814 s · phase1 29 187 s. Non évalué par le juge.<br>
+      <span style="font-size:12.5px;opacity:.8;display:block;margin-top:.3rem">
+        Réf. RERUN2 (API) : <span class="badge badge-green">4.75</span> — question répondable avec le backend API.
+      </span>
+    </div>
+  </div>
+</div>
+
+<div class="st">Q3 — Gestion d’absence de données (Aïti)</div>
+<div class="qs">
+  <div class="qs-head">
+    <div class="qs-tag">Type · absence totale de données · commune sans corpus</div>
+    <div class="qs-q">Quel est le niveau de bien-être subjectif à Aïti ?</div>
+  </div>
+  <div class="qs-body">
+    <div class="cmp3">
+      <div class="ac bl">
+  <div class="ac-head">
+    <span class="ac-hl">Baseline <span class="tok-count">800 tok</span></span>
+    <span class="badge badge-red">2.0</span>
+  </div>
+  <div class="ac-body">### **Synthèse sur le niveau de bien-être subjectif à Aïti**
+
+Le bien-être subjectif à Aïti, tel qu’il ressort des données disponibles, présente des contrastes entre les perceptions des habitants et les indicateurs territoriaux objectifs.
+
+#### **1. Perceptions des habitants**
+Selon l’enquête citoyenne, les habitants d’Aïti expriment un niveau de satisfaction globalement **modéré à faible** concernant leur qualité de vie [SQ1]. Plusieurs verbatims soulignent des préoccupations récurrentes :
+- **Un sentiment d’isolement** et des difficultés d’accès aux services essentiels (santé, commerces, transports), perçus comme moins disponibles qu’ailleurs en Corse.
+- **Une inquiétude face à la précarité économique**, avec des mentions fréquentes sur la stabilité de l’emploi et le coût de la vie.
+- **Un attachement fort au cadre de vie naturel** (paysages, tranquillité), souvent cité comme un facteur compensant les manques en équipements ou en opportunités.
+
+Ces perceptions, bien que subjectives, reflètent un **ressenti mitigé**, où les atouts environnementaux ne suffisent pas à contrebalancer les défis structurels [SQ1].
+
+---
+
+#### **2. Indicateurs territoriaux objectifs**
+Les données objectives, mesurées par les indicateurs OppChoVec, dressent un portrait plus nuancé, mais confirment certaines fragilités :
+- **Accès aux services et mobilité** : Le score d’**accessibilité** (incluant transports et couverture numérique) est **inférieur à la moyenne corse**, avec des temps d’accès aux services essentiels (médecins, écoles, commerces) souvent supérieurs à 20 minutes [SQ1]. Les données d’équipements communaux montrent par ailleurs une **offre limitée en professionnels de santé et en commerces de proximité** [SQ1].
+- **Conditions socio-économiques** : Le **revenu fiscal moyen** à Aïti est **en dessous de la moyenne régionale**, et la **stabilité de l’emploi** y est moins élevée qu’ailleurs en Corse [SQ1]. Ces éléments objectivent les craintes exprimées par les habitants sur la précarité.
+- **Logement et environnement** : La **qualité du logement** obtient un score proche de la moyenne corse, mais les indicateurs ne permettent pas de distinguer d’éventuels problèmes spécifiques (insalubrité, surcoûts) [SQ1]. En revanche, l’absence de quartiers prioritaires (QPV) suggère une **relative homogénéité sociale** dans la commune [SQ1].
+- **Dynamiques locales** : Le score de **diversité des catégories socioprofessionnelles (CSP)** est faible, indiquant une **économie peu diversifiée**, concentrée sur quelques secteurs (agriculture, tourisme saisonnier) [SQ1]. Cela peut expliquer le sentiment d’enclavement et le manque d’opportunités perçu par les habitants.
+
+---
+
+#### **3. Points de convergence et divergences**
+- **Convergence** : Les indicateurs territoriaux **valident les perceptions citoyennes** sur les faiblesses structurelles (accès aux services, précarité économique, isolement). Les scores objectifs et les verbatims s’accordent sur ces points critiques.
+- **Divergence** : Les habitants mettent davantage l’accent sur le **ressenti d’abandon** ou de délaissement, tandis que les données territoriales montrent que ces difficultés sont **partagées par d’autres communes rurales corses** (sans être spécifiques à Aïti). Par exemple, le score d’accessibilité, bien que faible, n’est pas le plus bas de l’île [SQ1].
+- **Atouts sous-estimés ?** : Les indicateurs révèlent une **qualité de vie environnementale préservée** (logement, absence de QPV), qui contraste avec les plaintes sur le manque d’équipements. Cela suggère que les habitants pourraient **sous-évaluer certains aspects objectifs** de leur cadre de vie, comme la tranquillité ou la cohésion sociale.
+
+---
+
+#### **4. Limites des données**
+- **Portée géographique** : Les données d’enquête citoyenne utilisées couvrent **l’ensemble de la Corse** et non spécifiquement Aïti. Les perceptions rapportées peuvent donc refléter des tendances régionales plutôt que locales [SQ1].
+- **Manque de granularité** : Les indicateurs OppChoVec ne permettent pas d’analyser finement des dimensions comme la **culture locale**, les **liens sociaux** ou les **projets collectifs**, qui pourraient moduler le bien-être subjectif.
+
+---
+
+### **Conclusion**
+À Aïti, le **bien-être subjectif** apparaît **fragilisé** par des **défis structurels objectifs** (accès aux services, précarité, isolement), largement confirmés par les indicateurs territoriaux. Cependant, les habitants semblent **accorder moins d’importance aux atouts du territoire** (cadre naturel, stabilité sociale) que ne le suggèrent les données. Cette dissonance entre ressenti et réalité mesurée invite à explorer des leviers d’amélioration **à la fois concrets** (renforcement des services) **et symboliques** (valorisation des spécificités locales).</div>
+</div>
+      <div class="ac p1">
+  <div class="ac-head">
+    <span class="ac-hl">Phase 1 <span class="tok-count">400 tok</span></span>
+    <span class="badge badge-green">5.0</span>
+  </div>
+  <div class="ac-body">**Synthèse sur le niveau de bien-être subjectif à Aïti**
+
+Les données disponibles pour évaluer le bien-être subjectif à Aïti présentent des limites importantes, mais permettent d’esquisser quelques éléments clés.
+
+- **Perceptions des habitants** : Aucune donnée d’enquête citoyenne spécifique à Aïti n’est disponible pour mesurer directement le bien-être subjectif des résidents [SQ1]. Les enquêtes existantes couvrent la Corse dans son ensemble, mais leurs résultats ne peuvent pas être extrapolés à cette commune en particulier.
+
+- **Indicateurs territoriaux objectifs** : Les données territoriales objectives, notamment les scores OppChoVec, ne sont pas non plus disponibles pour Aïti dans les réponses fournies [SQ1]. Cela empêche toute analyse comparative ou détaillée des conditions de vie locales (revenus, accès aux services, qualité du logement, etc.) à partir de ces indicateurs.
+
+En l’absence de données spécifiques, il n’est pas possible de dresser un portrait précis du bien-être subjectif à Aïti, que ce soit à travers les perceptions des habitants ou des mesures objectives.</div>
+</div>
+      <div class="ac ref">
+  <div class="ac-head">
+    <span class="ac-hl">RERUN2 décomp+RAPTOR </span>
+    <span class="badge badge-amber">3.5</span>
+  </div>
+  <div class="ac-body">### **Synthèse sur le niveau de bien-être subjectif à Aïti**
+
+#### **1. Perceptions des habitants : des données limitées à la Corse entière**
+Les enquêtes disponibles ne permettent pas d’évaluer directement le bien-être subjectif des habitants d’Aïti, car les résultats portent sur **l’ensemble de la Corse** :
+- **Satisfaction globale** : Les Corses interrogés expriment une qualité de vie modérée (3,83/5) et un bonheur perçu plutôt faible (3,66/5), selon l’enquête citoyenne.
+- **Confiance dans l’avenir** : Ce sentiment est particulièrement bas (2,80/5), reflétant des inquiétudes partagées à l’échelle régionale.
+
+*Aucune donnée spécifique à Aïti n’existe pour confirmer ou infirmer ces tendances locales.*
+
+---
+
+#### **2. Réalités territoriales objectives : un contraste marqué**
+Les indicateurs territoriaux révèlent une situation contrastée à Aïti :
+- **Un score global moyen** : Le niveau de bien-être objectif (3,07/10) place la commune dans la moyenne basse des villages corses, selon les données territoriales.
+- **Des libertés formelles élevées** : Le score "Choix" (8,93/10) indique que les habitants bénéficient de droits politiques solides (participation électorale, absence de quartiers prioritaires) et d’une bonne accessibilité aux infrastructures.
+- **Un quotidien difficile** : En revanche, le score "Vécu" (3,36/10) souligne des défis concrets :
+  - **Revenus et emploi** : Les revenus fiscaux moyens et la stabilité de l’emploi sont faibles.
+  - **Logement et services** : La qualité des logements et l’accès aux services essentiels (en moins de 20 minutes) restent limités.
+
+---
+
+#### **3. Synthèse analytique : un décalage entre droits et conditions de vie**
+À Aïti, le bien-être subjectif ne peut être pleinement évalué en l’absence de données locales. Cependant, les indicateurs objectifs dessinent un portrait nuancé :
+- **Un cadre institutionnel favorable** (libertés, mobilité) contraste avec **des conditions matérielles précaires** (revenus, logement, services).
+- Ce décalage pourrait expliquer un sentiment de frustration chez les habitants, similaire aux tendances observées en Corse (faible confiance dans l’avenir), mais cela reste à confirmer par une enquête locale.
+
+**En résumé** :
+- **Données subjectives** : Inconnues pour Aïti (seules des tendances corses sont disponibles).
+- **Données objectives** : Un village où les droits sont préservés, mais où le quotidien reste difficile, avec des inégalités structurelles entre libertés formelles et réalités socio-économiques.</div>
+</div>
+    </div>
+    <details class="src-details">
+  <summary class="src-summary">15 sources récupérées — baseline</summary>
+  <div class="src-body">
+    <div class="src-warn">⚠ Aucun verbatim ni donnée enquête spécifique à Aïti. Sources verbatim réelles : Corte, Grossetto Prugna, Afa, Lozzi, Alata. Le modèle a halluciné du contenu Aïti-spécifique à partir de ces sources.</div>
+    <table class="src-table"><tr>
+  <td class="src-rank">0</td>
+  <td><span class="st-tag st-raptor">RAPTOR</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+**Groupe : profession=Salarié(e) – Cadre ou profession intermédiaire (N=49 personnes)**
+
+---
+
+### **Thèmes dominants**
+1. **Équilibre vie professionnelle / vie personnelle**
+   - Besoin d’un équilibre pour éviter le "métro-boulot-dodo" et consac…</td>
+</tr><tr>
+  <td class="src-rank">1</td>
+  <td><span class="st-tag st-raptor">RAPTOR enquête</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+### **Synthèse analytique globale — Qualité de Vie en Corse (N=246)**
+
+---
+
+#### **1. Satisfaction globale**
+Les scores moyens révèlent une **satisfaction modérée** des Corses quant à leur qualité de vie, avec des disparités notables entre les d…</td>
+</tr><tr>
+  <td class="src-rank">2</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Corte</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 30 ans (Jeunes adultes), Salarié(e) – Cadre ou profession intermédiaire, à Corte, sur le thème 'Ratio vie pro/ vie perso': Avoir du temps en dehors de la vie pour s'impliquer dans des projets de territoire, des loisirs, et être connecté à la vie extérieure</td>
+</tr><tr>
+  <td class="src-rank">3</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Corte</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 30 ans (Jeunes adultes), Salarié(e) – Cadre ou profession intermédiaire, à Corte, sur le thème 'Communauté et relations': Richesse sociale, rencontres et partage de valeurs communautaires</td>
+</tr><tr>
+  <td class="src-rank">4</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Corte</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 30 ans (Jeunes adultes), Salarié(e) – Cadre ou profession intermédiaire, à Corte, sur le thème 'Services de proximité': créer une économie locale de circuit court</td>
+</tr><tr>
+  <td class="src-rank">5</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Corte</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 32 ans (Jeunes adultes), Salarié(e) – Cadre ou profession intermédiaire, à Corte, sur le thème 'Environnement': La qualité de la nature</td>
+</tr><tr>
+  <td class="src-rank">6</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Corte</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 32 ans (Jeunes adultes), Salarié(e) – Cadre ou profession intermédiaire, à Corte, sur le thème 'Communauté et relations': Le sens d'appartenance, l'entourage</td>
+</tr><tr>
+  <td class="src-rank">7</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Grossetto Prugna</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Entretiens semi-directifs réalisés en 2022.]
+**Commune : Grossetto Prugna — 1 entretien semi-directif (31 extraits de transcription)**
+
+---
+
+### **Thèmes dominants**
+1. **Attachement au cadre de vie et à l’identité corse** :
+   - La beauté du paysage (mer, soleil, vue) est constamment évoquée comme un élément central de l’attache…</td>
+</tr><tr>
+  <td class="src-rank">8</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Lozzi</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Entretiens semi-directifs réalisés en 2022.]
+**Commune : Lozzi — 6 entretiens semi-directifs (253 extraits de transcription)**
+
+---
+
+### **Thèmes dominants**
+1. **L’attachement identitaire et communautaire** : La majorité des entretiens soulignent un lien fort à la terre, à la langue corse, et à l’histoire familiale. L’identité l…</td>
+</tr><tr>
+  <td class="src-rank">9</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Alata</td>
+  <td class="src-extrait">[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Profil des répondants de la commune de Alata — enquête qualité de vie en Corse
+
+Nombre de répondants : 3
+
+Répartition par genre :
+  - Femme : 2 (66.7%)
+  - Homme : 1 (33.3%)
+
+Répartition par tranche d'âge :
+  - 15-29 : 1 (33.3%)
+  - 45-59 : 1 (33.3%)
+
+Répartition…</td>
+</tr><tr>
+  <td class="src-rank">10</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Afa</td>
+  <td class="src-extrait">[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Profil des répondants de la commune de Afa — enquête qualité de vie en Corse
+
+Nombre de répondants : 2
+
+Répartition par genre :
+  - Femme : 1 (50.0%)
+  - Homme : 1 (50.0%)
+
+Répartition par tranche d'âge :
+  - 45-59 : 2 (100.0%)
+
+Répartition par catégorie sociopro…</td>
+</tr><tr>
+  <td class="src-rank">11</td>
+  <td><span class="st-tag st-opp">OppChoVec</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]
+Le score OppChoVec moyen de la Corse (ensemble des 360 communes) est de 3.35/10 (moyen).
+Décomposition : Score Opportunités (Opp) moyen = 3.87/10, Score Choix (Cho) moyen = 8.7…</td>
+</tr><tr>
+  <td class="src-rank">12</td>
+  <td><span class="st-tag st-opp">OppChoVec</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]
+L'indicateur OppChoVec — Indice de bien-être objectif territorial
+
+L'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spat…</td>
+</tr><tr>
+  <td class="src-rank">13</td>
+  <td><span class="st-tag st-opp">OppChoVec</span></td>
+  <td class="src-commune">Aiti</td>
+  <td class="src-extrait">[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]
+NOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :
+  • Opp (Opportunités) = accès aux ressources du territoire
+  • Cho (Choix) = liberté effective…</td>
+</tr><tr>
+  <td class="src-rank">14</td>
+  <td><span class="st-tag st-method">Métho</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Enquête Qualité de Vie en Corse — Description méthodologique
+
+PRÉSENTATION GÉNÉRALE
+Enquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.
+Objectif : recueillir les perceptions subjectives de la qualité de vie (QdV…</td>
+</tr></table>
+  </div>
+</details>
+    <details class="src-details">
+  <summary class="src-summary">15 sources récupérées — phase 1</summary>
+  <div class="src-body">
+    <div class="src-warn">⚠ Aucun verbatim ni donnée enquête spécifique à Aïti. Sources verbatim réelles : Corte, Grossetto Prugna, Afa, Lozzi, Alata. Le modèle a halluciné du contenu Aïti-spécifique à partir de ces sources.</div>
+    <table class="src-table"><tr>
+  <td class="src-rank">0</td>
+  <td><span class="st-tag st-raptor">RAPTOR</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+**Groupe : profession=Salarié(e) – Cadre ou profession intermédiaire (N=49 personnes)**
+
+---
+
+### **Thèmes dominants**
+1. **Équilibre vie professionnelle / vie personnelle**
+   - Besoin d’un équilibre pour éviter le "métro-boulot-dodo" et consac…</td>
+</tr><tr>
+  <td class="src-rank">1</td>
+  <td><span class="st-tag st-raptor">RAPTOR enquête</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+### **Synthèse analytique globale — Qualité de Vie en Corse (N=246)**
+
+---
+
+#### **1. Satisfaction globale**
+Les scores moyens révèlent une **satisfaction modérée** des Corses quant à leur qualité de vie, avec des disparités notables entre les d…</td>
+</tr><tr>
+  <td class="src-rank">2</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Corte</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 30 ans (Jeunes adultes), Salarié(e) – Cadre ou profession intermédiaire, à Corte, sur le thème 'Ratio vie pro/ vie perso': Avoir du temps en dehors de la vie pour s'impliquer dans des projets de territoire, des loisirs, et être connecté à la vie extérieure</td>
+</tr><tr>
+  <td class="src-rank">3</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Corte</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 30 ans (Jeunes adultes), Salarié(e) – Cadre ou profession intermédiaire, à Corte, sur le thème 'Communauté et relations': Richesse sociale, rencontres et partage de valeurs communautaires</td>
+</tr><tr>
+  <td class="src-rank">4</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Corte</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 30 ans (Jeunes adultes), Salarié(e) – Cadre ou profession intermédiaire, à Corte, sur le thème 'Services de proximité': créer une économie locale de circuit court</td>
+</tr><tr>
+  <td class="src-rank">5</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Corte</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 32 ans (Jeunes adultes), Salarié(e) – Cadre ou profession intermédiaire, à Corte, sur le thème 'Environnement': La qualité de la nature</td>
+</tr><tr>
+  <td class="src-rank">6</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Corte</td>
+  <td class="src-extrait">[Entretiens semi-directifs — Réalisés en 2022.]
+Verbatim d'un(e) Femme de 32 ans (Jeunes adultes), Salarié(e) – Cadre ou profession intermédiaire, à Corte, sur le thème 'Communauté et relations': Le sens d'appartenance, l'entourage</td>
+</tr><tr>
+  <td class="src-rank">7</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Grossetto Prugna</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Entretiens semi-directifs réalisés en 2022.]
+**Commune : Grossetto Prugna — 1 entretien semi-directif (31 extraits de transcription)**
+
+---
+
+### **Thèmes dominants**
+1. **Attachement au cadre de vie et à l’identité corse** :
+   - La beauté du paysage (mer, soleil, vue) est constamment évoquée comme un élément central de l’attache…</td>
+</tr><tr>
+  <td class="src-rank">8</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Lozzi</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Entretiens semi-directifs réalisés en 2022.]
+**Commune : Lozzi — 6 entretiens semi-directifs (253 extraits de transcription)**
+
+---
+
+### **Thèmes dominants**
+1. **L’attachement identitaire et communautaire** : La majorité des entretiens soulignent un lien fort à la terre, à la langue corse, et à l’histoire familiale. L’identité l…</td>
+</tr><tr>
+  <td class="src-rank">9</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Alata</td>
+  <td class="src-extrait">[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Profil des répondants de la commune de Alata — enquête qualité de vie en Corse
+
+Nombre de répondants : 3
+
+Répartition par genre :
+  - Femme : 2 (66.7%)
+  - Homme : 1 (33.3%)
+
+Répartition par tranche d'âge :
+  - 15-29 : 1 (33.3%)
+  - 45-59 : 1 (33.3%)
+
+Répartition…</td>
+</tr><tr>
+  <td class="src-rank">10</td>
+  <td><span class="st-tag st-verbatim">Verbatim</span></td>
+  <td class="src-commune">Afa</td>
+  <td class="src-extrait">[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Profil des répondants de la commune de Afa — enquête qualité de vie en Corse
+
+Nombre de répondants : 2
+
+Répartition par genre :
+  - Femme : 1 (50.0%)
+  - Homme : 1 (50.0%)
+
+Répartition par tranche d'âge :
+  - 45-59 : 2 (100.0%)
+
+Répartition par catégorie sociopro…</td>
+</tr><tr>
+  <td class="src-rank">11</td>
+  <td><span class="st-tag st-opp">OppChoVec</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]
+Le score OppChoVec moyen de la Corse (ensemble des 360 communes) est de 3.35/10 (moyen).
+Décomposition : Score Opportunités (Opp) moyen = 3.87/10, Score Choix (Cho) moyen = 8.7…</td>
+</tr><tr>
+  <td class="src-rank">12</td>
+  <td><span class="st-tag st-opp">OppChoVec</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]
+L'indicateur OppChoVec — Indice de bien-être objectif territorial
+
+L'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spat…</td>
+</tr><tr>
+  <td class="src-rank">13</td>
+  <td><span class="st-tag st-opp">OppChoVec</span></td>
+  <td class="src-commune">Aiti</td>
+  <td class="src-extrait">[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]
+NOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :
+  • Opp (Opportunités) = accès aux ressources du territoire
+  • Cho (Choix) = liberté effective…</td>
+</tr><tr>
+  <td class="src-rank">14</td>
+  <td><span class="st-tag st-method">Métho</span></td>
+  <td class="src-commune">—</td>
+  <td class="src-extrait">[Synthèse RAPTOR — Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]
+Enquête Qualité de Vie en Corse — Description méthodologique
+
+PRÉSENTATION GÉNÉRALE
+Enquête en ligne menée entre 2024 et aujourd'hui auprès de 246 habitant·e·s de Corse.
+Objectif : recueillir les perceptions subjectives de la qualité de vie (QdV…</td>
+</tr></table>
+  </div>
+</details>
+    <div class="jb">
+  <div class="jb-title">Juge V4.3 — gpt-4o</div>
+  <div class="jr">
+    <span class="jr-lbl" style="color:var(--ref-stripe)">Réf. RERUN2</span>
+    <div class="dc"><span class="badge badge-amber">3.5</span> <span class="dch">P 3</span><span class="dch">F 4</span><span class="dch">N 3</span><span class="dch">Q 4</span> <span style="font-size:11px;color:var(--amber)">[mislabelling_flag]</span></div>
+  </div>
+  <div class="jr">
+    <span class="jr-lbl" style="color:var(--bl-stripe)">Baseline</span>
+    <div class="dc"><span class="badge badge-red">2.0</span> <span class="dch">P 2</span><span class="dch">F 2</span><span class="dch">N 2</span><span class="dch">Q 2</span></div>
+  </div>
+  <div class='jc'>La réponse prétend fournir des perceptions spécifiques à Aïti sans données qualitatives locales disponibles. Absence de signalement de ce manque.…</div>
+  <div class="jc halluc">⚠ Hallucination confirmée : verbatims inventés pour Aïti (sources réelles = Corte + données Corse globale)</div>
+  <div class="jr" style="margin-top:.3rem">
+    <span class="jr-lbl" style="color:var(--p1-stripe)">Phase 1</span>
+    <div class="dc"><span class="badge badge-green">5.0</span> <span class="dch">P 5</span><span class="dch">F 5</span><span class="dch">N 5</span><span class="dch">Q 5</span></div>
+  </div>
+  <div class='jc'>La réponse signale explicitement l'absence de données spécifiques pour Aïti, tant qualitatives que quantitatives, et refuse de fournir une analyse non fondée.…</div>
+  <div class="jc ok">✓ Correct : refus de répondre sans fondement — sources ne contiennent pas de données Aïti-spécifiques</div>
+</div>
+  </div>
+</div>
+
+<div class="findings">
+  <h3>Constats clés</h3>
+  <ul>
+    <li><strong>Hallucination no_data/baseline confirmée par les sources</strong> — les 9 verbatims récupérés viennent de Corte et de données Corse globales (aucun d’Aïti). Le modèle a fabriqué des « perceptions des habitants d’Aïti » ex nihilo.</li>
+    <li><strong>Hallucination causal/baseline suspecte</strong> — les extraits OppChoVec sont tronqués à 500 chars dans ce rapport (note structurelle, pas les scores). Le modèle avait le texte complet, mais a cité « 6,8/10 » au lieu du vrai score global Ajaccio (5,78/10). D’autres chiffres (« 7,2/10 », « 42 % ») n’apparaissent dans aucune source visible.</li>
+    <li><strong>Phase 1 &gt; Baseline sur no-data (+3.0 points, 5.0 vs 2.0)</strong> — le mode structuré JSON force l’aveu d’absence de données là où le mode prose hallucine.</li>
+    <li><strong>Phase 1 ≥ Baseline sur causal (+1.0 point, 4.5 vs 3.5)</strong> — meilleure nuance/incertitude (5 vs 3) et cohérence (5 vs 4), malgré les N/D artefactuels.</li>
+    <li><strong>Multi-communes : timeout les deux modes</strong> — thinking débridé du backend local. Résolu en API.</li>
+    <li><strong>−50 % de tokens systématique</strong> — confirmé même avec thinking overhead.</li>
+  </ul>
+</div>
+
+</div>
+</body>
+</html>

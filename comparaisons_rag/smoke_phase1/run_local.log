@@ -1,0 +1,364 @@
+Traceback (most recent call last):
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\httpx\_transports\default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\httpx\_transports\default.py", line 250, in handle_request
+    resp = self._pool.handle_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\httpcore\_sync\connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\httpcore\_sync\connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\httpcore\_sync\connection.py", line 103, in handle_request
+    return self._connection.handle_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\httpcore\_sync\http11.py", line 136, in handle_request
+    raise exc
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\httpcore\_sync\http11.py", line 106, in handle_request
+    ) = self._receive_response_headers(**kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\httpcore\_sync\http11.py", line 177, in _receive_response_headers
+    event = self._receive_event(timeout=timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\httpcore\_sync\http11.py", line 217, in _receive_event
+    data = self._network_stream.read(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\httpcore\_backends\sync.py", line 126, in read
+    with map_exceptions(exc_map):
+  File "C:\Users\comiti_g\AppData\Local\Programs\Python\Python312\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\httpcore\_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ReadTimeout: timed out
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\openai\_base_client.py", line 982, in request
+    response = self._client.send(
+               ^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\httpx\_client.py", line 914, in send
+    response = self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\httpx\_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\httpx\_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\httpx\_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\httpx\_transports\default.py", line 249, in handle_request
+    with map_httpcore_exceptions():
+  File "C:\Users\comiti_g\AppData\Local\Programs\Python\Python312\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\httpx\_transports\default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ReadTimeout: timed out
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\These\Données2\fichiers_pour_rag\local\smoke_phase1.py", line 50, in run_question
+    result = pipeline.query(question)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\local\rag_v12_local.py", line 463, in query
+    final_answer, sources, scoring, sub_qa, sources_mob = super().query(
+                                                          ^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\rag_v10_raptor_subq.py", line 926, in query
+    ans = answer_subquestion(sq, context_str, temperature_override=temperature_override)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\local\rag_v12_local.py", line 435, in _answer_hook
+    return _orig_answer(*a, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\rag_v10_raptor_subq.py", line 365, in answer_subquestion
+    return _call_claude(prompt, sys_prompt,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\local\rag_v12_local.py", line 227, in _call_claude
+    resp = client.chat.completions.create(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\openai\_utils\_utils.py", line 286, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\openai\resources\chat\completions\completions.py", line 1156, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\openai\_base_client.py", line 1259, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\openai\_base_client.py", line 1000, in request
+    raise APITimeoutError(request=request) from err
+openai.APITimeoutError: Request timed out.
+Traceback (most recent call last):
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\httpx\_transports\default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\httpx\_transports\default.py", line 250, in handle_request
+    resp = self._pool.handle_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\httpcore\_sync\connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\httpcore\_sync\connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\httpcore\_sync\connection.py", line 103, in handle_request
+    return self._connection.handle_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\httpcore\_sync\http11.py", line 136, in handle_request
+    raise exc
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\httpcore\_sync\http11.py", line 106, in handle_request
+    ) = self._receive_response_headers(**kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\httpcore\_sync\http11.py", line 177, in _receive_response_headers
+    event = self._receive_event(timeout=timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\httpcore\_sync\http11.py", line 217, in _receive_event
+    data = self._network_stream.read(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\httpcore\_backends\sync.py", line 126, in read
+    with map_exceptions(exc_map):
+  File "C:\Users\comiti_g\AppData\Local\Programs\Python\Python312\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\httpcore\_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ReadTimeout: timed out
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\openai\_base_client.py", line 982, in request
+    response = self._client.send(
+               ^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\httpx\_client.py", line 914, in send
+    response = self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\httpx\_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\httpx\_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\httpx\_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\httpx\_transports\default.py", line 249, in handle_request
+    with map_httpcore_exceptions():
+  File "C:\Users\comiti_g\AppData\Local\Programs\Python\Python312\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\httpx\_transports\default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ReadTimeout: timed out
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\These\Données2\fichiers_pour_rag\local\smoke_phase1.py", line 50, in run_question
+    result = pipeline.query(question)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\local\rag_v12_local.py", line 463, in query
+    final_answer, sources, scoring, sub_qa, sources_mob = super().query(
+                                                          ^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\rag_v10_raptor_subq.py", line 926, in query
+    ans = answer_subquestion(sq, context_str, temperature_override=temperature_override)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\local\rag_v12_local.py", line 441, in _answer_hook_p1
+    return _answer_structured(sub_question, context, temperature_override, no_typing)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\local\rag_v12_local.py", line 324, in _answer_structured
+    raw = _call_claude(prompt, _SYSTEM_ANSWERER_JSON,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\local\rag_v12_local.py", line 227, in _call_claude
+    resp = client.chat.completions.create(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\openai\_utils\_utils.py", line 286, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\openai\resources\chat\completions\completions.py", line 1156, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\openai\_base_client.py", line 1259, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\openai\_base_client.py", line 1000, in request
+    raise APITimeoutError(request=request) from err
+openai.APITimeoutError: Request timed out.
+
+======================================================================
+Smoke test Phase 1 — 3 questions × 2 modes (LLM_BACKEND=api)
+======================================================================
+
+Chargement pipeline (bge-m3 -> CPU, LLM_BACKEND=local)...
+[v12] Patches appliqués — LLM_BACKEND='local'
+[check_no_think] WARN — thinking actif malgré /no_think
+  completion_tokens=114, reasoning_words≈81
+  content='OK'
+  => thinking ignoré par ce build llama.cpp ; poursuite avec thinking actif.
+  => max_tokens des tâches answer/json augmentés pour absorber le budget thinking.
+RAPTOR Retriever : 493 syntheses + oppchovec (394 docs) + raptor_enquete (125 syntheses) + 9 collections extra (portrait_entretiens, raptor_entretiens_summaries, enquete_responses, enquete_scores_commune, communes_wiki, communes_equipements, communes_geo, zones_epci, communes_profil)
+RAG v10 initialise (493 syntheses RAPTOR disponibles)
+[v12] bge-m3 → CPU (VRAM réservée au générateur)
+Chargement : 88s
+
+
+------------------------------------------------------------
+Question [causal] : Le niveau de bien-être à Ajaccio peut-il s'expliquer par une combinaison de fact
+
+  mode='baseline' : Le niveau de bien-être à Ajaccio peut-il s'expliquer par une...
+[v12] scope='locale'  question_type='factuelle'
+
+[v10] Question : Le niveau de bien-être à Ajaccio peut-il s'expliquer par une combinaison de facteurs environnementaux, socio-économiques et institutionnels ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quel est le score OppChoVec global de bien-être pour la commune d'Ajaccio, et comment se situe-t-il par rapport à la moyenne des communes corses ?
+  2. Quels sont les scores OppChoVec spécifiques aux dimensions environnementales (ex : qualité de l'air, accès aux espaces verts) pour Ajaccio, et comment se comparent-ils aux autres communes corses ?
+  3. Quels sont les indicateurs socio-économiques clés (ex : taux de chômage, revenu médian, niveau d'éducation) disponibles pour Ajaccio, et en quoi diffèrent-ils de la moyenne régionale corse ?
+  4. Quels sont les scores OppChoVec liés aux dimensions institutionnelles (ex : qualité des services publics, confiance dans les institutions locales) pour Ajaccio, et comment se positionnent-ils par rapport aux autres communes corses ?
+  5. Quelles sont les perceptions des habitants d'Ajaccio concernant leur bien-être global, notamment en lien avec les facteurs environnementaux, socio-économiques et institutionnels (verbatims ou résultats d'enquêtes locales) ?
+[v10] OppChoVec pré-injecté pour commune : Ajaccio
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quel est le score OppChoVec global de bien-être pour la commune d'Ajaccio, et co...
+  [RAPTOR] Dimensions detectees: {'nom': 'Ajaccio', 'noms': ['Ajaccio']}
+  [RAPTOR] Vue trouvee: commune (N=129)
+  [2/5] Quels sont les scores OppChoVec spécifiques aux dimensions environnementales (ex...
+  [RAPTOR] Dimensions detectees: {'nom': 'Ajaccio', 'noms': ['Ajaccio'], 'dimension': 'Environnement'}
+  [RAPTOR] Vue trouvee: dimension*commune (N=23)
+  [3/5] Quels sont les indicateurs socio-économiques clés (ex : taux de chômage, revenu ...
+  [RAPTOR] Dimensions detectees: {'nom': 'Ajaccio', 'noms': ['Ajaccio'], 'dimension': 'Education'}
+  [RAPTOR] Vue trouvee: dimension*commune (N=8)
+  [4/5] Quels sont les scores OppChoVec liés aux dimensions institutionnelles (ex : qual...
+  [RAPTOR] Dimensions detectees: {'nom': 'Ajaccio', 'noms': ['Ajaccio']}
+  [RAPTOR] Vue trouvee: commune (N=129)
+  [5/5] Quelles sont les perceptions des habitants d'Ajaccio concernant leur bien-être g...
+  [RAPTOR] Dimensions detectees: {'nom': 'Ajaccio', 'noms': ['Ajaccio'], 'dimension': 'Environnement'}
+  [RAPTOR] Vue trouvee: dimension*commune (N=23)
+
+[v10] Etape 3/4 : Synthese finale (Mistral Large)...
+
+[v10] Etape 4/4 : Notation de la dimension (Mistral Large)...
+  -> Notation non applicable (Désactivée en v12 (chemin d'inférence)...)
+[v10] Pipeline termine.
+  baseline : 1450.4s | answer_compl=4000 | total_compl=6257
+
+  mode='phase1' : Le niveau de bien-être à Ajaccio peut-il s'expliquer par une...
+[v12] scope='locale'  question_type='factuelle'
+
+[v10] Question : Le niveau de bien-être à Ajaccio peut-il s'expliquer par une combinaison de facteurs environnementaux, socio-économiques et institutionnels ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quel est le score OppChoVec global de bien-être pour la commune d'Ajaccio, et comment se situe-t-il par rapport à la moyenne des communes corses ?
+  2. Quels sont les scores OppChoVec spécifiques aux dimensions environnementales (ex : qualité de l'air, accès aux espaces verts) pour Ajaccio, et comment se comparent-ils aux autres communes corses ?
+  3. Quels sont les indicateurs socio-économiques clés (ex : taux de chômage, revenu médian, niveau d'éducation) disponibles pour Ajaccio, et comment ces valeurs influencent-elles le score de bien-être global ?
+  4. Quels sont les scores OppChoVec liés aux dimensions institutionnelles (ex : qualité des services publics, confiance dans les institutions locales) pour Ajaccio, et comment ces scores se positionnent-ils par rapport aux autres communes de Corse ?
+  5. Quelles sont les perceptions des habitants d'Ajaccio concernant leur bien-être, notamment en lien avec les facteurs environnementaux, socio-économiques et institutionnels (verbatims ou résultats d'enquêtes locales) ?
+[v10] OppChoVec pré-injecté pour commune : Ajaccio
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quel est le score OppChoVec global de bien-être pour la commune d'Ajaccio, et co...
+  [RAPTOR] Dimensions detectees: {'nom': 'Ajaccio', 'noms': ['Ajaccio']}
+  [RAPTOR] Vue trouvee: commune (N=129)
+  [2/5] Quels sont les scores OppChoVec spécifiques aux dimensions environnementales (ex...
+  [RAPTOR] Dimensions detectees: {'nom': 'Ajaccio', 'noms': ['Ajaccio'], 'dimension': 'Environnement'}
+  [RAPTOR] Vue trouvee: dimension*commune (N=23)
+  [3/5] Quels sont les indicateurs socio-économiques clés (ex : taux de chômage, revenu ...
+  [RAPTOR] Dimensions detectees: {'nom': 'Ajaccio', 'noms': ['Ajaccio'], 'dimension': 'Education'}
+  [RAPTOR] Vue trouvee: dimension*commune (N=8)
+  [4/5] Quels sont les scores OppChoVec liés aux dimensions institutionnelles (ex : qual...
+  [RAPTOR] Dimensions detectees: {'nom': 'Ajaccio', 'noms': ['Ajaccio']}
+  [RAPTOR] Vue trouvee: commune (N=129)
+  [5/5] Quelles sont les perceptions des habitants d'Ajaccio concernant leur bien-être, ...
+  [RAPTOR] Dimensions detectees: {'nom': 'Ajaccio', 'noms': ['Ajaccio'], 'dimension': 'Environnement'}
+  [RAPTOR] Vue trouvee: dimension*commune (N=23)
+
+[v10] Etape 3/4 : Synthese finale (Mistral Large)...
+
+[v10] Etape 4/4 : Notation de la dimension (Mistral Large)...
+  -> Notation non applicable (Désactivée en v12 (chemin d'inférence)...)
+[v10] Pipeline termine.
+  phase1   : 1081.1s | answer_compl=2000 | total_compl=3715
+
+------------------------------------------------------------
+Question [multi_communes] : Quelle commune obtient le score objectif global le plus élevé entre Ajaccio et B
+
+  mode='baseline' : Quelle commune obtient le score objectif global le plus élev...
+[v12] scope='locale'  question_type='factuelle'
+
+[v10] Question : Quelle commune obtient le score objectif global le plus élevé entre Ajaccio et Bastia ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quel est le score OppChoVec global de la commune d'Ajaccio ?
+  2. Quel est le score OppChoVec global de la commune de Bastia ?
+  3. Quelle commune, entre Ajaccio et Bastia, présente le score OppChoVec global le plus élevé ?
+  4. Quels sont les scores OppChoVec détaillés par dimension (ex : cadre de vie, services, sécurité, etc.) pour Ajaccio et Bastia, si disponibles ?
+  5. Existe-t-il des écarts significatifs entre les scores OppChoVec des deux communes sur des dimensions spécifiques ?
+[v10] Classement OppChoVec global injecté dans le contexte des sous-questions
+[v10] OppChoVec pré-injecté pour commune : Ajaccio
+[v10] OppChoVec pré-injecté pour commune : Bastia
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quel est le score OppChoVec global de la commune d'Ajaccio ?...
+  [RAPTOR] Dimensions detectees: {'nom': 'Ajaccio', 'noms': ['Ajaccio']}
+  [RAPTOR] Vue trouvee: commune (N=129)
+    [ERREUR llama-server] Request timed out.
+  ERREUR : Request timed out.
+  baseline : 1813.7s | answer_compl=0 | total_compl=0
+
+  mode='phase1' : Quelle commune obtient le score objectif global le plus élev...
+[v12] scope='locale'  question_type='factuelle'
+
+[v10] Question : Quelle commune obtient le score objectif global le plus élevé entre Ajaccio et Bastia ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quel est le score OppChoVec global de la commune d'Ajaccio ?
+  2. Quel est le score OppChoVec global de la commune de Bastia ?
+  3. Quelle commune, entre Ajaccio et Bastia, présente le score OppChoVec le plus élevé ?
+  4. Quels sont les principaux indicateurs territoriaux (ex : accès aux services, environnement, sécurité) qui expliquent la différence de score OppChoVec entre Ajaccio et Bastia, si elle existe ?
+  5. Existe-t-il des écarts significatifs entre les scores OppChoVec des deux communes sur des dimensions spécifiques (ex : cadre de vie, dynamisme économique) ?
+[v10] Classement OppChoVec global injecté dans le contexte des sous-questions
+[v10] OppChoVec pré-injecté pour commune : Ajaccio
+[v10] OppChoVec pré-injecté pour commune : Bastia
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quel est le score OppChoVec global de la commune d'Ajaccio ?...
+  [RAPTOR] Dimensions detectees: {'nom': 'Ajaccio', 'noms': ['Ajaccio']}
+  [RAPTOR] Vue trouvee: commune (N=129)
+  [2/5] Quel est le score OppChoVec global de la commune de Bastia ?...
+  [RAPTOR] Dimensions detectees: {'nom': 'Bastia', 'noms': ['Bastia']}
+  [RAPTOR] Vue trouvee: commune (N=66)
+    [ERREUR llama-server] Request timed out.
+  ERREUR : Request timed out.
+  phase1   : 29187.5s | answer_compl=0 | total_compl=0
+
+------------------------------------------------------------
+Question [no_data] : Quel est le niveau de bien-être subjectif à Aïti ?
+
+  mode='baseline' : Quel est le niveau de bien-être subjectif à Aïti ?...
+[v12] scope='globale'  question_type='factuelle'
+
+[v10] Question : Quel est le niveau de bien-être subjectif à Aïti ?
+[v10] Question globale Corse détectée (pas de commune) — bypass décomposition
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Vue trouvee: profession (N=150)
+[v10] Doc agrégat Corse injecté
+[v10] Pipeline global termine.
+  baseline : 45242.5s | answer_compl=800 | total_compl=2029
+
+  mode='phase1' : Quel est le niveau de bien-être subjectif à Aïti ?...
+[v12] scope='globale'  question_type='factuelle'
+
+[v10] Question : Quel est le niveau de bien-être subjectif à Aïti ?
+[v10] Question globale Corse détectée (pas de commune) — bypass décomposition
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Vue trouvee: profession (N=150)
+[v10] Doc agrégat Corse injecté
+[v10] Pipeline global termine.
+  phase1   : 41.3s | answer_compl=400 | total_compl=715
+
+
+Résultats sauvegardés : C:\These\Données2\fichiers_pour_rag\comparaisons_rag\smoke_phase1\smoke_phase1_results.json
+
+-- Resume tokens answer ------------------------------------------
+Question          Base compl   P1 compl     Gain
+  causal                  4000       2000     -50%
+  multi_communes             0          0        ?
+  no_data                  800        400     -50%

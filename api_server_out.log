@@ -1,0 +1,693 @@
+AVERTISSEMENT: RAG v2.1 non disponible (No module named 'llama_index')
+AVERTISSEMENT: LlamaIndex non installé, RAG v7 désactivé (No module named 'llama_index')
+AVERTISSEMENT: LlamaIndex non installé, RAG v8 désactivé (No module named 'llama_index')
+
+============================================================
+DÉMARRAGE DU SERVEUR API MULTI-VERSION
+============================================================
+Host: 0.0.0.0
+Port: 8000
+Documentation: http://localhost:8000/docs
+============================================================
+
+AVERTISSEMENT: RAG v2.1 non disponible (No module named 'llama_index')
+AVERTISSEMENT: LlamaIndex non installé, RAG v7 désactivé (No module named 'llama_index')
+AVERTISSEMENT: LlamaIndex non installé, RAG v8 désactivé (No module named 'llama_index')
+
+============================================================
+INITIALISATION MULTI-VERSION RAG
+============================================================
+
+
+[1/10] Initialisation RAG v1 (basique)...
+
+============================================================
+INITIALISATION RAG v1 (BASIQUE)
+============================================================
+
+Chargement du modèle d'embeddings: BAAI/bge-m3
+OK Modèle d'embeddings chargé
+
+Connexion à ChromaDB: ./chroma_portrait
+OK Collection 'portrait_verbatims' chargée (690 documents)
+
+============================================================
+OK RAG v1 INITIALISE
+============================================================
+
+OK RAG v1 initialise
+
+[2/10] RAG v2 désactivé (chroma_v2 corrompu)
+
+[2.1/9] Initialisation RAG v2.1 (LlamaIndex)...
+AVERTISSEMENT: RAG v2.1 non disponible (llama-index manquant)
+
+[2.2/10] RAG v2.2 désactivé (chroma_portrait — Rust panic ChromaDB)
+
+[3-5/10] RAG v3, v4, v5 désactivés (chroma_v2 corrompu)
+
+[6/9] Initialisation RAG v6 (G-Retriever)...
+================================================================================
+INITIALISATION GRAPH-RAG (Neo4j + ChromaDB)
+================================================================================
+Connexion à Neo4j: bolt://localhost:7687
+  Mode: Sans authentification
+[X] Erreur de connexion Neo4j: Couldn't connect to localhost:7687 (resolved to ('[::1]:7687', '127.0.0.1:7687')):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)
+Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)
+AVERTISSEMENT: RAG v6 non disponible: Couldn't connect to localhost:7687 (resolved to ('[::1]:7687', '127.0.0.1:7687')):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)
+Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)
+
+[7/9] Initialisation RAG v7 (LlamaIndex - graphes optionnels)...
+AVERTISSEMENT: RAG v7 non disponible (llama-index manquant)
+
+[8/9] Initialisation RAG v8 (LlamaIndex FULL - graphes OBLIGATOIRES)...
+AVERTISSEMENT: RAG v8 non disponible (llama-index manquant)
+
+[9/11] Initialisation RAG v9 (RAPTOR-lite)...
+RAPTOR Retriever : 493 syntheses + oppchovec (394 docs) + raptor_enquete (125 syntheses) + 9 collections extra (portrait_entretiens, raptor_entretiens_summaries, enquete_responses, enquete_scores_commune, communes_wiki, communes_equipements, communes_geo, zones_epci, communes_profil)
+OK RAG v9 initialisé (493 synthèses RAPTOR)
+
+[10/11] Initialisation RAG v10 (RAPTOR + Sous-questions)...
+RAPTOR Retriever : 493 syntheses + oppchovec (394 docs) + raptor_enquete (125 syntheses) + 9 collections extra (portrait_entretiens, raptor_entretiens_summaries, enquete_responses, enquete_scores_commune, communes_wiki, communes_equipements, communes_geo, zones_epci, communes_profil)
+RAG v10 initialise (493 syntheses RAPTOR disponibles)
+OK RAG v10 initialisé
+
+[11/11] Initialisation RAG v11 (Agentic ReAct+CRAG)...
+  [v11] Chargement RaptorRetriever...
+RAPTOR Retriever : 493 syntheses + oppchovec (394 docs) + raptor_enquete (125 syntheses) + 9 collections extra (portrait_entretiens, raptor_entretiens_summaries, enquete_responses, enquete_scores_commune, communes_wiki, communes_equipements, communes_geo, zones_epci, communes_profil)
+  [v11] AgenticRAGPipeline pret.
+OK RAG v11 initialisé (Agentic ReAct+CRAG)
+
+[Ablations] Initialisation des configs d'ablation...
+RAPTOR Retriever : 493 syntheses + oppchovec (394 docs) + raptor_enquete (125 syntheses) + 9 collections extra (portrait_entretiens, raptor_entretiens_summaries, enquete_responses, enquete_scores_commune, communes_wiki, communes_equipements, communes_geo, zones_epci, communes_profil)
+VanillaRAG initialisé
+OK V_vanilla initialisé (k10 + k25 partagent la même instance)
+RAPTOR Retriever : 493 syntheses + oppchovec (394 docs) + raptor_enquete (125 syntheses) + 9 collections extra (portrait_entretiens, raptor_entretiens_summaries, enquete_responses, enquete_scores_commune, communes_wiki, communes_equipements, communes_geo, zones_epci, communes_profil)
+RAG v10 initialise (493 syntheses RAPTOR disponibles)
+DecompOnlyRAG (V_decomp) initialisé
+OK V_decomp initialisé
+RAPTOR Retriever : 493 syntheses + oppchovec (394 docs) + raptor_enquete (125 syntheses) + 9 collections extra (portrait_entretiens, raptor_entretiens_summaries, enquete_responses, enquete_scores_commune, communes_wiki, communes_equipements, communes_geo, zones_epci, communes_profil)
+RAG v10 initialise (493 syntheses RAPTOR disponibles)
+DecompNoTypingRAG (V_decomp_no_typing) initialisé
+OK V_decomp_no_typing initialisé
+OK V_decomp_raptor initialisé (réutilise pipeline v10 avec use_bilan=False)
+OK V_decomp_raptor_no_typing initialisé (réutilise pipeline v10, no_typing=True)
+
+============================================================
+SYSTEMES RAG DISPONIBLES: v1, v9, v10, v11, v_vanilla_k10, v_vanilla_k25, v_decomp, v_decomp_raptor, v_decomp_no_typing, v_decomp_raptor_no_typing
+============================================================
+
+INFO:     127.0.0.1:60698 - "GET /health HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:60702 - "GET /api/health HTTP/1.1" 200 OK
+
+[2026-08-14T16:32:56.935964] Requête v_vanilla_k10 (LLM: gpt-3.5-turbo): D'après les enquêtes, quelles sont les dimensions de la qualité de vie les plus souvent mentionnées à Ajaccio ?
+[2026-08-14T16:33:03.135400] Réponse générée (v_vanilla_k10) avec 5 sources
+INFO:     127.0.0.1:55946 - "POST /api/query HTTP/1.1" 200 OK
+
+[2026-08-14T16:33:14.161220] Requête v_vanilla_k10 (LLM: gpt-3.5-turbo): Les indicateurs objectifs et les perceptions qualitatives convergent-ils ?
+[2026-08-14T16:33:29.221321] Réponse générée (v_vanilla_k10) avec 10 sources
+INFO:     127.0.0.1:54878 - "POST /api/query HTTP/1.1" 200 OK
+
+[2026-08-14T16:33:36.603897] Requête v_vanilla_k10 (LLM: gpt-3.5-turbo): Observe-t-on un écart significatif entre indicateurs objectifs et perception à Bastia ?
+[2026-08-14T16:35:15.826174] Réponse générée (v_vanilla_k10) avec 4 sources
+INFO:     127.0.0.1:64018 - "POST /api/query HTTP/1.1" 200 OK
+
+[2026-08-14T16:35:25.404558] Requête v_vanilla_k10 (LLM: gpt-3.5-turbo): Existe-t-il une commune avec de bons indicateurs socio-économiques mais un faible bien-être perçu ?
+[2026-08-14T16:35:36.796758] Réponse générée (v_vanilla_k10) avec 10 sources
+INFO:     127.0.0.1:51504 - "POST /api/query HTTP/1.1" 200 OK
+
+[2026-08-14T16:35:44.746891] Requête v_vanilla_k10 (LLM: gpt-3.5-turbo): Une amélioration d’un indicateur objectif peut-elle ne produire aucun effet observable sur le bien-être subjectif ?
+[2026-08-14T16:36:04.812453] Réponse générée (v_vanilla_k10) avec 10 sources
+INFO:     127.0.0.1:51516 - "POST /api/query HTTP/1.1" 200 OK
+
+[2026-08-14T16:36:12.668193] Requête v_decomp_raptor (LLM: gpt-3.5-turbo): D'après les enquêtes, quelles sont les dimensions de la qualité de vie les plus souvent mentionnées à Ajaccio ?
+
+[v10] Question : D'après les enquêtes, quelles sont les dimensions de la qualité de vie les plus souvent mentionnées à Ajaccio ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quels sont les thèmes les plus fréquemment cités dans les verbatims citoyens d'Ajaccio concernant les aspects positifs de la qualité de vie (ex : environnement, services, sécurité, lien social) ?
+  2. Quels sont les thèmes les plus souvent évoqués dans les retours négatifs des habitants d'Ajaccio sur leur qualité de vie (ex : nuisances, accès aux soins, transports) ?
+  3. Parmi les dimensions évaluées dans les enquêtes locales (ex : cadre de vie, accès aux loisirs, dynamisme économique), lesquelles obtiennent les scores de satisfaction les plus élevés à Ajaccio ?
+  4. Quelles dimensions de la qualité de vie à Ajaccio sont associées aux scores de satisfaction les plus bas dans les enquêtes quantitatives (ex : logement, emploi, propreté) ?
+  5. Existe-t-il des écarts significatifs entre les perceptions subjectives des Ajacciens (verbatims) et les indicateurs objectifs (scores OppChoVec) pour les dimensions clés de la qualité de vie (ex : sécurité, environnement) ?
+[v10] OppChoVec pré-injecté pour commune : Ajaccio
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quels sont les thèmes les plus fréquemment cités dans les verbatims citoyens d'A...
+  [RAPTOR] Dimensions detectees: {'nom': 'Ajaccio', 'noms': ['Ajaccio'], 'dimension': 'Environnement'}
+  [RAPTOR] Vue trouvee: dimension*commune (N=23)
+  [2/5] Quels sont les thèmes les plus souvent évoqués dans les retours négatifs des hab...
+  [RAPTOR] Dimensions detectees: {'nom': 'Ajaccio', 'noms': ['Ajaccio'], 'dimension': 'Santé'}
+  [RAPTOR] Vue trouvee: dimension*commune (N=19)
+  [3/5] Parmi les dimensions évaluées dans les enquêtes locales (ex : cadre de vie, accè...
+  [RAPTOR] Dimensions detectees: {'profession': 'Salarié(e) – Cadre ou profession intermédiaire', 'nom': 'Ajaccio', 'noms': ['Ajaccio'], 'dimension': 'Culture'}
+  [RAPTOR] Vue trouvee: profession*commune (N=36)
+  [4/5] Quelles dimensions de la qualité de vie à Ajaccio sont associées aux scores de s...
+  [RAPTOR] Dimensions detectees: {'nom': 'Ajaccio', 'noms': ['Ajaccio'], 'dimension': 'Logement'}
+  [RAPTOR] Vue trouvee: dimension*commune (N=9)
+  [5/5] Existe-t-il des écarts significatifs entre les perceptions subjectives des Ajacc...
+  [RAPTOR] Dimensions detectees: {'nom': 'Ajaccio', 'noms': ['Ajaccio'], 'dimension': 'Environnement'}
+  [RAPTOR] Vue trouvee: dimension*commune (N=23)
+
+[v10] Etape 3/4 : Synthese finale (Mistral Large)...
+
+[v10] Etape 4/4 : Notation de la dimension (Mistral Large)...
+  -> qualité de vie globale à Ajaccio : 3/5
+     Si je devais noter la qualité de vie globale à Ajaccio, je mettrais 3/5 car les atouts majeurs (envi...
+[v10] Pipeline termine.
+[2026-08-14T16:37:22.704274] Réponse générée (v_decomp_raptor) avec 67 sources
+INFO:     127.0.0.1:51527 - "POST /api/query HTTP/1.1" 200 OK
+
+[2026-08-14T16:37:31.934170] Requête v_decomp_raptor (LLM: gpt-3.5-turbo): Les indicateurs objectifs et les perceptions qualitatives convergent-ils ?
+
+[v10] Question : Les indicateurs objectifs et les perceptions qualitatives convergent-ils ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quel est le score OppChoVec moyen des communes corses pour les dimensions objectives du bien-être (ex : accès aux services, environnement, santé) ?
+  2. Quels sont les écarts observés entre les scores OppChoVec des communes corses et leur classement en termes de qualité de vie perçue dans les enquêtes territoriales ?
+  3. Quels verbatims citoyens illustrent les perceptions des habitants sur les dimensions du bien-être où les indicateurs objectifs (OppChoVec) sont les plus élevés ou les plus faibles ?
+  4. Existe-t-il une corrélation statistique entre les scores OppChoVec des communes corses et les résultats des enquêtes de satisfaction des habitants (ex : taux de satisfaction globale) ?
+  5. Quelles dimensions du bien-être (objectives ou subjectives) présentent les divergences les plus marquées entre indicateurs territoriaux et perceptions des citoyens en Corse ?
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quel est le score OppChoVec moyen des communes corses pour les dimensions object...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Santé'}
+  [RAPTOR] Vue trouvee: dimension (N=111)
+  [2/5] Quels sont les écarts observés entre les scores OppChoVec des communes corses et...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Vue trouvee: dimension*profession (N=9)
+  [RAPTOR] Classement dimensions trouvé (scope=global)
+  [3/5] Quels verbatims citoyens illustrent les perceptions des habitants sur les dimens...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignoré (question globale, vue 'commune')
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [4/5] Existe-t-il une corrélation statistique entre les scores OppChoVec des communes ...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignoré (question globale, vue 'age_range*commune')
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [5/5] Quelles dimensions du bien-être (objectives ou subjectives) présentent les diver...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Vue trouvee: dimension*age_range (N=18)
+
+[v10] Etape 3/4 : Synthese finale (Mistral Large)...
+
+[v10] Etape 4/4 : Notation de la dimension (Mistral Large)...
+  -> qualité de vie en Corse (accès aux opportunités et services) : 3/5
+     Si je devais noter la qualité de vie en Corse sur l'accès aux opportunités et services, je mettrais ...
+[v10] Pipeline termine.
+[2026-08-14T16:39:05.159159] Réponse générée (v_decomp_raptor) avec 76 sources
+INFO:     127.0.0.1:58011 - "POST /api/query HTTP/1.1" 200 OK
+
+[2026-08-14T16:39:14.872552] Requête v_decomp_raptor (LLM: gpt-3.5-turbo): Observe-t-on un écart significatif entre indicateurs objectifs et perception à Bastia ?
+
+[v10] Question : Observe-t-on un écart significatif entre indicateurs objectifs et perception à Bastia ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quel est le score OppChoVec global de la commune de Bastia, et comment se situe-t-il par rapport à la moyenne des communes corses ?
+  2. Quels sont les principaux indicateurs objectifs (ex : accès aux services, environnement, sécurité) mesurés à Bastia dans les enquêtes territoriales, et quelles sont leurs valeurs comparées à la moyenne régionale ?
+  3. Quelle est la perception globale des habitants de Bastia concernant leur qualité de vie, telle qu'exprimée dans les verbatims citoyens ou enquêtes de satisfaction (ex : sentiment de bien-être, satisfaction vis-à-vis des infrastructures) ?
+  4. Observe-t-on des écarts notables entre les scores objectifs (OppChoVec/indicateurs territoriaux) et les perceptions subjectives des habitants de Bastia sur des dimensions spécifiques comme l'accès aux soins, la propreté ou la tranquillité ?
+  5. Existe-t-il des thèmes récurrents dans les verbatims citoyens de Bastia qui expliquent un décalage entre les indicateurs objectifs et le ressenti des habitants (ex : insatisfaction malgré des scores corrects, ou satisfaction malgré des indicateurs faibles) ?
+[v10] OppChoVec pré-injecté pour commune : Bastia
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quel est le score OppChoVec global de la commune de Bastia, et comment se situe-...
+  [RAPTOR] Dimensions detectees: {'nom': 'Bastia', 'noms': ['Bastia']}
+  [RAPTOR] Vue trouvee: commune (N=66)
+  [2/5] Quels sont les principaux indicateurs objectifs (ex : accès aux services, enviro...
+  [RAPTOR] Dimensions detectees: {'nom': 'Bastia', 'noms': ['Bastia'], 'dimension': 'Environnement'}
+  [RAPTOR] Vue trouvee: dimension*commune (N=12)
+  [3/5] Quelle est la perception globale des habitants de Bastia concernant leur qualité...
+  [RAPTOR] Dimensions detectees: {'nom': 'Bastia', 'noms': ['Bastia']}
+  [RAPTOR] Vue trouvee: commune (N=66)
+  [4/5] Observe-t-on des écarts notables entre les scores objectifs (OppChoVec/indicateu...
+  [RAPTOR] Dimensions detectees: {'nom': 'Bastia', 'noms': ['Bastia'], 'dimension': 'Santé'}
+  [RAPTOR] Vue trouvee: dimension*commune (N=17)
+  [5/5] Existe-t-il des thèmes récurrents dans les verbatims citoyens de Bastia qui expl...
+  [RAPTOR] Dimensions detectees: {'nom': 'Bastia', 'noms': ['Bastia']}
+  [RAPTOR] Vue trouvee: commune (N=66)
+
+[v10] Etape 3/4 : Synthese finale (Mistral Large)...
+
+[v10] Etape 4/4 : Notation de la dimension (Mistral Large)...
+  -> qualité de vie globale à Bastia (écart perception/indicateurs) : 2/5
+     Si je devais noter la qualité de vie globale à Bastia en intégrant l'écart entre perception citoyenn...
+[v10] Pipeline termine.
+[2026-08-14T16:40:54.345767] Réponse générée (v_decomp_raptor) avec 67 sources
+INFO:     127.0.0.1:62812 - "POST /api/query HTTP/1.1" 200 OK
+
+[2026-08-14T16:41:02.211334] Requête v_decomp_raptor (LLM: gpt-3.5-turbo): Existe-t-il une commune avec de bons indicateurs socio-économiques mais un faible bien-être perçu ?
+
+[v10] Question : Existe-t-il une commune avec de bons indicateurs socio-économiques mais un faible bien-être perçu ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quel est le classement des communes corses selon leur score OppChoVec (indicateur socio-économique objectif) ?
+  2. Quel est le niveau de bien-être perçu (scores d'enquêtes ou verbatims citoyens) dans les communes identifiées comme ayant les meilleurs scores OppChoVec ?
+  3. Parmi les communes avec un score OppChoVec élevé, lesquelles présentent un écart significatif entre leur indicateur socio-économique et leur bien-être perçu (données d'enquêtes ou ressentis citoyens) ?
+  4. Quels sont les verbatims citoyens ou perceptions des habitants des communes à fort score OppChoVec mais faible bien-être perçu, illustrant ce décalage ?
+  5. Existe-t-il des indicateurs complémentaires (ex : taux de chômage, accès aux services) dans ces communes qui pourraient expliquer le faible bien-être perçu malgré de bons scores socio-économiques globaux ?
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quel est le classement des communes corses selon leur score OppChoVec (indicateu...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignoré (question globale, vue 'age_range*commune')
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [RAPTOR] Classement dimensions trouvé (scope=global)
+  [2/5] Quel est le niveau de bien-être perçu (scores d'enquêtes ou verbatims citoyens) ...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Vue trouvee: age_range*profession (N=18)
+  [3/5] Parmi les communes avec un score OppChoVec élevé, lesquelles présentent un écart...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Vue trouvee: age_range*profession (N=6)
+  [4/5] Quels sont les verbatims citoyens ou perceptions des habitants des communes à fo...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignoré (question globale, vue 'dimension*commune')
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [5/5] Existe-t-il des indicateurs complémentaires (ex : taux de chômage, accès aux ser...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Emploi'}
+  [RAPTOR] Vue trouvee: dimension (N=16)
+
+[v10] Etape 3/4 : Synthese finale (Mistral Large)...
+INFO:     127.0.0.1:49170 - "POST /api/query HTTP/1.1" 500 Internal Server Error
+
+[2026-08-14T16:44:39.225941] Requête v_decomp_raptor (LLM: gpt-3.5-turbo): Une amélioration d’un indicateur objectif peut-elle ne produire aucun effet observable sur le bien-être subjectif ?
+
+[v10] Question : Une amélioration d’un indicateur objectif peut-elle ne produire aucun effet observable sur le bien-être subjectif ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+INFO:     127.0.0.1:58052 - "POST /api/query HTTP/1.1" 500 Internal Server Error
+
+[2026-08-14T18:34:32.201116] Requête v_decomp_raptor (LLM: gpt-3.5-turbo): Existe-t-il une commune avec de bons indicateurs socio-économiques mais un faible bien-être perçu ?
+
+[v10] Question : Existe-t-il une commune avec de bons indicateurs socio-économiques mais un faible bien-être perçu ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quel est le classement des communes corses selon leur score OppChoVec (indicateur socio-économique global) pour identifier celles en tête du classement ?
+  2. Parmi les communes avec les scores OppChoVec les plus élevés, quelles sont celles dont le score de satisfaction globale des habitants (issu des enquêtes de bien-être perçu) est inférieur à la moyenne corse ?
+  3. Pour les communes identifiées comme ayant un écart significatif entre un score OppChoVec élevé et un faible bien-être perçu, quels sont les verbatims citoyens illustrant ce décalage (ex : insatisfaction liée à l'environnement, aux services, ou à la vie sociale) ?
+  4. Quelle est la valeur médiane du score de bien-être perçu dans les enquêtes pour les communes corses, et comment se situe-t-elle par rapport aux communes aux indicateurs socio-économiques élevés mais à faible bien-être perçu ?
+  5. Existe-t-il des communes où le score OppChoVec est supérieur au 75e percentile corse, mais où le taux de réponse négative (ex : insatisfaction) dans les enquêtes de bien-être perçu dépasse 50 % des répondants ?
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quel est le classement des communes corses selon leur score OppChoVec (indicateu...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignoré (question globale, vue 'age_range*commune')
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [RAPTOR] Classement dimensions trouvé (scope=global)
+  [2/5] Parmi les communes avec les scores OppChoVec les plus élevés, quelles sont celle...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Vue trouvee: dimension*profession (N=9)
+  [3/5] Pour les communes identifiées comme ayant un écart significatif entre un score O...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Environnement'}
+  [RAPTOR] Vue trouvee: dimension (N=134)
+  [4/5] Quelle est la valeur médiane du score de bien-être perçu dans les enquêtes pour ...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Vue trouvee: dimension*profession (N=9)
+  [5/5] Existe-t-il des communes où le score OppChoVec est supérieur au 75e percentile c...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignoré (question globale, vue 'age_range*commune')
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+
+[v10] Etape 3/4 : Synthese finale (Mistral Large)...
+
+[v10] Etape 4/4 : Notation de la dimension (Mistral Large)...
+  -> décalage entre indicateurs socio-économiques objectifs et bien-être perçu à Bastelicaccia : 3/5
+     Si je devais noter le décalage entre les indicateurs socio-économiques objectifs et le bien-être per...
+[v10] Pipeline termine.
+[2026-08-14T18:38:44.372633] Réponse générée (v_decomp_raptor) avec 79 sources
+INFO:     127.0.0.1:57366 - "POST /api/query HTTP/1.1" 200 OK
+
+[2026-08-14T18:38:59.656873] Requête v_decomp_raptor (LLM: gpt-3.5-turbo): Une amélioration d’un indicateur objectif peut-elle ne produire aucun effet observable sur le bien-être subjectif ?
+
+[v10] Question : Une amélioration d’un indicateur objectif peut-elle ne produire aucun effet observable sur le bien-être subjectif ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quel est l'évolution récente des scores OppChoVec (indicateurs objectifs de bien-être) à l'échelle de la Corse, par dimension (ex : santé, environnement, emploi) ?
+  2. Quels sont les scores moyens de bien-être subjectif (issus des enquêtes territoriales) rapportés par les habitants de Corse sur la même période, et comment ont-ils évolué ?
+  3. Existe-t-il des communes corses où une amélioration significative d’un indicateur objectif (ex : baisse du chômage, hausse du revenu médian) n’a pas été accompagnée d’une hausse du score de bien-être subjectif dans les enquêtes citoyennes ?
+  4. Quels verbatims citoyens (issus des enquêtes ou consultations) illustrent une perception de stagnation ou de détérioration du bien-être malgré des indicateurs objectifs en progression ?
+  5. Quels facteurs contextuels (ex : crise sociale, événement climatique, changement politique) pourraient expliquer un décalage entre amélioration objective et absence d’effet sur le bien-être subjectif en Corse, selon les données disponibles ?
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quel est l'évolution récente des scores OppChoVec (indicateurs objectifs de bien...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Santé'}
+  [RAPTOR] Vue trouvee: dimension (N=111)
+  [2/5] Quels sont les scores moyens de bien-être subjectif (issus des enquêtes territor...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignoré (question globale, vue 'age_range*commune')
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [3/5] Existe-t-il des communes corses où une amélioration significative d’un indicateu...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Emploi'}
+  [RAPTOR] Vue trouvee: dimension (N=16)
+  [4/5] Quels verbatims citoyens (issus des enquêtes ou consultations) illustrent une pe...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Vue trouvee: age_range*profession (N=75)
+  [5/5] Quels facteurs contextuels (ex : crise sociale, événement climatique, changement...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Vue trouvee: profession (N=132)
+
+[v10] Etape 3/4 : Synthese finale (Mistral Large)...
+
+[v10] Etape 4/4 : Notation de la dimension (Mistral Large)...
+  -> bien-être subjectif en Corse : 2/5
+     Si je devais noter le bien-être subjectif en Corse, je mettrais 2/5 car malgré des indicateurs objec...
+[v10] Pipeline termine.
+[2026-08-14T18:40:17.900218] Réponse générée (v_decomp_raptor) avec 77 sources
+INFO:     127.0.0.1:58941 - "POST /api/query HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61326 - "GET /api/health HTTP/1.1" 200 OK
+
+[2026-08-14T20:24:43.276316] Requête v_decomp_raptor (LLM: gpt-3.5-turbo): Les différences observées entre communes peuvent-elles être influencées par des différences de profil des répondants ?
+
+[v10] Question : Les différences observées entre communes peuvent-elles être influencées par des différences de profil des répondants ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quel est le score OppChoVec moyen des communes corses en fonction de leur taille démographique (petites, moyennes, grandes communes) ?
+  2. Existe-t-il une corrélation entre le score OppChoVec d'une commune et la répartition des répondants par tranche d'âge (données d'enquête disponibles à l'échelle communale) ?
+  3. Les enquêtes disponibles montrent-elles des différences dans la structure socio-professionnelle (CSP) des répondants entre communes, et si oui, quelles sont les principales variations ?
+  4. Peut-on observer des écarts significatifs dans les scores de bien-être subjectif (ex : satisfaction globale, sentiment de sécurité) entre communes, une fois contrôlée la taille de l'échantillon de répondants ?
+  5. Les verbatims citoyens révèlent-ils des perceptions différentes du bien-être selon le profil des répondants (âge, CSP) au sein d'une même commune, et ces perceptions varient-elles entre communes ?
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quel est le score OppChoVec moyen des communes corses en fonction de leur taille...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignoré (question globale, vue 'age_range*commune')
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [2/5] Existe-t-il une corrélation entre le score OppChoVec d'une commune et la réparti...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignoré (question globale, vue 'age_range*commune')
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [3/5] Les enquêtes disponibles montrent-elles des différences dans la structure socio-...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Vue trouvee: age_range*profession (N=6)
+  [4/5] Peut-on observer des écarts significatifs dans les scores de bien-être subjectif...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Sécurité'}
+  [RAPTOR] Vue trouvee: dimension (N=26)
+  [5/5] Les verbatims citoyens révèlent-ils des perceptions différentes du bien-être sel...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Vue trouvee: dimension*age_range (N=19)
+
+[v10] Etape 3/4 : Synthese finale (Mistral Large)...
+
+[v10] Etape 4/4 : Notation de la dimension (Mistral Large)...
+  -> qualité de vie globale et disparités territoriales en Corse : 3/5
+     Si je devais noter la qualité de vie globale et ses disparités territoriales en Corse, je mettrais 3...
+[v10] Pipeline termine.
+[2026-08-14T20:26:06.734621] Réponse générée (v_decomp_raptor) avec 61 sources
+INFO:     127.0.0.1:54748 - "POST /api/query HTTP/1.1" 200 OK
+
+[2026-08-14T20:26:08.803717] Requête v_decomp_raptor (LLM: gpt-3.5-turbo): Que pensent les entrepreneurs Ajacciens de la qualité de vie ?
+
+[v10] Question : Que pensent les entrepreneurs Ajacciens de la qualité de vie ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quels sont les verbatims des entrepreneurs Ajacciens concernant leur satisfaction globale vis-à-vis de la qualité de vie dans la commune (enquêtes ou retours citoyens disponibles) ?
+  2. Quels aspects spécifiques de la qualité de vie (ex : accès aux services, dynamisme économique, cadre de vie) sont les plus souvent mentionnés par les entrepreneurs Ajacciens dans leurs retours qualitatifs ?
+  3. Quel est le score OppChoVec global de la commune d'Ajaccio, reflétant des indicateurs objectifs de bien-être territorial (sans ventilation par sous-population) ?
+  4. Quels sont les résultats des enquêtes locales (si disponibles) mesurant la perception des entrepreneurs Ajacciens sur des dimensions clés comme l'environnement économique, les infrastructures ou la vie sociale ?
+  5. Comment les entrepreneurs Ajacciens évaluent-ils, dans les verbatims ou enquêtes, l'équilibre entre vie professionnelle et vie personnelle dans la commune ?
+[v10] OppChoVec pré-injecté pour commune : Ajaccio
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quels sont les verbatims des entrepreneurs Ajacciens concernant leur satisfactio...
+  [RAPTOR] Dimensions detectees: {'profession': 'Travailleur(se) indépendant(e) / Entrepreneur(e)', 'nom': 'Ajaccio', 'noms': ['Ajaccio']}
+  [RAPTOR] Vue trouvee: profession*commune (N=6)
+  [2/5] Quels aspects spécifiques de la qualité de vie (ex : accès aux services, dynamis...
+  [RAPTOR] Dimensions detectees: {'profession': 'Travailleur(se) indépendant(e) / Entrepreneur(e)', 'nom': 'Ajaccio', 'noms': ['Ajaccio']}
+  [RAPTOR] Vue trouvee: profession*commune (N=6)
+  [3/5] Quel est le score OppChoVec global de la commune d'Ajaccio, reflétant des indica...
+  [RAPTOR] Dimensions detectees: {'nom': 'Ajaccio', 'noms': ['Ajaccio']}
+  [RAPTOR] Vue trouvee: commune (N=129)
+  [4/5] Quels sont les résultats des enquêtes locales (si disponibles) mesurant la perce...
+  [RAPTOR] Dimensions detectees: {'profession': 'Travailleur(se) indépendant(e) / Entrepreneur(e)', 'nom': 'Ajaccio', 'noms': ['Ajaccio'], 'dimension': 'Environnement'}
+  [RAPTOR] Vue trouvee: profession*commune (N=6)
+  [5/5] Comment les entrepreneurs Ajacciens évaluent-ils, dans les verbatims ou enquêtes...
+  [RAPTOR] Dimensions detectees: {'profession': 'Travailleur(se) indépendant(e) / Entrepreneur(e)', 'nom': 'Ajaccio', 'noms': ['Ajaccio'], 'dimension': 'Ratio vie pro/vie perso'}
+  [RAPTOR] Vue trouvee: profession*commune (N=6)
+
+[v10] Etape 3/4 : Synthese finale (Mistral Large)...
+
+[v10] Etape 4/4 : Notation de la dimension (Mistral Large)...
+  -> qualité de vie des entrepreneurs à Ajaccio : 2/5
+     Si je devais noter la qualité de vie des entrepreneurs à Ajaccio, je mettrais 2/5 car les données ré...
+[v10] Pipeline termine.
+[2026-08-14T20:27:16.196536] Réponse générée (v_decomp_raptor) avec 60 sources
+INFO:     127.0.0.1:54759 - "POST /api/query HTTP/1.1" 200 OK
+
+[2026-08-14T20:27:18.245746] Requête v_decomp_raptor (LLM: gpt-3.5-turbo): Les écarts socio-économiques observés peuvent-ils être mobilisés pour expliquer les différences de bien-être entre communes corses ?
+
+[v10] Question : Les écarts socio-économiques observés peuvent-ils être mobilisés pour expliquer les différences de bien-être entre communes corses ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quel est le score OppChoVec moyen de bien-être global pour les communes corses présentant les écarts socio-économiques les plus marqués (ex : revenus médians, taux de chômage, niveau d'éducation) ?
+  2. Existe-t-il une corrélation statistique entre les indicateurs socio-économiques (revenu médian, taux de pauvreté, accès à l'emploi) et les scores OppChoVec de bien-être communal en Corse ?
+  3. Quels sont les écarts de scores OppChoVec entre les communes corses les plus favorisées et les moins favorisées sur le plan socio-économique (ex : déciles extrêmes de revenus ou de chômage) ?
+  4. Comment les habitants des communes corses défavorisées socio-économiquement perçoivent-ils leur bien-être général (verbatims ou enquêtes de satisfaction) comparé à ceux des communes plus favorisées ?
+  5. Quels indicateurs socio-économiques (ex : taux de chômage, niveau de diplôme, accès aux services publics) montrent les écarts les plus significatifs entre communes corses, et sont-ils associés à des différences de bien-être mesurées par les enquêtes territoriales ?
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quel est le score OppChoVec moyen de bien-être global pour les communes corses p...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Education'}
+  [RAPTOR] Vue trouvee: dimension (N=43)
+  [2/5] Existe-t-il une corrélation statistique entre les indicateurs socio-économiques ...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Emploi'}
+  [RAPTOR] Vue trouvee: dimension (N=16)
+  [3/5] Quels sont les écarts de scores OppChoVec entre les communes corses les plus fav...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Revenus'}
+  [RAPTOR] Vue trouvee: dimension (N=72)
+  [4/5] Comment les habitants des communes corses défavorisées socio-économiquement perç...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Vue trouvee: profession (N=132)
+  [5/5] Quels indicateurs socio-économiques (ex : taux de chômage, niveau de diplôme, ac...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Emploi'}
+  [RAPTOR] Vue trouvee: dimension (N=16)
+
+[v10] Etape 3/4 : Synthese finale (Mistral Large)...
+
+[v10] Etape 4/4 : Notation de la dimension (Mistral Large)...
+  -> écarts socio-économiques et leur impact sur le bien-être territorial en Corse : 3/5
+     Si je devais noter l'impact des écarts socio-économiques sur le bien-être territorial en Corse, je m...
+[v10] Pipeline termine.
+[2026-08-14T20:28:36.063510] Réponse générée (v_decomp_raptor) avec 90 sources
+INFO:     127.0.0.1:59556 - "POST /api/query HTTP/1.1" 200 OK
+
+[2026-08-14T20:28:38.128522] Requête v_decomp_raptor (LLM: gpt-3.5-turbo): Le score OppChoVec peut-il masquer des disparités internes importantes au sein d’une même commune ?
+
+[v10] Question : Le score OppChoVec peut-il masquer des disparités internes importantes au sein d’une même commune ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quel est le score OppChoVec moyen des communes corses et son écart-type, pour évaluer la variabilité globale entre communes ?
+  2. Existe-t-il des écarts significatifs entre les scores OppChoVec des différentes communes d’un même EPCI en Corse, et si oui, quelles sont les amplitudes maximales observées ?
+  3. Pour une commune corse donnée (exemple : la plus peuplée ou la plus étendue), quel est l’écart entre son score OppChoVec et les scores des sous-zones infra-communales identifiables par des données d’enquêtes (ex : quartiers prioritaires, zones rurales isolées) si disponibles ?
+  4. Quels indicateurs territoriaux (ex : revenu médian, taux de chômage, accès aux services) présentent les disparités internes les plus marquées au sein des communes corses, et comment ces disparités se corrèlent-elles avec le score OppChoVec communal ?
+  5. Les verbatims citoyens recueillis dans les enquêtes de bien-être en Corse révèlent-ils des perceptions contrastées de la qualité de vie au sein d’une même commune, et si oui, quelles dimensions (ex : accès aux soins, sécurité, cadre de vie) sont les plus fréquemment citées comme sources de disparités internes ?
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quel est le score OppChoVec moyen des communes corses et son écart-type, pour év...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignoré (question globale, vue 'age_range*commune')
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [2/5] Existe-t-il des écarts significatifs entre les scores OppChoVec des différentes ...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignoré (question globale, vue 'age_range*commune')
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [3/5] Pour une commune corse donnée (exemple : la plus peuplée ou la plus étendue), qu...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignoré (question globale, vue 'age_range*commune')
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [4/5] Quels indicateurs territoriaux (ex : revenu médian, taux de chômage, accès aux s...
+  [RAPTOR] Dimensions detectees: {'dimension': 'Emploi'}
+  [RAPTOR] Vue trouvee: dimension (N=16)
+  [5/5] Les verbatims citoyens recueillis dans les enquêtes de bien-être en Corse révèle...
+  [RAPTOR] Dimensions detectees: {'profession': 'Salarié(e) – Cadre ou profession intermédiaire', 'dimension': 'Santé'}
+  [RAPTOR] Vue trouvee: dimension*profession (N=25)
+
+[v10] Etape 3/4 : Synthese finale (Mistral Large)...
+
+[v10] Etape 4/4 : Notation de la dimension (Mistral Large)...
+  -> équité territoriale intra-communale en Corse (accès aux services et conditions de vie) : 2/5
+     Si je devais noter l'équité territoriale intra-communale en Corse, je mettrais 2/5 car les données r...
+[v10] Pipeline termine.
+[2026-08-14T20:29:56.236709] Réponse générée (v_decomp_raptor) avec 61 sources
+INFO:     127.0.0.1:57583 - "POST /api/query HTTP/1.1" 200 OK
+
+[2026-08-14T20:29:58.281280] Requête v_decomp_raptor (LLM: gpt-3.5-turbo): Les communes rurales présentent-elles systématiquement un score OppChoVec plus faible que les communes urbaines ?
+
+[v10] Question : Les communes rurales présentent-elles systématiquement un score OppChoVec plus faible que les communes urbaines ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quel est le score OppChoVec moyen des communes classées comme rurales en Corse selon la typologie officielle (INSEE ou autre) ?
+  2. Quel est le score OppChoVec moyen des communes classées comme urbaines en Corse selon la même typologie ?
+  3. Existe-t-il une différence statistique significative entre les scores OppChoVec moyens des communes rurales et urbaines en Corse ?
+  4. Quelle est la répartition des scores OppChoVec parmi les communes rurales corses (ex : quartiles, écarts-types) ?
+  5. Quelle est la répartition des scores OppChoVec parmi les communes urbaines corses (ex : quartiles, écarts-types) ?
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quel est le score OppChoVec moyen des communes classées comme rurales en Corse s...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignoré (question globale, vue 'age_range*commune')
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [2/5] Quel est le score OppChoVec moyen des communes classées comme urbaines en Corse ...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignoré (question globale, vue 'age_range*commune')
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [3/5] Existe-t-il une différence statistique significative entre les scores OppChoVec ...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignoré (question globale, vue 'age_range*commune')
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [4/5] Quelle est la répartition des scores OppChoVec parmi les communes rurales corses...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignoré (question globale, vue 'age_range*commune')
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+  [5/5] Quelle est la répartition des scores OppChoVec parmi les communes urbaines corse...
+  [RAPTOR] Dimensions detectees: aucune
+  [RAPTOR] Fallback ignoré (question globale, vue 'age_range*commune')
+  [RAPTOR] Aucune vue trouvee, fallback semantique
+
+[v10] Etape 3/4 : Synthese finale (Mistral Large)...
+
+[v10] Etape 4/4 : Notation de la dimension (Mistral Large)...
+  -> qualité de vie globale en Corse (sans distinction rurale/urbaine) : 2/5
+     Si je devais noter la qualité de vie globale en Corse, je mettrais 2/5 car le score moyen disponible...
+[v10] Pipeline termine.
+[2026-08-14T20:30:42.838583] Réponse générée (v_decomp_raptor) avec 46 sources
+INFO:     127.0.0.1:57594 - "POST /api/query HTTP/1.1" 200 OK
+
+[2026-08-14T20:37:51.987677] Requête v_decomp_raptor (LLM: gpt-3.5-turbo): Peut-on considérer Ajaccio comme un territoire favorable au bien-être ?
+
+[v10] Question : Peut-on considérer Ajaccio comme un territoire favorable au bien-être ?
+[v10] Etape 1/4 : Decomposition en 5 sous-questions (Mistral Large)...
+[v10] Sous-questions :
+  1. Quel est le score OppChoVec global de la commune d'Ajaccio, et comment se positionne-t-il par rapport à la moyenne des communes corses ?
+  2. Quels sont les scores OppChoVec des dimensions spécifiques (ex : cadre de vie, accès aux services, dynamisme économique) pour Ajaccio, et comment se comparent-ils aux autres communes de Corse ?
+  3. Quels sont les principaux indicateurs territoriaux objectifs (ex : densité de médecins, taux de chômage, offre culturelle) disponibles pour Ajaccio, et comment ces données reflètent-elles son niveau de bien-être ?
+  4. Quelles sont les perceptions des habitants d'Ajaccio concernant leur qualité de vie générale, d'après les verbatims citoyens ou enquêtes locales (ex : satisfaction globale, points forts et points faibles cités) ?
+  5. Comment les habitants d'Ajaccio évaluent-ils des dimensions spécifiques du bien-être (ex : sécurité, environnement, liens sociaux, accès aux soins) dans les enquêtes ou retours citoyens disponibles ?
+[v10] OppChoVec pré-injecté pour commune : Ajaccio
+
+[v10] Etape 2/4 : Reponses aux sous-questions (RAPTOR + Claude Haiku)...
+  [1/5] Quel est le score OppChoVec global de la commune d'Ajaccio, et comment se positi...
+  [RAPTOR] Dimensions detectees: {'nom': 'Ajaccio', 'noms': ['Ajaccio']}
+  [RAPTOR] Vue trouvee: commune (N=129)
+  [2/5] Quels sont les scores OppChoVec des dimensions spécifiques (ex : cadre de vie, a...
+  [RAPTOR] Dimensions detectees: {'profession': 'Salarié(e) – Cadre ou profession intermédiaire', 'nom': 'Ajaccio', 'noms': ['Ajaccio']}
+  [RAPTOR] Vue trouvee: profession*commune (N=36)
+  [3/5] Quels sont les principaux indicateurs territoriaux objectifs (ex : densité de mé...
+  [RAPTOR] Dimensions detectees: {'nom': 'Ajaccio', 'noms': ['Ajaccio'], 'dimension': 'Santé'}
+  [RAPTOR] Vue trouvee: dimension*commune (N=19)
+  [4/5] Quelles sont les perceptions des habitants d'Ajaccio concernant leur qualité de ...
+  [RAPTOR] Dimensions detectees: {'nom': 'Ajaccio', 'noms': ['Ajaccio']}
+  [RAPTOR] Vue trouvee: commune (N=129)
+  [5/5] Comment les habitants d'Ajaccio évaluent-ils des dimensions spécifiques du bien-...
+  [RAPTOR] Dimensions detectees: {'nom': 'Ajaccio', 'noms': ['Ajaccio'], 'dimension': 'Santé'}
+  [RAPTOR] Vue trouvee: dimension*commune (N=19)
+
+[v10] Etape 3/4 : Synthese finale (Mistral Large)...
+
+[v10] Etape 4/4 : Notation de la dimension (Mistral Large)...
+  -> qualité de vie globale à Ajaccio : 3/5
+     Si je devais noter la qualité de vie globale à Ajaccio, je mettrais 3/5 car les données révèlent des...
+[v10] Pipeline termine.
+[2026-08-14T20:39:08.291025] Réponse générée (v_decomp_raptor) avec 69 sources
+INFO:     127.0.0.1:60844 - "POST /api/query HTTP/1.1" 200 OK
+AVERTISSEMENT: RAG v2.1 non disponible (No module named 'llama_index')
+AVERTISSEMENT: LlamaIndex non installé, RAG v7 désactivé (No module named 'llama_index')
+AVERTISSEMENT: LlamaIndex non installé, RAG v8 désactivé (No module named 'llama_index')
+
+============================================================
+DÉMARRAGE DU SERVEUR API MULTI-VERSION
+============================================================
+Host: 0.0.0.0
+Port: 8000
+Documentation: http://localhost:8000/docs
+============================================================
+
+AVERTISSEMENT: RAG v2.1 non disponible (No module named 'llama_index')
+AVERTISSEMENT: LlamaIndex non installé, RAG v7 désactivé (No module named 'llama_index')
+AVERTISSEMENT: LlamaIndex non installé, RAG v8 désactivé (No module named 'llama_index')
+
+============================================================
+INITIALISATION MULTI-VERSION RAG
+============================================================
+
+
+[1/10] Initialisation RAG v1 (basique)...
+
+============================================================
+INITIALISATION RAG v1 (BASIQUE)
+============================================================
+
+Chargement du modèle d'embeddings: BAAI/bge-m3
+OK Modèle d'embeddings chargé
+
+Connexion à ChromaDB: ./chroma_portrait
+OK Collection 'portrait_verbatims' chargée (690 documents)
+
+============================================================
+OK RAG v1 INITIALISE
+============================================================
+
+OK RAG v1 initialise
+
+[2/10] RAG v2 désactivé (chroma_v2 corrompu)
+
+[2.1/9] Initialisation RAG v2.1 (LlamaIndex)...
+AVERTISSEMENT: RAG v2.1 non disponible (llama-index manquant)
+
+[2.2/10] RAG v2.2 désactivé (chroma_portrait — Rust panic ChromaDB)
+
+[3-5/10] RAG v3, v4, v5 désactivés (chroma_v2 corrompu)
+
+[6/9] Initialisation RAG v6 (G-Retriever)...
+================================================================================
+INITIALISATION GRAPH-RAG (Neo4j + ChromaDB)
+================================================================================
+Connexion à Neo4j: bolt://localhost:7687
+  Mode: Sans authentification
+[X] Erreur de connexion Neo4j: Couldn't connect to localhost:7687 (resolved to ('[::1]:7687', '127.0.0.1:7687')):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)
+Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)
+AVERTISSEMENT: RAG v6 non disponible: Couldn't connect to localhost:7687 (resolved to ('[::1]:7687', '127.0.0.1:7687')):
+Failed to establish connection to ResolvedIPv6Address(('::1', 7687, 0, 0)) (reason [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)
+Failed to establish connection to ResolvedIPv4Address(('127.0.0.1', 7687)) (reason [WinError 10061] Aucune connexion n’a pu être établie car l’ordinateur cible l’a expressément refusée)
+
+[7/9] Initialisation RAG v7 (LlamaIndex - graphes optionnels)...
+AVERTISSEMENT: RAG v7 non disponible (llama-index manquant)
+
+[8/9] Initialisation RAG v8 (LlamaIndex FULL - graphes OBLIGATOIRES)...
+AVERTISSEMENT: RAG v8 non disponible (llama-index manquant)
+
+[9/11] Initialisation RAG v9 (RAPTOR-lite)...
+RAPTOR Retriever : 493 syntheses + oppchovec (394 docs) + raptor_enquete (125 syntheses) + 9 collections extra (portrait_entretiens, raptor_entretiens_summaries, enquete_responses, enquete_scores_commune, communes_wiki, communes_equipements, communes_geo, zones_epci, communes_profil)
+OK RAG v9 initialisé (493 synthèses RAPTOR)
+
+[10/11] Initialisation RAG v10 (RAPTOR + Sous-questions)...
+RAPTOR Retriever : 493 syntheses + oppchovec (394 docs) + raptor_enquete (125 syntheses) + 9 collections extra (portrait_entretiens, raptor_entretiens_summaries, enquete_responses, enquete_scores_commune, communes_wiki, communes_equipements, communes_geo, zones_epci, communes_profil)
+RAG v10 initialise (493 syntheses RAPTOR disponibles)
+OK RAG v10 initialisé
+
+[11/11] Initialisation RAG v11 (Agentic ReAct+CRAG)...
+  [v11] Chargement RaptorRetriever...
+RAPTOR Retriever : 493 syntheses + oppchovec (394 docs) + raptor_enquete (125 syntheses) + 9 collections extra (portrait_entretiens, raptor_entretiens_summaries, enquete_responses, enquete_scores_commune, communes_wiki, communes_equipements, communes_geo, zones_epci, communes_profil)
+  [v11] AgenticRAGPipeline pret.
+OK RAG v11 initialisé (Agentic ReAct+CRAG)
+
+[Ablations] Initialisation des configs d'ablation...
+RAPTOR Retriever : 493 syntheses + oppchovec (394 docs) + raptor_enquete (125 syntheses) + 9 collections extra (portrait_entretiens, raptor_entretiens_summaries, enquete_responses, enquete_scores_commune, communes_wiki, communes_equipements, communes_geo, zones_epci, communes_profil)
+VanillaRAG initialisé
+OK V_vanilla initialisé (k10 + k25 partagent la même instance)
+RAPTOR Retriever : 493 syntheses + oppchovec (394 docs) + raptor_enquete (125 syntheses) + 9 collections extra (portrait_entretiens, raptor_entretiens_summaries, enquete_responses, enquete_scores_commune, communes_wiki, communes_equipements, communes_geo, zones_epci, communes_profil)
+RAG v10 initialise (493 syntheses RAPTOR disponibles)
+DecompOnlyRAG (V_decomp) initialisé
+OK V_decomp initialisé
+RAPTOR Retriever : 493 syntheses + oppchovec (394 docs) + raptor_enquete (125 syntheses) + 9 collections extra (portrait_entretiens, raptor_entretiens_summaries, enquete_responses, enquete_scores_commune, communes_wiki, communes_equipements, communes_geo, zones_epci, communes_profil)
+RAG v10 initialise (493 syntheses RAPTOR disponibles)
+DecompNoTypingRAG (V_decomp_no_typing) initialisé
+OK V_decomp_no_typing initialisé
+OK V_decomp_raptor initialisé (réutilise pipeline v10 avec use_bilan=False)
+OK V_decomp_raptor_no_typing initialisé (réutilise pipeline v10, no_typing=True)
+
+============================================================
+SYSTEMES RAG DISPONIBLES: v1, v9, v10, v11, v_vanilla_k10, v_vanilla_k25, v_decomp, v_decomp_raptor, v_decomp_no_typing, v_decomp_raptor_no_typing
+============================================================
+

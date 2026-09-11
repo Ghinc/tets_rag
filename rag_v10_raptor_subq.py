@@ -656,7 +656,7 @@ def synthesize_answers(initial_question: str,
         f"6. Termine par le bloc ===SOURCES_MOBILISEES=== / ===FIN_SOURCES=== comme indiqué dans les règles"
     )
 
-    return _call_mistral(prompt, system_prompt, max_tokens=2500,
+    return _call_mistral(prompt, system_prompt, max_tokens=6000,
                          temperature=temperature_override if temperature_override is not None else 0.3)
 
 

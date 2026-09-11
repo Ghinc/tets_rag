@@ -1,0 +1,52 @@
+=== HippoRAG v2 — Chargement des documents ===
+
+  ✓ indicateurs_socioeco_communes.csv  (49,631 chars → 18 chunks)
+  ✓ scores_enquete_par_commune.csv  (9,362 chars → 1 chunk)
+  ✓ RAPTOR_enquete_commune_RAPTOR enquete commune _ Ajaccio.md  (4,120 chars → 1 chunk)
+  ✓ RAPTOR_enquete_commune_RAPTOR enquete commune _ Bastia.md  (4,605 chars → 1 chunk)
+  ✓ RAPTOR_enquete_commune_RAPTOR enquete commune _ Corte.md  (4,521 chars → 1 chunk)
+  ✓ RAPTOR_enquete_commune_RAPTOR enquete commune _ Porto-Vecchio.md  (5,881 chars → 1 chunk)
+  ✓ RAPTOR_enquete_global_RAPTOR enquete global.md  (4,275 chars → 1 chunk)
+  ✓ RAPTOR_enquete_profession_RAPTOR enquete profession _ Retraité_e_.md  (4,094 chars → 1 chunk)
+  ✓ RAPTOR_enquete_profession_RAPTOR enquete profession _ Étudiant_e_.md  (3,714 chars → 1 chunk)
+  ✓ RAPTOR_entretiens_commune_RAPTOR entretiens commune _ Ajaccio.md  (5,325 chars → 1 chunk)
+  ✓ RAPTOR_entretiens_commune_RAPTOR entretiens commune _ Bastia.md  (5,396 chars → 1 chunk)
+  ✓ RAPTOR_entretiens_commune_RAPTOR entretiens commune _ Corte.md  (5,565 chars → 1 chunk)
+  ✓ RAPTOR_entretiens_commune_RAPTOR entretiens commune _ Grosseto-Prugna.md  (2,853 chars → 1 chunk)
+  ✓ RAPTOR_entretiens_commune_RAPTOR entretiens commune _ Porto-Vecchio.md  (3,411 chars → 1 chunk)
+  ✓ RAPTOR_entretiens_dim_commune_RAPTOR entretiens dim commune _ Environnement _ Ajaccio.md  (5,551 chars → 1 chunk)
+  ✓ RAPTOR_entretiens_dim_commune_RAPTOR entretiens dim commune _ Environnement _ Corte.md  (4,559 chars → 1 chunk)
+  ✓ RAPTOR_entretiens_dim_commune_RAPTOR entretiens dim commune _ Revenus _ Ajaccio.md  (4,726 chars → 1 chunk)
+  ✓ RAPTOR_entretiens_dim_commune_RAPTOR entretiens dim commune _ Revenus _ Corte.md  (4,268 chars → 1 chunk)
+  ✓ verbatims_Ajaccio.txt  (25,299 chars → 10 chunks)
+  ✓ verbatims_Bastia.txt  (13,016 chars → 1 chunk)
+  ✓ verbatims_Corte.txt  (27,901 chars → 10 chunks)
+  ✓ verbatims_Grosseto-Prugna.txt  (1,145 chars → 1 chunk)
+  ✓ verbatims_Porto-Vecchio.txt  (4,225 chars → 1 chunk)
+
+58 fichiers chargés.
+
+=== HippoRAG v2 — Indexation + Requêtes ===
+
+→ Indexation en cours (peut prendre 5-15 min à la première exécution)…
+{'num_phrase_nodes': 1013, 'num_passage_nodes': 58, 'num_total_nodes': 1071, 'num_extracted_triples': 1439, 'num_triples_with_passage_node': 1546, 'num_synonymy_triples': 4816, 'num_total_triples': 7801}
+  ✓ Indexation terminée (84s)
+
+Q [bien_etre_ajaccio] : Quels sont les principaux facteurs de bien-être évoqués par les habitants d'Ajaccio ?
+  → 103 chars réponse | 50 sources | 5s
+
+Q [corte_vs_bastia] : Quelles différences observe-t-on entre Corte et Bastia en matière de revenus et de logement ?
+  → 265 chars réponse | 50 sources | 6s
+
+Q [etudiants_qov] : Comment les étudiants perçoivent-ils leur qualité de vie en Corse ?
+  → 133 chars réponse | 50 sources | 5s
+
+Q [scores_satisfaction] : Quelles communes ont les scores de satisfaction les plus élevés dans l'enquête ?
+  → 14 chars réponse | 50 sources | 7s
+
+Q [environnement_bienetre] : Quels liens existent entre l'environnement naturel et le bien-être subjectif en Corse ?
+  → 190 chars réponse | 50 sources | 9s
+
+✓ hipporag_results.json sauvegardé (5 questions)
+
+Lancez maintenant 02_judge_hipporag.py

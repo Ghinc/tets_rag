@@ -1,0 +1,373 @@
+{
+  "excel_row": 45,
+  "question": "Quel est le niveau de bien-être subjectif à Aïti ?",
+  "section": "Gestion d’absence d’information",
+  "subsection": "Absence totale de données",
+  "expected_type": "reponse_substantielle_attendue",
+  "hops": [
+    {
+      "hop": 1,
+      "follow_up": "Que révèlent les verbatims citoyens et les enquêtes sur le bien-être perçu à Aïti?",
+      "model_raw": "Follow up: Que révèlent les verbatims citoyens et les enquêtes sur le bien-être perçu à Aïti ?",
+      "sources": [
+        {
+          "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théorique >= 30 min de trajet.\n\n• Opp4 — Avoir accès aux TIC (poids 0,25)\n  Couverture locale par Internet haut débit (>= 30 Mbit/s) et réseau 4G.\n\nDIMENSION 2 — CHOIX (Cho)\nLa liberté de choix effective dont disposent les individus sur ce territoire.\n\n• Cho1 — Ne pas être discriminé(e) (poids 0,5)\n  Présence ou absence de quartiers cibles de la politique de la ville dans la commune (indicateur pénalisant la concentration de précarité).\n\n• Cho2 — Avoir les moyens d'influencer les décisions publiques (poids 0,5)\n  Proportion d'individus ayant le droit de vote (nationalité française, >= 18 ans) parmi la population en âge de travailler (>= 16 ans).\n\nDIMENSION 3 — VÉCU (Vec)\nLes réalisations effectives des individus — ce qui a été réellement accompli et vécu.\n\n• Vec1 — Avoir un revenu décent (poids 0,25)\n  Revenu fiscal moyen par foyer fiscal dans la commune.\n\n• Vec2 — Avoir un logement décent (poids 0,25, réparti sur 3 sous-indicateurs)\n  - Vec2a : Nombre moyen de personnes par pièce (surpeuplement)\n  - Vec2b : Proportion de logements avec équipements sanitaires complets (eau chaude, douche/baignoire, chauffage, cuisine avec évier)\n  - Vec2c : Proportion de la population vivant dans une habitation individuelle\n\n• Vec3 — Être bien inséré sur le marché du travail (poids 0,25)\n  Stabilité des emplois des résidents (5 niveaux : chômeur, emploi aidé, contrat ponctuel, CDD, emploi stable — CDI, fonctionnaire, indépendant).\n\n• Vec4 — Être proche des services (poids 0,25)\n  Nombre d'établissements de vie courante accessibles en moins de 20 minutes (santé, éducation, commerces, culture, administration), calculé par algorithme de plus court chemin (Dijkstra) sur réseau routier.\n\nCALCUL DE L'INDICE\n\nÉtape 1 — Standardisation (commensurabilité) :\n  V(i,j,k) = (Xijk − Xjk,min) / (Xjk,max − Xjk,min)\n  Chaque sous-indicateur est ramené entre 0 (minimum observé) et 1 (maximum observé).\n\nÉtape 2 — Agrégation par dimension (moyenne pondérée) :\n  Dk(i) = Σ pjk × V(i,j,k)\n  Les poids pjk sont égaux au sein de chaque dimension.\n\nÉtape 3 — Indice global (avec aversion à la pauvreté et complémentarité) :\n  OppChoVec(i) = agrégation des 3 dimensions Dk avec :\n    - paramètre β = 2,5 (aversion à la pauvreté : pénalise les très faibles scores)\n    - paramètre γ = 1,5 (complémentarité : pénalise les déséquilibres entre dimensions)\n  Le résultat brut (0-1) est ensuite renormalisé sur 0-10 pour l'application corse.\n\nINTERPRÉTATION DE L'ÉCHELLE 0-10\n\n- 0 = niveau de bien-être minimal parmi les 360 communes corses\n- 10 = niveau de bien-être maximal parmi les 360 communes corses\n- ~5 = niveau médian corse\n\nUn score élevé signifie que la commune offre à la fois de bonnes opportunités, une réelle liberté de choix et un vécu satisfaisant. Un score faible peut refléter un déficit sur une ou plusieurs dimensions. Les trois scores partiels (Opp, Cho, Vec) permettent de diagnostiquer la nature du déficit : une commune peut avoir de bonnes opportunités (Opp élevé) mais un vécu difficile (Vec faible), signalant un décalage entre l'offre territoriale et les conditions de vie réelles.\n\nSource : Bourdeau-Lepage L. (2011), adapté pour la Corse. Données : oppchovec_betti_0_10.",
+          "metadata": {
+            "commune": "",
+            "type": "methodology",
+            "source": "methodology"
+          },
+          "source_type": "oppchovec_scores",
+          "label": "Scores OppChoVec — "
+        },
+        {
+          "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Aiti : 3.07/10 (moyen).\n\nSous-scores principaux de Aiti :\n  • Opportunités (Opp) : 3.65/10 (moyen)  — rang 190e/360\n  • Choix (Cho)        : 8.93/10 (très élevé)  — rang 222e/360\n  • Vécu (Vec)         : 3.36/10 (moyen)  — rang 187e/360\n  • OppChoVec global   : rang 187e/360\n\nSous-dimensions du score Opportunités (Opp) de Aiti :\n  • Opp1 — Éducation      : 1.12/10 (très faible)  [valeur brute : 5.200] — rang 260e/360\n  • Opp2 — Diversité soc. : 6.26/10 (élevé)  [indice Theil : 0.6727] — rang 11e/360\n  • Opp3 — Mobilité       : 1.61/10 (faible)  [indicateur : 84.6/200] — rang 311e/360\n  • Opp4 — TIC (numérique): 5.00/10 (élevé)  [couverture : 50.0%] — rang 189e/360\n\nAnalyse de Aiti :\n- Aiti se distingue surtout par ses choix (Cho=8.93/10).\n- Le point le plus faible de Aiti est le score Vécu (3.36/10).\n\nValeurs brutes (non normalisées) de Aiti :\n- OppChoVec brut : 0.0653\n- Opp brut : 0.3334\n- Cho brut : 0.9300\n- Vec brut : 0.5029",
+          "metadata": {
+            "rank_opp1": 260,
+            "opp4_0_10": 5.0,
+            "cho_0_10": 8.928476,
+            "commune": "Aiti",
+            "oppchovec_0_10": 3.071433,
+            "rank_opp4": 189,
+            "rank_opp2": 11,
+            "rank_opp3": 311,
+            "opp2_0_10": 6.2559,
+            "rank_vec": 187,
+            "vec_0_10": 3.357159,
+            "rank_opp": 190,
+            "rank_total": 187,
+            "rank_cho": 222,
+            "opp1_0_10": 1.1236,
+            "opp3_0_10": 1.6073,
+            "source": "oppchovec_betti_0_10",
+            "opp_0_10": 3.651114
+          },
+          "source_type": "oppchovec_scores",
+          "label": "Scores OppChoVec — Aiti"
+        },
+        {
+          "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nProfil des répondants de la commune de Alata — enquête qualité de vie en Corse\n\nNombre de répondants : 3\n\nRépartition par genre :\n  - Femme : 2 (66.7%)\n  - Homme : 1 (33.3%)\n\nRépartition par tranche d'âge :\n  - 15-29 : 1 (33.3%)\n  - 45-59 : 1 (33.3%)\n\nRépartition par catégorie socioprofessionnelle :\n  - Ãtudiant(e) : 1 (33.3%)\n  - SalariÃ©(e) â Cadre ou profession intermÃ©diaire : 1 (33.3%)\n  - RetraitÃ©(e) : 1 (33.3%)",
+          "metadata": {
+            "n_repondants": 3,
+            "commune": "Alata",
+            "data_type": "quanti",
+            "source_type": "communes_profil"
+          },
+          "source_type": "communes_profil",
+          "label": "Profil démographique des répondants (contextuel/quanti)"
+        },
+        {
+          "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nProfil des répondants de la commune de Cuttoli-Corticchiato — enquête qualité de vie en Corse\n\nNombre de répondants : 1\n\nRépartition par genre :\n  - Femme : 1 (100.0%)\n\nRépartition par tranche d'âge :\n  - 45-59 : 1 (100.0%)\n\nRépartition par catégorie socioprofessionnelle :\n  - SalariÃ©(e) â EmployÃ©(e) : 1 (100.0%)",
+          "metadata": {
+            "source_type": "communes_profil",
+            "n_repondants": 1,
+            "commune": "Cuttoli-Corticchiato",
+            "data_type": "quanti"
+          },
+          "source_type": "communes_profil",
+          "label": "Profil démographique des répondants (contextuel/quanti)"
+        },
+        {
+          "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nProfil des répondants de la commune de Ajaccio — enquête qualité de vie en Corse\n\nNombre de répondants : 51\n\nRépartition par genre :\n  - Femme : 31 (60.8%)\n  - Homme : 20 (39.2%)\n\nRépartition par tranche d'âge :\n  - 45-59 : 20 (39.2%)\n  - 15-29 : 14 (27.5%)\n  - 30-44 : 11 (21.6%)\n  - 60-74 : 6 (11.8%)\n\nRépartition par catégorie socioprofessionnelle :\n  - SalariÃ©(e) â Cadre ou profession intermÃ©diaire : 17 (33.3%)\n  - Ãtudiant(e) : 12 (23.5%)\n  - Fonctionnaire : 9 (17.6%)\n  - SalariÃ©(e) â EmployÃ©(e) : 8 (15.7%)\n  - Travailleur(se) indÃ©pendant(e) / Entrepreneur(e) : 2 (3.9%)\n  - Autre : 2 (3.9%)\n  - RetraitÃ©(e) : 1 (2.0%)",
+          "metadata": {
+            "n_repondants": 51,
+            "commune": "Ajaccio",
+            "source_type": "communes_profil",
+            "data_type": "quanti"
+          },
+          "source_type": "communes_profil",
+          "label": "Profil démographique des répondants (contextuel/quanti)"
+        }
+      ],
+      "intermediate_answer": "# Bien-être perçu à Aïti : analyse des données disponibles\n\nLe contexte fourni ne contient **aucun verbatim citoyen ni donnée d'enquête citoyenne spécifique à Aïti**. Les profils démographiques présents concernent exclusivement Alata, Cuttoli-Corticchiato et Ajaccio.\n\nEn revanche, **selon les indicateurs territoriaux objectifs**, Aïti présente un profil contrasté : un score OppChoVec global de 3.07/10 (moyen, rang 187e/360) masque des disparités importantes. La commune se distingue par une **très forte diversité sociale** (Opp2 : 6.26/10, rang 11e/360), mais souffre de déficits majeurs en **éducation** (Opp1 : 1.12/10, rang 260e/360) et en **mobilité** (Opp3 : 1.61/10, rang 311e/360). Le score de **Choix est exceptionnellement élevé** (8.93/10, rang 222e/360), suggérant une absence de quartiers prioritaires et une population électoralement active.\n\n**Pour répondre précisément à votre question sur les perceptions citoyennes à Aïti, il faudrait disposer de verbatims ou de réponses d'enquête spécifiques à cette commune**, qui ne figurent pas dans le contexte actuel."
+    },
+    {
+      "hop": 2,
+      "follow_up": "Peut-on extrapoler des tendances de bien-être subjectif à partir des indicateurs objectifs et des profils des communes voisines?",
+      "model_raw": "Follow up: Peut-on extrapoler des tendances de bien-être subjectif à partir des indicateurs objectifs et des profils des communes voisines ?",
+      "sources": [
+        {
+          "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théorique >= 30 min de trajet.\n\n• Opp4 — Avoir accès aux TIC (poids 0,25)\n  Couverture locale par Internet haut débit (>= 30 Mbit/s) et réseau 4G.\n\nDIMENSION 2 — CHOIX (Cho)\nLa liberté de choix effective dont disposent les individus sur ce territoire.\n\n• Cho1 — Ne pas être discriminé(e) (poids 0,5)\n  Présence ou absence de quartiers cibles de la politique de la ville dans la commune (indicateur pénalisant la concentration de précarité).\n\n• Cho2 — Avoir les moyens d'influencer les décisions publiques (poids 0,5)\n  Proportion d'individus ayant le droit de vote (nationalité française, >= 18 ans) parmi la population en âge de travailler (>= 16 ans).\n\nDIMENSION 3 — VÉCU (Vec)\nLes réalisations effectives des individus — ce qui a été réellement accompli et vécu.\n\n• Vec1 — Avoir un revenu décent (poids 0,25)\n  Revenu fiscal moyen par foyer fiscal dans la commune.\n\n• Vec2 — Avoir un logement décent (poids 0,25, réparti sur 3 sous-indicateurs)\n  - Vec2a : Nombre moyen de personnes par pièce (surpeuplement)\n  - Vec2b : Proportion de logements avec équipements sanitaires complets (eau chaude, douche/baignoire, chauffage, cuisine avec évier)\n  - Vec2c : Proportion de la population vivant dans une habitation individuelle\n\n• Vec3 — Être bien inséré sur le marché du travail (poids 0,25)\n  Stabilité des emplois des résidents (5 niveaux : chômeur, emploi aidé, contrat ponctuel, CDD, emploi stable — CDI, fonctionnaire, indépendant).\n\n• Vec4 — Être proche des services (poids 0,25)\n  Nombre d'établissements de vie courante accessibles en moins de 20 minutes (santé, éducation, commerces, culture, administration), calculé par algorithme de plus court chemin (Dijkstra) sur réseau routier.\n\nCALCUL DE L'INDICE\n\nÉtape 1 — Standardisation (commensurabilité) :\n  V(i,j,k) = (Xijk − Xjk,min) / (Xjk,max − Xjk,min)\n  Chaque sous-indicateur est ramené entre 0 (minimum observé) et 1 (maximum observé).\n\nÉtape 2 — Agrégation par dimension (moyenne pondérée) :\n  Dk(i) = Σ pjk × V(i,j,k)\n  Les poids pjk sont égaux au sein de chaque dimension.\n\nÉtape 3 — Indice global (avec aversion à la pauvreté et complémentarité) :\n  OppChoVec(i) = agrégation des 3 dimensions Dk avec :\n    - paramètre β = 2,5 (aversion à la pauvreté : pénalise les très faibles scores)\n    - paramètre γ = 1,5 (complémentarité : pénalise les déséquilibres entre dimensions)\n  Le résultat brut (0-1) est ensuite renormalisé sur 0-10 pour l'application corse.\n\nINTERPRÉTATION DE L'ÉCHELLE 0-10\n\n- 0 = niveau de bien-être minimal parmi les 360 communes corses\n- 10 = niveau de bien-être maximal parmi les 360 communes corses\n- ~5 = niveau médian corse\n\nUn score élevé signifie que la commune offre à la fois de bonnes opportunités, une réelle liberté de choix et un vécu satisfaisant. Un score faible peut refléter un déficit sur une ou plusieurs dimensions. Les trois scores partiels (Opp, Cho, Vec) permettent de diagnostiquer la nature du déficit : une commune peut avoir de bonnes opportunités (Opp élevé) mais un vécu difficile (Vec faible), signalant un décalage entre l'offre territoriale et les conditions de vie réelles.\n\nSource : Bourdeau-Lepage L. (2011), adapté pour la Corse. Données : oppchovec_betti_0_10.",
+          "metadata": {
+            "type": "methodology",
+            "commune": "",
+            "source": "methodology"
+          },
+          "source_type": "oppchovec_scores",
+          "label": "Scores OppChoVec — "
+        },
+        {
+          "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Ghisoni : 3.83/10 (moyen).\n\nSous-scores principaux de Ghisoni :\n  • Opportunités (Opp) : 5.23/10 (élevé)  — rang 73e/360\n  • Choix (Cho)        : 9.81/10 (très élevé)  — rang 66e/360\n  • Vécu (Vec)         : 1.42/10 (très faible)  — rang 338e/360\n  • OppChoVec global   : rang 105e/360\n\nSous-dimensions du score Opportunités (Opp) de Ghisoni :\n  • Opp1 — Éducation      : 1.93/10 (faible)  [valeur brute : 5.272] — rang 188e/360\n  • Opp2 — Diversité soc. : 6.50/10 (élevé)  [indice Theil : 0.6948] — rang 7e/360\n  • Opp3 — Mobilité       : 8.65/10 (très élevé)  [indicateur : 181.5/200] — rang 150e/360\n  • Opp4 — TIC (numérique): 5.00/10 (élevé)  [couverture : 50.0%] — rang 189e/360\n\nAnalyse de Ghisoni :\n- Ghisoni se distingue surtout par ses choix (Cho=9.81/10).\n- Le point le plus faible de Ghisoni est le score Vécu (1.42/10).\n\nValeurs brutes (non normalisées) de Ghisoni :\n- OppChoVec brut : 0.0757\n- Opp brut : 0.4268\n- Cho brut : 0.9876\n- Vec brut : 0.3991",
+          "metadata": {
+            "rank_opp1": 188,
+            "opp_0_10": 5.227718,
+            "opp2_0_10": 6.4975,
+            "commune": "Ghisoni",
+            "oppchovec_0_10": 3.825951,
+            "rank_cho": 66,
+            "source": "oppchovec_betti_0_10",
+            "vec_0_10": 1.418703,
+            "opp3_0_10": 8.6545,
+            "opp1_0_10": 1.9326,
+            "rank_total": 105,
+            "rank_opp": 73,
+            "rank_opp4": 189,
+            "rank_vec": 338,
+            "rank_opp2": 7,
+            "cho_0_10": 9.809804,
+            "opp4_0_10": 5.0,
+            "rank_opp3": 150
+          },
+          "source_type": "oppchovec_scores",
+          "label": "Scores OppChoVec — Ghisoni"
+        },
+        {
+          "content": "La commune de Ghisoni compte une part de 5.2% de cadres et professions intellectuelles supérieures, 15.3% d'ouvriers, avec un taux d'activité de 60.9%. 70.1% des emplois y sont salariés. On y trouve 1.0 points de contact postal, 0.0 hypermarchés ou supermarchés, 1.0 supérettes ou épiceries, 0.0 boulangeries et 0.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 0.0 écoles maternelles, 0.0 écoles élémentaires, 0.0 collèges et 0.0 lycées. Elle possède 0.0 services d'urgence, 0.0 médecins généralistes, 0.0 pharmacies, 0.0 infirmiers et 0.0 crèches. La sécurité est assurée par 0.0 postes de police ou gendarmerie. Il y a également 0.0 agences Pôle emploi. Le taux de pauvreté est de 18.403112840466928%, la part de logements vacants est de 4.3%, et celle des résidences secondaires est de 70.2%. Le taux de coups et blessures volontaires est de 0.8620320855614972 pour 1 000 habitants. Le prix moyen au m² est de 1359.0€, pour une surface moyenne des logements de 103.0 m².",
+          "metadata": {
+            "commune": "Ghisoni",
+            "data_type": "quanti",
+            "source": "data_comp"
+          },
+          "source_type": "communes_equipements",
+          "label": "Équipements et services commune (objectif/quanti)"
+        },
+        {
+          "content": "La commune de Rapale compte une part de 4.3% de cadres et professions intellectuelles supérieures, 13.1% d'ouvriers, avec un taux d'activité de 73.3%. 39.2% des emplois y sont salariés. On y trouve 0.0 points de contact postal, 0.0 hypermarchés ou supermarchés, 0.0 supérettes ou épiceries, 0.0 boulangeries et 1.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 0.0 écoles maternelles, 0.0 écoles élémentaires, 0.0 collèges et 0.0 lycées. Elle possède 0.0 services d'urgence, 0.0 médecins généralistes, 0.0 pharmacies, 0.0 infirmiers et 0.0 crèches. La sécurité est assurée par 0.0 postes de police ou gendarmerie. Il y a également 0.0 agences Pôle emploi. Le taux de pauvreté est de 19.3%, la part de logements vacants est de 4.8%, et celle des résidences secondaires est de 43.8%. Le taux de coups et blessures volontaires est de 0.0 pour 1 000 habitants. Le prix moyen au m² est de 3153.33333333333€, pour une surface moyenne des logements de 70.3333333333333 m².",
+          "metadata": {
+            "source": "data_comp",
+            "data_type": "quanti",
+            "commune": "Rapale"
+          },
+          "source_type": "communes_equipements",
+          "label": "Équipements et services commune (objectif/quanti)"
+        },
+        {
+          "content": "La commune de Rospigliani compte une part de 12.5% de cadres et professions intellectuelles supérieures, 37.5% d'ouvriers, avec un taux d'activité de 71.4%. 87.5% des emplois y sont salariés. On y trouve 0.0 points de contact postal, 0.0 hypermarchés ou supermarchés, 0.0 supérettes ou épiceries, 0.0 boulangeries et 0.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 0.0 écoles maternelles, 0.0 écoles élémentaires, 0.0 collèges et 0.0 lycées. Elle possède 0.0 services d'urgence, 0.0 médecins généralistes, 0.0 pharmacies, 0.0 infirmiers et 0.0 crèches. La sécurité est assurée par 0.0 postes de police ou gendarmerie. Il y a également 0.0 agences Pôle emploi. Le taux de pauvreté est de 21.1%, la part de logements vacants est de 6.9%, et celle des résidences secondaires est de 50.6%. Le taux de coups et blessures volontaires est de 0.0 pour 1 000 habitants. Le prix moyen au m² est de 550.0€, pour une surface moyenne des logements de 76.19921785488143 m².",
+          "metadata": {
+            "data_type": "quanti",
+            "source": "data_comp",
+            "commune": "Rospigliani"
+          },
+          "source_type": "communes_equipements",
+          "label": "Équipements et services commune (objectif/quanti)"
+        }
+      ],
+      "intermediate_answer": "Non, on ne peut pas extrapoler des tendances de bien-être subjectif à partir des indicateurs objectifs et des profils des communes voisines, pour trois raisons structurelles :\n\n1. **Absence de données d'enquête citoyenne pour les communes voisines.** Le contexte fourni ne contient aucun verbatim, perception ou satisfaction déclarée pour Rapale ou Rospigliani — seuls les indicateurs objectifs (équipements, taux de pauvreté, prix du logement) et le score OppChoVec de Ghisoni sont disponibles. On ne peut donc pas mesurer le bien-être subjectif réel de ces communes.\n\n2. **Décalage structurel entre objectif et subjectif.** L'exemple de Ghisoni l'illustre : selon les indicateurs territoriaux objectifs, Ghisoni affiche un score Vécu (Vec) de 1.42/10 (très faible), révélant des conditions concrètes dégradées (absence totale d'équipements scolaires, médicaux, commerciaux selon les données d'équipements communaux). Cependant, sans enquête citoyenne locale, on ignore comment les habitants *perçoivent* et *vivent* réellement cette situation — satisfaction, résilience, attachement au territoire peuvent diverger fortement des chiffres.\n\n3. **Hétérogénéité des profils.** Rapale (taux d'activité 73.3%, 39.2% d'emplois salariés, prix au m² 3153€) et Rospigliani (taux de pauvreté 21.1%, prix au m² 550€) présentent des structures socio-économiques très différentes. Aucune logique de proximité géographique ne permet de transférer un profil de bien-être subjectif d'une commune à l'autre.\n\n**Conclusion :** seule une enquête citoyenne spécifique à chaque commune peut mesurer le bien-être subjectif."
+    }
+  ],
+  "n_hops": 2,
+  "final_answer": "À ce jour, **il n'existe pas de données permettant d'évaluer le niveau de bien-être subjectif à Aïti**. Les indicateurs objectifs disponibles (score OppChoVec de 3,07/10, avec une forte diversité sociale mais des déficits marqués en éducation et mobilité) ne reflètent que des conditions matérielles et structurelles, sans lien direct avec les perceptions ou le ressenti des habitants.\n\nAucun verbatim citoyen, entretien semi-directif ou résultat d'enquête locale n'a été recueilli pour cette commune dans les sources disponibles. Par ailleurs, les profils des communes voisines (Rapale, Rospigliani, Ghisoni) ne permettent pas d'extrapoler des tendances subjectives, en raison de leur hétérogénéité socio-économique et de l'absence de données perceptives pour ces territoires.\n\n**Pour connaître le bien-être subjectif à Aïti, une enquête dédiée (questionnaires, entretiens, groupes de discussion) serait nécessaire**, afin de capturer les dimensions immatérielles du bien-être : sentiment d'appartenance, qualité des relations sociales, satisfaction face aux services publics, ou encore attachement au cadre de vie.",
+  "all_sources": [
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nL'indicateur OppChoVec — Indice de bien-être objectif territorial\n\nL'indicateur OppChoVec a été développé par Lise Bourdeau-Lepage (2011) pour mesurer les inégalités socio-spatiales de bien-être objectif à l'échelle communale. Il opérationnalise l'approche des capabilités d'Amartya Sen (1985) qui considère que l'espace n'est pas neutre pour les individus et que leur épanouissement dépend des conditions objectives offertes par leur territoire. Il est appliqué ici aux 360 communes corses (source : Betti).\n\nDIMENSION 1 — OPPORTUNITÉS (Opp)\nLes opportunités objectives offertes aux individus par leur territoire (bien-être en tant que liberté).\n\n• Opp1 — Avoir une bonne éducation (poids 0,25)\n  Niveau d'éducation moyen de la population, corrigé de la structure par âge. Calculé comme une somme pondérée des niveaux de diplôme (7 niveaux) par classe d'âge.\n\n• Opp2 — Être inséré dans un environnement social diversifié (poids 0,25)\n  Indice de Theil mesurant la diversité des catégories socio-professionnelles (CSP), à la fois en journée (personnes travaillant dans la commune) et la nuit (résidents).\n\n• Opp3 — Avoir les moyens de la mobilité minimale (poids 0,25)\n  Proportion de la population disposant d'une voiture et/ou ayant accès à un réseau de transport en commun (train, tram, bus, car) avec une capacité théorique >= 30 min de trajet.\n\n• Opp4 — Avoir accès aux TIC (poids 0,25)\n  Couverture locale par Internet haut débit (>= 30 Mbit/s) et réseau 4G.\n\nDIMENSION 2 — CHOIX (Cho)\nLa liberté de choix effective dont disposent les individus sur ce territoire.\n\n• Cho1 — Ne pas être discriminé(e) (poids 0,5)\n  Présence ou absence de quartiers cibles de la politique de la ville dans la commune (indicateur pénalisant la concentration de précarité).\n\n• Cho2 — Avoir les moyens d'influencer les décisions publiques (poids 0,5)\n  Proportion d'individus ayant le droit de vote (nationalité française, >= 18 ans) parmi la population en âge de travailler (>= 16 ans).\n\nDIMENSION 3 — VÉCU (Vec)\nLes réalisations effectives des individus — ce qui a été réellement accompli et vécu.\n\n• Vec1 — Avoir un revenu décent (poids 0,25)\n  Revenu fiscal moyen par foyer fiscal dans la commune.\n\n• Vec2 — Avoir un logement décent (poids 0,25, réparti sur 3 sous-indicateurs)\n  - Vec2a : Nombre moyen de personnes par pièce (surpeuplement)\n  - Vec2b : Proportion de logements avec équipements sanitaires complets (eau chaude, douche/baignoire, chauffage, cuisine avec évier)\n  - Vec2c : Proportion de la population vivant dans une habitation individuelle\n\n• Vec3 — Être bien inséré sur le marché du travail (poids 0,25)\n  Stabilité des emplois des résidents (5 niveaux : chômeur, emploi aidé, contrat ponctuel, CDD, emploi stable — CDI, fonctionnaire, indépendant).\n\n• Vec4 — Être proche des services (poids 0,25)\n  Nombre d'établissements de vie courante accessibles en moins de 20 minutes (santé, éducation, commerces, culture, administration), calculé par algorithme de plus court chemin (Dijkstra) sur réseau routier.\n\nCALCUL DE L'INDICE\n\nÉtape 1 — Standardisation (commensurabilité) :\n  V(i,j,k) = (Xijk − Xjk,min) / (Xjk,max − Xjk,min)\n  Chaque sous-indicateur est ramené entre 0 (minimum observé) et 1 (maximum observé).\n\nÉtape 2 — Agrégation par dimension (moyenne pondérée) :\n  Dk(i) = Σ pjk × V(i,j,k)\n  Les poids pjk sont égaux au sein de chaque dimension.\n\nÉtape 3 — Indice global (avec aversion à la pauvreté et complémentarité) :\n  OppChoVec(i) = agrégation des 3 dimensions Dk avec :\n    - paramètre β = 2,5 (aversion à la pauvreté : pénalise les très faibles scores)\n    - paramètre γ = 1,5 (complémentarité : pénalise les déséquilibres entre dimensions)\n  Le résultat brut (0-1) est ensuite renormalisé sur 0-10 pour l'application corse.\n\nINTERPRÉTATION DE L'ÉCHELLE 0-10\n\n- 0 = niveau de bien-être minimal parmi les 360 communes corses\n- 10 = niveau de bien-être maximal parmi les 360 communes corses\n- ~5 = niveau médian corse\n\nUn score élevé signifie que la commune offre à la fois de bonnes opportunités, une réelle liberté de choix et un vécu satisfaisant. Un score faible peut refléter un déficit sur une ou plusieurs dimensions. Les trois scores partiels (Opp, Cho, Vec) permettent de diagnostiquer la nature du déficit : une commune peut avoir de bonnes opportunités (Opp élevé) mais un vécu difficile (Vec faible), signalant un décalage entre l'offre territoriale et les conditions de vie réelles.\n\nSource : Bourdeau-Lepage L. (2011), adapté pour la Corse. Données : oppchovec_betti_0_10.",
+      "metadata": {
+        "commune": "",
+        "type": "methodology",
+        "source": "methodology"
+      },
+      "source_type": "oppchovec_scores",
+      "label": "Scores OppChoVec — "
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Aiti : 3.07/10 (moyen).\n\nSous-scores principaux de Aiti :\n  • Opportunités (Opp) : 3.65/10 (moyen)  — rang 190e/360\n  • Choix (Cho)        : 8.93/10 (très élevé)  — rang 222e/360\n  • Vécu (Vec)         : 3.36/10 (moyen)  — rang 187e/360\n  • OppChoVec global   : rang 187e/360\n\nSous-dimensions du score Opportunités (Opp) de Aiti :\n  • Opp1 — Éducation      : 1.12/10 (très faible)  [valeur brute : 5.200] — rang 260e/360\n  • Opp2 — Diversité soc. : 6.26/10 (élevé)  [indice Theil : 0.6727] — rang 11e/360\n  • Opp3 — Mobilité       : 1.61/10 (faible)  [indicateur : 84.6/200] — rang 311e/360\n  • Opp4 — TIC (numérique): 5.00/10 (élevé)  [couverture : 50.0%] — rang 189e/360\n\nAnalyse de Aiti :\n- Aiti se distingue surtout par ses choix (Cho=8.93/10).\n- Le point le plus faible de Aiti est le score Vécu (3.36/10).\n\nValeurs brutes (non normalisées) de Aiti :\n- OppChoVec brut : 0.0653\n- Opp brut : 0.3334\n- Cho brut : 0.9300\n- Vec brut : 0.5029",
+      "metadata": {
+        "rank_opp1": 260,
+        "opp4_0_10": 5.0,
+        "cho_0_10": 8.928476,
+        "commune": "Aiti",
+        "oppchovec_0_10": 3.071433,
+        "rank_opp4": 189,
+        "rank_opp2": 11,
+        "rank_opp3": 311,
+        "opp2_0_10": 6.2559,
+        "rank_vec": 187,
+        "vec_0_10": 3.357159,
+        "rank_opp": 190,
+        "rank_total": 187,
+        "rank_cho": 222,
+        "opp1_0_10": 1.1236,
+        "opp3_0_10": 1.6073,
+        "source": "oppchovec_betti_0_10",
+        "opp_0_10": 3.651114
+      },
+      "source_type": "oppchovec_scores",
+      "label": "Scores OppChoVec — Aiti"
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nProfil des répondants de la commune de Alata — enquête qualité de vie en Corse\n\nNombre de répondants : 3\n\nRépartition par genre :\n  - Femme : 2 (66.7%)\n  - Homme : 1 (33.3%)\n\nRépartition par tranche d'âge :\n  - 15-29 : 1 (33.3%)\n  - 45-59 : 1 (33.3%)\n\nRépartition par catégorie socioprofessionnelle :\n  - Ãtudiant(e) : 1 (33.3%)\n  - SalariÃ©(e) â Cadre ou profession intermÃ©diaire : 1 (33.3%)\n  - RetraitÃ©(e) : 1 (33.3%)",
+      "metadata": {
+        "n_repondants": 3,
+        "commune": "Alata",
+        "data_type": "quanti",
+        "source_type": "communes_profil"
+      },
+      "source_type": "communes_profil",
+      "label": "Profil démographique des répondants (contextuel/quanti)"
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nProfil des répondants de la commune de Cuttoli-Corticchiato — enquête qualité de vie en Corse\n\nNombre de répondants : 1\n\nRépartition par genre :\n  - Femme : 1 (100.0%)\n\nRépartition par tranche d'âge :\n  - 45-59 : 1 (100.0%)\n\nRépartition par catégorie socioprofessionnelle :\n  - SalariÃ©(e) â EmployÃ©(e) : 1 (100.0%)",
+      "metadata": {
+        "source_type": "communes_profil",
+        "n_repondants": 1,
+        "commune": "Cuttoli-Corticchiato",
+        "data_type": "quanti"
+      },
+      "source_type": "communes_profil",
+      "label": "Profil démographique des répondants (contextuel/quanti)"
+    },
+    {
+      "content": "[Enquête citoyenne Qualité de vie en Corse — Collecte : 2024-2026 (enquête en cours).]\nProfil des répondants de la commune de Ajaccio — enquête qualité de vie en Corse\n\nNombre de répondants : 51\n\nRépartition par genre :\n  - Femme : 31 (60.8%)\n  - Homme : 20 (39.2%)\n\nRépartition par tranche d'âge :\n  - 45-59 : 20 (39.2%)\n  - 15-29 : 14 (27.5%)\n  - 30-44 : 11 (21.6%)\n  - 60-74 : 6 (11.8%)\n\nRépartition par catégorie socioprofessionnelle :\n  - SalariÃ©(e) â Cadre ou profession intermÃ©diaire : 17 (33.3%)\n  - Ãtudiant(e) : 12 (23.5%)\n  - Fonctionnaire : 9 (17.6%)\n  - SalariÃ©(e) â EmployÃ©(e) : 8 (15.7%)\n  - Travailleur(se) indÃ©pendant(e) / Entrepreneur(e) : 2 (3.9%)\n  - Autre : 2 (3.9%)\n  - RetraitÃ©(e) : 1 (2.0%)",
+      "metadata": {
+        "n_repondants": 51,
+        "commune": "Ajaccio",
+        "source_type": "communes_profil",
+        "data_type": "quanti"
+      },
+      "source_type": "communes_profil",
+      "label": "Profil démographique des répondants (contextuel/quanti)"
+    },
+    {
+      "content": "[Millésime des données : indicateurs INSEE/statistiques 2020-2022, score OppChoVec calculé en 2025. Aucune donnée disponible pour d'autres années (pas de série temporelle).]\nNOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux :\n  • Opp (Opportunités) = accès aux ressources du territoire\n  • Cho (Choix) = liberté effective des individus\n  • Vec (Vécu) = réalisations concrètes des habitants\nLe score Opp est lui-même décomposé en 4 sous-dimensions :\n  • Opp1 = niveau d'éducation moyen\n  • Opp2 = diversité sociale (indice de Theil CSP)\n  • Opp3 = accès à la mobilité (voiture et/ou transports en commun)\n  • Opp4 = accès aux TIC (Internet haut débit, 4G)\nCes scores sont normalisés sur 0-10 par rapport aux 360 communes corses.\n\nScore OppChoVec de Ghisoni : 3.83/10 (moyen).\n\nSous-scores principaux de Ghisoni :\n  • Opportunités (Opp) : 5.23/10 (élevé)  — rang 73e/360\n  • Choix (Cho)        : 9.81/10 (très élevé)  — rang 66e/360\n  • Vécu (Vec)         : 1.42/10 (très faible)  — rang 338e/360\n  • OppChoVec global   : rang 105e/360\n\nSous-dimensions du score Opportunités (Opp) de Ghisoni :\n  • Opp1 — Éducation      : 1.93/10 (faible)  [valeur brute : 5.272] — rang 188e/360\n  • Opp2 — Diversité soc. : 6.50/10 (élevé)  [indice Theil : 0.6948] — rang 7e/360\n  • Opp3 — Mobilité       : 8.65/10 (très élevé)  [indicateur : 181.5/200] — rang 150e/360\n  • Opp4 — TIC (numérique): 5.00/10 (élevé)  [couverture : 50.0%] — rang 189e/360\n\nAnalyse de Ghisoni :\n- Ghisoni se distingue surtout par ses choix (Cho=9.81/10).\n- Le point le plus faible de Ghisoni est le score Vécu (1.42/10).\n\nValeurs brutes (non normalisées) de Ghisoni :\n- OppChoVec brut : 0.0757\n- Opp brut : 0.4268\n- Cho brut : 0.9876\n- Vec brut : 0.3991",
+      "metadata": {
+        "rank_opp1": 188,
+        "opp_0_10": 5.227718,
+        "opp2_0_10": 6.4975,
+        "commune": "Ghisoni",
+        "oppchovec_0_10": 3.825951,
+        "rank_cho": 66,
+        "source": "oppchovec_betti_0_10",
+        "vec_0_10": 1.418703,
+        "opp3_0_10": 8.6545,
+        "opp1_0_10": 1.9326,
+        "rank_total": 105,
+        "rank_opp": 73,
+        "rank_opp4": 189,
+        "rank_vec": 338,
+        "rank_opp2": 7,
+        "cho_0_10": 9.809804,
+        "opp4_0_10": 5.0,
+        "rank_opp3": 150
+      },
+      "source_type": "oppchovec_scores",
+      "label": "Scores OppChoVec — Ghisoni"
+    },
+    {
+      "content": "La commune de Ghisoni compte une part de 5.2% de cadres et professions intellectuelles supérieures, 15.3% d'ouvriers, avec un taux d'activité de 60.9%. 70.1% des emplois y sont salariés. On y trouve 1.0 points de contact postal, 0.0 hypermarchés ou supermarchés, 1.0 supérettes ou épiceries, 0.0 boulangeries et 0.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 0.0 écoles maternelles, 0.0 écoles élémentaires, 0.0 collèges et 0.0 lycées. Elle possède 0.0 services d'urgence, 0.0 médecins généralistes, 0.0 pharmacies, 0.0 infirmiers et 0.0 crèches. La sécurité est assurée par 0.0 postes de police ou gendarmerie. Il y a également 0.0 agences Pôle emploi. Le taux de pauvreté est de 18.403112840466928%, la part de logements vacants est de 4.3%, et celle des résidences secondaires est de 70.2%. Le taux de coups et blessures volontaires est de 0.8620320855614972 pour 1 000 habitants. Le prix moyen au m² est de 1359.0€, pour une surface moyenne des logements de 103.0 m².",
+      "metadata": {
+        "commune": "Ghisoni",
+        "data_type": "quanti",
+        "source": "data_comp"
+      },
+      "source_type": "communes_equipements",
+      "label": "Équipements et services commune (objectif/quanti)"
+    },
+    {
+      "content": "La commune de Rapale compte une part de 4.3% de cadres et professions intellectuelles supérieures, 13.1% d'ouvriers, avec un taux d'activité de 73.3%. 39.2% des emplois y sont salariés. On y trouve 0.0 points de contact postal, 0.0 hypermarchés ou supermarchés, 0.0 supérettes ou épiceries, 0.0 boulangeries et 1.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 0.0 écoles maternelles, 0.0 écoles élémentaires, 0.0 collèges et 0.0 lycées. Elle possède 0.0 services d'urgence, 0.0 médecins généralistes, 0.0 pharmacies, 0.0 infirmiers et 0.0 crèches. La sécurité est assurée par 0.0 postes de police ou gendarmerie. Il y a également 0.0 agences Pôle emploi. Le taux de pauvreté est de 19.3%, la part de logements vacants est de 4.8%, et celle des résidences secondaires est de 43.8%. Le taux de coups et blessures volontaires est de 0.0 pour 1 000 habitants. Le prix moyen au m² est de 3153.33333333333€, pour une surface moyenne des logements de 70.3333333333333 m².",
+      "metadata": {
+        "source": "data_comp",
+        "data_type": "quanti",
+        "commune": "Rapale"
+      },
+      "source_type": "communes_equipements",
+      "label": "Équipements et services commune (objectif/quanti)"
+    },
+    {
+      "content": "La commune de Rospigliani compte une part de 12.5% de cadres et professions intellectuelles supérieures, 37.5% d'ouvriers, avec un taux d'activité de 71.4%. 87.5% des emplois y sont salariés. On y trouve 0.0 points de contact postal, 0.0 hypermarchés ou supermarchés, 0.0 supérettes ou épiceries, 0.0 boulangeries et 0.0 boucheries-charcuteries. En matière d'éducation, la commune dispose de 0.0 écoles maternelles, 0.0 écoles élémentaires, 0.0 collèges et 0.0 lycées. Elle possède 0.0 services d'urgence, 0.0 médecins généralistes, 0.0 pharmacies, 0.0 infirmiers et 0.0 crèches. La sécurité est assurée par 0.0 postes de police ou gendarmerie. Il y a également 0.0 agences Pôle emploi. Le taux de pauvreté est de 21.1%, la part de logements vacants est de 6.9%, et celle des résidences secondaires est de 50.6%. Le taux de coups et blessures volontaires est de 0.0 pour 1 000 habitants. Le prix moyen au m² est de 550.0€, pour une surface moyenne des logements de 76.19921785488143 m².",
+      "metadata": {
+        "data_type": "quanti",
+        "source": "data_comp",
+        "commune": "Rospigliani"
+      },
+      "source_type": "communes_equipements",
+      "label": "Équipements et services commune (objectif/quanti)"
+    }
+  ],
+  "elapsed_rag_s": 28.4,
+  "meta": {
+    "max_hops": 5,
+    "k": 5,
+    "mistral_temp": 0.0,
+    "answerer": "haiku",
+    "ts": "2026-07-20T18:32:21.807485"
+  },
+  "raisonnement": "La réponse signale explicitement l'absence de données subjectives pour Aïti et refuse de répondre sur le bien-être subjectif. Elle mobilise des données quantitatives objectives (OppChoVec) uniquement pour contextualiser, sans les présenter comme des mesures subjectives. L'absence de verbatims ou entretiens est clairement indiquée, et l'impossibilité d'extrapoler depuis d'autres communes est mentionnée. La réponse suggère une enquête dédiée, ce qui est cohérent avec la grille pour une absence totale de données.",
+  "section_observee": "Gestion de l'absence d'information / Absence totale de données",
+  "comportement_attendu_selon_grille": "Refus explicite ou approximation très signalée. Une réponse qui prétend répondre sans données subjectives disponibles = échec.",
+  "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+  "coherence_comportement_observe": "oui",
+  "sources_inventaire": [
+    {
+      "source": "methodology",
+      "type": "quanti"
+    },
+    {
+      "source": "oppchovec:Aiti",
+      "type": "quanti"
+    },
+    {
+      "source": "communes_profil:Alata",
+      "type": "quanti"
+    },
+    {
+      "source": "communes_profil:Cuttoli-Corticchiato",
+      "type": "quanti"
+    },
+    {
+      "source": "communes_profil:Ajaccio",
+      "type": "quanti"
+    },
+    {
+      "source": "oppchovec:Ghisoni",
+      "type": "quanti"
+    },
+    {
+      "source": "data_comp:Ghisoni",
+      "type": "quanti"
+    },
+    {
+      "source": "data_comp:Rapale",
+      "type": "quanti"
+    },
+    {
+      "source": "data_comp:Rospigliani",
+      "type": "quanti"
+    }
+  ],
+  "mislabelling_detecte": {
+    "regle_1_quali_quanti": "non",
+    "regle_2_surinterpretation_oppchovec": "non",
+    "regle_3_absence_quali_non_signalee": "non",
+    "regle_4_extrapolation_sous_groupe": "non"
+  },
+  "mislabelling_flag": false,
+  "elements_specifiques_question": [
+    "Aïti",
+    "bien-être subjectif",
+    "niveau"
+  ],
+  "elements_traitement": [
+    {
+      "element": "Aïti",
+      "traitement": "precis"
+    },
+    {
+      "element": "bien-être subjectif",
+      "traitement": "approximation_signalee"
+    },
+    {
+      "element": "niveau",
+      "traitement": "approximation_signalee"
+    }
+  ],
+  "pertinence": 5,
+  "pertinence_justif": "La réponse est parfaitement alignée avec la question et la sous-section. Elle refuse explicitement de répondre sur le bien-être subjectif en l'absence de données qualitatives, tout en contextualisant avec des données objectives sans les surinterpréter.",
+  "fondement_factuel": 5,
+  "fondement_factuel_justif": "Toutes les affirmations sont correctement sourcées et interprétées. L'absence de données subjectives est factuellement exacte, et les données quantitatives mobilisées (OppChoVec) sont présentées pour ce qu'elles sont : des indicateurs objectifs.",
+  "nuance_incertitude": 5,
+  "nuance_incertitude_justif": "La réponse est parfaitement nuancée : elle signale l'absence de données subjectives, l'impossibilité d'extrapoler, et propose une solution (enquête dédiée). Aucun ton catégorique.",
+  "coherence_qualiquanti": 5,
+  "coherence_qualiquanti_justif": "La réponse distingue clairement les données quantitatives (OppChoVec) des données qualitatives manquantes. Elle ne tente pas de croiser des données qui n'existent pas et signale explicitement le déséquilibre.",
+  "score_global": 5.0,
+  "error": null,
+  "elapsed_judge_s": 15.7
+}

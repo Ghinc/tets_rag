@@ -122,25 +122,24 @@ def detect_commune_in_text(text: str, commune_names: Optional[List[str]] = None)
 
     # Normaliser le texte
     text_lower = text.lower()
+    text_norm = _normalize_str(text)   # sans diacritiques pour matcher "Aiti" ~ "Aïti"
 
-    # Étape 1 : détecter les gentilés (formes adjectivales des communes)
+    # Étape 1 : détecter les gentilés (formes adjectivales des communes, déjà en ASCII)
     for gentile, commune_name in _GENTILES.items():
         if commune_name and re.search(r'\b' + re.escape(gentile) + r'\b', text_lower):
             return commune_name
 
-    # Étape 2 : matching exact sur les noms de communes
+    # Étape 2 : matching exact sur les noms normalisés (diacritiques supprimés)
     # Trier par longueur décroissante pour matcher les noms composés en premier
     for commune_name in sorted(commune_names, key=len, reverse=True):
-        commune_lower = commune_name.lower()
+        commune_norm = _normalize_str(commune_name)
 
         # Recherche flexible: avec ou sans tirets, apostrophes, accents
-        # Créer un pattern qui tolère les variations
-        pattern = re.escape(commune_lower)
+        pattern = re.escape(commune_norm)
         pattern = pattern.replace(r'\-', r'[\s\-]?')  # Tirets optionnels/espaces
         pattern = pattern.replace(r"\'", r"[\s']?")   # Apostrophes optionnelles
 
-        # Recherche avec limites de mots pour éviter les faux positifs
-        if re.search(r'\b' + pattern + r'\b', text_lower):
+        if re.search(r'\b' + pattern + r'\b', text_norm):
             return commune_name
 
     # Étape 2b/2c : matching sur le premier token des communes composées
@@ -194,25 +193,26 @@ def detect_communes(text: str) -> List[str]:
         return []
 
     text_lower = text.lower()
+    text_norm = _normalize_str(text)   # sans diacritiques pour matcher "Aiti" ~ "Aïti"
     found: List[str] = []
     seen: set = set()
 
-    # Étape 1 : gentilés
+    # Étape 1 : gentilés (déjà en ASCII — text_lower suffit)
     for gentile, commune_name in _GENTILES.items():
         if commune_name and re.search(r'\b' + re.escape(gentile) + r'\b', text_lower):
             if commune_name not in seen:
                 seen.add(commune_name)
                 found.append(commune_name)
 
-    # Étape 2 : matching exact sur les noms, du plus long au plus court
+    # Étape 2 : matching exact sur les noms normalisés (diacritiques supprimés)
     for commune_name in sorted(_COMMUNE_NAMES, key=len, reverse=True):
         if commune_name in seen:
             continue
-        commune_lower = commune_name.lower()
-        pattern = re.escape(commune_lower)
+        commune_norm = _normalize_str(commune_name)
+        pattern = re.escape(commune_norm)
         pattern = pattern.replace(r'\-', r'[\s\-]?')
         pattern = pattern.replace(r"\'", r"[\s']?")
-        if re.search(r'\b' + pattern + r'\b', text_lower):
+        if re.search(r'\b' + pattern + r'\b', text_norm):
             seen.add(commune_name)
             found.append(commune_name)
 

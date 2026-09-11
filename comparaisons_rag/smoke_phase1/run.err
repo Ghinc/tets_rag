@@ -1,0 +1,155 @@
+Traceback (most recent call last):
+  File "C:\These\Données2\fichiers_pour_rag\local\smoke_phase1.py", line 50, in run_question
+    result = pipeline.query(question)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\local\rag_v12_local.py", line 459, in query
+    final_answer, sources, scoring, sub_qa, sources_mob = super().query(
+                                                          ^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\rag_v10_raptor_subq.py", line 926, in query
+    ans = answer_subquestion(sq, context_str, temperature_override=temperature_override)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\local\rag_v12_local.py", line 437, in _answer_hook_p1
+    return _answer_structured(sub_question, context, temperature_override, no_typing)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\local\rag_v12_local.py", line 320, in _answer_structured
+    raw = _call_claude(prompt, _SYSTEM_ANSWERER_JSON,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\local\rag_v12_local.py", line 258, in _call_claude
+    response = client.messages.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\anthropic\_utils\_utils.py", line 282, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\anthropic\resources\messages\messages.py", line 950, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\anthropic\_base_client.py", line 1364, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\anthropic\_base_client.py", line 1137, in request
+    raise self._make_status_error_from_response(err.response) from None
+anthropic.BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeCYz3BMiGdSs8KS5CWuX'}
+Traceback (most recent call last):
+  File "C:\These\Données2\fichiers_pour_rag\local\smoke_phase1.py", line 50, in run_question
+    result = pipeline.query(question)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\local\rag_v12_local.py", line 459, in query
+    final_answer, sources, scoring, sub_qa, sources_mob = super().query(
+                                                          ^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\rag_v10_raptor_subq.py", line 926, in query
+    ans = answer_subquestion(sq, context_str, temperature_override=temperature_override)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\local\rag_v12_local.py", line 431, in _answer_hook
+    return _orig_answer(*a, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\rag_v10_raptor_subq.py", line 365, in answer_subquestion
+    return _call_claude(prompt, sys_prompt,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\local\rag_v12_local.py", line 258, in _call_claude
+    response = client.messages.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\anthropic\_utils\_utils.py", line 282, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\anthropic\resources\messages\messages.py", line 950, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\anthropic\_base_client.py", line 1364, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\anthropic\_base_client.py", line 1137, in request
+    raise self._make_status_error_from_response(err.response) from None
+anthropic.BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeCYzLWuAauBLLorBydxY'}
+Traceback (most recent call last):
+  File "C:\These\Données2\fichiers_pour_rag\local\smoke_phase1.py", line 50, in run_question
+    result = pipeline.query(question)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\local\rag_v12_local.py", line 459, in query
+    final_answer, sources, scoring, sub_qa, sources_mob = super().query(
+                                                          ^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\rag_v10_raptor_subq.py", line 926, in query
+    ans = answer_subquestion(sq, context_str, temperature_override=temperature_override)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\local\rag_v12_local.py", line 437, in _answer_hook_p1
+    return _answer_structured(sub_question, context, temperature_override, no_typing)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\local\rag_v12_local.py", line 320, in _answer_structured
+    raw = _call_claude(prompt, _SYSTEM_ANSWERER_JSON,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\local\rag_v12_local.py", line 258, in _call_claude
+    response = client.messages.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\anthropic\_utils\_utils.py", line 282, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\anthropic\resources\messages\messages.py", line 950, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\anthropic\_base_client.py", line 1364, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\anthropic\_base_client.py", line 1137, in request
+    raise self._make_status_error_from_response(err.response) from None
+anthropic.BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeCYzbtckAioVB8XuR9xj'}
+Traceback (most recent call last):
+  File "C:\These\Données2\fichiers_pour_rag\local\smoke_phase1.py", line 50, in run_question
+    result = pipeline.query(question)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\local\rag_v12_local.py", line 459, in query
+    final_answer, sources, scoring, sub_qa, sources_mob = super().query(
+                                                          ^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\rag_v10_raptor_subq.py", line 842, in query
+    _single_answer = answer_subquestion(question, context_str, temperature_override=temperature_override)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\local\rag_v12_local.py", line 431, in _answer_hook
+    return _orig_answer(*a, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\rag_v10_raptor_subq.py", line 365, in answer_subquestion
+    return _call_claude(prompt, sys_prompt,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\local\rag_v12_local.py", line 258, in _call_claude
+    response = client.messages.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\anthropic\_utils\_utils.py", line 282, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\anthropic\resources\messages\messages.py", line 950, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\anthropic\_base_client.py", line 1364, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\anthropic\_base_client.py", line 1137, in request
+    raise self._make_status_error_from_response(err.response) from None
+anthropic.BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeCYzgfbkQcV6ZTpHU7Ts'}
+Traceback (most recent call last):
+  File "C:\These\Données2\fichiers_pour_rag\local\smoke_phase1.py", line 50, in run_question
+    result = pipeline.query(question)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\local\rag_v12_local.py", line 459, in query
+    final_answer, sources, scoring, sub_qa, sources_mob = super().query(
+                                                          ^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\rag_v10_raptor_subq.py", line 842, in query
+    _single_answer = answer_subquestion(question, context_str, temperature_override=temperature_override)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\local\rag_v12_local.py", line 437, in _answer_hook_p1
+    return _answer_structured(sub_question, context, temperature_override, no_typing)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\local\rag_v12_local.py", line 320, in _answer_structured
+    raw = _call_claude(prompt, _SYSTEM_ANSWERER_JSON,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\local\rag_v12_local.py", line 258, in _call_claude
+    response = client.messages.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\anthropic\_utils\_utils.py", line 282, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\anthropic\resources\messages\messages.py", line 950, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\anthropic\_base_client.py", line 1364, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\These\Données2\fichiers_pour_rag\.venv\Lib\site-packages\anthropic\_base_client.py", line 1137, in request
+    raise self._make_status_error_from_response(err.response) from None
+anthropic.BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CeCYznUbu6x9SVMQJCYXf'}

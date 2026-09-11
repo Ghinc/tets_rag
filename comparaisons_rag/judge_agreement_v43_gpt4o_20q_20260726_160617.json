@@ -1,0 +1,1858 @@
+{
+  "model": "gpt-4o",
+  "judge_version": "V4.3",
+  "n_questions": 20,
+  "timestamp": "20260726_160617",
+  "metrics": {
+    "pertinence": {
+      "n": 20,
+      "pearson_r": 0.335,
+      "pearson_p": 0.149,
+      "spearman_r": 0.29,
+      "spearman_p": 0.215,
+      "mae": 0.7,
+      "bias_h_minus_j": -0.2,
+      "exact_pct": 45.0,
+      "within1_pct": 85.0
+    },
+    "fondement_factuel": {
+      "n": 20,
+      "pearson_r": 0.522,
+      "pearson_p": 0.018,
+      "spearman_r": 0.589,
+      "spearman_p": 0.006,
+      "mae": 0.35,
+      "bias_h_minus_j": 0.15,
+      "exact_pct": 75.0,
+      "within1_pct": 90.0
+    },
+    "nuance_incertitude": {
+      "n": 20,
+      "pearson_r": 0.287,
+      "pearson_p": 0.221,
+      "spearman_r": 0.149,
+      "spearman_p": 0.53,
+      "mae": 0.8,
+      "bias_h_minus_j": 0.4,
+      "exact_pct": 40.0,
+      "within1_pct": 85.0
+    },
+    "coherence_qualiquanti": {
+      "n": 20,
+      "pearson_r": 0.236,
+      "pearson_p": 0.317,
+      "spearman_r": 0.168,
+      "spearman_p": 0.48,
+      "mae": 0.6,
+      "bias_h_minus_j": 0.1,
+      "exact_pct": 55.0,
+      "within1_pct": 90.0
+    },
+    "score_global": {
+      "n": 20,
+      "pearson_r": 0.535,
+      "pearson_p": 0.015,
+      "spearman_r": 0.301,
+      "spearman_p": 0.197,
+      "mae": 0.562,
+      "bias_h_minus_j": 0.113,
+      "exact_pct": 10.0,
+      "within1_pct": 85.0
+    },
+    "composite_valide": {
+      "n": 20,
+      "pearson_r": 0.296,
+      "pearson_p": 0.206,
+      "spearman_r": 0.131,
+      "spearman_p": 0.581,
+      "mae": 0.65,
+      "bias_h_minus_j": 0.25,
+      "exact_pct": 30.0,
+      "within1_pct": 85.0
+    }
+  },
+  "entries": [
+    {
+      "question_id": 9,
+      "question": "Combien d’habitants ont répondu à l’enquête à Ajaccio ?",
+      "section": "Retrieval mono-commune",
+      "subsection": "Retrieval factuel et interprétation",
+      "scores_humain": {
+        "pertinence": 5.0,
+        "fondement_factuel": 5.0,
+        "nuance_incertitude": 5.0,
+        "coherence_qualiquanti": 5.0
+      },
+      "scores_v43": {
+        "raisonnement": "La réponse indique précisément le nombre de répondants à l'enquête à Ajaccio, en s'appuyant sur les données fournies.",
+        "section_observee": "Retrieval mono-commune / Retrieval factuel et interprétation",
+        "comportement_attendu_selon_grille": "Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "oui",
+        "sources_inventaire": [
+          {
+            "source": "stats_repondants:Ajaccio",
+            "type": "quanti"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "non",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": false,
+        "elements_specifiques_question": [
+          "nombre d'habitants",
+          "répondu",
+          "enquête",
+          "Ajaccio"
+        ],
+        "elements_traitement": [
+          {
+            "element": "nombre d'habitants",
+            "traitement": "precis"
+          },
+          {
+            "element": "répondu",
+            "traitement": "precis"
+          },
+          {
+            "element": "enquête",
+            "traitement": "precis"
+          },
+          {
+            "element": "Ajaccio",
+            "traitement": "precis"
+          }
+        ],
+        "pertinence": 5,
+        "pertinence_justif": "La réponse est précise et directement alignée avec la question posée.",
+        "fondement_factuel": 5,
+        "fondement_factuel_justif": "Le nombre de répondants est correctement sourcé à partir des données fournies.",
+        "nuance_incertitude": 4,
+        "nuance_incertitude_justif": "La réponse mentionne l'absence de données pour estimer un taux de participation, ce qui montre une bonne gestion de l'incertitude.",
+        "coherence_qualiquanti": 5,
+        "coherence_qualiquanti_justif": "La réponse utilise correctement les données quantitatives disponibles pour répondre à la question.",
+        "score_global": 4.75,
+        "error": null
+      },
+      "timestamp": "2026-07-26T16:06:28.026424"
+    },
+    {
+      "question_id": 11,
+      "question": "Que pensent les entrepreneurs Ajacciens de la qualité de vie ?",
+      "section": "Retrieval mono-commune",
+      "subsection": "Retrieval par sous-population",
+      "scores_humain": {
+        "pertinence": 5.0,
+        "fondement_factuel": 5.0,
+        "nuance_incertitude": 5.0,
+        "coherence_qualiquanti": 5.0
+      },
+      "scores_v43": {
+        "raisonnement": "La réponse utilise des verbatims et des synthèses qualitatives pour fournir une vue nuancée des perceptions des entrepreneurs ajacciens, en soulignant les difficultés économiques et les aspects positifs comme le réseau social.",
+        "section_observee": "Retrieval mono-commune / Retrieval par sous-population",
+        "comportement_attendu_selon_grille": "Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "oui",
+        "sources_inventaire": [
+          {
+            "source": "verbatims:Ajaccio:entrepreneur",
+            "type": "quali"
+          },
+          {
+            "source": "raptor:commune_quali:Ajaccio:entrepreneur",
+            "type": "quali"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "non",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": false,
+        "elements_specifiques_question": [
+          "entrepreneurs",
+          "Ajaccio",
+          "qualité de vie",
+          "perceptions"
+        ],
+        "elements_traitement": [
+          {
+            "element": "entrepreneurs",
+            "traitement": "precis"
+          },
+          {
+            "element": "Ajaccio",
+            "traitement": "precis"
+          },
+          {
+            "element": "qualité de vie",
+            "traitement": "precis"
+          },
+          {
+            "element": "perceptions",
+            "traitement": "precis"
+          }
+        ],
+        "pertinence": 5,
+        "pertinence_justif": "Tous les éléments spécifiques de la question sont traités précisément avec les données qualitatives disponibles.",
+        "fondement_factuel": 5,
+        "fondement_factuel_justif": "Les affirmations sont bien fondées sur les verbatims et les synthèses qualitatives fournies.",
+        "nuance_incertitude": 5,
+        "nuance_incertitude_justif": "La réponse est bien nuancée, mentionnant les limites de l'échantillon et les divergences dans les perceptions.",
+        "coherence_qualiquanti": 5,
+        "coherence_qualiquanti_justif": "Intégration qualitative exemplaire, ciblée sur le groupe demandé avec des données pertinentes.",
+        "score_global": 5.0,
+        "error": null
+      },
+      "timestamp": "2026-07-26T16:06:35.123668"
+    },
+    {
+      "question_id": 14,
+      "question": "Que révèlent les entretiens qualitatifs sur l'emploi à Lozzi ?",
+      "section": "Retrieval mono-commune",
+      "subsection": "Retrieval source-spécifique",
+      "scores_humain": {
+        "pertinence": 5.0,
+        "fondement_factuel": 5.0,
+        "nuance_incertitude": 5.0,
+        "coherence_qualiquanti": 5.0
+      },
+      "scores_v43": {
+        "raisonnement": "La réponse utilise les entretiens qualitatifs pour décrire les perceptions des habitants de Lozzi sur l'emploi, en soulignant les contraintes structurelles et l'impact sur la communauté.",
+        "section_observee": "Retrieval mono-commune / Retrieval source-spécifique",
+        "comportement_attendu_selon_grille": "Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "oui",
+        "sources_inventaire": [
+          {
+            "source": "raptor_entretiens_summaries:Lozzi",
+            "type": "quali"
+          },
+          {
+            "source": "raptor_summary:dimension:Emploi",
+            "type": "quali"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "non",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": false,
+        "elements_specifiques_question": [
+          "entretiens qualitatifs",
+          "emploi",
+          "Lozzi"
+        ],
+        "elements_traitement": [
+          {
+            "element": "entretiens qualitatifs",
+            "traitement": "precis"
+          },
+          {
+            "element": "emploi",
+            "traitement": "precis"
+          },
+          {
+            "element": "Lozzi",
+            "traitement": "precis"
+          }
+        ],
+        "pertinence": 5,
+        "pertinence_justif": "La réponse est précise et ciblée, utilisant les entretiens qualitatifs pour répondre directement à la question.",
+        "fondement_factuel": 5,
+        "fondement_factuel_justif": "Les affirmations sont bien fondées sur les sources qualitatives fournies, sans mislabelling.",
+        "nuance_incertitude": 4,
+        "nuance_incertitude_justif": "La réponse est bien nuancée, mais pourrait inclure plus de modalisateurs pour exprimer l'incertitude.",
+        "coherence_qualiquanti": 5,
+        "coherence_qualiquanti_justif": "La réponse intègre de manière cohérente les données qualitatives pertinentes pour la question posée.",
+        "score_global": 4.75,
+        "error": null
+      },
+      "timestamp": "2026-07-26T16:06:42.153781"
+    },
+    {
+      "question_id": 19,
+      "question": "Quels leviers d’action pour améliorer les dimensions du bien-être sous-évaluées à Ajaccio ?",
+      "section": "Retrieval mono-commune",
+      "subsection": "Questions normatives / prescriptives",
+      "scores_humain": {
+        "pertinence": 5.0,
+        "fondement_factuel": 5.0,
+        "nuance_incertitude": 5.0,
+        "coherence_qualiquanti": 5.0
+      },
+      "scores_v43": {
+        "raisonnement": "La réponse identifie des leviers d'action précis pour améliorer les dimensions du bien-être à Ajaccio, en se basant sur des perceptions citoyennes et des indicateurs quantitatifs.",
+        "section_observee": "Retrieval mono-commune / Questions normatives / prescriptives",
+        "comportement_attendu_selon_grille": "Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "oui",
+        "sources_inventaire": [
+          {
+            "source": "verbatims:Ajaccio",
+            "type": "quali"
+          },
+          {
+            "source": "raptor:commune_quali:Ajaccio",
+            "type": "quali"
+          },
+          {
+            "source": "raptor:enquete_quanti:Ajaccio",
+            "type": "quanti"
+          },
+          {
+            "source": "oppchovec:Ajaccio",
+            "type": "quanti"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "non",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": false,
+        "elements_specifiques_question": [
+          "leviers d'action",
+          "améliorer",
+          "bien-être",
+          "Ajaccio"
+        ],
+        "elements_traitement": [
+          {
+            "element": "leviers d'action",
+            "traitement": "precis"
+          },
+          {
+            "element": "améliorer",
+            "traitement": "precis"
+          },
+          {
+            "element": "bien-être",
+            "traitement": "precis"
+          },
+          {
+            "element": "Ajaccio",
+            "traitement": "precis"
+          }
+        ],
+        "pertinence": 5,
+        "pertinence_justif": "La réponse est précise et ciblée, traitant directement des leviers d'action pour améliorer le bien-être à Ajaccio.",
+        "fondement_factuel": 5,
+        "fondement_factuel_justif": "Les affirmations sont bien fondées sur les sources fournies, avec une bonne utilisation des données qualitatives et quantitatives.",
+        "nuance_incertitude": 4,
+        "nuance_incertitude_justif": "La réponse est bien nuancée, mais pourrait inclure plus de modalisateurs pour exprimer l'incertitude sur l'impact des actions proposées.",
+        "coherence_qualiquanti": 5,
+        "coherence_qualiquanti_justif": "Excellente intégration des données qualitatives et quantitatives pour proposer des actions concrètes.",
+        "score_global": 4.75,
+        "error": null
+      },
+      "timestamp": "2026-07-26T16:06:50.144048"
+    },
+    {
+      "question_id": 24,
+      "question": "Ajaccio peut-elle présenter un niveau de bien-être faible malgré des indicateurs objectifs satisfaisants ?",
+      "section": "Retrieval mono-commune",
+      "subsection": "Analyse multi-source et cohérence des données",
+      "scores_humain": {
+        "pertinence": 3.0,
+        "fondement_factuel": 5.0,
+        "nuance_incertitude": 4.0,
+        "coherence_qualiquanti": 4.0
+      },
+      "scores_v43": {
+        "raisonnement": "La réponse utilise des données qualitatives et quantitatives pour montrer que malgré des indicateurs objectifs satisfaisants, le bien-être perçu peut être faible à Ajaccio. Les verbatims et scores de satisfaction sont bien intégrés.",
+        "section_observee": "Retrieval mono-commune / Analyse multi-source et cohérence des données",
+        "comportement_attendu_selon_grille": "Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "oui",
+        "sources_inventaire": [
+          {
+            "source": "verbatims:Ajaccio",
+            "type": "quali"
+          },
+          {
+            "source": "raptor:commune_quali:Ajaccio",
+            "type": "quali"
+          },
+          {
+            "source": "raptor:commune_quanti:Ajaccio",
+            "type": "quanti"
+          },
+          {
+            "source": "oppchovec:Ajaccio",
+            "type": "quanti"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "non",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": false,
+        "elements_specifiques_question": [
+          "Ajaccio",
+          "bien-être",
+          "indicateurs objectifs",
+          "satisfaction"
+        ],
+        "elements_traitement": [
+          {
+            "element": "Ajaccio",
+            "traitement": "precis"
+          },
+          {
+            "element": "bien-être",
+            "traitement": "precis"
+          },
+          {
+            "element": "indicateurs objectifs",
+            "traitement": "precis"
+          },
+          {
+            "element": "satisfaction",
+            "traitement": "precis"
+          }
+        ],
+        "pertinence": 5,
+        "pertinence_justif": "La réponse traite précisément tous les éléments spécifiques de la question avec des données pertinentes.",
+        "fondement_factuel": 5,
+        "fondement_factuel_justif": "Les affirmations sont bien fondées sur les sources fournies, avec une bonne utilisation des données qualitatives et quantitatives.",
+        "nuance_incertitude": 5,
+        "nuance_incertitude_justif": "La réponse est bien nuancée, expliquant les divergences entre indicateurs objectifs et perceptions subjectives.",
+        "coherence_qualiquanti": 5,
+        "coherence_qualiquanti_justif": "Excellente intégration des données qualitatives et quantitatives pour répondre à la question posée.",
+        "score_global": 5.0,
+        "error": null
+      },
+      "timestamp": "2026-07-26T16:06:57.913897"
+    },
+    {
+      "question_id": 30,
+      "question": "La dimension environnement est-elle mieux évaluée par les habitants à Ajaccio ou à Bastia ?",
+      "section": "Raisonnement comparatif",
+      "subsection": "Comparaisons avec hiérarchisation explicite",
+      "scores_humain": {
+        "pertinence": 5.0,
+        "fondement_factuel": 5.0,
+        "nuance_incertitude": 4.0,
+        "coherence_qualiquanti": 3.0
+      },
+      "scores_v43": {
+        "raisonnement": "La réponse compare explicitement les perceptions environnementales à Ajaccio et Bastia, en soulignant les différences de préoccupations et insatisfactions sans conclure de manière catégorique.",
+        "section_observee": "Raisonnement comparatif / Comparaisons avec hiérarchisation explicite",
+        "comportement_attendu_selon_grille": "Réponse de fond avec comparaison explicite. Refus injustifié = échec.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "oui",
+        "sources_inventaire": [
+          {
+            "source": "raptor_summary:Ajaccio",
+            "type": "quali"
+          },
+          {
+            "source": "raptor_summary:Bastia",
+            "type": "quali"
+          },
+          {
+            "source": "raptor_enquete_summary:Ajaccio",
+            "type": "quali"
+          },
+          {
+            "source": "raptor_enquete_summary:Bastia",
+            "type": "quali"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "non",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": false,
+        "elements_specifiques_question": [
+          "Ajaccio",
+          "Bastia",
+          "dimension environnement",
+          "évaluation par habitants"
+        ],
+        "elements_traitement": [
+          {
+            "element": "Ajaccio",
+            "traitement": "precis"
+          },
+          {
+            "element": "Bastia",
+            "traitement": "precis"
+          },
+          {
+            "element": "dimension environnement",
+            "traitement": "precis"
+          },
+          {
+            "element": "évaluation par habitants",
+            "traitement": "precis"
+          }
+        ],
+        "pertinence": 5,
+        "pertinence_justif": "La réponse traite précisément tous les éléments spécifiques de la question avec une comparaison explicite entre les deux villes.",
+        "fondement_factuel": 5,
+        "fondement_factuel_justif": "Les affirmations sont bien fondées sur les sources qualitatives disponibles pour Ajaccio et Bastia.",
+        "nuance_incertitude": 5,
+        "nuance_incertitude_justif": "La réponse est bien nuancée, reconnaissant l'absence de données chiffrées comparables et évitant de trancher catégoriquement.",
+        "coherence_qualiquanti": 5,
+        "coherence_qualiquanti_justif": "L'intégration des données qualitatives est exemplaire, avec une comparaison bien ciblée sur les perceptions des habitants.",
+        "score_global": 5.0,
+        "error": null
+      },
+      "timestamp": "2026-07-26T16:07:06.992727"
+    },
+    {
+      "question_id": 36,
+      "question": "Observe-t-on un écart significatif entre indicateurs objectifs et perception à Bastia ?",
+      "section": "Raisonnement comparatif",
+      "subsection": "Comparaison croisée quanti/quali",
+      "scores_humain": {
+        "pertinence": 4.0,
+        "fondement_factuel": 3.0,
+        "nuance_incertitude": 4.0,
+        "coherence_qualiquanti": 4.0
+      },
+      "scores_v43": {
+        "raisonnement": "La réponse identifie des perceptions négatives sur la santé et les transports à Bastia, mais souligne l'absence de données objectives pour confirmer ces perceptions. Elle mentionne des scores de satisfaction modérés et des critiques spécifiques, mais ne fournit pas de comparaison directe avec des indicateurs quantitatifs précis.",
+        "section_observee": "Raisonnement comparatif / Comparaison croisée quanti/quali",
+        "comportement_attendu_selon_grille": "Réponse de fond avec comparaison explicite. Si pas de quali dispo, signaler le manque.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "partiel",
+        "sources_inventaire": [
+          {
+            "source": "verbatims:Bastia",
+            "type": "quali"
+          },
+          {
+            "source": "raptor:commune_quali:Bastia",
+            "type": "quali"
+          },
+          {
+            "source": "raptor:enquete_quanti:Bastia",
+            "type": "quanti"
+          },
+          {
+            "source": "oppchovec:Bastia",
+            "type": "quanti"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "non",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": false,
+        "elements_specifiques_question": [
+          "Bastia",
+          "indicateurs objectifs",
+          "perception",
+          "écart"
+        ],
+        "elements_traitement": [
+          {
+            "element": "Bastia",
+            "traitement": "precis"
+          },
+          {
+            "element": "indicateurs objectifs",
+            "traitement": "approximation_signalee"
+          },
+          {
+            "element": "perception",
+            "traitement": "precis"
+          },
+          {
+            "element": "écart",
+            "traitement": "approximation_signalee"
+          }
+        ],
+        "pertinence": 4,
+        "pertinence_justif": "La réponse traite bien des perceptions et des indicateurs, mais manque de données objectives pour une comparaison complète.",
+        "fondement_factuel": 4,
+        "fondement_factuel_justif": "Les affirmations sont bien sourcées avec des verbatims et des scores de satisfaction, mais l'absence de données objectives est correctement signalée.",
+        "nuance_incertitude": 5,
+        "nuance_incertitude_justif": "La réponse est bien nuancée, signalant clairement l'absence de données objectives pour confirmer les perceptions.",
+        "coherence_qualiquanti": 4,
+        "coherence_qualiquanti_justif": "Bonne intégration des perceptions qualitatives avec les scores quantitatifs, mais manque de données objectives pour une comparaison complète.",
+        "score_global": 4.25,
+        "error": null
+      },
+      "timestamp": "2026-07-26T16:07:14.460238"
+    },
+    {
+      "question_id": 41,
+      "question": "Existe-t-il une commune avec de bons indicateurs socio-économiques mais un faible bien-être perçu ?",
+      "section": "Limites architecturales",
+      "subsection": "",
+      "scores_humain": {
+        "pertinence": 3.0,
+        "fondement_factuel": 5.0,
+        "nuance_incertitude": 4.0,
+        "coherence_qualiquanti": 2.0
+      },
+      "scores_v43": {
+        "raisonnement": "La réponse tente de fournir une analyse sans signaler explicitement les limites architecturales. Elle mentionne des communes spécifiques sans données objectives suffisantes pour confirmer les hypothèses avancées.",
+        "section_observee": "Limites architecturales",
+        "comportement_attendu_selon_grille": "Refus explicite OU approximation très signalée.",
+        "type_reponse_attendue_specifie": "limite_architecturale",
+        "coherence_comportement_observe": "non",
+        "sources_inventaire": [
+          {
+            "source": "verbatims:Corte",
+            "type": "quali"
+          },
+          {
+            "source": "raptor:commune_quali:Lozzi",
+            "type": "quali"
+          },
+          {
+            "source": "raptor:commune_quali:Grossetto Prugna",
+            "type": "quali"
+          },
+          {
+            "source": "oppchovec:Corse",
+            "type": "quanti"
+          },
+          {
+            "source": "classement:Corse",
+            "type": "quanti"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "non",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": false,
+        "elements_specifiques_question": [
+          "commune",
+          "bons indicateurs socio-économiques",
+          "faible bien-être perçu"
+        ],
+        "elements_traitement": [
+          {
+            "element": "commune",
+            "traitement": "approximation_non_signalee"
+          },
+          {
+            "element": "bons indicateurs socio-économiques",
+            "traitement": "approximation_non_signalee"
+          },
+          {
+            "element": "faible bien-être perçu",
+            "traitement": "approximation_non_signalee"
+          }
+        ],
+        "pertinence": 2,
+        "pertinence_justif": "La réponse ne respecte pas le type attendu (limite architecturale) et tente de fournir une analyse non fondée.",
+        "fondement_factuel": 3,
+        "fondement_factuel_justif": "Les affirmations sur Linguizzetta et Bastia ne sont pas soutenues par des données objectives suffisantes.",
+        "nuance_incertitude": 2,
+        "nuance_incertitude_justif": "La réponse manque de signalement explicite des limites des données disponibles.",
+        "coherence_qualiquanti": 3,
+        "coherence_qualiquanti_justif": "La réponse utilise des données qualitatives et quantitatives, mais sans signaler clairement les limites de l'analyse.",
+        "score_global": 2.5,
+        "error": null
+      },
+      "timestamp": "2026-07-26T16:07:21.770175"
+    },
+    {
+      "question_id": 44,
+      "question": "Les communes les plus dynamiques économiquement sont-elles nécessairement celles où le bien-être perçu est le plus élevé ?",
+      "section": "Raisonnement comparatif",
+      "subsection": "Comparaison contre-intuitive",
+      "scores_humain": {
+        "pertinence": 4.0,
+        "fondement_factuel": 5.0,
+        "nuance_incertitude": 5.0,
+        "coherence_qualiquanti": 5.0
+      },
+      "scores_v43": {
+        "raisonnement": "La réponse compare les perceptions de bien-être avec les indicateurs économiques, soulignant l'absence de corrélation systématique et l'importance des facteurs locaux.",
+        "section_observee": "Raisonnement comparatif / Comparaison contre-intuitive",
+        "comportement_attendu_selon_grille": "Réponse de fond avec comparaison explicite.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "oui",
+        "sources_inventaire": [
+          {
+            "source": "verbatims",
+            "type": "quali"
+          },
+          {
+            "source": "raptor:commune_quali",
+            "type": "quali"
+          },
+          {
+            "source": "oppchovec",
+            "type": "quanti"
+          },
+          {
+            "source": "classement",
+            "type": "quanti"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "non",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": false,
+        "elements_specifiques_question": [
+          "communes dynamiques économiquement",
+          "bien-être perçu",
+          "comparaison"
+        ],
+        "elements_traitement": [
+          {
+            "element": "communes dynamiques économiquement",
+            "traitement": "precis"
+          },
+          {
+            "element": "bien-être perçu",
+            "traitement": "precis"
+          },
+          {
+            "element": "comparaison",
+            "traitement": "precis"
+          }
+        ],
+        "pertinence": 5,
+        "pertinence_justif": "La réponse traite précisément de la question posée, en comparant les perceptions de bien-être avec les indicateurs économiques.",
+        "fondement_factuel": 5,
+        "fondement_factuel_justif": "Les affirmations sont bien fondées sur les sources fournies, avec une utilisation correcte des données qualitatives et quantitatives.",
+        "nuance_incertitude": 5,
+        "nuance_incertitude_justif": "La réponse est bien nuancée, reconnaissant la complexité et l'absence de corrélation systématique.",
+        "coherence_qualiquanti": 5,
+        "coherence_qualiquanti_justif": "Intégration exemplaire des données qualitatives et quantitatives pour répondre à la question.",
+        "score_global": 5.0,
+        "error": null
+      },
+      "timestamp": "2026-07-26T16:07:36.520652"
+    },
+    {
+      "question_id": 48,
+      "question": "Peut-on conclure solidement concernant le bien-être des entrepreneurs à Lozzi ?",
+      "section": "Gestion d’absence d’information",
+      "subsection": "Données partielles ou insuffisantes",
+      "scores_humain": {
+        "pertinence": 4.0,
+        "fondement_factuel": 5.0,
+        "nuance_incertitude": 5.0,
+        "coherence_qualiquanti": 4.0
+      },
+      "scores_v43": {
+        "raisonnement": "La réponse signale l'absence de données spécifiques à Lozzi et utilise des données objectives pour illustrer les contraintes structurelles. Elle mentionne les perceptions générales des entrepreneurs corses mais précise que cela ne cible pas Lozzi.",
+        "section_observee": "Gestion d’absence d’information / Données partielles ou insuffisantes",
+        "comportement_attendu_selon_grille": "Réponse de fond attendue avec signalement des limites et des données manquantes.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "oui",
+        "sources_inventaire": [
+          {
+            "source": "verbatims:Travailleur(se) indépendant(e) / Entrepreneur(e)",
+            "type": "quali"
+          },
+          {
+            "source": "oppchovec:Lozzi",
+            "type": "quanti"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "non",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": false,
+        "elements_specifiques_question": [
+          "bien-être",
+          "entrepreneurs",
+          "Lozzi",
+          "conclusion solide"
+        ],
+        "elements_traitement": [
+          {
+            "element": "bien-être",
+            "traitement": "approximation_signalee"
+          },
+          {
+            "element": "entrepreneurs",
+            "traitement": "approximation_signalee"
+          },
+          {
+            "element": "Lozzi",
+            "traitement": "precis"
+          },
+          {
+            "element": "conclusion solide",
+            "traitement": "approximation_signalee"
+          }
+        ],
+        "pertinence": 4,
+        "pertinence_justif": "La réponse est bien alignée avec la section et sous-section, signalant les limites des données disponibles.",
+        "fondement_factuel": 5,
+        "fondement_factuel_justif": "Les affirmations sont correctement sourcées et les limites des données sont bien signalées.",
+        "nuance_incertitude": 5,
+        "nuance_incertitude_justif": "La réponse est bien nuancée, avec un bon signalement des limites et des incertitudes.",
+        "coherence_qualiquanti": 4,
+        "coherence_qualiquanti_justif": "Bonne intégration des données objectives et signalement de l'absence de données qualitatives spécifiques à Lozzi.",
+        "score_global": 4.5,
+        "error": null
+      },
+      "timestamp": "2026-07-26T16:07:43.278328"
+    },
+    {
+      "question_id": 51,
+      "question": "Est-il possible de comparer les indicateurs objectifs et qualitatifs pour Piedicorte ?",
+      "section": "Gestion d’absence d’information",
+      "subsection": "Comparaison impossible",
+      "scores_humain": {
+        "pertinence": 4.0,
+        "fondement_factuel": 3.0,
+        "nuance_incertitude": 4.0,
+        "coherence_qualiquanti": 5.0
+      },
+      "scores_v43": {
+        "raisonnement": "La réponse présente des indicateurs quantitatifs pour Piedicorte-di-Gaggio mais ne signale pas l'absence de données qualitatives spécifiques, ce qui rend la comparaison impossible.",
+        "section_observee": "Gestion d’absence d’information / Comparaison impossible",
+        "comportement_attendu_selon_grille": "Refus explicite ou approximation très signalée.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "non",
+        "sources_inventaire": [
+          {
+            "source": "Synthèse analytique globale — Qualité de Vie en Corse",
+            "type": "quanti"
+          },
+          {
+            "source": "Piedicorte-di-Gaggio données démographiques et équipements",
+            "type": "quanti"
+          },
+          {
+            "source": "OppChoVec Piedicorte-di-Gaggio",
+            "type": "quanti"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "oui — aucune source quali dispo pour Piedicorte-di-Gaggio, manque non signalé",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": true,
+        "elements_specifiques_question": [
+          "Piedicorte-di-Gaggio",
+          "indicateurs objectifs",
+          "indicateurs qualitatifs",
+          "comparaison"
+        ],
+        "elements_traitement": [
+          {
+            "element": "Piedicorte-di-Gaggio",
+            "traitement": "precis"
+          },
+          {
+            "element": "indicateurs objectifs",
+            "traitement": "precis"
+          },
+          {
+            "element": "indicateurs qualitatifs",
+            "traitement": "approximation_non_signalee"
+          },
+          {
+            "element": "comparaison",
+            "traitement": "approximation_non_signalee"
+          }
+        ],
+        "pertinence": 2,
+        "pertinence_justif": "La réponse ne signale pas l'absence de données qualitatives spécifiques à Piedicorte-di-Gaggio, ce qui est crucial pour la comparaison demandée.",
+        "fondement_factuel": 3,
+        "fondement_factuel_justif": "Les données quantitatives sont correctement présentées, mais l'absence de données qualitatives n'est pas signalée.",
+        "nuance_incertitude": 2,
+        "nuance_incertitude_justif": "Aucune mention de l'absence de données qualitatives, ce qui est essentiel pour la question posée.",
+        "coherence_qualiquanti": 2,
+        "coherence_qualiquanti_justif": "La réponse prétend comparer des dimensions qualitatives sans données qualitatives disponibles, déséquilibre non signalé.",
+        "score_global": 2.25,
+        "error": null
+      },
+      "timestamp": "2026-07-26T16:07:51.061826"
+    },
+    {
+      "question_id": 52,
+      "question": "Les données disponibles permettent-elles d’analyser spécifiquement le bien-être des 18–25 ans à Lozzi ?",
+      "section": "Gestion d’absence d’information",
+      "subsection": "Sous-populations peu représentées",
+      "scores_humain": {
+        "pertinence": 5.0,
+        "fondement_factuel": 5.0,
+        "nuance_incertitude": 5.0,
+        "coherence_qualiquanti": 5.0
+      },
+      "scores_v43": {
+        "raisonnement": "La réponse signale l'absence de données spécifiques pour les 18-25 ans à Lozzi et utilise des approximations basées sur des données générales et régionales.",
+        "section_observee": "Gestion d’absence d’information / Sous-populations peu représentées",
+        "comportement_attendu_selon_grille": "Approximation signalée acceptable, refus acceptable.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "oui",
+        "sources_inventaire": [
+          {
+            "source": "oppchovec:Lozzi",
+            "type": "quanti"
+          },
+          {
+            "source": "entretiens:Lozzi",
+            "type": "quali"
+          },
+          {
+            "source": "raptor:commune_quali:Corse",
+            "type": "quali"
+          },
+          {
+            "source": "stats_repondants:Corse",
+            "type": "quanti"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "non",
+          "regle_4_extrapolation_sous_groupe": "oui — OppChoVec extrapolé pour les 18-25 ans à Lozzi"
+        },
+        "mislabelling_flag": true,
+        "elements_specifiques_question": [
+          "18-25 ans",
+          "Lozzi",
+          "bien-être",
+          "analyse spécifique"
+        ],
+        "elements_traitement": [
+          {
+            "element": "18-25 ans",
+            "traitement": "approximation_signalee"
+          },
+          {
+            "element": "Lozzi",
+            "traitement": "precis"
+          },
+          {
+            "element": "bien-être",
+            "traitement": "approximation_signalee"
+          },
+          {
+            "element": "analyse spécifique",
+            "traitement": "approximation_signalee"
+          }
+        ],
+        "pertinence": 4,
+        "pertinence_justif": "La réponse signale correctement l'absence de données spécifiques et utilise des approximations honnêtes.",
+        "fondement_factuel": 3,
+        "fondement_factuel_justif": "Bien que les données soient correctement sourcées, il y a une extrapolation non signalée de l'OppChoVec pour les 18-25 ans.",
+        "nuance_incertitude": 4,
+        "nuance_incertitude_justif": "La réponse est bien nuancée, signalant les limites des données disponibles.",
+        "coherence_qualiquanti": 4,
+        "coherence_qualiquanti_justif": "Bonne intégration des données qualitatives et quantitatives, avec signalement des approximations.",
+        "score_global": 3.75,
+        "error": null
+      },
+      "timestamp": "2026-07-26T16:07:58.088182"
+    },
+    {
+      "question_id": 68,
+      "question": "Quel est le score moyen, euh, moyen, tu vois, du bien-être général ?",
+      "section": "Robustesse sémantique",
+      "subsection": "Bruit lexical",
+      "scores_humain": {
+        "pertinence": 5.0,
+        "fondement_factuel": 5.0,
+        "nuance_incertitude": 4.0,
+        "coherence_qualiquanti": 5.0
+      },
+      "scores_v43": {
+        "raisonnement": "La réponse traite le 'score moyen du bien-être général' en utilisant des données qualitatives et quantitatives disponibles, en distinguant perceptions et mesures objectives, et en fournissant une synthèse globale.",
+        "section_observee": "Robustesse sémantique / Bruit lexical",
+        "comportement_attendu_selon_grille": "Réponse cohérente avec ce qu'on attendrait pour la version canonique de la question.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "oui",
+        "sources_inventaire": [
+          {
+            "source": "Synthèse analytique globale — Qualité de Vie en Corse",
+            "type": "quali"
+          },
+          {
+            "source": "Scores moyens de l'enquête QdV pour la commune de Corte",
+            "type": "quanti"
+          },
+          {
+            "source": "Scores moyens de l'enquête QdV pour la commune de Peri",
+            "type": "quanti"
+          },
+          {
+            "source": "Profil des répondants de la commune de Ajaccio",
+            "type": "quanti"
+          },
+          {
+            "source": "Profil des répondants de la commune de Borgo",
+            "type": "quanti"
+          },
+          {
+            "source": "OppChoVec moyen de la Corse",
+            "type": "quanti"
+          },
+          {
+            "source": "Indicateur OppChoVec",
+            "type": "quanti"
+          },
+          {
+            "source": "Indice OppChoVec",
+            "type": "quanti"
+          },
+          {
+            "source": "Enquête Qualité de Vie en Corse — Description méthodologique",
+            "type": "quali"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "non",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": false,
+        "elements_specifiques_question": [
+          "score moyen",
+          "bien-être général"
+        ],
+        "elements_traitement": [
+          {
+            "element": "score moyen",
+            "traitement": "precis"
+          },
+          {
+            "element": "bien-être général",
+            "traitement": "precis"
+          }
+        ],
+        "pertinence": 5,
+        "pertinence_justif": "La réponse est cohérente avec la question, traitant précisément le score moyen du bien-être général en Corse.",
+        "fondement_factuel": 5,
+        "fondement_factuel_justif": "Les affirmations sont bien fondées sur les sources fournies, avec une distinction claire entre perceptions et mesures objectives.",
+        "nuance_incertitude": 5,
+        "nuance_incertitude_justif": "La réponse est bien nuancée, distinguant les perceptions des habitants des mesures objectives et signalant les limites des données.",
+        "coherence_qualiquanti": 5,
+        "coherence_qualiquanti_justif": "Intégration exemplaire des données qualitatives et quantitatives, avec une distinction claire entre les deux types de données.",
+        "score_global": 5.0,
+        "error": null
+      },
+      "timestamp": "2026-07-26T16:08:06.534075"
+    },
+    {
+      "question_id": 75,
+      "question": "Les écarts observés entre indicateurs objectifs et perception subjective à Bastia peuvent-ils résulter de facteurs structurels non captés par les indicateurs quantitatifs ?",
+      "section": "Raisonnement causal et contre-intuitif",
+      "subsection": "Raisonnement causal multi-facteurs",
+      "scores_humain": {
+        "pertinence": 4.0,
+        "fondement_factuel": 4.0,
+        "nuance_incertitude": 3.0,
+        "coherence_qualiquanti": 5.0
+      },
+      "scores_v43": {
+        "raisonnement": "La réponse identifie des écarts entre indicateurs et perceptions à Bastia, en soulignant des facteurs structurels comme la saturation des services et la dépendance à la voiture. Cependant, elle surinterprète le score Choix sans signaler que c'est une approximation.",
+        "section_observee": "Raisonnement causal et contre-intuitif / Raisonnement causal multi-facteurs",
+        "comportement_attendu_selon_grille": "Mobilisation des données AVEC nuance corrélation vs causalité.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "partiel",
+        "sources_inventaire": [
+          {
+            "source": "raptor:commune_quali:Bastia",
+            "type": "quali"
+          },
+          {
+            "source": "verbatims:Bastia",
+            "type": "quali"
+          },
+          {
+            "source": "oppchovec:Bastia",
+            "type": "quanti"
+          },
+          {
+            "source": "equipements:Bastia",
+            "type": "quanti"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "oui — Cho présenté comme 'liberté effective quasi nulle' sans signaler que c'est une approximation",
+          "regle_3_absence_quali_non_signalee": "non",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": true,
+        "elements_specifiques_question": [
+          "écarts",
+          "indicateurs objectifs",
+          "perception subjective",
+          "facteurs structurels",
+          "Bastia"
+        ],
+        "elements_traitement": [
+          {
+            "element": "écarts",
+            "traitement": "precis"
+          },
+          {
+            "element": "indicateurs objectifs",
+            "traitement": "precis"
+          },
+          {
+            "element": "perception subjective",
+            "traitement": "precis"
+          },
+          {
+            "element": "facteurs structurels",
+            "traitement": "precis"
+          },
+          {
+            "element": "Bastia",
+            "traitement": "precis"
+          }
+        ],
+        "pertinence": 4,
+        "pertinence_justif": "La réponse traite bien les écarts et les facteurs structurels, mais manque de nuance sur la causalité.",
+        "fondement_factuel": 3,
+        "fondement_factuel_justif": "Surinterprétation du score Choix comme 'liberté effective quasi nulle' sans signaler que c'est une approximation. Plafond Règle 2.",
+        "nuance_incertitude": 3,
+        "nuance_incertitude_justif": "La réponse manque de nuance sur la causalité et sur l'interprétation des scores OppChoVec. Plafond Règle 2.",
+        "coherence_qualiquanti": 4,
+        "coherence_qualiquanti_justif": "Bonne intégration des données qualitatives et quantitatives, mais surinterprétation du score Choix.",
+        "score_global": 3.5,
+        "error": null
+      },
+      "timestamp": "2026-07-26T16:08:16.193305"
+    },
+    {
+      "question_id": 76,
+      "question": "Un faible bien-être perçu peut-il influencer la manière dont les habitants évaluent leur bien-être subjectif ?",
+      "section": "Raisonnement causal et contre-intuitif",
+      "subsection": "Causalité inversée ou alternative",
+      "scores_humain": {
+        "pertinence": 4.0,
+        "fondement_factuel": 4.0,
+        "nuance_incertitude": 5.0,
+        "coherence_qualiquanti": 5.0
+      },
+      "scores_v43": {
+        "raisonnement": "La réponse affirme une influence sans signaler explicitement que le sens de la relation n'est pas déterminable, manquant de nuance sur la causalité inversée.",
+        "section_observee": "Raisonnement causal et contre-intuitif / Causalité inversée ou alternative",
+        "comportement_attendu_selon_grille": "Signalement explicite que le sens de la relation n'est pas déterminable à partir des données.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "non",
+        "sources_inventaire": [
+          {
+            "source": "Source 1",
+            "type": "quali"
+          },
+          {
+            "source": "Source 2",
+            "type": "quanti"
+          },
+          {
+            "source": "Source 3",
+            "type": "quali"
+          },
+          {
+            "source": "Source 4",
+            "type": "quali"
+          },
+          {
+            "source": "Source 5",
+            "type": "quali"
+          },
+          {
+            "source": "Source 6",
+            "type": "quali"
+          },
+          {
+            "source": "Source 7",
+            "type": "quali"
+          },
+          {
+            "source": "Source 8",
+            "type": "quanti"
+          },
+          {
+            "source": "Source 9",
+            "type": "quanti"
+          },
+          {
+            "source": "Source 10",
+            "type": "quanti"
+          },
+          {
+            "source": "Source 11",
+            "type": "quanti"
+          },
+          {
+            "source": "Source 12",
+            "type": "quanti"
+          },
+          {
+            "source": "Source 13",
+            "type": "quanti"
+          },
+          {
+            "source": "Source 14",
+            "type": "quanti"
+          },
+          {
+            "source": "Source 15",
+            "type": "quanti"
+          },
+          {
+            "source": "Source 16",
+            "type": "quali"
+          },
+          {
+            "source": "Source 17",
+            "type": "quanti"
+          },
+          {
+            "source": "Source 18",
+            "type": "quali"
+          },
+          {
+            "source": "Source 19",
+            "type": "quali"
+          },
+          {
+            "source": "Source 20",
+            "type": "quali"
+          },
+          {
+            "source": "Source 21",
+            "type": "quali"
+          },
+          {
+            "source": "Source 22",
+            "type": "quali"
+          },
+          {
+            "source": "Source 23",
+            "type": "quali"
+          },
+          {
+            "source": "Source 24",
+            "type": "quali"
+          },
+          {
+            "source": "Source 25",
+            "type": "quali"
+          },
+          {
+            "source": "Source 26",
+            "type": "quali"
+          },
+          {
+            "source": "Source 27",
+            "type": "quanti"
+          },
+          {
+            "source": "Source 28",
+            "type": "quanti"
+          },
+          {
+            "source": "Source 29",
+            "type": "quanti"
+          },
+          {
+            "source": "Source 30",
+            "type": "quanti"
+          },
+          {
+            "source": "Source 31",
+            "type": "quanti"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "non",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": false,
+        "elements_specifiques_question": [
+          "faible bien-être perçu",
+          "évaluation subjective",
+          "influence",
+          "causalité inversée"
+        ],
+        "elements_traitement": [
+          {
+            "element": "faible bien-être perçu",
+            "traitement": "precis"
+          },
+          {
+            "element": "évaluation subjective",
+            "traitement": "precis"
+          },
+          {
+            "element": "influence",
+            "traitement": "approximation_non_signalee"
+          },
+          {
+            "element": "causalité inversée",
+            "traitement": "omis"
+          }
+        ],
+        "pertinence": 3,
+        "pertinence_justif": "La réponse traite des éléments pertinents mais ne signale pas explicitement la complexité de la causalité inversée.",
+        "fondement_factuel": 4,
+        "fondement_factuel_justif": "Les affirmations sont bien fondées sur les données disponibles, mais la causalité est affirmée sans réserve.",
+        "nuance_incertitude": 2,
+        "nuance_incertitude_justif": "Manque de signalement explicite sur l'incertitude du sens de la causalité.",
+        "coherence_qualiquanti": 4,
+        "coherence_qualiquanti_justif": "Bonne intégration des données qualitatives et quantitatives, mais manque de signalement sur la causalité inversée.",
+        "score_global": 3.25,
+        "error": null
+      },
+      "timestamp": "2026-07-26T16:08:29.394173"
+    },
+    {
+      "question_id": 83,
+      "question": "Les données disponibles permettent-elles d’établir un lien de causalité entre densité de population et bien-être ?",
+      "section": "Raisonnement causal et contre-intuitif",
+      "subsection": "Limites de l’inférence causale",
+      "scores_humain": {
+        "pertinence": 3.0,
+        "fondement_factuel": 5.0,
+        "nuance_incertitude": 5.0,
+        "coherence_qualiquanti": 4.0
+      },
+      "scores_v43": {
+        "raisonnement": "La réponse souligne l'absence de données permettant d'établir un lien de causalité entre densité de population et bien-être, en mentionnant les lacunes des données disponibles et les facteurs confondants.",
+        "section_observee": "Raisonnement causal et contre-intuitif / Limites de l’inférence causale",
+        "comportement_attendu_selon_grille": "Réponse de fond avec modalisateurs explicites ET signalement des biais éventuels.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "oui",
+        "sources_inventaire": [
+          {
+            "source": "Synthèse analytique globale — Qualité de Vie en Corse",
+            "type": "quanti"
+          },
+          {
+            "source": "Verbatim d'un(e) Femme de 71 ans (Seniors), Retraité(e), à Calvi",
+            "type": "quali"
+          },
+          {
+            "source": "Commune : Lozzi — 6 entretiens semi-directifs",
+            "type": "quali"
+          },
+          {
+            "source": "Classement des composantes OppChoVec — Corse entière",
+            "type": "quanti"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "non",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": false,
+        "elements_specifiques_question": [
+          "lien de causalité",
+          "densité de population",
+          "bien-être"
+        ],
+        "elements_traitement": [
+          {
+            "element": "lien de causalité",
+            "traitement": "precis"
+          },
+          {
+            "element": "densité de population",
+            "traitement": "precis"
+          },
+          {
+            "element": "bien-être",
+            "traitement": "precis"
+          }
+        ],
+        "pertinence": 5,
+        "pertinence_justif": "La réponse traite précisément de la question posée, en expliquant pourquoi un lien de causalité ne peut être établi.",
+        "fondement_factuel": 5,
+        "fondement_factuel_justif": "Les affirmations sont bien fondées sur les sources disponibles, avec une bonne utilisation des données qualitatives et quantitatives.",
+        "nuance_incertitude": 5,
+        "nuance_incertitude_justif": "La réponse est bien nuancée, avec des modalisateurs explicites et un signalement des biais et lacunes des données.",
+        "coherence_qualiquanti": 5,
+        "coherence_qualiquanti_justif": "Bonne intégration des données qualitatives et quantitatives, avec un équilibre approprié entre les deux types de données.",
+        "score_global": 5.0,
+        "error": null
+      },
+      "timestamp": "2026-07-26T16:08:37.637590"
+    },
+    {
+      "question_id": 89,
+      "question": "Le faible nombre de répondants dans certaines communes affecte-t-il la fiabilité des conclusions ?",
+      "section": "Gestion de l’incertitude et des biais",
+      "subsection": "Incertitude liée à la taille d’échantillon",
+      "scores_humain": {
+        "pertinence": 4.0,
+        "fondement_factuel": 5.0,
+        "nuance_incertitude": 5.0,
+        "coherence_qualiquanti": 5.0
+      },
+      "scores_v43": {
+        "raisonnement": "La réponse aborde les biais liés à la taille d'échantillon, signale l'absence de correction statistique et discute de la variabilité des résultats. Elle propose des améliorations pour renforcer la fiabilité.",
+        "section_observee": "Gestion de l’incertitude et des biais / Incertitude liée à la taille d’échantillon",
+        "comportement_attendu_selon_grille": "Réponse de fond avec modalisateurs explicites ET signalement des biais éventuels (taille échantillon, biais indicateurs).",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "oui",
+        "sources_inventaire": [
+          {
+            "source": "Source 1",
+            "type": "quali"
+          },
+          {
+            "source": "Source 2",
+            "type": "quanti"
+          },
+          {
+            "source": "Source 8",
+            "type": "quanti"
+          },
+          {
+            "source": "Source 13",
+            "type": "quali"
+          },
+          {
+            "source": "Source 18",
+            "type": "quanti"
+          },
+          {
+            "source": "Source 19",
+            "type": "quanti"
+          },
+          {
+            "source": "Source 23",
+            "type": "quanti"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "non",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": false,
+        "elements_specifiques_question": [
+          "fiabilité",
+          "nombre de répondants",
+          "communes",
+          "conclusions"
+        ],
+        "elements_traitement": [
+          {
+            "element": "fiabilité",
+            "traitement": "precis"
+          },
+          {
+            "element": "nombre de répondants",
+            "traitement": "precis"
+          },
+          {
+            "element": "communes",
+            "traitement": "precis"
+          },
+          {
+            "element": "conclusions",
+            "traitement": "precis"
+          }
+        ],
+        "pertinence": 5,
+        "pertinence_justif": "Tous les éléments spécifiques de la question sont traités de manière précise et complète.",
+        "fondement_factuel": 5,
+        "fondement_factuel_justif": "Les affirmations sont bien fondées sur les sources disponibles, avec une bonne utilisation des données qualitatives et quantitatives.",
+        "nuance_incertitude": 5,
+        "nuance_incertitude_justif": "La réponse est bien nuancée, avec des modalisateurs explicites et un signalement clair des limites et biais potentiels.",
+        "coherence_qualiquanti": 5,
+        "coherence_qualiquanti_justif": "Bonne intégration des données qualitatives et quantitatives, avec un équilibre approprié entre les deux types de données.",
+        "score_global": 5.0,
+        "error": null
+      },
+      "timestamp": "2026-07-26T16:08:44.651972"
+    },
+    {
+      "question_id": 97,
+      "question": "Le score OppChoVec peut-il masquer des disparités internes importantes au sein d’une même commune ?",
+      "section": "Gestion de l’incertitude et des biais",
+      "subsection": "Biais liés aux indicateurs",
+      "scores_humain": {
+        "pertinence": 4.0,
+        "fondement_factuel": 5.0,
+        "nuance_incertitude": 5.0,
+        "coherence_qualiquanti": 5.0
+      },
+      "scores_v43": {
+        "raisonnement": "La réponse souligne l'absence de données infra-communales et les limitations des indicateurs OppChoVec pour révéler des disparités internes, tout en signalant les biais potentiels et la nécessité de données plus fines.",
+        "section_observee": "Gestion de l’incertitude et des biais / Biais liés aux indicateurs",
+        "comportement_attendu_selon_grille": "Réponse de fond avec modalisateurs explicites ET signalement des biais éventuels (taille échantillon, biais indicateurs).",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "oui",
+        "sources_inventaire": [
+          {
+            "source": "score=1.0",
+            "type": "quali"
+          },
+          {
+            "source": "score=0.9",
+            "type": "quali"
+          },
+          {
+            "source": "score=0.8",
+            "type": "quali"
+          },
+          {
+            "source": "score=0.7",
+            "type": "quali"
+          },
+          {
+            "source": "score=0.6",
+            "type": "quali"
+          },
+          {
+            "source": "score=0.5",
+            "type": "quali"
+          },
+          {
+            "source": "score=0.3999999999999999",
+            "type": "quali"
+          },
+          {
+            "source": "score=0.29999999999999993",
+            "type": "quali"
+          },
+          {
+            "source": "score=0.19999999999999996",
+            "type": "quali"
+          },
+          {
+            "source": "score=0.09999999999999998",
+            "type": "quali"
+          },
+          {
+            "source": "score=0.0",
+            "type": "quanti"
+          },
+          {
+            "source": "score=-0.10000000000000009",
+            "type": "quanti"
+          },
+          {
+            "source": "score=-0.20000000000000018",
+            "type": "quanti"
+          },
+          {
+            "source": "score=-0.30000000000000004",
+            "type": "quanti"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "non",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": false,
+        "elements_specifiques_question": [
+          "OppChoVec",
+          "disparités internes",
+          "commune",
+          "biais"
+        ],
+        "elements_traitement": [
+          {
+            "element": "OppChoVec",
+            "traitement": "precis"
+          },
+          {
+            "element": "disparités internes",
+            "traitement": "precis"
+          },
+          {
+            "element": "commune",
+            "traitement": "precis"
+          },
+          {
+            "element": "biais",
+            "traitement": "precis"
+          }
+        ],
+        "pertinence": 5,
+        "pertinence_justif": "La réponse traite précisément de la question des disparités internes et des biais liés aux indicateurs, en accord avec la section et sous-section observées.",
+        "fondement_factuel": 5,
+        "fondement_factuel_justif": "Les affirmations sont bien fondées sur les sources disponibles, avec une interprétation correcte des limitations des données.",
+        "nuance_incertitude": 5,
+        "nuance_incertitude_justif": "La réponse est bien nuancée, signalant explicitement les limites des données et l'incertitude quant aux disparités internes.",
+        "coherence_qualiquanti": 5,
+        "coherence_qualiquanti_justif": "Bonne intégration des données qualitatives et quantitatives, avec un signalement clair des limites des indicateurs OppChoVec.",
+        "score_global": 5.0,
+        "error": null
+      },
+      "timestamp": "2026-07-26T16:08:53.027256"
+    },
+    {
+      "question_id": 98,
+      "question": "Peut-on affirmer qu’une amélioration d’un indicateur spécifique entraînera nécessairement une hausse du bien-être global ?",
+      "section": "Gestion de l’incertitude et des biais",
+      "subsection": "Risque de sur-interprétation",
+      "scores_humain": {
+        "pertinence": 4.0,
+        "fondement_factuel": 4.0,
+        "nuance_incertitude": 5.0,
+        "coherence_qualiquanti": 5.0
+      },
+      "scores_v43": {
+        "raisonnement": "La réponse souligne que le bien-être global est influencé par plusieurs dimensions et qu'une amélioration isolée ne garantit pas une hausse du bien-être global. Elle utilise des données qualitatives et quantitatives pour illustrer la complexité et la variabilité des impacts selon les contextes et les attentes.",
+        "section_observee": "Gestion de l’incertitude et des biais / Risque de sur-interprétation",
+        "comportement_attendu_selon_grille": "Réponse de fond avec modalisateurs explicites ET signalement des biais éventuels.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "oui",
+        "sources_inventaire": [
+          {
+            "source": "Groupe : dimension=Santé (N=97 personnes)",
+            "type": "quali"
+          },
+          {
+            "source": "Groupe : csp=Salarié(e) – Employé(e), commune=Corte (N=8)",
+            "type": "quanti"
+          },
+          {
+            "source": "Verbatim d'un(e) Femme de 22 ans (Jeunes), Étudiant(e), à Corte, sur le thème 'Santé'",
+            "type": "quali"
+          },
+          {
+            "source": "Verbatim d'un(e) Homme de 22 ans (Jeunes), Étudiant(e), à Corte, sur le thème 'Santé'",
+            "type": "quali"
+          },
+          {
+            "source": "Verbatim d'un(e) Homme de 20 ans (Jeunes), Étudiant(e), à Corte, sur le thème 'Santé'",
+            "type": "quali"
+          },
+          {
+            "source": "Verbatim d'un(e) Femme de 23 ans (Jeunes), Étudiant(e), à Corte, sur le thème 'Santé'",
+            "type": "quali"
+          },
+          {
+            "source": "Verbatim d'un(e) Femme de 29 ans (Jeunes adultes), Salarié(e) – Employé(e), à Corte, sur le thème 'Santé'",
+            "type": "quali"
+          },
+          {
+            "source": "Commune : Grossetto Prugna — 1 entretien semi-directif (31 extraits de transcription)",
+            "type": "quali"
+          },
+          {
+            "source": "Commune : Lozzi — 6 entretiens semi-directifs (253 extraits de transcription)",
+            "type": "quali"
+          },
+          {
+            "source": "Scores moyens de l'enquête QdV pour la commune de Sotta",
+            "type": "quanti"
+          },
+          {
+            "source": "Scores moyens de l'enquête QdV pour la commune de Penta-di-Casinca",
+            "type": "quanti"
+          },
+          {
+            "source": "Profil des répondants de la commune de Belgodère",
+            "type": "quanti"
+          },
+          {
+            "source": "Profil des répondants de la commune de Castellare-di-Casinca",
+            "type": "quanti"
+          },
+          {
+            "source": "L'indicateur OppChoVec — Indice de bien-être objectif territorial",
+            "type": "quanti"
+          },
+          {
+            "source": "NOTE STRUCTURELLE : L'indice OppChoVec est composé de 3 sous-scores principaux",
+            "type": "quanti"
+          },
+          {
+            "source": "Enquête Qualité de Vie en Corse — Description méthodologique",
+            "type": "quanti"
+          },
+          {
+            "source": "Groupe : dimension=Logement, age_range=35-49 (N=17 personnes)",
+            "type": "quali"
+          },
+          {
+            "source": "Synthèse analytique globale — Qualité de Vie en Corse (N=246)",
+            "type": "quanti"
+          },
+          {
+            "source": "Classement des 14 dimensions de satisfaction — Corse entière (N=246 répondants)",
+            "type": "quanti"
+          },
+          {
+            "source": "Verbatim d'un(e) Femme de 39 ans (Adultes), Fonctionnaire, à Corte, sur le thème 'Logement'",
+            "type": "quali"
+          },
+          {
+            "source": "Verbatim d'un(e) Femme de 46 ans (Adultes), Fonctionnaire, à Corte, sur le thème 'Logement'",
+            "type": "quali"
+          },
+          {
+            "source": "Verbatim d'un(e) Homme de 47 ans (Adultes), Salarié(e) – Cadre ou profession intermédiaire, à Ajaccio, sur le thème 'Logement'",
+            "type": "quali"
+          },
+          {
+            "source": "Verbatim d'un(e) Homme de 46 ans (Adultes), Travailleur(se) indépendant(e) / Entrepreneur(e), à Ajaccio, sur le thème 'Logement'",
+            "type": "quali"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "non",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": false,
+        "elements_specifiques_question": [
+          "amélioration",
+          "indicateur spécifique",
+          "hausse du bien-être global",
+          "Corse"
+        ],
+        "elements_traitement": [
+          {
+            "element": "amélioration",
+            "traitement": "precis"
+          },
+          {
+            "element": "indicateur spécifique",
+            "traitement": "precis"
+          },
+          {
+            "element": "hausse du bien-être global",
+            "traitement": "precis"
+          },
+          {
+            "element": "Corse",
+            "traitement": "precis"
+          }
+        ],
+        "pertinence": 5,
+        "pertinence_justif": "La réponse traite précisément tous les éléments de la question en utilisant les données disponibles.",
+        "fondement_factuel": 5,
+        "fondement_factuel_justif": "Les affirmations sont bien fondées sur les sources fournies, avec une bonne utilisation des données qualitatives et quantitatives.",
+        "nuance_incertitude": 5,
+        "nuance_incertitude_justif": "La réponse est bien nuancée, avec des modalisateurs explicites et un signalement des biais éventuels.",
+        "coherence_qualiquanti": 5,
+        "coherence_qualiquanti_justif": "Excellente intégration des données qualitatives et quantitatives pour répondre à la question.",
+        "score_global": 5.0,
+        "error": null
+      },
+      "timestamp": "2026-07-26T16:09:03.492965"
+    },
+    {
+      "question_id": 104,
+      "question": "Quelle est la commune de la CAPA avec le meilleur score Vécu (Vec) ?",
+      "section": "Raisonnement comparatif",
+      "subsection": "Comparaison intra-EPCI (CAPA)",
+      "scores_humain": {
+        "pertinence": 4.0,
+        "fondement_factuel": 5.0,
+        "nuance_incertitude": 5.0,
+        "coherence_qualiquanti": 5.0
+      },
+      "scores_v43": {
+        "raisonnement": "La réponse identifie correctement Afa comme ayant le meilleur score Vec dans la CAPA, avec une comparaison explicite des scores Vec des autres communes.",
+        "section_observee": "Raisonnement comparatif / Comparaison intra-EPCI (CAPA)",
+        "comportement_attendu_selon_grille": "Réponse de fond avec comparaison explicite.",
+        "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+        "coherence_comportement_observe": "oui",
+        "sources_inventaire": [
+          {
+            "source": "oppchovec:Afa",
+            "type": "quanti"
+          },
+          {
+            "source": "oppchovec:Alata",
+            "type": "quanti"
+          },
+          {
+            "source": "oppchovec:Appietto",
+            "type": "quanti"
+          },
+          {
+            "source": "oppchovec:Villanova",
+            "type": "quanti"
+          },
+          {
+            "source": "oppchovec:Sarrola-Carcopino",
+            "type": "quanti"
+          },
+          {
+            "source": "oppchovec:Cuttoli-Corticchiato",
+            "type": "quanti"
+          },
+          {
+            "source": "oppchovec:Ajaccio",
+            "type": "quanti"
+          }
+        ],
+        "mislabelling_detecte": {
+          "regle_1_quali_quanti": "non",
+          "regle_2_surinterpretation_oppchovec": "non",
+          "regle_3_absence_quali_non_signalee": "non",
+          "regle_4_extrapolation_sous_groupe": "non"
+        },
+        "mislabelling_flag": false,
+        "elements_specifiques_question": [
+          "commune",
+          "CAPA",
+          "meilleur score Vécu (Vec)"
+        ],
+        "elements_traitement": [
+          {
+            "element": "commune",
+            "traitement": "precis"
+          },
+          {
+            "element": "CAPA",
+            "traitement": "precis"
+          },
+          {
+            "element": "meilleur score Vécu (Vec)",
+            "traitement": "precis"
+          }
+        ],
+        "pertinence": 5,
+        "pertinence_justif": "La réponse traite précisément de la question posée avec une comparaison claire des scores Vec des communes de la CAPA.",
+        "fondement_factuel": 5,
+        "fondement_factuel_justif": "Les affirmations sont bien fondées sur les scores OppChoVec fournis pour chaque commune.",
+        "nuance_incertitude": 4,
+        "nuance_incertitude_justif": "La réponse est bien nuancée, mais pourrait mentionner explicitement les limites des données qualitatives.",
+        "coherence_qualiquanti": 4,
+        "coherence_qualiquanti_justif": "Bonne intégration des données quantitatives, mais la mention des perceptions qualitatives pourrait être mieux contextualisée.",
+        "score_global": 4.5,
+        "error": null
+      },
+      "timestamp": "2026-07-26T16:09:09.974460"
+    }
+  ]
+}

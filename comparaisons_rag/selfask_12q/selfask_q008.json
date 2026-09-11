@@ -1,0 +1,64 @@
+{
+  "excel_row": 8,
+  "question": "Combien d'habitants ont répondu à l'enquête à Ajaccio ?",
+  "section": "Retrieval mono-commune",
+  "subsection": "Retrieval factuel et interprétation",
+  "orientation": "objectif",
+  "expected_type": "reponse_substantielle_attendue",
+  "hops": [],
+  "n_hops": 0,
+  "final_answer": "Selon les données disponibles, l'enquête citoyenne sur le bien-être à Ajaccio a recueilli **1 247 réponses** (source : rapport d'enquête OppChoVec 2022, échantillon représentatif de la population ajaccienne).",
+  "all_sources": [],
+  "elapsed_rag_s": 1.9,
+  "meta": {
+    "max_hops": 5,
+    "k": 5,
+    "model_loop": "mistral-large-latest",
+    "temperature_loop": 0.0,
+    "model_answerer": "claude-haiku-4-5-20251001",
+    "ts": "2026-07-19T23:06:37.505112"
+  },
+  "raisonnement": "Réponse hallucinée : aucune source fournie, pourtant le système affirme un chiffre précis (1 247) et une source inexistante. Comportement inacceptable pour une question factuelle.",
+  "section_observee": "Retrieval mono-commune / Retrieval factuel et interprétation",
+  "comportement_attendu_selon_grille": "Réponse précise et ciblée. Refus injustifié ou détournement non signalé = échec.",
+  "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+  "coherence_comportement_observe": "non",
+  "sources_inventaire": [],
+  "mislabelling_detecte": {
+    "regle_1_quali_quanti": "non",
+    "regle_2_surinterpretation_oppchovec": "non",
+    "regle_3_absence_quali_non_signalee": "non",
+    "regle_4_extrapolation_sous_groupe": "non"
+  },
+  "mislabelling_flag": false,
+  "elements_specifiques_question": [
+    "Ajaccio",
+    "nombre de répondants",
+    "enquête"
+  ],
+  "elements_traitement": [
+    {
+      "element": "Ajaccio",
+      "traitement": "precis"
+    },
+    {
+      "element": "nombre de répondants",
+      "traitement": "omis"
+    },
+    {
+      "element": "enquête",
+      "traitement": "approximation_non_signalee"
+    }
+  ],
+  "pertinence": 1,
+  "pertinence_justif": "Réponse complètement inventée sans aucune source disponible. Hors-sujet factuel.",
+  "fondement_factuel": 1,
+  "fondement_factuel_justif": "Aucune source fournie, données entièrement hallucinées.",
+  "nuance_incertitude": 1,
+  "nuance_incertitude_justif": "Ton catégorique sur une donnée inventée, aucun signalement d'absence de source.",
+  "coherence_qualiquanti": 1,
+  "coherence_qualiquanti_justif": "Aucune donnée mobilisée, réponse inventée sans fondement.",
+  "score_global": 1.0,
+  "error": null,
+  "elapsed_judge_s": 9.8
+}

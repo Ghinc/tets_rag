@@ -1,0 +1,499 @@
+{
+  "causal": {
+    "question": "Le niveau de bien-être à Ajaccio peut-il s'expliquer par une combinaison de facteurs environnementaux, socio-économiques et institutionnels ?",
+    "rerun2_reference": {
+      "score_global": 5.0,
+      "pertinence": 5,
+      "fondement_factuel": 5,
+      "nuance_incertitude": 5,
+      "coherence_qualiquanti": 5,
+      "mislabelling_flag": false
+    },
+    "modes": {
+      "baseline": {
+        "answer_completion_tokens": 2981,
+        "total_completion_tokens": 4978,
+        "elapsed_s": 87.3,
+        "score_global": 3.5,
+        "pertinence": 4,
+        "fondement_factuel": 3,
+        "nuance_incertitude": 3,
+        "coherence_qualiquanti": 4,
+        "mislabelling_flag": true,
+        "raisonnement": "La réponse mobilise des données qualitatives et quantitatives pour expliquer le bien-être à Ajaccio, mais surinterprète les scores OppChoVec, notamment Vec et Cho, au-delà de leurs composantes réelles.",
+        "judge_raw": {
+          "raisonnement": "La réponse mobilise des données qualitatives et quantitatives pour expliquer le bien-être à Ajaccio, mais surinterprète les scores OppChoVec, notamment Vec et Cho, au-delà de leurs composantes réelles.",
+          "section_observee": "Raisonnement causal et contre-intuitif / Raisonnement causal multi-facteurs",
+          "comportement_attendu_selon_grille": "Mobilisation des données AVEC nuance corrélation vs causalité.",
+          "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+          "coherence_comportement_observe": "partiel",
+          "sources_inventaire": [
+            {
+              "source": "raptor_summary",
+              "type": "quali"
+            },
+            {
+              "source": "raptor_enquete_summary",
+              "type": "quali"
+            },
+            {
+              "source": "entretiens",
+              "type": "quali"
+            },
+            {
+              "source": "enquete_scores_commune",
+              "type": "quanti"
+            },
+            {
+              "source": "oppchovec_score",
+              "type": "quanti"
+            }
+          ],
+          "mislabelling_detecte": {
+            "regle_1_quali_quanti": "non",
+            "regle_2_surinterpretation_oppchovec": "oui — Vec et Cho surinterprétés comme des mesures de vécu et d'inclusion politique",
+            "regle_3_absence_quali_non_signalee": "non",
+            "regle_4_extrapolation_sous_groupe": "non"
+          },
+          "mislabelling_flag": true,
+          "elements_specifiques_question": [
+            "bien-être",
+            "Ajaccio",
+            "facteurs environnementaux",
+            "facteurs socio-économiques",
+            "facteurs institutionnels"
+          ],
+          "elements_traitement": [
+            {
+              "element": "bien-être",
+              "traitement": "precis"
+            },
+            {
+              "element": "Ajaccio",
+              "traitement": "precis"
+            },
+            {
+              "element": "facteurs environnementaux",
+              "traitement": "precis"
+            },
+            {
+              "element": "facteurs socio-économiques",
+              "traitement": "precis"
+            },
+            {
+              "element": "facteurs institutionnels",
+              "traitement": "precis"
+            }
+          ],
+          "pertinence": 4,
+          "pertinence_justif": "La réponse traite tous les éléments spécifiques de la question avec une analyse multi-facteurs, mais la surinterprétation des scores OppChoVec affecte la précision.",
+          "fondement_factuel": 3,
+          "fondement_factuel_justif": "Bien que les sources soient correctement mobilisées, la surinterprétation des scores OppChoVec (Vec et Cho) limite la validité factuelle. Plafond Règle 2.",
+          "nuance_incertitude": 3,
+          "nuance_incertitude_justif": "La réponse manque de modalisateurs explicites pour distinguer corrélation et causalité, et la surinterprétation des scores OppChoVec n'est pas signalée. Plafond Règle 2.",
+          "coherence_qualiquanti": 4,
+          "coherence_qualiquanti_justif": "Bonne intégration des données qualitatives et quantitatives, mais la surinterprétation des scores OppChoVec affecte légèrement la cohérence globale.",
+          "score_global": 3.5,
+          "error": null
+        }
+      },
+      "phase1": {
+        "answer_completion_tokens": 1531,
+        "total_completion_tokens": 4305,
+        "elapsed_s": 95.1,
+        "score_global": 3.5,
+        "pertinence": 4,
+        "fondement_factuel": 3,
+        "nuance_incertitude": 3,
+        "coherence_qualiquanti": 4,
+        "mislabelling_flag": true,
+        "raisonnement": "La réponse mobilise des données objectives et subjectives pour expliquer le bien-être à Ajaccio, mais surinterprète OppChoVec et manque de nuance sur la causalité.",
+        "judge_raw": {
+          "raisonnement": "La réponse mobilise des données objectives et subjectives pour expliquer le bien-être à Ajaccio, mais surinterprète OppChoVec et manque de nuance sur la causalité.",
+          "section_observee": "Raisonnement causal et contre-intuitif / Raisonnement causal multi-facteurs",
+          "comportement_attendu_selon_grille": "Mobilisation des données AVEC nuance corrélation vs causalité.",
+          "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+          "coherence_comportement_observe": "partiel",
+          "sources_inventaire": [
+            {
+              "source": "raptor_summary",
+              "type": "quali"
+            },
+            {
+              "source": "raptor_enquete_summary",
+              "type": "quali"
+            },
+            {
+              "source": "entretiens",
+              "type": "quali"
+            },
+            {
+              "source": "enquete_scores_commune",
+              "type": "quanti"
+            },
+            {
+              "source": "oppchovec_score",
+              "type": "quanti"
+            },
+            {
+              "source": "communes_equipements",
+              "type": "quanti"
+            }
+          ],
+          "mislabelling_detecte": {
+            "regle_1_quali_quanti": "non",
+            "regle_2_surinterpretation_oppchovec": "oui — OppChoVec surinterprété comme mesurant des perceptions subjectives",
+            "regle_3_absence_quali_non_signalee": "non",
+            "regle_4_extrapolation_sous_groupe": "non"
+          },
+          "mislabelling_flag": true,
+          "elements_specifiques_question": [
+            "bien-être",
+            "Ajaccio",
+            "facteurs environnementaux",
+            "facteurs socio-économiques",
+            "facteurs institutionnels"
+          ],
+          "elements_traitement": [
+            {
+              "element": "bien-être",
+              "traitement": "precis"
+            },
+            {
+              "element": "Ajaccio",
+              "traitement": "precis"
+            },
+            {
+              "element": "facteurs environnementaux",
+              "traitement": "approximation_signalee"
+            },
+            {
+              "element": "facteurs socio-économiques",
+              "traitement": "precis"
+            },
+            {
+              "element": "facteurs institutionnels",
+              "traitement": "approximation_signalee"
+            }
+          ],
+          "pertinence": 4,
+          "pertinence_justif": "La réponse traite bien des facteurs multi-dimensionnels mais surinterprète certains indicateurs.",
+          "fondement_factuel": 3,
+          "fondement_factuel_justif": "Surinterprétation de l'indicateur OppChoVec comme mesurant des perceptions subjectives. Plafond Règle 2.",
+          "nuance_incertitude": 3,
+          "nuance_incertitude_justif": "La réponse manque de nuance sur la distinction entre corrélation et causalité. Plafond Règle 2.",
+          "coherence_qualiquanti": 4,
+          "coherence_qualiquanti_justif": "Bonne intégration des données qualitatives et quantitatives, mais surinterprétation des scores OppChoVec.",
+          "score_global": 3.5,
+          "error": null
+        }
+      }
+    }
+  },
+  "multi_communes": {
+    "question": "Quelle commune obtient le score objectif global le plus élevé entre Ajaccio et Bastia ?",
+    "rerun2_reference": {
+      "score_global": 4.75,
+      "pertinence": 5,
+      "fondement_factuel": 5,
+      "nuance_incertitude": 4,
+      "coherence_qualiquanti": 5,
+      "mislabelling_flag": false
+    },
+    "modes": {
+      "baseline": {
+        "answer_completion_tokens": 1809,
+        "total_completion_tokens": 3520,
+        "elapsed_s": 69.7,
+        "score_global": 4.75,
+        "pertinence": 5,
+        "fondement_factuel": 5,
+        "nuance_incertitude": 4,
+        "coherence_qualiquanti": 5,
+        "mislabelling_flag": false,
+        "raisonnement": "La réponse compare explicitement les scores OppChoVec d'Ajaccio et Bastia, avec une hiérarchisation claire et des explications détaillées.",
+        "judge_raw": {
+          "raisonnement": "La réponse compare explicitement les scores OppChoVec d'Ajaccio et Bastia, avec une hiérarchisation claire et des explications détaillées.",
+          "section_observee": "Raisonnement comparatif / Comparaisons avec hiérarchisation explicite",
+          "comportement_attendu_selon_grille": "Réponse de fond avec comparaison explicite. Refus injustifié = échec.",
+          "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+          "coherence_comportement_observe": "oui",
+          "sources_inventaire": [
+            {
+              "source": "oppchovec_score:Ajaccio",
+              "type": "quanti"
+            },
+            {
+              "source": "oppchovec_score:Bastia",
+              "type": "quanti"
+            },
+            {
+              "source": "raptor_summary:Ajaccio",
+              "type": "quali"
+            },
+            {
+              "source": "raptor_summary:Bastia",
+              "type": "quali"
+            }
+          ],
+          "mislabelling_detecte": {
+            "regle_1_quali_quanti": "non",
+            "regle_2_surinterpretation_oppchovec": "non",
+            "regle_3_absence_quali_non_signalee": "non",
+            "regle_4_extrapolation_sous_groupe": "non"
+          },
+          "mislabelling_flag": false,
+          "elements_specifiques_question": [
+            "Ajaccio",
+            "Bastia",
+            "score objectif global",
+            "comparaison"
+          ],
+          "elements_traitement": [
+            {
+              "element": "Ajaccio",
+              "traitement": "precis"
+            },
+            {
+              "element": "Bastia",
+              "traitement": "precis"
+            },
+            {
+              "element": "score objectif global",
+              "traitement": "precis"
+            },
+            {
+              "element": "comparaison",
+              "traitement": "precis"
+            }
+          ],
+          "pertinence": 5,
+          "pertinence_justif": "La réponse traite précisément tous les éléments spécifiques de la question avec une comparaison explicite et bien structurée.",
+          "fondement_factuel": 5,
+          "fondement_factuel_justif": "Les affirmations sont correctement sourcées et les scores OppChoVec sont utilisés de manière appropriée.",
+          "nuance_incertitude": 4,
+          "nuance_incertitude_justif": "La réponse est bien nuancée, mais pourrait inclure plus de modalisateurs pour les perceptions des habitants.",
+          "coherence_qualiquanti": 5,
+          "coherence_qualiquanti_justif": "Intégration exemplaire des données quantitatives et qualitatives, avec une comparaison claire et bien justifiée.",
+          "score_global": 4.75,
+          "error": null
+        }
+      },
+      "phase1": {
+        "answer_completion_tokens": 1166,
+        "total_completion_tokens": 2227,
+        "elapsed_s": 47.8,
+        "score_global": 4.75,
+        "pertinence": 5,
+        "fondement_factuel": 5,
+        "nuance_incertitude": 4,
+        "coherence_qualiquanti": 5,
+        "mislabelling_flag": false,
+        "raisonnement": "La réponse compare explicitement les scores OppChoVec d'Ajaccio et Bastia, en détaillant les sous-indicateurs et les perceptions des habitants.",
+        "judge_raw": {
+          "raisonnement": "La réponse compare explicitement les scores OppChoVec d'Ajaccio et Bastia, en détaillant les sous-indicateurs et les perceptions des habitants.",
+          "section_observee": "Raisonnement comparatif / Comparaisons avec hiérarchisation explicite",
+          "comportement_attendu_selon_grille": "Réponse de fond avec comparaison explicite. Refus injustifié = échec.",
+          "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+          "coherence_comportement_observe": "oui",
+          "sources_inventaire": [
+            {
+              "source": "oppchovec_score:Ajaccio",
+              "type": "quanti"
+            },
+            {
+              "source": "oppchovec_score:Bastia",
+              "type": "quanti"
+            },
+            {
+              "source": "raptor_summary:Ajaccio",
+              "type": "quali"
+            },
+            {
+              "source": "raptor_summary:Bastia",
+              "type": "quali"
+            }
+          ],
+          "mislabelling_detecte": {
+            "regle_1_quali_quanti": "non",
+            "regle_2_surinterpretation_oppchovec": "non",
+            "regle_3_absence_quali_non_signalee": "non",
+            "regle_4_extrapolation_sous_groupe": "non"
+          },
+          "mislabelling_flag": false,
+          "elements_specifiques_question": [
+            "Ajaccio",
+            "Bastia",
+            "score objectif global",
+            "comparaison"
+          ],
+          "elements_traitement": [
+            {
+              "element": "Ajaccio",
+              "traitement": "precis"
+            },
+            {
+              "element": "Bastia",
+              "traitement": "precis"
+            },
+            {
+              "element": "score objectif global",
+              "traitement": "precis"
+            },
+            {
+              "element": "comparaison",
+              "traitement": "precis"
+            }
+          ],
+          "pertinence": 5,
+          "pertinence_justif": "La réponse traite précisément tous les éléments spécifiques de la question avec une comparaison explicite.",
+          "fondement_factuel": 5,
+          "fondement_factuel_justif": "Les affirmations sont correctement sourcées et les scores OppChoVec sont utilisés de manière appropriée.",
+          "nuance_incertitude": 4,
+          "nuance_incertitude_justif": "La réponse est bien nuancée, mais pourrait inclure plus de modalisateurs sur les perceptions des habitants.",
+          "coherence_qualiquanti": 5,
+          "coherence_qualiquanti_justif": "Bonne intégration des données quantitatives et qualitatives, avec une comparaison claire et ciblée.",
+          "score_global": 4.75,
+          "error": null
+        }
+      }
+    }
+  },
+  "no_data": {
+    "question": "Quel est le niveau de bien-être subjectif à Aïti ?",
+    "rerun2_reference": {
+      "score_global": 3.5,
+      "pertinence": 3,
+      "fondement_factuel": 4,
+      "nuance_incertitude": 3,
+      "coherence_qualiquanti": 4,
+      "mislabelling_flag": true
+    },
+    "modes": {
+      "baseline": {
+        "answer_completion_tokens": 299,
+        "total_completion_tokens": 1000,
+        "elapsed_s": 20.3,
+        "score_global": 3.5,
+        "pertinence": 3,
+        "fondement_factuel": 4,
+        "nuance_incertitude": 4,
+        "coherence_qualiquanti": 3,
+        "mislabelling_flag": true,
+        "raisonnement": "La réponse signale l'absence de données spécifiques à Aïti mais utilise des données globales corses pour une approximation. Absence de données qualitatives spécifiques non explicitement signalée.",
+        "judge_raw": {
+          "raisonnement": "La réponse signale l'absence de données spécifiques à Aïti mais utilise des données globales corses pour une approximation. Absence de données qualitatives spécifiques non explicitement signalée.",
+          "section_observee": "Gestion d'absence d'information / Absence totale de données",
+          "comportement_attendu_selon_grille": "Refus explicite ou approximation très signalée.",
+          "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+          "coherence_comportement_observe": "partiel",
+          "sources_inventaire": [
+            {
+              "source": "raptor_summary",
+              "type": "quali"
+            },
+            {
+              "source": "raptor_enquete_summary",
+              "type": "quali"
+            },
+            {
+              "source": "oppchovec_score",
+              "type": "quanti"
+            }
+          ],
+          "mislabelling_detecte": {
+            "regle_1_quali_quanti": "non",
+            "regle_2_surinterpretation_oppchovec": "non",
+            "regle_3_absence_quali_non_signalee": "oui — la réponse ne signale pas explicitement l'absence de données qualitatives spécifiques à Aïti",
+            "regle_4_extrapolation_sous_groupe": "non"
+          },
+          "mislabelling_flag": true,
+          "elements_specifiques_question": [
+            "Aïti",
+            "bien-être subjectif"
+          ],
+          "elements_traitement": [
+            {
+              "element": "Aïti",
+              "traitement": "approximation_signalee"
+            },
+            {
+              "element": "bien-être subjectif",
+              "traitement": "approximation_signalee"
+            }
+          ],
+          "pertinence": 3,
+          "pertinence_justif": "La réponse signale l'absence de données spécifiques à Aïti mais utilise des données globales corses pour une approximation. Cependant, elle ne signale pas explicitement l'absence de données qualitatives spécifiques à Aïti.",
+          "fondement_factuel": 4,
+          "fondement_factuel_justif": "Les affirmations sont fondées sur les données disponibles, mais l'absence de données qualitatives spécifiques à Aïti n'est pas explicitement signalée.",
+          "nuance_incertitude": 4,
+          "nuance_incertitude_justif": "La réponse est bien nuancée en signalant l'absence de données locales subjectives et en utilisant des modalisateurs pour indiquer les limites des conclusions.",
+          "coherence_qualiquanti": 3,
+          "coherence_qualiquanti_justif": "Bien que la réponse utilise des données quantitatives pour une approximation, elle ne signale pas explicitement l'absence de données qualitatives spécifiques à Aïti, ce qui affecte la cohérence.",
+          "score_global": 3.5,
+          "error": null
+        }
+      },
+      "phase1": {
+        "answer_completion_tokens": 186,
+        "total_completion_tokens": 611,
+        "elapsed_s": 18.7,
+        "score_global": 5.0,
+        "pertinence": 5,
+        "fondement_factuel": 5,
+        "nuance_incertitude": 5,
+        "coherence_qualiquanti": 5,
+        "mislabelling_flag": false,
+        "raisonnement": "La réponse signale explicitement l'absence de données spécifiques à Aïti et utilise des données globales corses avec prudence, sans extrapolation indue.",
+        "judge_raw": {
+          "raisonnement": "La réponse signale explicitement l'absence de données spécifiques à Aïti et utilise des données globales corses avec prudence, sans extrapolation indue.",
+          "section_observee": "Gestion d'absence d'information / Absence totale de données",
+          "comportement_attendu_selon_grille": "Refus explicite ou approximation très signalée.",
+          "type_reponse_attendue_specifie": "reponse_substantielle_attendue",
+          "coherence_comportement_observe": "oui",
+          "sources_inventaire": [
+            {
+              "source": "raptor_enquete_summary",
+              "type": "quali"
+            },
+            {
+              "source": "oppchovec_score",
+              "type": "quanti"
+            }
+          ],
+          "mislabelling_detecte": {
+            "regle_1_quali_quanti": "non",
+            "regle_2_surinterpretation_oppchovec": "non",
+            "regle_3_absence_quali_non_signalee": "non",
+            "regle_4_extrapolation_sous_groupe": "non"
+          },
+          "mislabelling_flag": false,
+          "elements_specifiques_question": [
+            "Aïti",
+            "bien-être subjectif"
+          ],
+          "elements_traitement": [
+            {
+              "element": "Aïti",
+              "traitement": "precis"
+            },
+            {
+              "element": "bien-être subjectif",
+              "traitement": "approximation_signalee"
+            }
+          ],
+          "pertinence": 5,
+          "pertinence_justif": "La réponse est parfaitement alignée avec la grille, signalant clairement l'absence de données spécifiques à Aïti et évitant toute extrapolation non justifiée.",
+          "fondement_factuel": 5,
+          "fondement_factuel_justif": "Les affirmations sont correctement fondées sur les sources disponibles, avec une distinction claire entre les données globales et l'absence de données locales.",
+          "nuance_incertitude": 5,
+          "nuance_incertitude_justif": "La réponse est bien nuancée, signalant explicitement les limites des données disponibles et évitant toute conclusion hâtive.",
+          "coherence_qualiquanti": 5,
+          "coherence_qualiquanti_justif": "La réponse intègre correctement les données qualitatives globales sans prétendre à une précision locale inexistante.",
+          "score_global": 5.0,
+          "error": null
+        }
+      }
+    }
+  }
+}
