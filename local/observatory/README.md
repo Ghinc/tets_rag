@@ -58,22 +58,38 @@ Open <http://127.0.0.1:8600/>. The RAPTOR pipeline loads in a background thread
 * **Staged progress** — *Understanding your question → Consulting interviews &
   survey data (point i of n) → Drafting the answer*, plus an elapsed counter.
 * **Follow-up chips** — the sub-questions the pipeline generated, clickable.
-* **Sidebar** — pick any of the **360 Corsican communes**, then choose the
-  indicator type:
-  * **Territorial** (default) — OppChoVec scores (overall + Opportunities /
-    Choice / Lived experience, each /10) with the commune's rank out of 360.
-    Available for every commune.
-  * **Survey** — citizen-survey perceptions (happiness, quality of life,
-    confidence in the future, each /5, vs. the Corsica mean) plus respondents and
-    mean age. Only the 68 communes with survey responses; the others show a
-    "switch to Territorial" note.
-
-  The selector is **context only** — it populates the sidebar and never changes
-  the answer; the question reaches the pipeline verbatim and v10's own commune
-  detector decides what it's about.
+* **Sidebar** — pick any of the **360 Corsican communes**: shows its overall
+  OppChoVec rank as text, and the embedded **OppChoVec dashboard** (see below)
+  as a live choropleth map, both updating together. The selector is **context
+  only** — it never changes the answer; the question reaches the pipeline
+  verbatim and v10's own commune detector decides what it's about.
 * **Recent conversations** — stored in this browser's `localStorage`; click one
   to reopen it. `+` (top right) starts a new conversation.
 * Answers are steered to **English** regardless of the corpus language.
+
+## The OppChoVec dashboard (`local/observatory/dashboard/`)
+
+A separate, static, no-backend Leaflet dashboard — 11 tabs (OppChoVec/Opp/
+Cho/Vec choropleths, LISA spatial clustering, CAH hierarchical clustering,
+correlations, Parangons/archetypes, Data Viz, Entreprises) — copied wholesale
+from `C:\These\visu_oppchovec_propre` (its own repo,
+`github.com/Ghinc/oppchovec_visu`) and mounted at `/dashboard/`. Its own
+`script.js` (~208KB) is untouched; only two small additive files integrate it:
+
+* **`embed.js`** — `?embed=1` hides the dashboard's own sidebar/tab bar for a
+  compact map-only view (used by the sidebar iframe) with an "Open full
+  dashboard ↗" link back to the unmodified 11-tab experience; `?commune=<name>`
+  preselects a commune via the dashboard's own `afficherCommune()` global.
+* A banner in its stub **"DumèGPT" chat tab** (originally a fake typing
+  simulation, never wired to a backend) now links back to the real chat here
+  (`target=_top`) — the tab's original DOM was left intact so `script.js`'s
+  existing event listeners don't throw.
+
+The large route-network GeoJSON files (~29MB) and the `.xlsx` exports are
+gitignored inside `dashboard/` (mirrors that project's own policy) but present
+on disk from the copy; `Commune_Corse.geojson` (264KB, the commune boundaries
+every map needs) is the one GeoJSON kept in git. Open `/dashboard/` directly
+for the full, unembedded dashboard.
 
 ## The hidden model console
 
@@ -133,6 +149,7 @@ persist in `localStorage`.
 | Route | Method | Purpose |
 |---|---|---|
 | `/` | GET | the UI |
+| `/dashboard/` | GET | OppChoVec dashboard (static; `?embed=1`, `?commune=<name>`) |
 | `/api/health` | GET | `{ready, error, v11}` |
 | `/api/examples` | GET | starter questions |
 | `/api/communes` | GET | all 360 Corsican communes |
