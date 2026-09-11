@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Chargement Routes</title>
+</head>
+<body>
+    <h1>Test de chargement du réseau routier</h1>
+    <div id="result"></div>
+
+    <script>
+        const resultDiv = document.getElementById('result');
+
+        resultDiv.innerHTML += '<p>Tentative de chargement de routes.geojson...</p>';
+
+        fetch('routes.geojson')
+            .then(response => {
+                resultDiv.innerHTML += `<p>Status: ${response.status} ${response.statusText}</p>`;
+                if (!response.ok) {
+                    throw new Error(`Erreur HTTP: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                resultDiv.innerHTML += `<p style="color: green;">✓ Fichier chargé avec succès !</p>`;
+                resultDiv.innerHTML += `<p>Nombre de routes: ${data.features.length}</p>`;
+                resultDiv.innerHTML += `<p>Type: ${data.type}</p>`;
+                resultDiv.innerHTML += `<p>Première route: ${JSON.stringify(data.features[0].geometry.type)}</p>`;
+            })
+            .catch(error => {
+                resultDiv.innerHTML += `<p style="color: red;">✗ Erreur: ${error.message}</p>`;
+            });
+    </script>
+</body>
+</html>

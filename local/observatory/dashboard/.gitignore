@@ -1,0 +1,9 @@
+# OppChoVec dashboard (copied from C:\These\visu_oppchovec_propre) — mirrors
+# that project's own .gitignore policy: the big geodata/export files stay on
+# disk (needed for the app to run) but aren't tracked here. Commune_Corse.geojson
+# is the one exception — small (264KB) and required by every map.
+*.geojson
+!stage_ambroise/Données/Commune_Corse.geojson
+downloads/*.xlsx
+downloads/*.xls
+*.zip

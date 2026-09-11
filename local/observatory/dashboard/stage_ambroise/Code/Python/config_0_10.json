@@ -1,0 +1,33 @@
+{
+  "version": "1.0.0",
+  "normalisation": {
+    "type": "0-10",
+    "min": 0,
+    "max": 10,
+    "description": "Normalisation linéaire entre 0 et 10"
+  },
+  "fichiers": {
+    "scores": "data_scores_0_10.json",
+    "jenks": "seuils_jenks_0_10.json",
+    "lisa": {
+      "oppchovec": {
+        "1pct": "lisa_oppchovec_0_10_1pct.json",
+        "5pct": "lisa_oppchovec_0_10_5pct.json"
+      }
+    }
+  },
+  "indicateurs": {
+    "principal": "OppChoVec",
+    "dimensions": [
+      "Opp",
+      "Cho",
+      "Vec"
+    ]
+  },
+  "colonnes": {
+    "oppchovec": "OppChoVec_0_10",
+    "opp": "Score_Opp_0_10",
+    "cho": "Score_Cho_0_10",
+    "vec": "Score_Vec_0_10"
+  }
+}

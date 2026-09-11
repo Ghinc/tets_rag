@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Interactive OppChoVec</title>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <div id="app">
+    <aside>
+        <!-- Section d'import masquée car les fichiers sont chargés automatiquement -->
+        <div class="section" style="display: none;">
+            <h2>1. Import des fichiers</h2>
+            <h3>Fichiers des indicateurs</h3>
+            <input type="file" id="file" multiple accept=".json" /><br>
+            <h3>GeoJSON des communes</h3>
+            <input type="file" id="file_geojson" multiple accept=".geojson" /><br>
+            <button id="validateBtn">Valider les fichiers</button>
+        </div>
+      <!-- 1. Sélection de la commune -->
+      <div class="section">
+        <h2 data-translate="commune-title">2. Municipality selection</h2>
+        <select id="communeSelect" style="width:100%; padding:0.5em;">
+          <option value="">-- Select a municipality --</option>
+        </select>
+        <button id="validerCommune" style="margin-top: 0.5em;" data-translate="commune-validate">Validate</button>
+      </div>
+
+      <div class="section">
+        <h3 data-translate="commune-info">Selected municipality information:</h3>
+        <div id="resultCommune" style="background: #f8f8f8; padding: 1em; border-radius: 8px;"></div>
+      </div>
+
+      <!-- Contrôle du réseau routier -->
+      <div class="section">
+        <h2 data-translate="routes-title">3. Affichage des routes</h2>
+        <div style="display: flex; flex-direction: column; gap: 0.5em;">
+          <label style="display: flex; align-items: center; cursor: pointer;">
+            <input type="checkbox" id="checkbox-nationales" class="route-checkbox" checked>
+            <span style="margin-left: 0.5em;" data-translate="routes-national">Routes nationales (647)</span>
+          </label>
+          <label style="display: flex; align-items: center; cursor: pointer;">
+            <input type="checkbox" id="checkbox-departementales" class="route-checkbox">
+            <span style="margin-left: 0.5em;" data-translate="routes-departmental">Routes départementales (2654)</span>
+          </label>
+          <label style="display: flex; align-items: center; cursor: pointer;">
+            <input type="checkbox" id="checkbox-communales" class="route-checkbox">
+            <span style="margin-left: 0.5em;" data-translate="routes-municipal">Routes communales (3686)</span>
+          </label>
+          <label style="display: flex; align-items: center; cursor: pointer;">
+            <input type="checkbox" id="checkbox-toutes" class="route-checkbox">
+            <span style="margin-left: 0.5em;" data-translate="routes-all">Toutes les routes (7002)</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Contrôle de la langue -->
+      <div class="section">
+        <h2>4. Language</h2>
+        <label style="display: flex; align-items: center; cursor: pointer;">
+          <input type="checkbox" id="checkbox-english" checked>
+          <span style="margin-left: 0.5em;">English labels</span>
+        </label>
+      </div>
+
+      <!-- Pondérations p_k (OppChoLiv) -->
+      <div class="section">
+        <h2>5. Pondérations p_k</h2>
+        <button id="btn-toggle-pk" onclick="toggleModePk()">p_k : égal [1,1,1]</button>
+        <div id="pk-values-display" style="margin-top: 6px; font-size: 12px; color: #555; font-style: italic;">Pondérations égales (p_k = 1/3 chacun)</div>
+      </div>
+    </aside>
+    <main>
+      <div class="tabs-container">
+        <div class="tabs">
+          <button class="tab-button active" data-tab="oppchovectab" id="tab-oppchovec">OppChoLiv</button>
+          <button class="tab-button" data-tab="opptab" id="tab-opp">Opp</button>
+          <button class="tab-button" data-tab="chotab" id="tab-cho">Cho</button>
+          <button class="tab-button" data-tab="vectab" id="tab-vec">Liv</button>
+          <button class="tab-button" data-tab="lisatab">LISA</button>
+          <button class="tab-button" data-tab="cahtab">CAH</button>
+          <button class="tab-button" data-tab="parangonstab">Parangons</button>
+          <button class="tab-button" data-tab="chatbottab">DumèGPT</button>
+        </div>
+        <div class="tab-content active" id="oppchovectab">
+          <div id="map-oppchovec" class="map"></div>
+        </div>
+        <div class="tab-content" id="opptab">
+          <div id="map-opp" class="map"></div>
+        </div>
+        <div class="tab-content" id="chotab">
+          <div id="map-cho" class="map"></div>
+        </div>
+        <div class="tab-content" id="vectab">
+          <div id="map-vec" class="map"></div>
+        </div>
+        <div class="tab-content" id="lisatab">
+          <!-- Sous-onglets LISA -->
+          <div class="lisa-subtabs">
+            <button class="lisa-subtab-button active" data-lisa-tab="lisa5pct">LISA 5% (α=0.05)</button>
+            <button class="lisa-subtab-button" data-lisa-tab="lisa1pct">LISA 1% (α=0.01)</button>
+          </div>
+
+          <!-- LISA 5% -->
+          <div class="lisa-subtab-content active" id="lisa5pct">
+            <div id="map-lisa-5pct" class="map"></div>
+          </div>
+
+          <!-- LISA 1% -->
+          <div class="lisa-subtab-content" id="lisa1pct">
+            <div id="map-lisa-1pct" class="map"></div>
+          </div>
+        </div>
+        <div class="tab-content" id="cahtab">
+          <!-- Sous-onglets CAH -->
+          <div class="lisa-subtabs">
+            <button class="cah-subtab-button active" data-cah-tab="cah3clusters">CAH 3 Clusters</button>
+            <button class="cah-subtab-button" data-cah-tab="cah5clusters">CAH 5 Clusters</button>
+          </div>
+
+          <!-- CAH 3 Clusters -->
+          <div class="cah-subtab-content active" id="cah3clusters">
+            <!-- Bouton toggle -->
+            <div class="cah-controls-top">
+              <button id="toggleCAH3View" class="cah-toggle-button">
+                📊 Voir les écarts standardisés
+              </button>
+            </div>
+
+            <!-- Vue carte -->
+            <div id="cah3-map-view" class="cah-view">
+              <div id="map-cah-3" class="map"></div>
+            </div>
+
+            <!-- Vue graphique -->
+            <div id="cah3-graph-view" class="cah-view" style="display: none;">
+              <img src="cah_3_clusters_ecarts.png" alt="Écarts standardisés - 3 clusters" style="width: 100%; height: 100%; object-fit: contain;">
+            </div>
+          </div>
+
+          <!-- CAH 5 Clusters -->
+          <div class="cah-subtab-content" id="cah5clusters">
+            <!-- Bouton toggle -->
+            <div class="cah-controls-top">
+              <button id="toggleCAH5View" class="cah-toggle-button">
+                📊 Voir les écarts standardisés
+              </button>
+            </div>
+
+            <!-- Vue carte -->
+            <div id="cah5-map-view" class="cah-view">
+              <div id="map-cah-5" class="map"></div>
+            </div>
+
+            <!-- Vue graphique -->
+            <div id="cah5-graph-view" class="cah-view" style="display: none;">
+              <img src="cah_5_clusters_ecarts.png" alt="Écarts standardisés - 5 clusters" style="width: 100%; height: 100%; object-fit: contain;">
+            </div>
+          </div>
+        </div>
+
+        <!-- Onglet Parangons -->
+        <div class="tab-content" id="parangonstab">
+          <div class="parangons-layout">
+            <div class="parangons-map-col">
+              <div id="map-parangons" class="map"></div>
+            </div>
+            <div class="parangons-panel-col">
+              <div class="parangons-panel">
+                <h3 class="parangons-title">Parangons par classe Jenks</h3>
+                <p class="parangons-subtitle">Cliquez sur un cluster pour afficher les communes classées par proximité à la moyenne.</p>
+                <div class="parangons-search-row">
+                  <input type="text" id="parangons-search" class="parangons-search" placeholder="Rechercher une commune…" autocomplete="off">
+                </div>
+                <div id="parangons-cluster-btns" class="parangons-cluster-btns"></div>
+                <div id="parangons-list-container" class="parangons-list-container">
+                  <div id="parangons-list"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Onglet DumèGPT -->
+        <div class="tab-content" id="chatbottab">
+          <div class="chatbot-container">
+            <div class="chatbot-header">
+              <h2>💬 DumèGPT - Assistant bien-être des communes</h2>
+              <p class="chatbot-subtitle">Posez vos questions sur le bien-être, les opportunités et le vécu dans les communes corses</p>
+            </div>
+
+            <div class="chatbot-messages" id="chatbotMessages">
+              <div class="message bot-message">
+                <div class="message-avatar">🤖</div>
+                <div class="message-content">
+                  <p>Bonjour ! Je suis <strong>DumèGPT</strong>, votre assistant dédié au bien-être dans les communes de Corse.</p>
+                  <p>Je peux vous aider à comprendre les scores d'Opportunités, de Choix et de Vécu, analyser les clusters, et répondre à vos questions sur les données.</p>
+                  <p><em>Comment puis-je vous aider aujourd'hui ?</em></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="chatbot-input-container">
+              <textarea
+                id="chatbotInput"
+                class="chatbot-input"
+                placeholder="Posez votre question sur le bien-être des communes..."
+                rows="2"
+              ></textarea>
+              <button id="chatbotSend" class="chatbot-send-btn">
+                <span>Envoyer</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+                </svg>
+              </button>
+            </div>
+
+            <div class="chatbot-footer">
+              <small>💡 <strong>Astuce :</strong> Vous pouvez poser des questions sur une commune spécifique, comparer des profils, ou demander des explications sur les indicateurs.</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="lisa_data.js"></script>
+  <script src="lisa_data_1pct.js"></script>
+  <script src="cah_data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

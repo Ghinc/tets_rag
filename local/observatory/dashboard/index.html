@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Interactive OppChoVec</title>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
+  <link rel="stylesheet" href="stage_ambroise/Code/WEB/dashboard.css">
+  <!-- Embed mode (added for the Dumè GPT sidebar integration — see embed.js).
+       Inert unless the page is loaded with ?embed=1; does not touch any rule
+       above, only adds .embed-mode-scoped overrides. -->
+  <style>
+    body.embed-mode #app > aside { display: none !important; }
+    body.embed-mode .tabs-container .tabs { display: none !important; }
+    body.embed-mode html, body.embed-mode { height: 100%; }
+    body.embed-mode .tab-content.active,
+    body.embed-mode .tab-content.active .map { height: 100vh !important; width: 100% !important; }
+    .embed-open-full {
+      position: fixed; top: 8px; right: 8px; z-index: 9999;
+      background: #2f5241; color: #fff; font: 600 12px system-ui, -apple-system, "Segoe UI", sans-serif;
+      padding: 6px 11px; border-radius: 6px; text-decoration: none;
+      box-shadow: 0 2px 10px rgba(0,0,0,.3);
+    }
+    .embed-open-full:hover { background: #23402f; }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <aside>
+        <!-- Section d'import masquée car les fichiers sont chargés automatiquement -->
+        <div class="section" style="display: none;">
+            <h2>1. Import des fichiers</h2>
+            <h3>Fichiers des indicateurs</h3>
+            <input type="file" id="file" multiple accept=".json" /><br>
+            <h3>GeoJSON des communes</h3>
+            <input type="file" id="file_geojson" multiple accept=".geojson" /><br>
+            <button id="validateBtn">Valider les fichiers</button>
+        </div>
+      <!-- 1. Sélection de la commune -->
+      <div class="section">
+        <h2 data-translate="commune-title">2. Municipality selection</h2>
+        <select id="communeSelect" style="width:100%; padding:0.5em;">
+          <option value="" data-translate="commune-select">-- Select a municipality --</option>
+        </select>
+        <button id="validerCommune" style="margin-top: 0.5em;" data-translate="commune-validate">Validate</button>
+      </div>
+
+      <div class="section">
+        <h3 data-translate="commune-info">Selected municipality information:</h3>
+        <div id="resultCommune" style="background: #f8f8f8; padding: 1em; border-radius: 8px;"></div>
+      </div>
+
+      <!-- Contrôle du réseau routier -->
+      <div class="section">
+        <h2 data-translate="routes-title">3. Affichage des routes</h2>
+        <div style="display: flex; flex-direction: column; gap: 0.5em;">
+          <label style="display: flex; align-items: center; cursor: pointer;">
+            <input type="checkbox" id="checkbox-nationales" class="route-checkbox" checked>
+            <span style="margin-left: 0.5em;" data-translate="routes-national">Routes nationales (647)</span>
+          </label>
+          <label style="display: flex; align-items: center; cursor: pointer;">
+            <input type="checkbox" id="checkbox-departementales" class="route-checkbox">
+            <span style="margin-left: 0.5em;" data-translate="routes-departmental">Routes départementales (2654)</span>
+          </label>
+          <label style="display: flex; align-items: center; cursor: pointer;">
+            <input type="checkbox" id="checkbox-communales" class="route-checkbox">
+            <span style="margin-left: 0.5em;" data-translate="routes-municipal">Routes communales (3686)</span>
+          </label>
+          <label style="display: flex; align-items: center; cursor: pointer;">
+            <input type="checkbox" id="checkbox-toutes" class="route-checkbox">
+            <span style="margin-left: 0.5em;" data-translate="routes-all">Toutes les routes (7002)</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Contrôle de la langue -->
+      <div class="section">
+        <h2>4. Language</h2>
+        <label style="display: flex; align-items: center; cursor: pointer;">
+          <input type="checkbox" id="checkbox-english" checked>
+          <span style="margin-left: 0.5em;">English labels</span>
+        </label>
+        <label style="display: flex; align-items: center; cursor: pointer; margin-top: 0.5em;">
+          <input type="checkbox" id="checkbox-copyright" checked onchange="document.querySelectorAll('.copyright-control').forEach(el => el.style.display = this.checked ? '' : 'none')">
+          <span style="margin-left: 0.5em;">Afficher le copyright</span>
+        </label>
+      </div>
+
+      <!-- Pondérations p_k (OppChoVec) -->
+      <div class="section">
+        <h2>5. Pondérations p_k</h2>
+        <button id="btn-toggle-pk" onclick="toggleModePk()">p_k : égal [1,1,1]</button>
+        <div id="pk-values-display" style="margin-top: 6px; font-size: 12px; color: #555; font-style: italic;">Pondérations égales (p_k = 1/3 chacun)</div>
+      </div>
+
+      <!-- Téléchargements -->
+      <div class="section">
+        <h2>6. Téléchargements</h2>
+        <a href="downloads/stats_descriptives_betti_0_10.xlsx" download>
+          <button style="width:100%; margin-bottom:6px;">📥 Stats descriptives (Betti, 0-10)</button>
+        </a>
+        <a href="downloads/oppchovec_betti_0_10_trie.xlsx" download>
+          <button style="width:100%;">📥 Classement OppChoVec (Betti, 0-10)</button>
+        </a>
+      </div>
+    </aside>
+    <main>
+      <div class="tabs-container">
+        <div class="tabs">
+          <button class="tab-button active" data-tab="oppchovectab" id="tab-oppchovec">OppChoVec</button>
+          <button class="tab-button" data-tab="opptab" id="tab-opp">Opp</button>
+          <button class="tab-button" data-tab="chotab" id="tab-cho">Cho</button>
+          <button class="tab-button" data-tab="vectab" id="tab-vec">Vec</button>
+          <button class="tab-button" data-tab="lisatab">LISA</button>
+          <button class="tab-button" data-tab="cahtab">CAH</button>
+          <button class="tab-button" data-tab="datavistab" style="display: inline-block !important; visibility: visible !important; opacity: 1 !important; background-color: #ffcccc !important;">Data Visualisation</button>
+          <button class="tab-button" data-tab="entreprisestab">Entreprises</button>
+          <button class="tab-button" data-tab="correlationtab">Corrélation</button>
+          <button class="tab-button" data-tab="parangonstab">Parangons</button>
+          <button class="tab-button" data-tab="chatbottab">DumèGPT</button>
+        </div>
+        <div class="tab-content active" id="oppchovectab">
+          <div id="map-oppchovec" class="map"></div>
+        </div>
+        <div class="tab-content" id="opptab">
+          <div id="map-opp" class="map"></div>
+        </div>
+        <div class="tab-content" id="chotab">
+          <div id="map-cho" class="map"></div>
+        </div>
+        <div class="tab-content" id="vectab">
+          <div id="map-vec" class="map"></div>
+        </div>
+        <div class="tab-content" id="lisatab">
+          <!-- Sous-onglets LISA -->
+          <div class="lisa-subtabs">
+            <button class="lisa-subtab-button active" data-lisa-tab="lisa5pct">LISA 5% (α=0.05)</button>
+            <button class="lisa-subtab-button" data-lisa-tab="lisa1pct">LISA 1% (α=0.01)</button>
+          </div>
+
+          <!-- LISA 5% -->
+          <div class="lisa-subtab-content active" id="lisa5pct">
+            <div id="map-lisa-5pct" class="map"></div>
+          </div>
+
+          <!-- LISA 1% -->
+          <div class="lisa-subtab-content" id="lisa1pct">
+            <div id="map-lisa-1pct" class="map"></div>
+          </div>
+        </div>
+        <div class="tab-content" id="cahtab">
+          <!-- Sous-onglets CAH -->
+          <div class="lisa-subtabs">
+            <button class="cah-subtab-button active" data-cah-tab="cah3clusters">CAH 3 Clusters</button>
+            <button class="cah-subtab-button" data-cah-tab="cah5clusters">CAH 5 Clusters</button>
+          </div>
+
+          <!-- CAH 3 Clusters -->
+          <div class="cah-subtab-content active" id="cah3clusters">
+            <!-- Bouton toggle -->
+            <div class="cah-controls-top">
+              <button id="toggleCAH3View" class="cah-toggle-button">
+                📊 Voir les écarts standardisés
+              </button>
+            </div>
+
+            <!-- Vue carte -->
+            <div id="cah3-map-view" class="cah-view">
+              <div id="map-cah-3" class="map"></div>
+            </div>
+
+            <!-- Vue graphique -->
+            <div id="cah3-graph-view" class="cah-view" style="display: none;">
+              <img src="stage_ambroise/Code/WEB/cah_3_clusters_ecarts.png" alt="Écarts standardisés - 3 clusters" style="width: 100%; height: 100%; object-fit: contain;">
+            </div>
+          </div>
+
+          <!-- CAH 5 Clusters -->
+          <div class="cah-subtab-content" id="cah5clusters">
+            <!-- Bouton toggle -->
+            <div class="cah-controls-top">
+              <button id="toggleCAH5View" class="cah-toggle-button">
+                📊 Voir les écarts standardisés
+              </button>
+            </div>
+
+            <!-- Vue carte -->
+            <div id="cah5-map-view" class="cah-view">
+              <div id="map-cah-5" class="map"></div>
+            </div>
+
+            <!-- Vue graphique -->
+            <div id="cah5-graph-view" class="cah-view" style="display: none;">
+              <img src="stage_ambroise/Code/WEB/cah_5_clusters_ecarts.png" alt="Écarts standardisés - 5 clusters" style="width: 100%; height: 100%; object-fit: contain;">
+            </div>
+          </div>
+        </div>
+
+        <!-- Onglet Data Visualisation -->
+        <div class="tab-content" id="datavistab">
+          <!-- Sous-onglets Data Visualisation -->
+          <div class="datavis-subtabs">
+            <button class="datavis-subtab-button active" data-datavis-tab="top10">🏆 Top 10</button>
+            <button class="datavis-subtab-button" data-datavis-tab="histogram">📈 Histogramme</button>
+          </div>
+
+          <!-- Top 10 -->
+          <div class="datavis-subtab-content active" id="datavis-top10">
+            <div style="padding: 2rem; display: flex; justify-content: center; align-items: center; height: 100%;">
+              <div style="max-width: 700px; width: 100%;">
+                <h3 style="text-align: center; margin-bottom: 1.5rem; color: var(--text-primary); font-size: 1.3rem;">🏆 Top 10 des communes avec le meilleur score OppChoVec</h3>
+                <table id="top10-table" class="datavis-table">
+                  <thead>
+                    <tr>
+                      <th>Rang</th>
+                      <th>Commune</th>
+                      <th>Score OppChoVec</th>
+                    </tr>
+                  </thead>
+                  <tbody id="top10-tbody">
+                    <!-- Rempli dynamiquement par JavaScript -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Histogramme -->
+          <div class="datavis-subtab-content" id="datavis-histogram">
+            <div style="padding: 2rem; height: 100%; display: flex; flex-direction: column;">
+              <h3 style="text-align: center; margin-bottom: 1rem; color: var(--text-primary); font-size: 1.3rem;">📈 Répartition des communes selon le score OppChoVec</h3>
+              <div style="flex: 1; position: relative;">
+                <canvas id="histogram-chart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Onglet Entreprises -->
+        <div class="tab-content" id="entreprisestab">
+          <div id="map-entreprises" class="map"></div>
+        </div>
+
+        <!-- Onglet Corrélation -->
+        <div class="tab-content" id="correlationtab">
+          <div class="corr-subtabs">
+            <button class="corr-subtab-btn active" data-corr="corr-entr-occ">Densité → OppChoVec</button>
+            <button class="corr-subtab-btn" data-corr="corr-occ-entr">OppChoVec → Densité</button>
+            <button class="corr-subtab-btn" data-corr="corr-subjectif">B-E subjectif × OppChoVec</button>
+            <button class="corr-subtab-btn" data-corr="corr-subjectif-dens">B-E subjectif × Densité</button>
+          </div>
+
+          <!-- Sous-onglet 1 : Densité → OppChoVec -->
+          <div class="corr-subtab-content active" id="corr-entr-occ">
+            <div class="corr-page">
+              <div class="corr-header-bar"><span id="correlation-r"></span><button class="scatter-export-btn" onclick="exporterScatterPNG(_scatterChart, 'densite_oppchovec')">📥 PNG</button></div>
+              <div class="corr-chart-wrap"><canvas id="scatter-chart"></canvas></div>
+              <div class="corr-map-toggle-bar">
+                <button class="corr-map-toggle-btn" onclick="toggleCorrMap('map-correlation', this)">📍 Voir la carte des résidus</button>
+              </div>
+              <div class="corr-map-panel" id="map-correlation-panel" style="display:none;">
+                <div id="map-correlation" class="map corr-map"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sous-onglet 2 : OppChoVec → Densité -->
+          <div class="corr-subtab-content" id="corr-occ-entr">
+            <div class="corr-page">
+              <div class="corr-header-bar"><span id="correlation-r2"></span><button class="scatter-export-btn" onclick="exporterScatterPNG(_scatterChart2, 'oppchovec_densite')">📥 PNG</button></div>
+              <div class="corr-chart-wrap"><canvas id="scatter-chart2"></canvas></div>
+              <div class="corr-map-toggle-bar">
+                <button class="corr-map-toggle-btn" onclick="toggleCorrMap('map-correlation2', this)">📍 Voir la carte des résidus</button>
+              </div>
+              <div class="corr-map-panel" id="map-correlation2-panel" style="display:none;">
+                <div id="map-correlation2" class="map corr-map"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sous-onglet 3 : Bien-être subjectif × OppChoVec -->
+          <div class="corr-subtab-content" id="corr-subjectif">
+            <div class="corr-page">
+              <div class="corr-header-bar"><span id="correlation-r3"></span><button class="scatter-export-btn" onclick="exporterScatterPNG(_scatterChart3, 'be_subjectif_oppchovec')">📥 PNG</button></div>
+              <div class="corr-chart-wrap"><canvas id="scatter-chart3"></canvas></div>
+              <div class="corr-map-toggle-bar">
+                <button class="corr-map-toggle-btn" onclick="toggleCorrMap('map-subjectif', this)">📍 Voir la carte</button>
+              </div>
+              <div class="corr-map-panel" id="map-subjectif-panel" style="display:none;">
+                <div id="map-subjectif" class="map corr-map"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sous-onglet 4 : Bien-être subjectif × Densité -->
+          <div class="corr-subtab-content" id="corr-subjectif-dens">
+            <div class="corr-page">
+              <div class="corr-header-bar"><span id="correlation-r4"></span><button class="scatter-export-btn" onclick="exporterScatterPNG(_scatterChart4, 'be_subjectif_densite')">📥 PNG</button></div>
+              <div class="corr-chart-wrap"><canvas id="scatter-chart4"></canvas></div>
+              <div class="corr-map-toggle-bar">
+                <button class="corr-map-toggle-btn" onclick="toggleCorrMap('map-subjectif-dens', this)">📍 Voir la carte</button>
+              </div>
+              <div class="corr-map-panel" id="map-subjectif-dens-panel" style="display:none;">
+                <div id="map-subjectif-dens" class="map corr-map"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Onglet Parangons -->
+        <div class="tab-content" id="parangonstab">
+          <div class="parangons-layout">
+            <div class="parangons-map-col">
+              <div id="map-parangons" class="map"></div>
+            </div>
+            <div class="parangons-panel-col">
+              <div class="parangons-panel">
+                <h3 class="parangons-title">Parangons par classe Jenks</h3>
+                <p class="parangons-subtitle">Cliquez sur un cluster pour afficher les communes classées par proximité à la moyenne.</p>
+                <div class="parangons-search-row">
+                  <input type="text" id="parangons-search" class="parangons-search" placeholder="Rechercher une commune…" autocomplete="off">
+                </div>
+                <div id="parangons-cluster-btns" class="parangons-cluster-btns"></div>
+                <div id="parangons-list-container" class="parangons-list-container">
+                  <div id="parangons-list"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Onglet DumèGPT -->
+        <div class="tab-content" id="chatbottab">
+          <div class="chatbot-container">
+            <div class="chatbot-header">
+              <h2>💬 DumèGPT - Assistant bien-être des communes</h2>
+              <p class="chatbot-subtitle">Posez vos questions sur le bien-être, les opportunités et le vécu dans les communes corses</p>
+            </div>
+
+            <div class="chatbot-messages" id="chatbotMessages">
+              <!-- Real Dumè GPT is now a working RAG assistant, served at the app root.
+                   This tab predates it (see the TODO'd /api/chat stub further down in
+                   script.js) — point people at the real thing instead of the mock reply. -->
+              <div class="message bot-message" style="background:#eef3ee;border:1px solid #2f5241;border-radius:10px;">
+                <div class="message-avatar">💬</div>
+                <div class="message-content">
+                  <p><strong>Dumè GPT is now live</strong> — a real assistant answering from
+                  resident interviews, citizen-survey data and territorial indicators.</p>
+                  <p><a href="/" target="_top" style="display:inline-block;background:#2f5241;color:#fff;
+                     padding:8px 14px;border-radius:7px;text-decoration:none;font-weight:600;">
+                     Open the Dumè GPT assistant →</a></p>
+                </div>
+              </div>
+              <div class="message bot-message">
+                <div class="message-avatar">🤖</div>
+                <div class="message-content">
+                  <p>Bonjour ! Je suis <strong>DumèGPT</strong>, votre assistant dédié au bien-être dans les communes de Corse.</p>
+                  <p>Je peux vous aider à comprendre les scores d'Opportunités, de Choix et de Vécu, analyser les clusters, et répondre à vos questions sur les données.</p>
+                  <p><em>Comment puis-je vous aider aujourd'hui ?</em></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="chatbot-input-container">
+              <textarea
+                id="chatbotInput"
+                class="chatbot-input"
+                placeholder="Posez votre question sur le bien-être des communes..."
+                rows="2"
+              ></textarea>
+              <button id="chatbotSend" class="chatbot-send-btn">
+                <span>Envoyer</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+                </svg>
+              </button>
+            </div>
+
+            <div class="chatbot-footer">
+              <small>💡 <strong>Astuce :</strong> Vous pouvez poser des questions sur une commune spécifique, comparer des profils, ou demander des explications sur les indicateurs.</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="stage_ambroise/Code/WEB/lisa_data.js"></script>
+  <script src="stage_ambroise/Code/WEB/lisa_data_1pct.js"></script>
+  <script src="stage_ambroise/Code/WEB/lisa_data_betti.js"></script>
+  <script src="stage_ambroise/Code/WEB/lisa_data_betti_1pct.js"></script>
+  <script src="stage_ambroise/Code/WEB/cah_data.js"></script>
+  <script src="stage_ambroise/Code/WEB/script.js"></script>
+  <!-- Embed mode: ?embed=1 (compact view for the Dumè GPT sidebar iframe),
+       ?commune=<name> (preselect on load). Additive only — see embed.js. -->
+  <script src="embed.js"></script>
+</body>
+</html>

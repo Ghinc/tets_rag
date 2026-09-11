@@ -44,10 +44,12 @@ import pipeline_manager as pm  # noqa: E402
 
 from fastapi import FastAPI, Request  # noqa: E402
 from fastapi.responses import FileResponse, JSONResponse, StreamingResponse  # noqa: E402
+from fastapi.staticfiles import StaticFiles  # noqa: E402
 import uvicorn  # noqa: E402
 
 DEV_CODE = os.getenv("OBS_DEV_CODE", "corse2026")
 UI_FILE = os.path.join(_HERE, "ui", "index.html")
+DASHBOARD_DIR = os.path.join(_HERE, "dashboard")
 
 EXAMPLE_QUESTIONS = [
     "How do residents of Ajaccio describe their quality of life?",
@@ -64,6 +66,15 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="Dumè GPT", version="1.0.0", lifespan=lifespan)
+
+# OppChoVec dashboard (Leaflet maps, LISA/CAH clustering, correlations,
+# parangons...) — a separate static app (its own repo: oppchovec_visu),
+# copied wholesale into local/observatory/dashboard/ and served as-is.
+# html=True lets "/dashboard/" resolve to its index.html and every relative
+# asset request it makes (script.js, data JSON, geojson) resolve correctly —
+# see local/observatory/dashboard/.gitignore for what's tracked vs disk-only.
+if os.path.isdir(DASHBOARD_DIR):
+    app.mount("/dashboard", StaticFiles(directory=DASHBOARD_DIR, html=True), name="dashboard")
 
 
 # --------------------------------------------------------------------------- #

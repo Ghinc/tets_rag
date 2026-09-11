@@ -235,6 +235,11 @@
     padding: 6px 8px; background: var(--surface); color: var(--ink);
     border: 1px solid var(--line); border-radius: 7px;
   }
+  .map-wrap {
+    border: 1px solid var(--line); border-radius: 10px; overflow: hidden;
+    height: 340px; background: var(--surface); box-shadow: var(--shadow);
+  }
+  .map-wrap iframe { width: 100%; height: 100%; border: 0; display: block; }
   .viewtoggle {
     display: flex; margin: 10px 0 14px;
     border: 1px solid var(--line); border-radius: 8px; overflow: hidden;
@@ -377,10 +382,6 @@
       <div class="k">Municipality</div>
       <select class="commune" id="communeSelect"><option value="">All of Corsica</option></select>
     </div>
-    <div class="viewtoggle" id="viewToggle" role="tablist" aria-label="Indicator type">
-      <button type="button" data-view="objective">Territorial</button>
-      <button type="button" data-view="subjective">Survey</button>
-    </div>
     <div id="ctxProfile"></div>
     <div class="field">
       <div class="k">Active sources</div>
@@ -392,8 +393,11 @@
     </div>
 
     <hr class="sep" />
-    <div class="side-h" id="indHead">Key indicators</div>
-    <div id="indicators"><p class="side-note">Select a municipality to see its indicators.</p></div>
+    <div class="side-h">Territorial map</div>
+    <div class="map-wrap">
+      <iframe id="dashboardFrame" src="/dashboard/?embed=1"
+              title="OppChoVec territorial dashboard" loading="lazy"></iframe>
+    </div>
 
     <hr class="sep" />
     <div class="side-h">Recent conversations</div>
@@ -455,7 +459,7 @@
   var state = {
     ready: false, asking: false,
     dev: null, devCode: null,
-    communes: [], commune: "", view: "objective",
+    communes: [], commune: "",
     thread: [],           // [{role, text, time, meta?, sub?}]
     threadId: null,
     t0: 0, timer: null
@@ -512,12 +516,6 @@
 
   $("communeSelect").addEventListener("change", function(){ setCommune(this.value); });
 
-  state.view = lsGet("obs.view", "objective");
-  Array.prototype.forEach.call($("viewToggle").children, function(b){
-    if (b.getAttribute("data-view") === state.view) b.classList.add("on");
-    b.addEventListener("click", function(){ setView(b.getAttribute("data-view")); });
-  });
-
   function pollHealth(){
     fetch(API+"/api/health").then(function(r){return r.json();}).then(function(h){
       state.ready = !!h.ready;
@@ -536,63 +534,28 @@
     $("communeLabel").textContent = state.commune || "All of Corsica";
     refreshSidebar();
   }
-  function setView(v){
-    state.view = v;
-    lsSet("obs.view", v);
-    Array.prototype.forEach.call($("viewToggle").children, function(b){
-      b.classList.toggle("on", b.getAttribute("data-view") === v);
-    });
-    $("indHead").textContent = v === "subjective" ? "Resident survey" : "Territorial indicators";
-    refreshSidebar();
-  }
   function refreshSidebar(){
-    $("indHead").textContent = state.view === "subjective" ? "Resident survey" : "Territorial indicators";
+    // The embedded OppChoVec dashboard is the map/indicator view now; keep it
+    // in sync with the selector (chat -> map, one-directional for now).
+    $("dashboardFrame").src = "/dashboard/?embed=1"
+      + (state.commune ? "&commune=" + encodeURIComponent(state.commune) : "");
     if (!state.commune){
       $("ctxProfile").innerHTML = "";
-      $("indicators").innerHTML = '<p class="side-note">Select a municipality to see its indicators.</p>';
       return;
     }
-    fetch(API+"/api/commune?name="+encodeURIComponent(state.commune)+"&view="+state.view)
+    fetch(API+"/api/commune?name="+encodeURIComponent(state.commune)+"&view=objective")
       .then(function(r){return r.json();}).then(renderProfile).catch(function(){});
   }
   function renderProfile(p){
-    if (!p || !p.name){ $("ctxProfile").innerHTML = ""; $("indicators").innerHTML = ""; return; }
-
+    if (!p || !p.name){ $("ctxProfile").innerHTML = ""; return; }
     if (p.available === false){
-      $("ctxProfile").innerHTML = p.view === "subjective"
-        ? field("Data", "No resident-survey responses for this municipality (68 communes covered).")
-        : field("Data", "No territorial score for this municipality.");
-      $("indicators").innerHTML = p.view === "subjective"
-        ? '<p class="side-note">Switch to <strong>Territorial</strong> for OppChoVec scores (all 360 communes).</p>'
-        : '<p class="side-note">—</p>';
+      $("ctxProfile").innerHTML = field("Data", "No territorial score for this municipality.");
       return;
     }
-
     var rows = "";
-    if (p.view === "subjective"){
-      if (p.respondents) rows += field("Survey respondents", p.respondents + " residents");
-      if (p.mean_age) rows += field("Mean age of respondents", p.mean_age + " years");
-      if (p.worst_dimension) rows += field("Most criticised", p.worst_dimension);
-      if (p.best_dimension) rows += field("Best rated", p.best_dimension);
-    } else {
-      if (p.rank_total) rows += field("Overall rank", p.rank_total + " / 360");
-      if (p.note) rows += field("Data", p.note);
-    }
+    if (p.rank_total) rows += field("Overall rank", p.rank_total + " / 360");
+    if (p.note) rows += field("Data", p.note);
     $("ctxProfile").innerHTML = rows;
-
-    if (!p.indicators || !p.indicators.length){
-      $("indicators").innerHTML = '<p class="side-note">No indicators for this municipality.</p>';
-      return;
-    }
-    $("indicators").innerHTML = p.indicators.map(function(ind){
-      var sub = "";
-      if (ind.vs_corsica != null) sub = "(" + (ind.vs_corsica > 0 ? "+" : "") + ind.vs_corsica + " vs Corsica)";
-      else if (ind.rank != null) sub = "rank " + ind.rank + " / " + (ind.n || 360);
-      return '<div class="ind"><span class="lab">'+esc(ind.label)+'</span>'
-           + '<span class="num '+ind.tone+'">'+ind.arrow+' '+ind.value+' / '+ind.max
-           + (sub ? ' <span class="side-note">'+esc(sub)+'</span>' : '')
-           + '</span></div>';
-    }).join("");
   }
   function field(k, v){ return '<div class="field"><div class="k">'+esc(k)+'</div><div class="v">'+esc(String(v))+'</div></div>'; }
 
