@@ -7,31 +7,9 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
   <link rel="stylesheet" href="stage_ambroise/Code/WEB/dashboard.css">
-  <!-- Brand harmonisation with Dumè GPT (added for the sidebar integration).
-       dashboard.css defines its whole chrome (backgrounds, borders, buttons,
-       the active-tab underline...) through the CSS custom properties below —
-       overriding just those, after the stylesheet, retunes every one of
-       those rules to the same parchment/forest-green palette without editing
-       dashboard.css or any selector. Map DATA colours (Jenks choropleth
-       blue->violet scale, LISA categories, CAH clusters — documented in
-       COULEURS_CARTES.md) are left alone: those encode information, not
-       chrome, and live as JS constants in script.js. -->
-  <style>
-    :root {
-      --primary-blue: #2f5241; --primary-blue-dark: #24402f; --primary-blue-light: #4c7a63;
-      --bg-main: #f3f1ea; --bg-sidebar: #f7f5ef; --bg-card: #fffdf7; --bg-hover: #efeadd;
-      --text-primary: #26251f; --text-secondary: #55534a; --text-muted: #8a8779;
-      --border-light: #ddd8c9; --border-medium: #cbbfa0;
-    }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --primary-blue: #7fae95; --primary-blue-dark: #6a9880; --primary-blue-light: #9bc4ad;
-        --bg-main: #161813; --bg-sidebar: #1c1f19; --bg-card: #23261f; --bg-hover: #2b2f26;
-        --text-primary: #e9e7dc; --text-secondary: #b7b4a6; --text-muted: #837f70;
-        --border-light: #35392e; --border-medium: #454a3c;
-      }
-    }
-  </style>
+  <!-- Brand direction: the map's own blue/violet (dashboard.css's native
+       --primary-blue etc., untouched here) is the shared identity — Dumè
+       GPT's chrome was retuned to match it instead (see ui/index.html). -->
   <!-- Embed mode (added for the Dumè GPT sidebar integration — see embed.js).
        Inert unless the page is loaded with ?embed=1; does not touch any rule
        above, only adds .embed-mode-scoped overrides. -->
@@ -43,11 +21,12 @@
     body.embed-mode .tab-content.active .map { height: 100vh !important; width: 100% !important; }
     .embed-open-full {
       position: fixed; top: 8px; right: 8px; z-index: 9999;
-      background: #2f5241; color: #fff; font: 600 12px system-ui, -apple-system, "Segoe UI", sans-serif;
+      background: var(--primary-blue, #4a90e2); color: #fff;
+      font: 600 12px system-ui, -apple-system, "Segoe UI", sans-serif;
       padding: 6px 11px; border-radius: 6px; text-decoration: none;
       box-shadow: 0 2px 10px rgba(0,0,0,.3);
     }
-    .embed-open-full:hover { background: #23402f; }
+    .embed-open-full:hover { background: var(--primary-blue-dark, #357abd); }
   </style>
 </head>
 <body>
@@ -367,12 +346,12 @@
               <!-- Real Dumè GPT is now a working RAG assistant, served at the app root.
                    This tab predates it (see the TODO'd /api/chat stub further down in
                    script.js) — point people at the real thing instead of the mock reply. -->
-              <div class="message bot-message" style="background:#eef3ee;border:1px solid #2f5241;border-radius:10px;">
+              <div class="message bot-message" style="background:var(--bg-hover,#eef3ee);border:1px solid var(--primary-blue,#4a90e2);border-radius:10px;">
                 <div class="message-avatar">💬</div>
                 <div class="message-content">
                   <p><strong>Dumè GPT is now live</strong> — a real assistant answering from
                   resident interviews, citizen-survey data and territorial indicators.</p>
-                  <p><a href="/" target="_top" style="display:inline-block;background:#2f5241;color:#fff;
+                  <p><a href="/" target="_top" style="display:inline-block;background:var(--primary-blue,#4a90e2);color:#fff;
                      padding:8px 14px;border-radius:7px;text-decoration:none;font-weight:600;">
                      Open the Dumè GPT assistant →</a></p>
                 </div>
