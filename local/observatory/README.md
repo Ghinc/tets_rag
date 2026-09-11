@@ -64,7 +64,16 @@ Open <http://127.0.0.1:8600/>. The RAPTOR pipeline loads in a background thread
   only** — it never changes the answer; the question reaches the pipeline
   verbatim and v10's own commune detector decides what it's about.
 * **Recent conversations** — stored in this browser's `localStorage`; click one
-  to reopen it. `+` (top right) starts a new conversation.
+  to reopen it. `+` (top right) starts a new conversation, which also clears
+  conversation memory (see below).
+* **Conversation memory** — follow-ups work ("what about Bastia?" after asking
+  about Ajaccio). The browser sends its last 3 exchanges back with each new
+  question; one small LLM call (reusing the decomposer model, no extra
+  console setting) folds them into a standalone question *before* it reaches
+  the RAPTOR pipeline — v10 itself never sees the conversation and stays
+  single-turn/stateless. No server-side session or persistence: it's exactly
+  what's on screen, sent once. Invisible to ordinary visitors; the `?dev=`
+  inspector shows the original → standalone rewrite for each answer.
 * Answers are steered to **English** regardless of the corpus language.
 
 ## The OppChoVec dashboard (`local/observatory/dashboard/`)
