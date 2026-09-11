@@ -276,6 +276,59 @@ def _role_cfg(role: str) -> dict:
     return cur.get(role) or DEFAULTS[role]
 
 
+# --------------------------------------------------------------------------- #
+# Conversation memory — condense a follow-up into a standalone question.
+# The pipeline itself (rag_v10_raptor_subq.py) never sees the conversation;
+# this runs once, before query(), and hands v10 a single plain-English
+# question exactly as if it were asked fresh. No RAG source file is touched.
+# --------------------------------------------------------------------------- #
+_CONDENSE_SYSTEM = (
+    "You rewrite a follow-up question into a standalone question, using the "
+    "recent conversation for context. Resolve pronouns and implicit "
+    "references (\"what about Bastia?\", \"and the other one?\", \"why is "
+    "that?\") into explicit ones — commune names, indicators, topics — drawn "
+    "from the conversation below. If the follow-up is already standalone, "
+    "return it unchanged, verbatim. Reply with ONLY the rewritten question — "
+    "no preamble, no quotes, no explanation."
+)
+_MAX_HISTORY_TURNS = 3       # exchanges (user+bot pairs), not raw entries
+_MAX_ANSWER_CHARS = 350      # per prior answer, in the condense prompt only
+
+
+def _condense_question(question: str, history: list) -> str:
+    """Best-effort: fold `history` + `question` into one standalone question
+    via the decomposer role. Falls back to `question` unchanged on any error
+    or empty history — never blocks the real answer over this optional step."""
+    turns = [h for h in (history or [])
+             if isinstance(h, dict) and h.get("role") in ("user", "bot") and h.get("text")]
+    turns = turns[-(_MAX_HISTORY_TURNS * 2):]
+    if not turns:
+        return question
+
+    lines = []
+    for h in turns:
+        text = str(h["text"])
+        if h["role"] == "bot" and len(text) > _MAX_ANSWER_CHARS:
+            text = text[:_MAX_ANSWER_CHARS] + "…"
+        lines.append(("Q: " if h["role"] == "user" else "A: ") + text)
+    prompt = "\n".join(lines) + f"\n\nFollow-up: {question}"
+
+    cur = _CUR
+    if cur is not None:
+        cur["stage"] = "condense"
+    _emit("condense")
+    try:
+        text, dt, ptok, ctok = _dispatch(
+            _role_cfg("decomposer"), _CONDENSE_SYSTEM, prompt,
+            max_tokens=200, temperature=0.1, max_retries=3)
+        _accum("condense", dt, ptok, ctok)
+        rewritten = (text or "").strip().strip('"')
+        return rewritten or question
+    except Exception as exc:                                        # noqa: BLE001
+        print(f"[obs] condense failed, using original question: {exc}")
+        return question
+
+
 def _call_claude_shim(prompt, system_prompt, model=None, max_tokens=800,
                       temperature=0.2, max_retries=5, **_):
     """Answerer step (v10 routes it through _call_claude). Provider/model per console."""
@@ -689,8 +742,13 @@ def status() -> dict:
 # --------------------------------------------------------------------------- #
 # Query
 # --------------------------------------------------------------------------- #
-def run(question: str, cfg: dict, emit: Callable[[dict], None]) -> dict:
-    """Run one query. Blocks for the whole pipeline (~40-120 s)."""
+def run(question: str, cfg: dict, emit: Callable[[dict], None], history: list = None) -> dict:
+    """Run one query. Blocks for the whole pipeline (~40-120 s).
+
+    `history` (optional): prior turns from the client's own thread, used only
+    to condense a follow-up into a standalone question before it ever reaches
+    v10 — see _condense_question(). v10 itself stays single-turn/stateless.
+    """
     global _CUR
 
     if not _READY:
@@ -715,7 +773,11 @@ def run(question: str, cfg: dict, emit: Callable[[dict], None]) -> dict:
         # It must not steer the answer — the question goes to the pipeline
         # verbatim and v10's own commune_detector decides what it's about.
         commune = (cfg.get("commune") or "").strip()
-        asked = question
+
+        # Conversation memory: fold prior turns into a standalone question
+        # *before* v10 sees anything. v10's query() below is unchanged and
+        # unaware this ever happened — it just gets a plain question string.
+        asked = _condense_question(question, history) if history else question
 
         t0 = time.time()
         version = cfg["version"]
@@ -751,6 +813,8 @@ def run(question: str, cfg: dict, emit: Callable[[dict], None]) -> dict:
                 "elapsed_s": round(elapsed, 1),
                 "version": version,
                 "commune": commune or None,
+                "original_question": question,
+                "standalone_question": asked if asked != question else None,
                 "decomposer": cfg["decomposer"],
                 "answerer": cfg["answerer"],
                 "synthesizer": cfg["synthesizer"],

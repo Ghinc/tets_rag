@@ -173,6 +173,27 @@ def _resolve_config(raw: dict) -> dict:
 
 
 # --------------------------------------------------------------------------- #
+# Conversation memory — the client sends its own thread back; we just trim
+# and sanitise it defensively. No server-side session/state at all.
+# --------------------------------------------------------------------------- #
+_MAX_HISTORY_ENTRIES = 6  # 3 exchanges — mirrors pipeline_manager._MAX_HISTORY_TURNS
+
+
+def _resolve_history(raw) -> list:
+    if not isinstance(raw, list):
+        return []
+    out = []
+    for h in raw[-_MAX_HISTORY_ENTRIES:]:
+        if not isinstance(h, dict):
+            continue
+        role = h.get("role")
+        text = h.get("text")
+        if role in ("user", "bot") and isinstance(text, str) and text.strip():
+            out.append({"role": role, "text": text[:4000]})
+    return out
+
+
+# --------------------------------------------------------------------------- #
 # Ask — SSE
 # --------------------------------------------------------------------------- #
 def _sse(event: str, data: dict) -> str:
@@ -189,6 +210,7 @@ async def ask(req: Request):
         question = question[:2000]
 
     cfg = _resolve_config(body.get("config") or {})
+    history = _resolve_history(body.get("history"))
     q: "queue.Queue" = queue.Queue()
 
     def emit(ev: dict) -> None:
@@ -196,7 +218,7 @@ async def ask(req: Request):
 
     def worker() -> None:
         try:
-            result = pm.run(question, cfg, emit)
+            result = pm.run(question, cfg, emit, history=history)
             q.put(("result", result))
         except pm.Busy as exc:
             q.put(("error", {"message": str(exc), "busy": True}))

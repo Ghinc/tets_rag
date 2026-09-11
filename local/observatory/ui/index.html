@@ -779,6 +779,11 @@
       ? "<p><strong>Dimension</strong>: "+esc(String(sc.dimension))+" — "+esc(String(sc.score))+"/5</p>"
         +"<p class='side-note'>"+esc(String(sc.justification||""))+"</p>"
       : "<p><strong>Dimension score</strong>: n/a</p>";
+    var condenseHtml = m.standalone_question
+      ? "<p class='applied'>Conversation memory</p>"
+        + "<p class='side-note'>original: "+esc(String(m.original_question||""))+"</p>"
+        + "<p>standalone: "+esc(String(m.standalone_question))+"</p>"
+      : "";
     $("devInspector").innerHTML =
       "<div class='applied'><strong>Last run</strong></div>"
       + "<table><tbody>"
@@ -789,6 +794,7 @@
       + "<tr><td>synthesizer</td><td colspan='4'>"+role(m.synthesizer)+"</td></tr>"
       + "<tr><td>k · n · temp</td><td colspan='4'>"+m.k+" · "+m.n_subquestions+" · "+(m.temperature==null?"prod":m.temperature)+"</td></tr>"
       + "</tbody></table>"
+      + condenseHtml
       + "<p class='applied'>Per-step cost</p>"
       + "<table><thead><tr><th>step</th><th>calls</th><th>s</th><th>in</th><th>out</th></tr></thead><tbody>"+rows+"</tbody></table>"
       + scHtml
@@ -823,6 +829,12 @@
     $("send").disabled = true;
     if (!state.thread.length) $("messages").innerHTML = "";  // clear greeting
 
+    // Conversation memory: last few turns, captured *before* this question is
+    // added — the server folds these into a standalone question so follow-ups
+    // ("what about Bastia?") resolve correctly. Nothing server-side persists
+    // this; it's just what's already on screen, sent back once.
+    var history = state.thread.slice(-6).map(function(m){ return { role:m.role, text:m.text }; });
+
     var now = hhmm();
     state.thread.push({ role:"user", text:text, time:now });
     renderUser(text, now);
@@ -831,6 +843,7 @@
     var bot = elMsg(
       '<div class="who"><span class="avatar">D</span><span class="name">Dumè GPT</span></div>'
       + '<ul class="steps">'
+      + (history.length ? '<li data-s="condense"><span class="mk"></span>Reading the conversation so far</li>' : '')
       + '<li data-s="decompose"><span class="mk"></span>Understanding your question</li>'
       + '<li data-s="answer"><span class="mk"></span>Consulting interviews &amp; survey data <span class="sub"></span></li>'
       + '<li data-s="synthesize"><span class="mk"></span>Drafting the answer</li>'
@@ -838,7 +851,8 @@
 
     startTimer(bot);
 
-    var payload = { question:text, config: Object.assign({ commune: state.commune, output_language: "en" }, devConfig()) };
+    var payload = { question:text, history:history,
+                    config: Object.assign({ commune: state.commune, output_language: "en" }, devConfig()) };
 
     fetch(API+"/api/ask", {
       method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(payload)
@@ -895,18 +909,23 @@
   }
   function onProgress(p, bot){
     switch (p.stage){
-      case "received": case "decompose": step(bot,"decompose","active"); break;
+      case "received":
+        if (bot.querySelector('.steps li[data-s="condense"]')) step(bot,"condense","active");
+        else step(bot,"decompose","active");
+        break;
+      case "condense": step(bot,"condense","active"); break;
+      case "decompose": step(bot,"condense","done"); step(bot,"decompose","active"); break;
       case "decomposed":
         step(bot,"decompose","done");
         var s=bot.querySelector('.steps li[data-s="answer"] .sub'); if(s&&p.n) s.textContent="(0 / "+p.n+")";
         break;
       case "answer":
-        step(bot,"decompose","done"); step(bot,"answer","active");
+        step(bot,"condense","done"); step(bot,"decompose","done"); step(bot,"answer","active");
         var sb=bot.querySelector('.steps li[data-s="answer"] .sub');
         if (sb) sb.textContent = p.n ? ("("+p.i+" / "+p.n+")") : ("("+p.i+")");
         break;
       case "synthesize":
-        step(bot,"decompose","done"); step(bot,"answer","done"); step(bot,"synthesize","active"); break;
+        step(bot,"condense","done"); step(bot,"decompose","done"); step(bot,"answer","done"); step(bot,"synthesize","active"); break;
       case "score":
         step(bot,"synthesize","done"); break;
     }
