@@ -74,6 +74,14 @@ Open <http://127.0.0.1:8600/>. The RAPTOR pipeline loads in a background thread
   single-turn/stateless. No server-side session or persistence: it's exactly
   what's on screen, sent once. Invisible to ordinary visitors; the `?dev=`
   inspector shows the original → standalone rewrite for each answer.
+* **Sub-questions answer in parallel** (up to 4 at once) instead of one at a
+  time — roughly halves total answer time on a 5-sub-question query (measured
+  ~48s → ~26s). This is a *deliberate duplicate* of `RaptorSubQuestionPipeline.
+  query()` (`pipeline_manager._parallel_query`, kept in lockstep with the
+  original by hand) — `rag_v10_raptor_subq.py` itself is never edited. Set
+  `OBS_PARALLEL_SUBQ=0` to fall back to the original, fully sequential
+  `pipeline.query()` if anything looks off; the `?dev=` inspector shows which
+  path ran.
 * Answers are steered to **English** regardless of the corpus language.
 
 ## The OppChoVec dashboard (`local/observatory/dashboard/`)
@@ -152,6 +160,8 @@ persist in `localStorage`.
 | `OBS_DEV_CODE` | `corse2026` | unlock code for the model console |
 | `OBS_ENABLE_V11` | `1` | also load the v11 agentic pipeline |
 | `OBS_FORCE_CPU_EMBED` | `1` | pin embeddings to CPU (avoid fighting llama-server for the GPU) |
+| `OBS_PARALLEL_SUBQ` | `1` | answer sub-questions concurrently (`0` = original sequential `pipeline.query()`) |
+| `OBS_PARALLEL_SUBQ_WORKERS` | `4` | max concurrent sub-question threads |
 
 ## API
 

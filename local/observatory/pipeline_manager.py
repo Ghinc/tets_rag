@@ -39,6 +39,7 @@ import threading
 import time
 import traceback
 import unicodedata
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Callable, Optional
 
 # --------------------------------------------------------------------------- #
@@ -148,8 +149,13 @@ _COMMUNE_OBJ: dict = {}             # normalized name -> OppChoVec (objective) p
 
 
 # --------------------------------------------------------------------------- #
-# Instrumentation helpers (run inside the query worker thread)
+# Instrumentation helpers (run inside the query worker thread — and, with
+# parallel sub-questions, inside several answerer threads concurrently, hence
+# the lock guarding every _CUR mutation below).
 # --------------------------------------------------------------------------- #
+_CUR_LOCK = threading.Lock()
+
+
 def _emit(stage: str, **extra) -> None:
     cur = _CUR
     if cur and cur.get("emit"):
@@ -163,13 +169,14 @@ def _accum(step: str, dt: float, ptok: int, ctok: int) -> None:
     cur = _CUR
     if not cur:
         return
-    s = cur["steps"].setdefault(
-        step, {"elapsed_s": 0.0, "prompt_tokens": 0, "completion_tokens": 0, "n_calls": 0}
-    )
-    s["elapsed_s"] += dt
-    s["prompt_tokens"] += ptok
-    s["completion_tokens"] += ctok
-    s["n_calls"] += 1
+    with _CUR_LOCK:
+        s = cur["steps"].setdefault(
+            step, {"elapsed_s": 0.0, "prompt_tokens": 0, "completion_tokens": 0, "n_calls": 0}
+        )
+        s["elapsed_s"] += dt
+        s["prompt_tokens"] += ptok
+        s["completion_tokens"] += ctok
+        s["n_calls"] += 1
 
 
 def _drop_temperature(model: str) -> bool:
@@ -370,10 +377,14 @@ def _decompose_shim(*a, **kw):
 
 
 def _answer_shim(*a, **kw):
+    # May run concurrently across sub-questions (parallel path) — lock the
+    # counter so "i" is a clean 1..n sequence of *completions*, not a race.
     if _CUR is not None:
         _CUR["stage"] = "answer"
-        _CUR["answer_i"] = _CUR.get("answer_i", 0) + 1
-        _emit("answer", i=_CUR["answer_i"], n=_CUR.get("n_sub", 0))
+        with _CUR_LOCK:
+            _CUR["answer_i"] = _CUR.get("answer_i", 0) + 1
+            i = _CUR["answer_i"]
+        _emit("answer", i=i, n=_CUR.get("n_sub", 0))
     return _ORIG_ANSWER(*a, **kw)
 
 
@@ -740,6 +751,178 @@ def status() -> dict:
 
 
 # --------------------------------------------------------------------------- #
+# Parallel sub-questions — a DELIBERATE DUPLICATE of
+# RaptorSubQuestionPipeline.query() (rag_v10_raptor_subq.py:786-975), not a
+# patch. rag_v10_raptor_subq.py is never edited; this exists purely because
+# a caller-side for-loop can't be parallelised by patching the functions it
+# calls (retrieval + answer per sub-question are sequential inside the
+# original method, so making them concurrent means owning that loop).
+#
+# Every branch here mirrors the original line for line — same bypass check
+# for "Corse entière" questions, same OppChoVec pre-injection, same bilan/
+# sources_mobilisees handling — with ONLY the per-sub-question retrieve+answer
+# loop turned into a thread pool. If rag_v10_raptor_subq.py's query() ever
+# changes, this needs updating too; it is not derived automatically.
+#
+# Set OBS_PARALLEL_SUBQ=0 to fall back to the untouched, fully sequential
+# pipeline.query() instead of this function (see run(), below).
+# --------------------------------------------------------------------------- #
+_PARALLEL_SUBQ = os.getenv("OBS_PARALLEL_SUBQ", "1") == "1"
+_PARALLEL_SUBQ_WORKERS = int(os.getenv("OBS_PARALLEL_SUBQ_WORKERS", "4"))
+
+
+def _parallel_query(pipeline, question: str, k: int = 5, n_subquestions: int = None,
+                    extra_context: str = "", force_mixed: bool = False,
+                    use_bilan: bool = True, no_typing: bool = False,
+                    temperature_override=None):
+    if n_subquestions is None:
+        n_subquestions = _v10.DEFAULT_N_SUBQUESTIONS
+    if not pipeline._initialized:
+        raise RuntimeError("Pipeline non initialise. Appelez init() d'abord.")
+
+    print(f"\n[v10-parallel] Question : {question}")
+
+    # --- Détection question globale Corse (identique à v10 ; un seul "sous-
+    # entretien" ici, rien à paralléliser sur cette branche) ---
+    q_norm = "".join(c for c in unicodedata.normalize("NFD", question.lower())
+                     if unicodedata.category(c) != "Mn")
+    try:
+        from commune_detector import detect_communes as _dc
+        communes_in_q = _dc(question)
+    except ImportError:
+        communes_in_q = []
+    is_global_q = not communes_in_q and any(kw in q_norm for kw in (
+        "moyen", "moyenne", "general", "global", "ensemble", "niveau",
+        "corse entiere", "ile entiere", "l ensemble", "toutes les communes",
+        "score global", "score corse", "indicateur corse",
+    ))
+    if is_global_q:
+        context_str, sources = pipeline.retriever.query(question, k=k)
+        global_extra = extra_context
+        if pipeline.retriever._oppchovec:
+            try:
+                agg = pipeline.retriever._oppchovec.get(
+                    ids=["oppchovec_aggregate_corse"], include=["documents", "metadatas"])
+                if agg["documents"]:
+                    global_extra = ("[Scores OppChoVec — Corse entière (indicateurs territoriaux objectifs)]\n"
+                                    + agg["documents"][0] + ("\n\n" + extra_context if extra_context else ""))
+            except Exception:
+                pass
+        if global_extra:
+            context_str = global_extra + "\n\n" + context_str
+        single_answer = _v10.answer_subquestion(question, context_str, temperature_override=temperature_override)
+        single_pair = [(question, single_answer)]
+        global_raw = _v10.synthesize_answers(
+            question, single_pair,
+            source_bilan={1: {"has_subjective": True, "has_objective": True}},
+            use_bilan=use_bilan, temperature_override=temperature_override)
+        final_answer, global_sm = _v10._parse_sources_mobilisees(global_raw)
+        scoring = {"applicable": False, "dimension": None, "score": None,
+                   "justification": "Question globale — scoring non applicable"}
+        sub_qa_pairs_out = [{"idx": 1, "question": question, "answer": single_answer}]
+        return final_answer, sources, scoring, sub_qa_pairs_out, global_sm
+
+    # --- Etape 1 : Decomposition (identique) ---
+    try:
+        sub_questions = _v10.decompose_question(
+            question, n=n_subquestions, extra_context=extra_context, force_mixed=force_mixed,
+            no_typing=no_typing, temperature_override=temperature_override)
+    except RuntimeError:
+        refusal = _v10._call_mistral(
+            f"Question : {question}",
+            "Tu es un assistant spécialisé en qualité de vie en Corse. "
+            "Cette question ne relève pas de ton domaine d'expertise. "
+            "Réponds poliment que tu ne peux pas répondre à cette question.",
+            max_tokens=300, temperature=temperature_override if temperature_override is not None else 0.3)
+        empty_scoring = {"applicable": False, "dimension": None, "score": None,
+                         "justification": "Question hors-domaine"}
+        return refusal, [], empty_scoring, [], []
+
+    # --- Etape 1bis : pré-injection OppChoVec (identique) ---
+    opp_extra = ""
+    if pipeline.retriever._oppchovec and pipeline.retriever._is_ranking_question(question):
+        try:
+            cl = pipeline.retriever._oppchovec.get(
+                ids=["oppchovec_classement_global"], include=["documents", "metadatas"])
+            if cl["documents"]:
+                opp_extra = ("[Classement OppChoVec des communes corses — référence pour filtrer par EPCI/commune]\n"
+                             + cl["documents"][0][:8000])
+        except Exception:
+            pass
+    if communes_in_q and pipeline.retriever._oppchovec:
+        try:
+            q_emb = pipeline.retriever._encode_query(question)
+            for com in communes_in_q[:2]:
+                res_c = pipeline.retriever._oppchovec.query(
+                    query_embeddings=[q_emb], n_results=1,
+                    where={"$and": [{"source": {"$in": ["oppchovec_betti_0_10", "oppchovec_aggregate"]}},
+                                     {"commune": {"$eq": com}}]},
+                    include=["documents", "metadatas", "distances"])
+                if res_c["documents"][0]:
+                    opp_extra += f"\n\n[Scores OppChoVec — {com}]\n{res_c['documents'][0][0][:1500]}"
+            opp_extra = opp_extra.strip()
+        except Exception:
+            pass
+
+    # --- Etape 2 : Retrieval + reponse par sous-question — PARALLELISE ICI ---
+    # (the only real change from the original: this was a plain `for` loop)
+    def _one(i, sq):
+        context_str, sources = pipeline.retriever.query(sq, k=k)
+        merged_extra = "\n\n".join(x for x in [opp_extra, extra_context] if x)
+        if merged_extra:
+            context_str = merged_extra + "\n\n" + context_str
+        ans = _v10.answer_subquestion(sq, context_str, temperature_override=temperature_override)
+        for s in sources:
+            s["sub_question_idx"] = i + 1
+            s["sub_question"] = sq
+        return sq, ans, sources
+
+    n = len(sub_questions)
+    results = [None] * n
+    workers = max(1, min(n, _PARALLEL_SUBQ_WORKERS)) if n else 1
+    with ThreadPoolExecutor(max_workers=workers) as ex:
+        futures = {ex.submit(_one, i, sq): i for i, sq in enumerate(sub_questions)}
+        for fut in as_completed(futures):
+            results[futures[fut]] = fut.result()
+
+    sub_qa_pairs = [(sq, ans) for sq, ans, _s in results]
+    all_sources = []
+    for _sq, _ans, sources in results:
+        all_sources.extend(sources)
+
+    # --- Bilan déterministe des sources par sous-question (identique) ---
+    source_bilan = {}
+    if use_bilan:
+        for s in all_sources:
+            idx = s.get("sub_question_idx", 0)
+            if idx not in source_bilan:
+                source_bilan[idx] = {"has_subjective": False, "has_objective": False}
+            t = s.get("type", "") or s.get("source_type", "")
+            if "raptor" in t or "enquete" in t or "verbatim" in t:
+                source_bilan[idx]["has_subjective"] = True
+            if "opp" in t or "objectif" in t or "equipement" in t:
+                source_bilan[idx]["has_objective"] = True
+
+    # --- Etape 3 : Synthese finale (identique) ---
+    sources_per_subq = {}
+    for s in all_sources:
+        idx = s.get("sub_question_idx", 0)
+        sources_per_subq.setdefault(idx, []).append(s)
+    final_answer_raw = _v10.synthesize_answers(
+        question, sub_qa_pairs, source_bilan,
+        use_bilan=use_bilan, sources_per_subq=sources_per_subq,
+        temperature_override=temperature_override)
+    final_answer, sources_mobilisees = _v10._parse_sources_mobilisees(final_answer_raw)
+
+    # --- Etape 4 : Notation de la dimension (identique) ---
+    scoring = _v10.score_dimension(question, final_answer)
+
+    sub_qa_list = [{"idx": i + 1, "question": sq, "answer": ans}
+                   for i, (sq, ans) in enumerate(sub_qa_pairs)]
+    return final_answer, all_sources, scoring, sub_qa_list, sources_mobilisees
+
+
+# --------------------------------------------------------------------------- #
 # Query
 # --------------------------------------------------------------------------- #
 def run(question: str, cfg: dict, emit: Callable[[dict], None], history: list = None) -> dict:
@@ -789,8 +972,10 @@ def run(question: str, cfg: dict, emit: Callable[[dict], None], history: list = 
         else:
             version = "v10"
             extra = _v10_extra_context(_V10, asked)
-            answer, sources, scoring, sub_qa, sources_mob = _V10.query(
-                asked,
+            v10_query = _parallel_query if _PARALLEL_SUBQ else _V10.query
+            v10_args = ((_V10, asked) if _PARALLEL_SUBQ else (asked,))
+            answer, sources, scoring, sub_qa, sources_mob = v10_query(
+                *v10_args,
                 k=cfg["k"],
                 n_subquestions=cfg["n_subquestions"],
                 extra_context=extra["ctx"],
@@ -815,6 +1000,7 @@ def run(question: str, cfg: dict, emit: Callable[[dict], None], history: list = 
                 "commune": commune or None,
                 "original_question": question,
                 "standalone_question": asked if asked != question else None,
+                "parallel_subq": _PARALLEL_SUBQ if version == "v10" else None,
                 "decomposer": cfg["decomposer"],
                 "answerer": cfg["answerer"],
                 "synthesizer": cfg["synthesizer"],

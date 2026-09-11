@@ -793,6 +793,7 @@
       + "<tr><td>answerer</td><td colspan='4'>"+role(m.answerer)+"</td></tr>"
       + "<tr><td>synthesizer</td><td colspan='4'>"+role(m.synthesizer)+"</td></tr>"
       + "<tr><td>k · n · temp</td><td colspan='4'>"+m.k+" · "+m.n_subquestions+" · "+(m.temperature==null?"prod":m.temperature)+"</td></tr>"
+      + (m.parallel_subq!=null ? "<tr><td>sub-questions</td><td colspan='4'>"+(m.parallel_subq?"parallel":"sequential")+"</td></tr>" : "")
       + "</tbody></table>"
       + condenseHtml
       + "<p class='applied'>Per-step cost</p>"
