@@ -7,6 +7,31 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
   <link rel="stylesheet" href="stage_ambroise/Code/WEB/dashboard.css">
+  <!-- Brand harmonisation with Dumè GPT (added for the sidebar integration).
+       dashboard.css defines its whole chrome (backgrounds, borders, buttons,
+       the active-tab underline...) through the CSS custom properties below —
+       overriding just those, after the stylesheet, retunes every one of
+       those rules to the same parchment/forest-green palette without editing
+       dashboard.css or any selector. Map DATA colours (Jenks choropleth
+       blue->violet scale, LISA categories, CAH clusters — documented in
+       COULEURS_CARTES.md) are left alone: those encode information, not
+       chrome, and live as JS constants in script.js. -->
+  <style>
+    :root {
+      --primary-blue: #2f5241; --primary-blue-dark: #24402f; --primary-blue-light: #4c7a63;
+      --bg-main: #f3f1ea; --bg-sidebar: #f7f5ef; --bg-card: #fffdf7; --bg-hover: #efeadd;
+      --text-primary: #26251f; --text-secondary: #55534a; --text-muted: #8a8779;
+      --border-light: #ddd8c9; --border-medium: #cbbfa0;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --primary-blue: #7fae95; --primary-blue-dark: #6a9880; --primary-blue-light: #9bc4ad;
+        --bg-main: #161813; --bg-sidebar: #1c1f19; --bg-card: #23261f; --bg-hover: #2b2f26;
+        --text-primary: #e9e7dc; --text-secondary: #b7b4a6; --text-muted: #837f70;
+        --border-light: #35392e; --border-medium: #454a3c;
+      }
+    }
+  </style>
   <!-- Embed mode (added for the Dumè GPT sidebar integration — see embed.js).
        Inert unless the page is loaded with ?embed=1; does not touch any rule
        above, only adds .embed-mode-scoped overrides. -->
