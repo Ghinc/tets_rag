@@ -615,7 +615,7 @@
     var start = Object.assign({}, cfg.defaults, saved);
 
     fillSel($("devVersion"), cfg.versions, start.version || cfg.defaults.version);
-    fillSel($("devLang"), cfg.output_languages||["en","fr"], start.output_language || "en");
+    fillSel($("devLang"), cfg.output_languages||["en","fr"], start.output_language || "fr");
     Object.keys(ROLE_UI).forEach(function(role){ wireRole(ROLE_UI[role]); });
     applyConfig(start);   // sets roles/version/lang/k/n/temp from saved-or-default
 
@@ -852,8 +852,12 @@
 
     startTimer(bot);
 
+    // French is the base language; English is a hidden, console-only switch
+    // (kept for article screenshots) — no hardcoded language for ordinary
+    // visitors, they get the server default (French) unless devConfig()
+    // overrides it below.
     var payload = { question:text, history:history,
-                    config: Object.assign({ commune: state.commune, output_language: "en" }, devConfig()) };
+                    config: Object.assign({ commune: state.commune }, devConfig()) };
 
     fetch(API+"/api/ask", {
       method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(payload)

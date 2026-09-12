@@ -88,7 +88,8 @@ DEFAULTS = {
     "n_subquestions": _v10.DEFAULT_N_SUBQUESTIONS,
     "temperature": None,                       # None => the pipeline's tuned temps
     "commune": "",                             # "" => all of Corsica
-    "output_language": "en",                   # "en" | "fr"  (RAG prompts are French)
+    "output_language": "fr",                   # "en" | "fr" — French is the base language;
+                                                # English is a hidden console-only switch (article screenshots)
 }
 
 # The exact configuration used for every evaluation run in the thesis so far.
@@ -949,7 +950,7 @@ def run(question: str, cfg: dict, emit: Callable[[dict], None], history: list = 
             "decomposer": cfg["decomposer"],
             "answerer": cfg["answerer"],
             "synthesizer": cfg["synthesizer"],
-            "lang": cfg.get("output_language", "en"),
+            "lang": cfg.get("output_language", "fr"),
         }
 
         # The right-hand commune selector is CONTEXT ONLY (sidebar indicators).
@@ -1004,7 +1005,7 @@ def run(question: str, cfg: dict, emit: Callable[[dict], None], history: list = 
                 "decomposer": cfg["decomposer"],
                 "answerer": cfg["answerer"],
                 "synthesizer": cfg["synthesizer"],
-                "output_language": cfg.get("output_language", "en"),
+                "output_language": cfg.get("output_language", "fr"),
                 "k": cfg["k"],
                 "n_subquestions": cfg["n_subquestions"],
                 "temperature": cfg["temperature"],
